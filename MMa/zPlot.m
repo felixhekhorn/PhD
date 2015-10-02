@@ -42,5 +42,19 @@ zPlotAbsArg[f_Function, opts:OptionsPattern[]]:=Module[
   FrameStyle->None,Background->White,RoundingRadius->5],
  ImageSize->400]
 ]
+Options[zPlotAbs] = {"xmin" -> -1, "xmax" -> 5, "ymin" -> -3, "ymax" -> 3};
+zPlotAbs[f_Function, opts:OptionsPattern[]]:=Module[
+ {fn,x,y,xmin,xmax,ymin,ymax},
+ fn = f[x+y*I];
+ xmin = OptionValue["xmin"];
+ xmax = OptionValue["xmax"];
+ ymin = OptionValue["ymin"];
+ ymax = OptionValue["ymax"];
+ Show[
+  ContourPlot[Abs[fn],{x,xmin,xmax},{y,ymin,ymax},ColorFunction->"TemperatureMap"],
+  FrameLabel->{"Re(z)","Im(z)"},
+  PlotRangePadding->0,
+ ImageSize->400]
+]
 Options[zPlotRow] = {"xmin" -> -1, "xmax" -> 5, "ymin" -> -3, "ymax" -> 3};
 zPlotRow[f_Function, opts:OptionsPattern[]] := GraphicsRow[{zPlotReIm[f,opts],zPlotAbsArg[f,opts]}];
