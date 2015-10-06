@@ -22,10 +22,15 @@ Dgg1CoeffRules::usage = "replacements for coeffs of D soft gluon function for gg
 \!\(\*SubscriptBox[\(D\), \(gg, 1\)]\)(\!\(\*SubscriptBox[\(\[Alpha]\), \(s\)]\)) = \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(gg, 1\)], \((1)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\)) + \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(gg, 1\)], \((2)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\))\.b2 +...";
 Dgg8CoeffRules::usage = "replacements for coeffs of D soft gluon function for gg channel and I=8 with their value in term of \!\(\*SubscriptBox[\(C\), \(F\)]\),\!\(\*SubscriptBox[\(C\), \(A\)]\),\!\(\*SubscriptBox[\(n\), \(l\)]\):
 \!\(\*SubscriptBox[\(D\), \(gg, 8\)]\)(\!\(\*SubscriptBox[\(\[Alpha]\), \(s\)]\)) = \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(gg, 8\)], \((1)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\)) + \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(gg, 8\)], \((2)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\))\.b2 +...";
-Dqq8CoeffRules::usage = "replacements for coeffs of D soft gluon function for q\!\(\*OverscriptBox[\(q\), \(_\)]\) channel and I=8 with their value in term of \!\(\*SubscriptBox[\(C\), \(F\)]\),\!\(\*SubscriptBox[\(C\), \(A\)]\),\!\(\*SubscriptBox[\(n\), \(l\)]\):
+Dqqbar8CoeffRules::usage = "replacements for coeffs of D soft gluon function for q\!\(\*OverscriptBox[\(q\), \(_\)]\) channel and I=8 with their value in term of \!\(\*SubscriptBox[\(C\), \(F\)]\),\!\(\*SubscriptBox[\(C\), \(A\)]\),\!\(\*SubscriptBox[\(n\), \(l\)]\):
 \!\(\*SubscriptBox[\(D\), \(q \*OverscriptBox[\(q\), \(_\)], 8\)]\)(\!\(\*SubscriptBox[\(\[Alpha]\), \(s\)]\)) = \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(q \*OverscriptBox[\(q\), \(_\)], 8\)], \((1)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\)) + \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(q \*OverscriptBox[\(q\), \(_\)], 8\)], \((2)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\))\.b2 +...";
 D\[Gamma]gCoeffRules::usage = "replacements for coeffs of D soft gluon function for \[Gamma]g channel with their value in term of \!\(\*SubscriptBox[\(C\), \(F\)]\),\!\(\*SubscriptBox[\(C\), \(A\)]\),\!\(\*SubscriptBox[\(n\), \(l\)]\):
 \!\(\*SubscriptBox[\(D\), \(\[Gamma]g\)]\)(\!\(\*SubscriptBox[\(\[Alpha]\), \(s\)]\)) = \!\(\*SuperscriptBox[SubscriptBox[\(D\), \(\[Gamma]g\)], \((1)\)]\)*(\!\(\*SubscriptBox[\(\[Alpha]\), \(s/\[Pi]\)]\)) +...";
+
+(* combined rules *)
+getRules::usage = "get replacements for A soft gluon function, D soft gluon function and \[Nu] for a single channel";
+getRules::badarg = "A single argument of type String was expected";
+getRules::notAvailable = "Replacements for channel `1` not defined";
 
 (* resummation functions *)
 getPreG::usage = "getPreG[k] computes \!\(\*SubscriptBox[\*TemplateBox[{\"g\",\"n\"},\n\"Superscript\"], \(\[Nu], k, ij, I\)]\)(\[Lambda]) prefixed with either Log[N] for n=1 or \!\(\*TemplateBox[{SubscriptBox[\"\[Alpha]\", \"s\"],RowBox[{\"n\", \"-\", \"2\"}]},\n\"Superscript\"]\) otherwise; See getG[k]";
@@ -66,21 +71,34 @@ getBetaBCoeff[args__]:= $Failed /; Message[getBetaBCoeff::badarg]
 
 (* gluon radiation coeffs *)
 (* soft-collinear initial state radiation: *)
-Ak = {Ak1, Ak2, Ak3};
+Ak;
 Ag = {CA, CA*((67/18 - \[Pi]^2/6)CA - 5/9nl)/2,CA/4 (CA^2 (245/24 - 67/9 Zeta[2] + 11/6 Zeta[3]+11/5 Zeta[2]^2) + CF* nl (-55/24 + 2 Zeta[3]) +CA *nl (-209/108 + 10/9 Zeta[2] - 7/3 Zeta[3]) +nl^2 (-1/27))};
-AgCoeffRules = Table[Ak[[j]] -> Ag[[j]],{j,Length[Ak]}];
+AgCoeffRules = Table[Ak[j] -> Ag[[j]],{j,Length[Ag]}];
 Aq = {Ag[[1]]/CA*CF, Ag[[2]]/CA*CF, Ag[[3]]/CA*CF};
-AqCoeffRules = Table[Ak[[j]] -> Aq[[j]],{j,Length[Ak]}];
+AqCoeffRules = Table[Ak[j] -> Aq[[j]],{j,Length[Aq]}];
 (* wide-angle soft radiation *)
-DijI = {DijI1,DijI2};
-Dqq8 = {-CA,CA^2(-115/36+\[Pi]^2/12-Zeta[3]/2)+CA*CF(-101/27+11\[Pi]^2/18+7/2Zeta[3])+CA*nl 11/18+CF* nl(14/27-\[Pi]^2/9)};
-Dqq8CoeffRules = Table[DijI[[j]] -> Dqq8[[j]],{j,Length[DijI]}];
+DijI;
+Dqqbar8 = {-CA,CA^2(-115/36+\[Pi]^2/12-Zeta[3]/2)+CA*CF(-101/27+11\[Pi]^2/18+7/2Zeta[3])+CA*nl 11/18+CF* nl(14/27-\[Pi]^2/9)};
+Dqqbar8CoeffRules = Table[DijI[j] -> Dqqbar8[[j]],{j,Length[Dqqbar8]}];
 Dgg8 = {-CA, (CA^2 (-749/108 + 25/36 Pi^2 + 3 Zeta[3]) +CA *nl (61/54 -\[Pi]^2/9))};
-Dgg8CoeffRules = Table[DijI[[j]] -> Dgg8[[j]],{j,Length[DijI]}];
+Dgg8CoeffRules = Table[DijI[j] -> Dgg8[[j]],{j,Length[Dgg8]}];
 Dgg1 = {0,(CA^2 (-101/27 + 11\[Pi]^2/18 + 7/2 Zeta[3]) +CA *nl (14/27 - \[Pi]^2/9))};
-Dgg1CoeffRules = Table[DijI[[j]] -> Dgg1[[j]],{j,Length[DijI]}];
+Dgg1CoeffRules = Table[DijI[j] -> Dgg1[[j]],{j,Length[Dgg1]}];
 D\[Gamma]g = {-CA};
-D\[Gamma]gCoeffRules = Table[DijI[[j]] -> D\[Gamma]g[[j]],{j,Min[Length[DijI],Length[D\[Gamma]g]]}];
+D\[Gamma]gCoeffRules = Table[DijI[j] -> D\[Gamma]g[[j]],{j,Length[D\[Gamma]g]}];
+
+(* get combined rules *)
+getRules[channel_String] := Module[{b},
+ b = betaBCoeffRules;
+ Switch[channel,
+ "\[Gamma]g", Join[b,{\[Nu]->1},AgCoeffRules,D\[Gamma]gCoeffRules],
+ "gg1", Join[b,{\[Nu]->2},AgCoeffRules,Dgg1CoeffRules],
+ "gg8", Join[b,{\[Nu]->2},AgCoeffRules,Dgg8CoeffRules],
+ "qqbar8", Join[b,{\[Nu]->2},AqCoeffRules,Dqqbar8CoeffRules],
+ _, Message[getRules::notAvailable,channel];Return[$Failed]
+ ]
+];
+getRules[args__]:= $Failed /; Message[getRules::badarg]
 
 (* \[Alpha]s is avialable at order (n-1)-loop *)
 available\[Alpha]sOrder = 3;
@@ -148,8 +166,8 @@ zInt[f_Function,OptionsPattern[Integrate]]:= -Normal[
 	Integrate[f[z]/(1-z),{z,0,1-1/n} , 
 	Assumptions-> Join[
 		OptionValue[Assumptions],
-		{Re[n] > 0,b0> 0, b0 \[Element] Reals,b1> 0, b1\[Element] Reals,
-		b2> 0, b2 \[Element] Reals,\[Alpha]\[Mu] > 0,\[Alpha]\[Mu] \[Element] Reals}
+		{Re[n] > 0,b0 > 0, b0 \[Element] Reals,b1 > 0, b1 \[Element] Reals,
+		b2 > 0, b2 \[Element] Reals,\[Alpha]\[Mu] > 0,\[Alpha]\[Mu] \[Element] Reals}
 		]
 	]
 ]//. to\[Lambda]Sub;
@@ -219,7 +237,7 @@ Do[Module[{nn,parts,tot,DJ},
 	Do[tot = Total[p];
 		DJ = getZIntJAtScale[p,scale];
 		If[$Failed == DJ, Return[$Failed]];
-		a += \[Nu]*Ak[[tot]]/\[Pi]^tot * (Multinomial@@p) * DJ;
+		a += \[Nu]*Ak[tot]/\[Pi]^tot * (Multinomial@@p) * DJ;
 		,{p,parts}];
 	];
 	,{scale,0,n-1}];
@@ -232,7 +250,7 @@ If[n > 1,Module[{nD},
 		Do[tot = Total[p];
 			D\[Alpha] = getZInt\[Alpha]AtScale[p,scale];
 			If[$Failed == D\[Alpha], Return[$Failed]];
-			d += DijI[[tot]]/\[Pi]^tot * (Multinomial@@p) * D\[Alpha];
+			d += DijI[tot]/\[Pi]^tot * (Multinomial@@p) * D\[Alpha];
 			,{p,parts}];
 		];
 		,{scale,0,nD-1}];

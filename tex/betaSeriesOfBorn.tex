@@ -1,0 +1,53 @@
+% LaTeX Vorlage
+\documentclass[
+  ngerman,		% Sprache
+  a4paper,		% Papierformat
+  11pt,			% Schriftgröße (default 10pt)
+  DIV=12,		% Seiteneinteilung
+  parskip=half  	% Absätze (full,half,false -+*)
+]{scrartcl}
+%\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel} % Sprache 
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx} % Grafiken einbinden
+\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
+\usepackage{color}
+%\usepackage{bbm}
+
+%\usepackage{pdflscape}
+\usepackage{ulem}
+\usepackage{simplewick}
+\usepackage{array}
+\usepackage{feynmf}
+\usepackage{slashed}
+
+%\usepackage{mathpazo}
+%\usepackage{breqn}
+
+\include{lib}
+
+\begin{document}
+
+\section{definitions}
+\begin{align}
+\beta &:= \sqrt{1-\rho}\\
+\chi &:= \frac{1-\beta}{1+\beta}
+\end{align}
+
+\section{Photoproduction}
+\begin{align}
+\sigma_{\gamma g}^{(0)}(\rho) &= \sigma^{(0)}_{\gamma g}\cdot c^{(0)}_{\gamma g}(\rho)\\
+\sigma^{(0)}_{\gamma g} &= \frac{\alpha_s(\mu^2)\alpha_{QED} e_Q^2}{m_Q^2}\\
+c^{(0)}_{\gamma g}(\rho) &= \frac{\pi\beta\rho}{4}\left(-\frac{3-\beta^4}{\beta}\ln(\chi)+ 2\beta^2 - 4\right)
+\end{align}
+\begin{align}
+-\ln(\chi) &=\ln(1+\beta)-\ln(1-\beta)\\
+ &=-\sum_{k=1}^\infty \frac{(-\beta)^k}{k} + \sum_{k=1}^\infty \frac{\beta^k}{k}\\
+ &= \sum_{k=1}^\infty\frac{2}{2k-1}\beta^{2k-1}\\
+-(3-\beta^4)\ln(\chi) &= 6\beta +2\beta^3 + 2\sum_{k=3}^\infty \beta^{2k-1}\left(\frac 3 {2k-1} - \frac 1 {2k-5}\right)\\
+c^{(0)}_{\gamma g}(\rho) &= \frac \pi 2 \left(\beta + \beta^3 - \frac{12}5\beta^5 + \sum_{k=4}^\infty \beta^{2k-1}\left(\frac 3 {2k-1} - \frac 3 {2k-3} - \frac 1 {2k-5} + \frac 1 {2k-7}\right) \right)
+\end{align}
+
+\end{document}
