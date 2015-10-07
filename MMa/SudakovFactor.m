@@ -98,7 +98,7 @@ getRules[channel_String] := Module[{b},
  _, Message[getRules::notAvailable,channel];Return[$Failed]
  ]
 ];
-getRules[args__]:= $Failed /; Message[getRules::badarg]
+getRules[args__]:= $Failed /; Message[getRules::badarg];
 
 (* \[Alpha]s is avialable at order (n-1)-loop *)
 available\[Alpha]sOrder = 3;
