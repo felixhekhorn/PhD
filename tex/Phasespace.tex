@@ -33,6 +33,8 @@
 
 \begin{document}
 
+\section{2 to 2 phase space}
+
 process:
 \begin{equation}
 \gamma^*(q) + g(k_1) \rightarrow Q(p_1)+\bar{Q}(p_2)
@@ -62,21 +64,33 @@ use n-sphere:
 d^Dx = \Omega_D x^{D-1} dx = \frac{2\pi^{D/2}}{\Gamma(D/2)}x^{D-1} dx= \frac{\pi^{D/2}}{\Gamma(D/2)}(x^2)^{(D-2)/2} dx^2
 \end{equation}
 
+compute phase space:
 \begin{align}
-PS_2 &= \int \!\frac{d^np_1}{(2\pi)^{n-1}}\frac{d^np_1}{(2\pi)^{n-1}} \delta^{(4)}(q+k_1-p_1-p_2)\delta(p_1^2-m^2)\delta(p_2^2 - m^2)\\
- &= \frac 1 {(2\pi)^{n-2}}\int\!d^np_1\,\delta((q+k_1-p_2)^2 -m^2) \delta(p_1^2-m^2)\\
- &= \frac 1 {(2\pi)^{n-2}}\int\!dp_{1,0}dp_{1,||}d^2p_{1,\perp}d^{n-4}\hat p_1\,\delta(s-2p_{1,0}\sqrt s) \delta(p_{1,0}^2-p_{1,||}^2 - p_{1,\perp}^2 - \hat p_1^2-m^2)\\
- &= \frac \pi {(2\pi)^{n-2} 2\sqrt s}\int\!dp_{1,||}dp^2_{1,\perp}d^{n-4}\hat p_1\,\delta(p_{1,0}^2-p_{1,||}^2 - p_{1,\perp}^2 - \hat p_1^2-m^2)\\
- &= \frac \pi {(2\pi)^{n-2} 2\sqrt s}\int\!dp_{1,||}d\hat p_1^2\,\frac{\pi^{(n-4)/2}}{\Gamma((n-4)/2)}(\hat p_1^2)^{(n-6)/2}\\
- &= \frac 1 {2\sqrt s\Gamma((n-4)/2)(4\pi)^{(n-2)/2}}\int\!dp_{1,||}d\hat p_1^2\,(\hat p_1^2)^{(n-6)/2}
+PS_2 &= \int\!\!\frac{d^np_1}{(2\pi)^{n-1}}\frac{d^np_1}{(2\pi)^{n-1}} (2\pi)^n\delta^{(n)}(q+k_1-p_1-p_2)\delta(p_1^2-m^2)\delta(p_2^2 - m^2)\\
+ &= \frac 1 {(2\pi)^{n-2}}\int\!\!d^np_1\,\delta((q+k_1-p_2)^2 -m^2) \delta(p_1^2-m^2)\\
+ &= \frac 1 {(2\pi)^{n-2}}\int\!\!dp_{1,0}dp_{1,||}d^2p_{1,\perp}d^{n-4}\hat p_1\,\delta(s-2p_{1,0}\sqrt s) \delta(p_{1,0}^2-p_{1,||}^2 - p_{1,\perp}^2 - \hat p_1^2-m^2)\\
+ &= \frac \pi {(2\pi)^{n-2} 2\sqrt s}\int\!\!dp_{1,||}dp^2_{1,\perp}d^{n-4}\hat p_1\,\delta(s/4-p_{1,||}^2 - p_{1,\perp}^2 - \hat p_1^2-m^2)\\
+ &= \frac \pi {(2\pi)^{n-2} 2\sqrt s}\int\!\!dp_{1,||}d\hat p_1^2\,\frac{\pi^{(n-4)/2}}{\Gamma((n-4)/2)}(\hat p_1^2)^{(n-6)/2}\\
+ &= \frac 1 {2\sqrt s\Gamma((n-4)/2)(4\pi)^{(n-2)/2}}\int\!\!dp_{1,||}d\hat p_1^2\,(\hat p_1^2)^{(n-6)/2}
 \end{align}
 Integration borders are
 \begin{equation}
 p_{1,||} \in \frac {\sqrt s} 2\beta \cdot [-1,1] \qquad \hat p_1^2 \in \left(\frac{s \beta^2}{4}-p_{1,||}^2\right)\cdot [0,1]
 \end{equation}
+
+if cross section does not depend on hat-space:
+\begin{align}
+\int\!\!d\hat p_1^2\,(\hat p_1^2)^{(n-6)/2} &= \frac 2 {n-4}\left(\frac{s \beta^2}{4}-p_{1,||}^2\right)^{(n-4)/2}\\
+\Rightarrow PS_2 &= \frac 1 {2\sqrt s\Gamma((n-2)/2)(4\pi)^{(n-2)/2}}\int\!\!dp_{1,||}\left(\frac{s \beta^2}{4}-p_{1,||}^2\right)^{(n-4)/2}
+\end{align}
+
 rewrite $p_{1,||}$ to $\cos\theta$:
 \begin{equation}
-dp_{1,||} = \frac{\sqrt 2} 2 \beta\,d\!\cos\theta \qquad \cos\theta\in[-1,1],\, \hat p_1^2 \in \frac{s \beta^2}{4}\left(1-\cos^2\theta\right)\cdot[0,1]
+p_{1,||} = \frac{\sqrt s} 2 \beta\cos\theta \Rightarrow\quad dp_{1,||} = \frac{\sqrt s} 2 \beta\,d\!\cos\theta,\quad \cos\theta\in[-1,1],\, \hat p_1^2 \in \frac{s \beta^2}{4}\left(1-\cos^2\theta\right)\cdot[0,1]
+\end{equation}
+rewrite $\cos\theta$ to $t_1 = (k_1-p_2)^2-m^2$:
+\begin{equation}
+\cos\theta = t_1 \Rightarrow\quad d\!\cos\theta = dt_1,\quad t_1\in [,],\, \hat p_1^2 \in \cdot[0,1]
 \end{equation}
 
 \end{document}
