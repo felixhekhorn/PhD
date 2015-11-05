@@ -135,7 +135,7 @@ s-q^2 && +0 &= -u_6 &-& t_1 &-& t' &&\Leftrightarrow &0 &= s+t_1+t'+u_6-q^2 \lab
 \frac 1 2 \left((\ref{eq:MomCon3wq}) + (\ref{eq:MomCon3wk1}) + (\ref{eq:MomCon3wp2}) - (\ref{eq:MomCon3wp1}) - (\ref{eq:MomCon3wk2})\right)=&0= s - q^2 + t_1 + u_1 - s_4
 \end{align}
 
-\subsection{computation}
+\subsection{choose framework}
 use c.m.s. of recoiling heavy and light quark ($Q(p_1)$ and $q(k_2)$):
 \begin{align}
 k_2 &= (\omega_2,0,\ldots,0,\omega_2\sin\theta\sin\phi,\omega_2\sin\theta\cos\phi,\omega_2\cos\theta)\\
@@ -145,12 +145,12 @@ q &= (q_0,0,\ldots,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi-\omega_1)\\
 p_2 &= (E_2,0,\ldots,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi)
 \end{align}
 
-light quark masss already taken into account: $k_1^2 = 0 = k_2^2$
+light quark masses are already fixed: $k_1^2 = 0 = k_2^2$
 
 constraints:
 \begin{align}
 q_0+\omega_1 & &&=E_1+E_2+\omega_2 \label{eq:PSConMomCon}\\
-m^2 &= p_1^2 &&= E_1^2 - \omega_1^2 \label{eq:PSConp1}\\
+m^2 &= p_1^2 &&= E_1^2 - \omega_2^2 \label{eq:PSConp1}\\
 m^2 &= p_2^2 &&= E_2^2 - \abs{\vec p_2}^2 \label{eq:PSConp2} \\
 q^2 & &&= q_0^2 - \abs{\vec p_2}^2 + 2\abs{\vec p_2}\omega_1\cos\psi-\omega_1^2 \label{eq:PSConq}\\
 s &= (q+k_1)^2 &&= (q_0-\omega_1)^2 - \abs{\vec p_2}^2 \label{eq:PSCons}\\
@@ -158,16 +158,21 @@ t &= (k_1-p_2)^2 &&= (\omega_1-E_2)^2-\abs{\vec p_2}^2+2\abs{\vec p_2}\omega_1\c
 u &= (q-p_2)^2 &&= (q_0-E_2)^2 - \omega_1^2 \label{eq:PSConu}
 \end{align}
 
+solve:
 \begin{align}
 (\ref{eq:PSCons}) - (\ref{eq:PSConq}) + (\ref{eq:PSCont}) - (\ref{eq:PSConp2}) + (\ref{eq:PSConu}) &= s-q^2+t-m^2+u\\
- &= s_4+m^2 = (E_1+\omega)^2 \label{eq:PSCons4}\\
+ &= s_4+m^2 = (E_1+\omega_2)^2 \label{eq:PSCons4}\\
 (\ref{eq:PSCont}) + (\ref{eq:PSConu}) - (\ref{eq:PSConq}) &= t+u-q^2 = -2(E_1+\omega_2)E_2\\
-\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s_4+2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE2}\\
-\Rightarrow \abs{\vec p_2} &= \sqrt{E_2^2 - m^2} = \frac {s_4} {2\sqrt{s_4+m^2}}\label{eq:PSConabsp2}\\
+\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s-s_4-2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE2}\\
+(\ref{eq:PSCons4})\land (\ref{eq:PSConp1}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} \label{eq:PSConom2} \\
+(\ref{eq:PSCons4})\Rightarrow E_1 &= \frac{s_4+2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE1} \\
 (\ref{eq:PSCons})+(\ref{eq:PSConu})-(\ref{eq:PSConp2}) &= s+u-m^2 =2q_0(E_1+\omega_2)\\
 \Rightarrow q_0 &= \frac{s+u-m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConq0}\\
 (\ref{eq:PSCont}) - (\ref{eq:PSConq}) &= t-q^2 = (\omega_1-E_2)^2 - q_0^2\\
-\Rightarrow \omega_1 &= \frac{s_4+m^2-u}{2\sqrt{s_4+m^2}} \label{eq:PSConom1}
+\Rightarrow \omega_1 &= \frac{s_4+m^2-u}{2\sqrt{s_4+m^2}} \label{eq:PSConom1}\\
+(\ref{eq:PSConp2}) \Rightarrow \abs{\vec p_2} &= \sqrt{E_2^2 - m^2} = \frac {\sqrt{(s-s_4)^2-4sm^2}} {2\sqrt{s_4+m^2}}\label{eq:PSConabsp2}\\
+(\ref{eq:PSConq}) \Rightarrow \cos\psi &= \frac{q^2-q_0^2+\abs{\vec p_2}^2+\omega_1^2}{2\abs{\vec p_2}\omega_1}\\
+ &= \frac {2u(q^2-s-m^2+t)-(2m^2-q^2-t)(s_4-u+m^2)} {(s_4+m^2-u)\sqrt{(s-s_4)^2-4sm^2}}\label{eq:PSConabcos}
 \end{align}
 
 
