@@ -83,18 +83,18 @@
 \section{2 to 3 phase space}
 at phase space integration there occur integrations over propagators\cite{Bojak:2000eu,PhysRevD.40.54,van_neerven_dimensional_1986}; the propagators can be decomposed in 2 types: [ab] and [ABC]; the needed integrals then reduce to the master formula:
 \begin{align}
-I_n^{(k,l)} &=\int\limits_0^\pi\!d\theta_1\,\sin^{n-3}(\theta_1)\int\limits_0^\pi\!d\theta_2\,\sin^{n-4}(\theta_2)(a+b\cos(\theta_1))^{-k}(A+B\cos(\theta_1)+C\sin(\theta_1)\cos(\theta_2))^{-l}\\
-%I_{ab}^{(k)}(n) &:= \int\limits_0^\pi\!d\theta_1\,\sin^{n-3}(\theta_1)(a+b\cos(\theta_1))^{-k}\\
+I_n^{(k,l)} &=\int\limits_0^\pi\!d\theta_1\,\sin^{n-3}(\theta_1)\int\limits_0^\pi\!d\theta_2\,\sin^{n-4}(\theta_2)(a+b\cos(\theta_1))^{-k}(A+B\cos(\theta_1)+C\sin(\theta_1)\cos(\theta_2))^{-l}
 \end{align}
 
 the integrals can be further destinguished by the range of $k,l$ and the type of collinearity (following the notation in \cite{Bojak:2000eu}):
 \begin{itemize}
 \item "non collinear": $a^2\neq b^2 \land A^2 \neq B^2 + C^2 \rightarrow I_{0,n}^{(k,l)}$
-\item "single collinear a": $a=-b \land A^2 \neq B^2 + C^2 \rightarrow I_{aA,n}^{(k,l)}$
-\item "single collinear A": $a^2\neq b^2 \land A^2 = B^2 + C^2 \rightarrow I_{aA,n}^{(k,l)}$
+\item "single collinear a": $a=-b \land A^2 \neq B^2 + C^2 \rightarrow I_{a,n}^{(k,l)}$
+\item "single collinear A": $a^2\neq b^2 \land A^2 = B^2 + C^2 \rightarrow I_{A,n}^{(k,l)}$
 \item "double collinear": $a=-b \land A^2 = B^2 + C^2 \rightarrow I_{aA,n}^{(k,l)}$
 \end{itemize}
 
+Use $n=4+\epsilon$.
 
 \subsection{integral helper}
 define helper integral
@@ -104,18 +104,18 @@ define helper integral
 
 It is\cite[eq. 5.12.6]{NIST:DLMF}:
 \begin{equation}
-\int_{0}^{\pi}(\mathop{\sin\/}\nolimits t)^{\alpha-1}e^{i\beta t}dt=\frac{\pi}{2^{\alpha-1}} \frac{e^{i\pi \beta/2}}{\alpha\mathop{\mathrm{B}\/}\nolimits\!\left((\alpha+\beta+1)/2,(\alpha-\beta+1)/2\right)} \qquad\text{if}\,\Re(\alpha) > 0
+\int_{0}^{\pi}(\mathop{\sin\/}\nolimits t)^{\alpha-1}e^{i\beta t}dt=\frac{\pi}{2^{\alpha-1}} \frac{e^{i\pi \beta/2}}{\alpha\mathop{B}\left((\alpha+\beta+1)/2,(\alpha-\beta+1)/2\right)} \qquad\text{if}\,\Re(\alpha) > 0
 \end{equation}
 \begin{align}
-\Rightarrow \hat I^{(0)}(n) &= \frac{\pi}{2^{n-3}(n-2)}\frac 1 {\mathrm{B}((n-1)/2,(n-1)/2)}\\
-\Rightarrow \hat I^{(0)}(n-1) &= \frac{\pi}{2^{n-4}(n-3)}\frac 1 {\mathrm{B}((n-2)/2,(n-2)/2)}=\mathrm{B}((n-3)/2,1/2)
+\Rightarrow \hat I^{(0)}(n) &= \frac{\pi}{2^{n-3}(n-2)}\frac 1 {\mathop{B}((n-1)/2,(n-1)/2)}\\
+\Rightarrow \hat I^{(0)}(n-1) &= \frac{\pi}{2^{n-4}(n-3)}\frac 1 {\mathop{B}((n-2)/2,(n-2)/2)}=\mathop{B}((n-3)/2,1/2)
 \end{align}
 
 If q is odd: $\hat I^{(q)}=0$, due to symetry of kernel; if q is even: $q=2p$ with $p\in\mathbbm N$:
 \begin{align}
 \hat I^{(2p)}(\nu) &= \frac 1 {2^{2p}}\sum\limits_{k=0}^{2p} \binom{2p}{k} \int\limits_0^\pi\sin^{\nu-3}(t)\exp(2i(k-p)t)\,dt\\
- &= \frac \pi{2^{2p+\nu-3} (\nu-2)}\sum\limits_{k=0}^{2p} \binom{2p}{k}\frac{\exp(i\pi(k-p))}{\mathrm{B}((\nu-1)/2+(k-p),(\nu-1)/2-(k-p))}\\
- &= \frac \pi{2^{2p+\nu-3} (\nu-2)}\sum\limits_{l=-p}^{p} \binom{2p}{p+l}\frac{(-1)^l}{\mathrm{B}((\nu-1)/2+l,(\nu-1)/2-l)}\\
+ &= \frac \pi{2^{2p+\nu-3} (\nu-2)}\sum\limits_{k=0}^{2p} \binom{2p}{k}\frac{\exp(i\pi(k-p))}{\mathop{B}((\nu-1)/2+(k-p),(\nu-1)/2-(k-p))}\\
+ &= \frac \pi{2^{2p+\nu-3} (\nu-2)}\sum\limits_{l=-p}^{p} \binom{2p}{p+l}\frac{(-1)^l}{\mathop{B}((\nu-1)/2+l,(\nu-1)/2-l)}\\
  &= \frac {\pi\Gamma(\nu-1)(2p)!}{2^{2p+\nu-3} (\nu-2)\Gamma(\frac{n-1} 2+p)\Gamma(\frac{n-1} 2+p)}\left(\frac 1 {(p!)^2} \frac{\Gamma(\frac{\nu-1} 2+p)}{\Gamma(\frac{\nu-1} 2)}\frac{\Gamma(\frac{\nu-1} 2-p)}{\Gamma(\frac{\nu-1} 2)} \right. \nonumber\\
  &\hspace{40pt}\left. + 2\sum\limits_{l=1}^{p}\frac{(-1)^l}{(p+l)!(p-l)!}\frac{\Gamma(\frac{\nu-1} 2+p)}{\Gamma(\frac{\nu-1} 2+l)}\frac{\Gamma(\frac{\nu-1} 2-p)}{\Gamma(\frac{\nu-1} 2-l)}\right)\\
  &= \frac {2^{3-\nu}\pi\Gamma(\nu-1)}{(\nu-2)\Gamma(\frac{n-1} 2+p)\Gamma(\frac{n-1} 2+p)}\cdot \frac{\Gamma(\frac{\nu-1} 2-p)}{2^{p}\Gamma(\frac{\nu-1} 2)} \cdot \frac{(2p)!}{2^p p!} \cdot p! \left(\frac 1 {(p!)^2} \frac{\Gamma(\frac{\nu-1} 2+p)}{\Gamma(\frac{\nu-1} 2)} \right. \nonumber\\
@@ -132,8 +132,8 @@ TODO: prove \fxerror{prove}
  &= \frac{\sqrt{\pi}(2p)!}{2^{2p}p!} \frac {\Gamma((\nu-2)/2)} {\Gamma(\frac{\nu-1}2+p)}
 \end{align}
 
-\subsection{$-k,-l\in\mathbbm N_0$}
-If $-k,-l\in\mathbbm N_0$ $I_{n}^{(k,l)}$ can always be reduced in a straight forward manner to combination of $\hat I^{(q)}(n)$ and this way one finds\cite[Ch. 5]{Bojak:2000eu}\cite[App. C]{PhysRevD.40.54}:
+\subsection{any collinearity and $-k,-l\in\mathbbm N_0$}
+If $-k,-l\in\mathbbm N_0$ $I_{n}^{(k,l)}$ can always be reduced in a straight forward manner to combinations of $\hat I^{(q)}(n)$ and this way one finds\cite[Ch. 5]{Bojak:2000eu}\cite[App. C]{PhysRevD.40.54}:
 \begin{align}
 I^{(0,0)}_{n} &= \hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n) = \frac{2\pi}{n-3}\\
 I^{(0,0)}_{4} &= 2\pi\\
@@ -168,10 +168,14 @@ I^{(1,0)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n-2)\\
 I^{(2,0)}_{a,n} &= \frac 1 a^2\hat I^{(0)}(n-1) \cdot \left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right)\\
  &= \frac {2\pi}{a^2(n-6)} \approx -\frac {\pi}{a^2} + O(\epsilon)\\
 I^{(1,-1)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1)\cdot \left(A\hat I^{(0)}(n-2)+B\hat I^{(2)}(n-2)\right)\\
- &= \frac {2\pi}{a}\frac{(A(n-3)+B)\Gamma(n-4)}{\Gamma(n-2)} \approx \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
+ &= \frac {2\pi}{a}\frac{(A(n-3)+B)}{(n-3)(n-4)} \approx \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
 I^{(1,-2)}_{a,n} &= \frac 1 a\left(\hat I^{(0)}(n-1)\cdot \left(A^2\hat I^{(0)}(n-2)+(B^2+2AB)\hat I^{(2)}(n-2)\right) + C^2\hat I^{(2)}(n-1)\hat I^{(0)}(n)\right)\\
  &= \frac {2\pi}{a}\left(\frac {A^2}{n-4} + \frac {2AB + B^2}{(n-4)(n-3)} + \frac {C^2}{(n-3)(n-2)}\right) \\
- &\approx \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)
+ &\approx \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)\\
+I^{(2,-2)}_{a,n} &= \frac 1 {a^2}\left(\hat I^{(0)}(n-1)\cdot \left(A^2(\hat I^{(0)}(n-4)+\hat I^{(2)}(n-4))+4AB\hat I^{(2)}(n-4) \right.\right.\nonumber\\
+ &\hspace{20pt}\left.\left. + B^2(\hat I^{(2)}(n-4)+\hat I^{(4)}(n-4))\right) + C^2\hat I^{(2)}(n-1)(\hat I^{(0)}(n-2) + \hat I^{(2)}(n-2))\right)\\
+ &= \frac {2\pi}{a^2}\left(\frac {A^2}{n-6}+\frac{4AB}{(n-6)(n-4)} + \frac{B^2 n}{(n-6)(n-4)(n-3)} + \frac{C^2}{(n-4)(n-3)} \right) \\
+ &\approx \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
 \end{align}
 
 \subsection{non collinear and $k,l\in\mathbbm N$}
