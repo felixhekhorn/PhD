@@ -91,7 +91,7 @@ the integrals can be further destinguished by the range of $k,l$ and the type of
 \item "non collinear": $a^2\neq b^2 \land A^2 \neq B^2 + C^2 \rightarrow I_{0,n}^{(k,l)}$
 \item "single collinear a": $a=-b \land A^2 \neq B^2 + C^2 \rightarrow I_{a,n}^{(k,l)}$
 \item "single collinear A": $a^2\neq b^2 \land A^2 = B^2 + C^2 \rightarrow I_{A,n}^{(k,l)}$
-\item "double collinear": $a=-b \land A^2 = B^2 + C^2 \rightarrow I_{aA,n}^{(k,l)}$
+\item "double collinear": $a=-b \land A = -\sqrt{B^2 + C^2} \rightarrow I_{aA,n}^{(k,l)}$
 \end{itemize}
 
 Use $n=4+\epsilon$.
@@ -178,8 +178,29 @@ I^{(2,-2)}_{a,n} &= \frac 1 {a^2}\left(\hat I^{(0)}(n-1)\cdot \left(A^2(\hat I^{
  &\approx \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
 \end{align}
 
-\subsection{non collinear and $k,l\in\mathbbm N$}
-see \cite{van_neerven_dimensional_1986}
+\subsection{double collinear and $k,l\in\mathbbm N$}
+as said in \cite[Ch. 5]{Bojak:2000eu}: if $0\leq -\frac{C}{A},\frac B A \leq 1$ use \cite[eq. A11]{van_neerven_dimensional_1986} with $\cos\kappa = -\frac B A$:
+\begin{equation}
+I_{aA,n}^{(k,l)} = \frac{2\pi 2^{-(k+l)}}{a^kA^l}\frac{\Gamma(1+\epsilon)}{\Gamma^2(1+\epsilon/2)} B(1+\frac \epsilon 2 - k, 1+ \frac \epsilon 2 -l) \pFq 2 1 \left(k,l;1+\frac \epsilon 2; \frac{A-B}{2A}\right)
+\end{equation}
+
+\subsection{non collinear and $k,-l\in\mathbbm N$}
+Next we want to compute $I_{0,n}^{1,-3}$.
+
+The $\theta_2$ integration can be performed using the integral helper and the problem reduces then to the following integral:
+\begin{align}
+&\hat I_{0,\cos}^{(k,q,p)}(\epsilon) \nonumber\\
+&= \int\limits_0^\pi\!d\theta_1\, \frac{\sin^{1+\epsilon}(\theta_1)\sin^q(\theta_1) \cos^p(\theta_1)}{(a+b\cos(\theta_1))^k}\\
+&= \frac 1 {2a^k}\left((1+(-1)^p)B\left(\frac{2+q+\epsilon}{2},\frac{1+p}{2}\right)\pFq 3 2 \left(\frac{1+k}{2},\frac k 2,\frac{1+p}{2};\frac{1}{2},\frac{3+q+p+\epsilon}{2};\frac{b^2}{a^2}\right)\right.\nonumber\\
+ &\hspace{20pt}\left. \frac b a k(-1+(-1)^p)B\left(\frac{2+q+\epsilon}{2},\frac{2+p}{2}\right)\pFq 3 2\left(\frac{1+k} 2,\frac{2+k}{2},\frac{2+p}{2};\frac{3}{2},\frac{4+q+p+\epsilon}{2};\frac{b^2}{a^2}\right) \right)
+\end{align}
+for $k=1$ this simplifies to
+\begin{align}
+&\hat I_{0,\cos}^{(1,q,p)}(\epsilon) \nonumber\\
+&= \int\limits_0^\pi\!d\theta_1\, \frac{\sin^{1+\epsilon}(\theta_1)\sin^q(\theta_1) \cos^p(\theta_1)}{(a+b\cos(\theta_1))}\\
+&= \frac 1 {2a}\left((1+(-1)^p)B\left(\frac{2+q+\epsilon}{2},\frac{1+p}{2}\right)\pFq 2 1 \left(1,\frac{1+p}{2};\frac{3+q+p+\epsilon}{2};\frac{b^2}{a^2}\right)\right.\nonumber\\
+ &\hspace{20pt}\left. \frac b a (-1+(-1)^p)B\left(\frac{2+q+\epsilon}{2},\frac{2+p}{2}\right)\pFq 2 1\left(1,\frac{2+p}{2};\frac{4+q+p+\epsilon}{2};\frac{b^2}{a^2}\right) \right)
+\end{align}
 
 \appendix
 
