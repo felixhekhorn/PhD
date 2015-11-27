@@ -1,88 +1,7 @@
-% @author: Felix Hekhorn <felix.hekhorn@student.uni-tuebingen.de>
-\documentclass[
-  english,		% Sprache
-  a4paper,		% Papierformat
-  11pt,			% Schriftgröße (default 10pt)
-  %DIV=12,		% Seiteneinteilung
-  DIV=12,
-  titlepage,
-  toc=bibnumbered,
-  parskip=full,  	% Absätze (full,half,false -+*)
-  headings=normal,
-  BCOR=12mm,
-  numbers=noenddot
-]{scrartcl}
-%\documentclass[a4paper,10pt]{article}
-\usepackage{scrtime,scrlfile,scrpage2}
-
-\usepackage[status=draft]{fixme}
-%\usepackage[status=final]{fixme}
-
-\usepackage[utf8]{inputenc}
-%\usepackage[ngerman]{babel} % Sprache 
-\usepackage[ngerman,english,main=english]{babel} % Sprache 
-\selectlanguage{english}
-\usepackage{amsmath, amssymb}
-
-%\usepackage{graphicx} % Grafiken einbinden
-% The following is needed in order to make the code compatible
-% with both latex/dvips and pdflatex.
-\ifx\pdftexversion\undefined
-\usepackage[dvips]{graphicx}
-\else
-\usepackage[pdftex]{graphicx}
-\DeclareGraphicsRule{*}{mps}{*}{}
-\fi
-
-%\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
-\usepackage{color}
-\usepackage{bbm}
-
-\usepackage{pdflscape}
-\usepackage{ulem}
-\usepackage{url}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{listings}
-\usepackage{placeins}
-
-\usepackage{siunitx} % SI Einheiten
-\usepackage[version=3]{mhchem}
-%\sisetup{
-%	exponent-product = \!\cdot\!,
-%	output-product = \cdot,
-%	list-final-separator =  { und } ,
-%	list-pair-separator = { und } ,
-%	range-phrase = { bis },
-%	output-decimal-marker = {,},
-%	separate-uncertainty = true,
-%	group-digits = false
-%}
-
-\usepackage{simplewick}
-\usepackage{feynmf}
-\usepackage{slashed}
-
-%\usepackage{biblatex}
-\usepackage[numbers]{natbib}
-%\bibliographystyle{natdin}
-%\bibliographystyle{kp}
-\bibliographystyle{utphys}
-
-\usepackage{hyperref}
-%\hypersetup{colorlinks=false}
-\usepackage{tabularx}
-
-\include{lib}
-
-\begin{document}
-
-\section{2 to 3 phase space}
 at phase space integration there occur integrations over propagators\cite{Bojak:2000eu,PhysRevD.40.54,van_neerven_dimensional_1986}; the propagators can be decomposed in 2 types: [ab] and [ABC]; the needed integrals then reduce to the master formula:
 \begin{align}
-I_n^{(k,l)} &=\int\limits_0^\pi\!d\theta_1\,\sin^{n-3}(\theta_1)\int\limits_0^\pi\!d\theta_2\,\sin^{n-4}(\theta_2)(a+b\cos(\theta_1))^{-k}(A+B\cos(\theta_1)+C\sin(\theta_1)\cos(\theta_2))^{-l}
+I_n^{(k,l)} &=\int\limits_0^\pi\!d\theta_1\,\sin^{n-3}(\theta_1)\int\limits_0^\pi\!d\theta_2\,\sin^{n-4}(\theta_2)(a+b\cos(\theta_1))^{-k}(A+B\cos(\theta_1)+C\sin(\theta_1)\cos(\theta_2))^{-l}\\
+&=\int\!d\Omega_n\,(a+b\cos(\theta_1))^{-k}(A+B\cos(\theta_1)+C\sin(\theta_1)\cos(\theta_2))^{-l}
 \end{align}
 
 the integrals can be further destinguished by the range of $k,l$ and the type of collinearity (following the notation in \cite{Bojak:2000eu}):
@@ -95,7 +14,7 @@ the integrals can be further destinguished by the range of $k,l$ and the type of
 
 Use $n=4+\epsilon$.
 
-\subsection{integral helper}
+\subsubsection{integral helper}
 define helper integral
 \begin{equation}
 \hat I^{(q)}(\nu) := \int\limits_0^\pi\!dt\,\sin^{\nu-3}(t)\cos^{q}(t)
@@ -131,7 +50,7 @@ TODO: prove \fxerror{prove}
  &= \frac{\sqrt{\pi}(2p)!}{2^{2p}p!} \frac {\Gamma((\nu-2)/2)} {\Gamma(\frac{\nu-1}2+p)}
 \end{align}
 
-\subsection{any collinearity and $-k,-l\in\mathbbm N_0$}
+\subsubsection{any collinearity and $-k,-l\in\mathbbm N_0$}
 If $-k,-l\in\mathbbm N_0$ $I_{n}^{(k,l)}$ can always be reduced in a straight forward manner to combinations of $\hat I^{(q)}(n)$ and this way one finds\cite[Ch. 5]{Bojak:2000eu}\cite[App. C]{PhysRevD.40.54}:
 \begin{align}
 I^{(0,0)}_{n} &= \hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n) = \frac{2\pi}{n-3}\\
@@ -151,7 +70,7 @@ I^{(-1,-1)}_{n} &= \hat I^{(0)}(n-1) \cdot (a A\hat I^{(0)}(n) + b B \hat I^{(2)
 I^{(-1,-1)}_{4} &= 2\pi(aA + bB/3)
 \end{align}
 
-\subsection{single collinear a and $k,-l\in \mathbbm N_0$}
+\subsubsection{single collinear a and $k,-l\in \mathbbm N_0$}
 It is
 \begin{align}
 \hat I_{a}^{(k,q)}(\nu) &= \int\limits_0^\pi\!\frac{\sin^{\nu-3}t}{(1-\cos(t))^k}\cos^q(t)\, dt \\
@@ -164,7 +83,7 @@ this way one finds\cite[Ch. 5]{Bojak:2000eu}\cite[App. C]{PhysRevD.40.54}:
 \begin{align}
 I^{(1,0)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n-2)\\
  &= \frac {2\pi}{a(n-4)}\\
-I^{(2,0)}_{a,n} &= \frac 1 a^2\hat I^{(0)}(n-1) \cdot \left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right)\\
+I^{(2,0)}_{a,n} &= \frac 1 {a^2}\hat I^{(0)}(n-1) \cdot \left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right)\\
  &= \frac {2\pi}{a^2(n-6)} \approx -\frac {\pi}{a^2} + O(\epsilon)\\
 I^{(1,-1)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1)\cdot \left(A\hat I^{(0)}(n-2)+B\hat I^{(2)}(n-2)\right)\\
  &= \frac {2\pi}{a}\frac{(A(n-3)+B)}{(n-3)(n-4)} \approx \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
@@ -177,13 +96,13 @@ I^{(2,-2)}_{a,n} &= \frac 1 {a^2}\left(\hat I^{(0)}(n-1)\cdot \left(A^2(\hat I^{
  &\approx \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
 \end{align}
 
-\subsection{double collinear and $k,l\in\mathbbm N$}
+\subsubsection{double collinear and $k,l\in\mathbbm N$}
 as said in \cite[Ch. 5]{Bojak:2000eu}: if $0\leq -\frac{C}{A},\frac B A \leq 1$ use \cite[eq. A11]{van_neerven_dimensional_1986} with $\cos\kappa = -\frac B A$:
 \begin{equation}
 I_{aA,n}^{(k,l)} = \frac{2\pi 2^{-(k+l)}}{a^kA^l}\frac{\Gamma(1+\epsilon)}{\Gamma^2(1+\epsilon/2)} B(1+\frac \epsilon 2 - k, 1+ \frac \epsilon 2 -l) \pFq 2 1 \left(k,l;1+\frac \epsilon 2; \frac{A-B}{2A}\right)
 \end{equation}
 
-\subsection{non collinear and $k,-l\in\mathbbm N$}
+\subsubsection{non collinear and $k,-l\in\mathbbm N$}
 Next we want to compute $I_{0,n}^{1,-3}$.
 
 The $\theta_2$ integration can be performed using the integral helper and the problem reduces then to the following integral:
@@ -201,9 +120,21 @@ for $k=1$ this simplifies to
  &\hspace{20pt}\left. \frac b a (-1+(-1)^p)B\left(\frac{2+q+\epsilon}{2},\frac{2+p}{2}\right)\pFq 2 1\left(1,\frac{2+p}{2};\frac{4+q+p+\epsilon}{2};\frac{b^2}{a^2}\right) \right)
 \end{align}
 
-\appendix
-
-\bibliography{ref.bib}
-\listoffixmes
-
-\end{document}
+\subsubsection{needed set}
+we will need for $A_1$
+\begin{equation}
+\mathcal I_{A1}^{(j,k)} = \int\!d\Omega_n\,{t'}^{-2+j} {u_7}^{-2+k} \qquad j,k = \{0,1,2,3\}
+\end{equation}
+with
+\begin{align}
+a(t') = -b(t') &= -2\omega_1\omega_2 &&= -\frac{s_4(s_4-u_1)}{2(s_4+m^2)}\\
+A(u_7) &= q^2-2q_0E_1 &&= q^2-\frac{(s_4+2m^2)(s+u_1)}{2(s_4+m^2)}\\
+B(u_7) &= -2\omega_2(\abs{\vec p_2}\cos\psi-\omega_1) &&=\frac {s_4}{2}\left(1-\frac{s+u_1}{s_4+m^2}+\frac{s-q^2-t_1}{s_4-u_1}\right)\\
+C(u_7) &= -2\omega_2\abs{\vec p_2}\sin\psi
+\end{align}
+%\begin{align}
+%\int\!d\Omega_n &= \frac{2\pi}{n-3}\\
+%\int\!d\Omega_n\,t' &= \frac{2\pi}{n-3} (-2\omega_1\omega_2) &&= -\frac{\pi}{n-3}\cdot\frac{s_4(s_4-u_1)}{s_4+m^2}\\
+%\int\!d\Omega_n\,u_7 &= \frac{2\pi}{n-3}(q^2-2q_0E_1) &&=\frac{\pi}{n-3}\left(2q^2+\frac{(s_4+2m^2)(s+u_1)}{2(s_4+m^2)}\right)\\
+%\int\!d\Omega_n\,\frac 1 {t'} &= \frac{2\pi}{n-4} \frac 1 {-2\omega_1\omega_2} &&= -\frac{4\pi}{n-4}\cdot\frac{s_4+m^2}{s_4(s_4-u_1)}\\
+%\end{align}

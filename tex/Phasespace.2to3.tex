@@ -1,0 +1,107 @@
+following \cite{PhysRevD.40.54,van_neerven_dimensional_1986,Marco}:
+
+process:
+\begin{equation}
+\gamma^*(q) + q(k_1) \rightarrow Q(p_1)+\bar{Q}(p_2) + q(k_2)
+\end{equation}
+
+\subsection{kinematic constraints}
+
+definitions of kinematic variables:
+\begin{align}
+s &= (q+k_1)^2 &\Rightarrow& &2qk_1 &= s-q^2\\
+s_3 &= (k_2+p_2)^2-m^2  &\Rightarrow& &2k_2p_2 &= s_3\\
+s_4 &= (k_2+p_1)^2-m^2  &\Rightarrow& &2k_2p_1 &= s_4\\
+s_5 &= (p_1+p_2)^2 = -u_5  &\Rightarrow& &2p_1p_2 &= s_5-2m^2\\
+t_1 &= (k_1-p_2)^2-m^2 = t - m^2  &\Rightarrow& &2k_1p_2 &=-t_1\\
+t' &= (k_1-k_2)^2  &\Rightarrow& &2k_1k_2 &= -t'\\
+u_1 &= (q-p_2)^2-m^2 = u - m^2  &\Rightarrow& &2qp_2 &=-u_1+q^2\\
+u_6 &= (k_1-p_1)^2 - m^2  &\Rightarrow& &2k_1p_1 &=-u_6\\
+u_7 &= (q-p_1)^2 - m^2  &\Rightarrow& &2qp_1 &=-u_7+q^2\\
+u' &= (q-k_2)^2  &\Rightarrow& &2qk_2 &=-u'+q^2
+\end{align}
+
+impose momentum conservation:
+\begin{equation}
+q+k_1 = p_1+p_2+k_2
+\end{equation}
+
+contract with 2 times momentum:
+\begin{align}
+2q^2 && +s-q^2 &=-u_7+q^2 &-& u_1+q^2 &-& u'+q^2 &&\Leftrightarrow &0 &=s+u_1+u_7+u'-2q^2 \label{eq:MomCon3wq} \\
+s-q^2 && +0 &= -u_6 &-& t_1 &-& t' &&\Leftrightarrow &0 &= s+t_1+t'+u_6-q^2 \label{eq:MomCon3wk1}\\
+-u_7+q^2 && -u_6 &= 2m^2 &+& s_5-2m^2 &+& s_4 &&\Leftrightarrow &0 &= s_4+s_5+u_6+u_7-q^2 \label{eq:MomCon3wp1}\\
+-u_1+q^2 && -t_1 &= s_5-2m^2 &+& 2m^2 &+& s_3 &&\Leftrightarrow &0 &= s_3+s_5+t_1+u_1-q^2 \label{eq:MomCon3wp2}\\
+-u'+q^2 && -t' &= s_4 &+& s_3 &+& 0 &&\Leftrightarrow &0 &= s_3+s_4+t'+u'-q^2 \label{eq:MomCon3wk2}
+\end{align}
+
+\begin{align}
+\frac 1 2 \left((\ref{eq:MomCon3wq}) + (\ref{eq:MomCon3wk1}) + (\ref{eq:MomCon3wp2}) - (\ref{eq:MomCon3wp1}) - (\ref{eq:MomCon3wk2})\right)=&0= s - q^2 + t_1 + u_1 - s_4
+\end{align}
+
+\subsection{choose framework}
+use c.m.s. of recoiling heavy and light quark ($Q(p_1)$ and $q(k_2)$):
+\begin{align}
+k_2 &= (\omega_2,k_{2,x},\omega_2\sin\theta_1\cos\theta_2,\omega_2\cos\theta_1, \hat k_2)\\
+p_1 &= (E_1,-k_{2,x},-\omega_2\sin\theta_1\cos\theta_2,-\omega_2\cos\theta_1, -\hat k_2)\\
+k_1 &= (\omega_1,0,0,\omega_1, \hat 0)\\
+q &= (q_0,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi-\omega_1, \hat 0)\\
+p_2 &= (E_2,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi, \hat 0)
+\end{align}
+
+light quark masses are already fixed: $k_1^2 = 0 = k_2^2$
+
+constraints:
+\begin{align}
+q_0+\omega_1 & &&=E_1+E_2+\omega_2 \label{eq:PSConMomCon}\\
+m^2 &= p_1^2 &&= E_1^2 - \omega_2^2 \label{eq:PSConp1}\\
+m^2 &= p_2^2 &&= E_2^2 - \abs{\vec p_2}^2 \label{eq:PSConp2} \\
+q^2 & &&= q_0^2 - \abs{\vec p_2}^2 + 2\abs{\vec p_2}\omega_1\cos\psi-\omega_1^2 \label{eq:PSConq}\\
+s &= (q+k_1)^2 &&= (q_0+\omega_1)^2 - \abs{\vec p_2}^2 \label{eq:PSCons}\\
+t &= (k_1-p_2)^2 &&= (\omega_1-E_2)^2-\abs{\vec p_2}^2+2\abs{\vec p_2}\omega_1\cos\psi-\omega_1^2 \label{eq:PSCont}\\
+u &= (q-p_2)^2 &&= (q_0-E_2)^2 - \omega_1^2 \label{eq:PSConu}
+\end{align}
+
+solve:
+\begin{align}
+(\ref{eq:PSCons}) - (\ref{eq:PSConq}) + (\ref{eq:PSCont}) - (\ref{eq:PSConp2}) + (\ref{eq:PSConu}) &= s-q^2+t-m^2+u\\
+ &= s_4+m^2 = (E_1+\omega_2)^2 \label{eq:PSCons4}\\
+(\ref{eq:PSCont}) + (\ref{eq:PSConu}) - (\ref{eq:PSConq}) &= t+u-q^2 = -2(E_1+\omega_2)E_2\\
+\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s-s_4-2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE2}\\
+(\ref{eq:PSCons4})\land (\ref{eq:PSConp1}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} \label{eq:PSConom2} \\
+(\ref{eq:PSCons4})\Rightarrow E_1 &= \frac{s_4+2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE1} \\
+(\ref{eq:PSCons})+(\ref{eq:PSConu})-(\ref{eq:PSConp2}) &= s+u-m^2 =2q_0(E_1+\omega_2)\\
+\Rightarrow q_0 &= \frac{s+u_1}{2\sqrt{s_4+m^2}} \label{eq:PSConq0}\\
+(\ref{eq:PSCont}) - (\ref{eq:PSConq}) &= t-q^2 = (\omega_1-E_2)^2 - q_0^2\\
+\Rightarrow \omega_1 &= \frac{s_4-u_1}{2\sqrt{s_4+m^2}} \label{eq:PSConom1}\\
+(\ref{eq:PSConp2}) \Rightarrow \abs{\vec p_2} &= \sqrt{E_2^2 - m^2} = \frac {\sqrt{(s-s_4)^2-4sm^2}} {2\sqrt{s_4+m^2}}\label{eq:PSConabsp2}\\
+(\ref{eq:PSConq}) \Rightarrow \cos\psi &= \frac{q^2-q_0^2+\abs{\vec p_2}^2+\omega_1^2}{2\abs{\vec p_2}\omega_1}\\
+ &= \frac {(u_1+m^2)(q^2-s+t_1)-(m^2-q^2-t_1)(s_4-u_1)} {(s_4-u_1)\sqrt{(s-s_4)^2-4sm^2}}\label{eq:PSConabcos}\\
+\Rightarrow \sin\psi &= 2\frac{\sqrt{s_4+m^2}\sqrt{(s-q^2)t_1u_1-q^2t_1(s-q^2+t_1)-m^2(s-q^2)^2}}{(s_4-u_1)\sqrt{(s-s_4)^2-4sm}}
+\end{align}
+
+\begin{align}
+&&t' &= -2k_1k_2 = -2\omega_1\omega_2(1-\cos\theta_1)\\
+&&u_6 &= - 2k_1p_1 = -2\omega_1(E_1 + \omega_2\cos\theta_1)\\
+(\ref{eq:MomCon3wk1}): &&0 &= s+t_1+t'+u_6-q^2\quad\checkmark
+\end{align}
+
+$t'$ is the only variable that can get collinear (for $-q^2 > 0$).
+
+\begin{align}
+&&s_3 &= 2k_2p_2 = 2\omega_2(E_2-\abs{\vec p_2}(\cos\psi\cos\theta_1+\sin\psi\sin\theta_1\cos\theta_2))\\
+&&s_5 &= (p_1+p_2)^2 = 2m^2+2p_1p_2\\
+&& &= 2(m^2+E_1E_2+\omega_2\abs{\vec p_2}(\cos\psi\cos\theta_1+\sin\psi\sin\theta_1\cos\theta_2))\\
+(\ref{eq:MomCon3wp2}): &&0 &= s_3+s_5+t_1+u_1-q^2\quad\checkmark
+\end{align}
+
+\begin{align}
+&&u' &=(q-k_2)^2 = q^2-2qk_2\\
+&& &= q^2-2(q_0\omega_2 -\omega_2(\abs{\vec p_2}\cos\psi-\omega_1)\cos\theta_1-\omega_2\abs{\vec p_2}\sin\psi\sin\theta_1\cos\theta_2)\\
+&&u_7 &= q^2-2qp_1\\
+&& &=q^2 - 2(q_0E_1 +\omega_2(\abs{\vec p_2}\cos\psi-\omega_1)\cos\theta_1 + \omega_2\abs{\vec p_2}\sin\psi\sin\theta_1\cos\theta_2)\\
+(\ref{eq:MomCon3wq}): &&0 &=s+u_1+u_7+u'-2q^2\quad\checkmark
+\end{align}
+
+\subsection{phase space integrals}
+\input{Phasespace.2to3.Int}
