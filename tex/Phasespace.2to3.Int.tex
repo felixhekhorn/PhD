@@ -70,8 +70,8 @@ I^{(-1,-1)}_{n} &= \hat I^{(0)}(n-1) \cdot (a A\hat I^{(0)}(n) + b B \hat I^{(2)
 I^{(-1,-1)}_{4} &= 2\pi(aA + bB/3)
 \end{align}
 
-\subsubsection{single collinear a and $k,-l\in \mathbbm N_0$}
-It is
+\subsubsection{single collinear a}
+If $-l\in\mathcal N$ one finds:
 \begin{align}
 \hat I_{a}^{(k,q)}(\nu) &= \int\limits_0^\pi\!\frac{\sin^{\nu-3}t}{(1-\cos(t))^k}\cos^q(t)\, dt \\
  &= \int\limits_0^\pi\!\frac{\sin^{\nu-3}(t)}{(1-\cos^2(t))^k}\cos^q(t)(1+\cos(t))^k\, dt\\
@@ -86,8 +86,10 @@ I^{(1,0)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n-2)\\
 I^{(1,-1)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1)\cdot \left(A\hat I^{(0)}(n-2)+B\hat I^{(2)}(n-2)\right)\\
  &= \frac {2\pi}{a}\frac{(A(n-3)+B)}{(n-3)(n-4)} \approx \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
 I^{(1,-2)}_{a,n} &= \frac 1 a\left(\hat I^{(0)}(n-1)\cdot \left(A^2\hat I^{(0)}(n-2)+(B^2+2AB)\hat I^{(2)}(n-2)\right) + C^2\hat I^{(2)}(n-1)\hat I^{(0)}(n)\right)\\
- &= \frac {2\pi}{a}\left(\frac {A^2}{n-4} + \frac {2AB + B^2}{(n-4)(n-3)} + \frac {C^2}{(n-3)(n-2)}\right) \\
- &\approx \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)\\
+ &= \frac {2\pi}{a}\left(\frac {A^2}{n-4} + \frac {2AB + B^2}{(n-4)(n-3)} + \frac {C^2}{(n-3)(n-2)}\right)\\
+ &\approx \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)
+\end{align}
+\begin{align}
 I^{(2,0)}_{a,n} &= \frac 1 {a^2}\hat I^{(0)}(n-1) \cdot \left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right)\\
  &= \frac {2\pi}{a^2(n-6)} \approx -\frac {\pi}{a^2} + O(\epsilon)\\
 I^{(2,-1)}_{a,n} &= \frac 1 {a^2}\hat I^{(0)}(n-1) \cdot \left(A\left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right) + 2B\hat I^{(2)}(n-4)\right)\\
@@ -98,7 +100,22 @@ I^{(2,-2)}_{a,n} &= \frac 1 {a^2}\left(\hat I^{(0)}(n-1)\cdot \left(A^2(\hat I^{
  &\approx \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
 \end{align}
 
-\subsubsection{double collinear and $k,l\in\mathbbm N$}
+It is\cite[Ch. 5]{Bojak:2000eu}:
+\begin{align}
+I_{a,n}^{(1,1)} &= \frac{\pi}{a(A+B)}\left(\frac 2 \epsilon + \ln\left(\frac{(A+B)^2}{A^2-B^2-C^2}\right) \right) + O(\epsilon) \\
+I_{a,n}^{(2,1)} &= \frac{\pi}{a^2(A+B)}\left(\frac{B^2+AB+C^2}{(A+B)^2}\left(\frac 2 \epsilon + \ln\left(\frac{(A+B)^2}{A^2-B^2-C^2}\right)\right) \right.\nonumber\\
+ &\hspace{60pt}\left. - \frac{2C^2}{(A+B)^2} - 1\right) + O(\epsilon)
+\end{align}
+From this are the following integrals derived:
+\begin{align}
+I_{a,n}^{(1,2)} &=-\DeriveP A {I_{a,n}^{(1,1)}} \\
+ &= \frac{\pi}{a(A+B)^2}\left(\frac 2 \epsilon + \ln\left(\frac{(A+B)^2}{A^2-B^2-C^2}\right) + \frac{2A(A+B)}{A^2-B^2-C^2} -2 \right) + O(\epsilon) \\
+I_{a,n}^{(2,2)} &=-\DeriveP A {I_{a,n}^{(2,1)}} \\
+ &= \frac{\pi}{a^2(A+B)^2}\left(\frac{2B^2+2AB+3C^2}{(A+B)^2}\left(\frac 2 \epsilon + \ln\left(\frac{(A+B)^2}{A^2-B^2-C^2}\right)\right)\right.\nonumber\\
+ &\hspace{80pt}\left. +\frac{2A^2}{A^2-B^2-C^2} - \frac{8C^2}{(A+B)^2} -3 \right) + O(\epsilon)
+\end{align}
+
+\subsubsection{double collinear}
 as said in \cite[Ch. 5]{Bojak:2000eu}: if $0\leq -\frac{C}{A},\frac B A \leq 1$ use \cite[eq. A11]{van_neerven_dimensional_1986} with $\cos\kappa = -\frac B A$:
 \begin{equation}
 I_{aA,n}^{(k,l)} = \frac{2\pi 2^{-(k+l)}}{a^kA^l}\frac{\Gamma(1+\epsilon)}{\Gamma^2(1+\epsilon/2)} B(1+\frac \epsilon 2 - k, 1+ \frac \epsilon 2 -l) \pFq 2 1 \left(k,l;1+\frac \epsilon 2; \frac{A-B}{2A}\right)
@@ -127,10 +144,19 @@ I_{0,n}^{1,1} &= \frac{\pi}{\sqrt X}\ln\left(\frac{aA - bB + \sqrt X}{aA - bC - 
 X &= (aB - bA)^2 - (a^2-b^2)C^2
 \end{align}
 
-\subsubsection{needed set}
-we will need for $A_1$
+\subsection{needed set in matrix element}
+define a shortcut:
 \begin{equation}
-\mathcal I_{A1}^{(k,l)} = \int\!d\Omega_n\,{t'}^{-2+k} {u_7}^{-2+l} \qquad k,l = \{0,1,2,3\}
+\left(\mathcal V(x,y)\right)_{(k,l)} = x^{-2+k} y^{-2+l} \qquad k,l = \{0,1,2,3\}
+\end{equation}
+
+It is
+\begin{equation}
+A_1 = \sum_{k,l=0}^{3} \left(\mathcal C_{A_1}\right)_{(k,l)} {t'}^{-2+k} {u_7}^{-2+l} = \tr(\mathcal C_{A_1} \mathcal V(t',u_7)^t)
+\end{equation}
+and we will thus need the integrals
+\begin{equation}
+\left(\mathcal I_{A_1}\right)_{(k,l)} = \int\!d\Omega_n\,\left(\mathcal V(t',u_7)\right)_{(k,l)}
 \end{equation}
 with
 \begin{align}
@@ -139,10 +165,64 @@ A(u_7) &= q^2-2q_0E_1 &&= q^2-\frac{(s_4+2m^2)(s+u_1)}{2(s_4+m^2)}\\
 B(u_7) &= -2\omega_2(\abs{\vec p_2}\cos\psi-\omega_1) &&=\frac {s_4}{2}\left(1-\frac{s+u_1}{s_4+m^2}+\frac{s-q^2-t_1}{s_4-u_1}\right)\\
 C(u_7) &= -2\omega_2\abs{\vec p_2}\sin\psi
 \end{align}
-that is $I_{a,n}^{-2+k,-2+l}$.
+that is $I_{a,n}^{(-1\ldots 2,-1\ldots 2)}$. With this we get
+\begin{equation}
+\int\!d\Omega_n\,A_1 = \tr(\mathcal C_{A_1} \left(\mathcal I_{A_1}\right)^t)
+\end{equation}
 %\begin{align}
 %\int\!d\Omega_n &= \frac{2\pi}{n-3}\\
 %\int\!d\Omega_n\,t' &= \frac{2\pi}{n-3} (-2\omega_1\omega_2) &&= -\frac{\pi}{n-3}\cdot\frac{s_4(s_4-u_1)}{s_4+m^2}\\
 %\int\!d\Omega_n\,u_7 &= \frac{2\pi}{n-3}(q^2-2q_0E_1) &&=\frac{\pi}{n-3}\left(2q^2+\frac{(s_4+2m^2)(s+u_1)}{2(s_4+m^2)}\right)\\
 %\int\!d\Omega_n\,\frac 1 {t'} &= \frac{2\pi}{n-4} \frac 1 {-2\omega_1\omega_2} &&= -\frac{4\pi}{n-4}\cdot\frac{s_4+m^2}{s_4(s_4-u_1)}\\
 %\end{align}
+
+It is
+\begin{equation}
+A_2 = \sum_{k,l=0}^{3} \left(\mathcal C_{A_2}\right)_{(k,l)} {s_5}^{-2+k} {u'}^{-2+l} = \tr(\mathcal C_{A_2} \mathcal V(s_5,u')^t)
+\end{equation}
+and we will thus need the integrals
+\begin{equation}
+\left(\mathcal I_{A_2}\right)_{(k,l)} = \int\!d\Omega_n\,\left(\mathcal V(s_5,u')\right)_{(k,l)}
+\end{equation}
+but as both $s_5$ and $u'$ are of $[ABC]$ type we have to apply partial fractioning, following the ideas of \cite[Ch. 5]{Bojak:2000eu}. It is 
+\begin{equation}
+(\ref{eq:MonCon3s5up}): \qquad s_5 = s-q^2+t'+u'
+\end{equation}
+so end up with a form of $\mathcal V(p+q,q)$ where $p$ is $[ab]$ and $q$ and $p+q$ are $[ABC]$. The aim is then to get to a form with fractions of $\frac p q$ and/or $\frac {p+q} p$ and indeed this can be achieved. Define
+\begin{equation}
+\mathcal T =\!\left(\!\!
+\begin{array}{cccc}
+\{-2,1,2,1\} & \{1,\hphantom{-} 0,-1,-1\} & \{0,0,0,1\} & \{0,0,1,-1\}\\
+\{-1,1,1,0\} & \{1,-1,\hphantom{-} 0,\hphantom{-} 0\}  & \{0,0,1,0\} & \{0,0,1,-1\}\\
+\{\hphantom{-} 0,1,0,0\}  & \{1,\hphantom{-} 0,\hphantom{-} 0,\hphantom{-} 0\}   & \{1,0,0,0\} & \{0,0,1,-1\}\\
+\{\hphantom{-} 1,1,0,0\}  & \{1,\hphantom{-} 1,\hphantom{-} 0,\hphantom{-} 0\}   & \{1,1,0,0\} & \{0,0,1,-1\}
+\end{array}\!\!
+\right)
+\end{equation}
+\begin{equation}
+\left(\mathcal W(x,y)\right)_{(k,l)} = x^{-2+p_x(k+l)} y^{-2+p_y(k+l)}
+\end{equation}
+\begin{equation}
+p_x(s) = \left\{\begin{array}{ll}k+l&\text{if }k+l\leq 3\\ 3 &\text{else}\end{array}\right.
+\qquad
+p_y(s) = \left\{\begin{array}{ll}0&\text{if }k+l\leq 3\\ k+l-3 &\text{else}\end{array}\right.
+\end{equation}
+\begin{equation}
+\Rightarrow \mathcal W(x,y) = \!\left(\!\!
+\begin{array}{cccc}
+x^{-2}y^{-2} & x^{-1}y^{-2} & y^{-2} & xy^{-2}\\
+x^{-1}y^{-2} & y^{-2} & xy^{-2} & xy^{-1} \\
+y^{-2} & xy^{-2} & xy^{-1} & x\\
+xy^{-2} & xy^{-1} & x & xy
+\end{array}\!\!
+\right)
+\end{equation}
+\begin{equation}
+\left(\mathcal{W}^*(p,q)\right)_{(k,l)} = \left\{\frac q p\mathcal W(p,q),\mathcal W(p,q),\frac {p+q} p\mathcal W(p,p+q),\mathcal{W}(p,p+q)\right\}_{(k,l)}
+\end{equation}
+we then find:
+\begin{equation}
+\left(\mathcal V(p+q,q)\right)_{(k,l)} = \mathcal T_{(k,l)}\cdot \mathcal W^*(p,q)_{(k,l)}
+\end{equation}
+where the equation has to be read separate for each $(k,l)$, i.e. ``$\cdot$`` applies to the scalar $4x4$-product of the $\{\}$s. As $\mathcal W^t = \mathcal W$, $\mathcal W$ has 10 unique entries and thus for $\mathcal W^*$ are 40 unique integrals needed: $I_0^{(-1\ldots 3,-2\ldots 2)}$.
+
