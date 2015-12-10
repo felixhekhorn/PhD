@@ -11,7 +11,7 @@ heavy=color*(<<pqm1m1-unp-l + <<pqm2m2-unp-l +2* <<pqm1m2-unp-l );
 Print[MANDELSTAM REDUCTION]
 
 zwi=heavy /. {u6->-sp-t1-ts,us->-sp-u1p-u7,s5->ts-u1p-u7,s3->-ts+u7-t1,
-              s4->sp+t1+u1,eh->1,CF->1,m^2->m2,m^4->m2^2,m^6->m2^3};
+              s4->sp+t1+u1,eh->1,CF->1,m^2->m2,m^4->m2^2,m^6->m2^3,m^8->m2^4};
 
 unint=Expand[zwi /. {sp->s-q2,u1p->u1-q2}] ;
 
@@ -54,7 +54,7 @@ I22=(4*Pi*(m2 + s4)^2)/(s4^2*t1^2*u1^2) * (
 
 I00=2 Pi;
 
-I20=(-4*Pi*(m^2 + s4)^2)/(s4^2*(sp + t1)^2);
+I20=(-4*Pi*(m2 + s4)^2)/(s4^2*(sp + t1)^2);
 
 I01=(2*Pi*(m2 + s4))/(s4*Sqrt[-4*m2*q2 + s^2 - 4*q2*s4 + 2*s*u1 + u1^2])*
 Log[(2*m2*(q2 - s - u1) + s4*(2*q2 - s - u1 + 
@@ -72,7 +72,35 @@ IM11=Pi*((2*(2*m2*(q2 - s) - (2*q2 - s)*(q2 - s - t1) + (q2 - s + t1)*u1))/
     Sqrt[-4*m2*q2 + s^2 - 4*q2*s4 + 2*s*u1 + u1^2]))/
     (2*m2*(q2 - s - u1) - s4*(-2*q2 + s + u1 + 
     Sqrt[-4*m2*q2 + s^2 - 4*q2*s4 + 2*s*u1 + u1^2]))]);
+   
+   
+IM12=Pi*( ((m2 + s4)*(2*m2*(q2 - s)*(q2 - s - u1) + t1*(2*q2*s4 - u1*(s + u1))))/
+ ((-4*m2*q2 + s^2 - 4*q2*s4 + 2*s*u1 + u1^2)*
+ (q2*s4*t1 + m2*(-q2 + s + u1)^2)) + 
+  (2*(m2 + s4)*(2*q2^2 - 2*m2*(q2 - s) + s^2 + s*t1 + s*u1 - t1*u1 - 
+   q2*(3*s + 2*t1 + u1)))/(s4*(-4*m2*q2 + s^2 - 4*q2*s4 + 2*s*u1 + u1^2)^
+   (3/2))*
+   Log[(2*m2*(q2 - s - u1) + s4*(2*q2 - s - u1 + 
+     Sqrt[-4*q2*(m2 + s4) + (s + u1)^2]))/(2*m2*(q2 - s - u1) - 
+   s4*(-2*q2 + s + u1 + Sqrt[-4*q2*(m2 + s4) + (s + u1)^2]))])
 
+IM22=Pi*(  (2*(-q2 + s + t1)^2*((2*q2^2 + 2*m2*(-q2 + s) + s*(s + t1) + (s - t1)*u1 - 
+      q2*(3*s + 2*t1 + u1))^2/(-q2 + s + t1)^2 - 
+   (-4*m2*s + (-q2 + t1 + u1)^2)*
+    (1 - (2*m2*q2 - q2^2 - 2*m2*s + q2*s + s*t1 + t1^2 + (q2 - s + t1)*u1)^2/
+      ((-q2 + s + t1)^2*(-4*m2*s + (-q2 + t1 + u1)^2)))))/
+ (-4*m2*q2 + 4*q2^2 + (s + u1)^2 - 4*q2*(s + t1 + u1))^2 +
+ (2*(m2 + s4)*(2*m2*(q2 - s)*(q2 - s - u1) + t1*(2*q2*s4 - u1*(s + u1)))^2)/
+ ((-4*q2*(m2 + s4) + (s + u1)^2)^2*(q2*s4*t1 + m2*(-q2 + s + u1)^2))+
+ ( (4*(m2 + s4)*(2*q2^2 + 2*m2*(-q2 + s) + s*(s + t1) + (s - t1)*u1 - 
+   q2*(3*s + 2*t1 + u1))*(2*m2*(q2 - s)*(q2 - s - u1) + 
+   t1*(2*q2*s4 - u1*(s + u1))))/(s4*(-4*q2*(m2 + s4) + (s + u1)^2)^(5/2))+
+  (4*(m2 + s4)*(m2*(q2 - s)^2 + q2*t1*(-q2 + s + t1) + (q2 - s)*t1*u1)*
+  ((2*q2 - s - u1)*(q2 - s - t1 - u1) + 2*m2*(-q2 + s + u1)))/
+ (s4*(-4*q2*(m2 + s4) + (s + u1)^2)^(5/2)))* Log[(2*m2*(q2 - s - u1) + s4*(2*q2 - s - u1 + 
+     Sqrt[-4*q2*(m2 + s4) + (s + u1)^2]))/(2*m2*(q2 - s - u1) - 
+   s4*(-2*q2 + s + u1 + Sqrt[-4*q2*(m2 + s4) + (s + u1)^2]))])
+    
 (* INSERT INTEGRALS *)
 Print[INTEGRALS]
 
@@ -85,6 +113,8 @@ help = zwi /. {1/ts^2/u7^2 -> I22/I00,
                u7/ts -> I1M1/I00,
                1/ts^2 -> I20/I00,
                1/ts -> I10/I00,
+               ts^2/u7^2 -> IM22/I00,
+               ts/u7^2 -> IM12/I00,
                ts/u7 -> IM11/I00,
                1/u7^2 -> I02/I00,
                1/u7 -> I01/I00};
@@ -98,12 +128,14 @@ pole = Coefficient[intmarco,1/eps] 1/eps;
 willypole= (sp+t1)^3/u1^4 ( (s4^2+(sp+t1)^2)/(sp+t1)^2 * 
 4 q2/sp^2 (sp t1 u1p - m2 sp^2 - q2 t1^2)/(t1 (sp+t1))); 
 
-
-
-(*
+checkpole=FullSimplify[pole/willypole /. {s4->s-q2+t1+u1,sp->s-q2,u1p->u1-q2}];
 
 (* finite piece *)
 finite=Expand[Expand[intmarco]/. 1/eps->0] /. eps->0;
+
+(*
+
+
 
 
 
