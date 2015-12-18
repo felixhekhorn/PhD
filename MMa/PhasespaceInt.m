@@ -32,7 +32,7 @@ PsInta[1,2][a_,b_,A_,B_,C_] = (\[Pi] (-2-(2 A (A+B))/(-A^2+B^2+C^2)+2/(-4+dDim)+
 PsInta[2,1][a_,b_,A_,B_,C_] = (\[Pi] (-1-(2 C^2)/(A+B)^2+((A B+B^2+C^2) (2/(-4+dDim)+Log[(A+B)^2/(A^2-B^2-C^2)]))/(A+B)^2))/(a^2 (A+B));
 PsInta[2,2][a_,b_,A_,B_,C_] = (\[Pi] (-3 (A+B)^2-8 C^2-(2 A^2 (A+B)^2)/(-A^2+B^2+C^2)+(4 B (A+B)+6 C^2)/(-4+dDim)+(2 B (A+B)+3 C^2) Log[-((A+B)^2/(-A^2+B^2+C^2))]))/(a^2 (A+B)^4);
 PsInta[0,l_][a_,b_,A_,B_,C_] := (PsInta[0,l][a,b,A,B,C]=PsInt0[0,l][a,b,A,B,C]) /; l>0;
-PsInta[k_,l_][a_,b_,A_,B_,C_] := (PsInta[k,l][a,b,A,B,C]=Simplify@PsInt0[l,k][A,-Sqrt[B^2+C^2],a,a B/Sqrt[B^2+C^2],a C/Sqrt[B^2+C^2]]) /; -3<=k<0 && l>0;
+PsInta[k_,l_][a_,b_,A_,B_,C_] := (PsInta[k,l][a,b,A,B,C]=Simplify@PsInt0[l,k][A,-Sqrt[B^2+C^2],a,a*B/Sqrt[B^2+C^2],a*C/Sqrt[B^2+C^2]]) /; -3<=k<0 && l>0;
 
 (* non collinear *)
 PsInt0[k_,l_][a_,b_,A_,B_,C_] := (PsInt0[k,l][a,b,A,B,C]=PsInt\[Epsilon][k,l][a,b,A,B,C]) /; k<= 0 && l<=0;
@@ -56,6 +56,8 @@ PsInt0[1,l_] := Module[{Aa},
 PsInt0[k_,l_] := Module[{aa},
 	PsInt0[k,l] = {a,b,A,B,C}\[Function]Simplify[(-1)^(k-1)/(k-1)!D[PsInt0[1,l][aa,b,A,B,C],{aa,k-1}]/.{aa->a}]
 ] /; k>1 && l>=1;
+PsInt0[k_,l_][a_,b_,A_,B_,C_] := (PsInt0[k,l][a,b,A,B,C]=Simplify@PsInt0[l,k][A,-Sqrt[B^2+C^2],a,-b*B/Sqrt[B^2+C^2],-b*C/Sqrt[B^2+C^2]]) /; -3<=k<0 && l>0;
+
 
 End[];
 EndPackage[];
