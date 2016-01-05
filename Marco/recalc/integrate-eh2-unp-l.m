@@ -126,7 +126,7 @@ intmarco = Expand[help];
 intmarco >> "intmarcoAL1"
 
 (* POLE PART *)
-
+(*
 pole = Coefficient[intmarco,1/eps] 1/eps;
 
 willypole= (sp+t1)^3/u1^4 ( (s4^2+(sp+t1)^2)/(sp+t1)^2 * 
@@ -136,7 +136,7 @@ checkpole=FullSimplify[pole/willypole /. {s4->s-q2+t1+u1,sp->s-q2,u1p->u1-q2}];
 
 (* finite piece *)
 finite=Expand[Expand[intmarco]/. 1/eps->0] /. eps->0;
-
+*)
 (*
 
 

@@ -1,3 +1,5 @@
+(* ::Package:: *)
+
 (* 2->3 CONTRIBUTION: gamma q -> q Q QB - eQ2 PART *)
 (* g-munu PROJECTION *)
 
@@ -124,6 +126,15 @@ intmarco = Expand[help];
 
 (* EDIT: FHe *)
 intmarco >> "intmarcoAG1"
+(*
+Module[{l,r},
+l=CoefficientList[ts^2 u7^2 unint,{ts,u7}];
+r=l[[1,1]]*I22+l[[1,2]]*I21+l[[1,3]]*I20
++l[[2,1]]*I12+l[[2,2]]*I11+l[[2,3]]*I10+l[[2,4]]*I1M1
++l[[3,1]]*I02+l[[3,2]]*I01+l[[3,3]]*I00+l[[4,2]]*IM11;
+Simplify[r-intmarco]
+]
+*)
 
 (* POLE PART *)
 (*
@@ -201,7 +212,7 @@ bqed0=t1/u1 + u1/t1 + 4m2 sp/t1/u1 * (1- m2 sp/t1/u1) +
 Print[FACTORIZATION]
 
 x2=-u1/(sp+t1);
-pgq=CF(1+(1-x2)^2)/x2;
+pgq=CF (1+(1-x2)^2)/x2;
 uu1=u1;
 tt1=x2*t1;
 ssp=x2*sp
@@ -233,6 +244,15 @@ Print[FINITE]
 
 me23factor = (norm3 * ageps * factor) /. eps->0;
 *)
+
+
+Module[{l,r},
+l=CoefficientList[ts^2u7^2 unint,{ts,u7}];
+r=l[[1,1]]*I22+l[[1,2]]*I21+l[[1,3]]*I20
++l[[2,1]]*I12+l[[2,2]]*I11+l[[2,3]]*I10+l[[2,4]]*I1M1
++l[[3,1]]*I02+l[[3,2]]*I01+l[[3,3]]*I00+l[[4,2]]*IM11;
+Simplify[r-intmarco]
+]
 
 
 (*
