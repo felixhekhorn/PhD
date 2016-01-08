@@ -8,6 +8,8 @@ PsInt\[Epsilon]::usage = "Phasespace integrals for any collinearity and -k,-l \[
 PsInta::usage = "Phasespace integrals for collinear a case";
 PsInt0::usage = "Phasespace integrals for non collinear cases";
 
+NPsInt::usage = "numeric evaluation of phasespace integrals for any collinearity";
+
 Begin["`Private`"];
 dDim;
 
@@ -57,6 +59,9 @@ PsInt0[k_,l_] := Module[{aa},
 	PsInt0[k,l] = {a,b,A,B,C}\[Function]Simplify[(-1)^(k-1)/(k-1)!D[PsInt0[1,l][aa,b,A,B,C],{aa,k-1}]/.{aa->a}]
 ] /; k>1 && l>=1;
 PsInt0[k_,l_][a_,b_,A_,B_,C_] := (PsInt0[k,l][a,b,A,B,C]=Simplify@PsInt0[l,k][A,-Sqrt[B^2+C^2],a,-b*B/Sqrt[B^2+C^2],-b*C/Sqrt[B^2+C^2]]) /; -3<=k<0 && l>0;
+
+(* numeric evaluation *)
+NPsInt[k_,l_][a_,b_,A_,B_,C_]:=NIntegrate[Sin[t1](a+b Cos[t1])^(-k)(A+B Cos[t1]+C Sin[t1]Cos[t2])^(-l),{t1,0,\[Pi]},{t2,0,\[Pi]}]
 
 
 End[];
