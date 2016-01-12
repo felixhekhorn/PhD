@@ -1,0 +1,35 @@
+align $q$ to z-axis:
+\begin{align}
+q &= (q_0,0,0,q_z,\hat 0)\\
+k_1 &= (\omega_1,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi-q_z, \hat 0)\\
+p_2 &= (E_2,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi, \hat 0)
+\end{align}
+
+$k_1^2 = 0$ is already fixed
+
+constraints:
+\begin{align}
+q_0+\omega_1 & &&=E_1+E_2+\omega_2 \label{eq:PSConIIMomCon}\\
+m^2 &= p_1^2 &&= E_1^2 - \omega_2^2 \label{eq:PSConIIp1}\\
+m^2 &= p_2^2 &&= E_2^2 - \abs{\vec p_2}^2 \label{eq:PSConIIp2} \\
+q^2 & &&= q_0^2 - q_z^2 \label{eq:PSConIIq}\\
+0 & &&= \omega_1^2 - \abs{\vec p_2}^2 + 2\abs{\vec p_2}q_z\cos\psi-q_z^2 \label{eq:PSConIIk1}\\
+s &= (q+k_1)^2 &&= (q_0+\omega_1)^2 - \abs{\vec p_2}^2 \label{eq:PSConIIs}\\
+t &= (k_1-p_2)^2 &&= (\omega_1-E_2)^2-q_z^2 \label{eq:PSConIIt}\\
+u &= (q-p_2)^2 &&= (q_0-E_2)^2 - \abs{\vec p_2}^2+2\abs{\vec p_2}q_z\cos\psi - q_z^2 \label{eq:PSConIIu}
+\end{align}
+
+solve:
+\begin{align}
+(\ref{eq:PSConIIu})-(\ref{eq:PSConIIk1}) &= u=(q_0-E_2)^2-\omega_1^2 \label{eq:PSConIIu2}\\
+(\ref{eq:PSConIIs}) - (\ref{eq:PSConIIq}) + (\ref{eq:PSConIIt}) - (\ref{eq:PSConIIp2}) + (\ref{eq:PSConIIu2}) &= s-q^2+t-m^2+u\\
+ &= s_4+m^2 = (E_2-\omega_1-q_0)^2 \label{eq:PSConIIs4}\\
+(\ref{eq:PSConIIt}) + (\ref{eq:PSConIIu}) - (\ref{eq:PSConIIq}) &= t+u-q^2 = 2(E_2-\omega_1-q_0)E_2\\
+\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s-s_4-2m^2}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIE2}) \label{eq:PSConIIE2}\\
+(\ref{eq:PSConIIs}) - (\ref{eq:PSConIIq}) + (\ref{eq:PSConIIt}) - (\ref{eq:PSConIIp2}) &= s-q^2+t-m^2 = -2(E_2-\omega_1-q_0)\omega_1\\
+\Rightarrow \omega_1 &= \frac{s'+t_1}{2\sqrt{s_4+m^2}} =\frac{s_4-u_1}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIom1}) \label{eq:PSConIIom1}\\
+(\ref{eq:PSConIIs4}) \land (\ref{eq:PSConIIE2}) \land (\ref{eq:PSConIIom1}) \Rightarrow q_0 &= \frac{s+u_1}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIq0}) \label{eq:PSConIIq0}\\
+(\ref{eq:PSConIIs}) \land (\ref{eq:PSConIIq0}) \land (\ref{eq:PSConIIom1}) \Rightarrow \abs{\vec p_2} &= \frac{\sqrt{(s-s_4)^2-4m^2 s}}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIabsp2}) \label{eq:PSConIIabsp2}\\
+(\ref{eq:PSConIIq}) \land (\ref{eq:PSConIIq0}) \Rightarrow q_z &= \frac{\sqrt{(s'+u_1')^2-4q^2t}}{2\sqrt{s_4+m^2}} \label{eq:PSConIIqz}\\
+(\ref{eq:PSConIIp1}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIom2}) \label{eq:PSConIIom2}\\
+\end{align}

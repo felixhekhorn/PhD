@@ -44,65 +44,14 @@ s-q^2 && +0 &= -u_6 &-& t_1 &-& t' &&\Leftrightarrow &0 &= s+t_1+t'+u_6-q^2 \lab
 use c.m.s. of recoiling heavy and light quark ($Q(p_1)$ and $q(k_2)$):
 \begin{align}
 k_2 &= (\omega_2,k_{2,x},\omega_2\sin\theta_1\cos\theta_2,\omega_2\cos\theta_1, \hat k_2)\\
-p_1 &= (E_1,-k_{2,x},-\omega_2\sin\theta_1\cos\theta_2,-\omega_2\cos\theta_1, -\hat k_2)\\
-k_1 &= (\omega_1,0,0,\omega_1, \hat 0)\\
-q &= (q_0,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi-\omega_1, \hat 0)\\
-p_2 &= (E_2,0,\abs{\vec p_2}\sin\psi,\abs{\vec p_2}\cos\psi, \hat 0)
+p_1 &= (E_1,-k_{2,x},-\omega_2\sin\theta_1\cos\theta_2,-\omega_2\cos\theta_1, -\hat k_2)
 \end{align}
 
-light quark masses are already fixed: $k_1^2 = 0 = k_2^2$
+\subsubsection{Set I}
+\input{Phasespace.2to3.Framework.SetI}
 
-constraints:
-\begin{align}
-q_0+\omega_1 & &&=E_1+E_2+\omega_2 \label{eq:PSConMomCon}\\
-m^2 &= p_1^2 &&= E_1^2 - \omega_2^2 \label{eq:PSConp1}\\
-m^2 &= p_2^2 &&= E_2^2 - \abs{\vec p_2}^2 \label{eq:PSConp2} \\
-q^2 & &&= q_0^2 - \abs{\vec p_2}^2 + 2\abs{\vec p_2}\omega_1\cos\psi-\omega_1^2 \label{eq:PSConq}\\
-s &= (q+k_1)^2 &&= (q_0+\omega_1)^2 - \abs{\vec p_2}^2 \label{eq:PSCons}\\
-t &= (k_1-p_2)^2 &&= (\omega_1-E_2)^2-\abs{\vec p_2}^2+2\abs{\vec p_2}\omega_1\cos\psi-\omega_1^2 \label{eq:PSCont}\\
-u &= (q-p_2)^2 &&= (q_0-E_2)^2 - \omega_1^2 \label{eq:PSConu}
-\end{align}
-
-solve:
-\begin{align}
-(\ref{eq:PSCons}) - (\ref{eq:PSConq}) + (\ref{eq:PSCont}) - (\ref{eq:PSConp2}) + (\ref{eq:PSConu}) &= s-q^2+t-m^2+u\\
- &= s_4+m^2 = (E_1+\omega_2)^2 \label{eq:PSCons4}\\
-(\ref{eq:PSCont}) + (\ref{eq:PSConu}) - (\ref{eq:PSConq}) &= t+u-q^2 = -2(E_1+\omega_2)E_2\\
-\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s-s_4-2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE2}\\
-(\ref{eq:PSCons4})\land (\ref{eq:PSConp1}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} \label{eq:PSConom2} \\
-(\ref{eq:PSCons4})\Rightarrow E_1 &= \frac{s_4+2m^2}{2\sqrt{s_4+m^2}} \label{eq:PSConE1} \\
-(\ref{eq:PSCons})+(\ref{eq:PSConu})-(\ref{eq:PSConp2}) &= s+u-m^2 =2q_0(E_1+\omega_2)\\
-\Rightarrow q_0 &= \frac{s+u_1}{2\sqrt{s_4+m^2}} \label{eq:PSConq0}\\
-(\ref{eq:PSCont}) - (\ref{eq:PSConq}) &= t-q^2 = (\omega_1-E_2)^2 - q_0^2\\
-\Rightarrow \omega_1 &= \frac{s'+t_1}{2\sqrt{s_4+m^2}} \label{eq:PSConom1}\\
-(\ref{eq:PSConp2}) \Rightarrow \abs{\vec p_2} &= \sqrt{E_2^2 - m^2} = \frac {\sqrt{(s-s_4)^2-4sm^2}} {2\sqrt{s_4+m^2}}\label{eq:PSConabsp2}\\
-(\ref{eq:PSConq}) \Rightarrow \cos\psi &= \frac{q^2-q_0^2+\abs{\vec p_2}^2+\omega_1^2}{2\abs{\vec p_2}\omega_1}\\
- &= \frac {(u_1+m^2)(t_1-s')-(m^2-q^2-t_1)(s'+t_1)} {(s'+t_1)\sqrt{(s-s_4)^2-4sm^2}}\label{eq:PSConabcos}\\
-\Rightarrow \sin\psi &= 2\frac{\sqrt{s_4+m^2}\sqrt{m^2s'^2+q^2t_1(s'+t_1)-s't_1u_1}}{(s'+t_1)\sqrt{(s-s_4)^2-4sm}}
-\end{align}
-
-\begin{align}
-&&t' &= -2k_1k_2 = -2\omega_1\omega_2(1-\cos\theta_1)\\
-&&u_6 &= - 2k_1p_1 = -2\omega_1(E_1 + \omega_2\cos\theta_1)\\
-(\ref{eq:MomCon3wk1}): &&0 &= s+t_1+t'+u_6-q^2\quad\checkmark
-\end{align}
-
-$t'$ is the only variable that can get collinear (for $-q^2 > 0$).
-
-\begin{align}
-&&s_3 &= 2k_2p_2 = 2\omega_2(E_2-\abs{\vec p_2}(\cos\psi\cos\theta_1+\sin\psi\sin\theta_1\cos\theta_2))\\
-&&s_5 &= (p_1+p_2)^2 = 2m^2+2p_1p_2\\
-&& &= 2(m^2+E_1E_2+\omega_2\abs{\vec p_2}(\cos\psi\cos\theta_1+\sin\psi\sin\theta_1\cos\theta_2))\\
-(\ref{eq:MomCon3wp2}): &&0 &= s_3+s_5+t_1+u_1-q^2\quad\checkmark
-\end{align}
-
-\begin{align}
-&&u' &=(q-k_2)^2 = q^2-2qk_2\\
-&& &= q^2-2(q_0\omega_2 -\omega_2(\abs{\vec p_2}\cos\psi-\omega_1)\cos\theta_1-\omega_2\abs{\vec p_2}\sin\psi\sin\theta_1\cos\theta_2)\\
-&&u_7 &= q^2-2qp_1\\
-&& &=q^2 - 2(q_0E_1 +\omega_2(\abs{\vec p_2}\cos\psi-\omega_1)\cos\theta_1 + \omega_2\abs{\vec p_2}\sin\psi\sin\theta_1\cos\theta_2)\\
-(\ref{eq:MomCon3wq}): &&0 &=s+u_1+u_7+u'-2q^2\quad\checkmark
-\end{align}
+\subsubsection{Set II}
+\input{Phasespace.2to3.Framework.SetII}
 
 \subsection{phase space integrals}
 \input{Phasespace.2to3.Int}
