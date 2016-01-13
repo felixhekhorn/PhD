@@ -1,0 +1,38 @@
+align $p_2$ to z-axis:
+\begin{align}
+q &= (q_0,0,\abs{\vec q\,}\sin\psi,\abs{\vec q\,}\cos\psi,\hat 0)\\
+k_1 &= (\omega_1,0,-\abs{\vec q\,}\sin\psi,-\abs{\vec q\,}\cos\psi+p_{2,z}, \hat 0)\\
+p_2 &= (E_2,0,0,p_{2,z}, \hat 0)
+\end{align}
+
+constraints, from energy conservation, masses ($k_2^2 = 0$ is already fixed) and external Mandelstam variables:
+\begin{align}
+q_0+\omega_1 & &&=E_1+E_2+\omega_2 \label{eq:PSConIIIMomCon}\\
+m^2 &= p_1^2 &&= E_1^2 - \omega_2^2 \label{eq:PSConIIIp1}\\
+m^2 &= p_2^2 &&= E_2^2 - p_{2,z}^2 \label{eq:PSConIIIp2} \\
+q^2 & &&= q_0^2 - \abs{\vec q\,}^2 \label{eq:PSConIIIq}\\
+0 & &&= \omega_1^2 - \abs{\vec q\,}^2 + 2\abs{\vec q\,}p_{2,z}\cos\psi-p_{2,z}^2 \label{eq:PSConIIIk1}\\
+s &= (q+k_1)^2 &&= (q_0+\omega_1)^2 - p_{2,z}^2 \label{eq:PSConIIIs}\\
+t &= (k_1-p_2)^2 &&= (\omega_1-E_2)^2- \abs{\vec q\,}^2 \label{eq:PSConIIIt}\\
+u &= (q-p_2)^2 &&= (q_0-E_2)^2 - \abs{\vec q\,}^2 + 2\abs{\vec q\,}p_{2,z}\cos\psi-p_{2,z}^2 \label{eq:PSConIIIu}
+\end{align}
+
+solve:
+\begin{align}
+(\ref{eq:PSConIIIu})-(\ref{eq:PSConIIIk1}) &= u=(q_0-E_2)^2-\omega_1^2 \label{eq:PSConIIIu2}\\
+(\ref{eq:PSConIIIs}) - (\ref{eq:PSConIIIq}) + (\ref{eq:PSConIIIt}) - (\ref{eq:PSConIIIp2}) + (\ref{eq:PSConIIIu2}) &= s-q^2+t-m^2+u\\
+ &= s_4+m^2 = (\omega_1+q_0-E_2)^2 =(\ref{eq:PSConIIs4}) \label{eq:PSConIIIs4}\\
+(\ref{eq:PSConIIIt}) + (\ref{eq:PSConIIIu}) - (\ref{eq:PSConIIIq}) &= t+u-q^2 = 2(E_2-\omega_1-q_0)E_2\\
+\Rightarrow E_2 &= -\frac{t+u-q^2}{2\sqrt{s_4+m^2}} =\frac{s-s_4-2m^2}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIE2}) = (\ref{eq:PSConIIE2}) \label{eq:PSConIIIE2}\\
+(\ref{eq:PSConIIIs}) - (\ref{eq:PSConIIIq}) + (\ref{eq:PSConIIIt}) - (\ref{eq:PSConIIIp2}) &= s-q^2+t-m^2 = -2(E_2-\omega_1-q_0)\omega_1\\
+\Rightarrow \omega_1 &= \frac{s'+t_1}{2\sqrt{s_4+m^2}} =\frac{s_4-u_1}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIom1}) = (\ref{eq:PSConIIom1})\label{eq:PSConIIIom1}\\
+(\ref{eq:PSConIIIs4}) \land (\ref{eq:PSConIIIE2}) \land (\ref{eq:PSConIIIom1}) \Rightarrow q_0 &= \frac{s+u_1}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIq0}) = (\ref{eq:PSConIIq0}) \label{eq:PSConIIIq0}\\
+(\ref{eq:PSConIIIq}) \land (\ref{eq:PSConIIIq0}) \Rightarrow \abs{\vec q\,} &= \frac{\sqrt{(s'+u_1')^2-4q^2t}}{2\sqrt{s_4+m^2}} =(\ref{eq:PSConIIqz}) \label{eq:PSConIIabsq}\\
+(\ref{eq:PSConIIIp1})\land(\ref{eq:PSConIIIMomCon}) \Rightarrow E_1 &= \frac{s_4+2m^2}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIE1}) = (\ref{eq:PSConIIE1}) \label{eq:PSConIIIE1}\\
+(\ref{eq:PSConIIIMomCon}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIom2}) = (\ref{eq:PSConIIom2}) \label{eq:PSConIIIom2}\\
+(\ref{eq:PSConIIIp2}) \land (\ref{eq:PSConIIIE2}) \Rightarrow p_{2,z} &= \frac{\sqrt{(s-s_4)^2-4m^2 s}}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIabsp2}) = (\ref{eq:PSConIIabsp2}) \label{eq:PSConIIIabsp2}\\
+%(\ref{eq:PSConIIq}) \Rightarrow \cos\psi &= \frac{s(q^2-t_1-2m^2)+s_4 u_1' - q^2(s_4+2m^2)}{\sqrt{((s-s_4)^2-4m^2s)((s'+u_1')^2-4q^2 t)}} \neq (\ref{eq:PSConIcospsi}) \label{eq:PSConIIcospsi}
+\end{align}
+
+
+same as before: $t'$ is the only variable that can get collinear (for $-q^2 > 0$) - now collinear as [ABC] variable.
