@@ -31,8 +31,32 @@ solve:
 (\ref{eq:PSConIIIp1})\land(\ref{eq:PSConIIIMomCon}) \Rightarrow E_1 &= \frac{s_4+2m^2}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIE1}) = (\ref{eq:PSConIIE1}) \label{eq:PSConIIIE1}\\
 (\ref{eq:PSConIIIMomCon}) \Rightarrow \omega_2 &= \frac{s_4}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIom2}) = (\ref{eq:PSConIIom2}) \label{eq:PSConIIIom2}\\
 (\ref{eq:PSConIIIp2}) \land (\ref{eq:PSConIIIE2}) \Rightarrow p_{2,z} &= \frac{\sqrt{(s-s_4)^2-4m^2 s}}{2\sqrt{s_4+m^2}} = (\ref{eq:PSConIabsp2}) = (\ref{eq:PSConIIabsp2}) \label{eq:PSConIIIabsp2}\\
-%(\ref{eq:PSConIIq}) \Rightarrow \cos\psi &= \frac{s(q^2-t_1-2m^2)+s_4 u_1' - q^2(s_4+2m^2)}{\sqrt{((s-s_4)^2-4m^2s)((s'+u_1')^2-4q^2 t)}} \neq (\ref{eq:PSConIcospsi}) \label{eq:PSConIIcospsi}
+(\ref{eq:PSConIIIq}) \Rightarrow \cos\psi &= \frac{s(q^2-t-m^2)- 2q^2(s_4+m^2)+s_4 u_1}{\sqrt{((s-s_4)^2-4m^2s)((s'+u_1')^2-4q^2 t)}} \label{eq:PSConIIIcospsi}\\
+ &=(\ref{eq:PSConIIcospsi}) \neq (\ref{eq:PSConIcospsi}) \nonumber
 \end{align}
 
+
+\begin{align}
+&&s_3 &= 2k_2p_2 = 2\omega_2(E_2-p_{2,z}\cos\theta_1)\\
+&&s_5 &= (p_1+p_2)^2 = 2m^2+2p_1p_2\\
+&& &= 2(m^2+E_1E_2+\omega_2p_{2,z}\cos\theta_1)\\
+(\ref{eq:MomCon3wp2}): &&0 &= s_3+s_5+t_1+u_1'\quad\checkmark
+\end{align}
+
+\begin{align}
+&&u' &=(q-k_2)^2 = q^2-2qk_2 \\
+ &&&= q^2-2\omega_2(q_0 -\abs{\vec q\,}(\cos\psi\cos\theta_1 + \sin\psi\sin\theta_1\cos\theta_2))\\
+&&u_7 &= q^2-2qp_1\\
+ &&&=q^2 - 2(q_0E_1 +\abs{\vec q\,}\omega_2(\cos\psi\cos\theta_1 + \sin\psi\sin\theta_1\cos\theta_2)))\\
+(\ref{eq:MomCon3wq}): &&0 &=s'+u_1'+u_7+u'\quad\checkmark
+\end{align}
+
+\begin{align}
+&&t' &= -2k_1k_2\\
+ &&&= -2\omega_2(\omega_1 + (\abs{\vec q\,}\cos\psi-p_{2,z})\cos\theta_1 + \abs{\vec q\,}\sin\psi\sin\theta_1\cos\theta_2)\\
+&&u_6 &= - 2k_1p_1\\
+ &&&= -2(\omega_1 E_1 - \omega_2(\abs{\vec q\,}\cos\psi-p_{2,z})\cos\theta_1 - \omega_2\abs{\vec q\,}\sin\psi\sin\theta_1\cos\theta_2)\\
+(\ref{eq:MomCon3wk1}): &&0 &= s'+t_1+t'+u_6\quad\checkmark
+\end{align}
 
 same as before: $t'$ is the only variable that can get collinear (for $-q^2 > 0$) - now collinear as [ABC] variable.

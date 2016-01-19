@@ -46,4 +46,41 @@ but as both $s_5$ and $u'$ are of $[ABC]$ type we have to apply partial fraction
 \begin{equation}
 (\ref{eq:MonCon3s5up}): \qquad s_5 = s-q^2+t'+u'
 \end{equation}
-so end up with a form of $\mathcal V(p+q,q)$ where $p$ is $[ab]$ and $q$ and $p+q$ are $[ABC]$. The aim is then to get to a form with fractions of $\frac p q$ and/or $\frac {p+q} p$ and indeed this can be achieved. [TODO]\fxerror{rewrite}
+so end up with a form of $\mathcal V(p+q,q)$ where $p$ is $[ab]$ and $q$ and $p+q$ are $[ABC]$. The aim is then to get to a form with fractions of $\frac p q$ and/or $\frac {p+q} p$ and indeed this can be achieved. Define
+\begin{equation}
+\mathcal T =\!\left(\!\!
+\begin{array}{cccc}
+\{-2,1,2,1\} & \{1,\hphantom{-} 0,-1,-1\} & \{0,0,0,1\} & \{0,0,1,-1\}\\
+\{-1,1,1,0\} & \{1,-1,\hphantom{-} 0,\hphantom{-} 0\}  & \{0,0,1,0\} & \{0,0,1,-1\}\\
+\{\hphantom{-} 0,1,0,0\}  & \{1,\hphantom{-} 0,\hphantom{-} 0,\hphantom{-} 0\}   & \{1,0,0,0\} & \{0,0,1,-1\}\\
+\{\hphantom{-} 1,1,0,0\}  & \{1,\hphantom{-} 1,\hphantom{-} 0,\hphantom{-} 0\}   & \{1,1,0,0\} & \{0,0,1,-1\}
+\end{array}\!\!
+\right)
+\end{equation}
+\begin{equation}
+\left(\mathcal W(x,y)\right)_{(k,l)} = x^{-2+p_x(k+l)} y^{-2+p_y(k+l)}
+\end{equation}
+\begin{equation}
+p_x(s) = \left\{\begin{array}{ll}s&\text{if }s\leq 3\\ 3 &\text{else}\end{array}\right.
+\qquad
+p_y(s) = 3-p_x(6-s)\left\{\begin{array}{ll}0&\text{if }s\leq 3\\ s-3 &\text{else}\end{array}\right.
+\end{equation}
+\begin{equation}
+\Rightarrow \mathcal W(x,y) = \!\left(\!\!
+\begin{array}{cccc}
+x^{-2}y^{-2} & x^{-1}y^{-2} & y^{-2} & xy^{-2}\\
+x^{-1}y^{-2} & y^{-2} & xy^{-2} & xy^{-1} \\
+y^{-2} & xy^{-2} & xy^{-1} & x\\
+xy^{-2} & xy^{-1} & x & xy
+\end{array}\!\!
+\right)
+\end{equation}
+\begin{equation}
+\left(\mathcal{W}^*(p,q)\right)_{(k,l)} = \left\{\frac q p\mathcal W(p,q),\mathcal W(p,q),\frac {p+q} p\mathcal W(p,p+q),\mathcal{W}(p,p+q)\right\}_{(k,l)}
+\end{equation}
+we then find:
+\begin{equation}
+\left(\mathcal V(p+q,q)\right)_{(k,l)} = \mathcal T_{(k,l)}\cdot \mathcal W^*(p,q)_{(k,l)}
+\end{equation}
+where the equation has to be read separate for each $(k,l)$, i.e. ``$\cdot$`` applies to the scalar $4x4$-product of the $\{\}$s. As $\mathcal W^t = \mathcal W$, $\mathcal W$ has 10 unique entries and thus for $\mathcal W^*$ are 40 unique integrals needed: $I_0^{(-1\ldots 3,-2\ldots 2)}$.
+
