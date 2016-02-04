@@ -29,7 +29,7 @@ zwi12=G[l12,{al},q-p2+m U,{mu},p2-m U,{nu},q-p2+m U,{be},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm1m1=ContractEpsGamma[zwi3];
-pqm1m1>>pqm1m1-unp-g;
+pqm1m1>>data/pqm1m1-unp-g;
 (*pqm1m1>>pqm1m1-unp-l;*)
 
 (*m2m2*)
@@ -38,7 +38,7 @@ zwi12=G[l22,{mu},p1-q+m U,{al},p2-m U,{be},p1-q+m U,{nu},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm2m2=ContractEpsGamma[zwi3];
-pqm2m2>>pqm2m2-unp-g;
+pqm2m2>>data/pqm2m2-unp-g;
 (*pqm2m2>>pqm2m2-unp-l;*)
 
 (*m3m3*)
@@ -47,7 +47,7 @@ zwi12=G[l32,{al},p2-m U,{be},p1+m U]/us^2/s5^2;
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm3m3=ContractEpsGamma[zwi3];
-pqm3m3>>pqm3m3-unp-g;
+pqm3m3>>data/pqm3m3-unp-g;
 (*pqm3m3>>pqm3m3-unp-l;*)
 
 (*m4m4*)
@@ -56,7 +56,7 @@ zwi12=G[l42,{al},p2-m U,{be},p1+m U]/s^2/s5^2;
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm4m4=ContractEpsGamma[zwi3];
-pqm4m4>>pqm4m4-unp-g;
+pqm4m4>>data/pqm4m4-unp-g;
 (*pqm4m4>>pqm4m4-unp-l;*)
 
 (* INTERFERENCE TERMS *)
@@ -67,7 +67,7 @@ zwi12=G[l12,{al},q-p2+m U,{mu},p2-m U,{be},p1-q+m U,{nu},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm1m2=ContractEpsGamma[zwi3];
-pqm1m2>>pqm1m2-unp-g;
+pqm1m2>>data/pqm1m2-unp-g;
 (*pqm1m2>>pqm1m2-unp-l;*)
 
 (*m1m3*)
@@ -76,7 +76,7 @@ zwi12=G[l12,{al},q-p2+m U,{mu},p2-m U,{be},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm1m3=ContractEpsGamma[zwi3];
-pqm1m3>>pqm1m3-unp-g;
+pqm1m3>>data/pqm1m3-unp-g;
 (*pqm1m3>>pqm1m3-unp-l;*)
 
 (*m1m4*)
@@ -85,7 +85,7 @@ zwi12=G[l12,{al},q-p2+m U,{mu},p2-m U,{be},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm1m4=ContractEpsGamma[zwi3];
-pqm1m4>>pqm1m4-unp-g;
+pqm1m4>>data/pqm1m4-unp-g;
 (*pqm1m4>>pqm1m4-unp-l;*)
 
 (*m2m3*)
@@ -94,7 +94,7 @@ zwi12=G[l22,{mu},p1-q+m U,{al},p2-m U,{be},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm2m3=ContractEpsGamma[zwi3];
-pqm2m3>>pqm2m3-unp-g;
+pqm2m3>>data/pqm2m3-unp-g;
 (*pqm2m3>>pqm2m3-unp-l;*)
 
 (*m2m4*)
@@ -103,7 +103,7 @@ zwi12=G[l22,{mu},p1-q+m U,{al},p2-m U,{be},p1+m U];
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm2m4=ContractEpsGamma[zwi3];
-pqm2m4>>pqm2m4-unp-g;
+pqm2m4>>data/pqm2m4-unp-g;
 (*pqm2m4>>pqm2m4-unp-l;*)
 
 (*m3m4*)
@@ -112,7 +112,7 @@ zwi12=G[l32,{al},p2-m U,{be},p1+m U]/us/s5^2/s;
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm3m4=ContractEpsGamma[zwi3];
-pqm3m4>>pqm3m4-unp-g;
+pqm3m4>>data/pqm3m4-unp-g;
 (*pqm3m4>>pqm3m4-unp-l;*)
 
 (*m4m4*)
@@ -122,7 +122,7 @@ zwi12=G[l42,{al},p2-m U,{be},p1+m U]/s^2/s5^2;
 zwi2=ContractEpsGamma[zwi11*zwi12];
 zwi3=ContractEpsGamma[zwi2*tengam];
 pqm4m4=ContractEpsGamma[zwi3];
-pqm4m4>>pqm4m4-unp-g;*)
+pqm4m4>>data/pqm4m4-unp-g;*)
 
 Print[DONE]
 

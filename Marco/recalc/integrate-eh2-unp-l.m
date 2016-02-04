@@ -126,7 +126,7 @@ intmarco = Expand[help];
 intmarco >> "intmarcoAL1"
 
 (* POLE PART *)
-(*
+
 pole = Coefficient[intmarco,1/eps] 1/eps;
 
 willypole= (sp+t1)^3/u1^4 ( (s4^2+(sp+t1)^2)/(sp+t1)^2 * 
@@ -136,16 +136,13 @@ checkpole=FullSimplify[pole/willypole /. {s4->s-q2+t1+u1,sp->s-q2,u1p->u1-q2}];
 
 (* finite piece *)
 finite=Expand[Expand[intmarco]/. 1/eps->0] /. eps->0;
-*)
-(*
-
-
 
 
 
 (* final result *)
 (* include spin average in n dimensions *)
 
+(*
 Print[FINITE LOGS]
 
 zwi = finite /. {Log[m^2/(m^2 + s4)] -> ln1,
@@ -166,11 +163,11 @@ log2=Factor[log21] lll2;
 nolog = Factor[zwi /. {ln1 -> 0, ln2 -> 0}];
 
 cccc=finite-log1-log2-nolog;
-
+*)
 (* calculate factorized x-sec with correct normalization *)
 
 (* 2 -> 3 *)
-
+(*
 Print[POLE]
 
 norm3 = 1/2 * 1/NC * AEM * ALPS^2 * EH^2 * NC * CF * 1/(4 Pi)^(eps/2) *
@@ -190,6 +187,7 @@ mefinite = Factor[norm3 help /. eps->0];
 
 willy= (s+t1)/u1^2 ((s4^2+(s+t1)^2)/(s+t1)^2) (
        -(t1^2+(s+t1)^2)/t1/(s+t1) + 4m^2 s/t1/u1(1-m^2 s/t1/u1));
+*)
 
 (* factorization contribution *)
 
@@ -205,14 +203,19 @@ bqed=t/u+u/t+4m^2 ss/t/u (1-m^2 ss/t/u) + eps (-1+ss^2/t/u);
 normf = - AEM/2/Pi EH^2 *
       2* Pi * ALPS^2 * 1/(2 CF NC) * 1/(4 Pi)^(eps/2) 1/Gamma[1+eps/2] *
       ((t1 u1 - s m^2)/s mu^2)^(eps/2) * NC * CF;
-
-fact= normf * Normal[Series[Expand[1/x2 1/(s+t1) *  1/(1+eps/2)^2 *
+(* EDIT FHe: Fix: shift normf into series *)
+fact= Normal[Series[normf * Expand[1/x2 1/(s+t1) *  1/(1+eps/2)^2 *
       (2/eps+EulerGamma-Log[4Pi]+Log[muf^2/mu^2]) pgq bqed],{eps,0,1}]];
 
 factpole = Coefficient[Expand[fact],1/eps] 1/eps;
+factpole>>"marcoFactPoleL"
+
 help = Expand[fact] /. 1/eps->0;
 factfinite = Factor[help /. eps->0];
 
+factfinite>>"marcoFactFiniteL"
+
+(*
 (* finite pieces of 2->3 *)
 
 Print[FINITE]

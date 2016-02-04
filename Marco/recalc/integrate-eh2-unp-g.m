@@ -137,7 +137,7 @@ Simplify[r-intmarco]
 *)
 
 (* POLE PART *)
-(*
+
 pole = Coefficient[intmarco,1/eps] 1/eps;
 
 willypole= (sp+t1)/u1^2 (s4^2+(sp+t1)^2)/(sp+t1)^2 (
@@ -148,7 +148,7 @@ checkpole=FullSimplify[pole/willypole /. {s4->s-q2+t1+u1,sp->s-q2,u1p->u1-q2}];
 
 (* finite piece *)
 finite=Expand[Expand[intmarco]/. 1/eps->0] /. eps->0;
-*)
+
 (* final result *)
 (* include spin average in n dimensions *)
 (*
@@ -176,16 +176,16 @@ LLL2 = Log[(2*m2*(q2 - s - u1) + s4*(2*q2 - s - u1 +
                      Sqrt[-4*q2*(m2 + s4) + (s + u1)^2]))]
                      
 chkfin = finite - nolog - log11 LLL1 - log22 LLL2;
-
+*)
 
 (* calculate factorized x-sec with correct normalization *)
 
 (* 2 -> 3 *)
 
 Print[POLE]
-
+(* EDIT FHe: correct typo(?) mu *)
 norm3 = 1/2 * 1/NC * AEM * ALPS^2 * EH^2 * NC * CF * 1/(4 Pi)^(eps/2) *
-        1/Gamma[1+eps/2] * ( ((t1 u1p - sp m2)sp - q2 t1^2)/sp^2 mu^2)^(eps/2); 
+        1/Gamma[1+eps/2] * ( ((t1 u1p - sp m2)sp - q2 t1^2)/(sp^2 mu^2))^(eps/2); 
 
 factor = 1/(4 Pi)^(eps/2) Gamma[1+eps/2]/Gamma[1+eps] * mu^(-eps) * 
        s4^(1+eps)/(s4+m2)^(1+eps/2) 1/(1+eps/2) 1/Pi 1/16;
@@ -206,9 +206,9 @@ bqed0=t1/u1 + u1/t1 + 4m2 sp/t1/u1 * (1- m2 sp/t1/u1) +
    2 sp q2/t1/u1 + 2 q2^2/t1/u1 + 2m2 q2/t1/u1 * (2-sp^2/t1/u1) +
    eps * (-1 + sp^2/t1/u1 + sp q2/t1/u1 + q2^2/t1/u1 - m2 q2 sp^2/t1^2/u1^2) +
    eps^2 * (sp^2/4/t1/u1);
-*)
+
 (*========factorization contribution=======*)
-(*
+
 Print[FACTORIZATION]
 
 x2=-u1/(sp+t1);
@@ -223,9 +223,10 @@ bqed=tt1/uu1 + uu1/tt1 + 4m2 ssp/tt1/uu1 * (1- m2 ssp/tt1/uu1) +
    eps * (-1 + ssp^2/tt1/uu1 + ssp q2/tt1/uu1 + q2^2/tt1/uu1 - m2 q2 ssp^2/tt1^2/uu1^2) +
    eps^2 * (ssp^2/4/tt1/uu1);
 
+(* EDIT FHe: correct typo(?) mu *)
 normf = - AEM/2/Pi EH^2 *
       2* Pi * ALPS^2 * 1/(2 CF NC) * 1/(4 Pi)^(eps/2) 1/Gamma[1+eps/2] *
-      (((t1 u1p - sp m2)sp -q2 t1^2)/sp^2 mu^2)^(eps/2) * NC * CF;
+      (((t1 u1p - sp m2)sp -q2 t1^2)/(sp^2 mu^2))^(eps/2) * NC * CF;
 
       
 fact= Normal[Series[normf*Expand[1/x2 1/(sp+t1) * ageps * 1/(1+eps/2)^2 *
@@ -233,29 +234,20 @@ fact= Normal[Series[normf*Expand[1/x2 1/(sp+t1) * ageps * 1/(1+eps/2)^2 *
 
 
 factpole = Coefficient[Expand[fact],1/eps] 1/eps;
+factpole>>"marcoFactPoleG"
 
 help = Expand[fact] /. 1/eps->0;
 factfinite = Factor[help /. eps->0];
-*)
+
+factfinite>>"marcoFactFiniteG"
+
 
 (*----finite pieces of 2->3-----*)
 (*
 Print[FINITE]
 
 me23factor = (norm3 * ageps * factor) /. eps->0;
-*)
 
-
-Module[{l,r},
-l=CoefficientList[ts^2u7^2 unint,{ts,u7}];
-r=l[[1,1]]*I22+l[[1,2]]*I21+l[[1,3]]*I20
-+l[[2,1]]*I12+l[[2,2]]*I11+l[[2,3]]*I10+l[[2,4]]*I1M1
-+l[[3,1]]*I02+l[[3,2]]*I01+l[[3,3]]*I00+l[[4,2]]*IM11;
-Simplify[r-intmarco]
-]
-
-
-(*
 me23log1 = Factor[me23factor * log1];
 me23log2 = Factor[me23factor * log2];
 me23nolog = Factor[me23factor * nolog];
