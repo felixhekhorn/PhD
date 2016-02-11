@@ -5,7 +5,8 @@ BeginPackage["PhasespaceInt`"];
 dDim::usage = "use dimensional regularisation";
 
 PsInt\[Epsilon]::usage = "Phasespace integrals for any collinearity and -k,-l \[Element] \!\(\*SubscriptBox[\(\[CapitalNu]\), \(0\)]\).";
-PsInta::usage = "Phasespace integrals for collinear a case";
+PsInta::usage = "Phasespace integrals for collinear case in ab";
+PsHatInta::usage = "Phasespace integrals shifted by one hat moment for collinear case in ab";
 PsInt0::usage = "Phasespace integrals for non collinear cases";
 
 NPsInt::usage = "numeric evaluation of phasespace integrals for any collinearity";
@@ -62,6 +63,13 @@ PsInt0[k_,l_][a_,b_,A_,B_,C_] := (PsInt0[k,l][a,b,A,B,C]=Simplify@PsInt0[l,k][A,
 
 (* numeric evaluation *)
 NPsInt[k_,l_][a_,b_,A_,B_,C_]:=NIntegrate[Sin[t1](a+b Cos[t1])^(-k)(A+B Cos[t1]+C Sin[t1]Cos[t2])^(-l),{t1,0,\[Pi]},{t2,0,\[Pi]}]
+
+(* hat space: collinear a *)
+PsHatInta[2,0][a_,b_,A_,B_,C_] = 2\[Pi]/(a^2(dDim-4));
+PsHatInta[2,1][a_,b_,A_,B_,C_] = 2\[Pi]/(a^2(dDim-4)(A+B));
+PsHatInta[2,l_] := Module[{Aa},
+	PsHatInta[2,l] = {a,b,A,B,C}\[Function]Evaluate@Simplify[(-1)^(l-1)/(l-1)!D[PsHatInta[2,1][a,b,Aa,B,C],{Aa,l-1}]/.{Aa->A}]
+] /; l>1;
 
 
 End[];

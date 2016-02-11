@@ -40,4 +40,4 @@ res=ContractEpsGamma[zwi];
 
 
 (* EDIT FHe *)
-(res/.{H[a_,b_]:>0}) >> "data/DeltaBQED"
+(res/.{H[a_,b_]:>0}) >> "data/BPQED"

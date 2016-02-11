@@ -123,7 +123,7 @@ help = zwi /. {1/ts^2/u7^2 -> I22/I00,
 intmarco = Expand[help];
 
 (* EDIT: FHe *)
-intmarco >> "intmarcoAL1"
+intmarco >> "data/IntAL1"
 
 (* POLE PART *)
 
@@ -208,12 +208,12 @@ fact= Normal[Series[normf * Expand[1/x2 1/(s+t1) *  1/(1+eps/2)^2 *
       (2/eps+EulerGamma-Log[4Pi]+Log[muf^2/mu^2]) pgq bqed],{eps,0,1}]];
 
 factpole = Coefficient[Expand[fact],1/eps] 1/eps;
-factpole>>"marcoFactPoleL"
+factpole>>"data/factPoleL"
 
 help = Expand[fact] /. 1/eps->0;
 factfinite = Factor[help /. eps->0];
 
-factfinite>>"marcoFactFiniteL"
+factfinite>>"data/factFiniteL"
 
 (*
 (* finite pieces of 2->3 *)

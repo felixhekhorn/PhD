@@ -125,7 +125,7 @@ help = zwi /. {1/ts^2/u7^2 -> I22/I00,
 intmarco = Expand[help];
 
 (* EDIT: FHe *)
-intmarco >> "intmarcoAG1"
+intmarco >> "IntAG1"
 (*
 Module[{l,r},
 l=CoefficientList[ts^2 u7^2 unint,{ts,u7}];
@@ -234,12 +234,12 @@ fact= Normal[Series[normf*Expand[1/x2 1/(sp+t1) * ageps * 1/(1+eps/2)^2 *
 
 
 factpole = Coefficient[Expand[fact],1/eps] 1/eps;
-factpole>>"marcoFactPoleG"
+factpole>>"data/factPoleG"
 
 help = Expand[fact] /. 1/eps->0;
 factfinite = Factor[help /. eps->0];
 
-factfinite>>"marcoFactFiniteG"
+factfinite>>"data/factFiniteG"
 
 
 (*----finite pieces of 2->3-----*)

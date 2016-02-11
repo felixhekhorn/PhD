@@ -252,5 +252,4 @@ int = help /. {eps IM11tss5->0, eps IM11tsus->0, eps IM11tsu7->0,
                eps I11u7s5->0,
                eps I01s5->0, eps I01u7->0, eps I01us->0};        
 
-
-int >> "intmarcoAL3"          
+int >> "data/IntAL3"          

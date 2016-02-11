@@ -212,4 +212,4 @@ int = help /. {eps IM11tss5->0, eps IM11tsus->0, eps IM11tsu7->0,
                eps I11u7s5->0,
                eps I01s5->0, eps I01u7->0, eps I01us->0, eps I00->0};    (* REMOVE eps TERMS INFRONT OF FINITE INTEGRALS *)
 
-int >> "intmarcoAG3"
+int >> "data/IntAG3"
