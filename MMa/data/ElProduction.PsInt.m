@@ -2040,11 +2040,11 @@ psI[(u7*up)/(s5*tp)] = 2*Pi - (2*Pi*(-2*m2*sp - (-q2 + sp)*(sp + t1) -
         s*(2*m2*sp + (s - s4)*t1)*psLog3[S1][s5]))/
       ((-4*m2*s + (s - s4)^2)^(3/2)*s4)
  
-psIk2[tp^(-2)] = (8*Pi*(m2 + s4))/(sp + t1)^2
+psIk2[tp^(-2)] = (2*Pi*(m2 + s4))/(sp + t1)^2
  
-psIk2[1/(tp^2*u7^2)] = (8*Pi*(m2 + s4))/(t1^2*u1^2)
+psIk2[1/(tp^2*u7^2)] = (2*Pi*(m2 + s4))/(t1^2*u1^2)
  
-psIk2[1/(tp^2*u7)] = (-8*Pi*(m2 + s4))/(t1*(sp + t1)*u1)
+psIk2[1/(tp^2*u7)] = (-2*Pi*(m2 + s4))/(t1*(sp + t1)*u1)
  
 getPsLog[x_] := Module[{xx, r}, xx = Simplify[x /. normKinVars, 
         Assumptions -> physAssump]; r = Null; 
