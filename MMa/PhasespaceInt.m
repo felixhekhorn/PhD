@@ -47,7 +47,7 @@ PsInt0[1,l_] := Module[{Aa},
 ] /; -3<l<=0;
 PsInt0[k_,l_] := Module[{aa},
 	PsInt0[k,l] = {a,b,A,B,C}\[Function]Evaluate@Simplify[(-1)/(k-1)D[PsInt0[k-1,l][aa,b,A,B,C],aa]/.{aa->a}]
-] /; k>1 && -3<l<=0;
+] /; k>1 && -3<=l<=0;
 PsInt0[0,1][a_,b_,A_,B_,C_] = With[{Y=B^2+C^2},\[Pi]/Sqrt[Y]Log[(A+Sqrt[Y])/(A-Sqrt[Y])]];
 PsInt0[0,l_] := Module[{Aa},
 	PsInt0[0,l] = {a,b,A,B,C}\[Function]Evaluate@Simplify[(-1)^(l-1)/(l-1)!D[PsInt0[0,1][a,b,Aa,B,C],{Aa,l-1}]/.{Aa->A}]
