@@ -1,7 +1,8 @@
 (* TRACES FOR gamma g -> g Q QB - UNPOLARIZED *)
 (* NEEDS TO BE RUN WITH BOTH PROJECTION OPERATIONS: G AND L PARTS *)
 
-SetDirectory["/Users/marco/WORK/G1CHARM-NLO/GAMMAG-QQBG"]
+(* EDIT: FHe *)
+SetDirectory["~/Physik/PhD/Marco/recalc/data/gluon-me"]
 <<tracer11.m
 
 AntiCommute[off];
