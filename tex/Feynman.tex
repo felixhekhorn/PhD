@@ -3,8 +3,7 @@
   english,		% Sprache
   a4paper,		% Papierformat
   11pt,			% Schriftgröße (default 10pt)
-  %DIV=12,		% Seiteneinteilung
-  DIV=12,
+  DIV=12,		% Seiteneinteilung
   titlepage,
   toc=bibnumbered,
   parskip=full,  	% Absätze (full,half,false -+*)
@@ -61,8 +60,8 @@
 %	group-digits = false
 %}
 
-\usepackage{simplewick}
-\usepackage{feynmf}
+%\usepackage{simplewick}
+%\usepackage{feynmf}
 \usepackage{slashed}
 \usepackage{hepnames}
 
@@ -80,11 +79,14 @@
 
 \begin{document}
 
-\section{2 to 2 phase space}
-\input{Phasespace.2to2}
+\section{Feynman Rules}
+\input{Feynman.rules}
 
-\section{2 to 3 phase space}
-\input{Phasespace.2to3}
+\section[Leading Order: O(a aS)]{Leading Order: $O(\alpha \alpha_s)$}
+\input{Feynman.lo}
+
+\section[Next-to-leading Order: O(a aS2)]{Next-to-leading Order: $O(\alpha \alpha_S^2)$}
+\input{Feynman.nlo}
 
 \newpage
 \appendix
