@@ -28,13 +28,13 @@ Fermion(oQ0,oQ).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addLabel(PQ,pos=1.2,displace=0.01)\
 	.addParallelArrow(size=0.1, displace=-0.06).addLabel(r"$p_1$")
 Photon(iggx, vmu)\
-	.addLabel(r"\Pggx",pos=-.1,displace=0.01)\
+	.addLabel(r"$\Pggx(\lambda_{\Pgg})$",pos=-.3,displace=0.01)\
 	.addParallelArrow(size=0.1, displace=-0.06).addLabel(r"$q$")
 Ghost(igh, vnugh).addArrow()\
-	.addLabel(r"\Pgh,a",pos=-.15,displace=-0.01)\
+	.addLabel(r"$\Pgh(a)$",pos=-.3,displace=-0.01)\
 	.addParallelArrow(size=0.1, displace=0.06).addLabel(r"$k_1$",displace=.3)
 Ghost(vnugh,ogh).addArrow()\
-	.addLabel(r"\Pgh,b",pos=1.1,displace=0.01)\
+	.addLabel(r"$\Pgh(b)$",pos=1.15,displace=0.01)\
 	.addParallelArrow(size=0.1, displace=0.06).addLabel(r"$k_2$",displace=.3)
 Gluon(vnugh,vnuQ)\
 	.addParallelArrow(size=0.1, displace=-0.06, sense=1).addLabel(r"$k_1-k_2$",angle=90,displace=-.65)

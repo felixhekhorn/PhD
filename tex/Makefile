@@ -5,7 +5,7 @@
 
 Feynman: Feynman.pdf
 
-Feynman.pdf: Feynman*.tex pyfeyn/*.py
+Feynman.pdf: Feynman*.tex pyfeyn/*.py ref.bib lib.tex
 	#cd pyfeyn/
 	#make
 	#cd ..
@@ -14,3 +14,11 @@ Feynman.pdf: Feynman*.tex pyfeyn/*.py
 	bibtex Feynman
 	pdflatex --shell-escape Feynman
 	pdflatex --shell-escape Feynman
+
+PaVe: PaVe.pdf
+
+PaVe.pdf: PaVe*.tex ref.bib lib.tex
+	pdflatex --shell-escape PaVe
+	bibtex PaVe
+	pdflatex --shell-escape PaVe
+	pdflatex --shell-escape PaVe
