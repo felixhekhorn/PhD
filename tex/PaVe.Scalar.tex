@@ -1,0 +1,61 @@
+We focus on:
+\begin{equation}
+\Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2)
+\end{equation}
+\begin{equation}
+k_1^2 = 0 \quad p_1^2 = p_2^2 = m^2 \quad (p_1+p_2)^2=s\quad (p_2-q)^2=t\quad (p_1-q)^2=u
+\end{equation}
+
+define some shortcuts
+\begin{align}
+0\leq&\rho = \frac {4m^2} s\leq 1 &0\leq&\beta = \sqrt{1-\rho}\leq 1 &0\leq&\chi = \frac{1-\beta}{1+\beta}\leq 1\\
+&\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\beta_q = \sqrt{1-\rho_q} &0\leq&\chi_q = -\frac{1-\beta_q}{1+\beta_q}\leq 1
+\end{align}
+
+\subsection[One-Point Function A0]{One-Point Function $A_0$}
+\cite{Denner:2005nn}:
+\begin{align}
+A_0(m)&=-\frac{i}{16\pi^2}m^2\left(\frac{m^2}{4\pi\mu^2}\right)^{(n-4)/2}\Gamma(1-n/2)\\
+ &= \frac{im^2}{16\pi^2}\left(\Delta-\log(m^2/\mu^2)+1\right) + O(n-4)\\
+ &= iC_\epsilon m^2 \left(-\frac 2 \epsilon+1\right) + O(n-4)\\
+\Delta &= \frac 2 {4-n}-\gamma_E+\log(4\pi)\\
+C_\epsilon &= \frac 1 {16\pi^2}\exp\left(\left(\gamma_E-\log(4\pi)+\log\left(m^2/\mu^2\right)\right)\frac{\epsilon} 2\right)
+\end{align}
+this is \textit{up to order} $O(n-4)$ in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}, but NOT beyond - see also \cite[eq. (A.12)]{Bojak:2000eu}. So we can treat $C_\epsilon$ and $\Delta$ as equal.
+
+\subsection[Two-Point Function B0]{Two-Point Function $B_0$}
+In \cite[eq. (4.23)]{Denner:2005nn} is a generic function given and we end up with
+\begin{align}
+B_0(p_1+p_2,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta\log(\chi)\right)\\
+B_0(k_1,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon\right)\\
+B_0(q,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta_q\log(\chi_q)\right)
+\end{align}
+focussing on imaginary part \textit{only}; this in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
+
+\subsection[Three-Point Function C0]{Three-Point Function $C_0$}
+Again, in \cite[eq. (4.26)]{Denner:2005nn} is a generic function given and by taking the limit $k_1^2\rightarrow 0$ (or equivalenty $s_4\rightarrow 0$) we end up with:
+\begin{align}
+C_0(-p_1-p_2,q,m,m,m)&=\frac{i}{16\pi^2}\cdot\frac 1{s-q^2}\left(\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right)\right.\nonumber\\
+&\hspace{60pt}\left.-\DiLog\left(\frac 2 {1+\beta}\right)-\DiLog\left(\frac 2 {1-\beta}\right)\right)
+\end{align}
+with\cite{Zagier2007} we find:
+\begin{equation}
+\DiLog\left(\frac 2 {1+b}\right)+\DiLog\left(\frac 2 {1-b}\right) =3\zeta(2)+\frac 1 2\ln^2\left(\frac{1-b}{1+b}\right)-\ln\left(\frac{1-b}{1+b}\right)\ln\left(-\frac{1-b}{1+b}\right)
+\end{equation}
+and if we focus on real part \textit{only}, we find:
+\begin{align}
+\DiLog\left(\frac 2 {1+\beta}\right)+\DiLog\left(\frac 2 {1-\beta}\right) &=3\zeta(2)-\frac 1 2\ln^2(\chi)\\
+\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right) &=-\frac 1 2\ln^2(\chi_q)
+\end{align}
+
+Moreover it is
+\begin{equation}
+\lim_{q^2\rightarrow 0}\left[\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right)\right] = 0
+\end{equation}
+
+So we get:
+\begin{align}
+C_0(-p_1-p_2,q,m,m,m)&=iC_\epsilon\frac 1{s-q^2}\left(\frac 1 2\ln^2(\chi)-\frac 1 2\ln^2(\chi_q)-3\zeta(2)\right)\\
+C_0(-p_1-p_2,k_1,m,m,m)&=iC_\epsilon\frac 1{s}\left(\frac 1 2\ln^2(\chi)-3\zeta(2)\right)
+\end{align}
+in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}\cite{Laenen1993162}.
