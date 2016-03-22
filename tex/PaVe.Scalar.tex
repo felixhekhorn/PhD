@@ -15,7 +15,7 @@ define some shortcuts
 \subsection[One-Point Function A0]{One-Point Function $A_0$}
 \cite{Denner:2005nn}:
 \begin{align}
-A_0(m)&=-\frac{i}{16\pi^2}m^2\left(\frac{m^2}{4\pi\mu^2}\right)^{(n-4)/2}\Gamma(1-n/2)\\
+A_0(m^2)&=-\frac{i}{16\pi^2}m^2\left(\frac{m^2}{4\pi\mu^2}\right)^{(n-4)/2}\Gamma(1-n/2)\\
  &= \frac{im^2}{16\pi^2}\left(\Delta-\log(m^2/\mu^2)+1\right) + O(n-4)\\
  &= iC_\epsilon m^2 \left(-\frac 2 \epsilon+1\right) + O(n-4)\\
 \Delta &= \frac 2 {4-n}-\gamma_E+\log(4\pi)\\
@@ -26,19 +26,23 @@ this is \textit{up to order} $O(n-4)$ in accordance with \cite{Bojak:2000eu}\cit
 \subsection[Two-Point Function B0]{Two-Point Function $B_0$}
 In \cite[eq. (4.23)]{Denner:2005nn} is a generic function given and we end up with
 \begin{align}
-B_0(p_1+p_2,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta\log(\chi)\right)\\
-B_0(k_1,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon\right)\\
-B_0(q,m,m) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta_q\log(\chi_q)\right)
+B_0(s,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta\log(\chi)\right)\\
+B_0(q^2,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta_q\log(\chi_q)\right)\\
+B_0(0,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon\right)\\
+B_0(m^2,0,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2\right)\\
+B_0(t,0,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2-\frac{t-m^2}{t}\ln\left(-\frac{t-m^2}{m^2}\right)\right)
 \end{align}
 focussing on imaginary part \textit{only}; this in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
 
 \subsection[Three-Point Function C0]{Three-Point Function $C_0$}
-Again, in \cite[eq. (4.26)]{Denner:2005nn} is a generic function given and by taking the limit $k_1^2\rightarrow 0$ (or equivalenty $s_4\rightarrow 0$) we end up with:
+Again, in \cite[eq. (4.26)]{Denner:2005nn} is a generic function given.
+
+First, we compute $C_0(s,q^2,0,m^2,m^2,m^2)$ and by taking the limit $k_1^2\rightarrow 0$ (or equivalenty $s_4\rightarrow 0$) we end up with:
 \begin{align}
-C_0(-p_1-p_2,q,m,m,m)&=\frac{i}{16\pi^2}\cdot\frac 1{s-q^2}\left(\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right)\right.\nonumber\\
+C_0(s,q^2,0,m^2,m^2,m^2)&=\frac{i}{16\pi^2}\cdot\frac 1{s-q^2}\left(\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right)\right.\nonumber\\
 &\hspace{60pt}\left.-\DiLog\left(\frac 2 {1+\beta}\right)-\DiLog\left(\frac 2 {1-\beta}\right)\right)
 \end{align}
-with\cite{Zagier2007} we find:
+with \cite{Zagier2007} we find:
 \begin{equation}
 \DiLog\left(\frac 2 {1+b}\right)+\DiLog\left(\frac 2 {1-b}\right) =3\zeta(2)+\frac 1 2\ln^2\left(\frac{1-b}{1+b}\right)-\ln\left(\frac{1-b}{1+b}\right)\ln\left(-\frac{1-b}{1+b}\right)
 \end{equation}
@@ -55,7 +59,24 @@ Moreover it is
 
 So we get:
 \begin{align}
-C_0(-p_1-p_2,q,m,m,m)&=iC_\epsilon\frac 1{s-q^2}\left(\frac 1 2\ln^2(\chi)-\frac 1 2\ln^2(\chi_q)-3\zeta(2)\right)\\
-C_0(-p_1-p_2,k_1,m,m,m)&=iC_\epsilon\frac 1{s}\left(\frac 1 2\ln^2(\chi)-3\zeta(2)\right)
+C_0(s,q^2,0,m^2,m^2,m^2)&=iC_\epsilon\frac 1{s-q^2}\left(\frac 1 2\ln^2(\chi)-\frac 1 2\ln^2(\chi_q)-3\zeta(2)\right)\\
+C_0(s,0,0,m^2,m^2,m^2)&=iC_\epsilon\frac 1{s}\left(\frac 1 2\ln^2(\chi)-3\zeta(2)\right)
 \end{align}
-in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}\cite{Laenen1993162}.
+in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}\cite{Laenen1993162}. These results can also be obtained by the methods described in \cite[chap. 3]{Bojak:2000eu}.
+
+Next, we compute $C_0(m^2,0,t,0,m^2,m^2)$ again by taking the limit $k_1^2\rightarrow 0$ we end up with:
+\begin{align}
+C_0(m^2,0,t,0,m^2,m^2) &= \frac{i}{16\pi^2}\cdot\frac 1{t-m^2}\left(2\DiLog(2) + \DiLog(m^2/t)-\frac{\pi^2}6\right.\nonumber\\
+ &\hspace{40pt}\left.-\DiLog((t+m^2)/m^2)-\DiLog((m^2+t)/t)\right)
+\end{align}
+Using \cite{Zagier2007} and focussing on real part, we find
+\begin{align}
+\DiLog(2) &= \frac{\pi^2}4-i\pi\ln(2)\\
+2\DiLog(2) + \DiLog(1/z)-\frac{\pi^2}6-\DiLog(1+z)-\DiLog(1+1/z) &=\frac{\pi^2}6-\DiLog(z)
+\end{align}
+
+So we get:
+\begin{equation}
+C_0(m^2,0,t,0,m^2,m^2)=iC_\epsilon\frac 1{t-m^2}\left(\zeta(2)-\DiLog(t/m^2)\right)
+\end{equation}
+in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.

@@ -29,9 +29,10 @@ r_\Gamma &= \frac{\Gamma^2(1 - \varepsilon)\Gamma(1+\varepsilon)}
 \quad D = 4 - 2\varepsilon\,
 \end{align}
 later in the code they use a different signature (to avoid any vector structure):
-\begin{equation}
-A(m^2), B_0(p^2,m_1^2,m_2^2), C_0(p_1^2,p_2^2,(p_1+p_2)^2,m_1^2,m_2^2,m_3^2)
-\end{equation}
+\begin{align}
+A(m^2), B_0(p^2,m_1^2,m_2^2), C_0(p_1^2,p_2^2,(p_1+p_2)^2,m_1^2,m_2^2,m_3^2)\nonumber\\
+D_0(p_1^2,p_2^2,p_3^2,p_4^2,(p_1+p_2)^2,(p_2+p_3)^2,m_1^2,m_2^2,m_3^2,m_4^2)
+\end{align}
 
 \cite{Denner:2005nn}:
 \begin{align}
@@ -40,7 +41,7 @@ L_0 &= q^2-m_0^2 +i\varepsilon\\
 L_i &= (q+p_i)^2-m_i^2+i\varepsilon \, i=1,\ldots,N-1
 \end{align}
 
-I will stick to \cite{Bojak:2000eu} as it is the most natural form, I think.
+I will stick to the integrals of \cite{Bojak:2000eu} as it is the most natural form, I think, and to the non-vector signature, if possible.
 
 \subsection{Decomposition Labeling}
 \cite{Passarino:1978jh,Bojak:2000eu}:
@@ -67,26 +68,26 @@ I will stick to \HEPMath{} as it is the more generic and extensible form, I thin
 \subsection{B Decomposition}
 define
 \begin{align}
-f_1 = m_2^2-m_1^2-p^2
+f_1 = m_1^2-m_0^2-p^2
 \end{align}
 then one finds easily
 \begin{align}
-B_1(p^2,m_1^2,m_2^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_1^2,m_2^2)+A_0(m_1)-A_0(m_2)\right) \label{eq:B1}\\
-B_{11}(p^2,m_1^2,m_2^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_1^2,m_2^2)+A_0(m_2)-2B_{00}(p^2,m_1^2,m_2^2)\right)\\
-B_{00}(p^2,m_1^2,m_2^2) &= \frac 1 {2(n-1)}\left(2m_1^2B_0(p^2,m_1^2,m_2^2)+A_0(m_2)-f_1B_1(p^2,m_1^2,m_2^2)\right)
+B_1(p^2,m_0^2,m_1^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_0^2,m_1^2)+A_0(m_0^2)-A_0(m_1^2)\right) \label{eq:B1}\\
+B_{00}(p^2,m_0^2,m_1^2) &= \frac 1 {2(n-1)}\left(2m_0^2B_0(p^2,m_0^2,m_1^2)+A_0(m_1^2)-f_1B_1(p^2,m_0^2,m_1^2)\right)\\
+B_{11}(p^2,m_0^2,m_1^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_0^2,m_1^2)+A_0(m_1^2)-2B_{00}(p^2,m_0^2,m_1^2)\right)
 \end{align}
 in accordance with \cite{Bojak:2000eu,Ellis:2011cr}.
 
 Concering $B_1$ \cite{Passarino:1978jh} and \LoopTools{} use the following identity
 \begin{equation}
-A_0(m_1)-A_0(m_2)=(m_1^2-m_2^2)B_0(0,m_1^2,m_2^2)
+A_0(m_0^2)-A_0(m_1^2)=(m_0^2-m_1^2)B_0(0,m_0^2,m_1^2)
 \end{equation}
 that might help away with
 \begin{displayquote}[{\cite[below eq. D.6]{Passarino:1978jh}}]
 In case $m_1$ and/or $m_2$ are very large the expression on the right-hand side of eq. (\ref{eq:B1}) suffers very strong cancellations: the total is very much smaller than the individual terms. For this reason we have not used these algebraic relations, except to rewrite self-energy diagrams as much as possible in a form most suitable for numerical evaluation.
 \end{displayquote}
 
-To compare the other elements to \cite{Passarino:1978jh} and \LoopTools{} one has to use the \textit{strict} $n\rightarrow 4$ limit and the following identities\cite{Denner:2005nn}:
+To compare the other results to \cite{Passarino:1978jh} and \LoopTools{} one has to use the \textit{strict} $n\rightarrow 4$ limit and the following identities\cite{Denner:2005nn}:
 \begin{align}
 (n-4) B_{00}(p^2,m_0^2,m_1^2) &= \frac 1 6 (p^2-3m_0^2-3m_1^2)\\
 (n-4) B_{11}(p^2,m_0^2,m_1^2) &= -\frac 2 3
