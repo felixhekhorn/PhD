@@ -52,7 +52,7 @@ and if we focus on real part \textit{only}, we find:
 \DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right) &=-\frac 1 2\ln^2(\chi_q)
 \end{align}
 
-Moreover it is
+Additionally, we find
 \begin{equation}
 \lim_{q^2\rightarrow 0}\left[\DiLog\left(\frac 2 {1+\beta_q}\right)+\DiLog\left(\frac 2 {1-\beta_q}\right)\right] = 0
 \end{equation}
@@ -74,9 +74,43 @@ Using \cite{Zagier2007} and focussing on real part, we find
 \DiLog(2) &= \frac{\pi^2}4-i\pi\ln(2)\\
 2\DiLog(2) + \DiLog(1/z)-\frac{\pi^2}6-\DiLog(1+z)-\DiLog(1+1/z) &=\frac{\pi^2}6-\DiLog(z)
 \end{align}
-
 So we get:
 \begin{equation}
 C_0(m^2,0,t,0,m^2,m^2)=iC_\epsilon\frac 1{t-m^2}\left(\zeta(2)-\DiLog(t/m^2)\right)
 \end{equation}
 in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
+
+To compute $C_0(m^2,s,m^2,0,m^2,m^2)$ we use \cite{Bojak:2000eu} and find
+\begin{align}
+C_0(m^2,s,m^2,0,m^2,m^2) &= \frac{i C_\epsilon}{s\beta}\left(-\frac 2 {\epsilon} \ln(\chi)-\frac{\pi^2}2 + \frac 1 2\ln^2(\chi) - \ln(\chi)\ln(1-\chi)\right.\nonumber\\
+ &\hspace{40pt}\left.-\DiLog(1/(1-\chi))+\DiLog(\chi/(\chi-1))\right)
+\end{align}
+Using \cite{Zagier2007} and focussing on real part, we find
+\begin{align}
+-\DiLog(1/(1-x)) + \DiLog(x/(x-1))&=-2\DiLog(z)-\ln(x)\ln(1-x)-\frac{\pi^2}6
+\end{align}
+So we get:
+\begin{align}
+C_0(m^2,s,m^2,0,m^2,m^2) &=iC_\epsilon\frac 1{s\beta}\left(-\frac 2 {\epsilon} \ln(\chi)-2\ln(\chi)\ln(1-\chi)-2\DiLog(\chi)\right.\nonumber\\
+ &\hspace{60pt}\left.+\frac 1 2\ln^2(\chi)-4\zeta(2)\right)
+\end{align}
+in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
+
+To compute $C_0(t,m^2,q^2,0,m^2,m^2)$ we use \cite{Denner:2005nn} and find immediatelty:
+\begin{align}
+C_0(t,m^2,q^2,0,m^2,m^2) &= \frac{i C_\epsilon}{\alpha}\left[-\zeta(2)+2\DiLog\left(\frac{t_1+\alpha}{t_1}\right)+\DiLog\left(\frac{q^2-t-m^2+\alpha}{q^2-t-m^2-\alpha}\right)\right.\nonumber\\
+&\hspace{30pt}\DiLog\left(\frac{t_1-q^2\beta_q^2+\alpha}{t_1-q^2\beta_q^2-\beta_q\alpha}\right)-\DiLog\left(\frac{t_1-q^2\beta_q^2-\alpha}{t_1-q^2\beta_q^2+\beta_q\alpha}\right)\nonumber\\
+&\hspace{30pt}\DiLog\left(\frac{t_1-q^2\beta_q^2+\alpha}{t_1+q^2\beta_q^2-\beta_q\alpha}\right)-\DiLog\left(\frac{t_1-q^2\beta_q^2-\alpha}{t_1+q^2\beta_q^2+\beta_q\alpha}\right)\nonumber\\
+&\hspace{40pt}-\DiLog\left(\frac{t_1(q^2-t-m^2-\alpha)-2m^2\alpha}{t_1(q^2-t-m^2+\alpha)}\right)\nonumber\\
+&\hspace{40pt}\left.-\DiLog\left(\frac{t_1(q^2-t-m^2-\alpha)-2m^2\alpha}{t_1(q^2-t-m^2-\alpha)}\right)\right]
+\end{align}
+with $\alpha=\kappa(t,q^2,m^2)$ and the Källén function (as defined in \cite[eq. (4.27)]{Denner:2005nn})
+\begin{equation}
+\kappa(x,y,z)=\sqrt{x^2+y^2+z^2-2(xy+xz+yx)}
+\end{equation}
+This is in accordance with \cite[eq. (A.8)]{Laenen1993162}(Note the typo there!).
+
+Additionally, we find
+\begin{align}
+\lim_{q^2\rightarrow 0}C_0(t,m^2,q^2,0,m^2,m^2) = C_0(t,m^2,0,0,m^2,m^2) = C_0(m^2,0,t,0,m^2,m^2)
+\end{align}
