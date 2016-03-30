@@ -87,7 +87,7 @@ C_0(m^2,s,m^2,0,m^2,m^2) &= \frac{i C_\epsilon}{s\beta}\left(-\frac 2 {\epsilon}
 \end{align}
 Using \cite{Zagier2007} and focussing on real part, we find
 \begin{align}
--\DiLog(1/(1-x)) + \DiLog(x/(x-1))&=-2\DiLog(z)-\ln(x)\ln(1-x)-\frac{\pi^2}6
+-\DiLog(1/(1-x)) + \DiLog(x/(x-1))&=-2\DiLog(x)-\ln(x)\ln(1-x)-\frac{\pi^2}6
 \end{align}
 So we get:
 \begin{align}
@@ -113,4 +113,44 @@ This is in accordance with \cite[eq. (A.8)]{Laenen1993162}(Note the typo there!)
 Additionally, we find
 \begin{align}
 \lim_{q^2\rightarrow 0}C_0(t,m^2,q^2,0,m^2,m^2) = C_0(t,m^2,0,0,m^2,m^2) = C_0(m^2,0,t,0,m^2,m^2)
+\end{align}
+
+\subsection[Four-Point Function D0]{Four-Point Function $D_0$}
+To compute $D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)$ we follow Ingos way\cite{Bojak:2000eu} of computing his $D_0(p_1,-k_1,-k_2,0,m,m,m)=D_0(m^2,0,0,m^2,t,s,0,m^2,m^2,m^2)$ and find
+\begin{align}
+\tilde t &= -\frac{t_1}{m^2}\\
+K &= \frac x {\rho \rho_q}\left[4 x (-1+y) y z \rho+yz \rho\rho_q\tilde t +x (-4 (-1+y) y (-1+z)+\rho-\tilde t y z \rho) \rho_q\right]\\
+I_{xy} &= \frac{2 x^{\epsilon/2} \rho\rho_q^{2-\epsilon/2} \left[\tilde t y \rho_q+x (\rho_q+y (4 (y-1)-\tilde t \rho_q))\right]^{-1+\epsilon/2}}{(-2+\epsilon) \left[4 x (-1+y) \rho+\tilde t \rho \rho_q-x (4(y-1)+\tilde t \rho) \rho_q\right]}\\
+II_{xy} &= -\frac{2 x^{-1+\epsilon} \rho^{2-\epsilon/2} \rho_q \left[4 (-1+y) y+\rho\right]^{-1+\epsilon/2} }{(-2+\epsilon) \left[4 x (-1+y) \rho+\tilde t \rho \rho_q-x (-4+4 y+\tilde t \rho) \rho_q\right]}
+\end{align}
+\textquote{The integration of $I_{xy}$ does not diverge and one easily gets upon setting $\epsilon\rightarrow 0$}
+\begin{align}
+I &= \frac{m^4}{s t_1 \beta}\left[\ln^2(\chi)+4\DiLog(-\chi)+\frac{\pi^2}3 +2\ln(\chi_q)\ln\left(\frac{\beta_q+\beta}{\beta_q-\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\right.\nonumber\\
+ &\hspace{40pt}\left. 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)-2\DiLog\left(\frac{\beta_q+1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q+1}{\beta_q+\beta}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]
+\end{align}
+\textquote{Integrating $II_{xy}$ over $x$ gives}
+\begin{equation}
+II_y = -\frac {2}{\tilde t(-2+\epsilon)\epsilon}\left(\frac{4y(y-1)+\rho}{\rho}\right)^{-1+\epsilon/2}\pFq 2 1 \left(1,\epsilon;1+\epsilon;1-\frac{4(y-1)(\rho_q-\rho)}{\tilde t \rho\rho_q}\right)
+\end{equation}
+\textquote{The integration over $y$ does not give an additional pole, so we can expand to $O(1)$ using (\cite[eq. B.5]{Bojak:2000eu}) and then integrate to obtain}
+\begin{equation}
+II = -\frac{m^4}{\beta s t_1}\left(\frac{2\ln(\chi)}{\epsilon} +  \ln(\chi)\left(1+2\ln(\beta \tilde t)+\ln(\chi)-2\ln\left(1-q^2/s\right)\right)+\DiLog(\chi^2)+\frac{5\pi^2}{6}\right)
+\end{equation}
+with
+\begin{equation}
+\lim_{q^2\rightarrow 0}\ln(1-q^2/s)=0
+\end{equation}
+\textquote{The final result is then}
+\begin{align}
+&D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)\nonumber\\
+ &=\frac{i C_\epsilon}{\beta s t_1}\left[-\frac{2\ln(\chi)}{\epsilon} -2\ln(\chi)\ln(\beta\tilde t)+2\DiLog(-\chi)-2\DiLog(\chi)-3\zeta(2) \right.\nonumber\\
+ &\hspace{40pt}+2\ln(\chi_q)\ln\left(\frac{\beta_q+\beta}{\beta_q-\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\nonumber\\
+ &\hspace{40pt}\left. 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)-2\DiLog\left(\frac{\beta_q+1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q+1}{\beta_q+\beta}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]
+\end{align}
+This is NOT in accordance with \cite[eq. (A.3)]{Laenen1993162} - but I suspect a bunch of typos there.
+
+We get the match to \cite{Bojak:2000eu} and \cite{PhysRevD.40.54} by using
+\begin{align}
+&\lim_{q^2\rightarrow 0}\left[2\ln(\chi_q)\ln\left(\frac{\beta_q+\beta}{\beta_q-\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\right.\nonumber\\
+&\hspace{20pt}\left. 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)-2\DiLog\left(\frac{\beta_q+1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q+1}{\beta_q+\beta}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]&&=0
 \end{align}
