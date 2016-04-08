@@ -156,3 +156,40 @@ We get the match to \cite{Bojak:2000eu} and \cite{PhysRevD.40.54} by using
 &\lim_{q^2\rightarrow 0}\left[\ln\left(\frac{\beta_q^2-\beta^2}{(\beta_q-1)^2}\right)\ln\left(\frac{\beta_q-\beta}{\beta_q+\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\right.\nonumber\\
 &\hspace{20pt}\left. 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q-\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q+\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]&&=0
 \end{align}
+
+To compute $D_0(0,m^2,q^2,m^2,t,u,0,0,m^2,m^2)$ I neither suceeded with \cite{Bojak:2000eu} nor \cite{Denner:1991qq}, but one can use \cite[Box 11]{Ellis:2007qk}. The transformation from the notation in \cite{Ellis:2007qk} is given by
+\begin{equation}
+\text{\cite{Ellis:2007qk}:}\,\frac{\mu^{4-n}}{i\pi^{n/2}r_\Gamma} \mathcal{I} \leftrightarrow \text{\cite{Bojak:2000eu}:}\,\frac{\mu^{4-n}}{(2\pi)^n}\mathcal{I}
+\end{equation}
+with $\mathcal{I}$ denonting the \textit{raw} integral. We then need to solve (B=Bojak\cite{Bojak:2000eu},E=Ellis\cite{Ellis:2007qk}):
+\begin{align}
+\Rightarrow\, &iC_\epsilon\left(\frac{a^B}{(n-4)^2}+\frac{b^B}{n-4}+c^B + O(n-4)\right)\nonumber\\
+ &\EqualClaim \frac{\mu^{4-n}}{(2\pi)^n} \frac{i\pi^{n/2}r_\Gamma}{\mu^{4-n}}\left(\frac{a^E}{(n-4)^2}+\frac{b^E}{n-4}+c^E + O(n-4)\right)
+\end{align}
+\begin{align}
+\Rightarrow a^B &=a^E\\
+b^B &= b^E-\frac 1 2 a^E\ln(m^2/\mu^2)\\
+c^B &= c^E-a^E\frac{\pi^2}{48}+\frac{a^E}8\ln^2(m^2/\mu^2)-\frac{b^E} 2\ln(m^2/\mu^2)
+\end{align}
+So we get
+\begin{align}
+D_0(0,m^2,q^2,m^2,t,u,0,0,m^2,m^2) &= \frac{iC_\epsilon}{t_1u_1}\left(\frac 4 {\epsilon^2}+\frac 2 {\epsilon}\left(\ln(-t_1/m^2)+\ln(-u_1/m^2)\right)\right.\nonumber\\
+ &\left. + 2\ln(-t_1/m^2)\ln(-u_1/m^2) - \frac 7 2\zeta(2) - \ln^2(\chi_q) \right)
+\end{align}
+This is in accordance with \cite[eq. (A.4)]{Laenen1993162} using \cite{Zagier2007} (as above):
+\begin{align}
+2\DiLog\left(\frac{q^2(1+\beta_q)}{2m^2}\right)+2\DiLog\left(\frac{q^2(1-\beta_q)}{2m^2}\right) &= 2\DiLog\left(\frac{2}{1-\beta_q}\right)+2\DiLog\left(\frac{2}{1-\beta_q}\right)\\
+ &=-\ln^2(\chi_q)
+\end{align}
+(The question, why they use a complicated dilogarithm remains open \ldots)
+
+We get the match to \cite{Bojak:2000eu} and \cite{PhysRevD.40.54} by using
+\begin{equation}
+\lim_{q^2\rightarrow 0} \ln^2(\chi_q) = 0
+\end{equation}
+to find 
+\begin{align}
+D_0(0,m^2,0,m^2,t,u,0,0,m^2,m^2) &= \frac{iC_\epsilon}{t_1u_1}\left(\frac 4 {\epsilon^2}+\frac 2 {\epsilon}\left(\ln(-t_1/m^2)+\ln(-u_1/m^2)\right)\right.\nonumber\\
+ &\hspace{30pt}\left. + 2\ln(-t_1/m^2)\ln(-u_1/m^2) - \frac 7 2\zeta(2)\right)
+\end{align}
+
