@@ -121,7 +121,7 @@ To compute $D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)$ we follow Ingos way\cite{Bojak
 \tilde t &= -\frac{t_1}{m^2}\\
 K &= \frac x {\rho \rho_q}\left[4 x (-1+y) y z \rho+yz \rho\rho_q\tilde t +x (-4 (-1+y) y (-1+z)+\rho-\tilde t y z \rho) \rho_q\right]\\
 I_{xy} &= \frac{2 x^{\epsilon/2} \rho\rho_q^{2-\epsilon/2} \left[\tilde t y \rho_q+x (\rho_q+y (4 (y-1)-\tilde t \rho_q))\right]^{-1+\epsilon/2}}{(-2+\epsilon) \left[4 x (-1+y) \rho+\tilde t \rho \rho_q-x (4(y-1)+\tilde t \rho) \rho_q\right]}\\
-II_{xy} &= -\frac{2 x^{-1+\epsilon} \rho^{2-\epsilon/2} \rho_q \left[4 (-1+y) y+\rho\right]^{-1+\epsilon/2} }{(-2+\epsilon) \left[4 x (-1+y) \rho+\tilde t \rho \rho_q-x (-4+4 y+\tilde t \rho) \rho_q\right]}
+II_{xy} &= -\frac{2 x^{-1+\epsilon} \rho^{2-\epsilon/2} \rho_q \left[4 (-1+y) y+\rho\right]^{-1+\epsilon/2} }{(-2+\epsilon) \left[4 x (-1+y) \rho+\tilde t \rho \rho_q-x (4(y-1)+\tilde t \rho) \rho_q\right]}
 \end{align}
 \textquote{The integration of $I_{xy}$ does not diverge and one easily gets upon setting $\epsilon\rightarrow 0$}
 \begin{align}
@@ -130,9 +130,14 @@ I &= \frac{m^4}{s t_1 \beta}\left[\ln^2(\chi)+4\DiLog(-\chi)+\frac{\pi^2}3 +2\ln
 &= \frac{m^4}{s t_1 \beta}\left[\ln^2(\chi)+4\DiLog(-\chi)+\frac{\pi^2}3 +\ln\left(\frac{\beta_q^2-\beta^2}{(\beta_q-1)^2}\right)\ln\left(\frac{\beta_q-\beta}{\beta_q+\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\right.\nonumber\\
  &\hspace{40pt}\left. + 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q-\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q+\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]
 \end{align}
+with
+\begin{align}
+&\lim_{q^2\rightarrow 0}\left[\ln\left(\frac{\beta_q^2-\beta^2}{(\beta_q-1)^2}\right)\ln\left(\frac{\beta_q-\beta}{\beta_q+\beta}\right)-2\ln(\chi)\ln(1-q^2/s)\right.\nonumber\\
+ &\hspace{20pt}\left. + 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q-\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q+\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]&&=0
+\end{align}
 \textquote{Integrating $II_{xy}$ over $x$ gives}
 \begin{equation}
-II_y = -\frac {2}{\tilde t(-2+\epsilon)\epsilon}\left(\frac{4y(y-1)+\rho}{\rho}\right)^{-1+\epsilon/2}\pFq 2 1 \left(1,\epsilon;1+\epsilon;1-\frac{4(y-1)(\rho_q-\rho)}{\tilde t \rho\rho_q}\right)
+II_y = -\frac {2}{\tilde t(-2+\epsilon)\epsilon}\left(\frac{\rho-4y(1-y)}{\rho}\right)^{-1+\epsilon/2}\pFq 2 1 \left(1,\epsilon;1+\epsilon;1-\frac{4(1-y)(\rho_q-\rho)}{\tilde t \rho\rho_q}\right)
 \end{equation}
 \textquote{The integration over $y$ does not give an additional pole, so we can expand to $O(1)$ using (\cite[eq. B.5]{Bojak:2000eu}) and then integrate to obtain}
 \begin{equation}
