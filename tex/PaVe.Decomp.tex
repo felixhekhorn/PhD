@@ -1,4 +1,4 @@
-\subsection{Definitions}
+\subsection{Definitions}\label{sec:defs}
 \cite{Passarino:1978jh}:
 \begin{align}
 A(m) &= \frac 1 {i\pi^2}\int d^nq\frac 1 {q^2+m^2}\\
@@ -13,7 +13,7 @@ B(q_1,m_1,m_2) &= \mu^{-\epsilon}\int\frac{d^nq}{(2\pi)^n} \frac 1 {(q^2-m_1^2)(
 \end{align}
 and $n=4+\epsilon$. (\cite{PhysRevD4054} writes \textquote{The notations for the one-, two-, three-, and four-point functions have been taken over from Ref. \cite{Passarino:1978jh}.} - obviously they do not.)
 
-\HEPMath\cite{wiebusch_hepmath_2015} and \FeynCalc\cite{Mertig:1990an,Shtabovenko:2016sxi} refer to \LoopTools\cite{Hahn:1998yk,LoopTools212Guide}. \cite[eq. (1.1)]{LoopTools212Guide} and \cite[eq. (2.6)]{Ellis:2011cr}:
+\HEPMath\cite{wiebusch_hepmath_2015} and \FeynCalc\cite{Mertig:1990an,Shtabovenko:2016sxi} refer to \LoopTools\cite{Hahn:1998yk,LoopTools212Guide}. \cite[eq. (1.1)]{LoopTools212Guide} and \cite[eq. (2.6)]{Ellis:2011cr},\QCDLoop\cite{Ellis:2007qk}:
 \begin{align}
 T_{\mu_1\ldots\mu_P}^N &=
 \frac{\mu^{4 - D}}{i\pi^{D/2}\,r_\Gamma}
@@ -42,6 +42,32 @@ L_i &= (q+p_i)^2-m_i^2+i\varepsilon \, i=1,\ldots,N-1
 \end{align}
 
 I will stick to the integrals of \cite{Bojak:2000eu} as it is the most natural form, I think, and to the non-vector signature, if possible.
+
+The transformation of the \textit{analytic} results from the notation in \cite{Ellis:2007qk} is given by
+\begin{equation}
+\text{\cite{Ellis:2007qk}:}\,\frac{\mu^{4-n}}{i\pi^{n/2}r_\Gamma} \mathcal{I} \leftrightarrow \text{\cite{Bojak:2000eu}:}\,\frac{\mu^{4-n}}{(2\pi)^n}\mathcal{I}
+\end{equation}
+with $\mathcal{I}$ denonting the \textit{raw} integral. We then need to solve (B=Bojak\cite{Bojak:2000eu},E=Ellis\cite{Ellis:2007qk}):
+\begin{align}
+\Rightarrow\, &iC_\epsilon\left(\frac{a_{2}^B}{(n-4)^2}+\frac{a_{1}^B}{n-4}+a_0^B + O(n-4)\right)\nonumber\\
+ &\EqualClaim \frac{\mu^{4-n}}{(2\pi)^n} \frac{i\pi^{n/2}r_\Gamma}{\mu^{4-n}}\left(\frac{a_{2}^E}{(n-4)^2}+\frac{a_{1}^E}{n-4}+a_0^E + O(n-4)\right)
+\end{align}
+\begin{align}
+\Rightarrow a_{2}^B &=a_{2}^E\\
+a_{1}^B &= a_{1}^E-\frac 1 2 a_{2}^E\ln(m^2/\mu^2)\\
+a_0^B &= a_0^E-\frac{a_{2}^E}{8}\zeta(2)+\frac{a_{2}^E}8\ln^2(m^2/\mu^2)-\frac{a_{1}^E} 2\ln(m^2/\mu^2)
+\end{align}
+
+To compare \textit{numeric} results form \LoopTools{} or \QCDLoop{} one need to solve
+\begin{align}
+\Rightarrow\, &\left(\frac{b_2^B}{(n-4)^2}+\frac{b_1^B}{n-4}+b_0^B + O(n-4)\right)\nonumber\\
+ &\EqualClaim \frac{\mu^{4-n}}{(2\pi)^n} \frac{i\pi^{n/2}r_\Gamma}{\mu^{4-n}}\left(\frac{b_2^E}{(n-4)^2}+\frac{b_1^E}{n-4}+b_0^E + O(n-4)\right)
+\end{align}
+\begin{align}
+\Rightarrow b_2^B &=\frac{i}{16\pi^2}b_2^E\\
+b_1^B &= \frac{i}{16\pi^2}\left(b_1^E+\frac{b_2^E}2(\gamma_E-\ln(4\pi))\right)\\
+b_0^B &= \frac{i}{16\pi^2}\left(b_0^E+\frac{b_1^E}2(\gamma_E-\ln(4\pi))+\frac{b_2^E}{8}\left((\gamma_E-\ln(4\pi))^2-\zeta(2)\right)\right)\\
+\end{align}
 
 \subsection{Decomposition Labeling}
 \cite{Passarino:1978jh,Bojak:2000eu}:

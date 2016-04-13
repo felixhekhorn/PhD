@@ -162,20 +162,22 @@ We get the match to \cite{Bojak:2000eu} and \cite{PhysRevD.40.54} by using
 &\hspace{20pt}\left. 2\DiLog\left(\frac{\beta_q-1}{\beta_q-\beta}\right)+2\DiLog\left(\frac{\beta_q-\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q+\beta}{\beta_q+1}\right)-2\DiLog\left(\frac{\beta_q-1}{\beta_q+\beta}\right) \right]&&=0
 \end{align}
 
-To compute $D_0(0,m^2,q^2,m^2,t,u,0,0,m^2,m^2)$ I neither suceeded with \cite{Bojak:2000eu} nor \cite{Denner:1991qq}, but one can use \cite[Box 11]{Ellis:2007qk}. The transformation from the notation in \cite{Ellis:2007qk} is given by
-\begin{equation}
-\text{\cite{Ellis:2007qk}:}\,\frac{\mu^{4-n}}{i\pi^{n/2}r_\Gamma} \mathcal{I} \leftrightarrow \text{\cite{Bojak:2000eu}:}\,\frac{\mu^{4-n}}{(2\pi)^n}\mathcal{I}
-\end{equation}
-with $\mathcal{I}$ denonting the \textit{raw} integral. We then need to solve (B=Bojak\cite{Bojak:2000eu},E=Ellis\cite{Ellis:2007qk}):
+\fxerror{fix}
+Nevertheless this is probably wrong - because we find with \cite[Box 16]{Ellis:2007qk}:
 \begin{align}
-\Rightarrow\, &iC_\epsilon\left(\frac{a^B}{(n-4)^2}+\frac{b^B}{n-4}+c^B + O(n-4)\right)\nonumber\\
- &\EqualClaim \frac{\mu^{4-n}}{(2\pi)^n} \frac{i\pi^{n/2}r_\Gamma}{\mu^{4-n}}\left(\frac{a^E}{(n-4)^2}+\frac{b^E}{n-4}+c^E + O(n-4)\right)
+&D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)\nonumber\\
+ &=\frac{i C_\epsilon}{\beta s t_1}\left[-\frac{2\ln(\chi)}{\epsilon} -2\ln(\chi)\ln(\tilde t)+\DiLog(1-\chi^2)-4\zeta(2)+\ln^2(\chi_q) + 2\DiLog(-\chi\chi_q)\right.\nonumber\\
+ &\hspace{40pt}\left. +2\DiLog(-\chi/\chi_q)+2\ln(\chi\chi_q)\ln(1+\chi\chi_q)+2\ln(\chi/\chi_q)\ln(1+\chi/\chi_q)\right]
 \end{align}
+
+We get the match to \cite{Bojak:2000eu} and \cite{PhysRevD.40.54} by using
 \begin{align}
-\Rightarrow a^B &=a^E\\
-b^B &= b^E-\frac 1 2 a^E\ln(m^2/\mu^2)\\
-c^B &= c^E-a^E\frac{\pi^2}{48}+\frac{a^E}8\ln^2(m^2/\mu^2)-\frac{b^E} 2\ln(m^2/\mu^2)
+&\lim_{q^2\rightarrow 0}\left[\DiLog(1-\chi^2)-4\zeta(2)+\ln^2(\chi_q) + 2\DiLog(-\chi\chi_q)+2\DiLog(-\chi/\chi_q)\right.\nonumber\\
+&\hspace{20pt}\left. +2\ln(\chi\chi_q)\ln(1+\chi\chi_q)+2\ln(\chi/\chi_q)\ln(1+\chi/\chi_q)\right]\nonumber\\
+&=-2\ln(\chi)\ln(\beta)-3\zeta(2)+2\DiLog(2,-\chi)-2\DiLog(2,\chi)
 \end{align}
+
+To compute $D_0(0,m^2,q^2,m^2,t,u,0,0,m^2,m^2)$ I neither suceeded with \cite{Bojak:2000eu} nor \cite{Denner:1991qq}, but one can use \cite[Box 11]{Ellis:2007qk} (transformation see sec. \ref{sec:defs})
 So we get
 \begin{align}
 D_0(0,m^2,q^2,m^2,t,u,0,0,m^2,m^2) &= \frac{iC_\epsilon}{t_1u_1}\left(\frac 4 {\epsilon^2}+\frac 2 {\epsilon}\left(\ln(-t_1/m^2)+\ln(-u_1/m^2)\right)\right.\nonumber\\
