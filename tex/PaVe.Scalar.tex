@@ -13,7 +13,7 @@ define some shortcuts
 \end{align}
 
 \subsection[One-Point Function A0]{One-Point Function $A_0$}
-\cite{Denner:2005nn}:
+\cite{Denner:1991kt}:
 \begin{align}
 A_0(m^2)&=-\frac{i}{16\pi^2}m^2\left(\frac{m^2}{4\pi\mu^2}\right)^{(n-4)/2}\Gamma(1-n/2)\\
  &= \frac{im^2}{16\pi^2}\left(\Delta-\log(m^2/\mu^2)+1\right) + O(n-4)\\
@@ -21,10 +21,13 @@ A_0(m^2)&=-\frac{i}{16\pi^2}m^2\left(\frac{m^2}{4\pi\mu^2}\right)^{(n-4)/2}\Gamm
 \Delta &= \frac 2 {4-n}-\gamma_E+\log(4\pi)\\
 C_\epsilon &= \frac 1 {16\pi^2}\exp\left(\left(\gamma_E-\log(4\pi)+\log\left(m^2/\mu^2\right)\right)\frac{\epsilon} 2\right)
 \end{align}
-this is \textit{up to order} $O(n-4)$ in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}, but NOT beyond - see also \cite[eq. (A.12)]{Bojak:2000eu}. So we can treat $C_\epsilon$ and $\Delta$ as equal.
+this is \textit{up to order} $O(n-4)$ in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}, but NOT beyond - see also \cite[eq. (A.12)]{Bojak:2000eu}. So we can treat $C_\epsilon$ and $\Delta$ as equal. We also find with \cite{Bojak:2000eu}
+\begin{equation}
+A_0(0)=0
+\end{equation}
 
 \subsection[Two-Point Function B0]{Two-Point Function $B_0$}
-In \cite[eq. (4.23)]{Denner:2005nn} is a generic function given and we end up with
+In \cite[eq. (4.23)]{Denner:1991kt} is a generic function given and we end up with
 \begin{align}
 B_0(s,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta\log(\chi)\right)\\
 B_0(q^2,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2+\beta_q\log(\chi_q)\right)\\
@@ -32,10 +35,13 @@ B_0(0,m^2,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon\right)\\
 B_0(m^2,0,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2\right)\\
 B_0(t,0,m^2) &= iC_\epsilon \left(-\frac 2 \epsilon+2-\frac{t-m^2}{t}\ln\left(-\frac{t-m^2}{m^2}\right)\right)
 \end{align}
-focussing on imaginary part \textit{only}; this in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
+focussing on imaginary part \textit{only}; this in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}. We also find with \cite{Bojak:2000eu}
+\begin{equation}
+B_0(0,0,0)=0
+\end{equation}
 
 \subsection[Three-Point Function C0]{Three-Point Function $C_0$}
-Again, in \cite[eq. (4.26)]{Denner:2005nn} is a generic function given.
+Again, in \cite[eq. (4.26)]{Denner:1991qq} is a generic function given.
 
 First, we compute $C_0(s,q^2,0,m^2,m^2,m^2)$ and by taking the limit $k_1^2\rightarrow 0$ (or equivalenty $s_4\rightarrow 0$) we end up with:
 \begin{align}
@@ -96,7 +102,7 @@ C_0(m^2,s,m^2,0,m^2,m^2) &=iC_\epsilon\frac 1{s\beta}\left(-\frac 2 {\epsilon} \
 \end{align}
 in accordance with \cite{Bojak:2000eu}\cite{PhysRevD.40.54}.
 
-To compute $C_0(t,m^2,q^2,0,m^2,m^2)$ we use \cite{Denner:2005nn} and find immediatelty:
+To compute $C_0(t,m^2,q^2,0,m^2,m^2)$ we use \cite{Denner:1991qq} and find immediatelty:
 \begin{align}
 C_0(t,m^2,q^2,0,m^2,m^2) &= \frac{i C_\epsilon}{\alpha}\left[-\zeta(2)+2\DiLog\left(\frac{t_1+\alpha}{t_1}\right)+\DiLog\left(\frac{q^2-t-m^2+\alpha}{q^2-t-m^2-\alpha}\right)\right.\nonumber\\
 &\hspace{30pt}\DiLog\left(\frac{t_1-q^2\beta_q^2+\alpha}{t_1-q^2\beta_q^2-\beta_q\alpha}\right)-\DiLog\left(\frac{t_1-q^2\beta_q^2-\alpha}{t_1-q^2\beta_q^2+\beta_q\alpha}\right)\nonumber\\
@@ -104,7 +110,7 @@ C_0(t,m^2,q^2,0,m^2,m^2) &= \frac{i C_\epsilon}{\alpha}\left[-\zeta(2)+2\DiLog\l
 &\hspace{40pt}-\DiLog\left(\frac{t_1(q^2-t-m^2-\alpha)-2m^2\alpha}{t_1(q^2-t-m^2+\alpha)}\right)\nonumber\\
 &\hspace{40pt}\left.-\DiLog\left(\frac{t_1(q^2-t-m^2-\alpha)-2m^2\alpha}{t_1(q^2-t-m^2-\alpha)}\right)\right]
 \end{align}
-with $\alpha=\kappa(t,q^2,m^2)$ and the Källén function (as defined in \cite[eq. (4.27)]{Denner:2005nn})
+with $\alpha=\kappa(t,q^2,m^2)$ and the Källén function (as defined in \cite[eq. (4.27)]{Denner:1991qq})
 \begin{equation}
 \kappa(x,y,z)=\sqrt{x^2+y^2+z^2-2(xy+xz+yx)}
 \end{equation}
@@ -114,6 +120,11 @@ Additionally, we find
 \begin{align}
 \lim_{q^2\rightarrow 0}C_0(t,m^2,q^2,0,m^2,m^2) = C_0(t,m^2,0,0,m^2,m^2) = C_0(m^2,0,t,0,m^2,m^2)
 \end{align}
+
+To compute $C_0(0,m^2,t,0,0,m^2)$ we use \cite{Bojak:2000eu} and find
+\begin{equation}
+C_0(0,m^2,t,0,0,m^2)=\frac{iC_\epsilon}{t_1}\left(\frac 2 {\epsilon^2}+\frac 2 {\epsilon}\ln(-t_1/m^2)+\ln^2(-t_1/m^2)+\DiLog(t/m^2)+\frac{\zeta(2)}4\right)
+\end{equation}
 
 \subsection[Four-Point Function D0]{Four-Point Function $D_0$}
 To compute $D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)$ we follow Ingos way\cite{Bojak:2000eu} of computing his $D_0(p_1,-k_1,-k_2,0,m,m,m)=D_0(m^2,0,0,m^2,t,s,0,m^2,m^2,m^2)$ and find

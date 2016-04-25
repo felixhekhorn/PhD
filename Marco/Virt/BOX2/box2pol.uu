@@ -1,0 +1,43 @@
+#!/bin/csh -f
+# uuencoded gz-compressed .tar file created by csh script  uufiles
+# for more info (11/95), see e.g. http://xxx.lanl.gov/faq/uufaq.html
+# if you are on a unix machine this file will unpack itself: strip
+# any mail header and call resulting file, e.g., box2pol.uu
+# (uudecode ignores these header lines and starts at begin line below)
+# then say        csh box2pol.uu
+# or explicitly execute the commands (generally more secure):
+#    uudecode box2pol.uu ;   gunzip box2pol.tar.gz ;
+#    tar -xvf box2pol.tar
+# on some non-unix (e.g. VAX/VMS), first use editor to change filename
+# in "begin" line below to box2pol.tar-gz , then execute
+#    uudecode box2pol.uu
+#    gzip -d box2pol.tar-gz
+#    tar -xvf box2pol.tar
+#
+uudecode $0
+chmod 644 box2pol.tar.gz
+gunzip -c box2pol.tar.gz | tar -xvf -
+rm $0 box2pol.tar.gz
+exit
+
+begin 644 box2pol.tar.gz
+M'XL(`+"@!C4"`^W:[VZ;,!``\'S.4_`1NV+Q7VC>H6]0-5*Z95NET40!I&E/
+MO_/9!D-HE54JT,XG5234QHF4WYVQ>3S^%J?CKR^'4\57[Q0,(F<,CKI@A3+O
+MA<AS/&]"2;%BN6:<<24*">>Y4A+:K2:(IJKW9QBRJL_[NMP_O]3NV^GGUU/]
+M^I=D^"7M\8-$FDE!TRPM=X)6\)?6?">2FZ2!`R'P8IU@P'G:<)H*6G/\-^DW
+M33+?$@(O1E,%;7<26DCS0D!_>&TN0)NVIR2$WAU_W&=PM0WT(P^78]:VWU5C
+MNA%%,*(,1E2T-V;CQB1D`U=**]\+SJU7_T4\=O[%7/Y9KCK_N7;^B^A_"O_(
+M7U/DTV$92".;-)`1_7\^_]^?GF>K_[S0K7^IF?4O>/0_A7^>@W\!_I7AH]OR
+M#KCJJ^J]@V>-(S'DAO!L\J!W3^*^-M(>()&TR,@Z^E^2?[$L_R+ZG]X_4M/4
+M^K_.WI7^F]"_(Q;]+\F_G,]_,>)?1_]3^%>&/Z<MM8#737*+><&?Y:RE[1OT
+M<X#>VB20)7F7!>"D2P-_#O5>]&\EHO_E^%>S^6<C]9]'_U.$*?\&"4[TR<8L
+M`9BU0#B8M^`G2Z"TEW;"OC$\AEYW8AW]?P;_>C;_G(_XE]'_1/Y+M^Z?9CCM
+MQZF\L6^)]<C9Z?N%'\@!T?]']Y_/YE_G<?X_Y_K_V.0_2P1UIH17[4F+]L:^
+M)Y>BQH&L'O?H?\'^B[G\2Z%&_,?Z/]WZGZ3XTY>>B:&?V^<!N@V`#J;-#&C%
+MKOM)M^[GR?F5@M!<N%J`LX-TZ[OR;;A!J(.^!1U=(VRYN@_1WK'@MD+T_R;_
+MM\OR'Y__F=P__O1EWW]7?(?^&Z37;O*C>6].!>;DF']3UPO?%<FWN6,;]-V^
+MX+7E2AOW.4HW+R#1_UO\GP]5/9M_>7G_KV6L_Y/XSR`!E+;0XQ[@\!G`BXT^
+MI*5PF]!-&4)OV-%7<.GO%52@/WB0\-\OTX?:J_N#)!#]QX@1(\:K\1<Q]*P\
+$`#```-!-
+`
+end
