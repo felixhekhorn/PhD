@@ -91,16 +91,79 @@ The arguments of the functions are always inherited.
 
 I will stick to \HEPMath{} as it is the more generic and extensible form, I think.
 
+\subsection{Decomposition momenta}
+The tensor coefficients have to be expanded by momenta and there are also different conventions: \HEPMath{} and \LoopTools{}(LT) use the \textit{internal} momenta $k_i$ and \cite{Passarino:1978jh,Bojak:2000eu,Ellis:2011cr}(E) use the \textit{external} momenta $p_i$. They are related by
+\begin{equation}
+k_1 = p_1, \quad k_2 = k_1+p_2=p_1+p_2, \quad k_i = k_{i-1}+p_i, \forall i>1
+\end{equation}
+So the decomposition is different, e.g. $C_{\mu}:$
+\begin{align}
+C_{\mu}^{LT} &= k_{1\mu}C_{1}^{LT}+k_{2\nu}C_{2}^{LT}\\
+ &=p_{1\mu}(C_1^{LT}-C_2^{LT}) + p_{2\mu}C_2^{LT}\\
+C_{\mu}^{E} &= p_{1\mu}C_{1}^{E}+p_{2\mu}C_{2}^{E}
+\end{align}
+
+Scalar PaVe-Coefficients do not need any transformation, because they do not depend on any momenta. B-Coefficients also do not need any transformation, because $k_1=p_1$. The transformation for all other coefficients is given by:
+\begin{equation}
+\begin{pmatrix}C_1\\C_2\end{pmatrix}^{E} = \begin{pmatrix}1&-1\\0&1\end{pmatrix}\begin{pmatrix}C_1\\C_2\end{pmatrix}^{LT}
+\qquad
+\begin{pmatrix}D_1\\D_2\\D_3\end{pmatrix}^{E} = \begin{pmatrix}1&-1&0\\0&1&-1\\0&0&1\end{pmatrix}\begin{pmatrix}D_1\\D_2\\D_3\end{pmatrix}^{LT}
+\end{equation}
+\begin{equation}
+\begin{pmatrix}C_{00}\\C_{11}\\C_{12}\\C_{22}\end{pmatrix}^{E} =
+\begin{pmatrix}
+ 1 & 0 & 0 & 0 \\
+ 0 & 1 & -2 & 1 \\
+ 0 & 0 & 1 & -1 \\
+ 0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}C_{00}\\C_{11}\\C_{12}\\C_{22}\end{pmatrix}^{LT}
+\end{equation}
+\begin{equation}
+\begin{pmatrix}D_{00}\\D_{11}\\D_{12}\\D_{13}\\D_{22}\\D_{23}\\D_{33}\end{pmatrix}^{E} =
+\begin{pmatrix}
+ 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & -2 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 1 & -1 & -1 & 1 & 0 \\
+ 0 & 0 & 0 & 1 & 0 & -1 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & -2 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{pmatrix}
+\begin{pmatrix}D_{00}\\D_{11}\\D_{12}\\D_{13}\\D_{22}\\D_{23}\\D_{33}\end{pmatrix}^{LT}
+\end{equation}
+\begin{equation}
+\begin{pmatrix}D_{001}\\D_{002}\\D_{003}\\D_{111}\\D_{112}\\D_{113}\\D_{122}\\D_{123}\\D_{133}\\D_{222}\\D_{223}\\D_{333}\end{pmatrix}^{E} =
+\left(\!\!
+\begin{array}{ccccccccccccc}
+ 1 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 1 & -1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 1 & -3 & 0 & 3 & 0 & 0 & -1 & 0 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 1 & -1 & -2 & 2 & 0 & 1 & -1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 1 & 0 & -2 & 0 & 0 & 1 & 0 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 & 1 & -1 & 2 & -1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 & 0 & -1 & 1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 & -1 & 0 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -3 & 3 & -1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -2 & 1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 & -1 \\
+ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\
+\end{array}
+\!\!\right)
+\begin{pmatrix}D_{001}\\D_{002}\\D_{003}\\D_{111}\\D_{112}\\D_{113}\\D_{122}\\D_{123}\\D_{133}\\D_{222}\\D_{223}\\D_{333}\end{pmatrix}^{LT}
+\end{equation}
+
 \subsection{B Decomposition}
 define
 \begin{align}
-f_1 = m_1^2-m_0^2-p^2
+f_1 = m_1^2-m_0^2-p_1^2
 \end{align}
 then one finds easily
 \begin{align}
-B_1(p^2,m_0^2,m_1^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_0^2,m_1^2)+A_0(m_0^2)-A_0(m_1^2)\right) \label{eq:B1}\\
-B_{00}(p^2,m_0^2,m_1^2) &= \frac 1 {2(n-1)}\left(2m_0^2B_0(p^2,m_0^2,m_1^2)+A_0(m_1^2)-f_1B_1(p^2,m_0^2,m_1^2)\right)\\
-B_{11}(p^2,m_0^2,m_1^2) &= \frac 1 {2p^2}\left(f_1B_0(p^2,m_0^2,m_1^2)+A_0(m_1^2)-2B_{00}(p^2,m_0^2,m_1^2)\right)
+B_1(p_1^2,m_0^2,m_1^2) &= \frac 1 {2p_1^2}\left(f_1B_0(p_1^2,m_0^2,m_1^2)+A_0(m_0^2)-A_0(m_1^2)\right) \label{eq:B1}\\
+B_{00}(p_1^2,m_0^2,m_1^2) &= \frac 1 {2(n-1)}\left(2m_0^2B_0(p_1^2,m_0^2,m_1^2)+A_0(m_1^2)-f_1B_1(p_1^2,m_0^2,m_1^2)\right)\\
+B_{11}(p_1^2,m_0^2,m_1^2) &= \frac 1 {2p_1^2}\left(f_1B_0(p_1^2,m_0^2,m_1^2)+A_0(m_1^2)-2B_{00}(p_1^2,m_0^2,m_1^2)\right)
 \end{align}
 in accordance with \cite{Bojak:2000eu,Ellis:2011cr}.
 
@@ -115,6 +178,6 @@ In case $m_1$ and/or $m_2$ are very large the expression on the right-hand side 
 
 To compare the other results to \cite{Passarino:1978jh} and \LoopTools{} one has to use the \textit{strict} $n\rightarrow 4$ limit and the following identities\cite{Denner:2005nn}:
 \begin{align}
-(n-4) B_{00}(p^2,m_0^2,m_1^2) &= \frac 1 6 (p^2-3m_0^2-3m_1^2)\\
-(n-4) B_{11}(p^2,m_0^2,m_1^2) &= -\frac 2 3
+(n-4) B_{00}(p_1^2,m_0^2,m_1^2) &= \frac 1 6 (p_1^2-3m_0^2-3m_1^2)\\
+(n-4) B_{11}(p_1^2,m_0^2,m_1^2) &= -\frac 2 3
 \end{align}
