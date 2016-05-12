@@ -4,7 +4,7 @@ processOptions()
 fd = FeynDiagram()
 
 i = Point(0,  0)
-c = Vertex(1.5, 0, mark=CROSS)
+c = Vertex(1.5, 0, mark=CrossMark(0.1))
 o = Point(3, 0)
 
 Fermion(i, c).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\

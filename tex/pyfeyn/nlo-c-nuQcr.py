@@ -13,7 +13,7 @@ oAQ0 = Point(2,  2)
 oQ0 = Point(2, 0)
 oQ = Point(3, 0)
 vmu = Vertex(0, 2, mark=CIRCLE).addLabel(r"$\mu$",displace=.3,angle=70)
-vnuQ = Vertex(0, 0, mark=CIRCLE).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
+vnuQ = Vertex(0, 0, mark=CROSS).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
 
 Fermion(oAQ, oAQ0).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addLabel(PaQ,pos=-.2,displace=0.0)\
@@ -32,4 +32,4 @@ Gluon(ig,vnuQ)\
 	.addLabel("$\Pg(\lambda_{\Pg},a)$",pos=-.3,displace=0.0)\
 	.addParallelArrow(size=0.1, displace=0.06, sense=1).addLabel(r"$k_1$",angle=90,displace=.3)
 
-fd.draw("lo-b.pdf")
+fd.draw("nlo-c-nuQcr.pdf")
