@@ -13,7 +13,9 @@ oAQ0 = Point(2,  2)
 oQ0 = Point(2, 0)
 oQ = Point(3, 0)
 vmu = Vertex(0, 2, mark=CIRCLE).addLabel(r"$\mu$",displace=.3,angle=70)
-vnuQ = Vertex(0, 0, mark=CROSS).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
+vnuQ = Vertex(0, 0, mark=CircleMark(.1)).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
+DecoratedPoint(0,0,mark=CircleMark(.09),fill = [pyx.color.rgb.white])
+DecoratedPoint(0,0,mark=CrossMark(.08))
 
 Fermion(oAQ, oAQ0).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addLabel(PaQ,pos=-.2,displace=0.0)\
@@ -21,7 +23,7 @@ Fermion(oAQ, oAQ0).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 Fermion(oAQ0,vnuQ).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow(position=.4)
 Fermion(vnuQ,vmu).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addParallelArrow(size=0.1, displace=-0.06).addLabel(r"$p_1-q$",angle=90,displace=-.6)
-Fermion(vmu, oQ0).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow(position=.4)
+Fermion(vmu, oQ0).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow(position=.7)
 Fermion(oQ0,oQ).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addLabel(PQ,pos=1.2,displace=0.01)\
 	.addParallelArrow(size=0.1, displace=-0.06).addLabel(r"$p_1$")

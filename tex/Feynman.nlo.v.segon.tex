@@ -1,0 +1,48 @@
+We have\cite[(A.18)-(A.20)]{Pokorski}:
+\begin{align}
+I_0 &= \int\!\frac{d^np}{(2\pi)^n} \frac 1 {(p^2+2kp+M^2+i\eta)^\alpha}\\
+ &= i\frac{(-\pi)^{n/2}}{(2\pi)^n} \frac{\Gamma(\alpha-n/2)}{\Gamma(\alpha)} \frac 1 {(M^2-k^2+i\eta)^{\alpha-n/2}}\\
+I_\mu &= \int\!\frac{d^np}{(2\pi)^n} \frac {p_\mu} {(p^2+2kp+M^2+i\eta)^\alpha}\\
+ &= - k_\mu I_0\\
+I_{\mu\nu}&= \int\!\frac{d^np}{(2\pi)^n} \frac {p_\mu p_\nu} {(p^2+2kp+M^2+i\eta)^\alpha}\\
+ &= I_0\left(k_\mu k_\nu + \frac 1 2 g_{\mu\nu}(M^2-k^2)\frac 1 {\alpha-n/2-1}\right)
+\end{align}
+
+Heavy Quark loop:
+\begin{align}
+-i\Pi_{\mu\nu}^{ab,(4)}(k) &=  -\mu_R^{4-n}\!\!\int\!\!\frac{d^nl}{(2\pi)^n} \frac{\tr\!\left((ig\gamma_\mu)(i(\slashed l + m))\left(ig\gamma_\nu\right)(i(\slashed l + \slashed k + m))\right)\tr(T_aT_b)}{(l^2-m^2)((l+k)^2-m^2)}\\
+ &= -\frac {\delta^{ab}}{2}g^2\mu_R^{4-n}\!\int\limits_0^1dx\!\!\int\!\!\frac{d^nl}{(2\pi)^n} 4\frac{2l_\mu l_\nu+(l_\mu k_\nu+l_\nu k_\mu)+(m^2-k\cdot l-l^2)g_{\mu\nu}}{(l^2+2xk\cdot l-m^2+k^2 x)^2}\\
+ &= -2\delta^{ab}g^2\mu_R^{4-n}\!\int\limits_0^1dx\!\left(2I_{\mu\nu}+\left(k_\nu I_\nu + k_\nu I_\mu\right) + g_{\mu\nu}\left(m^2I_0-k^\rho I_\rho - g_\rho^{\,\sigma}I_{\rho\sigma}\right)\right)\\
+ &= -2\delta^{ab}g^2\mu_R^{4-n}\!\!\int\limits_0^1dx\,I_0\left[k_\mu k_\nu(2x^2-2x)+\right.\nonumber\\
+ &\hspace{60pt}\left.g_{\mu\nu}\left((k^2x(1-x)-m^2)\frac{1-n/2}{1-n/2}+m^2+k^2x(1-x)\right)\right]\\
+ &= 4\delta^{ab}g^2(k_\mu k_\nu - g_{\mu\nu}k^2) \mu_R^{4-n}\!\!\int\limits_0^1\!dx\,x(1-x)I_0
+\end{align}
+where
+\begin{align}
+\mu_R^{4-n}I_0 &= i\frac{(-\pi)^{n/2}}{(2\pi)^n} \frac{\Gamma(2-n/2)}{\Gamma(2)} \left(\frac {\mu_R^2} {k^2x(1-x)-m^2}\right)^{2-n/2}\\
+ &= -\frac i {16\pi^2}\left(\frac 2 \epsilon - \gamma_E-\ln(4\pi)-\ln((k^2x(1-x)-m^2)/\mu_R^2)\right) + O(\epsilon)
+\end{align}
+so for $k^2=0$ (on shell) we end up with
+\begin{equation}
+-i\Pi_{\mu\nu}^{ab,(4)}(k) = -i\delta^{ab}g^2(k_\mu k_\nu - g_{\mu\nu}k^2) C_\epsilon \frac 4 {3\epsilon}
+\end{equation}
+
+Light Quark loop:
+\begin{align}
+-i\Pi_{\mu\nu}^{ab,(3)}(k) &= -\mu_R^{4-n}\!\!\int\!\!\frac{d^nl}{(2\pi)^n} \frac{\tr\!\left((ig\gamma_\mu)(i\slashed l)\left(ig\gamma_\nu\right)(i(\slashed l + \slashed k))\right)\tr(T_aT_b)}{l^2(l+k)^2}\\
+ &= 4\delta^{ab}g^2(k_\mu k_\nu - g_{\mu\nu}k^2) \mu_R^{4-n}\!\!\int\limits_0^1\!dx\,x(1-x)I_0
+\end{align}
+where
+\begin{align}
+\mu_R^{4-n}I_0 &= \mu_R^{4-n}\!\!\int\!\!\frac{d^nl}{(2\pi)^n} \frac 1 {(l^2+2xk\cdot l+k^2x)^2}\\
+ &= \mu_R^{4-n}\!\!\int\!\!\frac{d^nl}{(2\pi)^n} \frac 1 {((l+xk)^2+k^2x(1-x))^2}
+\end{align}
+so for $k^2=0$ (on shell) we get $I_0 = 0$ and end up with
+\begin{equation}
+-i\Pi_{\mu\nu}^{ab,(3)}(k) = 0
+\end{equation}
+
+Gluon + Ghost loop vanish by the same arguments as the light quark loop:
+\begin{equation}
+-i\Pi_{\mu\nu}^{ab,(1+2)}(k) = 0
+\end{equation}

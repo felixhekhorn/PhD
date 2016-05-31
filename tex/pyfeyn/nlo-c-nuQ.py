@@ -1,4 +1,5 @@
 from pyfeyn.user import *
+from pyfeyn.points import Mark
 
 processOptions()
 fd = FeynDiagram()
@@ -11,7 +12,9 @@ ig = Point(-2, 0)
 oAQ = Point(3,  2)
 oQ = Point(3, 0)
 vmu = Vertex(0, 2, mark=CIRCLE).addLabel(r"$\mu$",displace=.3,angle=70)
-vnuQ = Vertex(0, 0, mark=CROSS).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
+vnuQ = Vertex(0, 0, mark=CircleMark(.1)).addLabel(r"$\nu_Q,a$",displace=.3,angle=-40)
+DecoratedPoint(0,0,mark=CircleMark(.09),fill = [pyx.color.rgb.white])
+DecoratedPoint(0,0,mark=CrossMark(.08))
 
 Fermion(oAQ, vmu).addStyle(pyx.style.linewidth(0.05*pyx.unit.w_cm)).addArrow()\
 	.addLabel(PaQ,pos=-.1,displace=0.0)\

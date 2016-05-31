@@ -12,7 +12,9 @@ nlo-g: nlo-g-1.pdf nlo-g-2.pdf nlo-g-3.pdf nlo-g-4.pdf nlo-g-5.pdf nlo-g-6.pdf n
 
 nlo-gh: nlo-gh-1.pdf nlo-gh-2.pdf nlo-gh-3.pdf nlo-gh-4.pdf
 
-nlo-v: nlo-v-box1.pdf nlo-v-box1cr.pdf nlo-v-box2.pdf nlo-v-e.pdf nlo-v-ecr.pdf nlo-v-g1.pdf nlo-v-g1cr.pdf nlo-v-g2.pdf nlo-v-g2cr.pdf nlo-v-m1.pdf nlo-v-m1cr.pdf nlo-v-seq.pdf nlo-v-seqc.pdf
+nlo-v: nlo-v-box1.pdf nlo-v-box1cr.pdf nlo-v-box2.pdf nlo-v-e.pdf nlo-v-ecr.pdf nlo-v-g1.pdf nlo-v-g1cr.pdf nlo-v-g2.pdf nlo-v-g2cr.pdf nlo-v-m1.pdf nlo-v-m1cr.pdf nlo-v-se
+
+nlo-v-se: nlo-v-seq.pdf nlo-v-seqc.pdf nlo-v-seg.pdf nlo-v-seggh.pdf nlo-v-segq.pdf nlo-v-seghq.pdf nlo-v-segc.pdf
 
 nlo-c: nlo-c-nuQ.pdf nlo-c-nuQcr.pdf nlo-c-m.pdf nlo-c-mcr.pdf 
 
