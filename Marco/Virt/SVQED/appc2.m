@@ -1,0 +1,1 @@
+L_QED= -BQED  Log[Delta/m^2] (1 + ((-2 m^2 + s) Log[x])/(beta s));
