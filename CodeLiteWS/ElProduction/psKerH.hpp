@@ -155,13 +155,13 @@ public:
 };
 
 /**
- * @class psKerHLGBarF
+ * @class psKerHLBarF
  * @author Felix Hekhorn
  * @date 27/06/16
  * @file psKers.hpp
  * @brief phase space kernel of factorisation scaling of hard part in longitudinal projection
  */
-class psKerHLGBarF : public psKerH {
+class psKerHLBarF : public psKerH {
 protected:
     
 /**
@@ -184,7 +184,7 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  */
-    psKerHLGBarF(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerH(m2,q2,sp,Delta) {}
+    psKerHLBarF(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerH(m2,q2,sp,Delta) {}
 };
 
 #endif // psKerH_H_

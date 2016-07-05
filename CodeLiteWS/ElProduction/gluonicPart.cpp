@@ -54,7 +54,7 @@ dbl gluonicPart::int1D(gsl_function* F) const {
     return res;
 }
 
-dbl gluonicPart::c0() const{
+dbl gluonicPart::c0() const {
     dbl s = sp+q2;
     dbl beta = sqrt(1. - 4.*m2/s);
     dbl chi = (1.-beta)/(1.+beta);
@@ -94,34 +94,34 @@ dbl gluonicPart::cBar1() const {
 dbl gluonicPart::cBarR1() const {
     gsl_function fSV;
     if (L == this->proj) {
-        psKerSVGBarR kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVGBarR>;
-        fSV.params = &kSV;
-    } else if(G == this->proj) {
         psKerSVLBarR kSV(m2,q2,sp,Delta);
         fSV.function = gsl::callFunctor<psKerSVLBarR>;
         fSV.params = &kSV;
+    } else if(G == this->proj) {
+        psKerSVGBarR kSV(m2,q2,sp,Delta);
+        fSV.function = gsl::callFunctor<psKerSVGBarR>;
+        fSV.params = &kSV;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int1D(&fSV)+2./3.*(1./(4.*4.*M_PI*M_PI))*this->c0();
+    return this->int1D(&fSV)/*+2./3.*(1./(4.*4.*M_PI*M_PI))*this->c0()*/;
 }
 
 dbl gluonicPart::cBarF1() const {
     gsl_monte_function fH;
     gsl_function fSV;
     if (L == this->proj) {
-        psKerHLGBarF kH(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHLGBarF>;
+        psKerHLBarF kH(m2,q2,sp,Delta);
+        fH.f = gsl::callFunctor2D<psKerHLBarF>;
         fH.params = &kH;
-        psKerSVGBarF kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVGBarF>;
+        psKerSVLBarF kSV(m2,q2,sp,Delta);
+        fSV.function = gsl::callFunctor<psKerSVLBarF>;
         fSV.params = &kSV;
     } else if(G == this->proj) {
         psKerHGBarF k(m2,q2,sp,Delta);
         fH.f = gsl::callFunctor2D<psKerHGBarF>;
         fH.params = &k;
-        psKerSVLBarF kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVLBarF>;
+        psKerSVGBarF kSV(m2,q2,sp,Delta);
+        fSV.function = gsl::callFunctor<psKerSVGBarF>;
         fSV.params = &kSV;
     } else
         throw invalid_argument("unknown projection!");

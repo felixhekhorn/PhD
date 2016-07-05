@@ -29,8 +29,7 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  */
-    psKerSV(dbl m2, dbl q2, dbl sp, dbl Delta) : psKer(m2,q2,sp,Delta) {
-    }
+    psKerSV(dbl m2, dbl q2, dbl sp, dbl Delta) : psKer(m2,q2,sp,Delta) {}
 
 /**
  * @brief called function
