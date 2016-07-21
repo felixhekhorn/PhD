@@ -6,8 +6,8 @@
 #include "psKerH.hpp"
 #include "psKerSV.hpp"
 
-gluonicPart::gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj) : 
-    m2(m2), q2(q2), sp(sp), Delta(Delta), proj(proj){
+gluonicPart::gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf) : 
+    m2(m2), q2(q2), sp(sp), Delta(Delta), proj(proj), nlf(nlf){
     dbl s4minV = Delta;
     dbl s4maxV = ((q2 + sp)*(1 - 2*Sqrt(m2/(q2 + sp)) + Sqrt((-4*m2 + q2 + sp)/(q2 + sp)))*(-1 + 2*Sqrt(m2/(q2 + sp)) + Sqrt((-4*m2 + q2 + sp)/(q2 + sp))))/(4.*Sqrt(m2/(q2 + sp)));
     if (s4minV >= s4maxV)
@@ -103,7 +103,8 @@ dbl gluonicPart::cBarR1() const {
         fSV.params = &kSV;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int1D(&fSV)/*+2./3.*(1./(4.*4.*M_PI*M_PI))*this->c0()*/;
+    // take fermion loop into account!
+    return this->int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->c0();
 }
 
 dbl gluonicPart::cBarF1() const {
@@ -125,5 +126,6 @@ dbl gluonicPart::cBarF1() const {
         fSV.params = &kSV;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int2D(&fH)+this->int1D(&fSV);
+    // given by mass factorization
+    return this->int2D(&fH)+this->int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->c0();
 }

@@ -40,6 +40,11 @@ class gluonicPart {
     projT proj;
 
 /**
+ * @brief number of light flavours
+ */
+    uint nlf;
+
+/**
  * @brief integrates 1 dimension
  * @param F kernel
  * @return \f$\int\limits_0^1 f(x)\,dx\f$
@@ -62,8 +67,9 @@ public:
  * @param center of mass energy \f$s' = s - q^2\f$
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param proj projection
+ * @param nlf number of light flavours
  */
-    gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj);
+    gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf);
     
 /**
  * @brief LO scaling function \f$c^{(0)}_g\f$: H+Poles+S+V
