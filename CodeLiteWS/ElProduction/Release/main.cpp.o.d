@@ -1,5 +1,5 @@
-Release/main.cpp.o: main.cpp config.h gluonicPart.h
+Release/main.cpp.o: main.cpp config.h ElProduction.h
 
 config.h:
 
-gluonicPart.h:
+ElProduction.h:

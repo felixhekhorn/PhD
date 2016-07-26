@@ -1,12 +1,13 @@
-#include "gluonicPart.h"
+#include "ElProduction.h"
 
 #include <gsl/gsl_monte_vegas.h>
 #include "gsl++.hpp"
 
 #include "psKerH.hpp"
 #include "psKerSV.hpp"
+#include "psKerA.hpp"
 
-gluonicPart::gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf) : 
+ElProduction::ElProduction(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf) : 
     m2(m2), q2(q2), sp(sp), Delta(Delta), proj(proj), nlf(nlf){
     dbl s4minV = Delta;
     dbl s4maxV = ((q2 + sp)*(1 - 2*Sqrt(m2/(q2 + sp)) + Sqrt((-4*m2 + q2 + sp)/(q2 + sp)))*(-1 + 2*Sqrt(m2/(q2 + sp)) + Sqrt((-4*m2 + q2 + sp)/(q2 + sp))))/(4.*Sqrt(m2/(q2 + sp)));
@@ -14,7 +15,7 @@ gluonicPart::gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf
         throw domain_error("Delta has to be smaller than s4_max!");
 }
 
-dbl gluonicPart::int2D(gsl_monte_function* F) const {
+dbl ElProduction::int2D(gsl_monte_function* F) const {
     const uint dim = 2;
     double xl[dim] = {0., 0.};
     double xu[dim] = {1., 1.};
@@ -42,7 +43,7 @@ dbl gluonicPart::int2D(gsl_monte_function* F) const {
     return res;
 }
 
-dbl gluonicPart::int1D(gsl_function* F) const {
+dbl ElProduction::int1D(gsl_function* F) const {
     //size_t reNevals;
     size_t calls = 10000;
     dbl res,err;
@@ -54,7 +55,7 @@ dbl gluonicPart::int1D(gsl_function* F) const {
     return res;
 }
 
-dbl gluonicPart::c0() const {
+dbl ElProduction::cg0() const {
     dbl s = sp+q2;
     dbl beta = sqrt(1. - 4.*m2/s);
     dbl chi = (1.-beta)/(1.+beta);
@@ -62,10 +63,12 @@ dbl gluonicPart::c0() const {
         return m2*16.*M_PI*Kggg*NC*CF*(-q2*s/(sp*sp*sp))*(beta + 2.*m2/s*log(chi));
     if(G == this->proj)
         return m2*M_PI*(-2.* (4.*m2*s + 2.*q2*s + sp*sp)*beta + (8.*m2*m2 - 2.*q2*q2 - 4.*m2*sp - sp*(2.*q2 + sp))*2.*log(chi))/(sp*sp*sp);
+    if (P == this->proj)
+        return m2*4*M_PI*((4*q2+3*sp)*beta +(2*q2+sp)*log(chi))/(sp*sp);
     throw invalid_argument("unknown projection!");
 }
 
-dbl gluonicPart::c1() const {
+dbl ElProduction::cg1() const {
     gsl_monte_function fH;
     gsl_function fSV;
     if (L == this->proj) {
@@ -87,11 +90,11 @@ dbl gluonicPart::c1() const {
     return this->int2D(&fH)+this->int1D(&fSV);
 }
 
-dbl gluonicPart::cBar1() const {
-    return this->cBarR1()+this->cBarF1();
+dbl ElProduction::cgBar1() const {
+    return this->cgBarR1()+this->cgBarF1();
 }
 
-dbl gluonicPart::cBarR1() const {
+dbl ElProduction::cgBarR1() const {
     gsl_function fSV;
     if (L == this->proj) {
         psKerSVLBarR kSV(m2,q2,sp,Delta);
@@ -104,10 +107,10 @@ dbl gluonicPart::cBarR1() const {
     } else
         throw invalid_argument("unknown projection!");
     // take fermion loop into account!
-    return this->int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->c0();
+    return this->int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
 }
 
-dbl gluonicPart::cBarF1() const {
+dbl ElProduction::cgBarF1() const {
     gsl_monte_function fH;
     gsl_function fSV;
     if (L == this->proj) {
@@ -127,5 +130,62 @@ dbl gluonicPart::cBarF1() const {
     } else
         throw invalid_argument("unknown projection!");
     // given by mass factorization
-    return this->int2D(&fH)+this->int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->c0();
+    return this->int2D(&fH)+this->int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
+}
+
+dbl ElProduction::cq1() const {
+    gsl_monte_function f;
+    if (L == this->proj) {
+        psKerAL1 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAL1>;
+        f.params = &k;
+    } else if(G == this->proj) {
+        psKerAG1 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAG1>;
+        f.params = &k;
+    } else if(P == this->proj) {
+        psKerAP1 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAP1>;
+        f.params = &k;
+    } else
+        throw invalid_argument("unknown projection!");
+    return this->int2D(&f);
+}
+
+dbl ElProduction::cqBarF1() const {
+    gsl_monte_function f;
+    if (L == this->proj) {
+        psKerAL1ScaleF k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAL1ScaleF>;
+        f.params = &k;
+    } else if(G == this->proj) {
+        psKerAG1ScaleF k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAG1ScaleF>;
+        f.params = &k;
+    } else if(P == this->proj) {
+        psKerAP1ScaleF k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAP1ScaleF>;
+        f.params = &k;
+    } else
+        throw invalid_argument("unknown projection!");
+    return this->int2D(&f);
+}
+
+dbl ElProduction::dq1() const {
+    gsl_monte_function f;
+    if (L == this->proj) {
+        psKerAL2 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAL2>;
+        f.params = &k;
+    } else if(G == this->proj) {
+        psKerAG2 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAG2>;
+        f.params = &k;
+    } else if(P == this->proj) {
+        psKerAP2 k(m2,q2,sp); 
+        f.f = gsl::callFunctor2D<psKerAP2>;
+        f.params = &k;
+    } else
+        throw invalid_argument("unknown projection!");
+    return this->int2D(&f);
 }

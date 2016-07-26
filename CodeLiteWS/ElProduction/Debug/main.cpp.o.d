@@ -1,5 +1,5 @@
-Debug/main.cpp.o: main.cpp config.h gluonicPart.h
+Debug/main.cpp.o: main.cpp config.h ElProduction.h
 
 config.h:
 
-gluonicPart.h:
+ElProduction.h:

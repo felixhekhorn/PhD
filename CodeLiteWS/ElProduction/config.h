@@ -110,9 +110,14 @@ namespace Color {
     const dbl CA = (dbl)NC;
     
     /**
-     * @brief Color avarage of \f$\Pgg$\f and \f$\Pg\f$ in initial state
+     * @brief Color avarage of \f$\Pg$\f and \f$\Pgg\f$ in initial state
      */
     const dbl Kggg = 1./(NC*NC - 1.);
+    
+    /**
+     * @brief Color avarage of \f$\Pq$\f and \f$\Pgg\f$ in initial state
+     */
+    const dbl Kqgg = 1./(NC);
 }
 
 /**
@@ -121,6 +126,6 @@ namespace Color {
  *  - L: \f$-\frac{4q^2}{{s'}^2}k_1^\mu k_1^\nu\f$ longitudinal projection
  *  - P: \f$i\epsilon_{\mu\nu\rho\sigma}\frac{k_1^\rho q^\sigma}{s'}\f$
  */
-enum projT {G, L};
+enum projT {G, L, P};
 
 #endif // Config_H_

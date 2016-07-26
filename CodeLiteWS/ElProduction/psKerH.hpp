@@ -10,10 +10,7 @@ using namespace Color;
 
 /**
  * @class psKerHG
- * @author Felix Hekhorn
- * @date 27/06/16
- * @file psKers.hpp
- * @brief phase space kernel of hard part in g-projection
+ * @brief abstract phase space kernel of hard part
  */
 class psKerH : public psKer {
 protected:
@@ -41,7 +38,7 @@ public:
  * @brief called function
  * @param x1
  * @param x2
- * @return hard part: (OK + QED)_G
+ * @return hard part
  */
     dbl operator()(dbl x1, dbl x2) const {
         dbl s = sp+q2;
@@ -56,9 +53,6 @@ public:
 
 /**
  * @class psKerHG
- * @author Felix Hekhorn
- * @date 27/06/16
- * @file psKers.hpp
  * @brief phase space kernel of hard part in g-projection
  */
 class psKerHG : public psKerH {

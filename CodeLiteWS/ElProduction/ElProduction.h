@@ -13,7 +13,7 @@
  * @file gluonicPart.h
  * @brief gluonic part of the cross sections
  */
-class gluonicPart {
+class ElProduction {
 /**
  * @brief heavy quark mass squared: \f$m^2 > 0\f$
  */
@@ -54,7 +54,7 @@ class gluonicPart {
 /**
  * @brief integrates 2 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(x,y)\,dxdy\f$
+ * @return \f$\int\limits_0^1 f(x_1,x_2)\,dx_1dx_2\f$
  */
     dbl int2D(gsl_monte_function* F) const;
     
@@ -69,37 +69,55 @@ public:
  * @param proj projection
  * @param nlf number of light flavours
  */
-    gluonicPart(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf);
+    ElProduction(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf);
     
 /**
- * @brief LO scaling function \f$c^{(0)}_g\f$: H+Poles+S+V
+ * @brief LO scaling function \f$c^{(0)}_g\f$
  * @return \f$c^{(0)}_g\f$
  */
-    dbl c0() const;
+    dbl cg0() const;
 
 /**
- * @brief NLO scaling function \f$c^{(1)}_g\f$: H+Poles+S+V
+ * @brief NLO gluon scaling function \f$c^{(1)}_g\f$: H+Poles+S+V
  * @return \f$c^{(1)}_g\f$
  */
-    dbl c1() const;
+    dbl cg1() const;
 
 /**
- * @brief scaling logs of NLO scaling function \f$\bar{c}^{R,(1)}_g\f$: H+Poles+S+V
+ * @brief scaling logs of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
-    dbl cBar1() const;
+    dbl cgBar1() const;
 
 /**
- * @brief renormalization log scaling of NLO scaling function \f$\bar{c}^{R,(1)}_g\f$: H+Poles+S+V
+ * @brief renormalization log scaling of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
-    dbl cBarR1() const;
+    dbl cgBarR1() const;
 
 /**
- * @brief factorization log scaling of NLO scaling function \f$\bar{c}^{F,(1)}_g\f$: H+Poles+S+V
- * @return \f$\bar{c}^{R,(1)}_g\f$
+ * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$: Poles+Factorization
+ * @return \f$\bar{c}^{F,(1)}_g\f$
  */
-    dbl cBarF1() const;
+    dbl cgBarF1() const;
+
+/**
+ * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with heavy charges
+ * @return \f$c^{(1)}_q\f$
+ */
+    dbl cq1() const;
+
+/**
+ * @brief factorization log scaling of NLO quark scaling function \f$\bar{c}^{F,(1)}_q\f$
+ * @return \f$\bar{c}^{F,(1)}_q\f$
+ */
+    dbl cqBarF1() const;
+
+/**
+ * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with light charges
+ * @return \f$d^{(1)}_q\f$
+ */
+    dbl dq1() const;
 };
 
 
