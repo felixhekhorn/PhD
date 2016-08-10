@@ -56,8 +56,8 @@ protected:
  * @return soft+virtual: (OK+QED)_G
  */
     inline dbl get(dbl t1) const {
-        dbl nG = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nG * (CA * SVOKG(m2,q2,sp,Delta,t1) + CF * SVQEDG(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKG(m2,q2,sp,Delta,t1) + CF * SVQEDG(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -81,11 +81,11 @@ protected:
 /**
  * @brief called function
  * @param t1
- * @return soft+virtual part: (OK+QED)_G
+ * @return soft+virtual part: (OK+QED)_L
  */
     inline dbl get(dbl t1) const {
-        dbl nL = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nL * (CA * SVOKL(m2,q2,sp,Delta,t1) + CF * SVQEDL(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKL(m2,q2,sp,Delta,t1) + CF * SVQEDL(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -102,6 +102,35 @@ public:
 };
 
 /**
+ * @brief phase space kernel of soft+virtual part in polarized projection
+ */
+class psKerSVP : public psKerSV {
+protected:
+    
+/**
+ * @brief called function
+ * @param t1
+ * @return soft+virtual part: (OK+QED)_P
+ */
+    inline dbl get(dbl t1) const {
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKP(m2,q2,sp,Delta,t1) + CF * SVQEDP(m2,q2,sp,Delta,t1))/(sp*sp);
+    }
+
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ */
+    psKerSVP(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerSV(m2,q2,sp,Delta) {}
+
+};
+
+/**
  * @brief phase space kernel of factorization log scaling of soft+virtual part in g-projection
  */
 class psKerSVGBarF : public psKerSV {
@@ -113,8 +142,8 @@ protected:
  * @return hard part: (OK+QED)_G
  */
     inline dbl get(dbl t1) const {
-        dbl nG = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nG * (CA * SVOKGScaleF(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKGScaleF(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -139,11 +168,11 @@ protected:
 /**
  * @brief called function
  * @param t1
- * @return soft+virtual part: (OK+QED)_G
+ * @return soft+virtual part: (OK+QED)_L
  */
     inline dbl get(dbl t1) const {
-        dbl nL = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nL * (CA * SVOKLScaleF(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKLScaleF(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -160,6 +189,35 @@ public:
 };
 
 /**
+ * @brief phase space kernel of factorization log scaling of soft+virtual part in polarized projection
+ */
+class psKerSVPBarF : public psKerSV {
+protected:
+    
+/**
+ * @brief called function
+ * @param t1
+ * @return soft+virtual part: (OK+QED)_P
+ */
+    inline dbl get(dbl t1) const {
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKPScaleF(m2,q2,sp,Delta,t1))/(sp*sp);
+    }
+
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ */
+    psKerSVPBarF(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerSV(m2,q2,sp,Delta) {}
+
+};
+
+/**
  * @brief phase space kernel of renormalization log scaling of soft+virtual part in g-projection
  */
 class psKerSVGBarR : public psKerSV {
@@ -171,8 +229,8 @@ protected:
  * @return hard part: (OK+QED)_G
  */
     inline dbl get(dbl t1) const {
-        dbl nG = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nG * (CA * SVOKGScaleR(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKGScaleR(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -197,11 +255,11 @@ protected:
 /**
  * @brief called function
  * @param t1
- * @return soft+virtual part: (OK+QED)_G
+ * @return soft+virtual part: (OK+QED)_L
  */
     inline dbl get(dbl t1) const {
-        dbl nL = Kggg * NC * CF;
-        return (m2/(4.*M_PI)) * nL * (CA * SVOKLScaleR(m2,q2,sp,Delta,t1))/(sp*sp);
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKLScaleR(m2,q2,sp,Delta,t1))/(sp*sp);
     }
 
 public:
@@ -214,6 +272,35 @@ public:
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  */
     psKerSVLBarR(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerSV(m2,q2,sp,Delta) {}
+
+};
+
+/**
+ * @brief phase space kernel of renormalization log scaling of soft+virtual part in polarized projection
+ */
+class psKerSVPBarR : public psKerSV {
+protected:
+    
+/**
+ * @brief called function
+ * @param t1
+ * @return soft+virtual part: (OK+QED)_L
+ */
+    inline dbl get(dbl t1) const {
+        dbl n = Kggg * NC * CF;
+        return (m2/(4.*M_PI)) * n * (CA * SVOKPScaleR(m2,q2,sp,Delta,t1))/(sp*sp);
+    }
+
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ */
+    psKerSVPBarR(dbl m2, dbl q2, dbl sp, dbl Delta) : psKerSV(m2,q2,sp,Delta) {}
 
 };
 

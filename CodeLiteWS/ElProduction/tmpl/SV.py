@@ -20,6 +20,12 @@ dbl SVOKL({sig}) {{
 {final}
 }}
 
+dbl SVOKP({sig}) {{
+{init}
+{SVOKP}
+{final}
+}}
+
 dbl SVQEDG({sig}) {{
 {init} 
 {SVQEDG}
@@ -29,6 +35,12 @@ dbl SVQEDG({sig}) {{
 dbl SVQEDL({sig}) {{
 {init}
 {SVQEDL}
+{final}
+}}
+
+dbl SVQEDP({sig}) {{
+{init}
+{SVQEDP}
 {final}
 }}
 
@@ -51,6 +63,16 @@ dbl SVOKLScaleF({sig}) {{
 {initScale}
 return {SVOKLScaleF};
 }}
+
+dbl SVOKPScaleR({sig}) {{
+{initScale}
+return {SVOKPScaleR};
+}}
+
+dbl SVOKPScaleF({sig}) {{
+{initScale}
+return {SVOKPScaleF};
+}}
 """
 
 fs={
@@ -67,7 +89,8 @@ dbl r = 0.;
 """,
  "final": "return r;"
 };
-for l in {"SVOKG", "SVOKL", "SVQEDG", "SVQEDL","SVOKGScaleR","SVOKGScaleF","SVOKLScaleR","SVOKLScaleF"}:
+for l in {"SVOKG","SVOKL","SVOKP", "SVQEDG","SVQEDL","SVQEDP",\
+          "SVOKGScaleR","SVOKGScaleF","SVOKLScaleR","SVOKLScaleF","SVOKPScaleR","SVOKPScaleF"}:
 	with open(l+".c","r") as f:
 		fs[l] = f.read()
 		f.close()

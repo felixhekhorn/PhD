@@ -25,9 +25,14 @@ class ElProduction {
     dbl q2;
     
 /**
- * @brief center of mass energy: \f$s' = s - q^2\f$
+ * @brief corrected center of mass energy: \f$s' = s - q^2\f$
  */
     dbl sp;
+    
+/**
+ * @brief has partonic s been set?
+ */
+    bool hasPartonicS;
     
 /**
  * @brief energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
@@ -58,18 +63,40 @@ class ElProduction {
  */
     dbl int2D(gsl_monte_function* F) const;
     
+/**
+ * @brief checks wether all parameters are given
+ */
+    void check() const;
+    
 public:
 
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
- * @param center of mass energy \f$s' = s - q^2\f$
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param proj projection
  * @param nlf number of light flavours
  */
-    ElProduction(dbl m2, dbl q2, dbl sp, dbl Delta, projT proj, uint nlf);
+    ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf);
+    
+/**
+ * @brief sets partonic eta
+ * @param eta partonic eta
+ */
+    void setEta(dbl eta);
+    
+/**
+ * @brief sets partonic center of mass energy
+ * @param s partonic cm-energy
+ */
+    void setPartonicS(dbl s);
+    
+/**
+ * @brief sets virtuality of photon \f$q^2< 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ */
+    void setQ2(dbl q2);
     
 /**
  * @brief LO scaling function \f$c^{(0)}_g\f$
