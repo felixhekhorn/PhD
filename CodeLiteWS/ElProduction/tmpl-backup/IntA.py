@@ -3,11 +3,10 @@
 
 tmpl = """#include "config.h"
 
-#define Pi M_PI
-
 dbl IntAG1({sig}) {{
 {init}
-return {IntAG1};
+{IntAG1}
+{final}
 }}
 
 dbl IntAG1ScaleF({sig}) {{
@@ -16,20 +15,21 @@ return {IntAG1ScaleF};
 }}
 
 dbl IntAG2({sig}) {{
-{init}
-dbl s = sp + q2;
-return {IntAG2};
+{init} 
+{IntAG2}
+{final}
 }}
 
 dbl IntAL1({sig}) {{
 {init}
-return {IntAL1};
+{IntAL1}
+{final}
 }}
 
 dbl IntAL2({sig}) {{
 {init}
-dbl s = sp + q2;
-return {IntAL2};
+{IntAL2}
+{final}
 }}
 
 dbl IntAL1ScaleF({sig}) {{
@@ -39,13 +39,14 @@ return {IntAL1ScaleF};
 
 dbl IntAP1({sig}) {{
 {init}
-return {IntAP1};
+{IntAP1}
+{final}
 }}
 
 dbl IntAP2({sig}) {{
 {init}
-dbl s = sp + q2;
-return {IntAP2};
+{IntAP2}
+{final}
 }}
 
 dbl IntAP1ScaleF({sig}) {{
@@ -57,9 +58,11 @@ return {IntAP1ScaleF};
 fs={
  "sig": "dbl m2, dbl q2, dbl sp, dbl s4, dbl t1",
  "init": """dbl u1 = s4-sp-t1;
-dbl t = t1 + m2;
-dbl u1p = u1 - q2;""",
- "initScale": """dbl u1 = s4-sp-t1;"""
+dbl r = 0.;
+""",
+ "initScale": """dbl u1 = s4-sp-t1;
+""",
+ "final": "return r;"
 };
 for l in {"IntAG1","IntAL1","IntAP1","IntAG2","IntAL2","IntAP2","IntAG1ScaleF","IntAL1ScaleF","IntAP1ScaleF"}:
 	with open(l+".c","r") as f:

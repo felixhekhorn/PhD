@@ -4,6 +4,8 @@
 
 #include "ElProduction.h"
 
+#include "IntA.h"
+
 int Marco();
 int test();
 
@@ -14,7 +16,8 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
+    return Marco();
     
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.e1;
@@ -53,7 +56,7 @@ int main(int argc, char **argv) {
 
 int test(){
     dbl Delta = 1e-6;
-    dbl xi = 44.32;
+    /*dbl xi = 44.32;
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
     dbl eta;
@@ -63,14 +66,53 @@ int test(){
         oG.setEta(eta);
         oL.setEta(eta);
         printf("%e\t%e\t%e\n",eta,oG.dq1(),oL.dq1());
+    }*/
+    /*uint N = 21;
+    for(uint j = 0; j < N; ++j) {
+        dbl m2 = 120. - 100.*j/(N-1);
+        printf("%e\t",m2);
+        ElProduction oG(m2,-1e3,Delta,G,4);
+        oG.setEta(1e-3);
+        //oG.setPartonicS(400);
+        printf("%e\t",oG.dq1());
+        oG.setEta(2e-3);
+        //oG.setPartonicS(390);
+        printf("%e\t",oG.dq1());
+        oG.setEta(3e-3);
+        //oG.setPartonicS(380);
+        printf("%e\t",oG.dq1());
+        oG.setEta(4e-3);
+        //oG.setPartonicS(370);
+        printf("%e\n",oG.dq1());
+    }*/
+    dbl m2 = 1.5*1.5;
+    ElProduction o(m2,-1e2,Delta,G,4);
+    uint N = 21;
+    for(uint j = 0; j < N; ++j) {
+        dbl q2 = -pow(10,3.+4./(N-1)*j);
+        o.setQ2(q2);
+        printf("%e\t",-q2);
+        o.setEta(1e-3);
+        printf("%e\t",o.dq1());
+        o.setEta(2e-3);
+        printf("%e\t",o.dq1());
+        o.setEta(1e-2);
+        printf("%e\t",o.dq1());
+        o.setEta(1e-1);
+        printf("%e\n",o.dq1());
     }
+    
+    /*ElProduction o(1.5*1.5,-1e3,Delta,G,4);
+    o.setEta(1e-3);
+    printf("%e\n",o.dq1());*/
+    //IntAG2(1.5*1.5,-1e3,1009.009,1.1153579464537023e-6,-519.81269239429935);
     return EXIT_SUCCESS;
 }
 
 int Marco() {
     dbl Delta = 1e-6;
     
-    dbl xi = 1e3;
+    /*dbl xi = 1e3;
     const uint neta = 43;
     dbl aeta[neta] = {0.1000e-02, 0.3000e-02,
        0.5000e-02, 0.7000e-02, 0.9000e-02, 0.1000e-01, 0.3000e-01, 
@@ -84,18 +126,18 @@ int Marco() {
        0.1000e+06};
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
-    for (uint j = 0; j < /*neta*/15; ++j) {
+    for (uint j = 0; j < /*neta* /15; ++j) {
         printf("%d,%e: ",j,aeta[j]);
         oG.setEta(aeta[j]);
         oL.setEta(aeta[j]);
-        printf("%e\n",(oG.dq1()/*+oL.dq1()/2.*/)*3./2.);
+        printf("%e\n",(oG.dq1()+oL.dq1()/2.)*3./2.);
     }
-    return EXIT_SUCCESS;
-/*    dbl m2 = 4.75*4.75;
+    return EXIT_SUCCESS;*/
+    dbl m2 = 4.75*4.75;
     
     // called function (macro needed ...)
     #define call(etaV) oG.setEta(etaV);oL.setEta(etaV);\
-        dbl g = oG.dq1();dbl l = oL.dq1();\
+        dbl g = oG.cq1();dbl l = oL.cq1();\
         printf("%e\t%e\t%e\t%e\n",etaV,-q2,l,g+l/2.);
         
     // do obscure eta loop ;-)
@@ -117,5 +159,5 @@ int Marco() {
         oL.setQ2(q2);
         etaLoop(call)
     }
-    return EXIT_SUCCESS;*/
+    return EXIT_SUCCESS;
 }
