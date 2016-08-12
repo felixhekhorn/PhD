@@ -3,11 +3,10 @@
 
 tmpl = """#include "config.h"
 
+#define Pi M_PI
+
 dbl IntROKfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    dbl u1 = s4-sp-t1;
-    dbl s = sp+q2;
-    dbl u1p = u1-q2;
-    dbl t = t1+m2;
+{initOK}
     
 {IntROKfiniteG}
 
@@ -15,10 +14,7 @@ dbl IntROKfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 }}
 
 dbl IntROKfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    dbl u1 = s4-sp-t1;
-    dbl s = sp+q2;
-    dbl u1p = u1-q2;
-    dbl t = t1+m2;
+{initOK}
     
 {IntROKfiniteL}
 
@@ -33,39 +29,34 @@ dbl IntROKfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 }}
 
 dbl IntRQEDfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    dbl u1 = s4-sp-t1;
-    dbl s = sp+q2;
-    dbl u1p = u1-q2;
-    dbl t = t1+m2;
+{initQED}
     
-{IntRQEDfiniteG}
-
-    return c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6;
+return {IntRQEDfiniteG};
 }}
 
 dbl IntRQEDfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    dbl u1 = s4-sp-t1;
-    dbl s = sp+q2;
-    dbl u1p = u1-q2;
-    dbl t = t1+m2;
+{initQED}
     
-{IntRQEDfiniteL}
-
-    return c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6;
+return {IntRQEDfiniteL};
 }}
 
 dbl IntRQEDfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    dbl u1 = s4-sp-t1;
-    dbl s = sp+q2;
-    dbl u1p = u1-q2;
-    dbl t = t1+m2;
+{initQED}
     
-{IntRQEDfiniteP}
-
-    return c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6;
+return {IntRQEDfiniteP};
 }}"""
 
-fs={};
+fs={
+  "initOK": """
+dbl u1 = s4-sp-t1;
+dbl s = sp+q2;
+dbl u1p = u1-q2;
+dbl t = t1+m2;""",
+  "initQED": """dbl u1 = s4-sp-t1;
+dbl s = sp+q2;
+dbl u1p = u1-q2;
+dbl t = t1+m2;""",
+};
 for l in {"IntROKfiniteG","IntROKfiniteL","IntROKfiniteP", "IntRQEDfiniteG","IntRQEDfiniteL","IntRQEDfiniteP"}:
 	with open(l+".c","r") as f:
 		fs[l] = f.read()

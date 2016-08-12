@@ -18,7 +18,11 @@ return {IntAG1ScaleF};
 dbl IntAG2({sig}) {{
 {init}
 dbl s = sp + q2;
-return {IntAG2};
+dbl r = {IntAG2};
+// protect from ps corner cases
+if (isnan(r))
+	return 0.;
+return r;
 }}
 
 dbl IntAL1({sig}) {{
@@ -29,7 +33,11 @@ return {IntAL1};
 dbl IntAL2({sig}) {{
 {init}
 dbl s = sp + q2;
-return {IntAL2};
+dbl r = {IntAL2};
+// protect from ps corner cases
+if (isnan(r))
+	return 0.;
+return r;
 }}
 
 dbl IntAL1ScaleF({sig}) {{

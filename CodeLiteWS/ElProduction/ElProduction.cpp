@@ -73,7 +73,7 @@ dbl ElProduction::int1D(gsl_function* F) const {
     size_t calls = 10000;
     dbl res,err;
     gsl_integration_workspace *w = gsl_integration_workspace_alloc(calls);
-    gsl_integration_qag(F, 0, 1., 1e-10,1e-5, calls, GSL_INTEG_GAUSS41, w, &res,&err);
+    gsl_integration_qag(F, 0, 1., 1e-20,1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
     gsl_integration_workspace_free(w);
     //reNevals = w->size;
     //printf("SV: res: %e, err: %e\n",res,err);

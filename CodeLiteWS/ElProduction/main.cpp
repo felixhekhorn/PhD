@@ -16,8 +16,8 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
-    return Marco();
+    return test();
+    //return Marco();
     
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.e1;
@@ -56,17 +56,19 @@ int main(int argc, char **argv) {
 
 int test(){
     dbl Delta = 1e-6;
-    /*dbl xi = 44.32;
+    dbl xi = 1e4;
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
     dbl eta;
     uint N = 20;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-3-1+2/(N-1.)*j);
+        eta = pow(10,-2-2/(N-1.)*j);
         oG.setEta(eta);
         oL.setEta(eta);
         printf("%e\t%e\t%e\n",eta,oG.dq1(),oL.dq1());
-    }*/
+    }
+    /*oG.setEta(1e-4);
+    printf("%e",oG.dq1());*/
     /*uint N = 21;
     for(uint j = 0; j < N; ++j) {
         dbl m2 = 120. - 100.*j/(N-1);
@@ -85,7 +87,7 @@ int test(){
         //oG.setPartonicS(370);
         printf("%e\n",oG.dq1());
     }*/
-    dbl m2 = 1.5*1.5;
+    /*dbl m2 = 1.5*1.5;
     ElProduction o(m2,-1e2,Delta,G,4);
     uint N = 21;
     for(uint j = 0; j < N; ++j) {
@@ -100,7 +102,7 @@ int test(){
         printf("%e\t",o.dq1());
         o.setEta(1e-1);
         printf("%e\n",o.dq1());
-    }
+    }*/
     
     /*ElProduction o(1.5*1.5,-1e3,Delta,G,4);
     o.setEta(1e-3);
@@ -112,7 +114,7 @@ int test(){
 int Marco() {
     dbl Delta = 1e-6;
     
-    /*dbl xi = 1e3;
+    dbl xi = 1e1;
     const uint neta = 43;
     dbl aeta[neta] = {0.1000e-02, 0.3000e-02,
        0.5000e-02, 0.7000e-02, 0.9000e-02, 0.1000e-01, 0.3000e-01, 
@@ -126,14 +128,13 @@ int Marco() {
        0.1000e+06};
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
-    for (uint j = 0; j < /*neta* /15; ++j) {
-        printf("%d,%e: ",j,aeta[j]);
+    for (uint j = 0; j < neta; ++j) {
         oG.setEta(aeta[j]);
         oL.setEta(aeta[j]);
         printf("%e\n",(oG.dq1()+oL.dq1()/2.)*3./2.);
     }
-    return EXIT_SUCCESS;*/
-    dbl m2 = 4.75*4.75;
+    return EXIT_SUCCESS;
+/*    dbl m2 = 4.75*4.75;
     
     // called function (macro needed ...)
     #define call(etaV) oG.setEta(etaV);oL.setEta(etaV);\
@@ -159,5 +160,5 @@ int Marco() {
         oL.setQ2(q2);
         etaLoop(call)
     }
-    return EXIT_SUCCESS;
+    return EXIT_SUCCESS;*/
 }
