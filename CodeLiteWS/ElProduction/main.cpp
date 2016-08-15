@@ -56,16 +56,16 @@ int main(int argc, char **argv) {
 
 int test(){
     dbl Delta = 1e-6;
-    dbl xi = 1e4;
+    dbl xi = 1e0;
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
     dbl eta;
-    uint N = 20;
+    uint N = 51;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-2-2/(N-1.)*j);
+        eta = pow(10.,2.-6./(N-1.)*j);
         oG.setEta(eta);
         oL.setEta(eta);
-        printf("%e\t%e\t%e\n",eta,oG.dq1(),oL.dq1());
+        printf("%e\t%e\n",eta,(oG.dq1()+oL.dq1()/2.));
     }
     /*oG.setEta(1e-4);
     printf("%e",oG.dq1());*/
