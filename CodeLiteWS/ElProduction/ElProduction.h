@@ -1,19 +1,13 @@
-#ifndef gluonicPart_H_
-#define gluonicPart_H_
+#ifndef ElProduction_H_
+#define ElProduction_H_
 
 #include "config.h"
 
-#include <gsl/gsl_monte.h>
-#include <gsl/gsl_integration.h>
-
 /**
- * @class gluonicPart
- * @author Felix Hekhorn
- * @date 27/06/16
- * @file gluonicPart.h
- * @brief gluonic part of the cross sections
+ * @brief application class
  */
 class ElProduction {
+    
 /**
  * @brief heavy quark mass squared: \f$m^2 > 0\f$
  */
@@ -48,20 +42,6 @@ class ElProduction {
  * @brief number of light flavours
  */
     uint nlf;
-
-/**
- * @brief integrates 1 dimension
- * @param F kernel
- * @return \f$\int\limits_0^1 f(x)\,dx\f$
- */
-    dbl int1D(gsl_function* F) const;
-    
-/**
- * @brief integrates 2 dimension
- * @param F kernel
- * @return \f$\int\limits_0^1 f(x_1,x_2)\,dx_1dx_2\f$
- */
-    dbl int2D(gsl_monte_function* F) const;
     
 /**
  * @brief checks wether all parameters are given
@@ -111,7 +91,7 @@ public:
     dbl cg1() const;
 
 /**
- * @brief scaling logs of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
+ * @brief sum of scaling logs of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
     dbl cgBar1() const;
@@ -123,7 +103,7 @@ public:
     dbl cgBarR1() const;
 
 /**
- * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$: Poles+Factorization
+ * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$
  * @return \f$\bar{c}^{F,(1)}_g\f$
  */
     dbl cgBarF1() const;
@@ -148,4 +128,4 @@ public:
 };
 
 
-#endif // gluonicPart_H_
+#endif // ElProduction_H_

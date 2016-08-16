@@ -1,8 +1,10 @@
 #include "ElProduction.h"
 
 #include <gsl/gsl_monte_vegas.h>
+#include <gsl/gsl_integration.h>
 #include "gsl++.hpp"
 
+#include "Integration.h"
 #include "psKerH.hpp"
 #include "psKerSV.hpp"
 #include "psKerA.hpp"
@@ -23,7 +25,7 @@ void ElProduction::setPartonicS(dbl s) {
         throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
     dbl s4minV = Delta;
     dbl s4maxV = s*(1.-Sqrt(4.*m2/s));
-    if (s4minV >= s4maxV)
+    if (s4minV > s4maxV)
         throw domain_error("Delta has to be smaller than s4_max!");
     this->sp = s - q2;
     this->hasPartonicS = true;
@@ -38,46 +40,6 @@ void ElProduction::setQ2(dbl q2) {
 void ElProduction::check() const {
     if (!this->hasPartonicS)
         throw invalid_argument("no partonic center of mass energy given!");
-}
-
-dbl ElProduction::int2D(gsl_monte_function* F) const {
-    const uint dim = 2;
-    double xl[dim] = {0., 0.};
-    double xu[dim] = {1., 1.};
-    const gsl_rng_type *T;
-    gsl_rng *r;
-    F->dim = dim;
-        
-    size_t calls = 70000;
-    gsl_rng_env_setup ();
-    T = gsl_rng_default;
-    r = gsl_rng_alloc (T);
-    
-    dbl res,err;
-    
-    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
-    gsl_monte_vegas_integrate (F, xl, xu, dim, 10000, r, s, &res, &err);
-    //printf("res: %f, err: %f\n",res,err);
-    uint guard=0;
-    do {
-        gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
-        //printf("H: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
-    } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
-    gsl_monte_vegas_free (s);
-    //printf("H: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
-    return res;
-}
-
-dbl ElProduction::int1D(gsl_function* F) const {
-    //size_t reNevals;
-    size_t calls = 10000;
-    dbl res,err;
-    gsl_integration_workspace *w = gsl_integration_workspace_alloc(calls);
-    gsl_integration_qag(F, 0, 1., 1e-20,1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
-    gsl_integration_workspace_free(w);
-    //reNevals = w->size;
-    //printf("SV: res: %e, err: %e\n",res,err);
-    return res;
 }
 
 dbl ElProduction::cg0() const {
@@ -121,7 +83,7 @@ dbl ElProduction::cg1() const {
         fSV.params = &kSV;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int2D(&fH)+this->int1D(&fSV);
+    return int2D(&fH)+int1D(&fSV);
 }
 
 dbl ElProduction::cgBar1() const {
@@ -147,7 +109,7 @@ dbl ElProduction::cgBarR1() const {
     } else
         throw invalid_argument("unknown projection!");
     // take fermion loop into account!
-    return this->int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
+    return int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
 }
 
 dbl ElProduction::cgBarF1() const {
@@ -178,7 +140,7 @@ dbl ElProduction::cgBarF1() const {
     } else
         throw invalid_argument("unknown projection!");
     // given by mass factorization
-    return this->int2D(&fH)+this->int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
+    return int2D(&fH)+int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
 }
 
 dbl ElProduction::cq1() const {
@@ -198,7 +160,7 @@ dbl ElProduction::cq1() const {
         f.params = &k;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int2D(&f);
+    return int2D(&f);
 }
 
 dbl ElProduction::cqBarF1() const {
@@ -218,7 +180,7 @@ dbl ElProduction::cqBarF1() const {
         f.params = &k;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int2D(&f);
+    return int2D(&f);
 }
 
 dbl ElProduction::dq1() const {
@@ -238,5 +200,5 @@ dbl ElProduction::dq1() const {
         f.params = &k;
     } else
         throw invalid_argument("unknown projection!");
-    return this->int2D(&f);
+    return int2D(&f);
 }

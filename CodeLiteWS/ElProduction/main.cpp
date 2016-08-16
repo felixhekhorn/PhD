@@ -16,8 +16,8 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
-    //return Marco();
+    //return test();
+    return Marco();
     
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.e1;
@@ -114,7 +114,7 @@ int test(){
 int Marco() {
     dbl Delta = 1e-6;
     
-    dbl xi = 1e1;
+    dbl xi = 1e2;
     const uint neta = 43;
     dbl aeta[neta] = {0.1000e-02, 0.3000e-02,
        0.5000e-02, 0.7000e-02, 0.9000e-02, 0.1000e-01, 0.3000e-01, 
@@ -126,12 +126,12 @@ int Marco() {
        0.9000e+02, 0.1000e+03, 0.2000e+03, 0.3000e+03, 0.5000e+03,
        0.7000e+03, 0.9000e+03, 0.1000e+04, 0.5000e+04, 0.1000e+05,
        0.1000e+06};
-    ElProduction oG(1.,-xi,Delta,G,4);
+    //ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
     for (uint j = 0; j < neta; ++j) {
-        oG.setEta(aeta[j]);
+        //oG.setEta(aeta[j]);
         oL.setEta(aeta[j]);
-        printf("%e\n",(oG.dq1()+oL.dq1()/2.)*3./2.);
+        printf("%e\t%e\n",aeta[j],oL.dq1());
     }
     return EXIT_SUCCESS;
 /*    dbl m2 = 4.75*4.75;
