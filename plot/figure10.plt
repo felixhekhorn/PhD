@@ -18,7 +18,6 @@ plot    "./data/cqbar1-q2_-2.dat"  u 1:2 t "Q²=1e-2", \
 	"./data/cqbar1-q2_2.dat"   u 1:2 t "Q²=1e2" , \
 	"./data/cqbar1-q2_3.dat"   u 1:2 t "Q²=1e3" 
 
-
 set title "Fig. 10. (b): c^{bar,(1)}_{L,q}"
 #set key at graph .3,.95
 set out "./img/figure10b.png"
@@ -28,5 +27,15 @@ plot    "./data/cqbar1-q2_-2.dat"  u 1:3 t "Q²=1e-2", \
 	"./data/cqbar1-q2_1.dat"   u 1:3 t "Q²=1e1" , \
 	"./data/cqbar1-q2_2.dat"   u 1:3 t "Q²=1e2" , \
 	"./data/cqbar1-q2_3.dat"   u 1:3 t "Q²=1e3" 
+
+set title "Fig. 10. (p): Δc^{bar,(1)}_{q}"
+#set key at graph .3,.95
+set out "./img/figure10p.png"
+#set yrange [-.03:.16]
+plot    "./data/cqbar1-q2_-2.dat"  u 1:4 t "Q²=1e-2", \
+	"./data/cqbar1-q2_0.dat"   u 1:4 t "Q²=1e0" , \
+	"./data/cqbar1-q2_1.dat"   u 1:4 t "Q²=1e1" , \
+	"./data/cqbar1-q2_2.dat"   u 1:4 t "Q²=1e2" , \
+	"./data/cqbar1-q2_3.dat"   u 1:4 t "Q²=1e3" 
 
 set out

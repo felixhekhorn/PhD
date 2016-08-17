@@ -18,7 +18,6 @@ plot    "./data/cg1-q2_-2.dat"  u 1:2 t "Q²=1e-2", \
 	"./data/cg1-q2_2.dat"   u 1:2 t "Q²=1e2" , \
 	"./data/cg1-q2_3.dat"   u 1:2 t "Q²=1e3" 
 
-
 set title "Fig. 7. (b): c^{(1)}_{L,g}"
 set key at graph .3,.95
 set out "./img/figure7b.png"
@@ -28,5 +27,15 @@ plot    "./data/cg1-q2_-2.dat"  u 1:3 t "Q²=1e-2", \
 	"./data/cg1-q2_1.dat"   u 1:3 t "Q²=1e1" , \
 	"./data/cg1-q2_2.dat"   u 1:3 t "Q²=1e2" , \
 	"./data/cg1-q2_3.dat"   u 1:3 t "Q²=1e3" 
+
+set title "Fig. 7. (p): Δc^{(1)}_{g}"
+set key at graph .98,.98
+set out "./img/figure7p.png"
+#set yrange [-.03:.16]
+plot    "./data/cg1-q2_-2.dat"  u 1:4 t "Q²=1e-2", \
+	"./data/cg1-q2_0.dat"   u 1:4 t "Q²=1e0" , \
+	"./data/cg1-q2_1.dat"   u 1:4 t "Q²=1e1" , \
+	"./data/cg1-q2_2.dat"   u 1:4 t "Q²=1e2" , \
+	"./data/cg1-q2_3.dat"   u 1:4 t "Q²=1e3" 
 
 set out

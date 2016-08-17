@@ -17,25 +17,27 @@ int test();
  */
 int main(int argc, char **argv) {
     //return test();
-    return Marco();
+    //return Marco();
     
     dbl m2 = 4.75*4.75;
-    dbl q2 = -1.e1;
     dbl Delta = 1e-6;
+    dbl q2 = -1.e-2;
     ElProduction oG(m2,q2,Delta,G,4);
     ElProduction oL(m2,q2,Delta,L,4);
+    ElProduction oP(m2,q2,Delta,P,4);
     
-    uint N = 100;
+    uint N = 101;
     for(uint j = 0; j < N; ++j) {
-        //dbl eta = pow(10.,-3.+6./(N-1)*j);
-        //oG.setEta(eta);
-        //oL.setEta(eta);
-        //dbl c0G = oG.c0();
-        //dbl c0L = oL.c0();
-        //printf("%e\t%e\t%e\n",eta,c0G+c0L/2.,c0L);
-        //dbl c1G = oG.c1();
-        //dbl c1L = oL.c1();
-        //printf("%e\t%e\t%e\n",eta,c1G+c1L/2.,c1L);
+        dbl eta = pow(10.,-3.+6./(N-1)*j);
+        oG.setEta(eta);
+        oL.setEta(eta);
+        oP.setEta(eta);
+        
+        //dbl g = oG.cg0(), l = oL.cg0(), p = oP.cg0();
+        dbl g = oG.cg1(), l = oL.cg1(), p = oP.cg1();
+        
+        printf("%e\t%e\t%e\t%e\n",eta,g+l/2.,l,p);
+        
         /*dbl cgBarF1G = oG.cgBarF1();
         dbl cgBarR1G = oG.cgBarR1();
         dbl cgBarF1L = oL.cgBarF1();
