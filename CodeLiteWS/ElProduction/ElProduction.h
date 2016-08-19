@@ -1,6 +1,8 @@
 #ifndef ElProduction_H_
 #define ElProduction_H_
 
+#include "LHAPDF/LHAPDF.h"
+
 #include "config.h"
 
 /**
@@ -44,9 +46,19 @@ class ElProduction {
     uint nlf;
     
 /**
- * @brief checks wether all parameters are given
+ * @brief unpolarized PDF
  */
-    void check() const;
+    LHAPDF::PDF* pdf;
+    
+/**
+ * @brief checks wether all partonic parameters are given
+ */
+    void checkPartonic() const;
+    
+/**
+ * @brief checks wether all hadronic parameters are given
+ */
+    void checkHardonic() const;
     
 public:
 
@@ -59,6 +71,11 @@ public:
  * @param nlf number of light flavours
  */
     ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf);
+    
+/**
+ * @brief destructor
+ */
+    ~ElProduction();
     
 /**
  * @brief sets partonic eta
@@ -77,6 +94,13 @@ public:
  * @param q2 virtuality of photon \f$q^2< 0\f$
  */
     void setQ2(dbl q2);
+
+/**
+ * @brief sets unpolarized PDF
+ * @param name LHAPDF name
+ * @param member LHAPDF member index
+ */
+    void setPdf(str name, int member);
     
 /**
  * @brief LO scaling function \f$c^{(0)}_g\f$
@@ -125,6 +149,12 @@ public:
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;
+    
+/**
+ * @brief LO structure function
+ * @return \f$F^{(0)}_g\f$
+ */
+    dbl Fg0() const;
 };
 
 

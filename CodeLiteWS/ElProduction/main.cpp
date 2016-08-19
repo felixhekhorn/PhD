@@ -27,7 +27,9 @@ int main(int argc, char **argv) {
     ElProduction oP(m2,q2,Delta,P,4);
     
     uint N = 101;
-    for(uint j = 0; j < N; ++j) {
+    
+    oL.setPdf("MSTW2008nnlo90cl",0);
+    /*for(uint j = 0; j < N; ++j) {
         dbl eta = pow(10.,-3.+6./(N-1)*j);
         oG.setEta(eta);
         oL.setEta(eta);
@@ -37,22 +39,7 @@ int main(int argc, char **argv) {
         dbl g = oG.cg1(), l = oL.cg1(), p = oP.cg1();
         
         printf("%e\t%e\t%e\t%e\n",eta,g+l/2.,l,p);
-        
-        /*dbl cgBarF1G = oG.cgBarF1();
-        dbl cgBarR1G = oG.cgBarR1();
-        dbl cgBarF1L = oL.cgBarF1();
-        dbl cgBarR1L = oL.cgBarR1();
-        printf("%e\t%e\t%e\t%e\t%e\n",eta,cgBarF1G+cgBarF1L/2.,cgBarF1L,cgBarR1G+cgBarR1L/2.,cgBarR1L);*/
-        /*dbl cq1G = oG.cq1();
-        dbl cq1L = oL.cq1();
-        printf("%e\t%e\t%e\n",eta,cq1G+cq1L/2.,cq1L);*/
-        /*dbl cqBarF1G = oG.cqBarF1();
-        dbl cqBarF1L = oL.cqBarF1();
-        printf("%e\t%e\t%e\n",eta,cqBarF1G+cqBarF1L/2.,cqBarF1L);*/
-        /*dbl dq1G = oG.dq1();
-        dbl dq1L = oL.dq1();
-        printf("%e\t%e\t%e\n",eta,dq1G+dq1L/2.,dq1L);*/
-    }
+    }*/
 	return EXIT_SUCCESS;
 }
 

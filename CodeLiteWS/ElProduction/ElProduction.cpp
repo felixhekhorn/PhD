@@ -10,8 +10,13 @@
 #include "psKerA.hpp"
 
 ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
-    m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(Delta), proj(proj), nlf(nlf){
+    m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(Delta), proj(proj), nlf(nlf), pdf(0){
     this->setQ2(q2);
+}
+
+ElProduction::~ElProduction() {
+    if (0 != this->pdf)
+        delete (this->pdf);
 }
 
 void ElProduction::setEta(dbl eta) {
@@ -37,13 +42,13 @@ void ElProduction::setQ2(dbl q2) {
     this->q2 = q2;
 }
 
-void ElProduction::check() const {
+void ElProduction::checkPartonic() const {
     if (!this->hasPartonicS)
         throw invalid_argument("no partonic center of mass energy given!");
 }
 
 dbl ElProduction::cg0() const {
-    this->check();
+    this->checkPartonic();
     dbl s = sp+q2;
     dbl beta = sqrt(1. - 4.*m2/s);
     dbl chi = (1.-beta)/(1.+beta);
@@ -57,7 +62,7 @@ dbl ElProduction::cg0() const {
 }
 
 dbl ElProduction::cg1() const {
-    this->check();
+    this->checkPartonic();
     gsl_monte_function fH;
     gsl_function fSV;
     if (L == this->proj) {
@@ -87,12 +92,12 @@ dbl ElProduction::cg1() const {
 }
 
 dbl ElProduction::cgBar1() const {
-    this->check();
+    this->checkPartonic();
     return this->cgBarR1()+this->cgBarF1();
 }
 
 dbl ElProduction::cgBarR1() const {
-    this->check();
+    this->checkPartonic();
     gsl_function fSV;
     if (L == this->proj) {
         psKerSVLBarR kSV(m2,q2,sp,Delta);
@@ -113,7 +118,7 @@ dbl ElProduction::cgBarR1() const {
 }
 
 dbl ElProduction::cgBarF1() const {
-    this->check();
+    this->checkPartonic();
     gsl_monte_function fH;
     gsl_function fSV;
     if (L == this->proj) {
@@ -144,7 +149,7 @@ dbl ElProduction::cgBarF1() const {
 }
 
 dbl ElProduction::cq1() const {
-    this->check();
+    this->checkPartonic();
     gsl_monte_function f;
     if (L == this->proj) {
         psKerAL1 k(m2,q2,sp); 
@@ -164,7 +169,7 @@ dbl ElProduction::cq1() const {
 }
 
 dbl ElProduction::cqBarF1() const {
-    this->check();
+    this->checkPartonic();
     gsl_monte_function f;
     if (L == this->proj) {
         psKerAL1ScaleF k(m2,q2,sp); 
@@ -184,7 +189,7 @@ dbl ElProduction::cqBarF1() const {
 }
 
 dbl ElProduction::dq1() const {
-    this->check();
+    this->checkPartonic();
     gsl_monte_function f;
     if (L == this->proj) {
         psKerAL2 k(m2,q2,sp); 
@@ -201,4 +206,21 @@ dbl ElProduction::dq1() const {
     } else
         throw invalid_argument("unknown projection!");
     return int2D(&f);
+}
+
+void ElProduction::setPdf(str name, int member) {
+    // suppress log message
+    int v = LHAPDF::verbosity();
+    LHAPDF::setVerbosity(0);
+    this->pdf = LHAPDF::mkPDF(name,member);
+    LHAPDF::setVerbosity(v);
+}
+
+void ElProduction::checkHardonic() const {
+    if (0 == this->pdf)
+        throw invalid_argument("no PDF given!");
+}
+
+dbl ElProduction::Fg0() const {
+    
 }
