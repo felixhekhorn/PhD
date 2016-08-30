@@ -46,9 +46,54 @@ class ElProduction {
     uint nlf;
     
 /**
- * @brief unpolarized PDF
+ * @brief parton distribution function
  */
     LHAPDF::PDF* pdf;
+    
+/**
+ * @brief renormalisation scale \f$\mu_R^2\f$
+ */
+    dbl muR2;
+
+/**
+ * @brief has renormalisation scale been set?
+ */
+    bool hasMuR2;
+    
+/**
+ * @brief factorisation scale \f$\mu_F^2\f$
+ */
+    dbl muF2;
+
+/**
+ * @brief has factorisation scale \f$\mu_F^2\f$ been set?
+ */
+    bool hasMuF2;
+    
+/**
+ * @brief Bjorken scaling variable
+ */
+    dbl bjorkenX;
+    
+/**
+ * @brief has Bjorken x been set?
+ */
+    bool hasBjorkenX;
+    
+/**
+ * @brief running strong coupling
+ */
+    dbl alphaS;
+    
+/**
+ * has running strong coupling been set
+ */
+    bool hasAlphaS;
+    
+/**
+ * upper z-integration limit
+ */
+    dbl zMax;
     
 /**
  * @brief checks wether all partonic parameters are given
@@ -59,6 +104,24 @@ class ElProduction {
  * @brief checks wether all hadronic parameters are given
  */
     void checkHardonic() const;
+    
+/**
+ * @brief returns the corresponding \f$c^{(1)}_{q}\f$
+ * @return \f$c^{(1)}_{q}\f$
+ */
+    func5dbl getCq1() const;
+    
+/**
+ * @brief returns the corresponding \f$\bar {c}^{F,(1)}_{q}\f$
+ * @return \f$\bar {c}^{F,(1)}_{q}\f$
+ */
+    func5dbl getCqBarF1() const;
+    
+/**
+ * @brief returns the corresponding \f$d^{(1)}_{q}\f$
+ * @return \f$d^{(1)}_{q}\f$
+ */
+    func5dbl getDq1() const;
     
 public:
 
@@ -96,11 +159,49 @@ public:
     void setQ2(dbl q2);
 
 /**
- * @brief sets unpolarized PDF
+ * @brief sets PDF
  * @param name LHAPDF name
  * @param member LHAPDF member index
+ * @see LHAPDF::mkPDF()
  */
     void setPdf(str name, int member);
+
+/**
+ * @brief sets PDF
+ * @param nmem LHAPDF name / member index
+ * @see LHAPDF::mkPDF()
+ */
+    //void setPdf(str nmem);
+    
+/**
+ * @brief sets renormalisation scale \f$\mu_R^2\f$
+ * @param muR2 renormalisation scale \f$\mu_R^2\f$
+ */
+    void setMuR2(dbl muR2);
+    
+/**
+ * @brief sets factorisation scale \f$\mu_F^2\f$
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ */
+    void setMuF2(dbl muR2);
+    
+/**
+ * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
+ * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
+ */
+    void setMu2(dbl mu2);
+    
+/**
+ * @brief sets running strong coupling
+ * @param alphaS running strong coupling
+ */
+    void setAlphaS(dbl alphaS);
+    
+/**
+ * @brief sets Bjorken x
+ * @param bjorkenX Bjorken x
+ */
+    void setBjorkenX(dbl bjorkenX);
     
 /**
  * @brief LO scaling function \f$c^{(0)}_g\f$
@@ -155,6 +256,12 @@ public:
  * @return \f$F^{(0)}_g\f$
  */
     dbl Fg0() const;
+    
+/**
+ * @brief NLO quark structure function
+ * @return \f$F^{(1)}_q\f$
+ */
+    dbl Fq1() const;
 };
 
 

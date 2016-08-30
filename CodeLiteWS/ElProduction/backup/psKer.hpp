@@ -9,6 +9,10 @@
 using namespace Color;
 
 /**
+ * @class psKer
+ * @author Felix Hekhorn
+ * @date 27/06/16
+ * @file psKers.hpp
  * @brief abstract phase space kernel
  */
 class psKer {
@@ -57,46 +61,6 @@ protected:
             throw domain_error("t1_min has to be smaller than t1_max!");
     }
 
-};
-
-/**
- * @brief phase space kernel of quark parts
- */
-class psKerA : public psKer {
-protected:
-    
-/**
- * @brief pointer to matrix element
- */
-    dbl (*gq1)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
-
-public:
-
-/**
- * @brief constructor
- * @param m2 heavy quark mass squared \f$m^2 > 0\f$
- * @param q2 virtuality of photon \f$q^2< 0\f$
- * @param sp center of mass energy \f$s' = s - q^2\f$
- */
-    psKerA(dbl m2, dbl q2, dbl sp, dbl (*gq1)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1)) : psKer(m2,q2,sp,0.),
-       gq1(gq1) {}
-
-/**
- * @brief called function
- * @param a1
- * @param a2
- * @return quark part
- */
-    dbl operator()(dbl a1, dbl a2) const {
-        dbl s = sp+q2;
-        dbl beta = Sqrt(1 - (4*m2)/s);
-        dbl t1 = this->t1min + (this->t1max-this->t1min)*a1;
-        dbl s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
-        dbl s4 = s4max*a2;
-        dbl jac = (this->t1max-this->t1min)*s4max;
-        dbl me = gq1(m2,q2,sp,s4,t1);
-        return jac*me;
-    }
 };
 
 #endif // psKers_H_

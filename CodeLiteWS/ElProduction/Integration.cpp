@@ -42,3 +42,31 @@ dbl int2D(gsl_monte_function* F) {
     //printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }
+
+dbl int3D(gsl_monte_function* F) {
+    const uint dim = 3;
+    double xl[dim] = {0., 0., 0.};
+    double xu[dim] = {1., 1., 1.};
+    const gsl_rng_type *T;
+    gsl_rng *r;
+    F->dim = dim;
+        
+    size_t calls = 70000;
+    gsl_rng_env_setup ();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc (T);
+    
+    dbl res,err;
+    
+    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
+    gsl_monte_vegas_integrate (F, xl, xu, dim, 10000, r, s, &res, &err);
+    //printf("int3D: res: %e, err: %e\n",res,err);
+    uint guard=0;
+    do {
+        gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
+        //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
+    gsl_monte_vegas_free (s);
+    //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    return res;
+}

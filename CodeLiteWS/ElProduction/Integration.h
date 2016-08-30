@@ -9,15 +9,22 @@
 /**
  * @brief integrates 1 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(x)\,dx\f$
+ * @return \f$\int\limits_0^1 f(a)\,da\f$
  */
 dbl int1D(gsl_function* F);
     
 /**
  * @brief integrates 2 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(x_1,x_2)\,dx_1dx_2\f$
+ * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
 dbl int2D(gsl_monte_function* F);
+    
+/**
+ * @brief integrates 3 dimension
+ * @param F kernel
+ * @return \f$\int\limits_0^1 f(a_1,a_2,a_3)\,da_1da_2da_3\f$
+ */
+dbl int3D(gsl_monte_function* F);
     
 #endif // Integration_H_

@@ -4,8 +4,6 @@
 
 #include "ElProduction.h"
 
-#include "IntA.h"
-
 int Marco();
 int test();
 
@@ -16,7 +14,7 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
+    return test();
     //return Marco();
     
     dbl m2 = 4.75*4.75;
@@ -26,10 +24,9 @@ int main(int argc, char **argv) {
     ElProduction oL(m2,q2,Delta,L,4);
     ElProduction oP(m2,q2,Delta,P,4);
     
+    /*
     uint N = 101;
-    
-    oL.setPdf("MSTW2008nnlo90cl",0);
-    /*for(uint j = 0; j < N; ++j) {
+    for(uint j = 0; j < N; ++j) {
         dbl eta = pow(10.,-3.+6./(N-1)*j);
         oG.setEta(eta);
         oL.setEta(eta);
@@ -39,13 +36,22 @@ int main(int argc, char **argv) {
         dbl g = oG.cg1(), l = oL.cg1(), p = oP.cg1();
         
         printf("%e\t%e\t%e\t%e\n",eta,g+l/2.,l,p);
-    }*/
+    }
+    */
 	return EXIT_SUCCESS;
 }
 
 int test(){
     dbl Delta = 1e-6;
-    dbl xi = 1e0;
+    dbl m2 = 1.5*1.5;
+    dbl q2 = -10.;
+    ElProduction oL(m2,q2,Delta,L,3);
+    oL.setPdf("cteq66",0);
+    oL.setMu2(4.*m2-q2);
+    oL.setBjorkenX(.6);
+    oL.setAlphaS(0.18904419407331516);
+    cout << oL.Fg0() << endl;
+    /*dbl xi = 1e0;
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);
     dbl eta;
@@ -55,7 +61,7 @@ int test(){
         oG.setEta(eta);
         oL.setEta(eta);
         printf("%e\t%e\n",eta,(oG.dq1()+oL.dq1()/2.));
-    }
+    }*/
     /*oG.setEta(1e-4);
     printf("%e",oG.dq1());*/
     /*uint N = 21;
@@ -92,7 +98,6 @@ int test(){
         o.setEta(1e-1);
         printf("%e\n",o.dq1());
     }*/
-    
     /*ElProduction o(1.5*1.5,-1e3,Delta,G,4);
     o.setEta(1e-3);
     printf("%e\n",o.dq1());*/
