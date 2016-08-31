@@ -7,12 +7,13 @@
 #include "Integration.h"
 #include "src/ME/Born.h"
 #include "src/ME/NLOq.h"
-#include "psKerH.hpp"
-#include "psKerSV.hpp"
-//#include "psKerA.hpp"
+#include "src/ME/NLOg.h"
+#include "psKer.hpp"
 
-#include "src/PdfConvolutionLO.hpp"
-#include "src/PdfConvolutionNLOq.hpp"
+#include "src/PdfConvLO.hpp"
+#include "src/PdfConv/PdfConvNLOgSV.hpp"
+#include "src/PdfConv/PdfConvNLOgH.hpp"
+#include "src/PdfConvNLOq.hpp"
 
 ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
     m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(Delta), proj(proj), nlf(nlf),
@@ -56,133 +57,79 @@ void ElProduction::checkPartonic() const {
         throw invalid_argument("no partonic center of mass energy given!");
 }
 
+fPtr3dbl ElProduction::getCg0() const {
+    switch(this->proj) {
+        case G: return &cg0G;
+        case L: return &cg0L;
+        case P: return &cg0P;
+        default: throw invalid_argument("unknown projection!");
+    }
+}
+
 dbl ElProduction::cg0() const {
     this->checkPartonic();
-    if(L == this->proj)
-        return cg0L(m2,q2,sp);
-    if(G == this->proj)
-        return cg0G(m2,q2,sp);
-    if (P == this->proj)
-        return cg0P(m2,q2,sp);
-    throw invalid_argument("unknown projection!");
+    fPtr3dbl cg0 = this->getCg0();
+    return cg0(m2,q2,sp);
 }
+
+#define getter(u,l) fPtr5dbl ElProduction::get##u() const {\
+    switch(this->proj) {\
+        case G: return &l##G;\
+        case L: return &l##L;\
+        case P: return &l##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
+
+getter(Cg1SV,cg1SV)
+getter(Cg1H,cg1H)
+getter(CgBarF1SV,cgBarF1SV)
+getter(CgBarF1H,cgBarF1H)
+getter(CgBarR1SV,cgBarR1SV)
 
 dbl ElProduction::cg1() const {
     this->checkPartonic();
-    gsl_monte_function fH;
+    psKerSV kSV(m2,q2,sp,Delta,this->getCg1SV());
     gsl_function fSV;
-    if (L == this->proj) {
-        psKerHL kH(m2,q2,sp,Delta); 
-        fH.f = gsl::callFunctor2D<psKerHL>;
-        fH.params = &kH;
-        psKerSVL kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVL>;
-        fSV.params = &kSV;
-    } else if(G == this->proj) {
-        psKerHG kH(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHG>;
-        fH.params = &kH;
-        psKerSVG kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVG>;
-        fSV.params = &kSV;
-    } else if(P == this->proj) {
-        psKerHP kH(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHP>;
-        fH.params = &kH;
-        psKerSVP kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVP>;
-        fSV.params = &kSV;
-    } else
-        throw invalid_argument("unknown projection!");
+    fSV.function = gsl::callFunctor<psKerSV>;
+    fSV.params = &kSV;
+    psKerH kH(m2,q2,sp,Delta,this->getCg1H());
+    gsl_monte_function fH;
+    fH.f = gsl::callFunctor2D<psKerH>;
+    fH.params = &kH;
     return int2D(&fH)+int1D(&fSV);
-}
-
-dbl ElProduction::cgBar1() const {
-    this->checkPartonic();
-    return this->cgBarR1()+this->cgBarF1();
 }
 
 dbl ElProduction::cgBarR1() const {
     this->checkPartonic();
-    gsl_function fSV;
-    if (L == this->proj) {
-        psKerSVLBarR kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVLBarR>;
-        fSV.params = &kSV;
-    } else if(G == this->proj) {
-        psKerSVGBarR kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVGBarR>;
-        fSV.params = &kSV;
-    } else if(P == this->proj) {
-        psKerSVPBarR kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVPBarR>;
-        fSV.params = &kSV;
-    } else
-        throw invalid_argument("unknown projection!");
+    psKerSV k(m2,q2,sp,Delta,this->getCgBarR1SV());
+    gsl_function f;
+    f.function = gsl::callFunctor<psKerSV>;
+    f.params = &k;
     // take fermion loop into account!
-    return int1D(&fSV)+2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
+    return int1D(&f)+nlf*fermionLoopFactor*this->cg0();
 }
 
 dbl ElProduction::cgBarF1() const {
     this->checkPartonic();
-    gsl_monte_function fH;
+    psKerSV kSV(m2,q2,sp,Delta,this->getCgBarF1SV());
     gsl_function fSV;
-    if (L == this->proj) {
-        psKerHLBarF kH(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHLBarF>;
-        fH.params = &kH;
-        psKerSVLBarF kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVLBarF>;
-        fSV.params = &kSV;
-    } else if(G == this->proj) {
-        psKerHGBarF k(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHGBarF>;
-        fH.params = &k;
-        psKerSVGBarF kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVGBarF>;
-        fSV.params = &kSV;
-    } else if(P == this->proj) {
-        psKerHPBarF k(m2,q2,sp,Delta);
-        fH.f = gsl::callFunctor2D<psKerHPBarF>;
-        fH.params = &k;
-        psKerSVPBarF kSV(m2,q2,sp,Delta);
-        fSV.function = gsl::callFunctor<psKerSVPBarF>;
-        fSV.params = &kSV;
-    } else
-        throw invalid_argument("unknown projection!");
+    fSV.function = gsl::callFunctor<psKerSV>;
+    fSV.params = &kSV;
+    psKerH kH(m2,q2,sp,Delta,this->getCgBarF1H());
+    gsl_monte_function fH;
+    fH.f = gsl::callFunctor2D<psKerH>;
+    fH.params = &kH;
     // given by mass factorization
-    return int2D(&fH)+int1D(&fSV)-2./3.*nlf*(1./(4.*4.*M_PI*M_PI))*this->cg0();
+    return int2D(&fH)+int1D(&fSV)-nlf*fermionLoopFactor*this->cg0();
 }
 
-func5dbl ElProduction::getCq1() const {
-    switch(this->proj) {
-        case G: return &cq1G;
-        case L: return &cq1L;
-        case P: return &cq1P;
-        default: throw invalid_argument("unknown projection!");
-    }
-}
-
-func5dbl ElProduction::getCqBarF1() const {
-    switch(this->proj) {
-        case G: return &cqBarF1G;
-        case L: return &cqBarF1L;
-        case P: return &cqBarF1P;
-        default: throw invalid_argument("unknown projection!");
-    }
-}
-
-func5dbl ElProduction::getDq1() const {
-    switch(this->proj) {
-        case G: return &dq1G;
-        case L: return &dq1L;
-        case P: return &dq1P;
-        default: throw invalid_argument("unknown projection!");
-    }
-}
+getter(Cq1,cq1)
+getter(CqBarF1,cqBarF1)
+getter(Dq1,dq1)
 
 dbl ElProduction::cq1() const {
-    this->checkPartonic();    
+    this->checkPartonic();
     psKerA k(m2,q2,sp,this->getCq1());
     gsl_monte_function f;
     f.f = gsl::callFunctor2D<psKerA>;
@@ -245,7 +192,7 @@ void ElProduction::setMu2(dbl mu2) {
 
 void ElProduction::setAlphaS(dbl alphaS) {
     if (alphaS <= 0.)
-        throw domain_error("running strong coupling has to be positive!");
+        throw domain_error("strong coupling has to be positive!");
     this->alphaS = alphaS;
     this->hasAlphaS = true;
 }
@@ -267,7 +214,7 @@ void ElProduction::checkHardonic() const {
     if (!this->hasBjorkenX)
         throw invalid_argument("no Bjorken x given!");
     if (!this->hasAlphaS)
-        throw invalid_argument("no running strong coupling given!");
+        throw invalid_argument("no strong coupling given!");
 }
 
 dbl ElProduction::Fg0() const {
@@ -275,20 +222,60 @@ dbl ElProduction::Fg0() const {
     /** @todo: correct? */
     if (this->bjorkenX >= this->zMax)
         return 0.;
-    dbl (*cg0)(dbl m2, dbl q2, dbl sp) = 0;
-    switch(this->proj) {
-        case G: cg0 = &cg0G; break;
-        case L: cg0 = &cg0L; break;
-        case P: cg0 = &cg0P; break;
-        default: throw invalid_argument("unknown projection!");
-    }
-    PdfConvolutionLO k(m2, q2, bjorkenX, pdf, muF2,cg0);
+    PdfConvLO k(m2, q2, bjorkenX, pdf, muF2, this->getCg0());
     gsl_function f;
-    f.function = gsl::callFunctor<PdfConvolutionLO>;
+    f.function = gsl::callFunctor<PdfConvLO>;
     f.params = &k;
     dbl eH = getElectricCharge(this->nlf + 1);
     dbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI) * eH*eH;
     return n*int1D(&f);
+}
+
+dbl ElProduction::Fg1() const {
+    this->checkHardonic();
+    /** @todo: correct? */
+    if (this->bjorkenX >= this->zMax)
+        return 0.;
+    // compute S+V
+    #define runSV(src,target) {\
+        fPtr5dbl g = this->get##src();\
+        PdfConvNLOgSV k(m2,q2,bjorkenX,pdf,muF2,Delta,g);\
+        gsl_monte_function f;\
+        f.f = gsl::callFunctor2D<PdfConvNLOgSV>;\
+        f.params = &k;\
+        target = int2D(&f);\
+    }
+    dbl cg1SV = 0.,cgBarF1SV = 0.,cgBarR1SV = 0.;
+    runSV(Cg1SV,cg1SV)
+    runSV(CgBarF1SV,cgBarF1SV)
+    runSV(CgBarR1SV,cgBarR1SV)
+    //printf("SV: %e\t%e\t%e\n",cg1SV,cgBarF1SV,cgBarR1SV);
+    
+    // compute H
+    #define runH(src,target) {\
+        fPtr5dbl g = this->get##src();\
+        PdfConvNLOgH k(m2,q2,bjorkenX,pdf,muF2,Delta,g);\
+        gsl_monte_function f;\
+        f.f = gsl::callFunctor3D<PdfConvNLOgH>;\
+        f.params = &k;\
+        target = int3D(&f);\
+    }
+    dbl cg1H = 0.,cgBarF1H = 0.;
+    runH(Cg1H,cg1H)
+    runH(CgBarF1H,cgBarF1H)
+    //printf("H: %e\t%e\n",cg1H,cgBarF1H);
+    
+    // compute fermion loop
+    dbl Fg0 = this->Fg0();
+    //printf("Fg0: %e\n",Fg0);
+    
+    // combine all functions
+    dbl eH = getElectricCharge(this->nlf + 1);
+    dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;
+    dbl realFg1 = n*(cg1SV + cg1H);
+    dbl FgBarF1 = n*(cgBarF1SV + cgBarF1H) + nlf*fermionLoopFactor*Fg0;
+    dbl FgBarR1 = n*cgBarR1SV - nlf*fermionLoopFactor*Fg0;
+    return realFg1 + FgBarF1*log(this->muF2/this->m2) + FgBarR1*log(this->muR2/this->m2);
 }
 
 dbl ElProduction::Fq1() const {
@@ -297,10 +284,10 @@ dbl ElProduction::Fq1() const {
     if (this->bjorkenX >= this->zMax)
         return 0.;
     // helper
-    #define run(src,inc,target) {func5dbl g = this->get##src();\
-        PdfConvolutionNLOq k(m2,q2,bjorkenX,pdf,muF2,nlf,inc,g);\
+    #define run(src,inc,target) {fPtr5dbl g = this->get##src();\
+        PdfConvNLOq k(m2,q2,bjorkenX,pdf,muF2,nlf,inc,g);\
         gsl_monte_function f;\
-        f.f = gsl::callFunctor3D<PdfConvolutionNLOq>;\
+        f.f = gsl::callFunctor3D<PdfConvNLOq>;\
         f.params = &k;\
         target = int3D(&f);}
     // compute

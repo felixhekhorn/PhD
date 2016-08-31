@@ -4,13 +4,16 @@
 tmpl = """#include "config.h"
 
 #define Pi M_PI
+// protect from ps corner cases
+#define psCC if (isnan(r)) return 0.; return r;
 
 dbl IntROKfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 {initOK}
     
 {IntROKfiniteG}
 
-    return c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6+c7*v7+c8*v8;
+dbl r = c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6+c7*v7+c8*v8;
+psCC
 }}
 
 dbl IntROKfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
@@ -18,32 +21,37 @@ dbl IntROKfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
     
 {IntROKfiniteL}
 
-    return c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6+c7*v7+c8*v8;
+dbl r = c0*v0+c1*v1+c2*v2+c3*v3+c4*v4+c5*v5+c6*v6+c7*v7+c8*v8;
+psCC
 }}
 
 dbl IntROKfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
     
 {IntROKfiniteP}
 
-    return c0*v0;
+dbl r = c0*v0;
+psCC
 }}
 
 dbl IntRQEDfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 {initQED}
     
-return {IntRQEDfiniteG};
+dbl r = {IntRQEDfiniteG};
+psCC
 }}
 
 dbl IntRQEDfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 {initQED}
     
-return {IntRQEDfiniteL};
+dbl r = {IntRQEDfiniteL};
+psCC
 }}
 
 dbl IntRQEDfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
 {initQED}
     
-return {IntRQEDfiniteP};
+dbl r = {IntRQEDfiniteP};
+psCC
 }}"""
 
 fs={

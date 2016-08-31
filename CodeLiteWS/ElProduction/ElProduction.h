@@ -106,22 +106,58 @@ class ElProduction {
     void checkHardonic() const;
     
 /**
+ * @brief returns the corresponding \f$c^{(0)}_{g}\f$
+ * @return \f$c^{(0)}_{g}\f$
+ */
+    fPtr3dbl getCg0() const;
+    
+/**
+ * @brief returns the corresponding \f$c^{(1),(S+V)}_{g}\f$
+ * @return \f$c^{(1),(S+V)}_{g}\f$
+ */
+    fPtr5dbl getCg1SV() const;
+    
+/**
+ * @brief returns the corresponding \f$c^{(1),(H)}_{g}\f$
+ * @return \f$c^{(1),(H)}_{g}\f$
+ */
+    fPtr5dbl getCg1H() const;
+    
+/**
+ * @brief returns the corresponding \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+    fPtr5dbl getCgBarF1SV() const;
+    
+/**
+ * @brief returns the corresponding \f$\bar {c}^{F,(1),(H)}_{g}\f$
+ * @return \f$\bar {c}^{F,(1),(H)}_{g}\f$
+ */
+    fPtr5dbl getCgBarF1H() const;
+    
+/**
+ * @brief returns the corresponding \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
+ * @return \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
+ */
+    fPtr5dbl getCgBarR1SV() const;
+    
+/**
  * @brief returns the corresponding \f$c^{(1)}_{q}\f$
  * @return \f$c^{(1)}_{q}\f$
  */
-    func5dbl getCq1() const;
+    fPtr5dbl getCq1() const;
     
 /**
  * @brief returns the corresponding \f$\bar {c}^{F,(1)}_{q}\f$
  * @return \f$\bar {c}^{F,(1)}_{q}\f$
  */
-    func5dbl getCqBarF1() const;
+    fPtr5dbl getCqBarF1() const;
     
 /**
  * @brief returns the corresponding \f$d^{(1)}_{q}\f$
  * @return \f$d^{(1)}_{q}\f$
  */
-    func5dbl getDq1() const;
+    fPtr5dbl getDq1() const;
     
 public:
 
@@ -256,6 +292,12 @@ public:
  * @return \f$F^{(0)}_g\f$
  */
     dbl Fg0() const;
+    
+/**
+ * @brief NLO gluon structure function
+ * @return \f$F^{(1)}_g\f$
+ */
+    dbl Fg1() const;
     
 /**
  * @brief NLO quark structure function

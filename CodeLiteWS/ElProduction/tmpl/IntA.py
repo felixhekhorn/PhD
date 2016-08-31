@@ -21,7 +21,7 @@ dbl s = sp + q2;
 dbl r = {IntAG2};
 // protect from ps corner cases
 if (isnan(r))
-	return 0.;
+    return 0.;
 return r;
 }}
 

@@ -1,7 +1,9 @@
 Release/ElProduction.cpp.o: ElProduction.cpp ElProduction.h config.h \
- gsl++.hpp Integration.h src/ME/Born.h config.h psKerH.hpp psKer.hpp \
- IntRFinite.h RPole.h SV.h psKerSV.hpp psKerA.hpp IntA.h \
- src/PdfConvolutionLO.hpp
+ gsl++.hpp Integration.h src/ME/Born.h config.h src/ME/NLOq.h \
+ src/ME/NLOg.h psKer.hpp IntRFinite.h RPole.h SV.h src/PdfConvLO.hpp \
+ src/PdfConv/PdfConvBase.hpp src/PdfConv/PdfConvNLOgSV.hpp \
+ src/PdfConv/PdfConvBase.hpp src/PdfConv/PdfConvNLOgH.hpp \
+ src/PdfConvNLOq.hpp
 
 ElProduction.h:
 
@@ -15,7 +17,9 @@ src/ME/Born.h:
 
 config.h:
 
-psKerH.hpp:
+src/ME/NLOq.h:
+
+src/ME/NLOg.h:
 
 psKer.hpp:
 
@@ -25,10 +29,14 @@ RPole.h:
 
 SV.h:
 
-psKerSV.hpp:
+src/PdfConvLO.hpp:
 
-psKerA.hpp:
+src/PdfConv/PdfConvBase.hpp:
 
-IntA.h:
+src/PdfConv/PdfConvNLOgSV.hpp:
 
-src/PdfConvolutionLO.hpp:
+src/PdfConv/PdfConvBase.hpp:
+
+src/PdfConv/PdfConvNLOgH.hpp:
+
+src/PdfConvNLOq.hpp:

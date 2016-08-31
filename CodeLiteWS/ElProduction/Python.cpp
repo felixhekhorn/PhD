@@ -13,9 +13,9 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setEta", &ElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &ElProduction::setPartonicS, "sets partonic center of mass energy")
         
-        /*.def("setPdf", &ElProduction::setPdf, /*ElProduction_setPdf_overloads(
+        /*.def("setPdf", &ElProduction::setPdf, ElProduction_setPdf_overloads(
                     args("lhaid|name|nmem", "memberid"), "sets pdf"
-                )[return_internal_reference<>()]* /ElProduction_setPdf_overloads())*/
+                )[return_internal_reference<>()] oder? ElProduction_setPdf_overloads())*/
         .def("setPdf", &ElProduction::setPdf, "sets pdf")
         .def("setMuR2", &ElProduction::setMuR2, "sets renormalisation scale")
         .def("setMuF2", &ElProduction::setMuF2, "sets factorisation scale")
@@ -27,13 +27,13 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cg1", &ElProduction::cg1)
         .def("cgBarF1", &ElProduction::cgBarF1)
         .def("cgBarR1", &ElProduction::cgBarR1)
-        .def("cgBar1", &ElProduction::cgBar1)
         
         .def("cq1", &ElProduction::cq1)
         .def("cqBarF1", &ElProduction::cqBarF1)
         .def("dq1", &ElProduction::dq1)
         
         .def("Fg0", &ElProduction::Fg0)
+        .def("Fg1", &ElProduction::Fg1)
         .def("Fq1", &ElProduction::Fq1)
     ;
     

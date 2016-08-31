@@ -59,6 +59,84 @@ protected:
 
 };
 
+
+/**
+ * @brief phase space kernel of soft+virtual contributions
+ */
+class psKerSV : public psKer {
+protected:
+    
+/**
+ * @brief pointer to matrix element
+ */
+  fPtr5dbl cg1SV;
+
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ * @param cg1SV pointer to matrix element
+ */
+    psKerSV(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr5dbl cg1SV) : psKer(m2,q2,sp,Delta), cg1SV(cg1SV) {}
+
+/**
+ * @brief called function
+ * @param x
+ * @return kernel
+ */
+    dbl operator()(dbl x1) const {
+        dbl t1 = this->t1min + (this->t1max-this->t1min)*x1;
+        dbl jac = (this->t1max-this->t1min);
+        dbl me = cg1SV(m2,q2,sp,Delta,t1);
+        //printf("x: %e t1:%e %e*%e\n",x1,t1,jac,this->get(t1));
+        return jac*me;
+    }
+};
+
+/**
+ * @brief phase space kernel of hard part
+ */
+class psKerH : public psKer {
+protected:
+    
+/**
+ * @brief pointer to matrix element
+ */
+  fPtr5dbl cg1H;
+
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ */
+    psKerH(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr5dbl cg1H) : psKer(m2,q2,sp,Delta), cg1H(cg1H) {}
+
+/**
+ * @brief called function
+ * @param x1
+ * @param x2
+ * @return hard part
+ */
+    dbl operator()(dbl x1, dbl x2) const {
+        dbl s = sp+q2;
+        dbl beta = Sqrt(1 - (4*m2)/s);
+        dbl t1 = this->t1min + (this->t1max-this->t1min)*x1;
+        dbl s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
+        dbl s4 = this->Delta + (s4max - this->Delta)*x2;
+        dbl jac = (this->t1max-this->t1min)*(s4max - this->Delta);
+        dbl me = cg1H(m2,q2,sp,s4,t1);
+        return jac*me;
+    }
+};
+
 /**
  * @brief phase space kernel of quark parts
  */
@@ -68,7 +146,7 @@ protected:
 /**
  * @brief pointer to matrix element
  */
-    dbl (*gq1)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+  fPtr5dbl gq1;
 
 public:
 
@@ -77,9 +155,9 @@ public:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param gq1 pointer to matrix element
  */
-    psKerA(dbl m2, dbl q2, dbl sp, dbl (*gq1)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1)) : psKer(m2,q2,sp,0.),
-       gq1(gq1) {}
+    psKerA(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) : psKer(m2,q2,sp,0.), gq1(gq1) {}
 
 /**
  * @brief called function

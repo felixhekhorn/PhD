@@ -24,7 +24,9 @@ typedef string str;
 // floating point precision
 typedef double dbl;
 
-typedef dbl (*func5dbl)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+// functions
+typedef dbl (*fPtr3dbl)(dbl m2, dbl q2, dbl sp);
+typedef dbl (*fPtr5dbl)(dbl m2, dbl q2, dbl sp, dbl s4OrDelta, dbl t1);
 
 // MMa functions can be treated as macros
 #define Power(a,b) pow(a,b)
@@ -88,8 +90,10 @@ namespace physicalConst {
      * @brief pico barn * GeV^2
      */
     const dbl pbTimesGeV2 = 3894./10000.*1e9;
-
 }
+
+/** @brief factor in front of fermion loop excluding a n_lf - see eq. (3.7) */
+#define fermionLoopFactor 2./3.*(1./(4.*4.*M_PI*M_PI))
 
 // color space
 namespace Color {

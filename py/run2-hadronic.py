@@ -17,11 +17,11 @@ pdfMem = 0
 mu02 = 4.*m2 - q2
 
 #pdf = "cteq66"
-#fp = "F2L-q2_1-cteq.dat"
+#fp = "F2Lc-q2_1-cteq.dat"
 pdf = "MSTW2008nnlo90cl"
-fp = "F2L-q2_2-mstw.dat"
+fp = "F2Lc-q2_2-mstw.dat"
 
-N = 11
+Nx = 11
 nProcesses = cpu_count()
 
 # @brief running strong coupling
@@ -33,17 +33,11 @@ def AlphaS(Q2,f):
   def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
   return 1./(b(f)*np.log(Q2/lam2))*(1. - (bp(f)*np.log(np.log(Q2/lam2)))/(b(f)*np.log(Q2/lam2)))
 
-# create objects
-os = {}
-os["G"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.G,nlf)
-os["L"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.L,nlf)
-#os["P"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.P,nlf)
-
 # setup grid
-js = range(N)
-xs = [10.**(-.1 -3.9/(N-1)*j) for j in js]
+js = range(Nx)
+xs = [10.**(-.1 -3.9/(Nx-1)*j) for j in js]
 #mu2s = [mu02/4.,mu02,4.*mu02]
-fs = ["Fg0","Fq1"]
+fs = ["Fg0", "Fg1", "Fq1"]
 ks = range(len(fs))
 
 qIn = Queue()
@@ -54,16 +48,21 @@ for proj in ["G", "L"]:
 lenParams = qIn.qsize()
 qOut = Queue()
 
-# prepare objects
-for proj in os:
-  o = os[proj]
-  o.setMu2(mu02)
-  o.setAlphaS(AlphaS(mu02, nlf+1))
-os["G"].setPdf(pdf, pdfMem)
-os["L"].setPdf(pdf, pdfMem)
-
 # define worker
 def worker(qi, qo, lenParams):
+  # create objects
+  os = {}
+  os["G"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.G,nlf)
+  os["L"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.L,nlf)
+  #os["P"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.P,nlf)
+  # prepare objects
+  for proj in os:
+    o = os[proj]
+    o.setMu2(mu02)
+    o.setAlphaS(AlphaS(mu02, nlf+1))
+  os["G"].setPdf(pdf, pdfMem)
+  os["L"].setPdf(pdf, pdfMem)
+
   guard = 0
   lenParamsMod = max(lenParams/10,1)
   while guard < lenParams:
@@ -74,11 +73,13 @@ def worker(qi, qo, lenParams):
        o = os[p["proj"]]
        o.setBjorkenX(p["x"])
        #p["res"] = np.random.rand()
-       #print p
        if "Fg0" == p["f"]:
          p["res"] = o.Fg0()
+       elif "Fg1" == p["f"]:
+         p["res"] = o.Fg1()
        elif "Fq1" == p["f"]:
          p["res"] = o.Fq1()
+       #print p
        qo.put(p)
 
        # log progress
