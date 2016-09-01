@@ -88,7 +88,7 @@ def worker(qi, qo, lenParams):
          sys.stdout.write("%d%%"%(k/lenParamsMod*10))
          if k/lenParamsMod < 10:
            sys.stdout.write(", ")
-       sys.stdout.flush()
+         sys.stdout.flush()
     except QEmpty:
       break
 

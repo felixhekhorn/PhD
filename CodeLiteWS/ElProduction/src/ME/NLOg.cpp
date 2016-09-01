@@ -6,9 +6,10 @@
 
 using namespace Color;
 
+// NB: no 2CF here! - just simple addition
 #define cg1SV(proj) dbl cg1SV##proj(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1) {\
     dbl n = Kggg * NC * CF;\
-    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj(m2,q2,sp,Delta,t1) + 2.*CF * SVQED##proj(m2,q2,sp,Delta,t1))/(sp*sp);\
+    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj(m2,q2,sp,Delta,t1) + CF * SVQED##proj(m2,q2,sp,Delta,t1))/(sp*sp);\
 }
 
 cg1SV(G)
