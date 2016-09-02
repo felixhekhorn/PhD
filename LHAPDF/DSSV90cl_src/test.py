@@ -20,21 +20,14 @@ def DSSVxfxQ2(pid,x,Q2):
 	if 21 == pid: return DGLU
 	raise "unknown PID"
 
-#x = 4e-5
-#Q2 = 0.8
-def compare(x,Q2):
-	pids = [-2,-1,1,2,3,21]
-	for pid in pids:
-		print pdf.xfxQ2(pid,x,Q2)," vs. ",DSSVxfxQ2(pid,x,Q2)
-#compare(.5,2)
-
-for t in range(50):
-	x = .27 + t/500.
-	pid = 21
-	Q2 = 1.5
-	l = pdf.xfxQ2(pid,x,Q2)
-	d = DSSVxfxQ2(pid,x,Q2)
-	print "x=%e: |%e - %e| = %e i.e. %.4f%%"%(x,l,d,abs(l-d),abs(l-d)/d*100.)
+def compare():
+	for t in range(50):
+		x = .27 + t/500.
+		pid = 21
+		Q2 = 1.5
+		l = pdf.xfxQ2(pid,x,Q2)
+		d = DSSVxfxQ2(pid,x,Q2)
+		print "x=%e: |%e - %e| = %e i.e. %.4f%%"%(x,l,d,abs(l-d),abs(l-d)/d*100.)
 
 #pdf = lhapdf.mkPDF("cteq66",0);
 #print pdf.xfxQ(-4,1e-8,1.3),pdf.xfxQ(-4,1e-8,1.494070)
@@ -55,3 +48,18 @@ def printGrid():
 				#xf = pdf.xfxQ(pid,xx,QQ)
 				#vs.append(xf)
 			#print " "+(" ".join(map(lambda(v): "% .7f"%v,vs)))
+
+def printHeatMap():
+	Nx = 150
+	NQ2 = 70
+	pid = 21
+	for j in range(Nx):
+		x = 10.**(-5.+5.*float(j)/Nx)
+		for k in range(NQ2):
+			Q2 = 10.**(0.+3.*float(k)/NQ2)
+			l = pdf.xfxQ2(pid,x,Q2)
+			d = DSSVxfxQ2(pid,x,Q2)
+			print "%d\t%d\t%e"%(j,k,np.log10(abs(l-d) if 0. == d else abs((l-d)/d)))
+		print
+			
+printHeatMap()

@@ -1,6 +1,9 @@
 #ifndef GSL_HPP
 #define GSL_HPP
 
+/**
+ * @brief object-oriented wrappers to GSL
+ */
 namespace gsl {
 
 /**

@@ -3,6 +3,9 @@
 
 #include "PdfConv/PdfConvBase.hpp"
 
+/**
+ * @brief NLO quark convolution
+ */
 class PdfConvNLOq : public PdfConvBase {
 
 /**

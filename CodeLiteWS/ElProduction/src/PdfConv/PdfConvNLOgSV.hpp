@@ -3,10 +3,13 @@
 
 #include "PdfConvBase.hpp"
 
+/**
+ * @brief NLO gluon convolution with S+V part
+ */
 class PdfConvNLOgSV : public PdfConvBase {
     
 /**
- * @brief energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ * @brief energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
     dbl Delta;
     
@@ -24,7 +27,7 @@ public:
  * @param bjorkenX Bjorken scaling variable
  * @param pdf parton distribution functions
  * @param muF2 factorisation scale \f$\mu_F^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param hg1SV pointer to matrix element
  */
     PdfConvNLOgSV(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl Delta, fPtr5dbl hg1SV) :

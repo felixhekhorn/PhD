@@ -10,6 +10,7 @@ BOOST_PYTHON_MODULE(ElProduction)
 {
     class_<ElProduction>("ElProduction", "application class", init<double,double,double,projT,uint>())
         .def("setQ2", &ElProduction::setQ2, "sets virtuality of photon q^2 < 0")
+        
         .def("setEta", &ElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &ElProduction::setPartonicS, "sets partonic center of mass energy")
         
@@ -27,7 +28,6 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cg1", &ElProduction::cg1)
         .def("cgBarF1", &ElProduction::cgBarF1)
         .def("cgBarR1", &ElProduction::cgBarR1)
-        
         .def("cq1", &ElProduction::cq1)
         .def("cqBarF1", &ElProduction::cqBarF1)
         .def("dq1", &ElProduction::dq1)

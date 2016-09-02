@@ -3,12 +3,15 @@
 
 #include "PdfConv/PdfConvBase.hpp"
 
+/**
+ * @brief LO gluon convolution
+ */
 class PdfConvLO : public PdfConvBase {
     
 /**
  * @brief pointer to matrix element
  */
-    dbl (*cg0)(dbl m2, dbl q2, dbl sp);
+    fPtr3dbl cg0;
     
 public:
 
@@ -21,7 +24,7 @@ public:
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  * @param cg0 pointer to matrix element
  */
-    PdfConvLO(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl (*cg0)(dbl m2, dbl q2, dbl sp)) :
+    PdfConvLO(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, fPtr3dbl cg0) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), cg0(cg0) {
     }
     

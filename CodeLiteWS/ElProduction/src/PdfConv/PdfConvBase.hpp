@@ -5,6 +5,9 @@
 
 #include "config.h"
 
+/**
+ * @brief Abstract base class for convolution with PDFs
+ */
 class PdfConvBase {
 protected:
     

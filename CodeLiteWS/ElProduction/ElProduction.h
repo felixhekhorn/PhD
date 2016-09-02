@@ -161,11 +161,14 @@ class ElProduction {
     
 public:
 
+/** @name Contrstuctor & Destructor */
+///@{
+    
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param proj projection
  * @param nlf number of light flavours
  */
@@ -175,6 +178,22 @@ public:
  * @brief destructor
  */
     ~ElProduction();
+
+///@}
+
+/** @name global setter */
+///@{
+    
+/**
+ * @brief sets virtuality of photon \f$q^2< 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ */
+    void setQ2(dbl q2);
+    
+///@}
+
+/** @name partonic setter */
+///@{
     
 /**
  * @brief sets partonic eta
@@ -187,13 +206,12 @@ public:
  * @param s partonic cm-energy
  */
     void setPartonicS(dbl s);
-    
-/**
- * @brief sets virtuality of photon \f$q^2< 0\f$
- * @param q2 virtuality of photon \f$q^2< 0\f$
- */
-    void setQ2(dbl q2);
 
+///@}
+
+/** @name hadronic setter */
+///@{
+    
 /**
  * @brief sets PDF
  * @param name LHAPDF name
@@ -202,7 +220,7 @@ public:
  */
     void setPdf(str name, int member);
 
-/**
+/*
  * @brief sets PDF
  * @param nmem LHAPDF name / member index
  * @see LHAPDF::mkPDF()
@@ -219,7 +237,7 @@ public:
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    void setMuF2(dbl muR2);
+    void setMuF2(dbl muF2);
     
 /**
  * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
@@ -228,8 +246,8 @@ public:
     void setMu2(dbl mu2);
     
 /**
- * @brief sets running strong coupling
- * @param alphaS running strong coupling
+ * @brief sets strong coupling
+ * @param alphaS strong coupling
  */
     void setAlphaS(dbl alphaS);
     
@@ -238,6 +256,12 @@ public:
  * @param bjorkenX Bjorken x
  */
     void setBjorkenX(dbl bjorkenX);
+    
+///@}
+
+
+/** @name partonic coefficient functions */
+///@{
     
 /**
  * @brief LO scaling function \f$c^{(0)}_g\f$
@@ -287,6 +311,12 @@ public:
  */
     dbl dq1() const;
     
+///@}
+
+
+/** @name hadronic structure functions */
+///@{
+    
 /**
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
@@ -304,6 +334,9 @@ public:
  * @return \f$F^{(1)}_q\f$
  */
     dbl Fq1() const;
+    
+///@}
+
 };
 
 
