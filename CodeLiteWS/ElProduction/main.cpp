@@ -48,11 +48,11 @@ int test(){
     dbl q2 = -1.e2;
     ElProduction o(m2,q2,Delta,G,3);
     //o.setPdf("cteq66",0);
-    o.setPdf("MSTW2008nnlo90cl",0);
+    /*o.setPdf("DSSV90cl",0);
     o.setMu2(4.*m2-q2);
     o.setBjorkenX(7.943282e-01);
     o.setAlphaS(0.18904419407331516);
-    printf("%e\n",o.Fg1());
+    printf("%e\n",o.Fg1());*/
     /*dbl xi = 1e0;
     ElProduction oG(1.,-xi,Delta,G,4);
     ElProduction oL(1.,-xi,Delta,L,4);

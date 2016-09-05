@@ -36,8 +36,8 @@ public:
     
 /**
  * @brief called function
- * @param a1
- * @param a2
+ * @param a1 integration variable
+ * @param a2 integration variable
  * @return \f$1/z f_{g}(x/z,\mu_F^2) h_{g}^{(1),(S+V)}(\eta,\xi)\f$
  */
     dbl operator() (dbl a1, dbl a2) {

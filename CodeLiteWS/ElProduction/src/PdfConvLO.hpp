@@ -30,7 +30,7 @@ public:
     
 /**
  * @brief called function
- * @param a
+ * @param a integration variable
  * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(0)}(\eta,\xi)\f$
  */
     dbl operator() (dbl a) {
@@ -38,6 +38,7 @@ public:
         dbl me = cg0(m2,q2,sp);
         //printf("a: %e, x: %e, z_max: %e, z: %e\n",a,bjorkenX,zMax,z);
         //printf("s_min: %e, s: %e, me: %e\n",4.*m2,s,me);
+        /** @todo missing factor of x_bj? */
         return jac * 1./this->bjorkenX * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
     }
 };

@@ -87,8 +87,7 @@ protected:
  */
     void setSp(dbl a) {
         this->z = this->bjorkenX + (this->zMax - this->bjorkenX)*a;
-        dbl s = -q2*(1.-z)/z;
-        this->sp = s - q2;
+        this->sp = -q2/z;
         this->jac *= (this->zMax - this->bjorkenX);
     }
 

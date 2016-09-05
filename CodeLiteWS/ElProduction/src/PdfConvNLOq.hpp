@@ -42,9 +42,9 @@ public:
     
 /**
  * @brief called function
- * @param a1
- * @param a2
- * @param a3
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @param a3 integration variable
  * @return \f$1/z \sum\limits_q e_q^2 \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) h_{q}^{(1)}(\eta,\xi)\f$
  */
     dbl operator() (dbl a1, dbl a2, dbl a3) {

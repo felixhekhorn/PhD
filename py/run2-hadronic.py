@@ -10,7 +10,7 @@ import ElProduction
 
 # parameters
 m2 = 1.5**2
-q2 = -1.e2
+q2 = -1.e1
 Delta = 1e-6
 nlf = 3
 pdfMem = 0
@@ -18,8 +18,12 @@ mu02 = 4.*m2 - q2
 
 #pdf = "cteq66"
 #fp = "F2Lc-q2_1-cteq.dat"
-pdf = "MSTW2008nnlo90cl"
-fp = "F2Lc-q2_2-mstw.dat"
+#pdf = "MSTW2008nnlo90cl"
+#fp = "F2Lc-q2_2-mstw.dat"
+#pdf = "MorfinTungB"
+#fp = "F2Lc-q2_2-mtb.dat"
+pdf = "CT14nnlo"
+fp = "F2Lc-q2_1-ct14.dat"
 
 Nx = 11
 nProcesses = cpu_count()
@@ -29,15 +33,17 @@ nProcesses = cpu_count()
 def AlphaS(Q2,f):
   lam2s = {4: 0.194, 5: 0.126}
   lam2 = lam2s[f]
+  t = np.log(Q2/lam2)
   def b(f): return (33. - 2.*f)/(12.*np.pi)
   def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
-  return 1./(b(f)*np.log(Q2/lam2))*(1. - (bp(f)*np.log(np.log(Q2/lam2)))/(b(f)*np.log(Q2/lam2)))
+  return 1./(b(f)*t)*(1. - (bp(f)*np.log(t))/(b(f)*t))
 
 # setup grid
 js = range(Nx)
 xs = [10.**(-.1 -3.9/(Nx-1)*j) for j in js]
 #mu2s = [mu02/4.,mu02,4.*mu02]
 fs = ["Fg0", "Fg1", "Fq1"]
+#fs = ["Fg0"]
 ks = range(len(fs))
 
 qIn = Queue()
@@ -55,6 +61,7 @@ def worker(qi, qo, lenParams):
   os["G"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.G,nlf)
   os["L"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.L,nlf)
   #os["P"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.P,nlf)
+  sys.stdout.flush()
   # prepare objects
   for proj in os:
     o = os[proj]
