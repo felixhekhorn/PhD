@@ -14,7 +14,7 @@ class PdfConvNLOq : public PdfConvBase {
     uint nlf;
 
 /**
- * @brief multiply quark charge?
+ * @brief multiply electric quark charge?
  */
     bool multiplyElCharge;
     
@@ -33,7 +33,7 @@ public:
  * @param pdf parton distribution functions
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  * @param nlf number of light flavours
- * @param multiplyElCharge multiply quark charge?
+ * @param multiplyElCharge multiply electric quark charge?
  * @param hq1 pointer to matrix element
  */
     PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, uint nlf, bool multiplyElCharge, fPtr5dbl hq1) :
@@ -58,9 +58,9 @@ public:
         for (uint q = 1; q < this->nlf + 1; ++q) {
             if (this->multiplyElCharge)
                 e = getElectricCharge(q);
-            fqs += e*e * (this->pdf->xfxQ2(q,y,this->muF2) + this->pdf->xfxQ2(-q,y,this->muF2));
+            fqs += e*e * (this->pdf->xfxQ2((int)q,y,this->muF2) + this->pdf->xfxQ2((int)-q,y,this->muF2));
         }
-        return jac * 1./this->bjorkenX * fqs * me;
+        return jac * 1./this->z * fqs * me;
     }
 };
 

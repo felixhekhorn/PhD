@@ -20,10 +20,10 @@ mu02 = 4.*m2 - q2
 #fp = "F2Lc-q2_1-cteq.dat"
 #pdf = "MSTW2008nnlo90cl"
 #fp = "F2Lc-q2_2-mstw.dat"
-#pdf = "MorfinTungB"
-#fp = "F2Lc-q2_2-mtb.dat"
-pdf = "CT14nnlo"
-fp = "F2Lc-q2_1-ct14.dat"
+pdf = "MorfinTungB"
+fp = "F2Lc-q2_1-mtb.dat"
+#pdf = "CT14nnlo"
+#fp = "F2Lc-q2_1-ct14.dat"
 
 Nx = 11
 nProcesses = cpu_count()
@@ -31,8 +31,8 @@ nProcesses = cpu_count()
 # @brief running strong coupling
 # taken from eq. 10 in G. Altarelli, M. Diemoz, G. Martinelli, and P. Nason, Nucl. Phys. B308 (1988) 724
 def AlphaS(Q2,f):
-  lam2s = {4: 0.194, 5: 0.126}
-  lam2 = lam2s[f]
+  lams = {4: 0.194, 5: 0.126}
+  lam2 = lams[f]**2
   t = np.log(Q2/lam2)
   def b(f): return (33. - 2.*f)/(12.*np.pi)
   def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))

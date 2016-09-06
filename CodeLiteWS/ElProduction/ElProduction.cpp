@@ -221,7 +221,7 @@ void ElProduction::checkHardonic() const {
 
 dbl ElProduction::Fg0() const {
     this->checkHardonic();
-    /** @todo cut-off correct? */
+    // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     PdfConvLO k(m2, q2, bjorkenX, pdf, muF2, this->getCg0());
@@ -235,7 +235,7 @@ dbl ElProduction::Fg0() const {
 
 dbl ElProduction::Fg1() const {
     this->checkHardonic();
-    /** @todo cut-off correct? */
+    // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     // compute S+V
@@ -282,7 +282,7 @@ dbl ElProduction::Fg1() const {
 
 dbl ElProduction::Fq1() const {
     this->checkHardonic();
-    /** @todo cut-off correct? */
+    // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     // helper

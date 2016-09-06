@@ -21,8 +21,8 @@ plot    "./data/F2Lc-q2_1-mstw.dat"  u 1:($1*$4) t "Q²=1e1",\
 
 set title "Fig. 16. (a): xF^{(1)}_{2,q}(x,Q²,m_c^2) Morfin-Tung B"
 set out "./img/figure16a-mtb.png"
-plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:($1*$4) t "Q²=1e1",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($1*$4) t "Q²=1e2"
+plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:(.584*$4) t "Q²=1e1",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.584*$4) t "Q²=1e2"
 
 set title "Fig. 16. (a): xF^{(1)}_{2,q}(x,Q²,m_c^2) CT14"
 set out "./img/figure16a-ct14.png"
@@ -42,8 +42,8 @@ plot    "./data/F2Lc-q2_1-mstw.dat"  u 1:($1*$7) t "Q²=1e1",\
 
 set title "Fig. 16. (b): xF^{(1)}_{L,q}(x,Q²,m_c^2) Morfin-Tung B"
 set out "./img/figure16b-mtb.png"
-plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:($1*$7) t "Q²=1e1",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($1*$7) t "Q²=1e2"
+plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:(.584*$7) t "Q²=1e1",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.584*$7) t "Q²=1e2"
 
 set title "Fig. 16. (b): xF^{(1)}_{L,q}(x,Q²,m_c^2) CT14"
 set out "./img/figure16b-ct14.png"

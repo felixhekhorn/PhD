@@ -36,13 +36,10 @@ public:
     dbl operator() (dbl a) {
         this->setSp(a);
         dbl me = cg0(m2,q2,sp);
-        //printf("a: %e, x: %e, z_max: %e, z: %e\n",a,bjorkenX,zMax,z);
-        //printf("s_min: %e, s: %e, me: %e\n",4.*m2,s,me);
-        if (this->bjorkenX/z < this->pdf->xMin()) {
-            printf("x/z out of range: %e\n",this->bjorkenX/z);
-        }
-        /** @todo missing factor of x_bj? */
-        return jac * 1./this->bjorkenX * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
+        //if (this->bjorkenX/z < this->pdf->xMin()) {
+        //    printf("x/z out of range: %e\n",this->bjorkenX/z);
+        //}
+        return jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
     }
 };
 

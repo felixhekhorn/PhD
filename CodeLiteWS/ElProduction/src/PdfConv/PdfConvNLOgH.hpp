@@ -46,7 +46,7 @@ public:
         this->setT1(a2);
         this->setS4(a3,Delta);
         dbl me = hg1H(m2,q2,sp,s4,t1);
-        return jac * 1./this->bjorkenX * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
+        return jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
     }
 };
 

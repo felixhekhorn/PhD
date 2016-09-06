@@ -11,7 +11,7 @@ set logscale y
 set ytics format "%.1e"
 set key left bottom
 
-set yrange [1e-6:1]
+set yrange [1e-4:1]
 set title "Fig. 14. (a): xF_{2}(x,Q²,m_c^2) CTEQ6.6"
 set out "./img/figure14a-cteq.png"
 plot    "./data/F2Lc-q2_1-cteq.dat"  u 1:($1*$2) w lines t "Q²=1e1, LO",\
@@ -28,10 +28,10 @@ plot    "./data/F2Lc-q2_1-mstw.dat"  u 1:($1*$2) w l t "Q²=1e1, LO",\
 
 set title "Fig. 14. (a): xF_{2}(x,Q²,m_c^2) Morfin-Tung B"
 set out "./img/figure14a-mtb.png"
-plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:($2) w l t "Q²=1e1, LO",\
-        "./data/F2Lc-q2_1-mtb.dat"  u 1:($2+$1*($3+$4)) w l t "Q²=1e1, LO+NLO",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($2) w l t "Q²=1e2, LO",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($2+$1*($3+$4)) w l t "Q²=1e2, LO+NLO"
+plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:(.764*$2) w l t "Q²=1e1, LO",\
+        "./data/F2Lc-q2_1-mtb.dat"  u 1:(.764*$2+.584*($3+$4)) w l t "Q²=1e1, LO+NLO",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.764*$2) w l t "Q²=1e2, LO",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.764*$2+.584*($3+$4)) w l t "Q²=1e2, LO+NLO"
 
 set title "Fig. 14. (a): xF_{2}(x,Q²,m_c^2) CT14"
 set out "./img/figure14a-ct14.png"
@@ -57,10 +57,10 @@ plot    "./data/F2Lc-q2_1-mstw.dat"  u 1:($1*$5) w l t "Q²=1e1, LO",\
 
 set title "Fig. 14. (b): xF_{L}(x,Q²,m_c^2) Morfin-Tung B"
 set out "./img/figure14b-mtb.png"
-plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:($5) w l t "Q²=1e1, LO",\
-        "./data/F2Lc-q2_1-mtb.dat"  u 1:($5+$1*($6+$7)) w lines t "Q²=1e1, LO+NLO",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($5) w l t "Q²=1e2, LO",\
-        "./data/F2Lc-q2_2-mtb.dat"  u 1:($5+$1*($6+$7)) w lines t "Q²=1e2, LO+NLO"
+plot    "./data/F2Lc-q2_1-mtb.dat"  u 1:(.764*$5) w l t "Q²=1e1, LO",\
+        "./data/F2Lc-q2_1-mtb.dat"  u 1:(.764*$5+.584*($6+$7)) w lines t "Q²=1e1, LO+NLO",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.764*$5) w l t "Q²=1e2, LO",\
+        "./data/F2Lc-q2_2-mtb.dat"  u 1:(.764*$5+.584*($6+$7)) w lines t "Q²=1e2, LO+NLO"
 
 set title "Fig. 14. (b): xF_{L}(x,Q²,m_c^2) CT14"
 set out "./img/figure14b-ct14.png"
