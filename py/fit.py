@@ -1,9 +1,5 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-#from multiprocessing import Pool, Queue, Lock
-#from Queue import Empty as QEmpty
-#import os
-#import time
 
 import numpy as np
 from scipy.special import spence
@@ -11,23 +7,27 @@ import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 
 etas = []
-dataT = []
+data = []
 
 # read data
-with open("../data/dq1-q2_-2.dat", "r") as f:
+with open("../data/partonic/dq1-q2_2.dat", "r") as f:
   for line in f:
     line = line.strip().split("\t")
     eta, t, l, p = [float(x) for x in line]
     etas.append(eta)
-    dataT.append(t)
+    data.append(l)
 
 #etas = etas[:30]
-#dataT = dataT[:30]
+#data = data[:30]
 
 # trafos
+m2 = 4.75**2
+q2 = -1e2
 def rho(eta): return 1./(1.+eta)
 def beta(eta): return np.sqrt(1. - rho(eta))
 def chi(eta): return (1. - beta(eta))/(1. + beta(eta))
+def s(eta): return 4.*m2/rho(eta)
+def sp(eta): return s(eta) - q2
 
 def f(eta, b0,b1,b2,\
           rb0,rb1,rb2,rrb0,rrb1,rrb2,rrrb0,rrrb1,rrrb2,\
@@ -54,18 +54,41 @@ def g(eta, a,b,c,d,e,f,g,h,k,l):
   x = chi(eta)
   return (a/(x+1)+b/(x+1)**2+c/(x-1))*np.log(x)+(d/(x+1)+e/(x+1)**2+f/(x-1))*np.log(1+x)+(g/(x+1)+h/(x+1)**2)*np.log(1-x) + (k/(x+1)+l/(x+1)**2)*np.log(x)**2
 
+def h(eta, b0,b1,b2,b3,b4,\
+           sb0,sb1,sb2,sb3,\
+           lb0,lb1,lb2,lb3,lb4
+    ):
+  s_ = s(eta)
+  sp_ = sp(eta)
+  betas = [beta(eta)**j for j in [0,1,2,3,4,5,6,7,8,9,10,11,12]]
+  x = chi(eta)
+  return (beta(eta)**7)*(\
+	    np.dot([b0,b1,b2,b3,b4],betas[:5])+\
+            np.dot([lb0,lb1,lb2,lb3],betas[7:11])*np.log(x)+\
+            0#np.dot([sb0,sb1,sb2,sb3],betas[3:7])*spence(1-x)\
+	)
+
+def th(eta, a, b):
+  return a * (beta(eta)**b)
+def he(eta, a, b, c):
+  x = chi(eta)
+  return a/x+b+c* x
+
 #for j in range(len(etas)):
 #  print "%e\t%e"%(etas[j],dataT[j])
 
 # compute fit
-popt, pcov = curve_fit(f, etas, dataT)
+#popt, pcov = curve_fit(th, etas[:20], data[:20])
+#popt, pcov = curve_fit(he, etas[80:], data[80:])
+popt, pcov = curve_fit(h, etas, data)
 print len(popt),": ",popt
-fitPoints = [f(*(np.insert(popt,0,eta))) for eta in etas]
+fitPoints = [h(*(np.insert(popt,0,eta))) for eta in etas]
 
 # plot data
-plt.plot(etas,dataT)
+plt.plot(etas,data)
 plt.plot(etas,fitPoints)
-plt.legend(("data","fit"))
+plt.plot(etas,[-p for p in fitPoints])
+plt.legend(("data","fit", "-fit"))
 
 ax = plt.axes()
 ax.set_yscale('log')
@@ -74,13 +97,10 @@ ax.set_xscale('log')
 plt.savefig("fit.png")
 
 # plot error
-err = [np.abs((dataT[j] - fitPoints[j])/dataT[j]) for j in range(len(etas))]
+err = [np.abs((data[j] - fitPoints[j])/data[j]) for j in range(len(etas))]
 plt.figure()
 plt.loglog(etas,err)
 ax = plt.axes()
 ax.set_ylim(1e-6,1e2)
-#ax.set_xscale('log')
-#ax.set_yscale('log')
 
 plt.savefig("fit-err.png")
-#plt.show()

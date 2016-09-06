@@ -46,64 +46,13 @@ int test(){
     dbl Delta = 1e-6;
     dbl m2 = 1.5*1.5;
     dbl q2 = -1.e2;
-    ElProduction o(m2,q2,Delta,G,3);
-    //o.setPdf("cteq66",0);
-    /*o.setPdf("DSSV90cl",0);
+    ElProduction o(m2,q2,Delta,L,3);
+    o.setPdf("MorfinTungB",0);
     o.setMu2(4.*m2-q2);
-    o.setBjorkenX(7.943282e-01);
+    dbl x = 1e-4;
+    o.setBjorkenX(x);
     o.setAlphaS(0.18904419407331516);
-    printf("%e\n",o.Fg1());*/
-    /*dbl xi = 1e0;
-    ElProduction oG(1.,-xi,Delta,G,4);
-    ElProduction oL(1.,-xi,Delta,L,4);
-    dbl eta;
-    uint N = 51;
-    for (uint j = 0; j < N; ++j) {
-        eta = pow(10.,2.-6./(N-1.)*j);
-        oG.setEta(eta);
-        oL.setEta(eta);
-        printf("%e\t%e\n",eta,(oG.dq1()+oL.dq1()/2.));
-    }*/
-    /*oG.setEta(1e-4);
-    printf("%e",oG.dq1());*/
-    /*uint N = 21;
-    for(uint j = 0; j < N; ++j) {
-        dbl m2 = 120. - 100.*j/(N-1);
-        printf("%e\t",m2);
-        ElProduction oG(m2,-1e3,Delta,G,4);
-        oG.setEta(1e-3);
-        //oG.setPartonicS(400);
-        printf("%e\t",oG.dq1());
-        oG.setEta(2e-3);
-        //oG.setPartonicS(390);
-        printf("%e\t",oG.dq1());
-        oG.setEta(3e-3);
-        //oG.setPartonicS(380);
-        printf("%e\t",oG.dq1());
-        oG.setEta(4e-3);
-        //oG.setPartonicS(370);
-        printf("%e\n",oG.dq1());
-    }*/
-    /*dbl m2 = 1.5*1.5;
-    ElProduction o(m2,-1e2,Delta,G,4);
-    uint N = 21;
-    for(uint j = 0; j < N; ++j) {
-        dbl q2 = -pow(10,3.+4./(N-1)*j);
-        o.setQ2(q2);
-        printf("%e\t",-q2);
-        o.setEta(1e-3);
-        printf("%e\t",o.dq1());
-        o.setEta(2e-3);
-        printf("%e\t",o.dq1());
-        o.setEta(1e-2);
-        printf("%e\t",o.dq1());
-        o.setEta(1e-1);
-        printf("%e\n",o.dq1());
-    }*/
-    /*ElProduction o(1.5*1.5,-1e3,Delta,G,4);
-    o.setEta(1e-3);
-    printf("%e\n",o.dq1());*/
-    //IntAG2(1.5*1.5,-1e3,1009.009,1.1153579464537023e-6,-519.81269239429935);
+    printf("%e\n",x*o.Fg0());
     return EXIT_SUCCESS;
 }
 

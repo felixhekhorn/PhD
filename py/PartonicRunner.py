@@ -91,6 +91,7 @@ def _threadWorker(qi, qo, oArgs,lenParams):
        f = p["f"]
        if "rand" == f: p["res"] = np.random.rand()
        elif "cg1" == f: p["res"] = o.cg1()
+       elif "dq1" == f: p["res"] = o.dq1()
        qo.put(p)
 
        # log progress
