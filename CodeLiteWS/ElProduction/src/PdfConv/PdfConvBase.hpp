@@ -57,6 +57,11 @@ protected:
     dbl t1;
     
 /**
+ * @brief current \f$s_1^{max}\f$
+ */
+    dbl s4max;
+    
+/**
  * @brief current \f$s_4\f$
  */
     dbl s4;
@@ -76,7 +81,7 @@ protected:
  */
     PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2) :
         m2(m2), q2(q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2),
-        z(0.),sp(0.),t1(0.),s4(0.),
+        z(0.),sp(0.),t1(0.),s4max(0.),s4(0.),
         jac(1.){
         this->zMax = -q2/(4.*m2 - q2);
     }
@@ -110,7 +115,7 @@ protected:
     void setS4(dbl a, dbl s4min) {
         dbl s = sp+q2;
         dbl beta = Sqrt(1 - (4*m2)/s);
-        dbl s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
+        this->s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
         this->s4 = s4min + (s4max - s4min)*a;
         this->jac *= (s4max - s4min);
     }

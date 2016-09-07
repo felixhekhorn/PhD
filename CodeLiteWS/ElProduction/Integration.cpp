@@ -8,10 +8,10 @@ dbl int1D(gsl_function* F) {
     size_t calls = 10000;
     dbl res,err;
     gsl_integration_workspace *w = gsl_integration_workspace_alloc(calls);
-    gsl_integration_qag(F, 0, 1., 1e-20,1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
+    gsl_integration_qag(F, 0, 1., 1e-20,1e-5, calls, GSL_INTEG_GAUSS41, w, &res,&err);
     gsl_integration_workspace_free(w);
     //reNevals = w->size;
-    printf("int1D: res: %e, err: %e\n",res,err);
+    //printf("int1D: res: %e, err: %e\n",res,err);
     return res;
 }
 
@@ -23,7 +23,7 @@ dbl int2D(gsl_monte_function* F) {
     gsl_rng *r;
     F->dim = dim;
         
-    size_t calls = 70000;
+    size_t calls = 50000;
     gsl_rng_env_setup ();
     T = gsl_rng_default;
     r = gsl_rng_alloc (T);
@@ -31,7 +31,7 @@ dbl int2D(gsl_monte_function* F) {
     dbl res,err;
     
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
-    gsl_monte_vegas_integrate (F, xl, xu, dim, 10000, r, s, &res, &err);
+    gsl_monte_vegas_integrate (F, xl, xu, dim, 20000, r, s, &res, &err);
     //printf("int2D: res: %e, err: %e\n",res,err);
     uint guard=0;
     do {
@@ -51,7 +51,7 @@ dbl int3D(gsl_monte_function* F) {
     gsl_rng *r;
     F->dim = dim;
         
-    size_t calls = 70000;
+    size_t calls = 100000;
     gsl_rng_env_setup ();
     T = gsl_rng_default;
     r = gsl_rng_alloc (T);
@@ -59,7 +59,7 @@ dbl int3D(gsl_monte_function* F) {
     dbl res,err;
     
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
-    gsl_monte_vegas_integrate (F, xl, xu, dim, 10000, r, s, &res, &err);
+    gsl_monte_vegas_integrate (F, xl, xu, dim, 30000, r, s, &res, &err);
     //printf("int3D: res: %e, err: %e\n",res,err);
     uint guard=0;
     do {

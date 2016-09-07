@@ -14,7 +14,6 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    
     //return test();
     //return Marco();
     

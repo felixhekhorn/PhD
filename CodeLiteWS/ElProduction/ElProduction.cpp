@@ -13,6 +13,7 @@
 #include "src/PdfConvLO.hpp"
 #include "src/PdfConv/PdfConvNLOgSV.hpp"
 #include "src/PdfConv/PdfConvNLOgH.hpp"
+#include "src/PdfConv/PdfConvNLOg.hpp"
 #include "src/PdfConvNLOq.hpp"
 
 ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
@@ -238,6 +239,7 @@ dbl ElProduction::Fg1() const {
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
+/*
     // compute S+V
     #define runSV(src,target) {\
         fPtr5dbl g = this->get##src();\
@@ -277,6 +279,36 @@ dbl ElProduction::Fg1() const {
     dbl realFg1 = n*(cg1SV + cg1H);
     dbl FgBarF1 = n*(cgBarF1SV + cgBarF1H) + nlf*fermionLoopFactor*Fg0;
     dbl FgBarR1 = n*cgBarR1SV - nlf*fermionLoopFactor*Fg0;
+    return realFg1 + FgBarF1*log(this->muF2/this->m2) + FgBarR1*log(this->muR2/this->m2);
+*/
+    PdfConvNLOg kCg1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCg1SV(),this->getCg1H());
+    gsl_monte_function fCg1;
+    fCg1.f = gsl::callFunctor3D<PdfConvNLOg>;
+    fCg1.params = &kCg1;
+    dbl cg1 = int3D(&fCg1);
+    
+    PdfConvNLOg kCgBarF1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCgBarF1SV(),this->getCgBarF1H());
+    gsl_monte_function fCgBarF1;
+    fCgBarF1.f = gsl::callFunctor3D<PdfConvNLOg>;
+    fCgBarF1.params = &kCgBarF1;
+    dbl cgBarF1 = int3D(&fCgBarF1);
+    
+    PdfConvNLOgSV kCgBarR1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCgBarR1SV());
+    gsl_monte_function fCgBarR1;
+    fCgBarR1.f = gsl::callFunctor2D<PdfConvNLOgSV>;
+    fCgBarR1.params = &kCgBarR1;
+    dbl cgBarR1 = int2D(&fCgBarR1);
+    
+    // compute fermion loop
+    dbl Fg0 = this->Fg0();
+    //printf("Fg0: %e\n",Fg0);
+    
+    // combine all functions
+    dbl eH = getElectricCharge(this->nlf + 1);
+    dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;
+    dbl realFg1 = n*cg1;
+    dbl FgBarF1 = n*cgBarF1 + nlf*fermionLoopFactor*Fg0;
+    dbl FgBarR1 = n*cgBarR1 - nlf*fermionLoopFactor*Fg0;
     return realFg1 + FgBarF1*log(this->muF2/this->m2) + FgBarR1*log(this->muR2/this->m2);
 }
 
