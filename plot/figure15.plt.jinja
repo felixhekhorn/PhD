@@ -1,0 +1,29 @@
+{% raw %}#!/usr/bin/gnuplot{% endraw %}
+reset
+
+set term png
+
+set xlabel "x []"
+set logscale x
+
+set logscale y
+set ytics format "%.1e"
+set yrange [1e-5:1e-1]
+
+set key left bottom
+
+{% for short, long in fileMap.iteritems()  %}
+set title "Fig. 15. (a): F^{(1)}_{2,g}(x,Q²,m_c^2) {{ long }}"
+set out "./img/figure15a-{{ short }}.png"
+plot    "./data/F2Lc-q2_1-{{ short }}.dat"  u 1:3 w l t "Q²=1e1",\
+        "./data/F2Lc-q2_2-{{ short }}.dat"  u 1:3 w l t "Q²=1e2"
+{% endfor %}
+
+{% for short, long in fileMap.iteritems()  %}
+set title "Fig. 15. (b): F^{(1)}_{L,g}(x,Q²,m_c^2) {{ long }}"
+set out "./img/figure15b-{{ short }}.png"
+plot    "./data/F2Lc-q2_1-{{ short }}.dat"  u 1:6 w l t "Q²=1e1",\
+        "./data/F2Lc-q2_2-{{ short }}.dat"  u 1:6 w l t "Q²=1e2",
+{% endfor %}
+
+set out

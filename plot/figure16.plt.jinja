@@ -1,0 +1,25 @@
+#!/usr/bin/gnuplot
+reset
+
+set term png
+
+set xlabel "x []"
+set logscale x
+
+set key right bottom
+
+{% for short, long in fileMap.iteritems()  %}
+set title "Fig. 16. (a): F^{(1)}_{2,q}(x,Q²,m_c^2) {{ long }}"
+set out "./img/figure16a-{{ short }}.png"
+plot    "./data/F2Lc-q2_1-{{ short }}.dat"  u 1:4 w l t "Q²=1e1",\
+        "./data/F2Lc-q2_2-{{ short }}.dat"  u 1:4 w l t "Q²=1e2"
+{% endfor %}
+
+{% for short, long in fileMap.iteritems()  %}
+set title "Fig. 16. (b): F^{(1)}_{L,q}(x,Q²,m_c^2) {{ long }}"
+set out "./img/figure16b-{{ short }}.png"
+plot    "./data/F2Lc-q2_1-{{ short }}.dat"  u 1:7 w l t "Q²=1e1",\
+        "./data/F2Lc-q2_2-{{ short }}.dat"  u 1:7 w l t "Q²=1e2"
+{% endfor %}
+
+set out

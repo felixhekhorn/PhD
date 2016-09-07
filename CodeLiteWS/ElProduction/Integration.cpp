@@ -11,7 +11,7 @@ dbl int1D(gsl_function* F) {
     gsl_integration_qag(F, 0, 1., 1e-20,1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
     gsl_integration_workspace_free(w);
     //reNevals = w->size;
-    //printf("SV: res: %e, err: %e\n",res,err);
+    printf("int1D: res: %e, err: %e\n",res,err);
     return res;
 }
 
@@ -39,7 +39,7 @@ dbl int2D(gsl_monte_function* F) {
         //printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    //printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }
 
@@ -67,6 +67,6 @@ dbl int3D(gsl_monte_function* F) {
         //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }

@@ -10,7 +10,7 @@ import ElProduction
 
 # parameters
 m2 = 1.5**2
-q2 = -1.e1
+q2 = -1.e2
 Delta = 1e-6
 nlf = 3
 pdfMem = 0
@@ -20,12 +20,12 @@ mu02 = 4.*m2 - q2
 #fp = "F2Lc-q2_1-cteq.dat"
 #pdf = "MSTW2008nnlo90cl"
 #fp = "F2Lc-q2_2-mstw.dat"
-pdf = "MorfinTungB"
-fp = "F2Lc-q2_1-mtb.dat"
-#pdf = "CT14nnlo"
-#fp = "F2Lc-q2_1-ct14.dat"
+#pdf = "MorfinTungB"
+#fp = "F2Lc-q2_2-mtb.dat"
+pdf = "CT14nnlo"
+fp = "F2Lc-q2_2-ct14.dat"
 
-Nx = 11
+Nx = 31
 nProcesses = cpu_count()
 
 # @brief running strong coupling

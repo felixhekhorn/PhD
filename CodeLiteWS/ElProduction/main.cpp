@@ -15,30 +15,24 @@ int test();
  */
 int main(int argc, char **argv) {
     
-    return test();
+    //return test();
     //return Marco();
     
-    dbl m2 = 4.75*4.75;
+    dbl m2 = 1.5*1.5;
+    uint nlf = 3;
     dbl Delta = 1e-6;
-    dbl q2 = -1.e-2;
-    ElProduction oG(m2,q2,Delta,G,4);
-    ElProduction oL(m2,q2,Delta,L,4);
-    ElProduction oP(m2,q2,Delta,P,4);
+    dbl q2 = -1.e2;
+    ElProduction o(m2,q2,Delta,L,nlf);
+    o.setPdf("CT14nnlo",0);
+    o.setMu2(4.*m2-q2);
+    o.setAlphaS(0.18904419407331516);
     
-    /*
-    uint N = 101;
-    for(uint j = 0; j < N; ++j) {
-        dbl eta = pow(10.,-3.+6./(N-1)*j);
-        oG.setEta(eta);
-        oL.setEta(eta);
-        oP.setEta(eta);
-        
-        //dbl g = oG.cg0(), l = oL.cg0(), p = oP.cg0();
-        dbl g = oG.cg1(), l = oL.cg1(), p = oP.cg1();
-        
-        printf("%e\t%e\t%e\t%e\n",eta,g+l/2.,l,p);
+    uint N = 10;
+    for (uint j = 0; j < N; ++j) {
+        dbl x = pow(10.,-3.+1.*j/N);
+        o.setBjorkenX(x);
+        printf("%e\t%e\n",x,o.Fg1());
     }
-    */
 	return EXIT_SUCCESS;
 }
 
