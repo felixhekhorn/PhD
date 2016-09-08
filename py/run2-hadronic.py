@@ -20,10 +20,10 @@ mu02 = 4.*m2 - q2
 #fp = "F2Lc-q2_1-cteq.dat"
 #pdf = "MSTW2008nnlo90cl"
 #fp = "F2Lc-q2_2-mstw.dat"
-#pdf = "MorfinTungB"
-#fp = "F2Lc-q2_2-mtb.dat"
-pdf = "CT14nnlo"
-fp = "F2Lc-q2_2-ct14.dat"
+pdf = "MorfinTungB"
+fp = "F2Lc-q2_2-mtb.dat"
+#pdf = "CT14nnlo"
+#fp = "F2Lc-q2_2-ct14.dat"
 
 Nx = 31
 nProcesses = cpu_count()

@@ -2,59 +2,24 @@
 #define psKers_H_
 
 #include "config.h"
-#include "IntRFinite.h"
-#include "RPole.h"
-#include "SV.h"
+#include "src/IntKerBase.hpp"
 
 using namespace Color;
 
 /**
  * @brief abstract phase space kernel
  */
-class PsKer {
+class PsKerBase : public IntKerBase {
 protected:
-/**
- * @brief heavy quark mass squared \f$m^2 > 0\f$
- */
-    dbl m2;
-    
-/**
- * @brief virtuality of the photon \f$q^2< 0\f$
- */
-    dbl q2;
-    
-/**
- * @brief center of mass energy \f$s' = s - q^2\f$
- */
-    dbl sp;
-     
-/**
- * @brief energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
- */
-    dbl Delta;
-
-/**
- * @brief lower bound of t1 integration
- */
-    dbl t1min;
-
-/**
- * @brief upper bound of t1 integration
- */
-    dbl t1max;
     
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
-    PsKer(dbl m2, dbl q2, dbl sp, dbl Delta) : m2(m2), q2(q2), sp(sp), Delta(Delta){
-        this->t1max = -(sp*(1. - Sqrt(1. - (4.*m2)/(q2 + sp))))/2.;
-        this->t1min = -(sp*(1. + Sqrt(1. - (4.*m2)/(q2 + sp))))/2.;
-        if (this->t1min >= this->t1max)
-            throw domain_error("t1_min has to be smaller than t1_max!");
+    PsKerBase(dbl m2, dbl q2, dbl sp) : IntKerBase(m2, q2){
+        this->setSpRaw(sp);
     }
 
 };
@@ -63,7 +28,7 @@ protected:
 /**
  * @brief phase space kernel of soft+virtual contributions
  */
-class PsKerNLOgSV : public PsKer {
+class PsKerNLOgSV : public PsKerBase {
 protected:
     
 /**
@@ -78,19 +43,17 @@ public:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param cg1SV pointer to matrix element
  */
-    PsKerNLOgSV(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr4dbl cg1SV) : PsKer(m2,q2,sp,Delta), cg1SV(cg1SV) {}
+    PsKerNLOgSV(dbl m2, dbl q2, dbl sp, fPtr4dbl cg1SV) : PsKerBase(m2,q2,sp), cg1SV(cg1SV) {}
 
 /**
  * @brief called function
  * @param a
  * @return kernel
  */
-    dbl operator()(dbl a) const {
-        dbl t1 = this->t1min + (this->t1max-this->t1min)*a;
-        dbl jac = (this->t1max-this->t1min);
+    dbl operator()(dbl a) {
+        this->setT1(a);
         dbl me = cg1SV(m2,q2,sp,t1);
         //printf("a: %e t1:%e %e*%e\n",a,t1,jac,this->get(t1));
         return jac*me;
@@ -100,13 +63,32 @@ public:
 /**
  * @brief phase space kernel of hard part
  */
-class psKerH : public PsKer {
+class PsKerNLOg : public PsKerBase {
 protected:
+/**
+ * @brief energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
+ */
+    dbl Delta;
     
 /**
- * @brief pointer to matrix element
+ * @brief pointer to S+V matrix element
  */
-  fPtr5dbl cg1H;
+    fPtr4dbl hg1SV;
+    
+/**
+ * @brief pointer to Delta-logs of S+V matrix element
+ */
+    fPtr4dbl hg1SVDelta1;
+    
+/**
+ * @brief pointer to double Delta-logs of S+V matrix element
+ */
+    fPtr4dbl hg1SVDelta2;
+    
+/**
+ * @brief pointer to hard matrix element
+ */
+    fPtr5dbl hg1H;
 
 public:
 
@@ -116,9 +98,13 @@ public:
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
- * @param cg1H pointer to matrix element
+ * @param hg1SV pointer to S+V matrix element
+ * @param hg1SVDelta1 pointer to Delta-logs of S+V matrix element
+ * @param hg1SVDelta2 pointer to double Delta-logs of S+V matrix element
+ * @param hg1H pointer to hard matrix element
  */
-    psKerH(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr5dbl cg1H) : PsKer(m2,q2,sp,Delta), cg1H(cg1H) {}
+    PsKerNLOg(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) : PsKerBase(m2,q2,sp),
+        Delta(Delta), hg1SV(hg1SV), hg1SVDelta1(hg1SVDelta1), hg1SVDelta2(hg1SVDelta2), hg1H(hg1H) {}
 
 /**
  * @brief called function
@@ -126,22 +112,28 @@ public:
  * @param a2
  * @return hard part
  */
-    dbl operator()(dbl a1, dbl a2) const {
-        dbl s = sp+q2;
-        dbl beta = Sqrt(1 - (4*m2)/s);
-        dbl t1 = this->t1min + (this->t1max-this->t1min)*a1;
-        dbl s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
-        dbl s4 = this->Delta + (s4max - this->Delta)*a2;
-        dbl jac = (this->t1max-this->t1min)*(s4max - this->Delta);
-        dbl me = cg1H(m2,q2,sp,s4,t1);
-        return jac*me;
+    dbl operator()(dbl a1, dbl a2) {
+        this->setT1(a1);
+        this->setS4(a2,Delta);
+        dbl A0 = 1./(s4max - Delta);
+        dbl fakeMESV = hg1SV(m2,q2,sp,t1) * A0;
+        
+        dbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
+        fakeMESV += hg1SVDelta1(m2,q2,sp,t1) * A1;
+        
+        if (0 != hg1SVDelta2) {
+            dbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
+            fakeMESV += hg1SVDelta2(m2,q2,sp,t1) * A2;
+        }
+        dbl meH = hg1H(m2,q2,sp,s4,t1);
+        return jac*(meH + fakeMESV);
     }
 };
 
 /**
  * @brief phase space kernel of quark parts
  */
-class PsKerNLOq : public PsKer {
+class PsKerNLOq : public PsKerBase {
 protected:
     
 /**
@@ -158,7 +150,7 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param gq1 pointer to matrix element
  */
-    PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) : PsKer(m2,q2,sp,0.), gq1(gq1) {}
+    PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) : PsKerBase(m2,q2,sp), gq1(gq1) {}
 
 /**
  * @brief called function
@@ -166,13 +158,9 @@ public:
  * @param a2
  * @return quark part
  */
-    dbl operator()(dbl a1, dbl a2) const {
-        dbl s = sp+q2;
-        dbl beta = Sqrt(1 - (4*m2)/s);
-        dbl t1 = this->t1min + (this->t1max-this->t1min)*a1;
-        dbl s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
-        dbl s4 = s4max*a2;
-        dbl jac = (this->t1max-this->t1min)*s4max;
+    dbl operator()(dbl a1, dbl a2) {
+        this->setT1(a1);
+        this->setS4(a2,0.);
         dbl me = gq1(m2,q2,sp,s4,t1);
         return jac*me;
     }

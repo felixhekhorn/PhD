@@ -99,49 +99,37 @@ getter4C(gBarF1SVDelta1)
 getter5(Cg1H,cg1H)
 getter5(CgBarF1H,cgBarF1H)
 
+getter5(Cq1,cq1)
+getter5(CqBarF1,cqBarF1)
+getter5(Dq1,dq1)
+
 dbl ElProduction::cg1() const {
-    /*this->checkPartonic();
-    psKerSV kSV(m2,q2,sp,Delta,this->getCg1SV());
-    gsl_function fSV;
-    fSV.function = gsl::callFunctor<psKerSV>;
-    fSV.params = &kSV;
-    psKerH kH(m2,q2,sp,Delta,this->getCg1H());
-    gsl_monte_function fH;
-    fH.f = gsl::callFunctor2D<psKerH>;
-    fH.params = &kH;
-    return int2D(&fH)+int1D(&fSV);*/
-    throw logic_error("not implemented yet!");
+    this->checkPartonic();
+    PsKerNLOg k(m2,q2,sp,Delta,this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
+    gsl_monte_function f;
+    f.f = gsl::callFunctor2D<PsKerNLOg>;
+    f.params = &k;
+    return int2D(&f);
 }
 
 dbl ElProduction::cgBarR1() const {
     this->checkPartonic();
-    PsKerNLOgSV k(m2,q2,sp,Delta,this->getCgBarR1SV());
+    PsKerNLOgSV k(m2,q2,sp,this->getCgBarR1SV());
     gsl_function f;
     f.function = gsl::callFunctor<PsKerNLOgSV>;
     f.params = &k;
     // take fermion loop into account!
     return int1D(&f)+nlf*fermionLoopFactor*this->cg0();
-    throw logic_error("not implemented yet!");
 }
 
 dbl ElProduction::cgBarF1() const {
-    /*this->checkPartonic();
-    psKerSV kSV(m2,q2,sp,Delta,this->getCgBarF1SV());
-    gsl_function fSV;
-    fSV.function = gsl::callFunctor<psKerSV>;
-    fSV.params = &kSV;
-    psKerH kH(m2,q2,sp,Delta,this->getCgBarF1H());
-    gsl_monte_function fH;
-    fH.f = gsl::callFunctor2D<psKerH>;
-    fH.params = &kH;
-    // given by mass factorization
-    return int2D(&fH)+int1D(&fSV)-nlf*fermionLoopFactor*this->cg0();*/
-    throw logic_error("not implemented yet!");
+    this->checkPartonic();
+    PsKerNLOg k(m2,q2,sp,Delta,this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),0,this->getCgBarF1H());
+    gsl_monte_function f;
+    f.f = gsl::callFunctor2D<PsKerNLOg>;
+    f.params = &k;
+    return int2D(&f);
 }
-
-getter5(Cq1,cq1)
-getter5(CqBarF1,cqBarF1)
-getter5(Dq1,dq1)
 
 dbl ElProduction::cq1() const {
     this->checkPartonic();
