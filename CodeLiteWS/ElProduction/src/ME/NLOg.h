@@ -8,99 +8,180 @@
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cg1SVG(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cg1SVL(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cg1SVP(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
- * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @brief Delta-logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
- * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cgBarF1SVG(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
- * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @brief Delta-logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
- * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cgBarF1SVL(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
- * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @brief Delta-logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
- * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @return \f$c^{(1),(S+V)}_{g}\f$
  */
-dbl cgBarF1SVP(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cg1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief double Delta-logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$c^{(1),(S+V)}_{g}\f$
+ */
+dbl cg1SVDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief double Delta-logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$c^{(1),(S+V)}_{g}\f$
+ */
+dbl cg1SVDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief double Delta-logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$c^{(1),(S+V)}_{g}\f$
+ */
+dbl cg1SVDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVG(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cgBarR1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVL(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cgBarR1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
- * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft\f$s_4<\Delta\f$ contributions: \f$\Delta > 0\f$
  * @param t1
  * @return \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVP(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1);
+dbl cgBarR1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief Double-log of factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief Double-log of factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+
+/**
+ * @brief Double-log of factorisation logs of S+V part of NLO gluon contribution
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param t1
+ * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ */
+dbl cgBarF1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
 
 /**
  * @brief H part of NLO gluon contribution

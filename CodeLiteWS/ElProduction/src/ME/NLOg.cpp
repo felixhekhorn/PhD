@@ -6,34 +6,55 @@
 
 using namespace Color;
 
-// NB: no 2CF here! - just simple addition
-#define cg1SV(proj) dbl cg1SV##proj(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1) {\
+#define cg1SV(proj) dbl cg1SV##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
     dbl n = Kggg * NC * CF;\
-    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj(m2,q2,sp,Delta,t1) + CF * SVQED##proj(m2,q2,sp,Delta,t1))/(sp*sp);\
+    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj(m2,q2,sp,t1) + 2.*CF * SVQED##proj(m2,q2,sp,t1))/(sp*sp);\
 }
-
 cg1SV(G)
 cg1SV(L)
 cg1SV(P)
 
-#define cgBarF1SV(proj) dbl cgBarF1SV##proj(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1) {\
+#define cg1SVDelta1(proj) dbl cg1SVDelta1##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
     dbl n = Kggg * NC * CF;\
-    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj##ScaleF(m2,q2,sp,Delta,t1))/(sp*sp);\
+    return (m2/(4.*M_PI)) * n * (CA * SVOKDelta1##proj(m2,q2,sp,t1) + 2.*CF * SVQEDDelta1##proj(m2,q2,sp,t1))/(sp*sp);\
 }
+cg1SVDelta1(G)
+cg1SVDelta1(L)
+cg1SVDelta1(P)
 
-cgBarF1SV(G)
-cgBarF1SV(L)
-cgBarF1SV(P)
-
-#define cgBarR1SV(proj) dbl cgBarR1SV##proj(dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1) {\
+#define cg1SVDelta2(proj) dbl cg1SVDelta2##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
     dbl n = Kggg * NC * CF;\
-    return (m2/(4.*M_PI)) * n * (CA * SVOK##proj##ScaleR(m2,q2,sp,Delta,t1))/(sp*sp);\
+    return (m2/(4.*M_PI)) * n * (CA * SVOKDelta2##proj(m2,q2,sp,t1))/(sp*sp);\
 }
+cg1SVDelta2(G)
+cg1SVDelta2(L)
+cg1SVDelta2(P)
 
+#define cgBarR1SV(proj) dbl cgBarR1SV##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
+    dbl n = Kggg * NC * CF;\
+    return (m2/(4.*M_PI)) * n * (CA * SVOKScaleR##proj(m2,q2,sp,t1))/(sp*sp);\
+}
 cgBarR1SV(G)
 cgBarR1SV(L)
 cgBarR1SV(P)
 
+#define cgBarF1SV(proj) dbl cgBarF1SV##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
+    dbl n = Kggg * NC * CF;\
+    return (m2/(4.*M_PI)) * n * (CA * SVOKScaleF##proj(m2,q2,sp,t1))/(sp*sp);\
+}
+cgBarF1SV(G)
+cgBarF1SV(L)
+cgBarF1SV(P)
+
+#define cgBarF1SVDelta1(proj) dbl cgBarF1SVDelta1##proj(dbl m2, dbl q2, dbl sp, dbl t1) {\
+    dbl n = Kggg * NC * CF;\
+    return (m2/(4.*M_PI)) * n * (CA * SVOKScaleFDelta1##proj(m2,q2,sp,t1))/(sp*sp);\
+}
+cgBarF1SVDelta1(G)
+cgBarF1SVDelta1(L)
+cgBarF1SVDelta1(P)
+
+// Hard functions
 dbl cg1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
     dbl nG = 1./(4) * Kggg * NC * CF;
     return (m2/(4.*M_PI)) * nG * (CA * (IntROKfiniteG(m2,q2,sp,s4,t1) + RPoleG(m2,q2,sp,s4,t1)) + 2.*CF * IntRQEDfiniteG(m2,q2,sp,s4,t1))/(sp*sp);

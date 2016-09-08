@@ -73,7 +73,22 @@ dbl ElProduction::cg0() const {
     return cg0(m2,q2,sp);
 }
 
-#define getter(u,l) fPtr5dbl ElProduction::get##u() const {\
+#define getter4C(n) fPtr4dbl ElProduction::getC##n() const {\
+    switch(this->proj) {\
+        case G: return &c##n##G;\
+        case L: return &c##n##L;\
+        case P: return &c##n##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
+getter4C(g1SV)
+getter4C(g1SVDelta1)
+getter4C(g1SVDelta2)
+getter4C(gBarR1SV)
+getter4C(gBarF1SV)
+getter4C(gBarF1SVDelta1)
+
+#define getter5(u,l) fPtr5dbl ElProduction::get##u() const {\
     switch(this->proj) {\
         case G: return &l##G;\
         case L: return &l##L;\
@@ -81,15 +96,11 @@ dbl ElProduction::cg0() const {
         default: throw invalid_argument("unknown projection!");\
     }\
 }
-
-getter(Cg1SV,cg1SV)
-getter(Cg1H,cg1H)
-getter(CgBarF1SV,cgBarF1SV)
-getter(CgBarF1H,cgBarF1H)
-getter(CgBarR1SV,cgBarR1SV)
+getter5(Cg1H,cg1H)
+getter5(CgBarF1H,cgBarF1H)
 
 dbl ElProduction::cg1() const {
-    this->checkPartonic();
+    /*this->checkPartonic();
     psKerSV kSV(m2,q2,sp,Delta,this->getCg1SV());
     gsl_function fSV;
     fSV.function = gsl::callFunctor<psKerSV>;
@@ -98,21 +109,23 @@ dbl ElProduction::cg1() const {
     gsl_monte_function fH;
     fH.f = gsl::callFunctor2D<psKerH>;
     fH.params = &kH;
-    return int2D(&fH)+int1D(&fSV);
+    return int2D(&fH)+int1D(&fSV);*/
+    throw logic_error("not implemented yet!");
 }
 
 dbl ElProduction::cgBarR1() const {
     this->checkPartonic();
-    psKerSV k(m2,q2,sp,Delta,this->getCgBarR1SV());
+    PsKerNLOgSV k(m2,q2,sp,Delta,this->getCgBarR1SV());
     gsl_function f;
-    f.function = gsl::callFunctor<psKerSV>;
+    f.function = gsl::callFunctor<PsKerNLOgSV>;
     f.params = &k;
     // take fermion loop into account!
     return int1D(&f)+nlf*fermionLoopFactor*this->cg0();
+    throw logic_error("not implemented yet!");
 }
 
 dbl ElProduction::cgBarF1() const {
-    this->checkPartonic();
+    /*this->checkPartonic();
     psKerSV kSV(m2,q2,sp,Delta,this->getCgBarF1SV());
     gsl_function fSV;
     fSV.function = gsl::callFunctor<psKerSV>;
@@ -122,36 +135,37 @@ dbl ElProduction::cgBarF1() const {
     fH.f = gsl::callFunctor2D<psKerH>;
     fH.params = &kH;
     // given by mass factorization
-    return int2D(&fH)+int1D(&fSV)-nlf*fermionLoopFactor*this->cg0();
+    return int2D(&fH)+int1D(&fSV)-nlf*fermionLoopFactor*this->cg0();*/
+    throw logic_error("not implemented yet!");
 }
 
-getter(Cq1,cq1)
-getter(CqBarF1,cqBarF1)
-getter(Dq1,dq1)
+getter5(Cq1,cq1)
+getter5(CqBarF1,cqBarF1)
+getter5(Dq1,dq1)
 
 dbl ElProduction::cq1() const {
     this->checkPartonic();
-    psKerA k(m2,q2,sp,this->getCq1());
+    PsKerNLOq k(m2,q2,sp,this->getCq1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<psKerA>;
+    f.f = gsl::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
 
 dbl ElProduction::cqBarF1() const {
     this->checkPartonic();
-    psKerA k(m2,q2,sp,this->getCqBarF1());
+    PsKerNLOq k(m2,q2,sp,this->getCqBarF1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<psKerA>;
+    f.f = gsl::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
 
 dbl ElProduction::dq1() const {
     this->checkPartonic();
-    psKerA k(m2,q2,sp,this->getDq1());
+    PsKerNLOq k(m2,q2,sp,this->getDq1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<psKerA>;
+    f.f = gsl::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
@@ -281,13 +295,13 @@ dbl ElProduction::Fg1() const {
     dbl FgBarR1 = n*cgBarR1SV - nlf*fermionLoopFactor*Fg0;
     return realFg1 + FgBarF1*log(this->muF2/this->m2) + FgBarR1*log(this->muR2/this->m2);
 */
-    PdfConvNLOg kCg1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCg1SV(),this->getCg1H());
+    PdfConvNLOg kCg1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     gsl_monte_function fCg1;
     fCg1.f = gsl::callFunctor3D<PdfConvNLOg>;
     fCg1.params = &kCg1;
     dbl cg1 = int3D(&fCg1);
     
-    PdfConvNLOg kCgBarF1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCgBarF1SV(),this->getCgBarF1H());
+    PdfConvNLOg kCgBarF1(m2,q2,bjorkenX,pdf,muF2,Delta,this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),0,this->getCgBarF1H());
     gsl_monte_function fCgBarF1;
     fCgBarF1.f = gsl::callFunctor3D<PdfConvNLOg>;
     fCgBarF1.params = &kCgBarF1;
@@ -299,16 +313,20 @@ dbl ElProduction::Fg1() const {
     fCgBarR1.params = &kCgBarR1;
     dbl cgBarR1 = int2D(&fCgBarR1);
     
-    // compute fermion loop
-    dbl Fg0 = this->Fg0();
-    //printf("Fg0: %e\n",Fg0);
     
     // combine all functions
     dbl eH = getElectricCharge(this->nlf + 1);
     dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;
     dbl realFg1 = n*cg1;
-    dbl FgBarF1 = n*cgBarF1 + nlf*fermionLoopFactor*Fg0;
-    dbl FgBarR1 = n*cgBarR1 - nlf*fermionLoopFactor*Fg0;
+    dbl FgBarF1 = n*cgBarF1;
+    dbl FgBarR1 = n*cgBarR1;
+    // compute fermion loop - change to |f-r|<eps?
+    if (this->muF2 != this->muR2) {
+        dbl Fg0 = this->Fg0();
+        //printf("Fg0: %e\n",Fg0);
+        FgBarF1 += nlf*fermionLoopFactor*Fg0;
+        FgBarR1 -= nlf*fermionLoopFactor*Fg0;
+    }
     return realFg1 + FgBarF1*log(this->muF2/this->m2) + FgBarR1*log(this->muR2/this->m2);
 }
 

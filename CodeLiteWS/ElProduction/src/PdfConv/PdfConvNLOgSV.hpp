@@ -16,7 +16,7 @@ class PdfConvNLOgSV : public PdfConvBase {
 /**
  * @brief pointer to matrix element
  */
-    fPtr5dbl hg1SV;
+    fPtr4dbl hg1SV;
     
 public:
 
@@ -30,7 +30,7 @@ public:
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param hg1SV pointer to matrix element
  */
-    PdfConvNLOgSV(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl Delta, fPtr5dbl hg1SV) :
+    PdfConvNLOgSV(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl Delta, fPtr4dbl hg1SV) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), Delta(Delta), hg1SV(hg1SV){
     }
     
@@ -43,7 +43,7 @@ public:
     dbl operator() (dbl a1, dbl a2) {
         this->setSp(a1);
         this->setT1(a2);
-        dbl me = hg1SV(m2,q2,sp,Delta,t1);
+        dbl me = hg1SV(m2,q2,sp,t1);
         return jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
     }
 };

@@ -1,82 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-tmpl = """#include "config.h"
+projs = ["G", "L", "P"]
+rawLs = ["SVOK","SVQED","SVOKDelta1","SVQEDDelta1","SVOKDelta2","SVOKScaleR","SVOKScaleF","SVOKScaleFDelta1"]
+ls = []
+for proj in projs:
+     ls.extend(map(lambda s:s+proj,rawLs))
+ls.append("SVOKScaleFDelta1G")
 
-#include <gsl/gsl_sf_dilog.h>
-#define ln(z) log(z)
-#define Li2(z) gsl_sf_dilog(z)
-#define zeta2 1.64493406684823 // pi^2/6
-
-dbl SVOKG({sig}) {{
-{init}
-{SVOKG}
-{final}
-}}
-
-dbl SVOKL({sig}) {{
-{init}
-{SVOKL}
-{final}
-}}
-
-dbl SVOKP({sig}) {{
-{init}
-{SVOKP}
-{final}
-}}
-
-dbl SVQEDG({sig}) {{
-{init} 
-{SVQEDG}
-{final}
-}}
-
-dbl SVQEDL({sig}) {{
-{init}
-{SVQEDL}
-{final}
-}}
-
-dbl SVQEDP({sig}) {{
-{init}
-{SVQEDP}
-{final}
-}}
-
-dbl SVOKGScaleR({sig}) {{
-{initScale}
-return {SVOKGScaleR};
-}}
-
-dbl SVOKGScaleF({sig}) {{
-{initScale}
-return {SVOKGScaleF};
-}}
-
-dbl SVOKLScaleR({sig}) {{
-{initScale}
-return {SVOKLScaleR};
-}}
-
-dbl SVOKLScaleF({sig}) {{
-{initScale}
-return {SVOKLScaleF};
-}}
-
-dbl SVOKPScaleR({sig}) {{
-{initScale}
-return {SVOKPScaleR};
-}}
-
-dbl SVOKPScaleF({sig}) {{
-{initScale}
-return {SVOKPScaleF};
-}}
-"""
-
-fs={
- "sig": "dbl m2, dbl q2, dbl sp, dbl Delta, dbl t1",
+# build cpp file
+vs={
+ "sig": "dbl m2, dbl q2, dbl sp, dbl t1",
  "init": """dbl u1 = -sp-t1;
 dbl s = sp+q2;
 dbl beta = sqrt(1.-4.*m2/s);
@@ -87,14 +21,132 @@ dbl r = 0.;
 """,
  "initScale": """dbl u1 = -sp-t1;
 """,
+ "initDelta1": """dbl u1 = -sp-t1;
+dbl s = sp+q2;
+dbl beta = sqrt(1.-4.*m2/s);
+dbl chi = (1.-beta)/(1.+beta);
+""",
  "final": "return r;"
 };
-for l in {"SVOKG","SVOKL","SVOKP", "SVQEDG","SVQEDL","SVQEDP",\
-          "SVOKGScaleR","SVOKGScaleF","SVOKLScaleR","SVOKLScaleF","SVOKPScaleR","SVOKPScaleF"}:
-	with open(l+".c","r") as f:
-		fs[l] = f.read()
-		f.close()
+for l in ls:
+    with open(l+".c","r") as f:
+        vs[l] = f.read()
+        f.close()
+
+tmpl = """#include "config.h"
+
+#include <gsl/gsl_sf_dilog.h>
+#define ln(z) log(z)
+#define Li2(z) gsl_sf_dilog(z)
+#define zeta2 1.64493406684823 // pi^2/6
+
+"""
+
+for proj in projs:
+    vs["proj"] = proj
+    for l in rawLs:
+        vs[l] = vs[l+proj]
+    tmpl += """dbl SVOK{proj}({sig}) {{
+{init}
+{SVOK}
+{final}
+}}
+
+dbl SVQED{proj}({sig}) {{
+{init}
+{SVQED}
+{final}
+}}
+""".format(**vs)
+    for l in rawLs[2:]:
+        tmpl += (("""dbl %s({sig}) {{
+{%s}
+return {%s};
+}}
+
+""")%(l+proj,"initDelta1" if "Delta1" == l[-6:] else "initScale",l+proj)).format(**vs)
+
 
 with open("../SV.cpp", "w") as f:
-	f.write(tmpl.format(**fs))
-	f.close()
+    f.write(tmpl)
+    f.close()
+
+# build header file
+vs = {
+  "sig": "dbl m2, dbl q2, dbl sp, dbl t1",
+  "params": """ * @param m2 heavy quark mass squared \\f$m^2 > 0\\f$
+ * @param q2 virtuality of photon \\f$q^2< 0\\f$
+ * @param sp center of mass energy \\f$s' = s - q^2\\f$
+ * @param t1"""
+}
+tmpl = """#ifndef SV_H_
+#define SV_H_
+
+"""
+for proj in projs:
+    vs["proj"] = proj
+    tmpl += """/**
+ * @brief \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return \\f$(S+V)_{{{proj},OK}}\\f$
+ */
+dbl SVOK{proj}({sig});
+
+/**
+ * @brief Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ */
+dbl SVOKDelta1{proj}({sig});
+
+/**
+ * @brief double Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln^2(\Delta/m^2)}}\\f$
+ */
+dbl SVOKDelta2{proj}({sig});
+
+/**
+ * @brief \\f$(S+V)_{{{proj},QED}}\\f$
+{params}
+ * @return \\f$(S+V)_{{{proj},QED}}\\f$
+ */
+dbl SVQED{proj}({sig});
+
+/**
+ * @brief Delta-logs of \\f$(S+V)_{{{proj},QED}}\\f$
+{params}
+ * @return \\f$\\left.(S+V)_{{{proj},QED}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ */
+dbl SVQEDDelta1{proj}({sig});
+
+/**
+ * @brief renormalization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return renormalization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+ */
+dbl SVOKScaleR{proj}({sig});
+
+/**
+ * @brief factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+ */
+dbl SVOKScaleF{proj}({sig});
+
+/**
+ * @brief Delta-logs of factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+{params}
+ * @return factorization scaling of \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ */
+dbl SVOKScaleFDelta1{proj}({sig});
+""".format(**vs)
+
+tmpl += """
+
+#endif // SV_H_""".format(**vs)
+
+with open("../SV.h", "w") as f:
+    f.write(tmpl)
+    f.close()
+

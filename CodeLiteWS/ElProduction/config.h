@@ -29,7 +29,9 @@ typedef double dbl;
 /** @brief function pointer */
 typedef dbl (*fPtr3dbl)(dbl m2, dbl q2, dbl sp);
 /** @brief function pointer */
-typedef dbl (*fPtr5dbl)(dbl m2, dbl q2, dbl sp, dbl s4OrDelta, dbl t1);
+typedef dbl (*fPtr4dbl)(dbl m2, dbl q2, dbl sp, dbl t1);
+/** @brief function pointer */
+typedef dbl (*fPtr5dbl)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 // MMa functions can be treated as macros
 /** @brief MMa port */
