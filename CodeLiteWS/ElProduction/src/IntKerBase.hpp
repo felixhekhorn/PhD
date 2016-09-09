@@ -58,9 +58,6 @@ protected:
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
- * @param bjorkenX Bjorken scaling variable
- * @param pdf parton distribution functions
- * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
     IntKerBase(dbl m2, dbl q2) : m2(m2), q2(q2), 
         sp(0.),t1min(0.),t1max(0.),t1(0.),s4max(0.),s4(0.),
@@ -85,6 +82,9 @@ protected:
  */
     void setT1(dbl a) {
         this->t1 = t1min + (t1max-t1min)*a;
+        dbl s = sp+q2;
+        dbl beta = Sqrt(1 - (4*m2)/s);
+        this->s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
         this->jac *= (t1max-t1min);
     }
 
@@ -94,9 +94,6 @@ protected:
  * @param s4min minimum value for s4
  */
     void setS4(dbl a, dbl s4min) {
-        dbl s = sp+q2;
-        dbl beta = Sqrt(1 - (4*m2)/s);
-        this->s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
         this->s4 = s4min + (s4max - s4min)*a;
         this->jac *= (s4max - s4min);
     }

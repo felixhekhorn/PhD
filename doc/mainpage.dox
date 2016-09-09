@@ -1,0 +1,32 @@
+/**
+@mainpage
+@section inst Installation
+@subsection extDep External Dependencies
+- GSL\cite GSL http://www.gnu.org/software/gsl/ used for integration and dilog implementation
+- LHAPDF\cite LHAPDF6 https://lhapdf.hepforge.org/ used for PDFs
+- Boost http://www.boost.org/ i.e. Boost.Python\cite BoostPython for providing a very handy Python port
+
+@section theory Theory
+The program is based on the papers of E. Laenen\cite Laenen1993162 and I. Bojak\cite Bojak:2000eu and was written in collaboration with M. Stratmann\cite Marco.
+
+The program investigates heavy-flavour production in neutral-current interactions of deep-inelastic lepton-proton scattering given by the reaction
+\f[ \Pl(l_1) + \Pp(p) \rightarrow \Pl(l_2) + \HepGenParticle{Q}{}{}\xspace(p_1)\left(\HepGenAntiParticle{Q}{}{}\xspace(p_2)\right) + X \f]
+Here X stands for any final hadronic state allowed by quantum-number conservation. We sum over these states so that the process is inclusive with respect to the outgoing hadrons. When the
+the momentum-transfer squared \f$Q^2=-q^2 = -(l_1-l_2)^2\f$ is not too large \f$(Q^2\ll M_Z^2)\f$ the reaction is dominated by the one-photon exchange mechanism.
+
+So in LO there is only one contributing reaction:
+\f[ \Pggx(q) + \Pg(k_1) \rightarrow \HepGenParticle{Q}{}{}(p_1)+\HepGenAntiParticle{Q}{}{}(p_2) \f]
+but in NLO there are two: the radiation of a gluon:
+\f[ \Pggx(q) + \Pg(k_1) \rightarrow \HepGenParticle{Q}{}{}(p_1)+\HepGenAntiParticle{Q}{}{}(p_2)+ \Pg(k_2) \f]
+and the light quark interaction:
+\f[ \Pggx(q) + \Pq(k_1) \rightarrow \HepGenParticle{Q}{}{}(p_1)+\HepGenAntiParticle{Q}{}{}(p_2)+ \Pq(k_2) \f]
+The corresponding Feynman diagrams have been computed with HEPMath\cite wiebusch_hepmath_2015 using \f$\overline{\text{MS}}\f$ scheme and \f$d=4+\epsilon\f$ dimensions.
+
+The resulting photon-parton cross sections can then be written as:
+\f[ \hat \sigma_{k,i} = \frac{\alpha_{em}\alpha_s}{m^2}\left( f^{(0)}_{k,i}(\eta,\xi) + 4\pi\alpha_s\left(f^{(1)}_{k,i} + \bar f^{R,(1)}_{k,i}\ln(\mu_R^2/m^2) + \bar f^{F,(1)}_{k,i}\ln(\mu_F^2/m^2) \right) \right) \f]
+where k denotes projection index \f$k\in\{G,L,P\}\f$ and i denotes parton index \f$i\in\{q,g\}\f$. The coefficient functions can be further decomposed by the electric charge of either the heavy quark \f$e_H^2\f$ or the light quark \f$e_L^2\f$:
+\f[ f^{(n)}_{k,g} = e_H^2 c^{(n)}_{k,g} \qquad f^{(1)}_{k,q} = e_H^2 c^{(1)}_{k,q} + e_L^2 d^{(1)}_{k,q} \f]
+The gluon contributions are also decomposed by soft + virtual and hard pieces and the first are further split by their \f$\ln(\Delta/m^2)\f$ dependences
+\f[ c_{g}^{(1),(S+V)}(\Delta) = c^{(1),(S+V)}_{g,0\Delta} + \ln(\Delta/m^2)c^{(1),(S+V)}_{g,1\Delta} + \ln^2(\Delta/m^2)c^{(1)}_{g,2\Delta} \f]
+to account for Ingos trick on making the hard+soft+virtual parts convergent\cite Bojak:2000eu.
+ */

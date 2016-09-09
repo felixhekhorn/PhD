@@ -1,3 +1,8 @@
+/**
+ * @file NLOq.h
+ * @brief defines all kernels to NLO quark cross sections for all projections
+ */
+ 
 #ifndef NLOq_H_
 #define NLOq_H_
 
@@ -10,7 +15,7 @@
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$c^{(1)}_{q}\f$
+ * @return kernel to \f$c^{(1)}_{q}\f$
  */
 dbl cq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -21,7 +26,7 @@ dbl cq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$c^{(1)}_{q}\f$
+ * @return kernel to \f$c^{(1)}_{q}\f$
  */
 dbl cq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -32,7 +37,7 @@ dbl cq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$c^{(1)}_{q}\f$
+ * @return kernel to \f$c^{(1)}_{q}\f$
  */
 dbl cq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -43,7 +48,7 @@ dbl cq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
 dbl cqBarF1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -54,7 +59,7 @@ dbl cqBarF1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
 dbl cqBarF1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -65,7 +70,7 @@ dbl cqBarF1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
 dbl cqBarF1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -76,7 +81,7 @@ dbl cqBarF1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$d^{(1)}_{q}\f$
+ * @return kernel to \f$d^{(1)}_{q}\f$
  */
 dbl dq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -87,7 +92,7 @@ dbl dq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$d^{(1)}_{q}\f$
+ * @return kernel to \f$d^{(1)}_{q}\f$
  */
 dbl dq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
@@ -98,7 +103,7 @@ dbl dq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return \f$d^{(1)}_{q}\f$
+ * @return kernel to \f$d^{(1)}_{q}\f$
  */
 dbl dq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 

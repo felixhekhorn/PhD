@@ -7,7 +7,7 @@
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{G,OK}\f$
+ * @return \f$(S+V)_{G,OK,0\Delta}\f$
  */
 dbl SVOKG(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -17,7 +17,7 @@ dbl SVOKG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{G,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{G,OK,1\Delta}\f$
  */
 dbl SVOKDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -27,7 +27,7 @@ dbl SVOKDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{G,OK}\right|_{\ln^2(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{G,OK,2\Delta}\f$
  */
 dbl SVOKDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -37,7 +37,7 @@ dbl SVOKDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{G,QED}\f$
+ * @return \f$(S+V)_{G,QED,0\Delta}\f$
  */
 dbl SVQEDG(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -47,7 +47,7 @@ dbl SVQEDG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{G,QED}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{G,QED,1\Delta}\f$
  */
 dbl SVQEDDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -67,7 +67,7 @@ dbl SVOKScaleRG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$(S+V)_{G,OK}\f$
+ * @return factorization scaling of \f$(S+V)_{G,OK,0\Delta}\f$
  */
 dbl SVOKScaleFG(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -77,7 +77,7 @@ dbl SVOKScaleFG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$\left.(S+V)_{G,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return factorization scaling of \f$(S+V)_{G,OK,1\Delta}\f$
  */
 dbl SVOKScaleFDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
 /**
@@ -86,7 +86,7 @@ dbl SVOKScaleFDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{L,OK}\f$
+ * @return \f$(S+V)_{L,OK,0\Delta}\f$
  */
 dbl SVOKL(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -96,7 +96,7 @@ dbl SVOKL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{L,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{L,OK,1\Delta}\f$
  */
 dbl SVOKDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -106,7 +106,7 @@ dbl SVOKDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{L,OK}\right|_{\ln^2(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{L,OK,2\Delta}\f$
  */
 dbl SVOKDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -116,7 +116,7 @@ dbl SVOKDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{L,QED}\f$
+ * @return \f$(S+V)_{L,QED,0\Delta}\f$
  */
 dbl SVQEDL(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -126,7 +126,7 @@ dbl SVQEDL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{L,QED}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{L,QED,1\Delta}\f$
  */
 dbl SVQEDDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -146,7 +146,7 @@ dbl SVOKScaleRL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$(S+V)_{L,OK}\f$
+ * @return factorization scaling of \f$(S+V)_{L,OK,0\Delta}\f$
  */
 dbl SVOKScaleFL(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -156,7 +156,7 @@ dbl SVOKScaleFL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$\left.(S+V)_{L,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return factorization scaling of \f$(S+V)_{L,OK,1\Delta}\f$
  */
 dbl SVOKScaleFDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
 /**
@@ -165,7 +165,7 @@ dbl SVOKScaleFDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{P,OK}\f$
+ * @return \f$(S+V)_{P,OK,0\Delta}\f$
  */
 dbl SVOKP(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -175,7 +175,7 @@ dbl SVOKP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{P,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{P,OK,1\Delta}\f$
  */
 dbl SVOKDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -185,7 +185,7 @@ dbl SVOKDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{P,OK}\right|_{\ln^2(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{P,OK,2\Delta}\f$
  */
 dbl SVOKDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -195,7 +195,7 @@ dbl SVOKDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$(S+V)_{P,QED}\f$
+ * @return \f$(S+V)_{P,QED,0\Delta}\f$
  */
 dbl SVQEDP(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -205,7 +205,7 @@ dbl SVQEDP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return \f$\left.(S+V)_{P,QED}\right|_{\ln(\Delta/m^2)}\f$
+ * @return \f$(S+V)_{P,QED,1\Delta}\f$
  */
 dbl SVQEDDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -225,7 +225,7 @@ dbl SVOKScaleRP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$(S+V)_{P,OK}\f$
+ * @return factorization scaling of \f$(S+V)_{P,OK,0\Delta}\f$
  */
 dbl SVOKScaleFP(dbl m2, dbl q2, dbl sp, dbl t1);
 
@@ -235,7 +235,7 @@ dbl SVOKScaleFP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @return factorization scaling of \f$\left.(S+V)_{P,OK}\right|_{\ln(\Delta/m^2)}\f$
+ * @return factorization scaling of \f$(S+V)_{P,OK,1\Delta}\f$
  */
 dbl SVOKScaleFDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
 

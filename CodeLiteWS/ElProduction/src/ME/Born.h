@@ -1,3 +1,8 @@
+/**
+ * @file Born.h
+ * @brief defines LO cross sections for all projections
+ */
+
 #ifndef Born_H_
 #define Born_H_
 

@@ -88,35 +88,35 @@ for proj in projs:
     tmpl += """/**
  * @brief \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
- * @return \\f$(S+V)_{{{proj},OK}}\\f$
+ * @return \\f$(S+V)_{{{proj},OK,0\\Delta}}\\f$
  */
 dbl SVOK{proj}({sig});
 
 /**
  * @brief Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
- * @return \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ * @return \\f$(S+V)_{{{proj},OK,1\\Delta}}\\f$
  */
 dbl SVOKDelta1{proj}({sig});
 
 /**
  * @brief double Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
- * @return \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln^2(\Delta/m^2)}}\\f$
+ * @return \\f$(S+V)_{{{proj},OK,2\\Delta}}\\f$
  */
 dbl SVOKDelta2{proj}({sig});
 
 /**
  * @brief \\f$(S+V)_{{{proj},QED}}\\f$
 {params}
- * @return \\f$(S+V)_{{{proj},QED}}\\f$
+ * @return \\f$(S+V)_{{{proj},QED,0\\Delta}}\\f$
  */
 dbl SVQED{proj}({sig});
 
 /**
  * @brief Delta-logs of \\f$(S+V)_{{{proj},QED}}\\f$
 {params}
- * @return \\f$\\left.(S+V)_{{{proj},QED}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ * @return \\f$(S+V)_{{{proj},QED,1\\Delta}}\\f$
  */
 dbl SVQEDDelta1{proj}({sig});
 
@@ -130,14 +130,14 @@ dbl SVOKScaleR{proj}({sig});
 /**
  * @brief factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
- * @return factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
+ * @return factorization scaling of \\f$(S+V)_{{{proj},OK,0\\Delta}}\\f$
  */
 dbl SVOKScaleF{proj}({sig});
 
 /**
  * @brief Delta-logs of factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
- * @return factorization scaling of \\f$\\left.(S+V)_{{{proj},OK}}\\right|_{{\ln(\Delta/m^2)}}\\f$
+ * @return factorization scaling of \\f$(S+V)_{{{proj},OK,1\\Delta}}\\f$
  */
 dbl SVOKScaleFDelta1{proj}({sig});
 """.format(**vs)

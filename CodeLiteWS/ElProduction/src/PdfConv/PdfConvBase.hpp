@@ -1,7 +1,7 @@
 #ifndef PdfConvBase_H_
 #define PdfConvBase_H_
 
-#include "LHAPDF/LHAPDF.h"
+#include <LHAPDF/LHAPDF.h>
 
 #include "config.h"
 #include "./../IntKerBase.hpp"

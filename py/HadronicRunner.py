@@ -36,12 +36,12 @@ class HadronicRunner:
         self.__qIn = Queue()
         self.__qOut = Queue()
         self.__js = range(self.Nx)
-        self.__js = range(len(self.fs))
-        self.__xs = [10.**(-.1 -3.9/(Nx-1)*j) for j in self.__js]
+        self.__ks = range(len(self.fs))
+        self.__xs = [10.**(-.1 -3.9/(self.Nx-1)*j) for j in self.__js]
         for proj in ["G", "L"]:
             for j in self.__js:
                 for k in self.__ks:
-                    self.__qIn.put({"proj": proj, "j": j, "eta": self.__xs[j], "k": k, "f": self.fs[k], "res": np.nan})
+                    self.__qIn.put({"proj": proj, "j": j, "x": self.__xs[j], "k": k, "f": self.fs[k], "res": np.nan})
         self.__lenParams = self.__qIn.qsize()
     # start processes
     def _compute(self):
@@ -69,12 +69,12 @@ class HadronicRunner:
     def _write(self):
         with open(self.fp, "w") as f:
             for j in self.__js:
-                data2 = [data["G"][j][k]+data["L"][j][k]*3./2. for k in ks]
-                l = ["%e"%xs[j]]
-                for k in ks:
+                data2 = [self.__data["G"][j][k]+self.__data["L"][j][k]*3./2. for k in self.__ks]
+                l = ["%e"%self.__xs[j]]
+                for k in self.__ks:
                     l.append("%e"%data2[k])
-                for k in ks:
-                    l.append("%e"%data["L"][j][k])
+                for k in self.__ks:
+                    l.append("%e"%self.__data["L"][j][k])
                 f.write("\t".join(l)+"\n")
     # run program
     def run(self):

@@ -106,74 +106,74 @@ class ElProduction {
     void checkHardonic() const;
     
 /**
- * @brief returns the corresponding \f$c^{(0)}_{g}\f$
- * @return \f$c^{(0)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$c^{(0)}_{g}\f$
+ * @return kernel of \f$c^{(0)}_{g}\f$
  */
     fPtr3dbl getCg0() const;
     
 /**
- * @brief returns the corresponding \f$c^{(1),(S+V)}_{g}\f$
- * @return \f$c^{(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$c^{(1),(S+V)}_{g,0\Delta}\f$
+ * @return kernel of \f$c^{(1),(S+V)}_{g,0\Delta}\f$
  */
     fPtr4dbl getCg1SV() const;
     
 /**
- * @brief returns the corresponding Delta-logs of \f$c^{(1),(S+V)}_{g}\f$
- * @return \f$c^{(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding Delta-logs of kernel of \f$c^{(1),(S+V)}_{g,1\Delta}\f$
+ * @return kernel of \f$c^{(1),(S+V)}_{g,1\Delta}\f$
  */
     fPtr4dbl getCg1SVDelta1() const;
     
 /**
- * @brief returns the corresponding double Delta-logs of \f$c^{(1),(S+V)}_{g}\f$
- * @return \f$c^{(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding double Delta-logs of kernel of \f$c^{(1),(S+V)}_{g,2\Delta}\f$
+ * @return kernel of \f$c^{(1),(S+V)}_{g,2\Delta}\f$
  */
     fPtr4dbl getCg1SVDelta2() const;
     
 /**
- * @brief returns the corresponding \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
- * @return \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
+ * @return kernel of \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
     fPtr4dbl getCgBarR1SV() const;
     
 /**
- * @brief returns the corresponding \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
- * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,0\Delta}\f$
+ * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,0\Delta}\f$
  */
     fPtr4dbl getCgBarF1SV() const;
     
 /**
- * @brief returns the corresponding Delta-logs of \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
- * @return \f$\bar {c}^{F,(1),(S+V)}_{g}\f$
+ * @brief returns the corresponding Delta-logs of kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,1\Delta}\f$
+ * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,1\Delta}\f$
  */
     fPtr4dbl getCgBarF1SVDelta1() const;
     
 /**
- * @brief returns the corresponding \f$c^{(1),(H)}_{g}\f$
- * @return \f$c^{(1),(H)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$c^{(1),(H)}_{g}\f$
+ * @return kernel of \f$c^{(1),(H)}_{g}\f$
  */
     fPtr5dbl getCg1H() const;
     
 /**
- * @brief returns the corresponding \f$\bar {c}^{F,(1),(H)}_{g}\f$
- * @return \f$\bar {c}^{F,(1),(H)}_{g}\f$
+ * @brief returns the corresponding kernel of \f$\bar {c}^{F,(1),(H)}_{g}\f$
+ * @return kernel of \f$\bar {c}^{F,(1),(H)}_{g}\f$
  */
     fPtr5dbl getCgBarF1H() const;
     
 /**
- * @brief returns the corresponding \f$c^{(1)}_{q}\f$
- * @return \f$c^{(1)}_{q}\f$
+ * @brief returns the corresponding kernel of \f$c^{(1)}_{q}\f$
+ * @return kernel of \f$c^{(1)}_{q}\f$
  */
     fPtr5dbl getCq1() const;
     
 /**
- * @brief returns the corresponding \f$\bar {c}^{F,(1)}_{q}\f$
- * @return \f$\bar {c}^{F,(1)}_{q}\f$
+ * @brief returns the corresponding kernel of \f$\bar {c}^{F,(1)}_{q}\f$
+ * @return kernel of \f$\bar {c}^{F,(1)}_{q}\f$
  */
     fPtr5dbl getCqBarF1() const;
     
 /**
- * @brief returns the corresponding \f$d^{(1)}_{q}\f$
- * @return \f$d^{(1)}_{q}\f$
+ * @brief returns the corresponding kernel of \f$d^{(1)}_{q}\f$
+ * @return kernel of \f$d^{(1)}_{q}\f$
  */
     fPtr5dbl getDq1() const;
     
