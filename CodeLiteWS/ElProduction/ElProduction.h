@@ -1,9 +1,8 @@
 #ifndef ElProduction_H_
 #define ElProduction_H_
 
-#include "LHAPDF/LHAPDF.h"
-
 #include "config.h"
+#include "src/PdfWrapper.h"
 
 /**
  * @brief application class
@@ -44,11 +43,11 @@ class ElProduction {
  * @brief number of light flavours
  */
     uint nlf;
-    
+
 /**
  * @brief parton distribution function
  */
-    LHAPDF::PDF* pdf;
+    PdfWrapper* pdf;
     
 /**
  * @brief renormalisation scale \f$\mu_R^2\f$

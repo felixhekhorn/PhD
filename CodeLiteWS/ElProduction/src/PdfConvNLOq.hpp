@@ -36,7 +36,7 @@ public:
  * @param multiplyElCharge multiply electric quark charge?
  * @param hq1 pointer to matrix element
  */
-    PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, uint nlf, bool multiplyElCharge, fPtr5dbl hq1) :
+    PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, uint nlf, bool multiplyElCharge, fPtr5dbl hq1) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), nlf(nlf), multiplyElCharge(multiplyElCharge), hq1(hq1){
     }
     

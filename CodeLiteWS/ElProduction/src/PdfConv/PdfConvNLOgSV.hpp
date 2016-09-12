@@ -30,7 +30,7 @@ public:
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param hg1SV pointer to matrix element
  */
-    PdfConvNLOgSV(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl Delta, fPtr4dbl hg1SV) :
+    PdfConvNLOgSV(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, dbl Delta, fPtr4dbl hg1SV) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), Delta(Delta), hg1SV(hg1SV){
     }
     

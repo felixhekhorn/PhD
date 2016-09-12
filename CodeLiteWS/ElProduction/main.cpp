@@ -21,8 +21,8 @@ int main(int argc, char **argv) {
     uint nlf = 3;
     dbl Delta = 1e-6;
     dbl q2 = -1.e2;
-    ElProduction o(m2,q2,Delta,L,nlf);
-    o.setPdf("CT14nnlo",0);
+    ElProduction o(m2,q2,Delta,P,nlf);
+    o.setPdf("DSSV2014",0);
     o.setMu2(4.*m2-q2);
     o.setAlphaS(0.18904419407331516);
     
@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
     for (uint j = 0; j < N; ++j) {
         dbl x = pow(10.,-3.+1.*j/N);
         o.setBjorkenX(x);
-        printf("%e\t%e\n",x,o.Fg1());
+        printf("%e\t%e\n",x,o.Fg0());
     }
 	return EXIT_SUCCESS;
 }

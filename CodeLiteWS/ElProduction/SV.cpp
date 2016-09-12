@@ -185,9 +185,6 @@ return ((-4*Power(m2,2)*Power(sp,2) + t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,
 
 dbl SVOKScaleFDelta1G(dbl m2, dbl q2, dbl sp, dbl t1) {
 dbl u1 = -sp-t1;
-dbl s = sp+q2;
-dbl beta = sqrt(1.-4.*m2/s);
-dbl chi = (1.-beta)/(1.+beta);
 
 return (8*Power(m2,2)*Power(sp,2) - 2*t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) + 4*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))/(Power(t1,2)*Power(u1,2));
 }
@@ -351,9 +348,6 @@ return (-4*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*(-11 + 12*ln(-(u1/m2))))/(3.
 
 dbl SVOKScaleFDelta1L(dbl m2, dbl q2, dbl sp, dbl t1) {
 dbl u1 = -sp-t1;
-dbl s = sp+q2;
-dbl beta = sqrt(1.-4.*m2/s);
-dbl chi = (1.-beta)/(1.+beta);
 
 return (16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1))/(Power(sp,2)*t1*u1);
 }
@@ -535,9 +529,6 @@ return ((2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2))*(-11 
 
 dbl SVOKScaleFDelta1P(dbl m2, dbl q2, dbl sp, dbl t1) {
 dbl u1 = -sp-t1;
-dbl s = sp+q2;
-dbl beta = sqrt(1.-4.*m2/s);
-dbl chi = (1.-beta)/(1.+beta);
 
 return (-2*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2)))/(sp*Power(t1,2)*Power(u1,2));
 }

@@ -12,7 +12,6 @@
 
 #include "src/PdfConvLO.hpp"
 #include "src/PdfConv/PdfConvNLOgSV.hpp"
-#include "src/PdfConv/PdfConvNLOgH.hpp"
 #include "src/PdfConv/PdfConvNLOg.hpp"
 #include "src/PdfConvNLOq.hpp"
 
@@ -159,11 +158,7 @@ dbl ElProduction::dq1() const {
 }
 
 void ElProduction::setPdf(str name, int member) {
-    // suppress log message
-    //int v = LHAPDF::verbosity();
-    //LHAPDF::setVerbosity(0);
-    this->pdf = LHAPDF::mkPDF(name,member);
-    //LHAPDF::setVerbosity(v);
+    this->pdf = new PdfWrapper(name,member);
 }
 
 /*void ElProduction::setPdf(str nmem) {

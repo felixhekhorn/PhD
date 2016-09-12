@@ -48,7 +48,7 @@ public:
  * @param hg1SVDelta2 pointer to double Delta-logs of S+V matrix element
  * @param hg1H pointer to hard matrix element
  */
-    PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, dbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) :
+    PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, dbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), Delta(Delta), hg1SV(hg1SV), hg1SVDelta1(hg1SVDelta1), hg1SVDelta2(hg1SVDelta2), hg1H(hg1H){
     }
     

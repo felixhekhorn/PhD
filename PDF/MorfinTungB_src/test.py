@@ -33,7 +33,7 @@ def printGrid():
 			for pid in pids:
 				xf = MorfinTungBxfxQ2(pid,x,Q**2)
 				vs.append(xf)
-			print (" ".join(map(lambda(v): "% .7e"%v,vs)))
+			print (" ".join(map(lambda(v): "%.7e"%v,vs)))
 printGrid()
 
 import lhapdf

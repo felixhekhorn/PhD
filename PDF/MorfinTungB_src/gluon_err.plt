@@ -13,9 +13,10 @@ set xtics ("1e-5" 0, "1e-4" Nx/5, "1e-3" 2*Nx/5, "1e-2" 3*Nx/5, "1e-1" 4*Nx/5, "
 set ylabel "Q² [GeV²]"
 set yrange[-.5:NQ2-.5]
 unset key
-set ytics ("1e0" 0, "1e1" NQ2/3, "1e2" 2*NQ2/3, "1e3" NQ2-1)
+set ytics ("1e1" 1, "5e1" NQ2/4, "1e2" NQ2/2, "5e2" 3*NQ2/4, "1e3" NQ2-1)
 
-set out "test.png"
-plot "out3.dat" u 1:2:3 w image
+set palette defined (-9 "dark-green", -2 "green", 0 "white", 1 "red")
+set out "gluon_err.png"
+plot "gluon_err.dat" u 1:2:3 w image
 
 set out

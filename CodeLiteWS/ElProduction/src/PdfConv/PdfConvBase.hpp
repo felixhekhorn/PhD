@@ -1,10 +1,9 @@
 #ifndef PdfConvBase_H_
 #define PdfConvBase_H_
 
-#include <LHAPDF/LHAPDF.h>
-
 #include "config.h"
 #include "./../IntKerBase.hpp"
+#include "./../PdfWrapper.h"
 
 /**
  * @brief Abstract base class for convolution with PDFs
@@ -20,7 +19,7 @@ protected:
 /**
  * @brief parton distribution functions
  */
-    LHAPDF::PDF* pdf;
+    PdfWrapper* pdf;
 
 /**
  * @brief factorisation scale \f$\mu_F^2\f$
@@ -45,7 +44,7 @@ protected:
  * @param pdf parton distribution functions
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2) :
+    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2) :
         IntKerBase(m2, q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2),
         z(0.){
         this->zMax = -q2/(4.*m2 - q2);

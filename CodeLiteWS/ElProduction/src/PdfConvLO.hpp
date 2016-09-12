@@ -24,7 +24,7 @@ public:
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  * @param cg0 pointer to matrix element
  */
-    PdfConvLO(dbl m2, dbl q2, dbl bjorkenX, LHAPDF::PDF* pdf, dbl muF2, fPtr3dbl cg0) :
+    PdfConvLO(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, fPtr3dbl cg0) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), cg0(cg0) {
     }
     
