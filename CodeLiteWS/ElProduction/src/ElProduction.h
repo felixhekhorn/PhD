@@ -207,6 +207,12 @@ public:
  */
     void setQ2(dbl q2);
     
+/**
+ * @brief sets phase space slice
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
+ */
+    void setDelta(dbl Delta);
+    
 ///@}
 
 /** @name partonic setter */

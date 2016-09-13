@@ -117,15 +117,29 @@ public:
         this->setS4(a2,Delta);
         dbl A0 = 1./(s4max - Delta);
         dbl fakeMESV = hg1SV(m2,q2,sp,t1) * A0;
+        //if (isnan(fakeMESV)) printf("hg1SV\n");
         
         dbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
         fakeMESV += hg1SVDelta1(m2,q2,sp,t1) * A1;
+        //if (isnan(fakeMESV)) printf("hg1SVDelta1\n");
         
         if (0 != hg1SVDelta2) {
             dbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
             fakeMESV += hg1SVDelta2(m2,q2,sp,t1) * A2;
+            //if (isnan(fakeMESV)) printf("hg1SVDelta2\n");
         }
         dbl meH = hg1H(m2,q2,sp,s4,t1);
+        /*if (isnan(meH)) {
+            printf("nan: meH\n");
+            meH = 0.;
+        }
+        if (isinf(meH)) {
+            printf("inf: meH\n");
+            meH = 0.;
+        }
+        if (isnan(meH+fakeMESV)) printf("meH+fakeMESV\n");
+        if (isnan(jac*(meH + fakeMESV))) printf("nan: jac*(meH + fakeMESV)\n");
+        if (isinf(jac*(meH + fakeMESV))) printf("inf: jac*(meH + fakeMESV)\n");*/
         return jac*(meH + fakeMESV);
     }
 };

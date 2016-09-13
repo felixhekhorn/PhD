@@ -16,10 +16,11 @@
 #include "IntKers/PdfConvNLOq.hpp"
 
 ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
-    m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(Delta), proj(proj), nlf(nlf),
+    m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(.0), proj(proj), nlf(nlf),
     pdf(0), muR2(0.), hasMuR2(false), muF2(0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
     alphaS(0.), hasAlphaS(false), zMax(0.) {
     this->setQ2(q2);
+    this->setDelta(Delta);
     if (nlf < 3 || nlf > 5)
         throw domain_error("number of light flavours has to be between 3 and 5!");
 }
@@ -27,6 +28,19 @@ ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) :
 ElProduction::~ElProduction() {
     if (0 != this->pdf)
         delete (this->pdf);
+}
+
+void ElProduction::setQ2(dbl q2) {
+    if (q2 >= 0.)
+        throw domain_error("virtuality q2 has to be negative! (this is NOT Q2!)");
+    this->q2 = q2;
+    this->zMax = -q2/(4.*m2  - q2);
+}
+
+void ElProduction::setDelta(dbl Delta) {
+    if (Delta < 0.)
+        throw domain_error("Delta has to be positive!");
+    this->Delta = Delta;
 }
 
 void ElProduction::setEta(dbl eta) {
@@ -43,13 +57,6 @@ void ElProduction::setPartonicS(dbl s) {
         throw domain_error("Delta has to be smaller than s4_max!");
     this->sp = s - q2;
     this->hasPartonicS = true;
-}
-
-void ElProduction::setQ2(dbl q2) {
-    if (q2 >= 0.)
-        throw domain_error("virtuality q2 has to be negative! (this is NOT Q2!)");
-    this->q2 = q2;
-    this->zMax = -q2/(4.*m2  - q2);
 }
 
 void ElProduction::checkPartonic() const {

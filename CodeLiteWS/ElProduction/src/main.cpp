@@ -17,21 +17,13 @@ int main(int argc, char **argv) {
     //return test();
     //return Marco();
     
-    dbl m2 = 1.5*1.5;
+    dbl m2 = 4.75*4.75;
     uint nlf = 3;
-    dbl Delta = 1e-6;
-    dbl q2 = -1.e2;
-    ElProduction o(m2,q2,Delta,P,nlf);
-    o.setPdf("DSSV2014",0);
-    o.setMu2(4.*m2-q2);
-    o.setAlphaS(0.18904419407331516);
-    
-    uint N = 10;
-    for (uint j = 0; j < N; ++j) {
-        dbl x = pow(10.,-3.+1.*j/N);
-        o.setBjorkenX(x);
-        printf("%e\t%e\n",x,o.Fg0());
-    }
+    dbl Delta = 1e-5;
+    dbl q2 = -1.e3;
+    ElProduction o(m2,q2,Delta,G,nlf);
+    o.setEta(1e-3);
+    cout << scientific << o.cg1() << endl;
 	return EXIT_SUCCESS;
 }
 

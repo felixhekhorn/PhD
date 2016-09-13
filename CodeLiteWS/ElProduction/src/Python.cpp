@@ -9,11 +9,13 @@ using namespace boost::python;
 BOOST_PYTHON_MODULE(ElProduction)
 {
     class_<ElProduction>("ElProduction", "application class", init<double,double,double,projT,uint>())
+        // global setter
         .def("setQ2", &ElProduction::setQ2, "sets virtuality of photon q^2 < 0")
-        
+        .def("setDelta", &ElProduction::setDelta, "sets phase space slice")
+        // partonic setter
         .def("setEta", &ElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &ElProduction::setPartonicS, "sets partonic center of mass energy")
-        
+        // hadronic setter
         /*.def("setPdf", &ElProduction::setPdf, ElProduction_setPdf_overloads(
                     args("lhaid|name|nmem", "memberid"), "sets pdf"
                 )[return_internal_reference<>()] oder? ElProduction_setPdf_overloads())*/
@@ -23,7 +25,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setMu2", &ElProduction::setMu2, "sets common scale")
         .def("setAlphaS", &ElProduction::setAlphaS, "sets running strong coupling")
         .def("setBjorkenX", &ElProduction::setBjorkenX, "sets Bjorken x")
-        
+        // partonic coefficient functions
         .def("cg0", &ElProduction::cg0)
         .def("cg1", &ElProduction::cg1)
         .def("cgBarF1", &ElProduction::cgBarF1)
@@ -31,7 +33,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cq1", &ElProduction::cq1)
         .def("cqBarF1", &ElProduction::cqBarF1)
         .def("dq1", &ElProduction::dq1)
-        
+        // hadronic structure functions
         .def("Fg0", &ElProduction::Fg0)
         .def("Fg1", &ElProduction::Fg1)
         .def("Fq1", &ElProduction::Fq1)

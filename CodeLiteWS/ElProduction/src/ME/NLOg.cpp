@@ -57,7 +57,10 @@ cgBarF1SVDelta1(P)
 // Hard functions
 dbl cg1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
     dbl nG = 1./(4) * Kggg * NC * CF;
-    return (m2/(4.*M_PI)) * nG * (CA * (IntROKfiniteG(m2,q2,sp,s4,t1) + RPoleG(m2,q2,sp,s4,t1)) + 2.*CF * IntRQEDfiniteG(m2,q2,sp,s4,t1))/(sp*sp);
+    dbl a = IntROKfiniteG(m2,q2,sp,s4,t1);
+    dbl b = RPoleG(m2,q2,sp,s4,t1);
+    dbl c = IntRQEDfiniteG(m2,q2,sp,s4,t1);
+    return (m2/(4.*M_PI)) * nG * (CA * (a + b) + 2.*CF * c)/(sp*sp);
 }
 dbl cg1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
     dbl nL = 1./(2) * Kggg * NC * CF;
