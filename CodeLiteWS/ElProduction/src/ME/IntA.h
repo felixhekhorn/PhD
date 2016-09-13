@@ -1,110 +1,105 @@
-/**
- * @file NLOq.h
- * @brief defines all kernels to NLO quark cross sections for all projections
- */
- 
-#ifndef NLOq_H_
-#define NLOq_H_
+#ifndef IntA_H_
+#define IntA_H_
 
 #include "../config.h"
 
 /**
- * @brief NLO heavy quark contribution
+ * @brief \f$\int A_{G,1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$c^{(1)}_{q}\f$
+ * @return \f$\int A_{G,1}\,d\Omega\f$
  */
-dbl cq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAG1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief NLO heavy quark contribution
+ * @brief scaling part of \f$\int A_{G,1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$c^{(1)}_{q}\f$
+ * @return scaling part of \f$\int A_{G,1}\,d\Omega\f$
  */
-dbl cq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAG1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief NLO heavy quark contribution
+ * @brief \f$\int A_{G,2}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$c^{(1)}_{q}\f$
+ * @return \f$\int A_{G,2}\,d\Omega\f$
  */
-dbl cq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAG2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief factorisation logs of NLO heavy quark contribution
+ * @brief \f$\int A_{L,1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return \f$\int A_{L,1}\,d\Omega\f$
  */
-dbl cqBarF1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAL1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief factorisation logs of NLO heavy quark contribution
+ * @brief scaling part of \f$\int A_{L,1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return scaling part of \f$\int A_{L,1}\,d\Omega\f$
  */
-dbl cqBarF1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAL1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief factorisation logs of NLO heavy quark contribution
+ * @brief \f$\int A_{L,2}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
+ * @return \f$\int A_{L,2}\,d\Omega\f$
  */
-dbl cqBarF1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAL2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief NLO light quark contribution
+ * @brief \f$\int \Delta A_{1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$d^{(1)}_{q}\f$
+ * @return \f$\int \Delta A_{1}\,d\Omega\f$
  */
-dbl dq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAP1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief NLO light quark contribution
+ * @brief scaling part of \f$\int \Delta A_{1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$d^{(1)}_{q}\f$
+ * @return scaling part of \f$\int \Delta A_{1}\,d\Omega\f$
  */
-dbl dq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAP1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
 /**
- * @brief NLO light quark contribution
+ * @brief \f$\int \Delta A_{2}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param s4
  * @param t1
- * @return kernel to \f$d^{(1)}_{q}\f$
+ * @return \f$\int \Delta A_{2}\,d\Omega\f$
  */
-dbl dq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+dbl IntAP2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 
-#endif // NLOq_H_
+#endif // IntA_H_

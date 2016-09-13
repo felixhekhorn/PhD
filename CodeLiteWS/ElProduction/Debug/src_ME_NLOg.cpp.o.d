@@ -1,12 +1,12 @@
-Debug/src_ME_NLOg.cpp.o: src/ME/NLOg.cpp src/ME/NLOg.h config.h SV.h \
- IntRFinite.h RPole.h
+Debug/src_ME_NLOg.cpp.o: src/ME/NLOg.cpp src/ME/NLOg.h src/ME/../config.h \
+ src/ME/SV.h src/ME/IntRFinite.h src/ME/RPole.h
 
 src/ME/NLOg.h:
 
-config.h:
+src/ME/../config.h:
 
-SV.h:
+src/ME/SV.h:
 
-IntRFinite.h:
+src/ME/IntRFinite.h:
 
-RPole.h:
+src/ME/RPole.h:

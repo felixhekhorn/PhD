@@ -1,48 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="ElProduction" InternalType="Console">
+  <Reconciliation>
+    <Regexes/>
+    <Excludepaths>
+      <Path>tmpl/</Path>
+      <Path>Release/</Path>
+      <Path>Py27/</Path>
+      <Path>Debug/</Path>
+    </Excludepaths>
+    <Ignorefiles/>
+    <Extensions>
+      <![CDATA[cpp;c;h;hpp;xrc;wxcp;fbp]]>
+    </Extensions>
+    <Topleveldir>../ElProduction</Topleveldir>
+  </Reconciliation>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="main.cpp" ExcludeProjConfig="Py27"/>
-    <File Name="config.h"/>
-    <File Name="gsl++.hpp"/>
-    <File Name="ElProduction.cpp"/>
-    <File Name="ElProduction.h"/>
-    <File Name="Integration.h"/>
-    <File Name="Integration.cpp"/>
-    <File Name="Python.cpp" ExcludeProjConfig="Debug;Release"/>
     <VirtualDirectory Name="ME">
-      <File Name="IntRFinite.cpp"/>
-      <File Name="IntRFinite.h"/>
-      <File Name="RPole.cpp"/>
-      <File Name="RPole.h"/>
-      <File Name="SV.cpp"/>
-      <File Name="SV.h"/>
-      <File Name="IntA.cpp"/>
-      <File Name="IntA.h"/>
       <File Name="src/ME/Born.cpp"/>
       <File Name="src/ME/Born.h"/>
       <File Name="src/ME/NLOq.h"/>
       <File Name="src/ME/NLOq.cpp"/>
       <File Name="src/ME/NLOg.h"/>
       <File Name="src/ME/NLOg.cpp"/>
+      <File Name="src/ME/IntA.cpp"/>
+      <File Name="src/ME/IntA.h"/>
+      <File Name="src/ME/IntRFinite.cpp"/>
+      <File Name="src/ME/IntRFinite.h"/>
+      <File Name="src/ME/RPole.cpp"/>
+      <File Name="src/ME/RPole.h"/>
+      <File Name="src/ME/SV.cpp"/>
+      <File Name="src/ME/SV.h"/>
     </VirtualDirectory>
     <VirtualDirectory Name="IntKers">
-      <File Name="src/PdfConvLO.hpp"/>
-      <File Name="src/PdfConvNLOq.hpp"/>
-      <File Name="src/PdfConv/PdfConvBase.hpp"/>
-      <File Name="src/PdfConv/PdfConvNLOgSV.hpp"/>
-      <File Name="src/PdfConv/PdfConvNLOg.hpp"/>
-      <File Name="src/IntKerBase.hpp"/>
-      <File Name="psKer.hpp"/>
+      <File Name="src/IntKers/IntKerBase.hpp"/>
+      <File Name="src/IntKers/PdfConvBase.hpp"/>
+      <File Name="src/IntKers/PdfConvLO.hpp"/>
+      <File Name="src/IntKers/PdfConvNLOg.hpp"/>
+      <File Name="src/IntKers/PdfConvNLOgSV.hpp"/>
+      <File Name="src/IntKers/PdfConvNLOq.hpp"/>
+      <File Name="src/IntKers/psKer.hpp"/>
     </VirtualDirectory>
-    <File Name="src/PdfWrapper.h"/>
-    <File Name="src/PdfWrapper.cpp"/>
     <VirtualDirectory Name="Pdf">
       <File Name="src/Pdf/DSSV_gluon_update.f"/>
+      <File Name="src/Pdf/PdfWrapper.cpp"/>
+      <File Name="src/Pdf/PdfWrapper.h"/>
     </VirtualDirectory>
+    <File Name="src/ElProduction.cpp"/>
+    <File Name="src/ElProduction.h"/>
+    <File Name="src/config.h"/>
+    <File Name="src/gsl++.hpp"/>
+    <File Name="src/main.cpp" ExcludeProjConfig="Py27"/>
+    <File Name="src/Integration.cpp"/>
+    <File Name="src/Python.cpp" ExcludeProjConfig="Debug;Release"/>
+    <File Name="src/Integration.h"/>
   </VirtualDirectory>
-  <Settings Type="Executable">
+  <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
@@ -141,7 +155,8 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
 	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
 
 $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO
-	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO</CustomPreBuild>
+	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -186,8 +201,7 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
 	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
 
 $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO
-	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
-</CustomPreBuild>
+	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

@@ -6,7 +6,7 @@
 #ifndef Born_H_
 #define Born_H_
 
-#include "config.h"
+#include "../config.h"
 
 /**
  * @brief LO contribution

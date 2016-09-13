@@ -6,7 +6,7 @@
 #ifndef NLOg_H_
 #define NLOg_H_
 
-#include "config.h"
+#include "../config.h"
 
 /** @name soft+virtual contributions */
 ///@{
