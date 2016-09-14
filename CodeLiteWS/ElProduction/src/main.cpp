@@ -18,10 +18,10 @@ int main(int argc, char **argv) {
     //return Marco();
     
     dbl m2 = 4.75*4.75;
-    uint nlf = 3;
-    dbl Delta = 1e-5;
-    dbl q2 = -1.e3;
-    ElProduction o(m2,q2,Delta,G,nlf);
+    uint nlf = 4;
+    dbl Delta = 1e-6;
+    dbl q2 = -1.e-2;
+    ElProduction o(m2,q2,Delta,P,nlf);
     o.setEta(1e-3);
     cout << scientific << o.cg1() << endl;
 	return EXIT_SUCCESS;
