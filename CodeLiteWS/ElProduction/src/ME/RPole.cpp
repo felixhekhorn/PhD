@@ -1,12 +1,8 @@
-#include "RPole.h"
-// protect from ps corner cases
-#define psCC if (isnan(r)) return 0.; return r;
+#include "../config.h"
 
 dbl RPoleG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
 dbl u1 = s4-sp-t1;
-dbl r = (8*Power(Power(sp + t1,2) + (sp + t1)*u1 + Power(u1,2),2)*(2*q2*(sp + t1)*(m2*Power(sp,2) + q2*t1*(sp + t1)) - 2*q2*sp*t1*(sp + t1)*u1 + 2*t1*(Power(sp,2) + sp*t1 + Power(t1,2))*Power(u1,2) - (2*(2*m2 + q2)*(sp + t1)*(m2*Power(sp,2) + q2*t1*(sp + t1)) - 2*(2*m2 + q2)*sp*t1*(sp + t1)*u1 + t1*(Power(sp,2) + 2*sp*t1 + 2*Power(t1,2))*Power(u1,2))*Log(Power(s4,2)/(m2*(m2 + s4)))))/(s4*Power(t1,2)*Power(sp + t1,3)*Power(u1,4));
-//if (isnan(r)) printf("s4: %e, t1: %e, l: %e\n",s4,t1,Power(s4,2)/(m2*(m2 + s4)));
-psCC
+return (8*Power(Power(sp + t1,2) + (sp + t1)*u1 + Power(u1,2),2)*(2*q2*(sp + t1)*(m2*Power(sp,2) + q2*t1*(sp + t1)) - 2*q2*sp*t1*(sp + t1)*u1 + 2*t1*(Power(sp,2) + sp*t1 + Power(t1,2))*Power(u1,2) - (2*(2*m2 + q2)*(sp + t1)*(m2*Power(sp,2) + q2*t1*(sp + t1)) - 2*(2*m2 + q2)*sp*t1*(sp + t1)*u1 + t1*(Power(sp,2) + 2*sp*t1 + 2*Power(t1,2))*Power(u1,2))*Log(Power(s4,2)/(m2*(m2 + s4)))))/(s4*Power(t1,2)*Power(sp + t1,3)*Power(u1,4));
 }
 
 dbl RPoleL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {

@@ -90,7 +90,12 @@ def _threadWorker(qi, qo, oArgs,lenParams):
        o.setEta(p["eta"])
        f = p["f"]
        if "rand" == f: p["res"] = np.random.rand()
+       elif "cg0" == f: p["res"] = o.cg0()
        elif "cg1" == f: p["res"] = o.cg1()
+       elif "cgBarF1" == f: p["res"] = o.cgBarF1()
+       elif "cgBarR1" == f: p["res"] = o.cgBarR1()
+       elif "cq1" == f: p["res"] = o.cq1()
+       elif "cqBarF1" == f: p["res"] = o.cqBarF1()
        elif "dq1" == f: p["res"] = o.dq1()
        qo.put(p)
 

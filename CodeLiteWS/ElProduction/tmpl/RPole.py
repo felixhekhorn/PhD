@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-tmpl = """#include "config.h"
+tmpl = """#include "../config.h"
 
 dbl RPoleG({sig}) {{
 {init}
@@ -42,6 +42,6 @@ for l in {"RPoleG","RPoleL","RPoleP", "RPoleGScaleF","RPoleLScaleF","RPolePScale
 		fs[l] = f.read()
 		f.close()
 
-with open("../RPole.cpp", "w") as f:
+with open("../src/ME/RPole.cpp", "w") as f:
 	f.write(tmpl.format(**fs))
 	f.close()

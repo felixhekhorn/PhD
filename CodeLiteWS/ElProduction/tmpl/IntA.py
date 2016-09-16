@@ -1,9 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-tmpl = """#include "config.h"
+tmpl = """#include "../config.h"
 
 #define Pi M_PI
+// protect from ps corner cases
+#define psCC if (isnan(r)) return 0.; return r;
 
 dbl IntAG1({sig}) {{
 {init}
@@ -19,10 +21,7 @@ dbl IntAG2({sig}) {{
 {init}
 dbl s = sp + q2;
 dbl r = {IntAG2};
-// protect from ps corner cases
-if (isnan(r))
-    return 0.;
-return r;
+psCC
 }}
 
 dbl IntAL1({sig}) {{
@@ -34,10 +33,7 @@ dbl IntAL2({sig}) {{
 {init}
 dbl s = sp + q2;
 dbl r = {IntAL2};
-// protect from ps corner cases
-if (isnan(r))
-	return 0.;
-return r;
+psCC
 }}
 
 dbl IntAL1ScaleF({sig}) {{
@@ -58,7 +54,8 @@ return {IntAP2};
 
 dbl IntAP1ScaleF({sig}) {{
 {initScale}
-return {IntAP1ScaleF};
+dbl r = {IntAP1ScaleF};
+psCC
 }}
 """
 
@@ -74,6 +71,6 @@ for l in {"IntAG1","IntAL1","IntAP1","IntAG2","IntAL2","IntAP2","IntAG1ScaleF","
 		fs[l] = f.read()
 		f.close()
 
-with open("../IntA.cpp", "w") as f:
+with open("../src/ME/IntA.cpp", "w") as f:
 	f.write(tmpl.format(**fs))
 	f.close()

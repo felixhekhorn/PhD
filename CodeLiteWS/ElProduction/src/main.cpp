@@ -20,10 +20,16 @@ int main(int argc, char **argv) {
     dbl m2 = 4.75*4.75;
     uint nlf = 4;
     dbl Delta = 1e-6;
-    dbl q2 = -1.e-2;
+    dbl q2 = -1e-5;
     ElProduction o(m2,q2,Delta,P,nlf);
-    o.setEta(1e-3);
-    cout << scientific << o.cg1() << endl;
+    o.setEta(pow(10.,-.5));
+    uint N = 10;
+    for (uint j = 0; j < N; ++j) {
+        //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
+        dbl eta = pow(10.,-1.+(dbl)j/(N-1));
+        o.setEta(eta);
+        printf("%e\t%e\n",eta,o.cq1());
+    }
 	return EXIT_SUCCESS;
 }
 

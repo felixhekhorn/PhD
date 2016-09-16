@@ -17,7 +17,7 @@ plot    "./data/partonic/cq1-q2_-2.dat"     u 1:4        t "Δc_{γq}^{(1)}",\
 
 set title "Fig. 7.5 gluon scaling functions at Q²=1e-2"
 set out "./img/Bojak-figure75.png"
-plot    "./data/partonic/cg1-q2_-2.dat"     u 1:($4/2)       t "Δc_{γg}^{(1)}",\
+plot    "./data/partonic/cg1-q2_-2.dat"     u 1:4       t "Δc_{γg}^{(1)}",\
         "./data/partonic/cgbar1-q2_-2.dat"  u 1:($4+$7) t "Δc_{γg}^{bar,(1)}",\
         "./data/partonic/cg1-q2_-2.dat"     u 1:2       t "c_{γg}^{(1)}", \
         "./data/partonic/cgbar1-q2_-2.dat"  u 1:($2+$5) t "c_{γg}^{bar,(1)}"
