@@ -15,7 +15,7 @@ int test();
  */
 int main(int argc, char **argv) {
     //return test();
-    //return Marco();
+    return Marco();
     
     dbl m2 = 4.75*4.75;
     uint nlf = 4;
@@ -50,7 +50,7 @@ int test(){
 int Marco() {
     dbl Delta = 1e-6;
     
-    dbl xi = 1e2;
+    /*dbl xi = 1e2;
     const uint neta = 43;
     dbl aeta[neta] = {0.1000e-02, 0.3000e-02,
        0.5000e-02, 0.7000e-02, 0.9000e-02, 0.1000e-01, 0.3000e-01, 
@@ -69,12 +69,13 @@ int Marco() {
         oL.setEta(aeta[j]);
         printf("%e\t%e\n",aeta[j],oL.dq1());
     }
-    return EXIT_SUCCESS;
-/*    dbl m2 = 4.75*4.75;
+    return EXIT_SUCCESS;*/
+    dbl m2 = 4.75*4.75;
+    uint nlf = 4;
     
     // called function (macro needed ...)
     #define call(etaV) oG.setEta(etaV);oL.setEta(etaV);\
-        dbl g = oG.cq1();dbl l = oL.cq1();\
+        dbl g = oG.cg0();dbl l = oL.cg0();\
         printf("%e\t%e\t%e\t%e\n",etaV,-q2,l,g+l/2.);
         
     // do obscure eta loop ;-)
@@ -87,8 +88,8 @@ int Marco() {
     callee(1.e3);
     
     dbl q2 = -1.e-2;
-    ElProduction oG(m2,q2,Delta,G,4);
-    ElProduction oL(m2,q2,Delta,L,4);
+    ElProduction oG(m2,q2,Delta,G,nlf);
+    ElProduction oL(m2,q2,Delta,L,nlf);
     etaLoop(call)
     for (uint p = 0; p < 4; ++p) {
         q2 = -pow(10.,p);
@@ -96,5 +97,5 @@ int Marco() {
         oL.setQ2(q2);
         etaLoop(call)
     }
-    return EXIT_SUCCESS;*/
+    return EXIT_SUCCESS;
 }

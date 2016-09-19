@@ -24,7 +24,6 @@ class PartonicRunner:
         self.__qOut = Queue()
         self.__js = []
         self.__etas = []
-        self.__lenParams = 0
         self.__data = {}
     # setup grid
     def _setupGrid(self):
@@ -35,7 +34,6 @@ class PartonicRunner:
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 self.__qIn.put({"proj": proj, "j": j, "eta": self.__etas[j], "f": self.f, "res": np.nan})
-        self.__lenParams = self.__qIn.qsize()
     # start processes
     def _compute(self):
         oArgs = {
@@ -43,9 +41,10 @@ class PartonicRunner:
             "L": (self.m2,self.q2,self.Delta,ElProduction.projT.L,self.nlf,),
             "P": (self.m2,self.q2,self.Delta,ElProduction.projT.P,self.nlf,)
         }
+        lenParams = self.__qIn.qsize()
         processes = []
         for j in range(self.nProcesses):
-            processes.append(Process(target=_threadWorker, args=(self.__qIn,self.__qOut,oArgs,self.__lenParams,)))
+            processes.append(Process(target=_threadWorker, args=(self.__qIn,self.__qOut,oArgs,lenParams,)))
         [p.start() for p in processes]
         [p.join() for p in processes]
         sys.stdout.write("\n")
@@ -89,14 +88,14 @@ def _threadWorker(qi, qo, oArgs,lenParams):
        o = os[p["proj"]]
        o.setEta(p["eta"])
        f = p["f"]
-       if "rand" == f: p["res"] = np.random.rand()
-       elif "cg0" == f: p["res"] = o.cg0()
-       elif "cg1" == f: p["res"] = o.cg1()
+       if   "rand"    == f: p["res"] = np.random.rand()
+       elif "cg0"     == f: p["res"] = o.cg0()
+       elif "cg1"     == f: p["res"] = o.cg1()
        elif "cgBarF1" == f: p["res"] = o.cgBarF1()
        elif "cgBarR1" == f: p["res"] = o.cgBarR1()
-       elif "cq1" == f: p["res"] = o.cq1()
+       elif "cq1"     == f: p["res"] = o.cq1()
        elif "cqBarF1" == f: p["res"] = o.cqBarF1()
-       elif "dq1" == f: p["res"] = o.dq1()
+       elif "dq1"     == f: p["res"] = o.dq1()
        qo.put(p)
 
        # log progress

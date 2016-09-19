@@ -14,25 +14,27 @@ q2 = -1.e3
 Delta = 1e-6
 nlf = 4
 
-fp = "cg0-q2_3.dat"
+fp = "cg1-LT-fhe.dat"
 
-Neta = 11
-nProcesses = cpu_count()
+nProcesses = 1
 
 # setup grid
 qIn = Queue()
 qOut = Queue()
-js = []
-etas = []
+etas = [j1/2.*10.**(j2) for j1 in range(2,19) for j2 in [-3,-2,-1,0,1,2]]
+etas.append(1e3)
+etas.sort()
+js = range(len(etas))
+q2s = [-1e-2,-1e0,-1e1,-1e2,-1e3]
+ks = range(len(q2s))
 lenParams = 0
 def setupGrid():
-#  qIn = Queue()
-#  qOut = Queue()
-  js = range(Neta)
-  etas = [10.**(-3.+6./(Neta-1)*j) for j in js]
-  for proj in ["G", "L", "P"]:
-    for j in js:
-      qIn.put({"proj": proj, "j": j, "eta": etas[j], "res": np.nan})
+  #qIn = Queue()
+  #qOut = Queue()
+  for proj in ["G", "L"]:
+    for k in ks:
+      for j in js:
+        qIn.put_nowait({"proj": proj, "j": j, "eta": etas[j], "k": k, "q2": q2s[k],"res": np.nan})
   return qIn.qsize()
 
 # define worker
@@ -41,7 +43,6 @@ def worker(qi, qo, lenParams):
   os = {}
   os["G"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.G,nlf)
   os["L"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.L,nlf)
-  os["P"] = ElProduction.ElProduction(m2,q2,Delta,ElProduction.projT.P,nlf)
   guard = 0
   lenParamsMod = max(lenParams/10,1)
   while guard < lenParams:
@@ -51,8 +52,9 @@ def worker(qi, qo, lenParams):
        p = qi.get(True,.1)
        o = os[p["proj"]]
        o.setEta(p["eta"])
-       p["res"] = o.cg0()
-       #p["res"] = np.random.rand()
+       o.setQ2(p["q2"])
+       #p["res"] = o.cg1()
+       p["res"] = np.random.rand()
        qo.put(p)
 
        # log progress
@@ -75,28 +77,36 @@ def compute(qIn,qOut,lenParams):
   sys.stdout.write("\n")
 
 # reorder
-data = {}
 def reorder():
   data = {}
-  data["G"] = [np.nan for j in js]
-  data["L"] = [np.nan for j in js]
-  data["P"] = [np.nan for j in js]
-  print data
+  data["G"] = [[np.nan for j in js] for k in ks]
+  data["L"] = [[np.nan for j in js] for k in ks]
   while not qOut.empty():
-    p = qOut.get()
-    data[p["proj"]][p["j"]] = p["res"]
+    p = qOut.get_nowait()
+    data[p["proj"]][p["k"]][p["j"]] = p["res"]
+  return data
 
 # write data
-def write():
+def write(data):
   with open(fp, "w") as f:
-    for j in js:
-      f.write("%e\t%e\t%e\t%e\n"%(etas[j],data["G"][j]+data["L"][j]/2.,data["L"][j],data["P"][j]))
+    for k in ks:
+      for j in js:
+        vs = []
+        vs.append(etas[j])
+        vs.append(-q2s[k])
+        vs.append(data["L"][k][j])
+        dataT = data["G"][k][j]+data["L"][k][j]/2.
+        vs.append(dataT)
+        f.write(("\t").join("%e"%v for v in vs)+"\n")
 
 # run program
 def run():
   lenParams = setupGrid()
+  print lenParams
+  #qIn.close()
+  #qOut.close()
   compute(qIn,qOut,lenParams)
-  reorder()
-  write()
+  data = reorder()
+  write(data)
 
 run()

@@ -6,7 +6,6 @@ rawLs = ["SVOK","SVQED","SVOKDelta1","SVQEDDelta1","SVOKDelta2","SVOKScaleR","SV
 ls = []
 for proj in projs:
      ls.extend(map(lambda s:s+proj,rawLs))
-ls.append("SVOKScaleFDelta1G")
 
 # build cpp file
 vs={
@@ -33,7 +32,7 @@ for l in ls:
         vs[l] = f.read()
         f.close()
 
-tmpl = """#include "config.h"
+tmpl = """#include "SV.h"
 
 #include <gsl/gsl_sf_dilog.h>
 #define ln(z) log(z)
@@ -64,10 +63,10 @@ dbl SVQED{proj}({sig}) {{
 return {%s};
 }}
 
-""")%(l+proj,"initDelta1" if "Delta1" == l[-6:] else "initScale",l+proj)).format(**vs)
+""")%(l+proj,"initDelta1" if "Delta1" == l[-6:] and not "SVOKScaleFDelta1" == l else "initScale",l+proj)).format(**vs)
 
 
-with open("../SV.cpp", "w") as f:
+with open("../src/ME/SV.cpp", "w") as f:
     f.write(tmpl)
     f.close()
 
@@ -81,6 +80,8 @@ vs = {
 }
 tmpl = """#ifndef SV_H_
 #define SV_H_
+
+#include "../config.h"
 
 """
 for proj in projs:
@@ -146,7 +147,7 @@ tmpl += """
 
 #endif // SV_H_""".format(**vs)
 
-with open("../SV.h", "w") as f:
+with open("../src/ME/SV.h", "w") as f:
     f.write(tmpl)
     f.close()
 
