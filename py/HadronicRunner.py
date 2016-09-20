@@ -55,8 +55,11 @@ class HadronicRunner:
                       oArgs, self.pdfs, self.pdfMem, self.mu02, self.aS, self.__lenParams,)
         for j in range(self.nProcesses):
             processes.append(Process(target=_threadWorker, args=threadArgs))
-        [p.start() for p in processes]
-        [p.join() for p in processes]
+        try:
+            [p.start() for p in processes]
+            [p.join() for p in processes]
+        except KeyboardInterrupt:
+            [p.terminate() for p in processes]
         sys.stdout.write("\n")
     # reorder
     def _reorder(self):

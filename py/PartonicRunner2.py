@@ -1,15 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from multiprocessing import Process, Queue, cpu_count
-from multiprocessing.queues import SimpleQueue
+from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 from Queue import Empty as QEmpty
 import sys
+import os
 import numpy as np
 #import time
 
 import ElProduction
 
-class PartonicRunner:
+class PartonicRunner2:
     def __init__(self, m2, q2, Delta, nlf, f,fp, Neta, nProcesses = cpu_count()):
         # parameters
         self.m2 = m2
@@ -21,7 +21,7 @@ class PartonicRunner:
         self.Neta = Neta
         self.nProcesses = nProcesses
         # vars
-        self.__qIn = Queue()
+        self.__qIn = JoinableQueue()
         self.__qOut = Queue()
         self.__js = []
         self.__etas = []
@@ -30,52 +30,50 @@ class PartonicRunner:
         self.__data = {}
         self.__processes = []
     # setup default grid
-    def _setupGrid(self):
-        self.__qIn = Queue()
-        self.__qOut = Queue()
+    def _getGrid(self):
         self.__js = range(self.Neta)
         self.__etas = [10.**(-3.+6./(self.Neta-1)*j) for j in self.__js]
+        g = []
         for proj in ["G", "L", "P"]:
             for j in self.__js:
-                self.__qIn.put({"proj": proj, "j": j, "eta": self.__etas[j], "f": self.f, "res": np.nan})
+                g.append({"proj": proj, "j": j, "eta": self.__etas[j], "f": self.f, "res": np.nan})
+        return g
     # setup Marcos grid
-    def _setupGridMarco(self):
-        self.__qIn.close()
-        self.__qIn = Queue()
-        #self.__qIn = SimpleQueue()
-        self.__qOut.close()
-        self.__qOut = Queue()
-        #self.__qOut = SimpleQueue()
-        self.__etas = [j1/2.*10.**(j2) for j1 in range(2,19) for j2 in [-3,-2,-1,0,1,2]]
+    def _getGridMarco(self):
+        self.__etas = [j1/2.*10.**(j2) for j1 in xrange(2,19) for j2 in [-3,-2,-1,0,1,2]]
         self.__etas.append(1e3)
         self.__etas.sort()
         self.__js = range(len(self.__etas))
         self.__q2s = [-1e-2,-1e0,-1e1,-1e2,-1e3]
         self.__ks = range(len(self.__q2s))
-        l = 0
+        g = []
         for proj in ["G", "L"]:
             for k in self.__ks:
                 for j in self.__js:
-                    l += 1
-                    self.__qIn.put({"proj": proj, "j": j, "eta": self.__etas[j], "k": k, "q2": self.__q2s[k], "f": self.f, "res": np.nan})
-                    print "putted ", l,"/",(len(self.__etas)*len(self.__q2s)*2)
-                print "a"
-            print "b"
-        print "c"
+                    g.append({"proj": proj, "j": j, "eta": self.__etas[j], "k": k, "q2": self.__q2s[k], "f": self.f, "res": np.nan})
+        return g
     # start processes
-    def _compute(self):
+    def _compute(self,g):
+        # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),
             "L": (self.m2,self.q2,self.Delta,ElProduction.projT.L,self.nlf,),
             "P": (self.m2,self.q2,self.Delta,ElProduction.projT.P,self.nlf,)
         }
-        lenParams = self.__qIn.qsize()
+        lenParams = len(g)
         processes = []
-        for j in range(self.nProcesses):
+        for j in xrange(self.nProcesses):
             processes.append(Process(target=_threadWorker, args=(self.__qIn,self.__qOut,oArgs,lenParams,)))
+        [p.start() for p in processes]
+        # fill
+        for e in g:
+            self.__qIn.put(e)
+        # add EOF
+        for n in xrange(self.nProcesses):
+            self.__qIn.put(None)
+        # run
         try:
-            [p.start() for p in processes]
-            [p.join() for p in processes]
+            self.__qIn.join()
         except KeyboardInterrupt:
             [p.terminate() for p in processes]
         sys.stdout.write("\n")
@@ -112,19 +110,17 @@ class PartonicRunner:
                     vs.append(-self.__q2s[k])
                     vs.append(self.__data["L"][k][j])
                     dataT = self.__data["G"][k][j]+self.__data["L"][k][j]/2.
-                    #vs.append(dataT)
-                    vs.append(self.__data["G"][k][j])
+                    vs.append(dataT)
+                    #vs.append(self.__data["G"][k][j])
                     f.write(("\t").join("%e"%v for v in vs)+"\n")
     # run program
     def run(self):
-        self._setupGrid()
-        self._compute()
+        self._compute(self.__getGrid())
         self._reorder()
         self._write()
     # run program to compare to Marco
     def runMarco(self):
-        self._setupGridMarco()
-        self._compute()
+        self._compute(self._getGridMarco())
         self._reorderMarco()
         self._writeMarco()
 
@@ -141,9 +137,12 @@ def _threadWorker(qi, qo, oArgs,lenParams):
   while guard < lenParams:
     guard += 1
     try:
+       # get
+       p = qi.get()
+       if None == p: # EOF?
+           qi.task_done()
+           break
        # compute
-       p = qi.get(True,.1)
-       #p = qi.get()
        o = objs[p["proj"]]
        if p.has_key("q2"): o.setQ2(p["q2"])
        o.setEta(p["eta"])
@@ -157,6 +156,7 @@ def _threadWorker(qi, qo, oArgs,lenParams):
        elif "cqBarF1" == f: p["res"] = o.cqBarF1()
        elif "dq1"     == f: p["res"] = o.dq1()
        qo.put(p)
+       qi.task_done()
 
        # log progress
        k = qo.qsize()
@@ -167,9 +167,4 @@ def _threadWorker(qi, qo, oArgs,lenParams):
          sys.stdout.flush()
     except QEmpty:
       break
-  print "final",1
-  qi.close()
-  print "final",2
-  qo.close()
-  print "final",3
   return
