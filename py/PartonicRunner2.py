@@ -44,7 +44,7 @@ class PartonicRunner2:
         self.__etas.append(1e3)
         self.__etas.sort()
         self.__js = range(len(self.__etas))
-        self.__q2s = [-1e-2,-1e0,-1e1,-1e2,-1e3]
+        self.__q2s = [-1e3] #[-1e-2,-1e0,-1e1,-1e2,-1e3]
         self.__ks = range(len(self.__q2s))
         g = []
         for proj in ["G", "L"]:
@@ -76,6 +76,7 @@ class PartonicRunner2:
             self.__qIn.join()
         except KeyboardInterrupt:
             [p.terminate() for p in processes]
+            self.__qIn.close()
         sys.stdout.write("\n")
     # reorder
     def _reorder(self):

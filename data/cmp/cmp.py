@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-l = "cg0"
+l = "cg1_3"
 pathMe = l+"-LT-fhe.dat"
 pathMarco = l+"-LT.dat"
 
