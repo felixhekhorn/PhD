@@ -166,7 +166,7 @@ zwi4=G[l11,{nu},(p1-k2+m U),{rho},(k1-p2+m U),{mu},k1,{rho},
        (p2-m U),{al},(p1-k2+m U),{be},(p1+m U)]/u1^2;
 
 Print["TRACES"]
-se1 = (zwi1+zwi3)*c11+(zwi3+zwi4)*c12;
+se1 = (zwi1+zwi2)*c11+(zwi3+zwi4)*c12;
 
 help1 = ContractEpsGamma[tenglu*se1];
 help2 = ContractEpsGamma[tengam*help1];
@@ -275,7 +275,7 @@ zwi4=G[l22,{nu},(p1-k2+m U),{rho},(k1-p2+m U),{mu},k1,{rho},
        (p2-m U),{be},(k2-p2+m U),{al},(p1+m U)]/u1/t1;
 
 Print["TRACES"]
-se1 = (zwi1+zwi3)*c11+(zwi3+zwi4)*c12;
+se1 = (zwi1+zwi3)*c11+(zwi2+zwi4)*c12;
 
 help1 = ContractEpsGamma[tenglu*se1];
 help2 = ContractEpsGamma[tengam*help1];
