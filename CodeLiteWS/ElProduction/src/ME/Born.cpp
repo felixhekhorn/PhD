@@ -20,5 +20,5 @@ dbl cg0P(dbl m2, dbl q2, dbl sp) {
     dbl s = sp+q2;
     dbl beta = sqrt(1. - 4.*m2/s);
     dbl chi = (1.-beta)/(1.+beta);
-    return m2*4*M_PI*((4*q2+3*sp)*beta +(2*q2+sp)*log(chi))/(sp*sp);
+    return m2*2*M_PI*((4*q2+3*sp)*beta +(2*q2+sp)*log(chi))/(sp*sp);
 }

@@ -15,20 +15,26 @@ int test();
  */
 int main(int argc, char **argv) {
     //return test();
-    return Marco();
+    //return Marco();
     
     dbl m2 = 4.75*4.75;
     uint nlf = 4;
     dbl Delta = 1e-6;
-    dbl q2 = -1e-5;
-    ElProduction o(m2,q2,Delta,P,nlf);
-    o.setEta(pow(10.,-.5));
-    uint N = 10;
+    dbl q2 = -1e-2;
+    ElProduction oG(m2,q2,Delta,G,nlf);
+    ElProduction oL(m2,q2,Delta,L,nlf);
+    ElProduction oP(m2,q2,Delta,P,nlf);
+    //oP.setEta(pow(10.,-.5));
+    uint N = 20;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
-        dbl eta = pow(10.,-1.+(dbl)j/(N-1));
-        o.setEta(eta);
-        printf("%e\t%e\n",eta,o.cq1());
+        dbl eta = pow(10.,0.+1.*(dbl)j/(N-1));
+        oG.setEta(eta);
+        oL.setEta(eta);
+        oP.setEta(eta);
+        dbl g = oG.cq1();
+        dbl l = oL.cq1();
+        printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cq1());
     }
 	return EXIT_SUCCESS;
 }
