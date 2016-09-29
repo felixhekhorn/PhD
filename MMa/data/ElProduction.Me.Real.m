@@ -50,19 +50,19 @@ CoeffAL1 = {{(8*q2*t1^3)/sp + (8*q2*t1^4)/sp^2, (16*q2*t1^2)/u1 +
        (4*q2*t1*\[Epsilon])/(sp^2*u1), 0}, 
      {(4*q2)/sp^2 + (2*q2*\[Epsilon])/sp^2, 0, 0}}
  
-CoeffAP1k0 = {{0, 0, 0, 0}, {-8*h*m2*sp - 4*h*q2*t1 - (8*h*q2*t1^2)/sp - 
-       4*h*m2*u1, -4*h*m2 + 4*h*q2 - 4*h*sp - 4*h*t1 + (4*h*q2*t1)/sp + 
-       (4*h*q2*sp)/u1 - 2*h*u1, (-8*h*m2*sp)/u1^2 - (4*h*q2*sp)/u1^2 - 
-       (12*h*q2*t1)/u1^2 - (8*h*q2*t1^2)/(sp*u1^2) - (4*h*m2)/u1 + 
-       (4*h*t1)/u1 - (4*h*q2*t1)/(sp*u1), (-4*h*m2)/u1^2 - (2*h)/u1}, 
-     {-2*h*q2 - (8*h*m2*q2)/sp - (12*h*q2*t1)/sp, (4*h*q2^2)/(sp*u1) + 
-       (4*h*sp)/u1, (-2*h*q2)/u1^2 - (8*h*m2*q2)/(sp*u1^2) - 
-       (4*h*q2*t1)/(sp*u1^2) + (4*h)/u1 - (4*h*q2)/(sp*u1), 0}, 
-     {(-4*h*q2)/sp, (4*h*q2)/(sp*u1), 0, 0}}
+CoeffAP1k0 = {{0, 0, 0, 0}, {-4*h*m2*sp - 2*h*q2*t1 - (4*h*q2*t1^2)/sp - 
+       2*h*m2*u1, -2*h*m2 + 2*h*q2 - 2*h*sp - 2*h*t1 + (2*h*q2*t1)/sp + 
+       (2*h*q2*sp)/u1 - h*u1, (-4*h*m2*sp)/u1^2 - (2*h*q2*sp)/u1^2 - 
+       (6*h*q2*t1)/u1^2 - (4*h*q2*t1^2)/(sp*u1^2) - (2*h*m2)/u1 + 
+       (2*h*t1)/u1 - (2*h*q2*t1)/(sp*u1), (-2*h*m2)/u1^2 - h/u1}, 
+     {-(h*q2) - (4*h*m2*q2)/sp - (6*h*q2*t1)/sp, (2*h*q2^2)/(sp*u1) + 
+       (2*h*sp)/u1, -((h*q2)/u1^2) - (4*h*m2*q2)/(sp*u1^2) - 
+       (2*h*q2*t1)/(sp*u1^2) + (2*h)/u1 - (2*h*q2)/(sp*u1), 0}, 
+     {(-2*h*q2)/sp, (2*h*q2)/(sp*u1), 0, 0}}
  
-CoeffAP1k2 = {{-8*h*m2*sp - 4*h*q2*t1 - (8*h*q2*t1^2)/sp + 4*h*t1*u1, 
-      (4*h*q2*sp)/u1, (-8*h*m2*sp)/u1^2 - (4*h*q2*sp)/u1^2 - 
-       (12*h*q2*t1)/u1^2 - (8*h*q2*t1^2)/(sp*u1^2) + (4*h*t1)/u1, 0}}
+CoeffAP1k2 = {{-4*h*m2*sp - 2*h*q2*t1 - (4*h*q2*t1^2)/sp + 2*h*t1*u1, 
+      (2*h*q2*sp)/u1, (-4*h*m2*sp)/u1^2 - (2*h*q2*sp)/u1^2 - 
+       (6*h*q2*t1)/u1^2 - (4*h*q2*t1^2)/(sp*u1^2) + (2*h*t1)/u1, 0}}
  
 CoeffAG2 = {{4*q2*t1^2 + 2*q2*t1^2*\[Epsilon], -4*m2*q2 - 2*q2^2 - 4*m2*sp - 
        2*q2*sp + (2*q2^3)/(q2 + sp) + (4*q2^2*sp)/(q2 + sp) + 
@@ -150,66 +150,63 @@ CoeffAL2 = {{0, 0, (-8*m2*q2)/sp, (-8*m2*q2)/sp^2},
       (-12*q2)/sp^2 - (6*q2*\[Epsilon])/sp^2, 0, 0}, 
      {(4*q2)/sp^2 + (2*q2*\[Epsilon])/sp^2, 0, 0, 0}}
  
-CoeffAP2 = {{4*h*q2*t1^2, -4*h*m2*q2 - 2*h*q2^2 - 4*h*m2*sp - 2*h*q2*sp + 
-       (2*h*q2^3)/(q2 + sp) + (4*h*q2^2*sp)/(q2 + sp) + 
-       (2*h*q2*sp^2)/(q2 + sp) - 4*h*q2*t1 - (4*h*q2^2*t1)/sp + 4*h*sp*t1 + 
-       (4*h*q2^3*t1)/(sp*(q2 + sp)) - (4*h*sp^2*t1)/(q2 + sp) + 4*h*t1^2 + 
-       (4*h*q2*t1^2)/sp - (4*h*q2^2*t1^2)/(sp*(q2 + sp)) - 
-       (4*h*sp*t1^2)/(q2 + sp) + 2*h*q2*u1 + 2*h*sp*u1 - 
-       (2*h*q2^2*u1)/(q2 + sp) - (4*h*q2*sp*u1)/(q2 + sp) - 
-       (2*h*sp^2*u1)/(q2 + sp) + 4*h*t1*u1 + (4*h*q2*t1*u1)/(q2 + sp) - 
-       (4*h*sp*t1*u1)/(q2 + sp), -8*h*m2 + 2*h*q2 - (8*h*m2*q2)/sp + 
-       (2*h*q2^2)/sp + (2*h*q2^3)/(q2 + sp)^2 + (2*h*q2*sp^2)/(q2 + sp)^2 + 
-       (8*h*m2*q2)/(q2 + sp) - (2*h*q2^2)/(q2 + sp) - 
-       (2*h*q2^3)/(sp*(q2 + sp)) + (8*h*m2*sp)/(q2 + sp) - 
-       (4*h*q2*sp)/(q2 + sp) - (4*h*q2*t1)/sp - (4*h*q2^2*t1)/(q2 + sp)^2 + 
-       (4*h*q2*sp*t1)/(q2 + sp)^2 + (4*h*q2^2*t1)/(sp*(q2 + sp)) + 
-       (4*h*t1^2)/sp + (4*h*q2*t1^2)/(q2 + sp)^2 - (4*h*t1^2)/(q2 + sp) - 
-       (4*h*q2*t1^2)/(sp*(q2 + sp)) - 2*h*u1 - (2*h*q2*u1)/sp - 
-       (2*h*q2^2*u1)/(q2 + sp)^2 + (4*h*q2*sp*u1)/(q2 + sp)^2 - 
-       (2*h*sp^2*u1)/(q2 + sp)^2 - (2*h*q2*u1)/(q2 + sp) + 
-       (2*h*q2^2*u1)/(sp*(q2 + sp)) + (4*h*sp*u1)/(q2 + sp) + 
-       (4*h*t1*u1)/sp + (4*h*q2*t1*u1)/(q2 + sp)^2 - 
-       (4*h*sp*t1*u1)/(q2 + sp)^2 - (4*h*q2*t1*u1)/(sp*(q2 + sp)) - 
-       (4*h*sp*u1^2)/(q2 + sp)^2 + (4*h*u1^2)/(q2 + sp), 
-      (2*h*q2)/sp - (4*h*m2*q2)/(q2 + sp)^2 + (2*h*q2^2)/(q2 + sp)^2 - 
-       (4*h*m2*sp)/(q2 + sp)^2 + (2*h*q2*sp)/(q2 + sp)^2 + 
-       (8*h*m2)/(q2 + sp) - (4*h*q2)/(q2 + sp) + (8*h*m2*q2)/(sp*(q2 + sp)) - 
-       (2*h*q2^2)/(sp*(q2 + sp)) - (2*h*t1)/sp - (2*h*q2*t1)/(q2 + sp)^2 - 
-       (2*h*sp*t1)/(q2 + sp)^2 + (4*h*t1)/(q2 + sp) + 
-       (2*h*q2*t1)/(sp*(q2 + sp)) - (2*h*u1)/sp - (2*h*q2*u1)/(q2 + sp)^2 - 
-       (2*h*sp*u1)/(q2 + sp)^2 + (4*h*u1)/(q2 + sp) + 
-       (2*h*q2*u1)/(sp*(q2 + sp))}, {4*h*m2*q2 + 4*h*q2*t1 - 
-       (8*h*q2*t1^2)/sp, 8*h*m2 - 2*h*q2 + (16*h*m2*q2)/sp - (2*h*q2^2)/sp + 
-       2*h*sp - (8*h*m2*q2)/(q2 + sp) - (2*h*q2^2)/(q2 + sp) + 
-       (2*h*q2^3)/(sp*(q2 + sp)) + (4*h*q2*sp)/(q2 + sp) - 
-       (4*h*sp^2)/(q2 + sp) + (16*h*q2*t1)/sp + (4*h*q2*t1)/(q2 + sp) - 
-       (8*h*q2^2*t1)/(sp*(q2 + sp)) - (4*h*sp*t1)/(q2 + sp) + 
-       (8*h*q2*t1^2)/(sp*(q2 + sp)) + (2*h*q2*u1)/sp + 
-       (6*h*q2*u1)/(q2 + sp) - (2*h*q2^2*u1)/(sp*(q2 + sp)) - 
-       (4*h*sp*u1)/(q2 + sp) - (4*h*t1*u1)/sp - (4*h*t1*u1)/(q2 + sp) + 
-       (4*h*q2*t1*u1)/(sp*(q2 + sp)) - (4*h*u1^2)/(q2 + sp) + 
-       h*q2*\[Epsilon] + h*sp*\[Epsilon], -2*h - (12*h*q2)/sp + 
-       (4*h*m2*q2)/(q2 + sp)^2 - (4*h*q2^2)/(q2 + sp)^2 - 
-       (8*h*m2)/(q2 + sp) + (14*h*q2)/(q2 + sp) - 
-       (16*h*m2*q2)/(sp*(q2 + sp)) + (8*h*q2^2)/(sp*(q2 + sp)) + 
-       (2*h*sp)/(q2 + sp) + (2*h*t1)/sp + (4*h*q2*t1)/(q2 + sp)^2 - 
-       (6*h*t1)/(q2 + sp) - (10*h*q2*t1)/(sp*(q2 + sp)) + (4*h*u1)/sp + 
-       (2*h*q2*u1)/(q2 + sp)^2 - (2*h*sp*u1)/(q2 + sp)^2 - 
-       (2*h*u1)/(q2 + sp) - (4*h*q2*u1)/(sp*(q2 + sp)) + 2*h*\[Epsilon] + 
-       (2*h*q2*\[Epsilon])/sp, (-2*h*q2)/(q2 + sp)^2 - (2*h*sp)/(q2 + sp)^2 + 
-       (4*h)/(q2 + sp) + (4*h*q2)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/
-        (q2 + sp)^2 - (h*sp*\[Epsilon])/(q2 + sp)^2 + 
-       (2*h*\[Epsilon])/(q2 + sp) + (2*h*q2*\[Epsilon])/(sp*(q2 + sp))}, 
-     {2*h*q2 - (8*h*m2*q2)/sp - (8*h*q2*t1)/sp - h*q2*\[Epsilon], 
-      (14*h*q2)/sp - (6*h*q2)/(q2 + sp) + (8*h*m2*q2)/(sp*(q2 + sp)) - 
-       (6*h*q2^2)/(sp*(q2 + sp)) + (8*h*q2*t1)/(sp*(q2 + sp)) - (2*h*u1)/sp - 
-       (2*h*u1)/(q2 + sp) + (2*h*q2*u1)/(sp*(q2 + sp)) - 2*h*\[Epsilon] - 
-       (4*h*q2*\[Epsilon])/sp, (2*h*q2)/(q2 + sp)^2 - (4*h)/(q2 + sp) - 
-       (8*h*q2)/(sp*(q2 + sp)) + (h*q2*\[Epsilon])/(q2 + sp)^2 - 
-       (2*h*\[Epsilon])/(q2 + sp) - (4*h*q2*\[Epsilon])/(sp*(q2 + sp)), 0}, 
-     {(-4*h*q2)/sp + (2*h*q2*\[Epsilon])/sp, (4*h*q2)/(sp*(q2 + sp)) + 
-       (2*h*q2*\[Epsilon])/(sp*(q2 + sp)), 0, 0}}
+CoeffAP2 = {{2*h*q2*t1^2, -2*h*m2*q2 - h*q2^2 - 2*h*m2*sp - h*q2*sp + 
+       (h*q2^3)/(q2 + sp) + (2*h*q2^2*sp)/(q2 + sp) + (h*q2*sp^2)/(q2 + sp) - 
+       2*h*q2*t1 - (2*h*q2^2*t1)/sp + 2*h*sp*t1 + (2*h*q2^3*t1)/
+        (sp*(q2 + sp)) - (2*h*sp^2*t1)/(q2 + sp) + 2*h*t1^2 + 
+       (2*h*q2*t1^2)/sp - (2*h*q2^2*t1^2)/(sp*(q2 + sp)) - 
+       (2*h*sp*t1^2)/(q2 + sp) + h*q2*u1 + h*sp*u1 - (h*q2^2*u1)/(q2 + sp) - 
+       (2*h*q2*sp*u1)/(q2 + sp) - (h*sp^2*u1)/(q2 + sp) + 2*h*t1*u1 + 
+       (2*h*q2*t1*u1)/(q2 + sp) - (2*h*sp*t1*u1)/(q2 + sp), 
+      -4*h*m2 + h*q2 - (4*h*m2*q2)/sp + (h*q2^2)/sp + (h*q2^3)/(q2 + sp)^2 + 
+       (h*q2*sp^2)/(q2 + sp)^2 + (4*h*m2*q2)/(q2 + sp) - (h*q2^2)/(q2 + sp) - 
+       (h*q2^3)/(sp*(q2 + sp)) + (4*h*m2*sp)/(q2 + sp) - 
+       (2*h*q2*sp)/(q2 + sp) - (2*h*q2*t1)/sp - (2*h*q2^2*t1)/(q2 + sp)^2 + 
+       (2*h*q2*sp*t1)/(q2 + sp)^2 + (2*h*q2^2*t1)/(sp*(q2 + sp)) + 
+       (2*h*t1^2)/sp + (2*h*q2*t1^2)/(q2 + sp)^2 - (2*h*t1^2)/(q2 + sp) - 
+       (2*h*q2*t1^2)/(sp*(q2 + sp)) - h*u1 - (h*q2*u1)/sp - 
+       (h*q2^2*u1)/(q2 + sp)^2 + (2*h*q2*sp*u1)/(q2 + sp)^2 - 
+       (h*sp^2*u1)/(q2 + sp)^2 - (h*q2*u1)/(q2 + sp) + 
+       (h*q2^2*u1)/(sp*(q2 + sp)) + (2*h*sp*u1)/(q2 + sp) + (2*h*t1*u1)/sp + 
+       (2*h*q2*t1*u1)/(q2 + sp)^2 - (2*h*sp*t1*u1)/(q2 + sp)^2 - 
+       (2*h*q2*t1*u1)/(sp*(q2 + sp)) - (2*h*sp*u1^2)/(q2 + sp)^2 + 
+       (2*h*u1^2)/(q2 + sp), (h*q2)/sp - (2*h*m2*q2)/(q2 + sp)^2 + 
+       (h*q2^2)/(q2 + sp)^2 - (2*h*m2*sp)/(q2 + sp)^2 + 
+       (h*q2*sp)/(q2 + sp)^2 + (4*h*m2)/(q2 + sp) - (2*h*q2)/(q2 + sp) + 
+       (4*h*m2*q2)/(sp*(q2 + sp)) - (h*q2^2)/(sp*(q2 + sp)) - (h*t1)/sp - 
+       (h*q2*t1)/(q2 + sp)^2 - (h*sp*t1)/(q2 + sp)^2 + (2*h*t1)/(q2 + sp) + 
+       (h*q2*t1)/(sp*(q2 + sp)) - (h*u1)/sp - (h*q2*u1)/(q2 + sp)^2 - 
+       (h*sp*u1)/(q2 + sp)^2 + (2*h*u1)/(q2 + sp) + 
+       (h*q2*u1)/(sp*(q2 + sp))}, {2*h*m2*q2 + 2*h*q2*t1 - (4*h*q2*t1^2)/sp, 
+      4*h*m2 - h*q2 + (8*h*m2*q2)/sp - (h*q2^2)/sp + h*sp - 
+       (4*h*m2*q2)/(q2 + sp) - (h*q2^2)/(q2 + sp) + (h*q2^3)/(sp*(q2 + sp)) + 
+       (2*h*q2*sp)/(q2 + sp) - (2*h*sp^2)/(q2 + sp) + (8*h*q2*t1)/sp + 
+       (2*h*q2*t1)/(q2 + sp) - (4*h*q2^2*t1)/(sp*(q2 + sp)) - 
+       (2*h*sp*t1)/(q2 + sp) + (4*h*q2*t1^2)/(sp*(q2 + sp)) + (h*q2*u1)/sp + 
+       (3*h*q2*u1)/(q2 + sp) - (h*q2^2*u1)/(sp*(q2 + sp)) - 
+       (2*h*sp*u1)/(q2 + sp) - (2*h*t1*u1)/sp - (2*h*t1*u1)/(q2 + sp) + 
+       (2*h*q2*t1*u1)/(sp*(q2 + sp)) - (2*h*u1^2)/(q2 + sp) + 
+       (h*q2*\[Epsilon])/2 + (h*sp*\[Epsilon])/2, -h - (6*h*q2)/sp + 
+       (2*h*m2*q2)/(q2 + sp)^2 - (2*h*q2^2)/(q2 + sp)^2 - 
+       (4*h*m2)/(q2 + sp) + (7*h*q2)/(q2 + sp) - (8*h*m2*q2)/(sp*(q2 + sp)) + 
+       (4*h*q2^2)/(sp*(q2 + sp)) + (h*sp)/(q2 + sp) + (h*t1)/sp + 
+       (2*h*q2*t1)/(q2 + sp)^2 - (3*h*t1)/(q2 + sp) - 
+       (5*h*q2*t1)/(sp*(q2 + sp)) + (2*h*u1)/sp + (h*q2*u1)/(q2 + sp)^2 - 
+       (h*sp*u1)/(q2 + sp)^2 - (h*u1)/(q2 + sp) - 
+       (2*h*q2*u1)/(sp*(q2 + sp)) + h*\[Epsilon] + (h*q2*\[Epsilon])/sp, 
+      -((h*q2)/(q2 + sp)^2) - (h*sp)/(q2 + sp)^2 + (2*h)/(q2 + sp) + 
+       (2*h*q2)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(2*(q2 + sp)^2) - 
+       (h*sp*\[Epsilon])/(2*(q2 + sp)^2) + (h*\[Epsilon])/(q2 + sp) + 
+       (h*q2*\[Epsilon])/(sp*(q2 + sp))}, 
+     {h*q2 - (4*h*m2*q2)/sp - (4*h*q2*t1)/sp - (h*q2*\[Epsilon])/2, 
+      (7*h*q2)/sp - (3*h*q2)/(q2 + sp) + (4*h*m2*q2)/(sp*(q2 + sp)) - 
+       (3*h*q2^2)/(sp*(q2 + sp)) + (4*h*q2*t1)/(sp*(q2 + sp)) - (h*u1)/sp - 
+       (h*u1)/(q2 + sp) + (h*q2*u1)/(sp*(q2 + sp)) - h*\[Epsilon] - 
+       (2*h*q2*\[Epsilon])/sp, (h*q2)/(q2 + sp)^2 - (2*h)/(q2 + sp) - 
+       (4*h*q2)/(sp*(q2 + sp)) + (h*q2*\[Epsilon])/(2*(q2 + sp)^2) - 
+       (h*\[Epsilon])/(q2 + sp) - (2*h*q2*\[Epsilon])/(sp*(q2 + sp)), 0}, 
+     {(-2*h*q2)/sp + (h*q2*\[Epsilon])/sp, (2*h*q2)/(sp*(q2 + sp)) + 
+       (h*q2*\[Epsilon])/(sp*(q2 + sp)), 0, 0}}
  
 CoeffAG3 = {{{{-4*m2*q2*sp + 2*q2^2*sp + 4*m2*sp^2 + 4*m2*q2*t1 + 6*q2^2*t1 + 
          4*m2*sp*t1 - 10*q2*sp*t1 + 6*sp^2*t1 - 10*q2*t1^2 + 14*sp*t1^2 + 
@@ -408,188 +405,189 @@ CoeffAL3 = {{{{4*q2^2*t1 - 8*q2*t1^2 + (12*q2^2*t1^2)/sp +
       {{(-4*q2)/sp^2 + (4*q2^2)/(sp^2*u1) - (2*q2*\[Epsilon])/sp^2 + 
          (2*q2^2*\[Epsilon])/(sp^2*u1), 0}, {0, 0}}, {{0, 0}, {0, 0}}}}
  
-CoeffAP3 = {{{{4*h*m2*q2*sp - 2*h*q2^2*sp - 4*h*m2*sp^2 - 4*h*m2*q2*t1 - 
-         2*h*q2^2*t1 - 4*h*m2*sp*t1 - 2*h*q2*sp*t1 - 2*h*sp^2*t1 - 
-         10*h*q2*t1^2 + (4*h*q2^2*t1^2)/sp - 2*h*sp*t1^2 - (8*h*q2*t1^3)/sp - 
-         4*h*m2*sp*u1 + 2*h*q2*sp*u1 - 2*h*q2*t1*u1 + 2*h*t1^2*u1 - 
-         (8*h*q2*t1^2*u1)/sp + 2*h*t1*u1^2 + h*q2^2*sp*\[Epsilon] - 
-         (h*q2*sp^2*\[Epsilon])/2 + h*q2^2*t1*\[Epsilon] - 
-         h*q2*sp*t1*\[Epsilon] - (3*h*q2*sp*u1*\[Epsilon])/2 + 
-         (h*sp^2*u1*\[Epsilon])/2 - (h*q2*t1*u1*\[Epsilon])/2 + 
-         (h*sp*t1*u1*\[Epsilon])/2 + (h*sp*u1^2*\[Epsilon])/2, 
-        -4*h*m2*q2 - 2*h*q2^2 - (4*h*q2^3)/sp - 4*h*m2*sp + 
-         (4*h*m2*q2^2)/(q2 + sp) + (6*h*q2^3)/(q2 + sp) + 
-         (4*h*q2^4)/(sp*(q2 + sp)) + (8*h*m2*q2*sp)/(q2 + sp) + 
-         (6*h*q2^2*sp)/(q2 + sp) + 4*h*m2*t1 + (14*h*q2^2*t1)/sp - 
-         4*h*sp*t1 - (4*h*m2*q2*t1)/(q2 + sp) - (6*h*q2^2*t1)/(q2 + sp) - 
-         (14*h*q2^3*t1)/(sp*(q2 + sp)) - (4*h*m2*sp*t1)/(q2 + sp) - 
-         (4*h*q2*sp*t1)/(q2 + sp) - 4*h*t1^2 - (14*h*q2*t1^2)/sp + 
-         (2*h*q2*t1^2)/(q2 + sp) + (18*h*q2^2*t1^2)/(sp*(q2 + sp)) - 
-         (8*h*q2*t1^3)/(sp*(q2 + sp)) + (4*h*q2^2*u1)/sp - 
-         (4*h*q2^2*u1)/(q2 + sp) - (4*h*q2^3*u1)/(sp*(q2 + sp)) - 
-         (4*h*m2*sp*u1)/(q2 + sp) - (6*h*q2*sp*u1)/(q2 + sp) - 2*h*t1*u1 - 
-         (12*h*q2*t1*u1)/sp + (4*h*q2*t1*u1)/(q2 + sp) + 
-         (12*h*q2^2*t1*u1)/(sp*(q2 + sp)) + (2*h*sp*t1*u1)/(q2 + sp) + 
-         (2*h*t1^2*u1)/(q2 + sp) - (8*h*q2*t1^2*u1)/(sp*(q2 + sp)) + 
-         2*h*u1^2 - (2*h*q2*u1^2)/(q2 + sp) + (2*h*t1*u1^2)/(q2 + sp) + 
-         (h*q2^2*\[Epsilon])/2 - (h*q2*sp*\[Epsilon])/2 - 
-         (h*q2^3*\[Epsilon])/(2*(q2 + sp)) + (h*q2^2*sp*\[Epsilon])/
-          (2*(q2 + sp)) - (h*q2*sp^2*\[Epsilon])/(2*(q2 + sp)) - 
-         h*q2*t1*\[Epsilon] + (h*q2^2*t1*\[Epsilon])/(q2 + sp) - 
-         (h*q2*sp*t1*\[Epsilon])/(q2 + sp) - (h*q2*u1*\[Epsilon])/2 + 
-         (h*sp*u1*\[Epsilon])/2 + (h*q2^2*u1*\[Epsilon])/(2*(q2 + sp)) - 
-         (h*q2*sp*u1*\[Epsilon])/(q2 + sp) + (h*sp^2*u1*\[Epsilon])/
-          (2*(q2 + sp)) + (h*t1*u1*\[Epsilon])/2 - (h*q2*t1*u1*\[Epsilon])/
-          (2*(q2 + sp)) + (h*sp*t1*u1*\[Epsilon])/(2*(q2 + sp)) + 
-         (h*sp*u1^2*\[Epsilon])/(2*(q2 + sp)), 
-        4*h*m2 - (4*h*m2*q2)/(q2 + sp) - (4*h*m2*sp)/(q2 + sp) - 2*h*t1 - 
-         (2*h*q2*t1)/sp + (4*h*m2*t1)/(q2 + sp) + (2*h*q2^2*t1)/
-          (sp*(q2 + sp)) - (2*h*t1^2)/sp - (2*h*q2*t1^2)/(sp*(q2 + sp)) - 
-         (h*q2*\[Epsilon])/2 + (h*q2^2*\[Epsilon])/(2*(q2 + sp)) - 
-         (h*q2*t1*\[Epsilon])/(q2 + sp) + (h*u1*\[Epsilon])/2 - 
-         (h*q2*u1*\[Epsilon])/(2*(q2 + sp)) + (h*t1*u1*\[Epsilon])/
-          (2*(q2 + sp))}, {4*h*q2*sp - 2*h*sp^2 + 4*h*q2*t1 - 2*h*sp*t1 - 
-         2*h*sp*u1 - (3*h*q2*sp*\[Epsilon])/2 + h*sp^2*\[Epsilon] - 
-         h*q2*t1*\[Epsilon] + h*sp*t1*\[Epsilon] + h*sp*u1*\[Epsilon], 
-        2*h*q2 + (4*h*q2^2)/sp - 4*h*sp - (6*h*q2^2)/(q2 + sp) - 
-         (4*h*q2^3)/(sp*(q2 + sp)) - (4*h*m2*sp)/(q2 + sp) - 
-         (4*h*q2*sp)/(q2 + sp) + (2*h*sp^2)/(q2 + sp) - 4*h*t1 - 
-         (8*h*q2*t1)/sp + (6*h*q2*t1)/(q2 + sp) + (8*h*q2^2*t1)/
-          (sp*(q2 + sp)) + (2*h*sp*t1)/(q2 + sp) - (4*h*q2*t1^2)/
-          (sp*(q2 + sp)) + (2*h*sp*u1)/(q2 + sp) - h*q2*\[Epsilon] + 
-         h*sp*\[Epsilon] + (h*q2^2*\[Epsilon])/(q2 + sp) - 
-         (h*q2*sp*\[Epsilon])/(2*(q2 + sp)) + (h*sp^2*\[Epsilon])/(q2 + sp) + 
-         h*t1*\[Epsilon] - (h*q2*t1*\[Epsilon])/(q2 + sp) + 
-         (h*sp*t1*\[Epsilon])/(q2 + sp) + (h*sp*u1*\[Epsilon])/(q2 + sp), 
-        h*\[Epsilon] - (h*q2*\[Epsilon])/(q2 + sp) + (h*t1*\[Epsilon])/
-          (q2 + sp)}, {0, 0, 0}}, {{-4*h*m2*sp - 6*h*q2*sp + 2*h*sp^2 - 
-         8*h*q2*t1 + 4*h*sp*t1 - (8*h*q2*t1^2)/sp - (4*h*m2*q2*sp)/u1 + 
-         (2*h*q2^2*sp)/u1 - (2*h*q2*sp^2)/u1 - (4*h*m2*q2*t1)/u1 + 
-         (4*h*q2^2*t1)/u1 - (4*h*m2*sp*t1)/u1 - (10*h*q2*sp*t1)/u1 + 
-         (2*h*sp^2*t1)/u1 - (14*h*q2*t1^2)/u1 + (4*h*q2^2*t1^2)/(sp*u1) + 
-         (2*h*sp*t1^2)/u1 - (8*h*q2*t1^3)/(sp*u1) + 4*h*sp*u1 - 
-         2*h*q2*sp*\[Epsilon] + (h*sp^2*\[Epsilon])/2 - h*q2*t1*\[Epsilon] + 
-         h*sp*t1*\[Epsilon] + (h*q2^2*sp*\[Epsilon])/u1 - 
-         (h*q2*sp^2*\[Epsilon])/(2*u1) + (h*q2^2*t1*\[Epsilon])/u1 - 
-         (h*q2*sp*t1*\[Epsilon])/u1 + h*sp*u1*\[Epsilon], 
-        -2*h*sp - (4*h*m2*sp)/(q2 + sp) - (8*h*q2*sp)/(q2 + sp) + 
-         (4*h*sp^2)/(q2 + sp) - 6*h*t1 - (4*h*q2*t1)/sp - 
-         (2*h*q2*t1)/(q2 + sp) + (4*h*q2^2*t1)/(sp*(q2 + sp)) + 
-         (10*h*sp*t1)/(q2 + sp) - (8*h*q2*t1^2)/(sp*(q2 + sp)) + 
-         (2*h*q2^2)/u1 + (8*h*m2*sp)/u1 + (2*h*q2*sp)/u1 - 
-         (2*h*q2^3)/((q2 + sp)*u1) - (4*h*m2*q2*sp)/((q2 + sp)*u1) - 
-         (4*h*m2*sp^2)/((q2 + sp)*u1) - (4*h*q2*sp^2)/((q2 + sp)*u1) + 
-         (4*h*m2*t1)/u1 + (2*h*q2*t1)/u1 + (2*h*q2^2*t1)/(sp*u1) + 
-         (4*h*sp*t1)/u1 - (4*h*m2*q2*t1)/((q2 + sp)*u1) + 
-         (2*h*q2^2*t1)/((q2 + sp)*u1) - (2*h*q2^3*t1)/(sp*(q2 + sp)*u1) - 
-         (4*h*m2*sp*t1)/((q2 + sp)*u1) - (10*h*q2*sp*t1)/((q2 + sp)*u1) + 
-         (4*h*t1^2)/u1 - (2*h*q2*t1^2)/(sp*u1) - (10*h*q2*t1^2)/
-          ((q2 + sp)*u1) + (6*h*q2^2*t1^2)/(sp*(q2 + sp)*u1) - 
-         (8*h*q2*t1^3)/(sp*(q2 + sp)*u1) - 2*h*u1 + (2*h*q2*u1)/(q2 + sp) + 
-         (8*h*sp*u1)/(q2 + sp) - (h*q2*\[Epsilon])/2 + (h*sp*\[Epsilon])/2 + 
-         (h*q2^2*\[Epsilon])/(2*(q2 + sp)) - (3*h*q2*sp*\[Epsilon])/
-          (2*(q2 + sp)) + (h*sp^2*\[Epsilon])/(2*(q2 + sp)) + 
-         h*t1*\[Epsilon] - (h*q2*t1*\[Epsilon])/(q2 + sp) + 
-         (h*sp*t1*\[Epsilon])/(q2 + sp) + (h*q2^2*\[Epsilon])/(2*u1) - 
-         (h*q2*sp*\[Epsilon])/(2*u1) - (h*q2^3*\[Epsilon])/(2*(q2 + sp)*u1) + 
-         (h*q2^2*sp*\[Epsilon])/(2*(q2 + sp)*u1) - (h*q2*sp^2*\[Epsilon])/
-          (2*(q2 + sp)*u1) - (h*q2*t1*\[Epsilon])/u1 + (h*q2^2*t1*\[Epsilon])/
-          ((q2 + sp)*u1) - (h*q2*sp*t1*\[Epsilon])/((q2 + sp)*u1) + 
-         (h*sp*u1*\[Epsilon])/(q2 + sp), (4*h*m2*sp)/((q2 + sp)*u1) + 
-         (2*h*t1)/u1 + (2*h*q2*t1)/(sp*u1) + (4*h*m2*t1)/((q2 + sp)*u1) - 
-         (2*h*q2^2*t1)/(sp*(q2 + sp)*u1) + (2*h*t1^2)/(sp*u1) + 
-         (2*h*q2*t1^2)/(sp*(q2 + sp)*u1) + (h*\[Epsilon])/2 - 
-         (h*q2*\[Epsilon])/(2*(q2 + sp)) + (h*t1*\[Epsilon])/(q2 + sp) - 
-         (h*q2*\[Epsilon])/(2*u1) + (h*q2^2*\[Epsilon])/(2*(q2 + sp)*u1) - 
-         (h*q2*t1*\[Epsilon])/((q2 + sp)*u1)}, 
-       {4*h*sp + 2*h*t1 - (4*h*m2*sp)/u1 - (6*h*q2*sp)/u1 + (2*h*sp^2)/u1 - 
-         (10*h*q2*t1)/u1 + (2*h*sp*t1)/u1 - (8*h*q2*t1^2)/(sp*u1) + 
-         (3*h*sp*\[Epsilon])/2 - (3*h*q2*sp*\[Epsilon])/(2*u1) - 
-         (h*q2*t1*\[Epsilon])/u1 + (h*sp*t1*\[Epsilon])/u1, 
-        -2*h + (2*h*q2)/(q2 + sp) + (6*h*sp)/(q2 + sp) - (2*h*t1)/(q2 + sp) - 
-         (2*h*q2)/u1 + (2*h*sp)/u1 + (2*h*q2^2)/((q2 + sp)*u1) - 
-         (2*h*q2*sp)/((q2 + sp)*u1) - (4*h*q2*t1)/(sp*u1) + 
-         (4*h*q2^2*t1)/(sp*(q2 + sp)*u1) + (2*h*sp*t1)/((q2 + sp)*u1) - 
-         (4*h*q2*t1^2)/(sp*(q2 + sp)*u1) + (3*h*sp*\[Epsilon])/
-          (2*(q2 + sp)) - (3*h*q2*sp*\[Epsilon])/(2*(q2 + sp)*u1) + 
-         (h*t1*\[Epsilon])/u1 - (h*q2*t1*\[Epsilon])/((q2 + sp)*u1) + 
-         (h*sp*t1*\[Epsilon])/((q2 + sp)*u1), (h*t1*\[Epsilon])/
-         ((q2 + sp)*u1)}, {(h*sp*\[Epsilon])/u1, (2*h*sp)/((q2 + sp)*u1) + 
-         (h*sp*\[Epsilon])/((q2 + sp)*u1), 0}}, 
-      {{-2*h*t1 + (2*h*q2*t1)/u1 - (2*h*t1^2)/u1 + (h*sp*\[Epsilon])/2 - 
-         (h*q2*sp*\[Epsilon])/(2*u1) - (h*q2*t1*\[Epsilon])/(2*u1) + 
-         (h*sp*t1*\[Epsilon])/(2*u1), (-2*h*t1)/(q2 + sp) + 
-         (2*h*q2*t1)/((q2 + sp)*u1) - (2*h*t1^2)/((q2 + sp)*u1) + 
-         (h*sp*\[Epsilon])/(2*(q2 + sp)) - (h*q2*sp*\[Epsilon])/
-          (2*(q2 + sp)*u1) + (h*t1*\[Epsilon])/(2*u1) - (h*q2*t1*\[Epsilon])/
+CoeffAP3 = {{{{2*h*m2*q2*sp - h*q2^2*sp - 2*h*m2*sp^2 - 2*h*m2*q2*t1 - 
+         h*q2^2*t1 - 2*h*m2*sp*t1 - h*q2*sp*t1 - h*sp^2*t1 - 5*h*q2*t1^2 + 
+         (2*h*q2^2*t1^2)/sp - h*sp*t1^2 - (4*h*q2*t1^3)/sp - 2*h*m2*sp*u1 + 
+         h*q2*sp*u1 - h*q2*t1*u1 + h*t1^2*u1 - (4*h*q2*t1^2*u1)/sp + 
+         h*t1*u1^2 + (h*q2^2*sp*\[Epsilon])/2 - (h*q2*sp^2*\[Epsilon])/4 + 
+         (h*q2^2*t1*\[Epsilon])/2 - (h*q2*sp*t1*\[Epsilon])/2 - 
+         (3*h*q2*sp*u1*\[Epsilon])/4 + (h*sp^2*u1*\[Epsilon])/4 - 
+         (h*q2*t1*u1*\[Epsilon])/4 + (h*sp*t1*u1*\[Epsilon])/4 + 
+         (h*sp*u1^2*\[Epsilon])/4, -2*h*m2*q2 - h*q2^2 - (2*h*q2^3)/sp - 
+         2*h*m2*sp + (2*h*m2*q2^2)/(q2 + sp) + (3*h*q2^3)/(q2 + sp) + 
+         (2*h*q2^4)/(sp*(q2 + sp)) + (4*h*m2*q2*sp)/(q2 + sp) + 
+         (3*h*q2^2*sp)/(q2 + sp) + 2*h*m2*t1 + (7*h*q2^2*t1)/sp - 2*h*sp*t1 - 
+         (2*h*m2*q2*t1)/(q2 + sp) - (3*h*q2^2*t1)/(q2 + sp) - 
+         (7*h*q2^3*t1)/(sp*(q2 + sp)) - (2*h*m2*sp*t1)/(q2 + sp) - 
+         (2*h*q2*sp*t1)/(q2 + sp) - 2*h*t1^2 - (7*h*q2*t1^2)/sp + 
+         (h*q2*t1^2)/(q2 + sp) + (9*h*q2^2*t1^2)/(sp*(q2 + sp)) - 
+         (4*h*q2*t1^3)/(sp*(q2 + sp)) + (2*h*q2^2*u1)/sp - 
+         (2*h*q2^2*u1)/(q2 + sp) - (2*h*q2^3*u1)/(sp*(q2 + sp)) - 
+         (2*h*m2*sp*u1)/(q2 + sp) - (3*h*q2*sp*u1)/(q2 + sp) - h*t1*u1 - 
+         (6*h*q2*t1*u1)/sp + (2*h*q2*t1*u1)/(q2 + sp) + 
+         (6*h*q2^2*t1*u1)/(sp*(q2 + sp)) + (h*sp*t1*u1)/(q2 + sp) + 
+         (h*t1^2*u1)/(q2 + sp) - (4*h*q2*t1^2*u1)/(sp*(q2 + sp)) + h*u1^2 - 
+         (h*q2*u1^2)/(q2 + sp) + (h*t1*u1^2)/(q2 + sp) + 
+         (h*q2^2*\[Epsilon])/4 - (h*q2*sp*\[Epsilon])/4 - 
+         (h*q2^3*\[Epsilon])/(4*(q2 + sp)) + (h*q2^2*sp*\[Epsilon])/
+          (4*(q2 + sp)) - (h*q2*sp^2*\[Epsilon])/(4*(q2 + sp)) - 
+         (h*q2*t1*\[Epsilon])/2 + (h*q2^2*t1*\[Epsilon])/(2*(q2 + sp)) - 
+         (h*q2*sp*t1*\[Epsilon])/(2*(q2 + sp)) - (h*q2*u1*\[Epsilon])/4 + 
+         (h*sp*u1*\[Epsilon])/4 + (h*q2^2*u1*\[Epsilon])/(4*(q2 + sp)) - 
+         (h*q2*sp*u1*\[Epsilon])/(2*(q2 + sp)) + (h*sp^2*u1*\[Epsilon])/
+          (4*(q2 + sp)) + (h*t1*u1*\[Epsilon])/4 - (h*q2*t1*u1*\[Epsilon])/
+          (4*(q2 + sp)) + (h*sp*t1*u1*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*sp*u1^2*\[Epsilon])/(4*(q2 + sp)), 
+        2*h*m2 - (2*h*m2*q2)/(q2 + sp) - (2*h*m2*sp)/(q2 + sp) - h*t1 - 
+         (h*q2*t1)/sp + (2*h*m2*t1)/(q2 + sp) + (h*q2^2*t1)/(sp*(q2 + sp)) - 
+         (h*t1^2)/sp - (h*q2*t1^2)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/4 + 
+         (h*q2^2*\[Epsilon])/(4*(q2 + sp)) - (h*q2*t1*\[Epsilon])/
+          (2*(q2 + sp)) + (h*u1*\[Epsilon])/4 - (h*q2*u1*\[Epsilon])/
+          (4*(q2 + sp)) + (h*t1*u1*\[Epsilon])/(4*(q2 + sp))}, 
+       {2*h*q2*sp - h*sp^2 + 2*h*q2*t1 - h*sp*t1 - h*sp*u1 - 
+         (3*h*q2*sp*\[Epsilon])/4 + (h*sp^2*\[Epsilon])/2 - 
+         (h*q2*t1*\[Epsilon])/2 + (h*sp*t1*\[Epsilon])/2 + 
+         (h*sp*u1*\[Epsilon])/2, h*q2 + (2*h*q2^2)/sp - 2*h*sp - 
+         (3*h*q2^2)/(q2 + sp) - (2*h*q2^3)/(sp*(q2 + sp)) - 
+         (2*h*m2*sp)/(q2 + sp) - (2*h*q2*sp)/(q2 + sp) + (h*sp^2)/(q2 + sp) - 
+         2*h*t1 - (4*h*q2*t1)/sp + (3*h*q2*t1)/(q2 + sp) + 
+         (4*h*q2^2*t1)/(sp*(q2 + sp)) + (h*sp*t1)/(q2 + sp) - 
+         (2*h*q2*t1^2)/(sp*(q2 + sp)) + (h*sp*u1)/(q2 + sp) - 
+         (h*q2*\[Epsilon])/2 + (h*sp*\[Epsilon])/2 + (h*q2^2*\[Epsilon])/
+          (2*(q2 + sp)) - (h*q2*sp*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*sp^2*\[Epsilon])/(2*(q2 + sp)) + (h*t1*\[Epsilon])/2 - 
+         (h*q2*t1*\[Epsilon])/(2*(q2 + sp)) + (h*sp*t1*\[Epsilon])/
+          (2*(q2 + sp)) + (h*sp*u1*\[Epsilon])/(2*(q2 + sp)), 
+        (h*\[Epsilon])/2 - (h*q2*\[Epsilon])/(2*(q2 + sp)) + 
+         (h*t1*\[Epsilon])/(2*(q2 + sp))}, {0, 0, 0}}, 
+      {{-2*h*m2*sp - 3*h*q2*sp + h*sp^2 - 4*h*q2*t1 + 2*h*sp*t1 - 
+         (4*h*q2*t1^2)/sp - (2*h*m2*q2*sp)/u1 + (h*q2^2*sp)/u1 - 
+         (h*q2*sp^2)/u1 - (2*h*m2*q2*t1)/u1 + (2*h*q2^2*t1)/u1 - 
+         (2*h*m2*sp*t1)/u1 - (5*h*q2*sp*t1)/u1 + (h*sp^2*t1)/u1 - 
+         (7*h*q2*t1^2)/u1 + (2*h*q2^2*t1^2)/(sp*u1) + (h*sp*t1^2)/u1 - 
+         (4*h*q2*t1^3)/(sp*u1) + 2*h*sp*u1 - h*q2*sp*\[Epsilon] + 
+         (h*sp^2*\[Epsilon])/4 - (h*q2*t1*\[Epsilon])/2 + 
+         (h*sp*t1*\[Epsilon])/2 + (h*q2^2*sp*\[Epsilon])/(2*u1) - 
+         (h*q2*sp^2*\[Epsilon])/(4*u1) + (h*q2^2*t1*\[Epsilon])/(2*u1) - 
+         (h*q2*sp*t1*\[Epsilon])/(2*u1) + (h*sp*u1*\[Epsilon])/2, 
+        -(h*sp) - (2*h*m2*sp)/(q2 + sp) - (4*h*q2*sp)/(q2 + sp) + 
+         (2*h*sp^2)/(q2 + sp) - 3*h*t1 - (2*h*q2*t1)/sp - 
+         (h*q2*t1)/(q2 + sp) + (2*h*q2^2*t1)/(sp*(q2 + sp)) + 
+         (5*h*sp*t1)/(q2 + sp) - (4*h*q2*t1^2)/(sp*(q2 + sp)) + (h*q2^2)/u1 + 
+         (4*h*m2*sp)/u1 + (h*q2*sp)/u1 - (h*q2^3)/((q2 + sp)*u1) - 
+         (2*h*m2*q2*sp)/((q2 + sp)*u1) - (2*h*m2*sp^2)/((q2 + sp)*u1) - 
+         (2*h*q2*sp^2)/((q2 + sp)*u1) + (2*h*m2*t1)/u1 + (h*q2*t1)/u1 + 
+         (h*q2^2*t1)/(sp*u1) + (2*h*sp*t1)/u1 - (2*h*m2*q2*t1)/
+          ((q2 + sp)*u1) + (h*q2^2*t1)/((q2 + sp)*u1) - 
+         (h*q2^3*t1)/(sp*(q2 + sp)*u1) - (2*h*m2*sp*t1)/((q2 + sp)*u1) - 
+         (5*h*q2*sp*t1)/((q2 + sp)*u1) + (2*h*t1^2)/u1 - 
+         (h*q2*t1^2)/(sp*u1) - (5*h*q2*t1^2)/((q2 + sp)*u1) + 
+         (3*h*q2^2*t1^2)/(sp*(q2 + sp)*u1) - (4*h*q2*t1^3)/
+          (sp*(q2 + sp)*u1) - h*u1 + (h*q2*u1)/(q2 + sp) + 
+         (4*h*sp*u1)/(q2 + sp) - (h*q2*\[Epsilon])/4 + (h*sp*\[Epsilon])/4 + 
+         (h*q2^2*\[Epsilon])/(4*(q2 + sp)) - (3*h*q2*sp*\[Epsilon])/
+          (4*(q2 + sp)) + (h*sp^2*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*t1*\[Epsilon])/2 - (h*q2*t1*\[Epsilon])/(2*(q2 + sp)) + 
+         (h*sp*t1*\[Epsilon])/(2*(q2 + sp)) + (h*q2^2*\[Epsilon])/(4*u1) - 
+         (h*q2*sp*\[Epsilon])/(4*u1) - (h*q2^3*\[Epsilon])/(4*(q2 + sp)*u1) + 
+         (h*q2^2*sp*\[Epsilon])/(4*(q2 + sp)*u1) - (h*q2*sp^2*\[Epsilon])/
+          (4*(q2 + sp)*u1) - (h*q2*t1*\[Epsilon])/(2*u1) + 
+         (h*q2^2*t1*\[Epsilon])/(2*(q2 + sp)*u1) - (h*q2*sp*t1*\[Epsilon])/
+          (2*(q2 + sp)*u1) + (h*sp*u1*\[Epsilon])/(2*(q2 + sp)), 
+        (2*h*m2*sp)/((q2 + sp)*u1) + (h*t1)/u1 + (h*q2*t1)/(sp*u1) + 
+         (2*h*m2*t1)/((q2 + sp)*u1) - (h*q2^2*t1)/(sp*(q2 + sp)*u1) + 
+         (h*t1^2)/(sp*u1) + (h*q2*t1^2)/(sp*(q2 + sp)*u1) + 
+         (h*\[Epsilon])/4 - (h*q2*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*t1*\[Epsilon])/(2*(q2 + sp)) - (h*q2*\[Epsilon])/(4*u1) + 
+         (h*q2^2*\[Epsilon])/(4*(q2 + sp)*u1) - (h*q2*t1*\[Epsilon])/
+          (2*(q2 + sp)*u1)}, {2*h*sp + h*t1 - (2*h*m2*sp)/u1 - 
+         (3*h*q2*sp)/u1 + (h*sp^2)/u1 - (5*h*q2*t1)/u1 + (h*sp*t1)/u1 - 
+         (4*h*q2*t1^2)/(sp*u1) + (3*h*sp*\[Epsilon])/4 - 
+         (3*h*q2*sp*\[Epsilon])/(4*u1) - (h*q2*t1*\[Epsilon])/(2*u1) + 
+         (h*sp*t1*\[Epsilon])/(2*u1), -h + (h*q2)/(q2 + sp) + 
+         (3*h*sp)/(q2 + sp) - (h*t1)/(q2 + sp) - (h*q2)/u1 + (h*sp)/u1 + 
+         (h*q2^2)/((q2 + sp)*u1) - (h*q2*sp)/((q2 + sp)*u1) - 
+         (2*h*q2*t1)/(sp*u1) + (2*h*q2^2*t1)/(sp*(q2 + sp)*u1) + 
+         (h*sp*t1)/((q2 + sp)*u1) - (2*h*q2*t1^2)/(sp*(q2 + sp)*u1) + 
+         (3*h*sp*\[Epsilon])/(4*(q2 + sp)) - (3*h*q2*sp*\[Epsilon])/
+          (4*(q2 + sp)*u1) + (h*t1*\[Epsilon])/(2*u1) - (h*q2*t1*\[Epsilon])/
           (2*(q2 + sp)*u1) + (h*sp*t1*\[Epsilon])/(2*(q2 + sp)*u1), 
-        (h*t1*\[Epsilon])/(2*(q2 + sp)*u1)}, 
-       {(-2*h*t1)/u1 + (h*sp*\[Epsilon])/(2*u1), (-2*h*t1)/((q2 + sp)*u1) + 
-         (h*sp*\[Epsilon])/(2*(q2 + sp)*u1), 0}, {0, 0, 0}}}, 
-     {{{8*h*m2*q2 - 4*h*q2^2 - 2*h*q2*sp - 2*h*q2*t1 - (8*h*m2*q2*t1)/sp - 
-         (4*h*q2^2*t1)/sp + 2*h*q2*u1 + 2*h*sp*u1 + 2*h*t1*u1 + 2*h*u1^2 + 
-         (3*h*q2^2*\[Epsilon])/2 + (2*h*q2^2*t1*\[Epsilon])/sp - 
-         (3*h*q2*u1*\[Epsilon])/2 - (h*q2*t1*u1*\[Epsilon])/sp, 
-        -8*h*m2 + 2*h*q2 - (8*h*m2*q2)/sp + (8*h*q2^2)/sp + 
-         (4*h*m2*q2)/(q2 + sp) - (6*h*q2^2)/(q2 + sp) + 
-         (8*h*m2*q2^2)/(sp*(q2 + sp)) - (8*h*q2^3)/(sp*(q2 + sp)) - 
-         (2*h*q2*sp)/(q2 + sp) - 2*h*t1 - (8*h*q2*t1)/sp - 
-         (8*h*m2*q2*t1)/(sp*(q2 + sp)) + (20*h*q2^2*t1)/(sp*(q2 + sp)) - 
-         (12*h*q2*t1^2)/(sp*(q2 + sp)) - 2*h*u1 - (8*h*q2*u1)/sp + 
-         (4*h*q2*u1)/(q2 + sp) + (8*h*q2^2*u1)/(sp*(q2 + sp)) + 
-         (2*h*sp*u1)/(q2 + sp) + (2*h*t1*u1)/(q2 + sp) - 
-         (12*h*q2*t1*u1)/(sp*(q2 + sp)) + (2*h*u1^2)/(q2 + sp) - 
-         (h*q2*\[Epsilon])/2 + (h*q2^2*\[Epsilon])/sp + (h*q2^2*\[Epsilon])/
-          (2*(q2 + sp)) - (h*q2^3*\[Epsilon])/(sp*(q2 + sp)) + 
-         (2*h*q2^2*t1*\[Epsilon])/(sp*(q2 + sp)) + (h*u1*\[Epsilon])/2 - 
-         (h*q2*u1*\[Epsilon])/sp - (h*q2*u1*\[Epsilon])/(2*(q2 + sp)) + 
-         (h*q2^2*u1*\[Epsilon])/(sp*(q2 + sp)) - (h*q2*t1*u1*\[Epsilon])/
-          (sp*(q2 + sp)), (4*h*m2)/(q2 + sp) - (2*h*t1)/sp - 
-         (2*h*q2*t1)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(2*(q2 + sp)) + 
-         (h*u1*\[Epsilon])/(2*(q2 + sp))}, {8*h*q2 + (8*h*q2*t1)/sp - 
-         2*h*q2*\[Epsilon] - (2*h*q2*t1*\[Epsilon])/sp, 
-        -4*h - (8*h*q2)/sp + (8*h*q2)/(q2 + sp) + (8*h*q2^2)/(sp*(q2 + sp)) - 
-         (8*h*q2*t1)/(sp*(q2 + sp)) + h*\[Epsilon] - (2*h*q2*\[Epsilon])/sp + 
-         (2*h*q2^2*\[Epsilon])/(sp*(q2 + sp)) - (2*h*q2*t1*\[Epsilon])/
-          (sp*(q2 + sp)), (h*\[Epsilon])/(q2 + sp)}, {0, 0, 0}}, 
-      {{-8*h*q2 + 2*h*sp + 6*h*t1 - (8*h*q2*t1)/sp - (20*h*m2*q2)/u1 + 
-         (2*h*q2^2)/u1 - (2*h*q2*sp)/u1 - (16*h*q2*t1)/u1 - 
-         (8*h*m2*q2*t1)/(sp*u1) + (4*h*q2^2*t1)/(sp*u1) - 
-         (16*h*q2*t1^2)/(sp*u1) + 6*h*u1 - (3*h*q2*\[Epsilon])/2 - 
-         (2*h*q2*t1*\[Epsilon])/sp + (3*h*q2^2*\[Epsilon])/(2*u1) + 
-         (2*h*q2^2*t1*\[Epsilon])/(sp*u1), -4*h - (2*h*q2)/sp + 
-         (2*h*q2^2)/(sp*(q2 + sp)) - (4*h*t1)/sp - (2*h*t1)/(q2 + sp) - 
-         (8*h*q2*t1)/(sp*(q2 + sp)) + (12*h*m2)/u1 + (4*h*q2)/u1 + 
-         (2*h*q2^2)/(sp*u1) - (8*h*m2*q2)/((q2 + sp)*u1) + 
-         (2*h*q2^2)/((q2 + sp)*u1) - (2*h*q2^3)/(sp*(q2 + sp)*u1) + 
-         (2*h*t1)/u1 + (4*h*q2*t1)/(sp*u1) - (2*h*q2*t1)/((q2 + sp)*u1) - 
-         (8*h*m2*q2*t1)/(sp*(q2 + sp)*u1) + (4*h*q2^2*t1)/(sp*(q2 + sp)*u1) - 
-         (4*h*q2*t1^2)/(sp*(q2 + sp)*u1) - (2*h*u1)/(q2 + sp) + 
-         (h*\[Epsilon])/2 - (h*q2*\[Epsilon])/sp - (h*q2*\[Epsilon])/
-          (2*(q2 + sp)) + (h*q2^2*\[Epsilon])/(sp*(q2 + sp)) - 
-         (2*h*q2*t1*\[Epsilon])/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(2*u1) + 
-         (h*q2^2*\[Epsilon])/(sp*u1) + (h*q2^2*\[Epsilon])/(2*(q2 + sp)*u1) - 
-         (h*q2^3*\[Epsilon])/(sp*(q2 + sp)*u1) + (2*h*q2^2*t1*\[Epsilon])/
-          (sp*(q2 + sp)*u1), (2*h*t1)/(sp*u1) + (2*h*q2*t1)/
-          (sp*(q2 + sp)*u1) + (h*\[Epsilon])/(2*(q2 + sp)) - 
-         (h*q2*\[Epsilon])/(2*(q2 + sp)*u1)}, 
-       {4*h - (8*h*q2)/u1 - (8*h*q2*t1)/(sp*u1) - (h*q2*\[Epsilon])/u1 - 
-         (2*h*q2*t1*\[Epsilon])/(sp*u1), (-2*h)/(q2 + sp) + (2*h)/u1 - 
-         (4*h*q2)/((q2 + sp)*u1) - (4*h*q2*t1)/(sp*(q2 + sp)*u1) - 
-         (h*q2*\[Epsilon])/((q2 + sp)*u1) - (2*h*q2*t1*\[Epsilon])/
+        (h*t1*\[Epsilon])/(2*(q2 + sp)*u1)}, {(h*sp*\[Epsilon])/(2*u1), 
+        (h*sp)/((q2 + sp)*u1) + (h*sp*\[Epsilon])/(2*(q2 + sp)*u1), 0}}, 
+      {{-(h*t1) + (h*q2*t1)/u1 - (h*t1^2)/u1 + (h*sp*\[Epsilon])/4 - 
+         (h*q2*sp*\[Epsilon])/(4*u1) - (h*q2*t1*\[Epsilon])/(4*u1) + 
+         (h*sp*t1*\[Epsilon])/(4*u1), -((h*t1)/(q2 + sp)) + 
+         (h*q2*t1)/((q2 + sp)*u1) - (h*t1^2)/((q2 + sp)*u1) + 
+         (h*sp*\[Epsilon])/(4*(q2 + sp)) - (h*q2*sp*\[Epsilon])/
+          (4*(q2 + sp)*u1) + (h*t1*\[Epsilon])/(4*u1) - (h*q2*t1*\[Epsilon])/
+          (4*(q2 + sp)*u1) + (h*sp*t1*\[Epsilon])/(4*(q2 + sp)*u1), 
+        (h*t1*\[Epsilon])/(4*(q2 + sp)*u1)}, 
+       {-((h*t1)/u1) + (h*sp*\[Epsilon])/(4*u1), -((h*t1)/((q2 + sp)*u1)) + 
+         (h*sp*\[Epsilon])/(4*(q2 + sp)*u1), 0}, {0, 0, 0}}}, 
+     {{{4*h*m2*q2 - 2*h*q2^2 - h*q2*sp - h*q2*t1 - (4*h*m2*q2*t1)/sp - 
+         (2*h*q2^2*t1)/sp + h*q2*u1 + h*sp*u1 + h*t1*u1 + h*u1^2 + 
+         (3*h*q2^2*\[Epsilon])/4 + (h*q2^2*t1*\[Epsilon])/sp - 
+         (3*h*q2*u1*\[Epsilon])/4 - (h*q2*t1*u1*\[Epsilon])/(2*sp), 
+        -4*h*m2 + h*q2 - (4*h*m2*q2)/sp + (4*h*q2^2)/sp + 
+         (2*h*m2*q2)/(q2 + sp) - (3*h*q2^2)/(q2 + sp) + 
+         (4*h*m2*q2^2)/(sp*(q2 + sp)) - (4*h*q2^3)/(sp*(q2 + sp)) - 
+         (h*q2*sp)/(q2 + sp) - h*t1 - (4*h*q2*t1)/sp - 
+         (4*h*m2*q2*t1)/(sp*(q2 + sp)) + (10*h*q2^2*t1)/(sp*(q2 + sp)) - 
+         (6*h*q2*t1^2)/(sp*(q2 + sp)) - h*u1 - (4*h*q2*u1)/sp + 
+         (2*h*q2*u1)/(q2 + sp) + (4*h*q2^2*u1)/(sp*(q2 + sp)) + 
+         (h*sp*u1)/(q2 + sp) + (h*t1*u1)/(q2 + sp) - (6*h*q2*t1*u1)/
+          (sp*(q2 + sp)) + (h*u1^2)/(q2 + sp) - (h*q2*\[Epsilon])/4 + 
+         (h*q2^2*\[Epsilon])/(2*sp) + (h*q2^2*\[Epsilon])/(4*(q2 + sp)) - 
+         (h*q2^3*\[Epsilon])/(2*sp*(q2 + sp)) + (h*q2^2*t1*\[Epsilon])/
+          (sp*(q2 + sp)) + (h*u1*\[Epsilon])/4 - (h*q2*u1*\[Epsilon])/
+          (2*sp) - (h*q2*u1*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*q2^2*u1*\[Epsilon])/(2*sp*(q2 + sp)) - (h*q2*t1*u1*\[Epsilon])/
+          (2*sp*(q2 + sp)), (2*h*m2)/(q2 + sp) - (h*t1)/sp - 
+         (h*q2*t1)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(4*(q2 + sp)) + 
+         (h*u1*\[Epsilon])/(4*(q2 + sp))}, {4*h*q2 + (4*h*q2*t1)/sp - 
+         h*q2*\[Epsilon] - (h*q2*t1*\[Epsilon])/sp, -2*h - (4*h*q2)/sp + 
+         (4*h*q2)/(q2 + sp) + (4*h*q2^2)/(sp*(q2 + sp)) - 
+         (4*h*q2*t1)/(sp*(q2 + sp)) + (h*\[Epsilon])/2 - 
+         (h*q2*\[Epsilon])/sp + (h*q2^2*\[Epsilon])/(sp*(q2 + sp)) - 
+         (h*q2*t1*\[Epsilon])/(sp*(q2 + sp)), (h*\[Epsilon])/(2*(q2 + sp))}, 
+       {0, 0, 0}}, {{-4*h*q2 + h*sp + 3*h*t1 - (4*h*q2*t1)/sp - 
+         (10*h*m2*q2)/u1 + (h*q2^2)/u1 - (h*q2*sp)/u1 - (8*h*q2*t1)/u1 - 
+         (4*h*m2*q2*t1)/(sp*u1) + (2*h*q2^2*t1)/(sp*u1) - 
+         (8*h*q2*t1^2)/(sp*u1) + 3*h*u1 - (3*h*q2*\[Epsilon])/4 - 
+         (h*q2*t1*\[Epsilon])/sp + (3*h*q2^2*\[Epsilon])/(4*u1) + 
+         (h*q2^2*t1*\[Epsilon])/(sp*u1), -2*h - (h*q2)/sp + 
+         (h*q2^2)/(sp*(q2 + sp)) - (2*h*t1)/sp - (h*t1)/(q2 + sp) - 
+         (4*h*q2*t1)/(sp*(q2 + sp)) + (6*h*m2)/u1 + (2*h*q2)/u1 + 
+         (h*q2^2)/(sp*u1) - (4*h*m2*q2)/((q2 + sp)*u1) + 
+         (h*q2^2)/((q2 + sp)*u1) - (h*q2^3)/(sp*(q2 + sp)*u1) + (h*t1)/u1 + 
+         (2*h*q2*t1)/(sp*u1) - (h*q2*t1)/((q2 + sp)*u1) - 
+         (4*h*m2*q2*t1)/(sp*(q2 + sp)*u1) + (2*h*q2^2*t1)/(sp*(q2 + sp)*u1) - 
+         (2*h*q2*t1^2)/(sp*(q2 + sp)*u1) - (h*u1)/(q2 + sp) + 
+         (h*\[Epsilon])/4 - (h*q2*\[Epsilon])/(2*sp) - (h*q2*\[Epsilon])/
+          (4*(q2 + sp)) + (h*q2^2*\[Epsilon])/(2*sp*(q2 + sp)) - 
+         (h*q2*t1*\[Epsilon])/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(4*u1) + 
+         (h*q2^2*\[Epsilon])/(2*sp*u1) + (h*q2^2*\[Epsilon])/
+          (4*(q2 + sp)*u1) - (h*q2^3*\[Epsilon])/(2*sp*(q2 + sp)*u1) + 
+         (h*q2^2*t1*\[Epsilon])/(sp*(q2 + sp)*u1), (h*t1)/(sp*u1) + 
+         (h*q2*t1)/(sp*(q2 + sp)*u1) + (h*\[Epsilon])/(4*(q2 + sp)) - 
+         (h*q2*\[Epsilon])/(4*(q2 + sp)*u1)}, 
+       {2*h - (4*h*q2)/u1 - (4*h*q2*t1)/(sp*u1) - (h*q2*\[Epsilon])/(2*u1) - 
+         (h*q2*t1*\[Epsilon])/(sp*u1), -(h/(q2 + sp)) + h/u1 - 
+         (2*h*q2)/((q2 + sp)*u1) - (2*h*q2*t1)/(sp*(q2 + sp)*u1) - 
+         (h*q2*\[Epsilon])/(2*(q2 + sp)*u1) - (h*q2*t1*\[Epsilon])/
           (sp*(q2 + sp)*u1), 0}, {0, 0, 0}}, 
-      {{-((h*q2*t1*\[Epsilon])/(sp*u1)), -((h*q2*t1*\[Epsilon])/
-          (sp*(q2 + sp)*u1)), 0}, {0, 0, 0}, {0, 0, 0}}}, 
-     {{{(8*h*m2*q2)/sp - (4*h*q2^2)/sp + (4*h*q2*t1)/sp + (4*h*q2*u1)/sp + 
-         (h*q2^2*\[Epsilon])/sp - (h*q2*u1*\[Epsilon])/sp, 
-        (-8*h*m2*q2)/(sp*(q2 + sp)) + (4*h*q2^2)/(sp*(q2 + sp)) - 
-         (4*h*q2*t1)/(sp*(q2 + sp)) - (4*h*q2*u1)/(sp*(q2 + sp)) + 
-         (h*q2^2*\[Epsilon])/(sp*(q2 + sp)) - (h*q2*u1*\[Epsilon])/
-          (sp*(q2 + sp)), 0}, {(8*h*q2)/sp - (2*h*q2*\[Epsilon])/sp, 
-        (-4*h*q2)/(sp*(q2 + sp)) - (2*h*q2*\[Epsilon])/(sp*(q2 + sp)), 0}, 
-       {0, 0, 0}}, {{(-16*h*m2*q2)/(sp*u1) - (4*h*q2*t1)/(sp*u1) - 
-         (h*q2*\[Epsilon])/sp + (h*q2^2*\[Epsilon])/(sp*u1), 
-        (-2*h)/sp - (2*h*q2)/(sp*(q2 + sp)) + (2*h*q2)/(sp*u1) + 
-         (2*h*q2^2)/(sp*(q2 + sp)*u1) - (h*q2*\[Epsilon])/(sp*(q2 + sp)) + 
-         (h*q2^2*\[Epsilon])/(sp*(q2 + sp)*u1), 0}, {(-4*h*q2)/(sp*u1), 0, 
+      {{-(h*q2*t1*\[Epsilon])/(2*sp*u1), -(h*q2*t1*\[Epsilon])/
+         (2*sp*(q2 + sp)*u1), 0}, {0, 0, 0}, {0, 0, 0}}}, 
+     {{{(4*h*m2*q2)/sp - (2*h*q2^2)/sp + (2*h*q2*t1)/sp + (2*h*q2*u1)/sp + 
+         (h*q2^2*\[Epsilon])/(2*sp) - (h*q2*u1*\[Epsilon])/(2*sp), 
+        (-4*h*m2*q2)/(sp*(q2 + sp)) + (2*h*q2^2)/(sp*(q2 + sp)) - 
+         (2*h*q2*t1)/(sp*(q2 + sp)) - (2*h*q2*u1)/(sp*(q2 + sp)) + 
+         (h*q2^2*\[Epsilon])/(2*sp*(q2 + sp)) - (h*q2*u1*\[Epsilon])/
+          (2*sp*(q2 + sp)), 0}, {(4*h*q2)/sp - (h*q2*\[Epsilon])/sp, 
+        (-2*h*q2)/(sp*(q2 + sp)) - (h*q2*\[Epsilon])/(sp*(q2 + sp)), 0}, 
+       {0, 0, 0}}, {{(-8*h*m2*q2)/(sp*u1) - (2*h*q2*t1)/(sp*u1) - 
+         (h*q2*\[Epsilon])/(2*sp) + (h*q2^2*\[Epsilon])/(2*sp*u1), 
+        -(h/sp) - (h*q2)/(sp*(q2 + sp)) + (h*q2)/(sp*u1) + 
+         (h*q2^2)/(sp*(q2 + sp)*u1) - (h*q2*\[Epsilon])/(2*sp*(q2 + sp)) + 
+         (h*q2^2*\[Epsilon])/(2*sp*(q2 + sp)*u1), 0}, {(-2*h*q2)/(sp*u1), 0, 
         0}, {0, 0, 0}}, {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}}}}

@@ -116,7 +116,7 @@ class PartonicRunner2:
                     f.write(("\t").join("%e"%v for v in vs)+"\n")
     # run program
     def run(self):
-        self._compute(self.__getGrid())
+        self._compute(self._getGrid())
         self._reorder()
         self._write()
     # run program to compare to Marco

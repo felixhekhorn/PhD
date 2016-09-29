@@ -25,10 +25,10 @@ int main(int argc, char **argv) {
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
     //oP.setEta(pow(10.,-.5));
-    uint N = 20;
+    uint N = 19;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
-        dbl eta = pow(10.,0.+1.*(dbl)j/(N-1));
+        dbl eta = pow(10.,0+1.*(dbl)j/(N-1));
         oG.setEta(eta);
         oL.setEta(eta);
         oP.setEta(eta);
