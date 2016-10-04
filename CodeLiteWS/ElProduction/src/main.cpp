@@ -25,16 +25,16 @@ int main(int argc, char **argv) {
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
     //oP.setEta(pow(10.,-.5));
-    uint N = 19;
+    uint N = 11;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
-        dbl eta = pow(10.,0+1.*(dbl)j/(N-1));
+        dbl eta = pow(10.,-3.+1.*(dbl)j/(N-1));
         oG.setEta(eta);
         oL.setEta(eta);
         oP.setEta(eta);
-        dbl g = oG.cq1();
-        dbl l = oL.cq1();
-        printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cq1());
+        dbl g = oG.cg1();
+        dbl l = oL.cg1();
+        printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cg1());
     }
 	return EXIT_SUCCESS;
 }

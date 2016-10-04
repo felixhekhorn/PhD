@@ -67,7 +67,7 @@ dbl cg1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
     return (m2/(4.*M_PI)) * nL * (CA * (IntROKfiniteL(m2,q2,sp,s4,t1) + RPoleL(m2,q2,sp,s4,t1)) + 2.*CF * IntRQEDfiniteL(m2,q2,sp,s4,t1))/(sp*sp);
 }
 dbl cg1HP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
-    dbl nP = 1./(4) * Kggg * NC * CF;
+    dbl nP = 1./(2) * Kggg * NC * CF;
     return (m2/(4.*M_PI)) * nP * (CA * (IntROKfiniteP(m2,q2,sp,s4,t1) + RPoleP(m2,q2,sp,s4,t1)) + 2.*CF * IntRQEDfiniteP(m2,q2,sp,s4,t1))/(sp*sp);
 }
 
@@ -80,6 +80,6 @@ dbl cgBarF1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
     return (m2/(4.*M_PI)) * nL * (CA * (RPoleLScaleF(m2,q2,sp,s4,t1)))/(sp*sp);
 }
 dbl cgBarF1HP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {
-    dbl nP = 1./(4) * Kggg * NC * CF;
+    dbl nP = 1./(2) * Kggg * NC * CF;
     return (m2/(4.*M_PI)) * nP * (CA * (RPolePScaleF(m2,q2,sp,s4,t1)))/(sp*sp);
 }

@@ -25,6 +25,7 @@ tenglu=(-{nu}.{be});
 tengam=I Eps[{mu},{al},k1,k2]/(s/2);
 tenglu=I Eps[{nu},{be},k2,k1]/(s/2);
 
+
 (* general definitions *)
 cepsp = Exp[eps/2(EulerGamma-Log[4 Pi])] (m^2/mur^2)^(eps/2);
 ceps = 1/(16 Pi^2) cepsp;
@@ -108,7 +109,7 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve11bare=Expand[(help2 /. {s->-t1-u1})];
 
 Print[COUNTERTERM]
@@ -121,14 +122,14 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normc*norm*help2) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normc*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve11counter=Expand[(help2 /. {s->-t1-u1})];
 
 ve11c24=ve11bare+ve11counter;
 
 Print[BARE C21]
 zwi1=G[l3,{nu},(p1-k2+m U),{rho},p2,{mu},p2,{rho},(p2-m U),{al},
-       (p1-k2+m U),{be},(p1+m U)]/u1^2;
+       (p1-k2+m U),{be},(p1+m U)]/u1^2*c21;
 
 Print[TRACE]
 se1 = zwi1;
@@ -136,12 +137,12 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c21) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve11c21=Expand[(help2 /. {s->-t1-u1})];
 
 Print[BARE C22]
 zwi1=G[l4,{nu},(p1-k2+m U),{rho},k1,{mu},k1,{rho},(p2-m U),{al},
-       (p1-k2+m U),{be},(p1+m U)]/u1^2;
+       (p1-k2+m U),{be},(p1+m U)]/u1^2*c22;
 
 Print[TRACE]
 se1 = zwi1;
@@ -149,7 +150,7 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c22) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve11c22=Expand[(help2 /. {s->-t1-u1})];
 
 Print[BARE C23]
@@ -160,18 +161,18 @@ zwi2=G[l6,{nu},(p1-k2+m U),{rho},k1,{mu},p2,{rho},(p2-m U),{al},
        (p1-k2+m U),{be},(p1+m U)]/u1^2 (-1);
 
 Print[TRACES]
-se1 = zwi1+zwi2;
+se1 = (zwi1+zwi2)*c23;
 help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c23) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve11c23=Expand[(help2 /. {s->-t1-u1})];
 
 
 Print[BARE C0]
 zwi1=G[l7,{nu},(p1-k2+m U),{rho},(k1-p2+m U),{mu},(-p2+m U),{rho},
-       (p2-m U),{al},(p1-k2+m U),{be},(p1+m U)]/u1^2;
+       (p2-m U),{al},(p1-k2+m U),{be},(p1+m U)]/u1^2*c0(*[p2,-k1,0,m,m]*);
 
 Print[TRACE]
 se1 = zwi1;
@@ -179,8 +180,8 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c0(*[p2,-k1,0,m,m]*)) /. n->4+eps)],
-            {eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],
+            {eps,0,1}]];*)
 ve11c0=Expand[(help2 /. {s->-t1-u1})];
 
 Print["BARE C11 + C12"]
@@ -204,8 +205,8 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[(normv*norm*help2 /. n->4+eps)],
-            {eps,0,1}]]; 
+(*help2=Normal[Series[Expand[(normv*norm*help2 /. n->4+eps)],
+            {eps,0,1}]];*)
 ve11c1=Expand[(help2 /. {s->-t1-u1})];
 
 ve11= Expand[ve11c0+ve11c1+ve11c21+ve11c22+ve11c23+ve11c24];
@@ -224,7 +225,7 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve12bare=Expand[(help2 /. {s->-t1-u1})];
 
 Print[COUNTERTERM]
@@ -237,14 +238,14 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normc*norm*help2) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normc*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve12counter=Expand[(help2 /. {s->-t1-u1})];
 
 ve12c24=ve12bare+ve12counter;
 
 Print[BARE C21]
 zwi1=G[l14,{nu},(p1-k2+m U),{rho},p2,{mu},p2,{rho},(p2-m U),{be},
-       (k2-p2+m U),{al},(p1+m U)]/u1/t1;
+       (k2-p2+m U),{al},(p1+m U)]/u1/t1*c21;
 
 Print[TRACE]
 se1 = zwi1;
@@ -252,12 +253,12 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c21) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve12c21=Expand[(help2 /. {s->-t1-u1})];
 
 Print[BARE C22]
 zwi1=G[l15,{nu},(p1-k2+m U),{rho},k1,{mu},k1,{rho},(p2-m U),{be},
-       (k2-p2+m U),{al},(p1+m U)]/u1/t1;
+       (k2-p2+m U),{al},(p1+m U)]/u1/t1*c22;
 
 Print[TRACE]
 se1 = zwi1;
@@ -265,7 +266,7 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c22) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve12c22=Expand[(help2 /. {s->-t1-u1})];
 
 Print[BARE C23]
@@ -276,18 +277,18 @@ zwi2=G[l17,{nu},(p1-k2+m U),{rho},k1,{mu},p2,{rho},(p2-m U),{be},
        (k2-p2+m U),{al},(p1+m U)]/u1/t1 (-1);
 
 Print[TRACES]
-se1 = zwi1+zwi2;
+se1 = (zwi1+zwi2)*c23;
 help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c23) /. n->4+eps)],{eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],{eps,0,1}]];*)
 ve12c23=Expand[(help2 /. {s->-t1-u1})];
 
 
 Print[BARE C0]
 zwi1=G[l18,{nu},(p1-k2+m U),{rho},(k1-p2+m U),{mu},(-p2+m U),{rho},
-       (p2-m U),{be},(k2-p2+m U),{al},(p1+m U)]/u1/t1;
+       (p2-m U),{be},(k2-p2+m U),{al},(p1+m U)]/u1/t1*c0(*[p2,-k1,0,m,m]*);
 
 Print[TRACE]
 se1 = zwi1;
@@ -295,8 +296,8 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[((normv*norm*help2*c0(*[p2,-k1,0,m,m]*)) /. n->4+eps)],
-            {eps,0,1}]]; 
+(*help2=Normal[Series[Expand[((normv*norm*help2) /. n->4+eps)],
+            {eps,0,1}]];*)
 ve12c0=Expand[(help2 /. {s->-t1-u1})];
 
 Print["BARE C11 + C12"]
@@ -320,8 +321,8 @@ help1 = ContractEpsGamma[tenglu*se1];
 help22 = ContractEpsGamma[tengam*help1];
 help2 = RemoveHatMomenta[help22,k1,k2,p1,p2];
 Print[CONTRACTIONS]
-help2=Normal[Series[Expand[(normv*norm*help2 /. n->4+eps)],
-            {eps,0,1}]]; 
+(*help2=Normal[Series[Expand[(normv*norm*help2 /. n->4+eps)],
+            {eps,0,1}]];*)
 ve12c1=Expand[(help2 /. {s->-t1-u1})];
 
 ve12= Expand[ve12c0+ve12c1+ve12c21+ve12c22+ve12c23+ve12c24];
@@ -337,7 +338,7 @@ vertex1 = Expand[sum + (sum /. {t1->u1,u1->t1,t->u,u->t})];
 Print[" "]
 Print["GENERATING SIMPLIFIED RESULT :"]
 Print[" "]
-Print[" (VERTEX I - RENORMALIZED - POLARIZED CASE) "]
+Print[" (VERTEX I - RENORMALIZED - UNPOLARIZED CASE) "]
 Print[" "]
 
 Print["Collecting 1/eps poles:"]
@@ -397,8 +398,8 @@ fin3>>vtx1pol.fin3;
 fin4>>vtx1pol.fin4;
 fin5>>vtx1pol.fin5;
 rest>>vtx1pol.rest;
-*)
 
+*)
 
 
 
