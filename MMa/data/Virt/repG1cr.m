@@ -1,5 +1,4 @@
-{PaVe[2, muR, 0][0][Sqr[k1], m2, m2] -> -2/\[Epsilon], 
- PaVe[3, muR, 0][0][Sqr[-p2], Sqr[k1], Sqr[k1 - p2], 0, m2, m2] -> 
+{PaVe[3, muR, 0][0][Sqr[-p2], Sqr[k1], Sqr[k1 - p2], 0, m2, m2] -> 
   zeta2/t1 - Li2[(m2 + t1)/m2]/t1, 
  PaVe[3, muR, 0][1][Sqr[-p2], Sqr[k1], Sqr[k1 - p2], 0, m2, m2] -> 
   -2/t1 - ((2*m2 + t1)*zeta2)/t1^2 + ((2*m2 + t1)*Li2[(m2 + t1)/m2])/t1^2 + 

@@ -1,6 +1,5 @@
-{PaVe[2, muR, 0][0][Sqr[q], m2, m2] -> 2 - 2/\[Epsilon] + 
-   \[Beta]q*ln[\[Chi]q], PaVe[3, muR, 0][0][Sqr[-p2], Sqr[q], Sqr[-p2 + q], 
-   0, m2, m2] -> (Sqrt[m2^2 + (-m2 + q2 - u1)^2 - 2*m2*(m2 + q2 + u1)]*zeta2)/
+{PaVe[3, muR, 0][0][Sqr[-p2], Sqr[q], Sqr[-p2 + q], 0, m2, m2] -> 
+  (Sqrt[m2^2 + (-m2 + q2 - u1)^2 - 2*m2*(m2 + q2 + u1)]*zeta2)/
     (4*m2*q2 - (q2 - u1)^2) + 
    (Sqrt[m2^2 + (-m2 + q2 - u1)^2 - 2*m2*(m2 + q2 + u1)]*
      Li2[(-2*m2 + q2 - u1 + Sqrt[m2^2 + (-m2 + q2 - u1)^2 - 

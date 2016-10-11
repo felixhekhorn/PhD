@@ -1,14 +1,4 @@
-{PaVe[3, muR, 0][0][Sqr[-k1], Sqr[-q], Sqr[-k1 - q], m2, m2, m2] -> 
-  (-3*zeta2)/sp + ln[\[Chi]]^2/(2*sp) - ln[\[Chi]q]^2/(2*sp), 
- PaVe[3, muR, 0][1][Sqr[-k1], Sqr[-q], Sqr[-k1 - q], m2, m2, m2] -> 
-  2/(t1 + u1) + (3*(-q2 + t1 + u1)*zeta2)/(sp*(t1 + u1)) + 
-   (2*(-q2 + t1 + u1)*\[Beta]*ln[\[Chi]])/(t1 + u1)^2 - 
-   ((-q2 + t1 + u1)*ln[\[Chi]]^2)/(2*sp*(t1 + u1)) + 
-   ((2*q2 - t1 - u1)*\[Beta]q*ln[\[Chi]q])/(t1 + u1)^2 + 
-   ((-q2 + t1 + u1)*ln[\[Chi]q]^2)/(2*sp*(t1 + u1)), 
- PaVe[3, muR, 0][2][Sqr[-k1], Sqr[-q], Sqr[-k1 - q], m2, m2, m2] -> 
-  -((\[Beta]*ln[\[Chi]])/(t1 + u1)) + (\[Beta]q*ln[\[Chi]q])/(t1 + u1), 
- PaVe[4, muR, 0][0][Sqr[p1], Sqr[-k1], Sqr[-q], Sqr[-k1 + p1 - q], 
+{PaVe[4, muR, 0][0][Sqr[p1], Sqr[-k1], Sqr[-q], Sqr[-k1 + p1 - q], 
    Sqr[-k1 + p1], Sqr[-k1 - q], 0, m2, m2, m2] -> 
   (-3*zeta2)/(q2*u1*\[Beta] + sp*u1*\[Beta]) - 
    (2*Li2[-\[Chi]])/(q2*u1*\[Beta] + sp*u1*\[Beta]) - 
