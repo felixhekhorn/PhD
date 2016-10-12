@@ -1,0 +1,35 @@
+getLTCoeff[2, {0}] = LoopTools`bb0;
+getLTCoeff[2, {1}] = LoopTools`bb1;
+
+getLTCoeff[3, {0}] = LoopTools`cc0;
+getLTCoeff[3, {1}] = LoopTools`cc1;
+getLTCoeff[3, {2}] = LoopTools`cc2;
+getLTCoeff[3, {0, 0}] = LoopTools`cc00;
+getLTCoeff[3, {1, 1}] = LoopTools`cc11;
+getLTCoeff[3, {1, 2}] = LoopTools`cc12;
+getLTCoeff[3, {2, 2}] = LoopTools`cc22;
+
+getLTCoeff[4, {0}] = LoopTools`dd0;
+getLTCoeff[4, {1}] = LoopTools`dd1;
+getLTCoeff[4, {2}] = LoopTools`dd2;
+getLTCoeff[4, {3}] = LoopTools`dd3;
+getLTCoeff[4, {0, 0}] = LoopTools`dd00;
+getLTCoeff[4, {1, 1}] = LoopTools`dd11;
+getLTCoeff[4, {1, 2}] = LoopTools`dd12;
+getLTCoeff[4, {1, 3}] = LoopTools`dd13;
+getLTCoeff[4, {2, 2}] = LoopTools`dd22;
+getLTCoeff[4, {2, 3}] = LoopTools`dd23;
+getLTCoeff[4, {3, 3}] = LoopTools`dd33;
+getLTCoeff[4, {0, 0, 1}] = LoopTools`dd001;
+getLTCoeff[4, {0, 0, 2}] = LoopTools`dd002;
+getLTCoeff[4, {0, 0, 3}] = LoopTools`dd003;
+getLTCoeff[4, {1, 1, 1}] = LoopTools`dd111;
+getLTCoeff[4, {1, 1, 2}] = LoopTools`dd112;
+getLTCoeff[4, {1, 1, 3}] = LoopTools`dd113;
+getLTCoeff[4, {1, 2, 2}] = LoopTools`dd122;
+getLTCoeff[4, {1, 2, 3}] = LoopTools`dd123;
+getLTCoeff[4, {1, 3, 3}] = LoopTools`dd133;
+getLTCoeff[4, {2, 2, 2}] = LoopTools`dd222;
+getLTCoeff[4, {2, 2, 3}] = LoopTools`dd223;
+getLTCoeff[4, {2, 3, 3}] = LoopTools`dd233;
+getLTCoeff[4, {3, 3, 3}] = LoopTools`dd333;
