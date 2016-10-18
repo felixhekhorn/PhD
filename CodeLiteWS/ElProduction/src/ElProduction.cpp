@@ -261,7 +261,6 @@ dbl ElProduction::Fg1() const {
     fCgBarR1.params = &kCgBarR1;
     dbl cgBarR1 = int2D(&fCgBarR1);
     
-    
     // combine all functions
     dbl eH = getElectricCharge(this->nlf + 1);
     dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;

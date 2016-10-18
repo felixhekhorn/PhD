@@ -24,7 +24,6 @@ psCC
 dbl IntROKfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
     
 dbl r = {IntROKfiniteP}
-
 psCC
 }}
 
