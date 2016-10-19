@@ -17,15 +17,15 @@ int main(int argc, char **argv) {
     //return test();
     //return Marco();
     
-    dbl m2 = 4.75*4.75;
+    dbl m2 = 1.;
     uint nlf = 4;
     dbl Delta = 1e-6;
-    dbl q2 = -1e-2;
+    dbl q2 = -1e-5;
     ElProduction oG(m2,q2,Delta,G,nlf);
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
     //oP.setEta(pow(10.,-.5));
-    uint N = 11;
+    uint N = 16;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
         dbl eta = pow(10.,-3.+1.*(dbl)j/(N-1));
@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
         oL.setEta(eta);
         oP.setEta(eta);
         dbl g = oG.cg1();
-        dbl l = oL.cg1();
+        dbl l = 1/0.;//oL.cg0();
         printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cg1());
     }
 	return EXIT_SUCCESS;

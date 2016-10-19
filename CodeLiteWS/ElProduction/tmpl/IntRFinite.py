@@ -8,53 +8,50 @@ tmpl = """#include "../config.h"
 #define psCC if (isnan(r)) return 0.; return r;
 
 dbl IntROKfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-{initOK}
+{init}
     
 dbl r = {IntROKfiniteG};
 psCC
 }}
 
 dbl IntROKfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-{initOK}
+{init}
     
 dbl r = {IntROKfiniteL};
 psCC
 }}
 
 dbl IntROKfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-    
-dbl r = {IntROKfiniteP}
+{init}
+
+dbl r = {IntROKfiniteP};
 psCC
 }}
 
 dbl IntRQEDfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-{initQED}
+{init}
     
 dbl r = {IntRQEDfiniteG};
 psCC
 }}
 
 dbl IntRQEDfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-{initQED}
+{init}
     
 dbl r = {IntRQEDfiniteL};
 psCC
 }}
 
 dbl IntRQEDfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
-{initQED}
+{init}
     
 dbl r = {IntRQEDfiniteP};
 psCC
 }}"""
 
 fs={
-  "initOK": """
+  "init": """
 dbl u1 = s4-sp-t1;
-dbl s = sp+q2;
-dbl u1p = u1-q2;
-dbl t = t1+m2;""",
-  "initQED": """dbl u1 = s4-sp-t1;
 dbl s = sp+q2;
 dbl u1p = u1-q2;
 dbl t = t1+m2;""",

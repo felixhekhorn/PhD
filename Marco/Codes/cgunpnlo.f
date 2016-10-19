@@ -22,10 +22,10 @@ c ***
       cf = 4.d0/3.d0
       nc = 3.d0
 c ***
-      delta = 10.d0**(-5)
+      delta = 10.d0**(-6)
 c ***
       order = 1
-      whatc = 7
+      whatc = 1
       if(order.eq.0) then
          points = 10000
          iterations = 4
@@ -70,7 +70,7 @@ c ***
       common/flags/order,whatc
 c ***
       pi = 3.1415926d0
-      m = 10.d0
+      m = 1.d0
       m2 = m*m
       s = 4.d0*m2*(1.d0+eta)
 c ***
