@@ -8,6 +8,7 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       program unphq
       implicit double precision (a-z)
       integer n1,n2
+      integer nEta
       integer order,whatc
       integer points,iterations
 c ***
@@ -25,7 +26,7 @@ c ***
       delta = 10.d0**(-6)
 c ***
       order = 1
-      whatc = 1
+      whatc = 4
       if(order.eq.0) then
          points = 10000
          iterations = 4
@@ -42,17 +43,22 @@ c      WRITE (*,*) '=========================='
 c      WRITE (*,*) ' '
 
 c ***
-      do 100 n1=-3,4,1
-         do 300 n2=0,14,1
-         eta=dble(exp(0.1535057*n2))*10.d0**n1
+
+       nEta = 11
+       do 90 n1=0,nEta-1,1
+c      do 100 n1=-3,4,1
+c         do 300 n2=0,14,1
+c         eta=dble(exp(0.1535057*n2))*10.d0**n1
+           eta = dble(exp(log(10.d0)*(-3.d0 + 6.d0*dble(n1)/(nEta-1))))
 cc         n2=1
 cc         eta=dble(n2)*10.d0**n1
-            if(eta.gt.10001.d0) goto 100
+c            if(eta.gt.10001.d0) goto 100
             call vegas(partxsec,1.d-6,2,points,iterations,0,0)
             write(6,200) eta,s1,s2
  200        format(3(1pe12.5,1x))
- 300     continue
- 100  continue
+c 300     continue
+c 100  continue
+  90  continue
       STOP
       END
 c ***

@@ -8,6 +8,7 @@ CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       program polhq
       implicit double precision (a-z)
       integer n1,n2
+      integer nEta
 c
       external cgsvh
 c
@@ -25,17 +26,21 @@ c      WRITE (*,*) '=========================='
 c      WRITE (*,*) ' '
 
 c ***
-      do 100 n1=-3,4,1
-        do 300 n2=0,14,1
-           eta=dble(exp(0.1535057*n2))*10.d0**n1
+       nEta = 11
+       do 90 n1=0,nEta-1,1
+c      do 100 n1=-3,4,1
+c        do 300 n2=0,14,1
+c           eta=dble(exp(0.1535057*n2))*10.d0**n1
+           eta = dble(exp(log(10.d0)*(-3.d0 + 6.d0*dble(n1)/(nEta-1))))
 cc           n2=1
 c            eta=dble(n2)*10.d0**n1
-            if(eta.gt.10001.d0) goto 100
+c            if(eta.gt.10001.d0) goto 100
             CALL VEGAS(cgsvh,1.d-6,2,40000,6,0,0)
             write(6,200) eta,s1,s2
  200        format(3(1pe12.5,1x))
- 300     continue
- 100  continue
+c 300     continue
+c 100  continue
+  90  continue
       STOP
       END
 c ***
@@ -73,8 +78,8 @@ c...no u1 integration
 cc      u1 = -s-t1
 cc      jacob = (mt1up - mt1do)
 c... only soft + virtual
-c      cgsvh = m2/s**2/4.d0/pi * jacob2 * 
-c     1     (svok(s,t1,u1elast,m) + svqed(s,t1,u1elast,m))
+      cgsvh = m2/s**2/4.d0/pi * jacob2 * 
+     1     (svok(s,t1,u1elast,m) + svqed(s,t1,u1elast,m))
 c... only soft + virtual QED
 cc      cgsvh = m2/s**2/4.d0/pi * jacob * svqed(s,t1,u1,m)  
 **************************************************************
@@ -83,7 +88,7 @@ cccc       cgsvh = m2/s**2/4.d0/pi * jacob *
 cccc     1     cgbar(s,t1,u1elast,s4,s4min,s4max,m)
 **************************************************************
 c... only gluonic hard part:
-      cgsvh=0.d0
+c      cgsvh=0.d0
       cgsvh = cgsvh + m2/s**2/4.d0/pi * jacob * 
      1     (cg1ok(s,t1,u1elast,s4,s4min,s4max,m) +
      2     cg1qed(s,t1,u1elast,s4,s4min,s4max,m))  

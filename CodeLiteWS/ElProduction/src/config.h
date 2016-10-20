@@ -16,6 +16,8 @@
 #include <iomanip>
 #include <stdio.h>
 
+#include "Timer.h"
+
 using namespace std;
 
 /** @brief shorthand */

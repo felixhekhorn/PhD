@@ -16,6 +16,9 @@ int test();
 int main(int argc, char **argv) {
     //return test();
     //return Marco();
+    Timer::make("hg1SV");
+    Timer::make("hg1SVDelta");
+    Timer::make("hg1H");
     
     dbl m2 = 1.;
     uint nlf = 4;
@@ -25,17 +28,19 @@ int main(int argc, char **argv) {
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
     //oP.setEta(pow(10.,-.5));
-    uint N = 16;
+    uint N = 11;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
-        dbl eta = pow(10.,-3.+1.*(dbl)j/(N-1));
+        dbl eta = pow(10.,-3.+1.*(dbl)j/((dbl)std::max((uint)1,N-1)));
         oG.setEta(eta);
         oL.setEta(eta);
         oP.setEta(eta);
         dbl g = oG.cg1();
         dbl l = 1/0.;//oL.cg0();
-        printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cg1());
+        printf("%e\t%e\t%e\t%e\n",eta,g,l,/*oP.cg1()*/1/0.);
     }
+    Timer::logAll(cout);
+    Timer::deleteAll();
 	return EXIT_SUCCESS;
 }
 
