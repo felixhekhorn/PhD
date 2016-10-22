@@ -1,4 +1,4 @@
-To collect all soft and collinear poles we have to calculate in $n=4+\epsilon$ dimension. Unfortunaly the extension for \textit{polarized} processes is nontrivial, because the occuring Levi-Civita tensors $\varepsilon_{\mu\nu\rho\sigma}$ and $\gamma_5$. A common choice to deal with these objects is the HVBM prescription\cite{breitenlohner1977} that keeps those two objects four dimensional at the price for splitting the full $n$ dimensional space into a $n-4$ dimensional space, called \enquote{hat-space}, and a four dimensional space (that is actually never used).
+To collect all soft and collinear poles we have to calculate in $n=4+\epsilon$ dimension. Unfortunaly the extension for \textit{polarized} processes is nontrivial, because the occuring Levi-Civita tensors $\varepsilon_{\mu\nu\rho\sigma}$ and $\gamma_5$. A common choice to deal with these objects is the HVBM prescription\cite{breitenlohner1977} that keeps those two objects four dimensional at the price for splitting the full $n$-dimensional space into a $(n-4)$-dimensional space, called \enquote{hat-space}, and a four-dimensional space (that is actually never used).
 
 In leading order (LO) we have to consider the following processes
 \begin{equation}
@@ -9,8 +9,8 @@ The corresponding parton structure tensor $W_{\mu\mu'}^{(0)}$ can then be writte
 \begin{align}
 &W_{\mu\mu'}^{(0)}(k_1,q;s,t_1,u_1,q^2;\sigma_{k_1}\sigma_{q})\nonumber\\
  &= \frac 1 2 E_\epsilon K_{\Pgg\Pg}\!\int\!\frac{d^{n-1}p_1}{2E_1(2\pi)^{n-1}}\!\int\!\frac{d^{n-1}p_2}{2E_2(2\pi)^{n-1}}\delta(p_1^2-m^2) \delta(p_2^2-m^2)\nonumber\\
- &\hspace{20pt}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2) \Md_{\mu}^{(0)}(\sigma_{k_1})\Md_{\mu'}^{(0)}(\sigma_q)
-\end{align}
+ &\hspace{20pt}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2) \Md_{\mu}^{(0)}(\sigma_{k_1},\sigma_q)\Md_{\mu'}^{(0)}(\sigma_{k_1},\sigma_q)
+\label{eq:PartonicStructureTensor0}\end{align}
 where the initial $1/2$ is the initial state spin average, $K_{\Pgg\Pg}$ is the color average,
 \begin{align}
 E_\epsilon := \left\{\begin{array}{ll}
@@ -30,12 +30,12 @@ The Lorentz indices $\mu$ and $\mu'$ refer to the virtual photon that is exchang
 
 By using Lorentz covariance, hermiticity, parity invariance and current conservation the parton structure tensor can be decomposed into several parts:
 \begin{align}
-W_{\mu\mu'}^{(0)}(k_1,q;s,t_1,u_1,q^2;\sigma_{k_1},\sigma_{q}) &= \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right)\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1} \nonumber\\
+W_{\mu\mu'}(k_1,q;s,t_1,u_1,q^2;\sigma_{k_1},\sigma_{q}) &= \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right)\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1} \nonumber\\
  &\hspace{20pt} +\left(k_{1,\mu}-\frac{k_1\cdot q}{q^2}q_\mu\right)\left(k_{1,\mu'}-\frac{k_1\cdot q}{q^2}q_{\mu'}\right)\left(\frac{-4q^2}{{s'}^2}\right) \nonumber\\
  &\hspace{30pt} \cdot\left(\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1}+\frac{d^2\sigma_L(s,t_1,u_1,q^2)}{dt_1du_1}\right)
 \end{align}
 \fxerror{extend}
-We can then define appropiate projection operators\cite{Vogelsang:1993eg}:
+We can then define appropiate projection operators\cite{Laenen1993162,Vogelsang:1993eg}:
 \begin{align}
 \mathcal P_{G,\mu\mu'} &= -g_{\mu\mu'} &b_G(\epsilon) &= \frac 1 {2(1+\epsilon/2)}\\
 \mathcal P_{L,\mu\mu'} &= -\frac{4q^2}{{s'}^2} k_{1,\mu}k_{1,\mu'} &b_L(\epsilon) &= 1\\
@@ -50,6 +50,19 @@ with $k\in\{G,L,P\}$ denoting (here and mostly ever after) the projection type. 
 \frac{d^2\sigma_T}{dt_1du_1} &= \frac{d^2\sigma_G}{dt_1du_1} + b_G(\epsilon)\frac{d^2\sigma_L}{dt_1du_1}
 \end{align}
 
-\fxerror{explain ghosts?}
+The final state spins are always summed over, but the initial spins have to be treated seperately: for unpolarized projections $k\in{G,L}$ they are also summed over, but for polarized $k=P$ they are combined as follows
+\begin{align}
+\hat\sum_{G,\sigma} f(\sigma_{k_1},\sigma_q) &= \hat\sum_{L,\sigma} f(\sigma_{k_1},\sigma_q) =\sum_{\sigma_{k_1},\sigma_q\in\{+,-\}}f(\sigma_{k_1},\sigma_q)\\
+\hat\sum_{P,\sigma} f(\sigma_{k_1},\sigma_q) &= f(+,+)+f(-,-)-f(+,-)-f(-,+)
+\end{align}
+which keeps spin asymmetries well behaving.
 
-\fxerror{more}
+When computing total cross section we define a set of partonic variables:
+\begin{align}
+0\leq&\rho = \frac {4m^2} s\leq 1 &0\leq&\beta = \sqrt{1-\rho}\leq 1 &0\leq&\chi = \frac{1-\beta}{1+\beta}\leq 1\\
+&\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\beta_q = \sqrt{1-\rho_q} &0\leq&\chi_q = -\frac{1-\beta_q}{1+\beta_q}\leq 1
+\end{align}
+
+When computing Feynman diagrams a computer algebra system (CAS) is almost obligatory: common choices are \texttt{FORM}\cite{Vermaseren:2000nd} or \MMa\cite{Mathematica} - for the later the most common choice is \texttt{TRACER}\cite{Tracer}, but we have chosen \HEPMath\cite{wiebusch_hepmath_2015}. We used the Feynman rules given by \cite{Leader}.\fxerror{explain ghosts?}
+
+\fxerror{more?}
