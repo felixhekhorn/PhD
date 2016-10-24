@@ -1,1 +1,47 @@
-\fxerror{do}
+In next-to-leading order we have to consider the following process:
+\begin{equation}
+\Pggx(q;\sigma_q) + \Pg(k_1;\sigma_{k_1}) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
+\end{equation}
+All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
+\begin{equation}
+\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
+\end{equation}
+and it will depend on ten kinematical invariants:
+\begin{align}
+s &= (q+k_1)^2 &t_1 &=(k_1-p_2)^2-m^2 &u_1 &=(q-p_2)^2 -m^2\\
+s_3 &= (k_2+p_2)^2-m^2 &s_4 &=(k_2+p_1)^2-m^2 &s_5 &= (p_1+p_2)^2=-u_5\\
+t' &= (k_1-k_2)^2\\
+u' &= (q-k_2)^2 &u_6 &=(k_1-p_1)^2-m^2 &u_7 &=(q-p_1)^2-m^2
+\end{align}
+from which only five are independent as can be seen from momentum conservation $k_1+q=p_1+p_2+k_2$ and $s,t_1,u_1$ match to their leading order definition.
+
+The $2\rightarrow 3$ $n$-dimensional phase space is given by
+\begin{align}
+dPS_3 &= \!\int\!\!\frac{d^{n}p_1}{(2\pi)^{n-1}}\frac{d^{n}p_2}{(2\pi)^{n-1}}\frac{d^{n}k_2}{(2\pi)^{n-1}}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2-k_2) \nonumber\\
+ &\hspace{50pt}\Theta(p_{1,0})\delta(p_1^2-m^2)\Theta(p_{2,0})\delta(p_2^2-m^2)\Theta(k_{2,0})\delta(k_2^2) \label{eq:PS3}
+\end{align}
+This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay \cite{PhysRevD4054}. We find
+\begin{align}
+dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{\epsilon/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
+\end{align}
+with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$ and $d\hat{\mathcal I}$ taking care of all occuring hat momenta:
+\begin{align}
+d\hat{\mathcal I} &= \frac 1 {B(1/2,(n-4)/2)}\frac{x^{(n-6)/2}}{\sqrt{1-x}}dx &\text{with}\,x &= \hat p_1^2/\hat p_{1,max}\\
+d\hat p_{1,max} &= \frac{s_4^2}{4(s_4+m^2)}\sin^2(\theta_1)\sin^2(\theta_2)
+\end{align}
+\begin{equation}
+\Rightarrow \int\!d\hat{\mathcal I} = 1 \qquad \int\!d\hat{\mathcal I}\,\hat p_1^2 = \epsilon \hat p_{1,max} + O(\epsilon^2)
+\end{equation}
+The needed phase space integrals for $\theta_1$ and $\theta_2$ can be found in \cite{PhysRevD4054} and \cite{Bojak:2000eu}.
+\fxerror{introduce psLogs? in appendix?}
+
+Again when integrating the phase space angles the expression become quite lengthy, but the pole parts are compact:
+\begin{align}
+\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_A R_{k,OK} &=-\frac 1 {u_1}B_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^H_{k,gg}(x_1)\frac 2 \epsilon + O(\epsilon^0)
+\end{align}
+with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,gg}$:
+\begin{align}
+P^H_{G,gg} = P^H_{L,gg} &= \frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\\
+P^H_{P,gg} &= \frac 2 {1-x} - 4x + 2
+\end{align}
+The $R_{k,QED}$ do not contain poles.

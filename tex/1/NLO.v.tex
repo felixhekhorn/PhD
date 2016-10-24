@@ -1,14 +1,33 @@
 Virtual contributions have the same initial and final state as the Born process, but have a looping particle. All contributing Feynman diagrams are depicted in figure \fxerror{do}.
 The result can then be written as
 \begin{equation}
-\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j}\left[\Md^{(1),v}_{j,\mu}\left(\Md^{(0)}_{1,\mu'}+\Md^{(0)}_{2,\mu'}\right)^*+c.c.\right] = 8g^4e^2e_H^2 N_C C_F\left( C_A V_{k,OK} + 2C_F V_{k,QED}\right)
+\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j}\left[\Md^{(1),V}_{j,\mu}\left(\Md^{(0)}_{1,\mu'}+\Md^{(0)}_{2,\mu'}\right)^*+c.c.\right] = 8g^4e^2e_H^2 N_C C_F\left( C_A V_{k,OK} + 2C_F V_{k,QED}\right)
 \end{equation}
-where $C_A$ is the second Casimir constant of the adjoint representation for the gluon.
+where $C_A$ is the second Casimir constant of the adjoint representation for the gluon (that introduces a non-abelian part).
 
-For the computation of the loops the Passarino-Veltman-decomposition\cite{Passarino:1978jh} is used as far as possible. The decomposition is based on Lorentz invariance and a good explanation is for example given in \cite{Bojak:2000eu}. The needed scalar integrals are given in \cite{PhysRevD4054} and \cite{Laenen1993162}, but there is also one wrong integral: we find with \cite[Box 16]{Ellis:2007qk}:
+For the computation of the loops the Passarino-Veltman-decomposition\cite{Passarino:1978jh} in $n=4+\epsilon$ dimension is used as far as possible. The decomposition is based on Lorentz invariance and a good explanation is for example given in \cite{Bojak:2000eu}. The needed scalar integrals are given in \cite{PhysRevD4054} and \cite{Laenen1993162}, but there is also one wrong integral: we find with \cite[Box 16]{Ellis:2007qk}:
 \begin{align}
 &D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2)\nonumber\\
- &=\frac{i C_\epsilon}{\beta s t_1}\left[-\frac{2\ln(\chi)}{\epsilon} -2\ln(\chi)\ln(\tilde t)+\DiLog(1-\chi^2)-4\zeta(2)+\ln^2(\chi_q) + 2\DiLog(-\chi\chi_q)\right.\nonumber\\
+ &=\frac{i C_\epsilon}{\beta s t_1}\left[-\frac{2\ln(\chi)}{\epsilon} -2\ln(\chi)\ln(-t_1/m^2)+\DiLog(1-\chi^2)-4\zeta(2)+\ln^2(\chi_q) + 2\DiLog(-\chi\chi_q)\right.\nonumber\\
  &\hspace{40pt}\left. +2\DiLog(-\chi/\chi_q)+2\ln(\chi\chi_q)\ln(1+\chi\chi_q)+2\ln(\chi/\chi_q)\ln(1+\chi/\chi_q)\right]
 \end{align}
 where we used the argument ordering of \LoopTools\cite{Hahn:1998yk,LoopTools212Guide} (and also checked it against \LoopTools).
+
+As the short example above shows are the full expressions for the $V_{k,OK},V_{k,QED}$ quite complicated and too long to be presented here, nevertheless are the arising poles quite compact:
+\begin{align}
+V_{k,OK} &= -2B_{k,QED}\left(\frac 4 {\epsilon^2} + \left(\ln(-t_1/m^2) + \ln(-u_1/m^2) -\frac{2m^2-s}{s}\ln(\chi)\right)\frac 2 \epsilon \right) + O(\epsilon^0)\\
+V_{k,QED} &= -2B_{k,QED}\left(1-\frac{2m^2-s}{s}\ln(\chi)\right)\frac 2 \epsilon + O(\epsilon^0)
+\end{align}
+The above results already include the mass renormalization that we have performed \textit{on-shell}, so all ultra-violet poles have been removed. For the renormalization of the strong coupling we use the $\MSbar_m$ scheme defined in \cite{Bojak:2000eu} and so the full renormalization can be achieved by
+\begin{align}
+\frac{d^2\sigma_{k}^{(1),V,ren.}}{dt_1du_1} &=\frac{d^2\sigma_{k}^{(1),V}}{dt_1du_1} + \frac{\alpha_s(\mu_R^2)}{4\pi}\left[\left(\frac 2 \epsilon + \gamma_E-\ln(4\pi)+\ln(\mu_R^2/m^2)-\ln(\mu_D^2/m^2)\right)\beta_0 \right.\nonumber\\
+ &\hspace{120pt}\left.+\frac 2 3 \ln(\mu_R^2/m^2)\right]\frac{d^2\sigma_{k}^{(0)}}{dt_1du_1}
+\end{align}
+with $\mu_R$ the renormalization scale introduced by the RGE, $\beta_0 = (11C_A-2n_f)/3$ the first coefficient of the beta function and $n_f$ the number of \textit{total} flavours (i.e. $n_{lf}=n_f-1$ active (light) flavours and one heavy flavour). The double poles occuring in $V_{k,OK}$ are introduced by the diagrams \fxerror{do} when the soft and collinear singularities coincide.
+
+The double differential partonic cross section is given by
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k}^{(1),V}(s',t_1,u_1,q^2)}{dt_1du_1} &= 2^8\alpha\alpha_s^2 e_H^2 K_{\Pg\Pgg}N_CC_F E_k(\epsilon) b_k(\epsilon)\delta(s'+t_1+u_1) \frac{\pi^4 S_\epsilon}{\Gamma(1+\epsilon/2)}  \nonumber\\
+ &\hspace{20pt} \left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{m^2{s'}^2}\right)^{\epsilon/2}\left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \nonumber\\
+ &\hspace{20pt} \left( C_A V_{k,OK} + 2C_F V_{k,QED}\right)
+\end{align}
