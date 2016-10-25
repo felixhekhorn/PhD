@@ -1,3 +1,4 @@
+\label{sec:NLO.g}
 In next-to-leading order we have to consider the following process:
 \begin{equation}
 \Pggx(q;\sigma_q) + \Pg(k_1;\sigma_{k_1}) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
@@ -22,7 +23,7 @@ dPS_3 &= \!\int\!\!\frac{d^{n}p_1}{(2\pi)^{n-1}}\frac{d^{n}p_2}{(2\pi)^{n-1}}\fr
 \end{align}
 This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay \cite{PhysRevD4054}. We find
 \begin{align}
-dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{\epsilon/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
+dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
 \end{align}
 with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$ and $d\hat{\mathcal I}$ taking care of all occuring hat momenta:
 \begin{align}
@@ -35,13 +36,55 @@ d\hat p_{1,max} &= \frac{s_4^2}{4(s_4+m^2)}\sin^2(\theta_1)\sin^2(\theta_2)
 The needed phase space integrals for $\theta_1$ and $\theta_2$ can be found in \cite{PhysRevD4054} and \cite{Bojak:2000eu}.
 \fxerror{introduce psLogs? in appendix?}
 
-Again when integrating the phase space angles the expression become quite lengthy, but the pole parts are compact:
+Again when integrating the phase space angles the expressions become quite lengthy, but the (collinear) pole parts are compact:
 \begin{align}
 \frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_A R_{k,OK} &=-\frac 1 {u_1}B_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^H_{k,gg}(x_1)\frac 2 \epsilon + O(\epsilon^0)
 \end{align}
-with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,gg}$:
+with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,gg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
 \begin{align}
-P^H_{G,gg} = P^H_{L,gg} &= \frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\\
-P^H_{P,gg} &= \frac 2 {1-x} - 4x + 2
+P^H_{G,gg} = P^H_{L,gg} &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right)\\
+P^H_{P,gg} &= C_A\left(\frac 2 {1-x} - 4x + 2\right)
 \end{align}
 The $R_{k,QED}$ do not contain poles.
+
+The double differential partonic cross section is given by
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k}^{(1),R}(s',t_1,u_1,q^2)}{dt_1du_1} &= 2^7\alpha\alpha_s^2 e_H^2 K_{\Pg\Pgg}N_CC_F E_k(\epsilon) b_k(\epsilon)\frac{\pi^3 S_\epsilon^2}{\Gamma(1+\epsilon)} \frac{s_4}{s_4+m^2}  \nonumber\\
+ &\hspace{20pt} \left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{m^2{s'}^2}\right)^{\epsilon/2} \left(\frac{s_4^2}{m^2(s_4+m^2)}\right)^{\epsilon/2} \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon} \nonumber\\
+ &\hspace{20pt} \int\!d\Omega_n d\hat{\mathcal I}\,\left(C_A R_{k,OK} + 2C_F R_{k,QED}\right)
+\end{align}
+
+From the above expression we can obtain the soft limit $k_2\rightarrow 0$ and seperate their calculations:
+\begin{equation}
+\lim_{k_2\rightarrow 0}\left(C_A R_{k,OK} + 2C_F R_{k,QED}\right) = \left(C_A S_{k,OK} + 2C_F S_{k,QED}\right) + O(1/s_4,1/s_3,1/t')
+\end{equation}
+\begin{align}
+S_{k,OK}  &= 2\left(\frac{t_1}{t's_3} + \frac{u_1}{t's_4}-\frac{s-2m^2}{s_3s_4}\right)B_{k,QED}\\
+S_{k,QED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{k,QED}
+\end{align}
+Note that the einkonal factors multiplying the Born functions $B_{k,QED}$ neither depend on $q^2$ nor on the projection $k$. We can then split the phase space by introducing an infrared cut-off $\Delta$ and distinguish then between soft $s_4\leq \Delta$ and hard $s_4>\Delta$ contributions. Let $\mathcal R(s_4)$ be a function with a soft pole $s_4^{-1+\epsilon}\mathcal S(s_4)$ and a finite part $\mathcal F(s_4)$, we then find \cite{Bojak:2000eu}:
+\begin{align}
+\int\limits_0^{s_{4,max}} \!\!\mathcal R(s_4) &= \int\limits_0^{s_{4,max}} \!\!\left(s_4^{-1+\epsilon}\mathcal S(s_4) + \mathcal F(s_4)\right)\\
+ &\simeq \frac{\Delta^\epsilon}{\epsilon}\mathcal S(0) + \int\limits_\Delta^{s_{4,max}}\!\!\mathcal R(s_4)
+\end{align}
+This expansion is valid for $\Delta$ being small, i.e. smaller then any leading order scale or $m^2$; a typical choice is $\Delta/m^2 \sim 10^{-6}$. We then find
+\begin{align}
+&\frac{s_4^2}{2\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,S_{k,QED}\nonumber\\
+ &= 2B_{k,QED}\left[-\frac 2 \epsilon\left(1+\frac{s-2m^2}{s\beta}\ln(\chi)\right)
++1 - \frac{s-m^2}{s\beta}\left(\ln(\chi)\left(1+\ln(\chi)\right) + \DiLog(1-\chi^2)\right)
+\right] \\
+&\frac{s_4^2}{4\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,S_{k,OK} \nonumber\\
+ &=B_{k,QED}\left[\frac 4 {\epsilon^2} + \frac 2 \epsilon\left(\ln(t_1/u_1)+\frac{s-2m^2}{s\beta}\ln(\chi)\right)-\ln^2(\chi) - \frac 3 2 \zeta(2)+\frac 1 2\ln^2(t_1/(u_1\chi))\right.\nonumber\\
+ &\hspace{20pt}\left. +\DiLog(1-t_1/(u_1\chi)) - \DiLog(1-u_1/(t_1\chi)) + \frac{s-2m^2}{s\beta}\left(
+\DiLog(1-\chi^2)+\ln^2(\chi)
+\right) \right]
+\end{align}
+(Note the mistyped sign of $\ln(\chi)^2$ in \cite[eq. (3.25)]{Laenen1993162}) The additional factors originate from the difference between the $2\rightarrow 3$ phasespace of $R_{k}$ and the $2\rightarrow 2$ phasespace needed for $S_k$.
+
+The double differential partonic cross section is given by
+\begin{align}
+&{s'}^2\frac{d^2\sigma_{k}^{(1),S}(s',t_1,u_1,q^2)}{dt_1du_1} \nonumber\\
+ &= 2^8\alpha\alpha_s^2 e_H^2 K_{\Pg\Pgg}N_CC_F E_k(\epsilon) b_k(\epsilon)\delta(s'+t_1+u_1)\frac{\pi^4 S_\epsilon}{\Gamma(1+\epsilon/2)} \nonumber\\
+ &\hspace{20pt} \left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{m^2{s'}^2}\right)^{\epsilon/2} C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon} \left(\frac \Delta {m^2}\right)^\epsilon \nonumber\\
+ &\hspace{20pt}\frac{s_4^2}{4\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,\left(C_A S_{k,OK} + 2C_F S_{k,QED}\right)
+\end{align}
