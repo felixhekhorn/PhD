@@ -5,7 +5,7 @@ In next-to-leading order we have to consider the following process:
 \end{equation}
 All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
 \begin{equation}
-\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
+\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
 \end{equation}
 and it will depend on ten kinematical invariants:
 \begin{align}
@@ -23,27 +23,33 @@ dPS_3 &= \!\int\!\!\frac{d^{n}p_1}{(2\pi)^{n-1}}\frac{d^{n}p_2}{(2\pi)^{n-1}}\fr
 \end{align}
 This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay \cite{PhysRevD4054}. We find
 \begin{align}
-dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
+dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)s'} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}\\
+ &=h_3(n)\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
 \end{align}
 with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$ and $d\hat{\mathcal I}$ taking care of all occuring hat momenta:
 \begin{align}
 d\hat{\mathcal I} &= \frac 1 {B(1/2,(n-4)/2)}\frac{x^{(n-6)/2}}{\sqrt{1-x}}dx &\text{with}\,x &= \hat p_1^2/\hat p_{1,max}\\
-d\hat p_{1,max} &= \frac{s_4^2}{4(s_4+m^2)}\sin^2(\theta_1)\sin^2(\theta_2)
+\hat p_{1,max} &= \frac{s_4^2}{4(s_4+m^2)}\sin^2(\theta_1)\sin^2(\theta_2)
 \end{align}
 \begin{equation}
 \Rightarrow \int\!d\hat{\mathcal I} = 1 \qquad \int\!d\hat{\mathcal I}\,\hat p_1^2 = \epsilon \hat p_{1,max} + O(\epsilon^2)
 \end{equation}
-The needed phase space integrals for $\theta_1$ and $\theta_2$ can be found in \cite{PhysRevD4054} and \cite{Bojak:2000eu}.
+The needed phase space integrals for $\theta_1$ and $\theta_2$ can be found in \cite{PhysRevD4054} and \cite{Bojak:2000eu}. We find for the difference to the $2\rightarrow 2$ phase space
+\begin{align}
+\frac{h_3(4+\epsilon)}{h_2(4+\epsilon)} &= \frac{S_\epsilon}{2\pi} \frac{\Gamma(1+\epsilon/2)}{\Gamma(1+\epsilon)} \frac{s_4^{1+\epsilon}}{(s_4+m^2)^{1+\epsilon/2}}\\
+ &= \frac{C_\epsilon}{2\pi}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\frac{s_4^{1+\epsilon}}{(s_4+m^2)^{1+\epsilon/2}} + O(\epsilon^3)
+\end{align}
+where $\zeta$ is Riemanns zeta function.
 \fxerror{introduce psLogs? in appendix?}
 
 Again when integrating the phase space angles the expressions become quite lengthy, but the (collinear) pole parts are compact:
 \begin{align}
-\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_A R_{k,OK} &=-\frac 1 {u_1}B_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^H_{k,gg}(x_1)\frac 2 \epsilon + O(\epsilon^0)
+\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_A R_{k,OK} &=-\frac 1 {u_1}B_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^H_{k,\Pg\Pg}(x_1)\frac 2 \epsilon + O(\epsilon^0)
 \end{align}
-with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,gg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
+with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,\Pg\Pg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
 \begin{align}
-P^H_{G,gg} = P^H_{L,gg} &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right)\\
-P^H_{P,gg} &= C_A\left(\frac 2 {1-x} - 4x + 2\right)
+P^H_{G,\Pg\Pg}(x) = P^H_{L,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right)\\
+P^H_{P,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} - 4x + 2\right)
 \end{align}
 The $R_{k,QED}$ do not contain poles.
 
@@ -69,8 +75,8 @@ Note that the einkonal factors multiplying the Born functions $B_{k,QED}$ neithe
 \end{align}
 This expansion is valid for $\Delta$ being small, i.e. smaller then any leading order scale or $m^2$; a typical choice is $\Delta/m^2 \sim 10^{-6}$. We then find
 \begin{align}
-&\frac{s_4^2}{2\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,S_{k,QED}\nonumber\\
- &= 2B_{k,QED}\left[-\frac 2 \epsilon\left(1+\frac{s-2m^2}{s\beta}\ln(\chi)\right)
+&\frac{s_4^2}{4\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,S_{k,QED}\nonumber\\
+ &= B_{k,QED}\left[-\frac 2 \epsilon\left(1+\frac{s-2m^2}{s\beta}\ln(\chi)\right)
 +1 - \frac{s-m^2}{s\beta}\left(\ln(\chi)\left(1+\ln(\chi)\right) + \DiLog(1-\chi^2)\right)
 \right] \\
 &\frac{s_4^2}{4\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,S_{k,OK} \nonumber\\

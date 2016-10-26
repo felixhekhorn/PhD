@@ -4,8 +4,26 @@ In next-to-leading order a new production mechanism enters, that is induced by a
 \end{equation}
 All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
 \begin{equation}
-\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),q}_{j,\mu}\Md^{(1),q}_{j',\mu'}}^* = 8g^4e^2 N_C C_F\left( e_H^2 A_{k,1} +  e_L^2 A_{k,2} +  e_L e_H A_{k,3} \right)
+\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),q}_{j,\mu}\Md^{(1),q}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2 N_C C_F\left( e_H^2 A_{k,1} +  e_L^2 A_{k,2} +  e_L e_H A_{k,3} \right)
 \end{equation}
 where $e_L$ denotes the charge of the light quark $q$ in units of $e$.
 
-The needed $2\rightarrow 3$ phase space has already been calculated in Section \ref{seq:NLO.g}
+The needed $2\rightarrow 3$ phase space has already been calculated in section \ref{sec:NLO.g}, so we can immediately quote the (collinear) poles:
+\begin{align}
+\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_F A_{k,1} &=-\frac 1 {u_1}B_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P_{k,\Pg\Pq}(x_1)\frac 2 \epsilon + O(\epsilon^0)
+\end{align}
+with $x_1 = -u_1/(s'+t_1)$ and the Altarelli-Parisi splitting functions $P_{k,\Pg\Pq}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
+\begin{align}
+P_{G,\Pg\Pq}(x) = P_{L,\Pg\Pq}(x) &= C_F\left(\frac 1 x + \frac {(1-x)^2} x\right)\\
+P_{P,\Pg\Pq}(x) &= C_F\left(2-x\right)
+\end{align}
+$A_{k,2}$ does not contain poles and we find $\int\!d\Omega_n d\hat{\mathcal I}\,A_{k,3}=0$. Note that in the limit $q^2\rightarrow 0$ $A_{k,2}$ will also get collinear poles.
+
+
+The double differential partonic cross section is given by
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k}^{(1),q}(s',t_1,u_1,q^2)}{dt_1du_1} &= 2^7\alpha\alpha_s^2 K_{\Pq\Pgg}N_CC_Fb_k(\epsilon)\frac{\pi^3 S_\epsilon^2}{\Gamma(1+\epsilon)} \frac{s_4}{s_4+m^2}  \nonumber\\
+ &\hspace{20pt} \left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{m^2{s'}^2}\right)^{\epsilon/2} \left(\frac{s_4^2}{m^2(s_4+m^2)}\right)^{\epsilon/2} \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon} \nonumber\\
+ &\hspace{20pt} \int\!d\Omega_n d\hat{\mathcal I}\,\left(e_H^2 A_{k,1} + e_L^2 A_{k,2} + e_H e_L A_{k,3} \right)
+\end{align}
+with the color average $K_{\Pq\Pgg} = 1/N_C$.
