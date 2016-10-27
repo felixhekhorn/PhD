@@ -1,1 +1,16 @@
-\fxerror{do}
+All collinear poles can be removed by mass factorization in the following way:
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1),fin}(s',t_1,u_1,q^2,\mu_F)}{dt_1du_1} &= \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1)}(s',t_1,u_1,q^2,\epsilon)}{dt_1du_1} \right.\nonumber\\
+ &\hspace{20pt}\left. -\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{k,\Pg\Pg}^{(1)}(x,\mu_F^2,\mu_D,\epsilon)(x_1s')^2\frac{d^2\sigma_{k,\Pg}^{(0)}(x_1s',x_1t_1,u_1,q^2,\epsilon)}{d(x_1t_1)du_1} \right]\\
+\Gamma_{k,\Pg\Pg}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}\left(P_{k,\Pg\Pg}(x)\frac{2}{\epsilon} + f_{k,\Pg\Pg}(x,\mu_F^2,\mu_D^2)\right)
+\end{align}
+where $\Gamma_{k,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{k,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $k$. In the $\MSbar$-scheme we find
+\begin{align}
+\Gamma_{k,\Pg\Pg}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{k,\Pg\Pg}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
+ &= 8\pi\alpha_s P_{k,\Pg\Pg}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right)
+\end{align}
+The $P_{k,\Pg\Pg}(x)$ are the Altarelli-Parisi splitting functions for which we find\cite{Altarelli:1977zs,Vogelsang:1995vh}
+\begin{align}
+P_{k,\Pg\Pg}(x) &= \Theta(1-\delta-x)P_{k,\Pg\Pg}^H(x)+\delta(1-x)\left(2C_A\ln(\delta)+\frac{\beta_0}{2}\right)
+\end{align}
+where we introduced another infrared cut-off $\delta$ to seperate soft ($x\geq 1-\delta$) and hard ($x<1-\delta$) gluons that is connected to $\Delta$ via $\delta=\Delta/(s'+t_1)$.

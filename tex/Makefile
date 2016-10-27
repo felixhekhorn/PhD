@@ -1,6 +1,6 @@
 #!/bin/bash
 # Builds the thesis
-# @author: Felix Hekhorn <felix.hekhorn@student.uni-tuebingen.de>
+# @author: Felix Hekhorn
 
 
 Feynman: Feynman.pdf
