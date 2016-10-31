@@ -71,6 +71,18 @@ public:
     static Timer* get(std::string name);
     
     /**
+     * @brief start global Timer
+     * @param name name
+     */
+    static void start(std::string name);
+    
+    /**
+     * @brief end global Timer
+     * @param name name
+     */
+    static void end(std::string name);
+    
+    /**
      * @brief logs all global Timer
      * @param o stream
      */

@@ -115,13 +115,13 @@ public:
     dbl operator()(dbl a1, dbl a2) {
         this->setT1(a1);
         this->setS4(a2,Delta);
-        Timer::get("hg1SV")->start();
+        //Timer::start("hg1SV");
         dbl A0 = 1./(s4max - Delta);
         dbl fakeMESV = hg1SV(m2,q2,sp,t1) * A0;
         //if (isnan(fakeMESV)) printf("hg1SV\n");
-        Timer::get("hg1SV")->end();
+        //Timer::end("hg1SV");
         
-        Timer::get("hg1SVDelta")->start();
+        //Timer::start("hg1SVDelta");
         dbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
         fakeMESV += hg1SVDelta1(m2,q2,sp,t1) * A1;
         //if (isnan(fakeMESV)) printf("hg1SVDelta1\n");
@@ -131,11 +131,11 @@ public:
             fakeMESV += hg1SVDelta2(m2,q2,sp,t1) * A2;
             //if (isnan(fakeMESV)) printf("hg1SVDelta2\n");
         }
-        Timer::get("hg1SVDelta")->end();
+        //Timer::end("hg1SVDelta");
         
-        Timer::get("hg1H")->start();
+        //Timer::start("hg1H");
         dbl meH = hg1H(m2,q2,sp,s4,t1);
-        Timer::get("hg1H")->end();
+        //Timer::end("hg1H");
         /*if (isnan(meH)) {
             printf("nan: meH\n");
             meH = 0.;

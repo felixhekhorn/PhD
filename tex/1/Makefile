@@ -5,7 +5,7 @@
 
 main: main.pdf
 
-main.pdf: *.tex ref.bib lib.tex
+main.pdf: *.tex ref.bib lib.tex img/*.tex
 	#cd pyfeyn/
 	#make
 	#cd ..

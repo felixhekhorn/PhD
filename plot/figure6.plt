@@ -14,7 +14,7 @@ set title "Fig. 6. (a): c^{(0)}_{T,g}"
 set out "./img/figure6a.png"
 set yrange [-.3:1.3]
 plot    "./data/partonic/cg0-q2_-2.dat"  u 1:2 t "Q²=1e-2" w lines, \
-	"./data/partonic/cg0-q2_0.dat"   u 1:2 t "Q²=1" w lines, \
+	"./data/partonic/cg0-q2_0.dat"   u 1:2 t "Q²=1e0" w lines, \
 	"./data/partonic/cg0-q2_1.dat"   u 1:2 t "Q²=1e1" w lines, \
 	"./data/partonic/cg0-q2_2.dat"   u 1:2 t "Q²=1e2" w lines, \
 	"./data/partonic/cg0-q2_3.dat"   u 1:2 t "Q²=1e3" w lines
@@ -23,18 +23,28 @@ set title "Fig. 6. (b): c^{(0)}_{L,g}"
 set out "./img/figure6b.png"
 set yrange [-.03:.16]
 plot    "./data/partonic/cg0-q2_-2.dat"  u 1:3 t "Q²=1e-2" w lines, \
-	"./data/partonic/cg0-q2_0.dat"   u 1:3 t "Q²=1" w lines, \
+	"./data/partonic/cg0-q2_0.dat"   u 1:3 t "Q²=1e0" w lines, \
 	"./data/partonic/cg0-q2_1.dat"   u 1:3 t "Q²=1e1" w lines, \
 	"./data/partonic/cg0-q2_2.dat"   u 1:3 t "Q²=1e2" w lines, \
 	"./data/partonic/cg0-q2_3.dat"   u 1:3 t "Q²=1e3" w lines
 
-set title "Fig. 6. (p): Δc^{(0)}_{g}"
+set title "Fig. 6. (p): c^{(0)}_{P,g}"
 set out "./img/figure6p.png"
 set yrange [*:*]
 plot    "./data/partonic/cg0-q2_-2.dat"  u 1:4 t "Q²=1e-2" w lines, \
-	"./data/partonic/cg0-q2_0.dat"   u 1:4 t "Q²=1" w lines, \
+	"./data/partonic/cg0-q2_0.dat"   u 1:4 t "Q²=1e0" w lines, \
 	"./data/partonic/cg0-q2_1.dat"   u 1:4 t "Q²=1e1" w lines, \
 	"./data/partonic/cg0-q2_2.dat"   u 1:4 t "Q²=1e2" w lines, \
 	"./data/partonic/cg0-q2_3.dat"   u 1:4 t "Q²=1e3" w lines
+
+set title "Fig. 6. (a) vs (p): c^{(0)}_{T,g} vs c^{(0)}_{P,g}"
+set out "./img/figure6avsp.png"
+set yrange [*:*]
+plot    "./data/partonic/cg0-q2_-2.dat"  u 1:2 t "T, Q²=1e-2" w lines, \
+	"./data/partonic/cg0-q2_-2.dat"  u 1:4 t "P, Q²=1e-2" w lines, \
+	"./data/partonic/cg0-q2_2.dat"   u 1:2 t "T, Q²=1e2" w lines, \
+	"./data/partonic/cg0-q2_2.dat"   u 1:4 t "P, Q²=1e2" w lines, \
+	"./data/partonic/cg0-q2_3.dat"   u 1:2 t "T, Q²=1e3" w lines,\
+	"./data/partonic/cg0-q2_3.dat"   u 1:4 t "P, Q²=1e3" w lines
 
 set out

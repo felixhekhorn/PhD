@@ -1,1 +1,94 @@
-\fxerror{do}
+The \textit{total} partonic cross sections can be computed by
+\begin{align}
+\sigma^{(n)}_{k,j}(s,q^2,m^2) &= \int\limits_{-s'(1+\beta)/2}^{-s'(1-\beta)/2} dt_1\int\limits_0^{s_{4,max}}ds_4 \frac{d^2\sigma^{(n),fin}_{k,j}(s',t_1,u_1,q^2)}{dt_1ds_4}\\
+s_{4,max} &= \frac{s}{s' t_1}\left(t_1+\frac{s'(1-\beta)}{2}\right)\left(t_1+\frac{s'(1+\beta)}{2}\right)
+\end{align}
+where $k$ denotes as usual projection, $j\in\{\Pg,\Pq,\Paq\}$ is a parton index and we used $s_4 = s'+t_1+u_1$. The result can then be parametrised as
+\begin{align}
+&\sigma_{k,j}(s,q^2,m^2)\nonumber\\
+ &= \sigma^{(0)}_{k,j}(s,q^2,m^2) + \sigma^{(1)}_{k,j}(s,q^2,m^2)\\
+ &= \frac{\alpha\alpha_S}{m^2}\left(f_{k,j}^{(0)}(\eta,\xi) + 4\pi\left(f_{k,j}^{(1)}(\eta,\xi) + \ln(\mu_F^2/m^2)\bar f_{k,j}^{F,(1)}(\eta,\xi) + \ln(\mu_R^2/m^2)\bar f_{k,j}^{R,(1)}(\eta,\xi)\right)\right)
+\end{align}
+where each function $f_{k,j}$ depends on the scaling variables $\eta=1/\rho-1$ and $\xi=-q^2/m^2$ and can be further decomposed by the electric charges
+\begin{align}
+f_{k,\Pg}(\eta,\xi) &= e_H^2 c_{k,\Pg}(\eta,\xi)\\
+f_{k,\Pq}(\eta,\xi) &= e_H^2 c_{k,\Pq}(\eta,\xi) + e_L^2 d_{k,\Pq}(\eta,\xi)
+\end{align}
+As already mentioned the interference term proportional to $e_H e_L$ vanishes for total cross sections.
+
+\fxerror{how to arrange 3 equal images? shift to appendix?}
+\fxerror{compare T and P?}
+
+\pagebreak
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg0T}
+	\caption{$c_{T,g}^{(0)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg0L}
+	\caption{$c_{L,g}^{(0)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg0P}
+	\caption{$c_{P,g}^{(0)}(\eta)$}
+\end{subfigure}
+\caption{leading order scaling functions $c_{k,g}^{(0)}(\eta,\xi)$ plotted as function of $\eta=s/(4m^2)-1$ for different values of $Q^2$ in units of $\si{\GeV^2}$ at $m=\SI{4.75}{\GeV}$ (i.e. different values of $\xi=Q^2/m^2$) }\label{fig:cg0}
+\end{figure}
+
+\pagebreak
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg1T}
+	\caption{$c_{T,g}^{(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg1L}
+	\caption{$c_{L,g}^{(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cg1P}
+	\caption{$c_{P,g}^{(1)}(\eta)$}
+\end{subfigure}
+\caption{next-to-leading order scaling functions $c_{k,g}^{(1)}(\eta,\xi)$ plotted as function of $\eta=s/(4m^2)-1$ for different values of $Q^2$ in units of $\si{\GeV^2}$ at $m=\SI{4.75}{\GeV}$ (i.e. different values of $\xi=Q^2/m^2$) }\label{fig:cg1}
+\end{figure}
+
+\pagebreak
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarF1T}
+	\caption{$\bar c_{T,g}^{F,(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarF1L}
+	\caption{$\bar c_{L,g}^{F,(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarF1P}
+	\caption{$\bar c_{P,g}^{F,(1)}(\eta)$}
+\end{subfigure}
+\caption{next-to-leading order scaling functions $\bar c_{k,g}^{F,(1)}(\eta,\xi)$ plotted as function of $\eta=s/(4m^2)-1$ for different values of $Q^2$ in units of $\si{\GeV^2}$ at $m=\SI{4.75}{\GeV}$ (i.e. different values of $\xi=Q^2/m^2$) and $n_{lf}=4$ }\label{fig:cg1}
+\end{figure}
+
+\pagebreak
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarR1T}
+	\caption{$\bar c_{T,g}^{R,(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarR1L}
+	\caption{$\bar c_{L,g}^{R,(1)}(\eta)$}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/cgBarR1P}
+	\caption{$\bar c_{P,g}^{R,(1)}(\eta)$}
+\end{subfigure}
+\caption{next-to-leading order scaling functions $\bar c_{k,g}^{R,(1)}(\eta,\xi)$ plotted as function of $\eta=s/(4m^2)-1$ for different values of $Q^2$ in units of $\si{\GeV^2}$ at $m=\SI{4.75}{\GeV}$ (i.e. different values of $\xi=Q^2/m^2$) and $n_{lf}=4$ }\label{fig:cg1}
+\end{figure}
+
+\clearpage

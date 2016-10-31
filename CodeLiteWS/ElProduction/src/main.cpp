@@ -16,9 +16,9 @@ int test();
 int main(int argc, char **argv) {
     //return test();
     //return Marco();
-    Timer::make("hg1SV");
+    /*Timer::make("hg1SV");
     Timer::make("hg1SVDelta");
-    Timer::make("hg1H");
+    Timer::make("hg1H");*/
     
     dbl m2 = 1.;
     uint nlf = 4;
@@ -39,8 +39,8 @@ int main(int argc, char **argv) {
         dbl l = 1/0.;//oL.cg0();
         printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cg1());
     }
-    Timer::logAll(cout);
-    Timer::deleteAll();
+    /*Timer::logAll(cout);
+    Timer::deleteAll();*/
 	return EXIT_SUCCESS;
 }
 

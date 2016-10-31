@@ -43,7 +43,7 @@ typedef dbl (*fPtr5dbl)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
 /** @brief MMa port */
 #define Sqrt(a) sqrt(a)
 
-/** @brief factor in front of fermion loop excluding a n_lf - see eq. (3.7) */
+/** @brief factor in front of fermion loop excluding the \f$n_{lf}\f$ - see eq. (3.7) */
 #define fermionLoopFactor 2./3.*(1./(4.*4.*M_PI*M_PI))
 
 /**

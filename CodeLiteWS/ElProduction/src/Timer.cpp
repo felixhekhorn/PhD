@@ -58,6 +58,14 @@ Timer* Timer::get(std::string name) {
     return it->second;
 }
 
+void Timer::start(std::string name) {
+    Timer::get(name)->start();
+}
+
+void Timer::end(std::string name) {
+    Timer::get(name)->end();
+}
+
 void Timer::logAll(std::ostream& o) {
     for (mType::const_iterator it = Timer::mp.cbegin(); it != Timer::mp.cend(); ++it) {
         o << it->first << ": ";
