@@ -153,6 +153,7 @@ def _threadWorker(qi, qo, oArgs,lenParams):
        elif "cg1"     == f: p["res"] = o.cg1()
        elif "cgBarF1" == f: p["res"] = o.cgBarF1()
        elif "cgBarR1" == f: p["res"] = o.cgBarR1()
+       elif "cgBar1"  == f: p["res"] = o.cgBar1()
        elif "cq1"     == f: p["res"] = o.cq1()
        elif "cqBarF1" == f: p["res"] = o.cqBarF1()
        elif "dq1"     == f: p["res"] = o.dq1()

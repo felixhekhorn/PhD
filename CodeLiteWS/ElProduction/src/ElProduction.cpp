@@ -137,6 +137,10 @@ dbl ElProduction::cgBarF1() const {
     return int2D(&f);
 }
 
+dbl ElProduction::cgBar1() const {
+    return this->cgBarF1()+this->cgBarR1();
+}
+
 dbl ElProduction::cq1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getCq1());
