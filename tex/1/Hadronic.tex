@@ -4,11 +4,42 @@ The hadronic reaction to study is deep-inelastic lepton-proton scattering:
 \end{equation}
 where one either detects the heavy quark $\PQ$ \textit{or} the heavy anti quark $\PaQ$ and $X$ stands for any final hadronic state allowed by quantum-number conservation. We define then the hadronic Bjorken variables
 \begin{equation}
-q=l_2-l_1 \quad x=\frac{-q^2}{2p\cdot q} \quad z = \frac{p\cdot q}{p\cdot l_1}
+q=l_1-l_2 \quad x=\frac{-q^2}{2p\cdot q} \quad z = \frac{p\cdot q}{p\cdot l_1}
 \end{equation}
 
 We can then define the measurable deep-inelastic hadron structure functions
 \begin{align}
+F_k(x,Q^2,m^2) &= \sum_{n=0}^\infty F_{k}^{(n)}(x,Q^2,m^2)\\
 F_{k}^{(n)}(x,Q^2,m^2) &= \sum_{j\in\{\Pg,\Pq,\Paq\}}\int\limits_x^{z_{max}} \frac{dz}{z} f_j(x/z,\mu_F^2) \frac{-q^2}{4\pi^2\alpha} \sigma^{(n)}_{k,j}(s,q^2,m^2)
 \end{align}
-where $k\in\{G,L,P\}$ denotes as usual projection, $z=-q^2/s'$, $z_{max} = -q^2/(4m^2-q^2)$ and $f_j(x/z,\mu_F^2)$ denotes parton momentum density functions\fxerror{cite}.
+where $k\in\{G,L,P\}$ denotes as usual projection, $z=Q^2/s'$, $z_{max} = Q^2/(4m^2+Q^2)$ and $f_j(x/z,\mu_F^2)$ denotes parton momentum density functions\fxerror{cite}.
+We can then split the contributions whether there is a gluon in the initial state $F_{k,g}(x,Q^2,m^2)$ or a (anti)quark $F_{k,q}$. In leading order we find:
+\begin{align}
+F_{k,g}^{(0)}(x,Q^2,m^2) &= \frac{\alpha_sQ^2}{4\pi^2m^2}e_H^2\int\limits_x^{z_{max}}\frac{dz}{z} f_g(x/z,\mu_F^2) c^{(0)}_{k,g}(\eta,\xi)
+\end{align}
+In next-to-leading order we find for the gluonic part:
+\begin{align}
+&F_{k,g}^{(1)}(x,Q^2,m^2) \nonumber\\
+ &= \frac{\alpha_s^2Q^2}{\pi m^2}e_H^2\int\limits_x^{z_{max}}\frac{dz}{z} f_g(x/z,\mu_F^2) \left(c_{k,g}^{(1)}(\eta,\xi) + \ln(\mu_F^2/m^2)\bar c_{k,g}^{F,(1)}(\eta,\xi) + \ln(\mu_R^2/m^2)\bar c_{k,g}^{R,(1)}(\eta,\xi)\right)
+\end{align}
+In next-to-leading order we find for the quark part:
+\begin{align}
+&F_{k,q}^{(1)}(x,Q^2,m^2) \nonumber\\
+ &= \frac{\alpha_s^2Q^2}{\pi m^2}e_H^2\int\limits_x^{z_{max}}\frac{dz}{z} \left(\sum_{j=1}^{n_{lf}}f_{q(j)}(x/z,\mu_F^2)+f_{q(-j)}(x/z,\mu_F^2)\right) \nonumber\\
+ &\hspace{120pt} \cdot\left(c_{k,q}^{(1)}(\eta,\xi) + \ln(\mu_F^2/m^2)\bar c_{k,q}^{F,(1)}(\eta,\xi)\right) \nonumber\\
+ &\hspace{20pt} + \frac{\alpha_s^2Q^2}{\pi m^2}\int\limits_x^{z_{max}}\frac{dz}{z} \left(\sum_{j=1}^{n_{lf}}e_{q(j)}^2\left(f_{q(j)}(x/z,\mu_F^2)+f_{q(-j)}(x/z,\mu_F^2)\right)\right) d_{k,q}(\eta,\xi)
+\end{align}
+where we used the PDG particle labeling\cite{Hagiwara:2002fs}: $q(1)=u,q(-1)=\bar u,q(2)=d,q(-2)=\bar d$, \ldots and $e_u = e_c = e_t = 2/3, e_d=e_s=e_b=-1/3$. 
+
+We can then also define some more practical functions:
+\begin{align}
+F_{2}(x,Q^2,m^2) &= F_{T}(x,Q^2,m^2) + F_{L}(x,Q^2,m^2)\\
+ &= F_{G}(x,Q^2,m^2) + \frac 3 2 F_{L}(x,Q^2,m^2)\\
+F_1(x,Q^2,m^2) &= (F_{2}(x,Q^2,m^2)-F_L(x,Q^2,m^2))/(2x)\\
+ &= \left(F_{G}(x,Q^2,m^2)+\frac 1 2 F_{L}(x,Q^2,m^2)\right)/(2x)\\
+g_1(x,Q^2,m^2) &= F_{P}(x,Q^2,m^2)/(2x)
+\end{align}
+and we define the spin asymmetry
+\begin{align}
+A_1(x,Q^2,m^2) &= \frac{g_1(x,Q^2,m^2)}{F_1(x,Q^2,m^2)} = \frac{F_P(x,Q^2,m^2)}{F_2(x,Q^2,m^2)-F_L(x,Q^2,m^2)}
+\end{align}
