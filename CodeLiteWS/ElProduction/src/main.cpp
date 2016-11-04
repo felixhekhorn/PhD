@@ -20,16 +20,28 @@ int main(int argc, char **argv) {
     Timer::make("hg1SVDelta");
     Timer::make("hg1H");*/
     
-    dbl m2 = 1.;
-    uint nlf = 4;
+    dbl m2 = 1.5*1.5;
+    uint nlf = 3;
     dbl Delta = 1e-6;
-    dbl q2 = -1e-5;
+    dbl q2 = -1e1;
+    dbl mu02 = 4.*m2-q2;
+    dbl aS = 0.189663591654;// Q²=1e2 -> 0.152761042522;
     ElProduction oG(m2,q2,Delta,G,nlf);
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
-    //oP.setEta(pow(10.,-.5));
-    uint N = 11;
+    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
+    oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
+    uint N = 15;
     for (uint j = 0; j < N; ++j) {
+        dbl x = pow(10,-4./(100.)*(31.+(dbl)j));
+        oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
+        dbl g = oG.Fg0();
+        dbl l = oL.Fg0();
+        dbl p = oP.Fq1();
+        printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
+    }
+    /*for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
         dbl eta = pow(10.,1.+1.*(dbl)j/((dbl)std::max((uint)1,N-1)));
         oG.setEta(eta);
@@ -38,7 +50,7 @@ int main(int argc, char **argv) {
         dbl g = 1/0.;//oG.cg1();
         dbl l = 1/0.;//oL.cg0();
         printf("%e\t%e\t%e\t%e\n",eta,g,l,oP.cg1());
-    }
+    }*/
     /*Timer::logAll(cout);
     Timer::deleteAll();*/
 	return EXIT_SUCCESS;

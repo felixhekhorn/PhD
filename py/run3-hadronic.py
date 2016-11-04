@@ -20,14 +20,15 @@ nlf = 3
 q2 = -1.e1
 mu02 = 4.*m2 - q2
 aS = AlphaS(mu02, nlf+1)
+print aS
 pdfs = {"G": "MSTW2008nlo90cl", "L": "MSTW2008nlo90cl", "P": "DSSV2014"}
 
 # parameters
 r = HadronicRunner(m2 = m2, q2 = q2, Delta = 1e-6, nlf = nlf,\
                    pdfs = pdfs, pdfMem = 0, mu02 = mu02, aS = aS,\
                    fs = ["Fg0", "Fg1", "Fq1"],\
-                   fp = "Fc-q2_1-mstw-dssv2014.dat",\
-                   Nx = 11)
+                   fp = "Fc-q2_1-MSTW2008nlo90cl-DSSV2014.dat",\
+                   Nx = 101)
 #r.run()
 
 q2 = -1e2
@@ -36,6 +37,7 @@ aS = AlphaS(mu02, nlf+1)
 r.q2 = q2
 r.mu02 = mu02
 r.aS = aS
-r.fp = "Fc-q2_2-mstw-dssv2014.dat"
-r.run()
+print aS
+r.fp = "Fc-q2_2-MSTW2008nlo90cl-DSSV2014.dat"
+#r.run()
 

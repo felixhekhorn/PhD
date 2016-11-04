@@ -37,7 +37,7 @@ class HadronicRunner:
         self.__qOut = Queue()
         self.__js = range(self.Nx)
         self.__ks = range(len(self.fs))
-        self.__xs = [10.**(-.1 -3.9/(self.Nx-1)*j) for j in self.__js]
+        self.__xs = [10.**(-4./(self.Nx-1)*j) for j in self.__js]
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 for k in self.__ks:

@@ -7,7 +7,7 @@ void dssvgupdate_(double* X, double* Q2, double* DUV, double* DDV, double* DUBAR
 }
 
 
-PdfWrapper::PdfWrapper(const str &setname, int member) : setname(setname), member(member) {
+PdfWrapper::PdfWrapper(const str &setname, int member) : setname(setname), member(member) ,lha(0) {
     this->isDSSV = ("DSSV2014" == setname);
     if (this->isDSSV) {
         dssvini_();

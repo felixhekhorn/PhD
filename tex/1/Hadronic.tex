@@ -12,8 +12,8 @@ We can then define the measurable deep-inelastic hadron structure functions
 F_k(x,Q^2,m^2) &= \sum_{n=0}^\infty F_{k}^{(n)}(x,Q^2,m^2)\\
 F_{k}^{(n)}(x,Q^2,m^2) &= \sum_{j\in\{\Pg,\Pq,\Paq\}}\int\limits_x^{z_{max}} \frac{dz}{z} f_j(x/z,\mu_F^2) \frac{-q^2}{4\pi^2\alpha} \sigma^{(n)}_{k,j}(s,q^2,m^2)
 \end{align}
-where $k\in\{G,L,P\}$ denotes as usual projection, $z=Q^2/s'$, $z_{max} = Q^2/(4m^2+Q^2)$ and $f_j(x/z,\mu_F^2)$ denotes parton momentum density functions\fxerror{cite}.
-We can then split the contributions whether there is a gluon in the initial state $F_{k,g}(x,Q^2,m^2)$ or a (anti)quark $F_{k,q}$. In leading order we find:
+where $k\in\{G,L,P\}$ denotes as usual projection, $z=Q^2/s'$, $z_{max} = Q^2/(4m^2+Q^2)$ and $f_j(x/z,\mu_F^2)$ denotes parton momentum density functions\cite{Martin:2009iq,PhysRevLett.113.012001}.
+We can then split the contributions whether there is a gluon in the initial state $F_{k,g}$ or a (anti)quark $F_{k,q}$. In leading order we find:
 \begin{align}
 F_{k,g}^{(0)}(x,Q^2,m^2) &= \frac{\alpha_sQ^2}{4\pi^2m^2}e_H^2\int\limits_x^{z_{max}}\frac{dz}{z} f_g(x/z,\mu_F^2) c^{(0)}_{k,g}(\eta,\xi)
 \end{align}
@@ -43,3 +43,25 @@ and we define the spin asymmetry
 \begin{align}
 A_1(x,Q^2,m^2) &= \frac{g_1(x,Q^2,m^2)}{F_1(x,Q^2,m^2)} = \frac{F_P(x,Q^2,m^2)}{F_2(x,Q^2,m^2)-F_L(x,Q^2,m^2)}
 \end{align}
+
+For the plots we focused on charm production ($n_{lf}=3$) with $m_c=\SI{1.5}{\GeV}$ and we used the running coupling of \fxerror{cite,do}: We set $\mu_F^2=\mu_R^2=4m^2-q^2$ in analogy to \cite{Laenen1993162}.We used the PDF set MSTW2008nlo90cl\cite{Martin:2009iq,Martin:2009bu,Martin:2010db} provided by LHAPDF\cite{LHAPDF6} for the unpolarized structure functions ($F_2,F_G,F_L$) and DSSV2014\cite{PhysRevLett.113.012001} for the polarized structure function ($F_G$).
+
+\fxerror{shift to appendix?}
+
+\pagebreak
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{\textwidth}
+	\input{img/F0012}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/F001L}
+\end{subfigure}\\%
+\begin{subfigure}[t]{\textwidth}
+	\input{img/F001P}
+\end{subfigure}
+\caption{hadronic structure functions $F_{k}(x,Q^2,m_c^2)$ plotted as function of $x$ for different values of $Q^2$ in units of $\si{\GeV^2}$}\label{fig:F001}
+\end{figure}
+
+\clearpage
+\pagebreak
