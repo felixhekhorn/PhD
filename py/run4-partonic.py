@@ -25,4 +25,4 @@ def runAll(f):
     r.fp = fpTemplate%(-2)
     r.run()
 
-runAll("cqBarF1")
+runAll("cgBar1")

@@ -43,7 +43,7 @@ set key right bottom
 set ytics format "%.1e"
 unset logscale y
 plot    p.f1  u 1:8           t "$Q^2=10^{1}$, LO"     w lines, \
-        p.f1  u 1:($8+$9+$10) t "$Q^2=10^{2}$, LO+NLO" w lines, \
+        p.f1  u 1:($8+$9+$10) t "$Q^2=10^{1}$, LO+NLO" w lines, \
         p.f2  u 1:8           t "$Q^2=10^{2}$, LO"     w lines, \
         p.f2  u 1:($8+$9+$10) t "$Q^2=10^{2}$, LO+NLO" w lines
 

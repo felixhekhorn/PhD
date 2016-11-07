@@ -1,1 +1,0 @@
-(4*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*(11 + 12*ln(Delta/m2) - 12*ln(-(u1/m2))))/(3.*Power(sp,2)*t1*u1)

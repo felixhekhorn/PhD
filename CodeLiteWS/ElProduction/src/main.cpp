@@ -23,18 +23,18 @@ int main(int argc, char **argv) {
     dbl m2 = 1.5*1.5;
     uint nlf = 3;
     dbl Delta = 1e-6;
-    dbl q2 = -1e1;
+    dbl q2 = -1e2;
+    dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = 4.*m2-q2;
-    dbl aS = 0.189663591654;// Q²=1e2 -> 0.152761042522;
     ElProduction oG(m2,q2,Delta,G,nlf);
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
     oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
     oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
     oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
-    uint N = 15;
+    uint N = 3;
     for (uint j = 0; j < N; ++j) {
-        dbl x = pow(10,-4./(100.)*(31.+(dbl)j));
+        dbl x = pow(10,-4./(100.)*(49.+(dbl)j));
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
         dbl g = oG.Fg0();
         dbl l = oL.Fg0();
