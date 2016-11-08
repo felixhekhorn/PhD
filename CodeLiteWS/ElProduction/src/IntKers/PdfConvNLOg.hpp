@@ -174,9 +174,10 @@ public:
         dbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
         
         // take fermion loop into account
+        dbl B0 = A0/(this->t1max-this->t1min);
         dbl meCg0 = cg0(m2,q2,sp);
-        fakeCgBarF1SV += nlf * fermionLoopFactor * meCg0;
-        fakeCgBarR1SV -= nlf * fermionLoopFactor * meCg0;
+        fakeCgBarF1SV += nlf * fermionLoopFactor * meCg0 * B0;
+        fakeCgBarR1SV -= nlf * fermionLoopFactor * meCg0 * B0;
         
         dbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
         return jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;

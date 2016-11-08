@@ -29,7 +29,7 @@ r = HadronicRunner(m2 = m2, q2 = q2, Delta = 1e-6, nlf = nlf,\
                    fs = ["Fg0", "Fg1", "Fq1"],\
                    fp = "Fc-q2_1-MSTW2008nlo90cl-DSSV2014.dat",\
                    Nx = 101)
-#r.run()
+r.run()
 
 q2 = -1e2
 mu02 = 4.*m2 - q2
@@ -39,5 +39,5 @@ r.mu02 = mu02
 r.aS = aS
 print aS
 r.fp = "Fc-q2_2-MSTW2008nlo90cl-DSSV2014.dat"
-#r.run()
+r.run()
 

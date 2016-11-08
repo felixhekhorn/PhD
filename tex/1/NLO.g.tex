@@ -1,11 +1,11 @@
 \label{sec:NLO.g}
 In next-to-leading order we have to consider the following process:
 \begin{equation}
-\Pggx(q;\sigma_q) + \Pg(k_1;\sigma_{k_1}) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
+\Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
 \end{equation}
 All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
 \begin{equation}
-\hat\sum_{k,\sigma}\mathcal P_{k}^{\mu\mu'}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
+\hat {\mathcal P}_{k}^{\Pgg,\mu\mu'}\hat {\mathcal P}_{k}^{\Pg}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
 \end{equation}
 and it will depend on ten kinematical invariants:
 \begin{align}
@@ -21,9 +21,9 @@ The $2\rightarrow 3$ $n$-dimensional phase space is given by
 dPS_3 &= \!\int\!\!\frac{d^{n}p_1}{(2\pi)^{n-1}}\frac{d^{n}p_2}{(2\pi)^{n-1}}\frac{d^{n}k_2}{(2\pi)^{n-1}}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2-k_2) \nonumber\\
  &\hspace{50pt}\Theta(p_{1,0})\delta(p_1^2-m^2)\Theta(p_{2,0})\delta(p_2^2-m^2)\Theta(k_{2,0})\delta(k_2^2) \label{eq:PS3}
 \end{align}
-This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay \cite{PhysRevD4054}. We find
+This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay\cite{PhysRevD4054}. We find
 \begin{align}
-dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)s'} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}\\
+dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)s'} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\! dt_1 du_1 d\Omega_n d\hat{\mathcal I}\\
  &=h_3(n)\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
 \end{align}
 with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$ and $d\hat{\mathcal I}$ taking care of all occuring hat momenta:
@@ -85,7 +85,7 @@ This expansion is valid for $\Delta$ being small, i.e. smaller then any leading 
 \DiLog(1-\chi^2)+\ln^2(\chi)
 \right) \right]
 \end{align}
-(Note the mistyped sign of $\ln(\chi)^2$ in \cite[eq. (3.25)]{Laenen1993162}) The additional factors originate from the difference between the $2\rightarrow 3$ phasespace of $R_{k}$ and the $2\rightarrow 2$ phasespace needed for $S_k$.
+(Note the mistyped sign of $\ln(\chi)^2$ in \cite[eq. (3.25)]{Laenen1993162}) The additional factors on the left hand sides originate from the difference between the $2\rightarrow 3$ phasespace of $R_{k}$ and the $2\rightarrow 2$ phasespace needed for $S_k$.
 
 The double differential partonic cross section is given by
 \begin{align}
@@ -94,3 +94,5 @@ The double differential partonic cross section is given by
  &\hspace{20pt} \left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{m^2{s'}^2}\right)^{\epsilon/2} C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon} \left(\frac \Delta {m^2}\right)^\epsilon \nonumber\\
  &\hspace{20pt}\frac{s_4^2}{4\pi(s_4+m^2)}\left(1-\frac 3 8 \zeta(2)\epsilon^2\right)\int\!d\Omega_n d\hat{\mathcal I}\,\left(C_A S_{k,OK} + 2C_F S_{k,QED}\right)
 \end{align}
+
+The results agree in the photo-production limit ($q^2\rightarrow 0$) with \cite{Bojak:1998zm}.

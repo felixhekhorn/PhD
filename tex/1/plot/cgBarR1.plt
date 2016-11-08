@@ -19,7 +19,7 @@ p = "./../../data/partonic/"
 #set key left bottom Left
 set label 1 "(a) $\\bar c_{T,g}^{R,(1)}(\\eta)$"
 set out "img/cgBarR1T.tex"
-set ytics format "%.2f"
+set ytics format " %.2f"
 plot    p."cgBarR1-q2_-2.dat"  u 1:2 t "$Q^2=10^{-2}$" w lines, \
 	p."cgBarR1-q2_0.dat"   u 1:2 t "$Q^2=10^0$" w lines, \
 	p."cgBarR1-q2_1.dat"   u 1:2 t "$Q^2=10^1$" w lines, \
