@@ -1,15 +1,15 @@
-To collect all soft and collinear poles we have to calculate in $n=4+\epsilon$ dimension. Unfortunaly the extension for \textit{polarized} processes is nontrivial, because the occuring Levi-Civita tensors $\varepsilon_{\mu\nu\rho\sigma}$ and $\gamma_5$. A common choice to deal with these objects is the HVBM prescription\cite{breitenlohner1977} that keeps those two objects four dimensional at the price for splitting the full $n$-dimensional space into a $(n-4)$-dimensional space, called \enquote{hat-space}, and a four-dimensional space (that is actually never used).
+We calculate in $n=4+\epsilon$ dimension to regularize all soft, collinear and ultraviolet poles. Unfortunaly this extension for \textit{polarized} processes is nontrivial, because the occuring Levi-Civita tensors $\varepsilon_{\mu\nu\rho\sigma}$ and $\gamma_5$. A common choice to deal with these objects is the HVBM prescription\cite{breitenlohner1977} that keeps those two objects four dimensional at the price of splitting the full $n$-dimensional space into a $(n-4)$-dimensional space, called \enquote{hat-space}, and a four-dimensional space (that is actually never used).
 
 In leading order (LO) we have to consider the following processes
 \begin{equation}
-\Pggx(q;\sigma_q) + \Pg(k_1;\sigma_{k_1}) \rightarrow \PQ(p_1)+\PaQ(p_2)
+\Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2)
 \end{equation}
 The corresponding parton structure tensor $W_{\mu\mu'}^{(0)}$ can then be written as
 \fxerror{avoid all order expr?}
 \begin{align}
-&W_{\mu\mu'}^{(0)}(k_1,q;s,t_1,u_1,q^2;\sigma_{k_1}\sigma_{q})\nonumber\\
- &= \frac 1 2 E_\epsilon K_{\Pg\Pgg}\!\int\!\frac{d^{n-1}p_1}{2E_1(2\pi)^{n-1}}\!\int\!\frac{d^{n-1}p_2}{2E_2(2\pi)^{n-1}}\delta(p_1^2-m^2) \delta(p_2^2-m^2)\nonumber\\
- &\hspace{20pt}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2) \Md_{\mu}^{(0)}(\sigma_{k_1},\sigma_q)\Md_{\mu'}^{(0)}(\sigma_{k_1},\sigma_q)
+&W_{\mu\mu'}^{(0)}(k_1,q;s,t_1,u_1,q^2;\sigma_{q})\nonumber\\
+ &= \frac 1 2 E_\epsilon K_{\Pg\Pgg}\frac{1}{2s'}\!\int\!\frac{d^{n-1}p_1}{2E_1(2\pi)^{n-1}}\!\int\!\frac{d^{n-1}p_2}{2E_2(2\pi)^{n-1}}\delta(p_1^2-m^2) \delta(p_2^2-m^2)\nonumber\\
+ &\hspace{20pt}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2) \Md_{\mu}^{(0)}\Md_{\mu'}^{(0)}
 \label{eq:PartonicStructureTensor0}\end{align}
 where the initial $1/2$ is the initial state spin average, $K_{\Pg\Pgg}$ is the color average,
 \begin{align}
@@ -18,19 +18,15 @@ E_\epsilon := \left\{\begin{array}{ll}
 1 &\text{polarized}
 \end{array}\right.
 \end{align}
-accounts for initial freedom in $n$ dimensions for bosons and we defined the following Mandelstam variables:
+accounts for additional degrees of freedom in $n$ dimensions for initial bosons. The Lorentz indices $\mu$ and $\mu'$ refer to the virtual photon that is exchanged with the scattering lepton. We have chosen to detect the heavy \textit{antiquark} $\PaQ(p_2)$ and so we define the following Mandelstam variables:
 \begin{equation}
-s = (q+k_1)^2, \quad t_1=t-m^2=(k_1-p_2)^2-m^2, \quad u_1 = u - m^2 = (q-p_2)^2 -m^2
+s = (q+k_1)^2, \quad t_1=t-m^2=(k_1-p_2)^2-m^2, \quad u_1 = u - m^2 = (q-p_2)^2 -m^2 \label{eq:LOst1u1}
 \end{equation}
-\begin{equation}
-s' = s-q^2,\quad u_1' = u_1 - q^2
-\end{equation}
-\fxerror{move to LO?}
-The Lorentz indices $\mu$ and $\mu'$ refer to the virtual photon that is exchanged with the scattering lepton.
+For convenience we also define $s' = s-q^2$ and $u_1' = u_1 - q^2$. If the heavy \textit{quark} $\PaQ(p_1)$ is detected, $p_2$ in eq. (\ref{eq:LOst1u1}) has to be replaced by $p_1$ which effectively interchanges $t_1\leftrightarrow u_1$.\fxerror{move to LO?}
 
 By using Lorentz covariance, hermiticity, parity invariance and current conservation the parton structure tensor can be decomposed into several parts:
 \begin{align}
-W_{\mu\mu'}(k_1,q;s,t_1,u_1,q^2;\sigma_{k_1},\sigma_{q}) &= \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right)\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1} \nonumber\\
+W_{\mu\mu'}(k_1,q;s,t_1,u_1,q^2;\sigma_{q}) &= \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right)\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1} \nonumber\\
  &\hspace{20pt} +\left(k_{1,\mu}-\frac{k_1\cdot q}{q^2}q_\mu\right)\left(k_{1,\mu'}-\frac{k_1\cdot q}{q^2}q_{\mu'}\right)\left(\frac{-4q^2}{{s'}^2}\right) \nonumber\\
  &\hspace{30pt} \cdot\left(\frac{d^2\sigma_T(s,t_1,u_1,q^2)}{dt_1du_1}+\frac{d^2\sigma_L(s,t_1,u_1,q^2)}{dt_1du_1}\right)
 \end{align}
@@ -67,10 +63,10 @@ By writing eq. (\ref{eq:PgG}) we decided to introduce Fadeev-Popov ghosts\cite{B
 &\hat {\mathcal P}^{\Paq}_{P} v(k_1)\bar v(k_1) &= \gamma_5\slashed k_1
 \end{align}
 
-We define a set of partonic variables:
+We further define a set of partonic variables:
 \begin{align}
 0\leq&\,\rho = \frac {4m^2} s\leq 1 &0\leq&\,\beta = \sqrt{1-\rho}\leq 1 &0\leq&\,\chi = \frac{1-\beta}{1+\beta}\leq 1\\
-&\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\,\beta_q = \sqrt{1-\rho_q} &0\leq&\,\chi_q = -\frac{1-\beta_q}{1+\beta_q}\leq 1
+&\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\,\beta_q = \sqrt{1-\rho_q} &0\leq&\,\chi_q = \frac{\beta_q-1}{\beta_q+1}\leq 1
 \end{align}
 
 When computing Feynman diagrams a computer algebra system (CAS) is almost obligatory: common choices are \texttt{FORM}\cite{Vermaseren:2000nd} or \MMa\cite{Mathematica} - for the later the most common choice is \texttt{TRACER}\cite{Tracer}, but we have chosen \HEPMath\cite{wiebusch_hepmath_2015}. We used the Feynman rules given by \cite{Leader}.
