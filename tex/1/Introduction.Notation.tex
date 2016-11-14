@@ -52,16 +52,16 @@ E_G(\epsilon) = E_L(\epsilon) = \frac 1 {1+\epsilon/2} \qquad E_P(\epsilon) = 1
 
 The final state spins are always summed over, but the initial spins have to be treated seperately: for unpolarized projections $k\in\{G,L\}$ they are also summed over, but for the polarized projection $k=P$ they are projected on their asymmetric part:
 \begin{align}
-\hat {\mathcal P}^{\Pg}_{G}\varepsilon^{(\sigma_k)}_\nu(k_1)\varepsilon^{*(\sigma_k)}_{\nu'}(k_1) = \hat {\mathcal P}^{\Pg}_{L}\varepsilon^{(\sigma_k)}_\nu(k_1)\varepsilon^{*(\sigma_k)}_{\nu'}(k_1) &= -g_{\nu\nu'} \label{eq:PgG} \\
-\hat {\mathcal P}^{\Pg}_{P}\varepsilon^{(\sigma_k)}_\nu(k_1)\varepsilon^{*(\sigma_k)}_{\nu'}(k_1) &= 2i\epsilon_{\nu\nu'\rho\rho'}\frac{k_1^{\rho}q^{\rho}}{s'}
+\hat {\mathcal P}^{\Pg}_{G,\nu\nu'} = \hat {\mathcal P}^{\Pg}_{L,\nu\nu'} &= -g_{\nu\nu'} &\hat {\mathcal P}^{\Pg}_{P,\nu\nu'} &= 2i\epsilon_{\nu\nu'\rho\rho'}\frac{k_1^{\rho}q^{\rho}}{s'}\label{eq:PgG}
 \end{align}
-By writing eq. (\ref{eq:PgG}) we decided to introduce Fadeev-Popov ghosts\cite{Bojak:2000eu} as we got a single diagram in next-to-leading order with a triple-gluon vertex\fxerror{explain ghosts?}. As we can consider all quarks in the initial state as massless, we further find
+where $\nu$ and $\nu'$ refer to the initial gluon. By writing $\hat {\mathcal P}^{\Pg}_{G,\nu\nu'}$ in eq. (\ref{eq:PgG}) we decided to introduce Fadeev-Popov ghosts\cite{Bojak:2000eu} as we got a single diagram in next-to-leading order with a triple-gluon vertex\fxerror{explain ghosts?}. As we can consider all quarks in the initial state as massless, we further find
 \begin{align}
-\hat {\mathcal P}^{\Pq}_{G} u(k_1)\bar u(k_1) = \hat {\mathcal P}^{\Pq}_{L} u(k_1)\bar u(k_1) &= \slashed k_1
-&\hat {\mathcal P}^{\Pq}_{P} u(k_1)\bar u(k_1) &= -\gamma_5\slashed k_1\\
-\hat {\mathcal P}^{\Paq}_{G} v(k_1)\bar v(k_1) = \hat {\mathcal P}^{\Paq}_{L} v(k_1)\bar v(k_1) &= \slashed k_1
-&\hat {\mathcal P}^{\Paq}_{P} v(k_1)\bar v(k_1) &= \gamma_5\slashed k_1
+\hat {\mathcal P}^{\Pq}_{G,aa'} = \hat {\mathcal P}^{\Pq}_{L,aa'} &= \left(\slashed k_1\right)_{aa'}
+&\hat {\mathcal P}^{\Pq}_{P,aa'} &= -\left(\gamma_5\slashed k_1\right)_{aa'}\\
+\hat {\mathcal P}^{\Paq}_{G,bb'} = \hat {\mathcal P}^{\Paq}_{L,bb'} &= \left(\slashed k_1\right)_{bb'}
+&\hat {\mathcal P}^{\Paq}_{P,bb'} &= \left(\gamma_5\slashed k_1\right)_{bb'}
 \end{align}
+where $a$ and $a'$ refer to the Dirac-index of the intial quark in next-to-leading order - analogous for $b$ and the antiquark.
 
 We further define a set of partonic variables:
 \begin{align}
@@ -69,4 +69,4 @@ We further define a set of partonic variables:
 &\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\,\beta_q = \sqrt{1-\rho_q} &0\leq&\,\chi_q = \frac{\beta_q-1}{\beta_q+1}\leq 1
 \end{align}
 
-When computing Feynman diagrams a computer algebra system (CAS) is almost obligatory: common choices are \texttt{FORM}\cite{Vermaseren:2000nd} or \MMa\cite{Mathematica} - for the later the most common choice is \texttt{TRACER}\cite{Tracer}, but we have chosen \HEPMath\cite{wiebusch_hepmath_2015}. We used the Feynman rules given by \cite{Leader}.
+When computing Feynman diagrams a computer algebra system (CAS) is almost obligatory: common choices are \texttt{FORM}\cite{Vermaseren:2000nd} or \MMa\cite{Mathematica} - for the later the most common choice is \texttt{TRACER}\cite{Tracer}, but we have chosen \HEPMath\cite{wiebusch_hepmath_2015}. We used the Feynman rules given by \cite{Leader} and \cite{Bojak:2000eu}.

@@ -13,6 +13,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setQ2", &ElProduction::setQ2, "sets virtuality of photon q^2 < 0")
         .def("setDelta", &ElProduction::setDelta, "sets phase space slice")
         // partonic setter
+        .def("setM2", &ElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
         .def("setEta", &ElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &ElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter

@@ -202,6 +202,13 @@ public:
 ///@{
     
 /**
+ * @brief sets mass of heavy quark \f$m^2 > 0\f$
+ * This functions unsets partonic cm-energy
+ * @param m2 mass of heavy quark \f$m^2 > 0\f$
+ */
+    void setM2(dbl m2);
+    
+/**
  * @brief sets virtuality of photon \f$q^2< 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  */

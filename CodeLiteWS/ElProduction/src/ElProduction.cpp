@@ -15,9 +15,11 @@
 #include "IntKers/PdfConvNLOq.hpp"
 
 ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
-    m2(m2), q2(0.), sp(0.), hasPartonicS(false), Delta(.0), proj(proj), nlf(nlf),
+    m2(0.), q2(0.), sp(0.), hasPartonicS(false), Delta(.0), proj(proj), nlf(nlf),
     pdf(0), muR2(0.), hasMuR2(false), muF2(0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
     alphaS(0.), hasAlphaS(false), zMax(0.) {
+    // ordering is important!
+    this->setM2(m2);
     this->setQ2(q2);
     this->setDelta(Delta);
     if (nlf < 3 || nlf > 5)
@@ -27,6 +29,18 @@ ElProduction::ElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) :
 ElProduction::~ElProduction() {
     if (0 != this->pdf)
         delete (this->pdf);
+}
+
+void ElProduction::setM2(dbl m2) {
+    if (m2 <= 0.)
+        throw domain_error("mass m2 has to be positive!");
+    this->m2 = m2;
+    // call from contstructor? suppress, other case reset zMax
+    if (0. != this->q2)
+        this->setQ2(this->q2);
+    // reset sp
+    this->sp = 0.;
+    this->hasPartonicS = false;
 }
 
 void ElProduction::setQ2(dbl q2) {

@@ -37,7 +37,7 @@ plot    p.f1  u 1:5          t "$Q^2=10^{1}$, LO"     w lines, \
         p.f2  u 1:($5+$6+$7) t "$Q^2=10^{2}$, LO+NLO" w lines
 
 set yrange[*:*]
-set label 1 "(c) $F_P(x,Q^2,m_c^2)$"
+set label 1 "(c) $2xg_1(x,Q^2,m_c^2)$"
 set out "img/F001P.tex"
 set key right bottom
 set ytics format "%.1e"

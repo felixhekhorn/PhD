@@ -32,7 +32,7 @@ plot    p.f1  u 1:6 t "$Q^2=10^{1}$" w lines, \
         p.f2  u 1:6 t "$Q^2=10^{2}$" w lines
 
 set yrange[*:*]
-set label 1 "(c) $F_{P,g}^{(1)}(x,Q^2,m_c^2)$"
+set label 1 "(c) $2xg_{1,g}^{(1)}(x,Q^2,m_c^2)$"
 set out "img/Fg1P.tex"
 set key right bottom
 set ytics format "%.1e"
