@@ -221,7 +221,7 @@ void ElProduction::setAlphaS(dbl alphaS) {
 }
     
 void ElProduction::setBjorkenX(dbl bjorkenX) {
-    if (bjorkenX < 0. || bjorkenX > 1.)
+    if (bjorkenX <= 0. || bjorkenX > 1.)
         throw domain_error("Bjorken x has to be between 0 and 1!");
     this->bjorkenX = bjorkenX;
     this->hasBjorkenX = true;
