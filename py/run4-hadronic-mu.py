@@ -30,8 +30,7 @@ getAlphaS = lambda Q2: AlphaS(Q2,nlf+1);
 # parameters
 r = HadronicRunner2(m2 = m2, q2 = q2, Delta = 1e-6, nlf = nlf,\
                    pdfs = pdfs, pdfMem = 0, mu02 = mu02, aS = aS,\
-                   #fs = ["Fg0", "Fg1", "Fq1"],\
-                   fs = ["Fg0"],\
+                   fs = ["Fg0", "Fg1", "Fq1"],\
                    fp = "Fc-x_3-q2_1-MSTW2008nlo90cl-DSSV2014.dat")
 r.runMu(x,rMu,Nmu,getAlphaS)
 
