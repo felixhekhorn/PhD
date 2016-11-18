@@ -39,7 +39,10 @@ public:
         //if (this->bjorkenX/z < this->pdf->xMin()) {
         //    printf("x/z out of range: %e\n",this->bjorkenX/z);
         //}
-        return jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
+        dbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
+        // Protect from ps corner cases
+        if (isnan(r) || isinf(r)) return 0.;
+        return r;
     }
 };
 

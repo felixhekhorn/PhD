@@ -31,36 +31,47 @@ class HadronicRunner2:
         self.__qOut = Queue()
         self.__js = []
         self.__ks = []
-        self.__xs = []
-        self.__rmu2s = []
+        self.__params = []
         self.__data = {}
         self.__processes = []
-    # setup default grid
+    # setup x grid
     def _getGridX(self,Nx):
-        if (Nx < 2):
-            raise "invalid argument! Nx > 2!"
+        if (Nx < 2): raise "invalid argument! Nx >= 2!"
 	self.__js = range(Nx)
         self.__ks = range(len(self.fs))
-        self.__xs = [10.**(-4./(Nx-1)*j) for j in self.__js]
+        self.__params = [10.**(-4./(Nx-1)*j) for j in self.__js]
         g = []
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 for k in self.__ks:
-                    g.append({"proj": proj, "j": j, "x": self.__xs[j], "k": k, "f": self.fs[k], "res": np.nan})
+                    g.append({"proj": proj, "j": j, "x": self.__params[j], "k": k, "f": self.fs[k], "res": np.nan})
         return g
-    # setup default grid
-    def _getGridMu(self,x,r,Nmu,getAlphaS):
-        if (Nmu < 2):
-            raise "invalid argument! Nmu > 2!"
-	self.__js = range(Nmu)
+    # setup mu2 grid
+    def _getGridMu2(self,x,r,Nmu2,getAlphaS):
+        if (Nmu2 < 2): raise "invalid argument! Nmu2 >= 2!"
+	self.__js = range(Nmu2)
         self.__ks = range(len(self.fs))
-        self.__rmu2s = [r**(-1.+2./(Nmu-1)*j) for j in self.__js]
+        self.__params = [r**(-1.+2./(Nmu2-1)*j) for j in self.__js]
         g = []
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 for k in self.__ks:
-                    mu2 = self.mu02*self.__rmu2s[j]
+                    mu2 = self.mu02*self.__params[j]
                     g.append({"proj": proj, "x": x, "j": j, "mu2": mu2, "alphaS": getAlphaS(mu2),"k": k, "f": self.fs[k], "res": np.nan})
+        return g
+    # setup m2 grid
+    def _getGridM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
+        if (Nm2 < 2): raise "invalid argument! Nm2 >= 2!"
+	self.__js = range(Nm2)
+        self.__ks = range(len(self.fs))
+        self.__params = [m2min + (m2max-m2min)/(Nm2-1)*j for j in self.__js]
+        g = []
+        for proj in ["G", "L", "P"]:
+            for j in self.__js:
+                for k in self.__ks:
+                    m2 = self.__params[j]
+                    mu2 = getMu2(m2)
+                    g.append({"proj": proj, "x": x, "j": j, "m2": m2, "mu2": mu2, "alphaS": getAlphaS(mu2), "k": k, "f": self.fs[k], "res": np.nan})
         return g
     # start processes
     def _compute(self,g):
@@ -105,10 +116,10 @@ class HadronicRunner2:
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["k"]] = p["res"]
     # write data
-    def _write(self,ar):
+    def _write(self):
         with open(self.fp, "w") as f:
             for j in self.__js:
-                x = ar[j]
+                x = self.__params[j]
                 l = ["%e"%x]
                 data2 = [self.__data["G"][j][k]+self.__data["L"][j][k]*3./2. for k in self.__ks]
                 for k in self.__ks:
@@ -118,24 +129,23 @@ class HadronicRunner2:
                 for k in self.__ks:
                     l.append("%e"%self.__data["P"][j][k])
                 f.write("\t".join(l)+"\n")
+    # compute grid
+    def _run(self,g):
+        if len(g) == 0:
+            print _pwarn(),"no data!"
+            return
+        self._compute(g)
+        self._reorder()
+        self._write()
     # iterate x
     def runX(self,Nx):
-        g = self._getGridX(Nx)
-        if len(g) == 0:
-            print _pwarn(),"no data!"
-            return
-        self._compute(g)
-        self._reorder()
-        self._write(self.__xs)
-    # iterate mu
-    def runMu(self,x,r,Nmu,getAlphaS):
-        g = self._getGridMu(x,r,Nmu,getAlphaS)
-        if len(g) == 0:
-            print _pwarn(),"no data!"
-            return
-        self._compute(g)
-        self._reorder()
-        self._write(self.__rmu2s)
+        self._run(self._getGridX(Nx))
+    # iterate mu2
+    def runMu2(self,x,r,Nmu2,getAlphaS):
+        self._run(self._getGridMu2(x,r,Nmu2,getAlphaS))
+    # iterate m2
+    def runM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
+        self._run(self._getGridM2(x,m2min,m2max,Nm2,getMu2,getAlphaS))
 
 # define worker
 def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
@@ -164,6 +174,7 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
            break
        # compute
        o = objs[p["proj"]]
+       if p.has_key("m2"): o.setM2(p["m2"])
        if p.has_key("mu2"): o.setMu2(p["mu2"])
        if p.has_key("alphaS"): o.setAlphaS(p["alphaS"])
        o.setBjorkenX(p["x"])
