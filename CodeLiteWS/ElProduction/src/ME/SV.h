@@ -11,7 +11,7 @@
  * @param t1
  * @return \f$(S+V)_{G,OK,0\Delta}\f$
  */
-dbl SVOKG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{G,OK}\f$
@@ -21,7 +21,7 @@ dbl SVOKG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{G,OK,1\Delta}\f$
  */
-dbl SVOKDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of \f$(S+V)_{G,OK}\f$
@@ -31,7 +31,7 @@ dbl SVOKDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{G,OK,2\Delta}\f$
  */
-dbl SVOKDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta2G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief \f$(S+V)_{G,QED}\f$
@@ -41,7 +41,7 @@ dbl SVOKDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{G,QED,0\Delta}\f$
  */
-dbl SVQEDG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{G,QED}\f$
@@ -51,7 +51,7 @@ dbl SVQEDG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{G,QED,1\Delta}\f$
  */
-dbl SVQEDDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalization scaling of \f$(S+V)_{G,OK}\f$
@@ -61,7 +61,7 @@ dbl SVQEDDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return renormalization scaling of \f$(S+V)_{G,OK}\f$
  */
-dbl SVOKScaleRG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleRG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorization scaling of \f$(S+V)_{G,OK}\f$
@@ -71,7 +71,7 @@ dbl SVOKScaleRG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{G,OK,0\Delta}\f$
  */
-dbl SVOKScaleFG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of factorization scaling of \f$(S+V)_{G,OK}\f$
@@ -81,7 +81,7 @@ dbl SVOKScaleFG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{G,OK,1\Delta}\f$
  */
-dbl SVOKScaleFDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 /**
  * @brief \f$(S+V)_{L,OK}\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -90,7 +90,7 @@ dbl SVOKScaleFDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{L,OK,0\Delta}\f$
  */
-dbl SVOKL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{L,OK}\f$
@@ -100,7 +100,7 @@ dbl SVOKL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{L,OK,1\Delta}\f$
  */
-dbl SVOKDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of \f$(S+V)_{L,OK}\f$
@@ -110,7 +110,7 @@ dbl SVOKDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{L,OK,2\Delta}\f$
  */
-dbl SVOKDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta2L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief \f$(S+V)_{L,QED}\f$
@@ -120,7 +120,7 @@ dbl SVOKDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{L,QED,0\Delta}\f$
  */
-dbl SVQEDL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{L,QED}\f$
@@ -130,7 +130,7 @@ dbl SVQEDL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{L,QED,1\Delta}\f$
  */
-dbl SVQEDDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalization scaling of \f$(S+V)_{L,OK}\f$
@@ -140,7 +140,7 @@ dbl SVQEDDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return renormalization scaling of \f$(S+V)_{L,OK}\f$
  */
-dbl SVOKScaleRL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleRL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorization scaling of \f$(S+V)_{L,OK}\f$
@@ -150,7 +150,7 @@ dbl SVOKScaleRL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{L,OK,0\Delta}\f$
  */
-dbl SVOKScaleFL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of factorization scaling of \f$(S+V)_{L,OK}\f$
@@ -160,7 +160,7 @@ dbl SVOKScaleFL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{L,OK,1\Delta}\f$
  */
-dbl SVOKScaleFDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 /**
  * @brief \f$(S+V)_{P,OK}\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -169,7 +169,7 @@ dbl SVOKScaleFDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{P,OK,0\Delta}\f$
  */
-dbl SVOKP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{P,OK}\f$
@@ -179,7 +179,7 @@ dbl SVOKP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{P,OK,1\Delta}\f$
  */
-dbl SVOKDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of \f$(S+V)_{P,OK}\f$
@@ -189,7 +189,7 @@ dbl SVOKDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{P,OK,2\Delta}\f$
  */
-dbl SVOKDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKDelta2P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief \f$(S+V)_{P,QED}\f$
@@ -199,7 +199,7 @@ dbl SVOKDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{P,QED,0\Delta}\f$
  */
-dbl SVQEDP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of \f$(S+V)_{P,QED}\f$
@@ -209,7 +209,7 @@ dbl SVQEDP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return \f$(S+V)_{P,QED,1\Delta}\f$
  */
-dbl SVQEDDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVQEDDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalization scaling of \f$(S+V)_{P,OK}\f$
@@ -219,7 +219,7 @@ dbl SVQEDDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return renormalization scaling of \f$(S+V)_{P,OK}\f$
  */
-dbl SVOKScaleRP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleRP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorization scaling of \f$(S+V)_{P,OK}\f$
@@ -229,7 +229,7 @@ dbl SVOKScaleRP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{P,OK,0\Delta}\f$
  */
-dbl SVOKScaleFP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of factorization scaling of \f$(S+V)_{P,OK}\f$
@@ -239,7 +239,7 @@ dbl SVOKScaleFP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return factorization scaling of \f$(S+V)_{P,OK,1\Delta}\f$
  */
-dbl SVOKScaleFDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl SVOKScaleFDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 
 #endif // SV_H_

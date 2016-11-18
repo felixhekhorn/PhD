@@ -9,6 +9,7 @@ import time
 
 import ElProduction
 
+# http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
 
 class HadronicRunner2:

@@ -17,7 +17,7 @@
  * @param t1
  * @return kernel to \f$c^{(1)}_{q}\f$
  */
-dbl cq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cq1G(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief NLO heavy quark contribution
@@ -28,7 +28,7 @@ dbl cq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$c^{(1)}_{q}\f$
  */
-dbl cq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cq1L(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief NLO heavy quark contribution
@@ -39,7 +39,7 @@ dbl cq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$c^{(1)}_{q}\f$
  */
-dbl cq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cq1P(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of NLO heavy quark contribution
@@ -50,7 +50,7 @@ dbl cq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
-dbl cqBarF1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cqBarF1G(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of NLO heavy quark contribution
@@ -61,7 +61,7 @@ dbl cqBarF1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
-dbl cqBarF1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cqBarF1L(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of NLO heavy quark contribution
@@ -72,7 +72,7 @@ dbl cqBarF1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$\bar{c}^{F,(1)}_{q}\f$
  */
-dbl cqBarF1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cqBarF1P(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief NLO light quark contribution
@@ -83,7 +83,7 @@ dbl cqBarF1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$d^{(1)}_{q}\f$
  */
-dbl dq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl dq1G(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief NLO light quark contribution
@@ -94,7 +94,7 @@ dbl dq1G(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$d^{(1)}_{q}\f$
  */
-dbl dq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl dq1L(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief NLO light quark contribution
@@ -105,6 +105,6 @@ dbl dq1L(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel to \f$d^{(1)}_{q}\f$
  */
-dbl dq1P(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl dq1P(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 #endif // NLOq_H_

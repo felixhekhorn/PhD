@@ -9,21 +9,21 @@ for proj in projs:
 
 # build cpp file
 vs={
- "sig": "dbl m2, dbl q2, dbl sp, dbl t1",
- "init": """dbl u1 = -sp-t1;
-dbl s = sp+q2;
-dbl beta = sqrt(1.-4.*m2/s);
-dbl chi = (1.-beta)/(1.+beta);
-dbl betaq = sqrt(1.-4*m2/q2);
-dbl chiq = (betaq-1.)/(betaq+1.);
+ "sig": "cdbl m2, cdbl q2, cdbl sp, cdbl t1",
+ "init": """cdbl u1 = -sp-t1;
+cdbl s = sp+q2;
+cdbl beta = sqrt(1.-4.*m2/s);
+cdbl chi = (1.-beta)/(1.+beta);
+cdbl betaq = sqrt(1.-4*m2/q2);
+cdbl chiq = (betaq-1.)/(betaq+1.);
 dbl r = 0.;
 """,
- "initScale": """dbl u1 = -sp-t1;
+ "initScale": """cdbl u1 = -sp-t1;
 """,
- "initDelta1": """dbl u1 = -sp-t1;
-dbl s = sp+q2;
-dbl beta = sqrt(1.-4.*m2/s);
-dbl chi = (1.-beta)/(1.+beta);
+ "initDelta1": """cdbl u1 = -sp-t1;
+cdbl s = sp+q2;
+cdbl beta = sqrt(1.-4.*m2/s);
+cdbl chi = (1.-beta)/(1.+beta);
 """,
  "final": "return r;"
 };
@@ -45,20 +45,20 @@ for proj in projs:
     vs["proj"] = proj
     for l in rawLs:
         vs[l] = vs[l+proj]
-    tmpl += """dbl SVOK{proj}({sig}) {{
+    tmpl += """cdbl SVOK{proj}({sig}) {{
 {init}
 {SVOK}
 {final}
 }}
 
-dbl SVQED{proj}({sig}) {{
+cdbl SVQED{proj}({sig}) {{
 {init}
 {SVQED}
 {final}
 }}
 """.format(**vs)
     for l in rawLs[2:]:
-        tmpl += (("""dbl %s({sig}) {{
+        tmpl += (("""cdbl %s({sig}) {{
 {%s}
 return {%s};
 }}
@@ -72,7 +72,7 @@ with open("../src/ME/SV.cpp", "w") as f:
 
 # build header file
 vs = {
-  "sig": "dbl m2, dbl q2, dbl sp, dbl t1",
+  "sig": "cdbl m2, cdbl q2, cdbl sp, cdbl t1",
   "params": """ * @param m2 heavy quark mass squared \\f$m^2 > 0\\f$
  * @param q2 virtuality of photon \\f$q^2< 0\\f$
  * @param sp center of mass energy \\f$s' = s - q^2\\f$
@@ -91,56 +91,56 @@ for proj in projs:
 {params}
  * @return \\f$(S+V)_{{{proj},OK,0\\Delta}}\\f$
  */
-dbl SVOK{proj}({sig});
+cdbl SVOK{proj}({sig});
 
 /**
  * @brief Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
  * @return \\f$(S+V)_{{{proj},OK,1\\Delta}}\\f$
  */
-dbl SVOKDelta1{proj}({sig});
+cdbl SVOKDelta1{proj}({sig});
 
 /**
  * @brief double Delta-logs of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
  * @return \\f$(S+V)_{{{proj},OK,2\\Delta}}\\f$
  */
-dbl SVOKDelta2{proj}({sig});
+cdbl SVOKDelta2{proj}({sig});
 
 /**
  * @brief \\f$(S+V)_{{{proj},QED}}\\f$
 {params}
  * @return \\f$(S+V)_{{{proj},QED,0\\Delta}}\\f$
  */
-dbl SVQED{proj}({sig});
+cdbl SVQED{proj}({sig});
 
 /**
  * @brief Delta-logs of \\f$(S+V)_{{{proj},QED}}\\f$
 {params}
  * @return \\f$(S+V)_{{{proj},QED,1\\Delta}}\\f$
  */
-dbl SVQEDDelta1{proj}({sig});
+cdbl SVQEDDelta1{proj}({sig});
 
 /**
  * @brief renormalization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
  * @return renormalization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
  */
-dbl SVOKScaleR{proj}({sig});
+cdbl SVOKScaleR{proj}({sig});
 
 /**
  * @brief factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
  * @return factorization scaling of \\f$(S+V)_{{{proj},OK,0\\Delta}}\\f$
  */
-dbl SVOKScaleF{proj}({sig});
+cdbl SVOKScaleF{proj}({sig});
 
 /**
  * @brief Delta-logs of factorization scaling of \\f$(S+V)_{{{proj},OK}}\\f$
 {params}
  * @return factorization scaling of \\f$(S+V)_{{{proj},OK,1\\Delta}}\\f$
  */
-dbl SVOKScaleFDelta1{proj}({sig});
+cdbl SVOKScaleFDelta1{proj}({sig});
 """.format(**vs)
 
 tmpl += """

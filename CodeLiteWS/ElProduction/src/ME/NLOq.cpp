@@ -4,8 +4,8 @@
 
 using namespace Color;
 
-#define cq1(proj) dbl cq1##proj(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {\
-    dbl n = Kqgg * NC * CF;\
+#define cq1(proj) cdbl cq1##proj(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1) {\
+    cdbl n = Kqgg * NC * CF;\
     return (m2/(4.*M_PI)) * n * (IntA##proj##1(m2,q2,sp,s4,t1))/(sp*sp);\
 }
 
@@ -13,8 +13,8 @@ cq1(G)
 cq1(L)
 cq1(P)
 
-#define cqBarF1(proj) dbl cqBarF1##proj(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {\
-    dbl n = Kqgg * NC * CF;\
+#define cqBarF1(proj) cdbl cqBarF1##proj(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1) {\
+    cdbl n = Kqgg * NC * CF;\
     return (m2/(4.*M_PI)) * n * (IntA##proj##1ScaleF(m2,q2,sp,s4,t1))/(sp*sp);\
 }
 
@@ -23,8 +23,8 @@ cqBarF1(L)
 cqBarF1(P)
 
 
-#define dq1(proj) dbl dq1##proj(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1) {\
-    dbl n = Kqgg * NC * CF;\
+#define dq1(proj) cdbl dq1##proj(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1) {\
+    cdbl n = Kqgg * NC * CF;\
     return (m2/(4.*M_PI)) * n * (IntA##proj##2(m2,q2,sp,s4,t1))/(sp*sp);\
 }
 

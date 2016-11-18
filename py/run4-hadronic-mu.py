@@ -24,7 +24,7 @@ aS = AlphaS(mu02, nlf+1)
 pdfs = {"G": "MSTW2008nlo90cl", "L": "MSTW2008nlo90cl", "P": "DSSV2014"}
 
 rMu = 10
-Nmu = 101
+Nmu = 21
 getAlphaS = lambda Q2: AlphaS(Q2,nlf+1);
 
 # parameters
@@ -42,4 +42,4 @@ r.q2 = q2
 r.mu02 = mu02
 r.aS = aS
 r.fp = "Fc-x_1-q2_2-MSTW2008nlo90cl-DSSV2014.dat"
-r.runMu(x,rMu,Nmu,getAlphaS)
+#r.runMu(x,rMu,Nmu,getAlphaS)

@@ -72,7 +72,10 @@ public:
             dbl eL = getElectricCharge(q);
             fqs += (this->pdf->xfxQ2((int)q,y,this->muF2) + this->pdf->xfxQ2(-((int)q),y,this->muF2))*(eH*eH*meCq1 + eL*eL*meDq1);
         }
-        return jac * 1./this->z * fqs;
+        dbl r = jac * 1./this->z * fqs;
+        // Protect from ps corner cases
+        if (isnan(r) || isinf(r)) return 0.;
+        return r;
     }
 };
 

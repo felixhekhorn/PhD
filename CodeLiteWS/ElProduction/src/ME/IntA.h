@@ -12,7 +12,7 @@
  * @param t1
  * @return \f$\int A_{G,1}\,d\Omega\f$
  */
-dbl IntAG1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAG1(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief scaling part of \f$\int A_{G,1}\,d\Omega\f$
@@ -23,7 +23,7 @@ dbl IntAG1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return scaling part of \f$\int A_{G,1}\,d\Omega\f$
  */
-dbl IntAG1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAG1ScaleF(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$\int A_{G,2}\,d\Omega\f$
@@ -34,7 +34,7 @@ dbl IntAG1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$\int A_{G,2}\,d\Omega\f$
  */
-dbl IntAG2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAG2(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$\int A_{L,1}\,d\Omega\f$
@@ -45,7 +45,7 @@ dbl IntAG2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$\int A_{L,1}\,d\Omega\f$
  */
-dbl IntAL1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAL1(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief scaling part of \f$\int A_{L,1}\,d\Omega\f$
@@ -56,7 +56,7 @@ dbl IntAL1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return scaling part of \f$\int A_{L,1}\,d\Omega\f$
  */
-dbl IntAL1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAL1ScaleF(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$\int A_{L,2}\,d\Omega\f$
@@ -67,7 +67,7 @@ dbl IntAL1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$\int A_{L,2}\,d\Omega\f$
  */
-dbl IntAL2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAL2(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$\int \Delta A_{1}\,d\Omega\f$
@@ -78,7 +78,7 @@ dbl IntAL2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$\int \Delta A_{1}\,d\Omega\f$
  */
-dbl IntAP1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAP1(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief scaling part of \f$\int \Delta A_{1}\,d\Omega\f$
@@ -89,7 +89,7 @@ dbl IntAP1(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return scaling part of \f$\int \Delta A_{1}\,d\Omega\f$
  */
-dbl IntAP1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAP1ScaleF(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$\int \Delta A_{2}\,d\Omega\f$
@@ -100,6 +100,6 @@ dbl IntAP1ScaleF(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$\int \Delta A_{2}\,d\Omega\f$
  */
-dbl IntAP2(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntAP2(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 #endif // IntA_H_

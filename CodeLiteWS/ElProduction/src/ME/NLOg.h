@@ -19,7 +19,7 @@
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cg1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief S+V part of NLO gluon contribution
@@ -29,7 +29,7 @@ dbl cg1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cg1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief S+V part of NLO gluon contribution
@@ -39,7 +39,7 @@ dbl cg1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cg1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of S+V part of NLO gluon contribution
@@ -49,7 +49,7 @@ dbl cg1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cg1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of S+V part of NLO gluon contribution
@@ -59,7 +59,7 @@ dbl cg1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cg1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-logs of S+V part of NLO gluon contribution
@@ -69,7 +69,7 @@ dbl cg1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cg1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of S+V part of NLO gluon contribution
@@ -79,7 +79,7 @@ dbl cg1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,2\Delta}\f$
  */
-dbl cg1SVDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta2G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of S+V part of NLO gluon contribution
@@ -89,7 +89,7 @@ dbl cg1SVDelta2G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,2\Delta}\f$
  */
-dbl cg1SVDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta2L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief double Delta-logs of S+V part of NLO gluon contribution
@@ -99,7 +99,7 @@ dbl cg1SVDelta2L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(S+V)}_{g,2\Delta}\f$
  */
-dbl cg1SVDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cg1SVDelta2P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
@@ -109,7 +109,7 @@ dbl cg1SVDelta2P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarR1SVG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
@@ -119,7 +119,7 @@ dbl cgBarR1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarR1SVL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief renormalisation logs of S+V part of NLO gluon contribution
@@ -129,7 +129,7 @@ dbl cgBarR1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{R,(1),(S+V)}_{g}\f$
  */
-dbl cgBarR1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarR1SVP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorisation logs of S+V part of NLO gluon contribution
@@ -139,7 +139,7 @@ dbl cgBarR1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cgBarF1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVG(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorisation logs of S+V part of NLO gluon contribution
@@ -149,7 +149,7 @@ dbl cgBarF1SVG(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cgBarF1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVL(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief factorisation logs of S+V part of NLO gluon contribution
@@ -159,7 +159,7 @@ dbl cgBarF1SVL(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,0\Delta}\f$
  */
-dbl cgBarF1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-log of factorisation logs of S+V part of NLO gluon contribution
@@ -169,7 +169,7 @@ dbl cgBarF1SVP(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cgBarF1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-log of factorisation logs of S+V part of NLO gluon contribution
@@ -179,7 +179,7 @@ dbl cgBarF1SVDelta1G(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cgBarF1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 /**
  * @brief Delta-log of factorisation logs of S+V part of NLO gluon contribution
@@ -189,7 +189,7 @@ dbl cgBarF1SVDelta1L(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(S+V)}_{g,1\Delta}\f$
  */
-dbl cgBarF1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
+cdbl cgBarF1SVDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
 ///@}
 
@@ -205,7 +205,7 @@ dbl cgBarF1SVDelta1P(dbl m2, dbl q2, dbl sp, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(H)}_{g}\f$
  */
-dbl cg1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cg1HG(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief H part of NLO gluon contribution
@@ -216,7 +216,7 @@ dbl cg1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(H)}_{g}\f$
  */
-dbl cg1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cg1HL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief H part of NLO gluon contribution
@@ -227,7 +227,7 @@ dbl cg1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel of \f$c^{(1),(H)}_{g}\f$
  */
-dbl cg1HP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cg1HP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of H part of NLO gluon contribution
@@ -238,7 +238,7 @@ dbl cg1HP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(H)}_{g}\f$
  */
-dbl cgBarF1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cgBarF1HG(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of H part of NLO gluon contribution
@@ -249,7 +249,7 @@ dbl cgBarF1HG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(H)}_{g}\f$
  */
-dbl cgBarF1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cgBarF1HL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief factorisation logs of H part of NLO gluon contribution
@@ -260,7 +260,7 @@ dbl cgBarF1HL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return kernel of \f$\bar {c}^{F,(1),(H)}_{g}\f$
  */
-dbl cgBarF1HP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl cgBarF1HP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 ///@}
 

@@ -4,57 +4,42 @@
 tmpl = """#include "../config.h"
 
 #define Pi M_PI
-// protect from ps corner cases
-#define psCC if (isnan(r)) return 0.; return r;
 
-dbl IntROKfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntROKfiniteG(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-    
-dbl r = {IntROKfiniteG};
-psCC
+return {IntROKfiniteG};
 }}
 
-dbl IntROKfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntROKfiniteL(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-    
-dbl r = {IntROKfiniteL};
-psCC
+return {IntROKfiniteL};
 }}
 
-dbl IntROKfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntROKfiniteP(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-
-dbl r = {IntROKfiniteP};
-psCC
+return {IntROKfiniteP};
 }}
 
-dbl IntRQEDfiniteG(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntRQEDfiniteG(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-    
-dbl r = {IntRQEDfiniteG};
-psCC
+return {IntRQEDfiniteG};
 }}
 
-dbl IntRQEDfiniteL(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntRQEDfiniteL(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-    
-dbl r = {IntRQEDfiniteL};
-psCC
+return {IntRQEDfiniteL};
 }}
 
-dbl IntRQEDfiniteP(dbl m2,dbl q2,dbl sp,dbl s4,dbl t1) {{
+cdbl IntRQEDfiniteP(cdbl m2,cdbl q2,cdbl sp,cdbl s4,cdbl t1) {{
 {init}
-    
-dbl r = {IntRQEDfiniteP};
-psCC
+return {IntRQEDfiniteP};
 }}"""
 
 fs={
-  "init": """
-dbl u1 = s4-sp-t1;
-dbl s = sp+q2;
-dbl u1p = u1-q2;
-dbl t = t1+m2;""",
+  "init": """cdbl u1 = s4-sp-t1;
+cdbl s = sp+q2;
+cdbl u1p = u1-q2;
+cdbl t = t1+m2;""",
 };
 for l in {"IntROKfiniteG","IntROKfiniteL","IntROKfiniteP", "IntRQEDfiniteG","IntRQEDfiniteL","IntRQEDfiniteP"}:
 	with open(l+".c","r") as f:

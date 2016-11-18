@@ -15,7 +15,7 @@
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @return \f$c_{g,0}\f$
  */
-dbl cg0G(dbl m2, dbl q2, dbl sp);
+cdbl cg0G(cdbl m2, cdbl q2, cdbl sp);
 
 /**
  * @brief LO contribution
@@ -24,7 +24,7 @@ dbl cg0G(dbl m2, dbl q2, dbl sp);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @return \f$c_{g,0}\f$
  */
-dbl cg0L(dbl m2, dbl q2, dbl sp);
+cdbl cg0L(cdbl m2, cdbl q2, cdbl sp);
 
 /**
  * @brief LO contribution
@@ -33,7 +33,7 @@ dbl cg0L(dbl m2, dbl q2, dbl sp);
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @return \f$c_{g,0}\f$
  */
-dbl cg0P(dbl m2, dbl q2, dbl sp);
+cdbl cg0P(cdbl m2, cdbl q2, cdbl sp);
 
 
 #endif // Born_H_

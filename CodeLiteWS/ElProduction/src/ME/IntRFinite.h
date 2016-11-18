@@ -12,7 +12,7 @@
  * @param t1
  * @return \f$R_{G,OK,finite}\f$
  */
-dbl IntROKfiniteG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntROKfiniteG(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$R_{L,OK,finite}\f$
@@ -23,7 +23,7 @@ dbl IntROKfiniteG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$R_{L,OK,finite}\f$
  */
-dbl IntROKfiniteL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntROKfiniteL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$R_{P,OK,finite}\f$
@@ -34,7 +34,7 @@ dbl IntROKfiniteL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$R_{P,OK,finite}\f$
  */
-dbl IntROKfiniteP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntROKfiniteP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$R_{G,QED,finite}\f$
@@ -45,7 +45,7 @@ dbl IntROKfiniteP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$R_{G,QED,finite}\f$
  */
-dbl IntRQEDfiniteG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntRQEDfiniteG(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$R_{L,QED,finite}\f$
@@ -56,7 +56,7 @@ dbl IntRQEDfiniteG(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$R_{L,QED,finite}\f$
  */
-dbl IntRQEDfiniteL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntRQEDfiniteL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 /**
  * @brief \f$R_{P,QED,finite}\f$
@@ -67,6 +67,6 @@ dbl IntRQEDfiniteL(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
  * @param t1
  * @return \f$R_{P,QED,finite}\f$
  */
-dbl IntRQEDfiniteP(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+cdbl IntRQEDfiniteP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 #endif // IntRFinite_H_
