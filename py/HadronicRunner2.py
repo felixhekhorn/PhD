@@ -11,6 +11,7 @@ import ElProduction
 
 # http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
+def _pinfo(): return "[INFO]"
 
 class HadronicRunner2:
     def __init__(self, m2, q2, Delta, nlf, pdfs, pdfMem, mu02, aS, fs, fp, nProcesses = cpu_count()):
@@ -30,8 +31,10 @@ class HadronicRunner2:
         self.__qIn = JoinableQueue()
         self.__qOut = Queue()
         self.__js = []
+        self.__jps = []
         self.__ks = []
         self.__params = []
+        self.__paramps = []
         self.__data = {}
         self.__processes = []
     # setup x grid
@@ -55,9 +58,10 @@ class HadronicRunner2:
         g = []
         for proj in ["G", "L", "P"]:
             for j in self.__js:
+                mu2 = self.mu02*self.__params[j]
+                aS = getAlphaS(mu2)
                 for k in self.__ks:
-                    mu2 = self.mu02*self.__params[j]
-                    g.append({"proj": proj, "x": x, "j": j, "mu2": mu2, "alphaS": getAlphaS(mu2),"k": k, "f": self.fs[k], "res": np.nan})
+                    g.append({"proj": proj, "x": x, "j": j, "mu2": mu2, "alphaS": aS,"k": k, "f": self.fs[k], "res": np.nan})
         return g
     # setup m2 grid
     def _getGridM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
@@ -68,14 +72,40 @@ class HadronicRunner2:
         g = []
         for proj in ["G", "L", "P"]:
             for j in self.__js:
+                m2 = self.__params[j]
+                mu2 = getMu2(m2)
+                aS = getAlphaS(mu2)
                 for k in self.__ks:
-                    m2 = self.__params[j]
-                    mu2 = getMu2(m2)
-                    g.append({"proj": proj, "x": x, "j": j, "m2": m2, "mu2": mu2, "alphaS": getAlphaS(mu2), "k": k, "f": self.fs[k], "res": np.nan})
+                    g.append({"proj": proj, "x": x, "j": j, "m2": m2, "mu2": mu2, "alphaS": aS, "k": k, "f": self.fs[k], "res": np.nan})
+        return g
+    # setup muR2-muF2 grid
+    def _getGridMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2,getAlphaS):
+        if (NmuF2 < 2 or NmuR2 < 2): raise "invalid argument! NmuF2 >= 2, NmuR2 >= 2!"
+	self.__js = range(NmuR2)
+	self.__jps = range(NmuF2)
+        self.__ks = range(len(self.fs))
+        self.__params = [rR**(-1.+2./(NmuR2-1)*j) for j in self.__js]
+        self.__paramps = [rF**(-1.+2./(NmuF2-1)*jp) for jp in self.__jps]
+        g = []
+        for proj in ["G", "L", "P"]:
+            for j in self.__js:
+                muR2 = self.mu02*self.__params[j]
+                aS = getAlphaS(muR2)
+                for jp in self.__jps:
+                    muF2 = self.mu02*self.__paramps[jp]
+                    for k in self.__ks:
+                        g.append({"proj": proj, "x": x, "j": j, "muR2": muR2, "alphaS": aS, "jp": jp, "muF2": muF2,"k": k, "f": self.fs[k], "res": np.nan})
         return g
     # start processes
     def _compute(self,g):
         self.__qIn = JoinableQueue()
+        # fill
+        for e in g:
+            self.__qIn.put(e)
+        print _pinfo(),"computing %d elements"%self.__qIn.qsize()
+        # add EOF
+        for n in xrange(self.nProcesses):
+            self.__qIn.put(None)
         self.__qOut = Queue()
         # start processes
         oArgs = {
@@ -90,12 +120,6 @@ class HadronicRunner2:
         for j in xrange(self.nProcesses):
             processes.append(Process(target=_threadWorker, args=threadArgs))
         [p.start() for p in processes]
-        # fill
-        for e in g:
-            self.__qIn.put(e)
-        # add EOF
-        for n in xrange(self.nProcesses):
-            self.__qIn.put(None)
         # run
         try:
             self.__qIn.join()
@@ -104,19 +128,26 @@ class HadronicRunner2:
             print "\n",_pwarn(),"aborting at",self.__qOut.qsize(),"/",lenParams
             self.__qIn.close()
         sys.stdout.write("\n")
-    # reorder
-    def _reorder(self):
+    # reorder in 1D
+    def _reorder1(self,l):
         self.__data = {}
         self.__data["G"] = [[np.nan for k in self.__ks] for j in self.__js]
         self.__data["L"] = [[np.nan for k in self.__ks] for j in self.__js]
         self.__data["P"] = [[np.nan for k in self.__ks] for j in self.__js]
-        while True:
-            if self.__qOut.empty():
-                break
+        while g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["k"]] = p["res"]
-    # write data
-    def _write(self):
+    # reorder in 2D
+    def _reorder2(self,l):
+        self.__data = {}
+        self.__data["G"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
+        self.__data["L"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
+        self.__data["P"] = [[[np.inf for k in self.__ks] for jp in self.__jps] for j in self.__js]
+        for g in range(l):
+            p = self.__qOut.get()
+            self.__data[p["proj"]][p["j"]][p["jp"]][p["k"]] = p["res"]
+    # write data for 1D
+    def _write1(self):
         with open(self.fp, "w") as f:
             for j in self.__js:
                 x = self.__params[j]
@@ -129,23 +160,53 @@ class HadronicRunner2:
                 for k in self.__ks:
                     l.append("%e"%self.__data["P"][j][k])
                 f.write("\t".join(l)+"\n")
-    # compute grid
-    def _run(self,g):
-        if len(g) == 0:
+    # write data for 2D
+    def _write2(self):
+        with open(self.fp, "w") as f:
+            for j in self.__js:
+                x = self.__params[j]
+                for jp in self.__jps:
+                    xp = self.__paramps[jp]
+                    l = ["%e"%x, "%e"%xp]
+                    data2 = [self.__data["G"][j][jp][k]+self.__data["L"][j][jp][k]*3./2. for k in self.__ks]
+                    for k in self.__ks:
+                        l.append("%e"%data2[k])
+                    for k in self.__ks:
+                        l.append("%e"%self.__data["L"][j][jp][k])
+                    for k in self.__ks:
+                        l.append("%e"%self.__data["P"][j][jp][k])
+                    f.write("\t".join(l)+"\n")
+                f.write("\n")
+    # compute grid in 1D
+    def _run1(self,g):
+        l = len(g)
+        if l == 0:
             print _pwarn(),"no data!"
             return
         self._compute(g)
-        self._reorder()
-        self._write()
+        self._reorder1(l)
+        self._write1()
+    # compute grid in 2D
+    def _run2(self,g):
+        l = len(g)
+        if l == 0:
+            print _pwarn(),"no data!"
+            return
+        self._compute(g)
+        self._reorder2(l)
+        self._write2()
     # iterate x
     def runX(self,Nx):
-        self._run(self._getGridX(Nx))
+        self._run1(self._getGridX(Nx))
     # iterate mu2
     def runMu2(self,x,r,Nmu2,getAlphaS):
-        self._run(self._getGridMu2(x,r,Nmu2,getAlphaS))
+        self._run1(self._getGridMu2(x,r,Nmu2,getAlphaS))
     # iterate m2
     def runM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
-        self._run(self._getGridM2(x,m2min,m2max,Nm2,getMu2,getAlphaS))
+        self._run1(self._getGridM2(x,m2min,m2max,Nm2,getMu2,getAlphaS))
+    # iterate muR2 and muF2
+    def runMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2,getAlphaS):
+        self._run2(self._getGridMuR2MuF2(x,rR,NmuR2,rF,NmuF2,getAlphaS))
 
 # define worker
 def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
@@ -176,13 +237,16 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
        o = objs[p["proj"]]
        if p.has_key("m2"): o.setM2(p["m2"])
        if p.has_key("mu2"): o.setMu2(p["mu2"])
-       if p.has_key("alphaS"): o.setAlphaS(p["alphaS"])
+       if p.has_key("muR2"): o.setMuR2(p["muR2"])
+       if p.has_key("muF2"): o.setMuF2(p["muF2"])
+       if p.has_key("alphaS"): o.setAlphaS(p["alphaS"]);
        o.setBjorkenX(p["x"])
        f = p["f"]
-       if  "rand" == f: p["res"] = np.random.rand(); time.sleep(p["res"])
+       if  "rand" == f: p["res"] = np.random.random_sample(); time.sleep(p["res"])
        elif "Fg0" == f: p["res"] = o.Fg0()
        elif "Fg1" == f: p["res"] = o.Fg1()
        elif "Fq1" == f: p["res"] = o.Fq1()
+       if np.isnan(p["res"]): print _pwarn(), "NaN result: ",p
        qo.put(p)
        qi.task_done()
 
