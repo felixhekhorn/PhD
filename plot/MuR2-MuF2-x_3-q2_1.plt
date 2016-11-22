@@ -7,7 +7,7 @@ set xlabel "µ_R^2/µ_0^2 []"
 set ylabel "µ_F^2/µ_0^2 []"
 set logscale x
 set logscale y
-set logscale z
+#set logscale z
 
 set contour
 
@@ -32,7 +32,7 @@ set title "F^1_{2,g}(µ_R^2,µ_F^2)/F^1_{2,g}(µ_0^2,µ_0^2) at x=1e-3,Q^2=1e1"
 set out "./img/Fc-muR2-muF2-x_3-q2_1-NLOg-2.png"
 splot    f  u 1:2:(($4)/word(mid,4)) w l t ""
 
-set title "F^L_{2,g}(µ_R^2,µ_F^2)/F^L_{2,g}(µ_0^2,µ_0^2) at x=1e-3,Q^2=1e1"
+set title "F^1_{L,g}(µ_R^2,µ_F^2)/F^1_{L,g}(µ_0^2,µ_0^2) at x=1e-3,Q^2=1e1"
 set out "./img/Fc-muR2-muF2-x_3-q2_1-NLOg-L.png"
 splot    f  u 1:2:(($7)/word(mid,7)) w l t ""
 

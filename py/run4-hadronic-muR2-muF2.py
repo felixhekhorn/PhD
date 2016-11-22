@@ -33,7 +33,7 @@ r = HadronicRunner2(m2 = m2, q2 = q2, Delta = 1e-6, nlf = nlf,\
                    fs = ["Fg0", "Fg1", "Fq1"],\
                    #fs = ["Fg0", "rand", "rand"],\
                    fp = "Fc-muR2-muF2-x_3-q2_1-MSTW2008nlo90cl-DSSV2014.dat")
-r.runMuR2MuF2(x,rMu,Nmu,rMu,Nmu,getAlphaS)
+#r.runMuR2MuF2(x,rMu,Nmu,rMu,Nmu,getAlphaS)
 
 q2 = -1e2
 x = 1e-1
@@ -43,4 +43,4 @@ r.q2 = q2
 r.mu02 = mu02
 r.aS = aS
 r.fp = "Fc-muR2-muF2-x_1-q2_2-MSTW2008nlo90cl-DSSV2014.dat"
-#r.runMuR2MuF2(x,rMu,Nmu,rMu,Nmu,getAlphaS)
+r.runMuR2MuF2(x,rMu,Nmu,rMu,Nmu,getAlphaS)
