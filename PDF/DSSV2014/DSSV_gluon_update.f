@@ -121,7 +121,7 @@ C...
 C
 C---------------------------
       SUBROUTINE DSSVINI(RPATH,IMEMBER)
-cf2py intent(in) RPATH
+cf2py intent(in) PATH
 cf2py intent(in) IMEMBER
 C---------------------------
       IMPLICIT NONE

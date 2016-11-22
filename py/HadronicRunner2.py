@@ -96,6 +96,21 @@ class HadronicRunner2:
                     for k in self.__ks:
                         g.append({"proj": proj, "x": x, "j": j, "muR2": muR2, "alphaS": aS, "jp": jp, "muF2": muF2,"k": k, "f": self.fs[k], "res": np.nan})
         return g
+    # setup pdf grid
+    def _getGridPdf(self,Nx,proj, pdf, Npdfmem):
+        if (Nx < 2): raise "invalid argument! Nx >= 2!"
+        if (Npdfmem < 0): raise "invalid argument! Npdfmem >= 0!"
+	self.__js = range(Nx)
+        self.__jps = range(Npdfmem+1)
+        self.__ks = range(len(self.fs))
+        self.__params = [10.**(-4./(Nx-1)*j) for j in self.__js]
+        g = []
+        for j in self.__js:
+            x = self.__params[j]
+            for k in self.__ks:
+                for pdfMem in self.__jps:
+                    g.append({"proj": proj, "j": j, "x": x, "k": k, "f": self.fs[k], "pdf": pdf, "pdfMem": pdfMem, "res": np.nan})
+        return g
     # start processes
     def _compute(self,g):
         self.__qIn = JoinableQueue()
@@ -142,10 +157,19 @@ class HadronicRunner2:
         self.__data = {}
         self.__data["G"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
         self.__data["L"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
-        self.__data["P"] = [[[np.inf for k in self.__ks] for jp in self.__jps] for j in self.__js]
+        self.__data["P"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
         for g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["jp"]][p["k"]] = p["res"]
+    # reorder in pdf data
+    def _reorderPdf(self,l):
+        self.__data = {}
+        self.__data["G"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
+        self.__data["L"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
+        self.__data["P"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
+        for g in range(l):
+            p = self.__qOut.get()
+            self.__data[p["proj"]][p["j"]][p["k"]][p["pdfMem"]] = p["res"]
     # write data for 1D
     def _write1(self):
         with open(self.fp, "w") as f:
@@ -177,6 +201,18 @@ class HadronicRunner2:
                         l.append("%e"%self.__data["P"][j][jp][k])
                     f.write("\t".join(l)+"\n")
                 f.write("\n")
+    # write data for pdf data
+    def _writePdf(self,proj):
+        with open(self.fp, "w") as f:
+            for j in self.__js:
+                x = self.__params[j]
+                l = ["%e"%x]
+                d = self.__data[proj][j]
+                for k in self.__ks:
+                    l.append("%e"%np.min(d[k]))
+                    l.append("%e"%(d[k][0]))
+                    l.append("%e"%np.max(d[k]))
+                f.write("\t".join(l)+"\n")
     # compute grid in 1D
     def _run1(self,g):
         l = len(g)
@@ -207,6 +243,15 @@ class HadronicRunner2:
     # iterate muR2 and muF2
     def runMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2,getAlphaS):
         self._run2(self._getGridMuR2MuF2(x,rR,NmuR2,rF,NmuF2,getAlphaS))
+    def runPdf(self,Nx,proj, pdf, Npdfmem):
+        g = self._getGridPdf(Nx,proj, pdf, Npdfmem)
+        l = len(g)
+        if l == 0:
+            print _pwarn(),"no data!"
+            return
+        self._compute(g)
+        self._reorderPdf(l)
+        self._writePdf(proj)
 
 # define worker
 def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
@@ -239,7 +284,8 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
        if p.has_key("mu2"): o.setMu2(p["mu2"])
        if p.has_key("muR2"): o.setMuR2(p["muR2"])
        if p.has_key("muF2"): o.setMuF2(p["muF2"])
-       if p.has_key("alphaS"): o.setAlphaS(p["alphaS"]);
+       if p.has_key("alphaS"): o.setAlphaS(p["alphaS"])
+       if p.has_key("pdf") and p.has_key("pdfMem"): o.setPdf(p["pdf"],p["pdfMem"])
        o.setBjorkenX(p["x"])
        f = p["f"]
        if  "rand" == f: p["res"] = np.random.random_sample(); time.sleep(p["res"])

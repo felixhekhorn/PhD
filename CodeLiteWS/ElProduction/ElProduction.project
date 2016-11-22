@@ -57,7 +57,7 @@
     <File Name="src/Timer.h"/>
     <File Name="src/Timer.cpp"/>
   </VirtualDirectory>
-  <Settings Type="Executable">
+  <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
@@ -103,12 +103,8 @@
       <AdditionalRules>
         <CustomPostBuild/>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
-	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-
-$(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO
-	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
-</CustomPreBuild>
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
+	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -154,11 +150,9 @@ $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(Wo
       <AdditionalRules>
         <CustomPostBuild/>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
 	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-
-$(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO
-	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO</CustomPreBuild>
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -199,11 +193,8 @@ $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(Wo
       <AdditionalRules>
         <CustomPostBuild/>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO
-	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-
-$(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO: $(IntermediateDirectory)/.d $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO
-	@test -L $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO || ln -s $(WorkspacePath)/../PDF/DSSV2014_src/DSSV_GLUON_UPDATE.NLO $(IntermediateDirectory)/DSSV_GLUON_UPDATE.NLO</CustomPreBuild>
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
+	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

@@ -20,13 +20,16 @@
 
 using namespace std;
 
-/** @brief shorthand */
+/** @name shorthands */
+///@{
+/** @brief int shorthand */
 typedef unsigned int uint;
-/** @brief shorthand */
+/** @brief string shorthand */
 typedef string str;
 
 /** @brief define floating point precision */
 typedef double dbl;
+/** @brief define floating point precision */
 typedef const double cdbl;
 
 /** @brief function pointer */
@@ -35,14 +38,19 @@ typedef cdbl (*fPtr3dbl)(cdbl m2, cdbl q2, cdbl sp);
 typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 /** @brief function pointer */
 typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+///@}
 
-// MMa functions can be treated as macros
+/** @name Mathematica functions
+ * functions can be treated as macros
+ */
+///@{
 /** @brief MMa port */
 #define Power(a,b) pow(a,b)
 /** @brief MMa port */
 #define Log(a) log(a)
 /** @brief MMa port */
 #define Sqrt(a) sqrt(a)
+///@}
 
 /** @brief factor in front of fermion loop excluding the \f$n_{lf}\f$ - see eq. (3.7) */
 #define fermionLoopFactor 2./3.*(1./(4.*4.*M_PI*M_PI))

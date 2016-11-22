@@ -36,18 +36,19 @@ int main(int argc, char **argv) {
     ElProduction oG(m2,q2,Delta,G,nlf);
     ElProduction oL(m2,q2,Delta,L,nlf);
     ElProduction oP(m2,q2,Delta,P,nlf);
-    /*oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
     oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
     oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
+    uint N = 11;
     for (uint j = 0; j < N; ++j) {
         dbl x = pow(10,-4./(100.)*(49.+(dbl)j));
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
         dbl g = oG.Fg0();
         dbl l = oL.Fg0();
-        dbl p = oP.Fq1();
+        dbl p = oP.Fg0();
         printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
-    }*/
-    uint N = 11;
+    }
+    /*uint N = 11;
     for (uint j = 0; j < N; ++j) {
         //dbl q2 = -pow(10.,0.-3.*(dbl)j/(N-1));
         dbl eta = pow(10.,-3.+1.*(dbl)j/((dbl)std::max((uint)1,N-1)));
@@ -58,7 +59,7 @@ int main(int argc, char **argv) {
         dbl l = 1/0.;//oL.cg0();
         dbl p = 1/0.;
         printf("%e\t%e\t%e\t%e\n",eta,g,l,p);
-    }
+    }*/
     /*Timer::logAll(cout);
     Timer::deleteAll();*/
 	return EXIT_SUCCESS;
