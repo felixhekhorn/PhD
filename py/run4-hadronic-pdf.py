@@ -23,7 +23,7 @@ mu02 = 4.*m2 - q2
 aS = AlphaS(mu02, nlf+1)
 pdfs = {"G": "MSTW2008nlo90cl", "L": "MSTW2008nlo90cl", "P": "DSSV2014"}
 
-Nx = 11
+Nx = 21
 getAlphaS = lambda muR2: AlphaS(muR2,nlf+1);
 
 # parameters
@@ -32,7 +32,7 @@ r = HadronicRunner2(m2 = m2, q2 = q2, Delta = 1e-6, nlf = nlf,\
                    fs = ["Fg0", "Fg1", "Fq1"],\
                    #fs = ["Fg0", "rand"],\
                    fp = "FPc-pdf-q2_1-DSSV2014.dat")
-r.runPdf(Nx,"P","DSSV2014", 22)
+#r.runPdf(Nx,"P","DSSV2014", 22)
 
 q2 = -1e2
 x = 1e-1
@@ -42,4 +42,4 @@ r.q2 = q2
 r.mu02 = mu02
 r.aS = aS
 r.fp = "FPc-pdf-q2_2-DSSV2014.dat"
-#r.runPdf(Nx,"P","DSSV2014", 22)
+r.runPdf(Nx,"P","DSSV2014", 22)

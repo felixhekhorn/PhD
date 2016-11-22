@@ -8,7 +8,7 @@ dbl int1D(gsl_function* F) {
     size_t calls = 10000;
     dbl res,err;
     gsl_integration_workspace *w = gsl_integration_workspace_alloc(calls);
-    gsl_integration_qag(F, 0, 1., 1e-6, 1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
+    gsl_integration_qag(F, 0, 1., 5e-6, 1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
     gsl_integration_workspace_free(w);
     //reNevals = w->size;
     //printf("int1D: res: %e, err: %e\n",res,err);

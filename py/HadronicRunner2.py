@@ -144,29 +144,32 @@ class HadronicRunner2:
             self.__qIn.close()
         sys.stdout.write("\n")
     # reorder in 1D
-    def _reorder1(self,l):
+    def _reorder1(self):
         self.__data = {}
         self.__data["G"] = [[np.nan for k in self.__ks] for j in self.__js]
         self.__data["L"] = [[np.nan for k in self.__ks] for j in self.__js]
         self.__data["P"] = [[np.nan for k in self.__ks] for j in self.__js]
+        l = self.__qOut.qsize()
         while g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["k"]] = p["res"]
     # reorder in 2D
-    def _reorder2(self,l):
+    def _reorder2(self):
         self.__data = {}
         self.__data["G"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
         self.__data["L"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
         self.__data["P"] = [[[np.nan for k in self.__ks] for jp in self.__jps] for j in self.__js]
+        l = self.__qOut.qsize()
         for g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["jp"]][p["k"]] = p["res"]
     # reorder in pdf data
-    def _reorderPdf(self,l):
+    def _reorderPdf(self):
         self.__data = {}
         self.__data["G"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
         self.__data["L"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
         self.__data["P"] = [[[np.nan for pdfMem in self.__jps] for k in self.__ks] for j in self.__js]
+        l = self.__qOut.qsize()
         for g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["k"]][p["pdfMem"]] = p["res"]
@@ -215,21 +218,19 @@ class HadronicRunner2:
                 f.write("\t".join(l)+"\n")
     # compute grid in 1D
     def _run1(self,g):
-        l = len(g)
-        if l == 0:
+        if len(g) == 0:
             print _pwarn(),"no data!"
             return
         self._compute(g)
-        self._reorder1(l)
+        self._reorder1()
         self._write1()
     # compute grid in 2D
     def _run2(self,g):
-        l = len(g)
-        if l == 0:
+        if len(g) == 0:
             print _pwarn(),"no data!"
             return
         self._compute(g)
-        self._reorder2(l)
+        self._reorder2()
         self._write2()
     # iterate x
     def runX(self,Nx):
@@ -245,12 +246,11 @@ class HadronicRunner2:
         self._run2(self._getGridMuR2MuF2(x,rR,NmuR2,rF,NmuF2,getAlphaS))
     def runPdf(self,Nx,proj, pdf, Npdfmem):
         g = self._getGridPdf(Nx,proj, pdf, Npdfmem)
-        l = len(g)
-        if l == 0:
+        if len(g) == 0:
             print _pwarn(),"no data!"
             return
         self._compute(g)
-        self._reorderPdf(l)
+        self._reorderPdf()
         self._writePdf(proj)
 
 # define worker
