@@ -46,8 +46,11 @@ void ElProduction::setM2(dbl m2) {
 void ElProduction::setQ2(dbl q2) {
     if (q2 >= 0.)
         throw domain_error("virtuality q2 has to be negative! (this is NOT Q2!)");
+    dbl s = this->hasPartonicS ? this->sp + this->q2 : 0.;
     this->q2 = q2;
     this->zMax = -q2/(4.*m2  - q2);
+    if (this->hasPartonicS)
+        this->setPartonicS(s);
 }
 
 void ElProduction::setDelta(dbl Delta) {
