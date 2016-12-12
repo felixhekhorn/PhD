@@ -32,11 +32,11 @@ typedef double dbl;
 /** @brief define floating point precision */
 typedef const double cdbl;
 
-/** @brief function pointer */
+/** @brief function pointer of 3 variables */
 typedef cdbl (*fPtr3dbl)(cdbl m2, cdbl q2, cdbl sp);
-/** @brief function pointer */
+/** @brief function pointer of 4 variables */
 typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-/** @brief function pointer */
+/** @brief function pointer of 5 variables */
 typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 ///@}
 

@@ -1,11 +1,14 @@
 Release/src_main.cpp.o: src/main.cpp src/config.h src/Timer.h \
- src/ElProduction.h src/Pdf/PdfWrapper.h src/Pdf/../config.h
+ src/InclusiveElProduction.h src/AbstractElProduction.h \
+ src/Pdf/PdfWrapper.h src/Pdf/../config.h
 
 src/config.h:
 
 src/Timer.h:
 
-src/ElProduction.h:
+src/InclusiveElProduction.h:
+
+src/AbstractElProduction.h:
 
 src/Pdf/PdfWrapper.h:
 

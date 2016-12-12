@@ -130,9 +130,9 @@ class PartonicRunner2:
 def _threadWorker(qi, qo, oArgs,lenParams):
   # create objects
   objs = {}
-  objs["G"] = ElProduction.ElProduction(*oArgs["G"])
-  objs["L"] = ElProduction.ElProduction(*oArgs["L"])
-  objs["P"] = ElProduction.ElProduction(*oArgs["P"])
+  objs["G"] = ElProduction.InclusiveElProduction(*oArgs["G"])
+  objs["L"] = ElProduction.InclusiveElProduction(*oArgs["L"])
+  objs["P"] = ElProduction.InclusiveElProduction(*oArgs["P"])
   guard = 0
   lenParamsMod = max(lenParams/10,1)
   while guard < lenParams:

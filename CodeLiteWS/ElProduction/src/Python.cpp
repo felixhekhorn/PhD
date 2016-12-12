@@ -1,6 +1,6 @@
 #include <boost/python.hpp>
 
-#include "ElProduction.h"
+#include "InclusiveElProduction.h"
 
 using namespace boost::python;
 
@@ -8,37 +8,37 @@ using namespace boost::python;
 
 BOOST_PYTHON_MODULE(ElProduction)
 {
-    class_<ElProduction>("ElProduction", "application class", init<double,double,double,projT,uint>())
+    class_<InclusiveElProduction>("InclusiveElProduction", "application class", init<double,double,double,projT,uint>())
         // global setter
-        .def("setQ2", &ElProduction::setQ2, "sets virtuality of photon q^2 < 0")
-        .def("setDelta", &ElProduction::setDelta, "sets phase space slice")
+        .def("setQ2", &InclusiveElProduction::setQ2, "sets virtuality of photon q^2 < 0")
+        .def("setDelta", &InclusiveElProduction::setDelta, "sets phase space slice")
         // partonic setter
-        .def("setM2", &ElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
-        .def("setEta", &ElProduction::setEta, "sets partonic eta")
-        .def("setPartonicS", &ElProduction::setPartonicS, "sets partonic center of mass energy")
+        .def("setM2", &InclusiveElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
+        .def("setEta", &InclusiveElProduction::setEta, "sets partonic eta")
+        .def("setPartonicS", &InclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
         /*.def("setPdf", &ElProduction::setPdf, ElProduction_setPdf_overloads(
                     args("lhaid|name|nmem", "memberid"), "sets pdf"
                 )[return_internal_reference<>()] oder? ElProduction_setPdf_overloads())*/
-        .def("setPdf", &ElProduction::setPdf, "sets pdf")
-        .def("setMuR2", &ElProduction::setMuR2, "sets renormalisation scale")
-        .def("setMuF2", &ElProduction::setMuF2, "sets factorisation scale")
-        .def("setMu2", &ElProduction::setMu2, "sets common scale")
-        .def("setAlphaS", &ElProduction::setAlphaS, "sets running strong coupling")
-        .def("setBjorkenX", &ElProduction::setBjorkenX, "sets Bjorken x")
+        .def("setPdf", &InclusiveElProduction::setPdf, "sets pdf")
+        .def("setMuR2", &InclusiveElProduction::setMuR2, "sets renormalisation scale")
+        .def("setMuF2", &InclusiveElProduction::setMuF2, "sets factorisation scale")
+        .def("setMu2", &InclusiveElProduction::setMu2, "sets common scale")
+        .def("setAlphaS", &InclusiveElProduction::setAlphaS, "sets running strong coupling")
+        .def("setBjorkenX", &InclusiveElProduction::setBjorkenX, "sets Bjorken x")
         // partonic coefficient functions
-        .def("cg0", &ElProduction::cg0)
-        .def("cg1", &ElProduction::cg1)
-        .def("cgBarF1", &ElProduction::cgBarF1)
-        .def("cgBarR1", &ElProduction::cgBarR1)
-        .def("cgBar1", &ElProduction::cgBar1)
-        .def("cq1", &ElProduction::cq1)
-        .def("cqBarF1", &ElProduction::cqBarF1)
-        .def("dq1", &ElProduction::dq1)
+        .def("cg0", &InclusiveElProduction::cg0)
+        .def("cg1", &InclusiveElProduction::cg1)
+        .def("cgBarF1", &InclusiveElProduction::cgBarF1)
+        .def("cgBarR1", &InclusiveElProduction::cgBarR1)
+        .def("cgBar1", &InclusiveElProduction::cgBar1)
+        .def("cq1", &InclusiveElProduction::cq1)
+        .def("cqBarF1", &InclusiveElProduction::cqBarF1)
+        .def("dq1", &InclusiveElProduction::dq1)
         // hadronic structure functions
-        .def("Fg0", &ElProduction::Fg0)
-        .def("Fg1", &ElProduction::Fg1)
-        .def("Fq1", &ElProduction::Fq1)
+        .def("Fg0", &InclusiveElProduction::Fg0)
+        .def("Fg1", &InclusiveElProduction::Fg1)
+        .def("Fq1", &InclusiveElProduction::Fq1)
     ;
     
     enum_<projT>("projT")

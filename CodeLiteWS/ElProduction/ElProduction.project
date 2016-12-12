@@ -3,10 +3,10 @@
   <Reconciliation>
     <Regexes/>
     <Excludepaths>
-      <Path>tmpl/</Path>
-      <Path>Release/</Path>
-      <Path>Py27/</Path>
       <Path>Debug/</Path>
+      <Path>Py27/</Path>
+      <Path>Release/</Path>
+      <Path>tmpl/</Path>
     </Excludepaths>
     <Ignorefiles/>
     <Extensions>
@@ -17,37 +17,11 @@
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <VirtualDirectory Name="ME">
-      <File Name="src/ME/Born.cpp"/>
-      <File Name="src/ME/Born.h"/>
-      <File Name="src/ME/NLOq.h"/>
-      <File Name="src/ME/NLOq.cpp"/>
-      <File Name="src/ME/NLOg.h"/>
-      <File Name="src/ME/NLOg.cpp"/>
-      <File Name="src/ME/IntA.cpp"/>
-      <File Name="src/ME/IntA.h"/>
-      <File Name="src/ME/IntRFinite.cpp"/>
-      <File Name="src/ME/IntRFinite.h"/>
-      <File Name="src/ME/RPole.cpp"/>
-      <File Name="src/ME/RPole.h"/>
-      <File Name="src/ME/SV.cpp"/>
-      <File Name="src/ME/SV.h"/>
-    </VirtualDirectory>
-    <VirtualDirectory Name="IntKers">
-      <File Name="src/IntKers/IntKerBase.hpp"/>
-      <File Name="src/IntKers/PdfConvBase.hpp"/>
-      <File Name="src/IntKers/PdfConvLO.hpp"/>
-      <File Name="src/IntKers/PdfConvNLOg.hpp"/>
-      <File Name="src/IntKers/PdfConvNLOq.hpp"/>
-      <File Name="src/IntKers/psKer.hpp"/>
-    </VirtualDirectory>
     <VirtualDirectory Name="Pdf">
       <File Name="src/Pdf/DSSV_gluon_update.f"/>
       <File Name="src/Pdf/PdfWrapper.cpp"/>
       <File Name="src/Pdf/PdfWrapper.h"/>
     </VirtualDirectory>
-    <File Name="src/ElProduction.cpp"/>
-    <File Name="src/ElProduction.h"/>
     <File Name="src/config.h"/>
     <File Name="src/gsl++.hpp"/>
     <File Name="src/main.cpp" ExcludeProjConfig="Py27"/>
@@ -56,6 +30,38 @@
     <File Name="src/Integration.h"/>
     <File Name="src/Timer.h"/>
     <File Name="src/Timer.cpp"/>
+    <VirtualDirectory Name="Inclusive">
+      <VirtualDirectory Name="ME">
+        <File Name="src/Inclusive/ME/Born.cpp"/>
+        <File Name="src/Inclusive/ME/Born.h"/>
+        <File Name="src/Inclusive/ME/IntA.cpp"/>
+        <File Name="src/Inclusive/ME/IntA.h"/>
+        <File Name="src/Inclusive/ME/IntRFinite.cpp"/>
+        <File Name="src/Inclusive/ME/IntRFinite.h"/>
+        <File Name="src/Inclusive/ME/NLOg.cpp"/>
+        <File Name="src/Inclusive/ME/NLOg.h"/>
+        <File Name="src/Inclusive/ME/NLOq.cpp"/>
+        <File Name="src/Inclusive/ME/NLOq.h"/>
+        <File Name="src/Inclusive/ME/RPole.cpp"/>
+        <File Name="src/Inclusive/ME/RPole.h"/>
+        <File Name="src/Inclusive/ME/SV.cpp"/>
+        <File Name="src/Inclusive/ME/SV.h"/>
+      </VirtualDirectory>
+      <VirtualDirectory Name="IntKers">
+        <File Name="src/Inclusive/IntKers/IntKerBase.hpp"/>
+        <File Name="src/Inclusive/IntKers/PdfConvBase.hpp"/>
+        <File Name="src/Inclusive/IntKers/PdfConvLO.hpp"/>
+        <File Name="src/Inclusive/IntKers/PdfConvNLOg.hpp"/>
+        <File Name="src/Inclusive/IntKers/PdfConvNLOq.hpp"/>
+        <File Name="src/Inclusive/IntKers/psKer.hpp"/>
+      </VirtualDirectory>
+    </VirtualDirectory>
+    <File Name="src/InclusiveElProduction.cpp"/>
+    <File Name="src/InclusiveElProduction.h"/>
+    <File Name="src/AbstractElProduction.h"/>
+    <File Name="src/AbstractElProduction.cpp"/>
+    <File Name="src/ExclusiveElProduction.h"/>
+    <File Name="src/ExclusiveElProduction.cpp"/>
   </VirtualDirectory>
   <Settings Type="Dynamic Library">
     <GlobalSettings>
