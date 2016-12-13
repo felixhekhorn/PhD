@@ -18,6 +18,12 @@ class ExclusiveElProduction : public AbstractElProduction {
  */
     dbl deltay;
     
+/**
+ * @brief returns \f$A'_{2,G}\f$
+ * @return \f$A'_{2,G}\f$
+ */
+    fPtr7dbl getAp2() const;
+    
 public:
 /**
  * @brief constructor
@@ -30,6 +36,11 @@ public:
  */
     ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl omega, dbl deltay);
 
+/**
+ * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with light charges
+ * @return \f$d^{(1)}_q\f$
+ */
+    dbl dq1() const;
 };
 
 #endif // EXCLUSIVEELPRODUCTION_H

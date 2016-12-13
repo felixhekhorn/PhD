@@ -15,12 +15,30 @@ int runInclusive();
  */
 int main(int argc, char **argv) {
 	//return runInclusive();
-    dbl m2 = 1.5*1.5;
+    //dbl m2 = 1.5*1.5;
+    dbl m2 = 4.75*4.75;
     dbl q2 = -1.;
     uint nlf = 3;
+    dbl Delta = 1e-6;
     dbl omega = 1.;
     dbl deltay = 1e-6;
-    ExclusiveElProduction oG(m2,q2,G,nlf,omega,deltay);
+    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
+    ExclusiveElProduction eG(m2,q2,G,nlf,omega,deltay);
+    iG.setEta(1.);
+    eG.setEta(1.);
+    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
+    //m2 = 5*5;
+    iG.setM2(m2);
+    eG.setM2(m2);
+    iG.setEta(.01);
+    eG.setEta(.01);
+    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
+    //m2 = 6*6;
+    iG.setM2(m2);
+    eG.setM2(m2);
+    iG.setEta(.001);
+    eG.setEta(.001);
+    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
     return EXIT_SUCCESS;
 }
 

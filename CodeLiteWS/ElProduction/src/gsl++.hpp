@@ -53,6 +53,18 @@ template <class F> inline double callFunctor3D (double x[], size_t dim, void * p
     return o(x[0],x[1],x[2]);
 }
 
+/**
+ * @brief wrapper for gsl for dim = 4
+ * @param x integration variables
+ * @param dim dimension = 4
+ * @param params functor
+ * @return params(a1,a2,a3,a4)
+ */
+template <class F> inline double callFunctor4D (double x[], size_t dim, void * params) {
+    F o = *(F *) params;
+    return o(x[0],x[1],x[2],x[3]);
+}
+
 } // namespace gsl
 
 #endif // GSL_HPP
