@@ -19,10 +19,28 @@ class ExclusiveElProduction : public AbstractElProduction {
     dbl deltay;
     
 /**
- * @brief returns \f$A'_{2,G}\f$
- * @return \f$A'_{2,G}\f$
+ * @brief returns \f$B'_{QED}\f$
+ * @return \f$B'_{QED}\f$
+ */
+    fPtr4dbl getBpQED() const;
+    
+/**
+ * @brief returns \f$A'_{1}\f$
+ * @return \f$A'_{1}\f$
+ */
+    fPtr7dbl getAp1() const;
+    
+/**
+ * @brief returns \f$A'_{2}\f$
+ * @return \f$A'_{2}\f$
  */
     fPtr7dbl getAp2() const;
+    
+/**
+ * @brief returns \f$A'_{3}\f$
+ * @return \f$A'_{3}\f$
+ */
+    fPtr7dbl getAp3() const;
     
 public:
 /**
@@ -37,7 +55,13 @@ public:
     ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl omega, dbl deltay);
 
 /**
- * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with light charges
+ * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with heavy charges
+ * @return \f$c^{(1)}_q\f$
+ */
+    dbl cq1() const;
+    
+/**
+ * @brief NLO quark scaling function \f$d^{(1)}_q\f$ with light charges
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;

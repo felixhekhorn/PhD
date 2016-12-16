@@ -172,7 +172,7 @@ public:
     dbl cqBarF1() const;
 
 /**
- * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with light charges
+ * @brief NLO quark scaling function \f$d^{(1)}_q\f$ with light charges
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;

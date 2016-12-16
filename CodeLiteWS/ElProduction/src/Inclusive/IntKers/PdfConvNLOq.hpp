@@ -74,7 +74,7 @@ public:
         }
         dbl r = jac * 1./this->z * fqs;
         // Protect from ps corner cases
-        if (isnan(r) || isinf(r)) return 0.;
+        if (!isfinite(r)) return 0.;
         return r;
     }
 };

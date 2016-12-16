@@ -54,6 +54,9 @@ typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl u1, cdbl t1, cdbl tp, c
 #define Sqrt(a) sqrt(a)
 ///@}
 
+/** @brief force x to be min <= x <= max  */
+#define mima(x,mi,ma) min(max(x,mi),ma)
+
 /** @brief factor in front of fermion loop excluding the \f$n_{lf}\f$ - see eq. (3.7) */
 #define fermionLoopFactor 2./3.*(1./(4.*4.*M_PI*M_PI))
 

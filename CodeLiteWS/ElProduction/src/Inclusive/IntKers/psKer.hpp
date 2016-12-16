@@ -138,7 +138,7 @@ public:
         //Timer::end("hg1H");
         cdbl r = jac*(meH + fakeMESV);
         // Protect from ps corner cases
-        if (isnan(r) || isinf(r)) return 0.;
+        if (!isfinite(r)) return 0.;
         return r;
     }
 };

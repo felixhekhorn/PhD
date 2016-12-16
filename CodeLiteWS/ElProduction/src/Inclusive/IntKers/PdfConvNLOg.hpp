@@ -182,7 +182,7 @@ public:
         dbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
         dbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
         // Protect from ps corner cases
-        if (isnan(r) || isinf(r)) return 0.;
+        if (!isfinite(r)) return 0.;
         return r;
     }
 };

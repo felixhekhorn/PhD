@@ -5,7 +5,8 @@
 #include "gsl++.hpp"
 #include "Integration.h"
 
-#include "Exclusive/ME/Ap2.h"
+#include "Exclusive/ME/BpQED.h"
+#include "Exclusive/ME/Ap.h"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
 
@@ -21,13 +22,35 @@ ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nl
     this->deltay = deltay;
 }
 
-fPtr7dbl ExclusiveElProduction::getAp2() const {
+fPtr4dbl ExclusiveElProduction::getBpQED() const {
     switch(this->proj) {
-        case G: return &Ap2G;
-        case L: return &Ap2L;
-        case P: return &Ap2P;
+        case G: return &BpQEDG;
+        case L: return &BpQEDL;
+        case P: return &BpQEDP;
         default: throw invalid_argument("unknown projection!");
     }
+}
+
+#define getter7(n) fPtr7dbl ExclusiveElProduction::get##n() const {\
+    switch(this->proj) {\
+        case G: return &n##G;\
+        case L: return &n##L;\
+        case P: return &n##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
+
+getter7(Ap1)
+getter7(Ap2)
+getter7(Ap3)
+
+dbl ExclusiveElProduction::cq1() const {
+    this->checkPartonic();
+    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), omega, deltay);
+    gsl_monte_function f;
+    f.f = gsl::callFunctor4D<PsKerCq1>;
+    f.params = &k;
+    return int4D(&f);
 }
 
 dbl ExclusiveElProduction::dq1() const {

@@ -22,23 +22,30 @@ int main(int argc, char **argv) {
     dbl Delta = 1e-6;
     dbl omega = 1.;
     dbl deltay = 1e-6;
-    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
-    ExclusiveElProduction eG(m2,q2,G,nlf,omega,deltay);
-    iG.setEta(1.);
-    eG.setEta(1.);
-    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
-    //m2 = 5*5;
+    dbl eta = 100.;
+    InclusiveElProduction iG(m2,q2,Delta,L,nlf);
+    ExclusiveElProduction eG(m2,q2,L,nlf,omega,deltay);
+    iG.setEta(eta);
+    eG.setEta(eta);
+    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
+    /*m2 = 5*5;
     iG.setM2(m2);
-    eG.setM2(m2);
-    iG.setEta(.01);
-    eG.setEta(.01);
-    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
-    //m2 = 6*6;
-    iG.setM2(m2);
-    eG.setM2(m2);
-    iG.setEta(.001);
-    eG.setEta(.001);
-    printf("%e\t%e\t%e\n",q2,iG.dq1(),eG.dq1());
+    eG.setM2(m2);*/
+    eta = 1;
+    iG.setEta(eta);
+    eG.setEta(eta);
+    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
+    /*q2 = -10;
+    iG.setQ2(q2);
+    eG.setQ2(q2);*/
+    eta = .01;
+    iG.setEta(eta);
+    eG.setEta(eta);
+    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
+    eta = .001;
+    iG.setEta(eta);
+    eG.setEta(eta);
+    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
     return EXIT_SUCCESS;
 }
 

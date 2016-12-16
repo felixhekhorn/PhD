@@ -36,12 +36,12 @@ struct KinematicVars {
         cdbl Sqrts5 = sqrt(s5);
         this->q0 = (s+up)/(2.*Sqrts5);
         this->k10 = (s5-up)/(2.*Sqrts5);
-        this->absq = 1./2.*sqrt(pow(s+up,2)/s5-4.*q2);
-        this->cosPsi = (-sp+2.*k10*q0)/(2.*k10*absq);
+        this->absq = 1./(2.*Sqrts5)*sqrt(pow(s+up,2)-4.*s5*q2);
+        this->cosPsi = mima((-sp+2.*k10*q0)/(2.*k10*absq),-1.,1.);
         this->sinPsi = sqrt(1.-cosPsi*cosPsi);
         this->beta5 = sqrt(1.-4.*m2/s5);
         
-        this->t1 = 1./2.*(s5-up)*(1. + beta5*cos(Theta2)*sin(Theta1)*sinPsi + beta5*cos(Theta1)*cosPsi);
+        this->t1 = -1./2.*(s5-up)*(1. + beta5*cos(Theta2)*sin(Theta1)*sinPsi + beta5*cos(Theta1)*cosPsi);
         this->u1 = q2 - 1./2.*(s + up + 2.*Sqrts5*beta5*absq*cos(Theta1));
     }
 };
