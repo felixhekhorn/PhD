@@ -43,6 +43,45 @@ cdbl Ap1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
  * @return \f$A'_{1,P}\f$
  */
 cdbl Ap1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
+
+/**
+ * @brief Counter part to heavy quark contribution in G-Projection \f$\sim e_H^2\f$
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param x
+ * @param y
+ * @param Theta1
+ * @param Theta2
+ * @return \f$A'_{1,G}(y=-1)\f$
+ */
+cdbl Ap1CounterG(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
+
+/**
+ * @brief Counter part to heavy quark contribution in L-Projection \f$\sim e_H^2\f$
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param x
+ * @param y
+ * @param Theta1
+ * @param Theta2
+ * @return \f$A'_{1,L}(y=-1)\f$
+ */
+cdbl Ap1CounterL(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
+
+/**
+ * @brief Counter part to heavy quark contribution in P-Projection \f$\sim e_H^2\f$
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of photon \f$q^2< 0\f$
+ * @param sp center of mass energy \f$s' = s - q^2\f$
+ * @param x
+ * @param y
+ * @param Theta1
+ * @param Theta2
+ * @return \f$A'_{1,P}(y=-1)\f$
+ */
+cdbl Ap1CounterP(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
     
 /**
  * @brief light quark contribution in G-Projection \f$\sim e_L^2\f$

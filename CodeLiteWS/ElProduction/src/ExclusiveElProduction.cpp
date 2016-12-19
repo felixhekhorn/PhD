@@ -31,6 +31,14 @@ fPtr4dbl ExclusiveElProduction::getBpQED() const {
     }
 }
 
+#define getter6(n) fPtr6dbl ExclusiveElProduction::get##n() const {\
+    switch(this->proj) {\
+        case G: return &n##G;\
+        case L: return &n##L;\
+        case P: return &n##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
 #define getter7(n) fPtr7dbl ExclusiveElProduction::get##n() const {\
     switch(this->proj) {\
         case G: return &n##G;\
@@ -41,12 +49,13 @@ fPtr4dbl ExclusiveElProduction::getBpQED() const {
 }
 
 getter7(Ap1)
+getter6(Ap1Counter)
 getter7(Ap2)
 getter7(Ap3)
 
 dbl ExclusiveElProduction::cq1() const {
     this->checkPartonic();
-    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), omega, deltay);
+    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), this->getAp1Counter(), omega, deltay);
     gsl_monte_function f;
     f.f = gsl::callFunctor4D<PsKerCq1>;
     f.params = &k;

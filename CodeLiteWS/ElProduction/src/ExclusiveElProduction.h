@@ -31,6 +31,12 @@ class ExclusiveElProduction : public AbstractElProduction {
     fPtr7dbl getAp1() const;
     
 /**
+ * @brief returns \f$A'_{1}(y=-1)\f$
+ * @return \f$A'_{1}(y=-1)\f$
+ */
+    fPtr6dbl getAp1Counter() const;
+    
+/**
  * @brief returns \f$A'_{2}\f$
  * @return \f$A'_{2}\f$
  */

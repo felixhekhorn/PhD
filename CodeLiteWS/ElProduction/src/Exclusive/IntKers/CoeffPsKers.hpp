@@ -44,14 +44,19 @@ protected:
 class PsKerCq1 : public AbstractCoeffPsKer {
     
 /**
- * @param BpQED pointer to Born ME
+ * @brief BpQED pointer to Born ME
  */
     fPtr4dbl BpQED;
     
 /**
- * @param Ap1 pointer to heavy quark charge ME
+ * @brief Ap1pole pointer to pole part of heavy quark charge ME
  */
     fPtr7dbl Ap1;
+    
+/**
+ * @brief Ap1finite pointer to finite part of heavy quark charge ME
+ */
+    fPtr6dbl Ap1Counter;
     
 /**
  * @brief collinear factorisation parameter \f$\omega\f$
@@ -69,10 +74,13 @@ public:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
- * @param Ap1 pointer to ME
+ * @param Ap1 pointer to pole part of ME
+ * @param Ap1Counter pointer to finite part of heavy quark charge ME
+ * @param omega collinear factorisation parameter \f$\omega\f$
+ * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
-    PsKerCq1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, fPtr7dbl Ap1, dbl omega, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
-        BpQED(BpQED),Ap1(Ap1),omega(omega),deltay(deltay) {};
+    PsKerCq1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, fPtr7dbl Ap1, fPtr6dbl Ap1Counter, dbl omega, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
+        BpQED(BpQED),Ap1(Ap1),Ap1Counter(Ap1Counter),omega(omega),deltay(deltay) {};
     
 /**
  * @brief called function
@@ -82,7 +90,7 @@ public:
  * @param a4 integration variable
  * @return kernel
  */
-    dbl operator() (dbl a1, dbl a2, dbl a3, dbl a4) {
+    dbl operator() (cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
         dbl jac = 1.;
         // x
         cdbl rhoStar = (4.*m2 - q2)/sp;
@@ -108,16 +116,20 @@ public:
         cdbl yCmax = -1.+omega;
         cdbl yC = yCmin + (yCmax - yCmin)*a2;
         cdbl jacC = jac * (yCmax - yCmin);
-        const KinematicVars vsC(m2,q2,sp,x,-1.,Theta1,Theta2);
+        //const KinematicVars vsC(m2,q2,sp,x,-1.,Theta1,Theta2);
         
         cdbl meB = BpQED(m2,q2,x*sp,x*vsB.t1);
         cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
-        cdbl meC = Ap1(m2,q2,sp,vsC.t1,vsC.u1,vsC.tp,vsC.up);
+        cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
         cdbl l = log(sp/m2*sp/(sp+q2)*omega/2*(1.-x)*(1.-x));
         cdbl Pqg = (1.+pow(1.-x,2))/x;
         cdbl g = Kqgg*NC*CF * m2/sp*1./(8.*M_PI) * vsB.beta5*sin(Theta1);
-        cdbl r = f * (jacE*meE/(1.+yE) + jacC*meC/(1.+yC)) + g*jacB*meB*(1. + Pqg/x*l);
+        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(1. + Pqg/x*l);
+        if (!isfinite(r)) {
+            printf("[WARN] r = %e\n",r);
+            cout << flush;
+        }
         return r;
     }
 };

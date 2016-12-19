@@ -6,6 +6,10 @@
 #include "ExclusiveElProduction.h"
 
 int runInclusive();
+int test() {
+    printf("%e %e %e %e",-1.-(-1.+1e-17),-1.-(-1.+5e-17),-1.-(-1.+6e-17),-1.-(-1.+7e-17));
+    return EXIT_SUCCESS;
+}
 
 /**
  * @brief main
@@ -14,6 +18,7 @@ int runInclusive();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
+    //return test();
 	//return runInclusive();
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
@@ -34,18 +39,18 @@ int main(int argc, char **argv) {
     eta = 1;
     iG.setEta(eta);
     eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
+    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
     /*q2 = -10;
     iG.setQ2(q2);
     eG.setQ2(q2);*/
     eta = .01;
     iG.setEta(eta);
     eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
+    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
     eta = .001;
     iG.setEta(eta);
     eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.dq1(),eG.dq1());
+    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
     return EXIT_SUCCESS;
 }
 

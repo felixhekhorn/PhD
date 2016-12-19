@@ -38,6 +38,8 @@ typedef cdbl (*fPtr3dbl)(cdbl m2, cdbl q2, cdbl sp);
 typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 /** @brief function pointer of 5 variables */
 typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+/** @brief function pointer of 6 variables */
+typedef cdbl (*fPtr6dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
 /** @brief function pointer of 7 variables */
 typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl u1, cdbl t1, cdbl tp, cdbl up);
 ///@}
