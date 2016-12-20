@@ -49,6 +49,7 @@ class ExclusiveElProduction : public AbstractElProduction {
     fPtr7dbl getAp3() const;
     
 public:
+
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -60,6 +61,19 @@ public:
  */
     ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl omega, dbl deltay);
 
+/** @name partonic coefficient functions */
+///@{
+
+/**
+ * @brief sets omega
+ * @param omega collinear factorisation parameter
+ */
+    void setOmega(cdbl omega);
+    
+///@}
+
+/** @name partonic coefficient functions */
+///@{
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with heavy charges
  * @return \f$c^{(1)}_q\f$
@@ -71,6 +85,9 @@ public:
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;
+    
+///@}
+
 };
 
 #endif // EXCLUSIVEELPRODUCTION_H

@@ -108,28 +108,25 @@ public:
         // transform y with distribution for Event
         cdbl yEmin = -1.+deltay;
         cdbl yEmax = 1.;
-        cdbl yE = yEmin + (yEmax-yEmin)*a2;
-        cdbl jacE = jac * (yEmax-yEmin);
+        cdbl yE = yEmin + (yEmax - yEmin)*a2;
+        cdbl jacE = jac * (yEmax - yEmin);
         const KinematicVars vsE(m2,q2,sp,x,yE,Theta1,Theta2);
         // transform y with distribution for Counterevent
         cdbl yCmin = yEmin;
         cdbl yCmax = -1.+omega;
         cdbl yC = yCmin + (yCmax - yCmin)*a2;
         cdbl jacC = jac * (yCmax - yCmin);
-        //const KinematicVars vsC(m2,q2,sp,x,-1.,Theta1,Theta2);
         
         cdbl meB = BpQED(m2,q2,x*sp,x*vsB.t1);
         cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
         cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
-        cdbl l = log(sp/m2*sp/(sp+q2)*omega/2*(1.-x)*(1.-x));
+        cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-x)*(1.-x));
         cdbl Pqg = (1.+pow(1.-x,2))/x;
+        //cdbl Pqg = 2.-x;
         cdbl g = Kqgg*NC*CF * m2/sp*1./(8.*M_PI) * vsB.beta5*sin(Theta1);
         cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(1. + Pqg/x*l);
-        if (!isfinite(r)) {
-            printf("[WARN] r = %e\n",r);
-            cout << flush;
-        }
+        if (!isfinite(r)) return 0.;
         return r;
     }
 };

@@ -58,7 +58,7 @@ cdbl s5 = q2 + sp*x;
 cdbl beta5 = sqrt(1.-4.*m2/s5);
 cdbl t1c = -1./2.*sp*(1.-beta5*cos(Theta1));
 cdbl u1c = -1./2.*(s5-q2)*(1.+beta5*cos(Theta1));
-return (Power(sp,2)*(2*m2*(2*m2 + q2)*x - t1c*u1c*(2 + (-2 + x)*x)))/(2.*Power(t1c,2)*Power(u1c,2)*x) - (Power(q2,2)*u1c - 2*m2*q2*t1c*x + Power(t1c,2)*u1c*(2 + (-2 + x)*x))/(t1c*Power(u1c,2)*x) + (sp*(2*m2*q2*x - u1c*((2*m2 + q2)*x + t1c*(2 + (-2 + x)*x))))/(t1c*Power(u1c,2)*x) + (Power(beta5,2)*(2*m2 + q2)*Power(sp,4)*(-1 + x)*Power(Cos(Theta2),2)*Power(Sin(Theta1),2))/(s5*Power(t1c,2)*Power(u1c,2)*Power(x,2));
+return -((Power(q2,2)*u1c - 2*m2*q2*t1c*x + Power(t1c,2)*u1c*(2 + (-2 + x)*x))/(t1c*Power(u1c,2)*x)) + (sp*(2*m2*q2*x - u1c*((2*m2 + q2)*x + t1c*(2 + (-2 + x)*x))))/(t1c*Power(u1c,2)*x) + (Power(sp,2)*(-4*t1c*u1c*x*(2 + (-2 + x)*x) + 2*(2*m2 + q2)*(Power(beta5,2)*s5*(-1 + x) + 4*m2*Power(x,2)) - 2*Power(beta5,2)*(2*m2 + q2)*s5*(-1 + x)*(Cos(2*Theta1) - 2*Cos(2*Theta2)*Power(Sin(Theta1),2))))/(8.*Power(t1c,2)*Power(u1c,2)*Power(x,2));
 }
 
 cdbl Ap1CounterL(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2) {
@@ -66,7 +66,7 @@ cdbl s5 = q2 + sp*x;
 cdbl beta5 = sqrt(1.-4.*m2/s5);
 cdbl t1c = -1./2.*sp*(1.-beta5*cos(Theta1));
 cdbl u1c = -1./2.*(s5-q2)*(1.+beta5*cos(Theta1));
-return (4*Power(q2,2))/(Power(sp,2)*Power(x,2)) + (4*q2)/(sp*x) - (4*m2*q2)/(t1c*u1c*x) - (4*Power(beta5,2)*q2*Power(sp,2)*(-1 + x)*Power(Cos(Theta2),2)*Power(Sin(Theta1),2))/(s5*t1c*u1c*Power(x,3));
+return (4*Power(q2,2))/(Power(sp,2)*Power(x,2)) + (4*q2)/(sp*x) - (4*q2*(m2*Power(x,2) + Power(beta5,2)*s5*(-1 + x)*Power(Cos(Theta2),2)*Power(Sin(Theta1),2)))/(t1c*u1c*Power(x,3));
 }
 
 cdbl Ap1CounterP(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2) {

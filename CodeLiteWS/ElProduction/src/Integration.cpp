@@ -37,10 +37,10 @@ dbl int2D(gsl_monte_function* F) {
     do {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
-        //printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+        //printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    printf("int2D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }
 
@@ -66,10 +66,10 @@ dbl int3D(gsl_monte_function* F) {
     do {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
-        //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+        //printf("int3D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     } while (fabs(gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    //printf("int3D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    //printf("int3D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }
 
@@ -95,9 +95,9 @@ dbl int4D(gsl_monte_function* F) {
     do {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
-        //printf("int4D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+        //printf("int4D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     } while (fabs(gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    printf("int4D: guard: %d, res: %e, err: %e, chi: %e\n",guard,res,err,gsl_monte_vegas_chisq (s));
+    printf("int4D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq (s));
     return res;
 }
