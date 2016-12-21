@@ -101,7 +101,6 @@ public:
         jac *= M_PI;
         // Born contributions
         cdbl jacB = jac;
-        const KinematicVars vsB(m2,q2,sp,x,-1.,Theta1,0.);
         // Theta2
         cdbl Theta2 = M_PI * a4;
         jac *= M_PI;
@@ -117,15 +116,21 @@ public:
         cdbl yC = yCmin + (yCmax - yCmin)*a2;
         cdbl jacC = jac * (yCmax - yCmin);
         
-        cdbl meB = BpQED(m2,q2,x*sp,x*vsB.t1);
+        cdbl s5B = q2 + sp*x;
+        cdbl beta5B = sqrt(1. - 4.*m2/s5B);
+        cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
+        cdbl meB = BpQED(m2,q2,x*sp,x*t1c);
+        
         cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
         cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
         cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-x)*(1.-x));
-        cdbl Pqg = (1.+pow(1.-x,2))/x;
-        //cdbl Pqg = 2.-x;
-        cdbl g = Kqgg*NC*CF * m2/sp*1./(8.*M_PI) * vsB.beta5*sin(Theta1);
-        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(1. + Pqg/x*l);
+        //cdbl Pqg = (1.+pow(1.-x,2))/x;
+        //cdbl dE = 1.;
+        cdbl Pqg = 2.-x;
+        cdbl dE = 0.;
+        cdbl g = Kqgg*NC*CF * m2/sp*1./(8.*M_PI) * beta5B*sin(Theta1);
+        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(dE + Pqg/x*l);
         if (!isfinite(r)) return 0.;
         return r;
     }
