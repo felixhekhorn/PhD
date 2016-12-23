@@ -7,6 +7,7 @@
 
 #include "Exclusive/ME/BpQED.h"
 #include "Exclusive/ME/Ap.h"
+#include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
 
@@ -35,6 +36,24 @@ fPtr4dbl ExclusiveElProduction::getBpQED() const {
     }
 }
 
+fPtr1dbl ExclusiveElProduction::getPgq0() const {
+    switch(this->proj) {
+        case P: return &AltarelliParisi::DeltaPgq0;
+        case G: 
+        case L: return &AltarelliParisi::Pgq0;
+        default: throw invalid_argument("unknown projection!");
+    }
+}
+
+fPtr1dbl ExclusiveElProduction::getPgq1() const {
+    switch(this->proj) {
+        case P: return &AltarelliParisi::DeltaPgq1;
+        case G: 
+        case L: return &AltarelliParisi::Pgq1;
+        default: throw invalid_argument("unknown projection!");
+    }
+}
+
 #define getter6(n) fPtr6dbl ExclusiveElProduction::get##n() const {\
     switch(this->proj) {\
         case G: return &n##G;\
@@ -59,7 +78,7 @@ getter7(Ap3)
 
 dbl ExclusiveElProduction::cq1() const {
     this->checkPartonic();
-    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), this->getAp1Counter(), omega, deltay);
+    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), this->getAp1Counter(), this->getPgq0(), this->getPgq1(), omega, deltay);
     gsl_monte_function f;
     f.f = gsl::callFunctor4D<PsKerCq1>;
     f.params = &k;

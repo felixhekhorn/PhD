@@ -44,19 +44,29 @@ protected:
 class PsKerCq1 : public AbstractCoeffPsKer {
     
 /**
- * @brief BpQED pointer to Born ME
+ * @brief pointer to Born ME
  */
     fPtr4dbl BpQED;
     
 /**
- * @brief Ap1pole pointer to pole part of heavy quark charge ME
+ * @brief pointer to pole part of heavy quark charge ME
  */
     fPtr7dbl Ap1;
     
 /**
- * @brief Ap1finite pointer to finite part of heavy quark charge ME
+ * @brief pointer to finite part of heavy quark charge ME
  */
     fPtr6dbl Ap1Counter;
+    
+/**
+ * @brief pointer to \f$P_{gq}^{(0)}(z)\f$
+ */
+    fPtr1dbl Pgq0;
+    
+/**
+ * @brief pointer to \f$P_{gq}^{(1)}(z)\f$
+ */
+    fPtr1dbl Pgq1;
     
 /**
  * @brief collinear factorisation parameter \f$\omega\f$
@@ -76,11 +86,13 @@ public:
  * @param sp current \f$s'\f$
  * @param Ap1 pointer to pole part of ME
  * @param Ap1Counter pointer to finite part of heavy quark charge ME
+ * @param Pgq0 pointer to \f$P_{gq}^{(0)}(z)\f$
+ * @param Pgq1 pointer to \f$P_{gq}^{(1)}(z)\f$
  * @param omega collinear factorisation parameter \f$\omega\f$
  * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
-    PsKerCq1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, fPtr7dbl Ap1, fPtr6dbl Ap1Counter, dbl omega, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
-        BpQED(BpQED),Ap1(Ap1),Ap1Counter(Ap1Counter),omega(omega),deltay(deltay) {};
+    PsKerCq1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, fPtr7dbl Ap1, fPtr6dbl Ap1Counter, fPtr1dbl Pgq0, fPtr1dbl Pgq1, dbl omega, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
+        BpQED(BpQED),Ap1(Ap1),Ap1Counter(Ap1Counter),Pgq0(Pgq0),Pgq1(Pgq1),omega(omega),deltay(deltay) {};
     
 /**
  * @brief called function
@@ -125,12 +137,10 @@ public:
         cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
         cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-x)*(1.-x));
-        //cdbl Pqg = (1.+pow(1.-x,2))/x;
-        //cdbl dE = 1.;
-        cdbl Pqg = 2.-x;
-        cdbl dE = 0.;
-        cdbl g = Kqgg*NC*CF * m2/sp*1./(8.*M_PI) * beta5B*sin(Theta1);
-        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(dE + Pqg/x*l);
+        cdbl vPqg0 = Pgq0(x)/CF;
+        cdbl vPgq1 = Pgq1(x)/CF;
+        cdbl g = Kqgg*NC*CF * m2/(x*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(2.*vPgq1 + vPqg0*l);
         if (!isfinite(r)) return 0.;
         return r;
     }

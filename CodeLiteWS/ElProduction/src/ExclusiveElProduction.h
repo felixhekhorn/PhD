@@ -37,6 +37,18 @@ class ExclusiveElProduction : public AbstractElProduction {
     fPtr6dbl getAp1Counter() const;
     
 /**
+ * @brief return \f$P_{gq}^{(0)}(z)\f$
+ * @return \f$P_{gq}^{(0)}(z)\f$
+ */
+    fPtr1dbl getPgq0() const;
+    
+/**
+ * @brief return \f$P_{gq}^{(1)}(z)\f$
+ * @return \f$P_{gq}^{(1)}(z)\f$
+ */
+    fPtr1dbl getPgq1() const;
+    
+/**
  * @brief returns \f$A'_{2}\f$
  * @return \f$A'_{2}\f$
  */
