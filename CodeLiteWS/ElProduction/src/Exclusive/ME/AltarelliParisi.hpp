@@ -43,7 +43,7 @@ cdbl DeltaPgq1 (cdbl x) { return CF*(-(1.-x)); }
  * @param x momentum fraction
  * @return \f$\tilde P_{gg}^{(0)}(z)\f$
  */
-cdbl Pgg0 (cdbl x) { return 2.*CA*(x/(1.-x) + (1.-x)/x + x(1-x); }
+cdbl Pgg0 (cdbl x) { return 2.*CA*(x/(1.-x) + (1.-x)/x + x*(1.-x)); }
 
 /**
  * @brief unregulated hard part of gluon-splitting-gluon AP-kernel \f$\tilde P_{gg}(z) = \tilde P_{gg}^{(0)}(z) + \epsilon \tilde P_{gg}^{(1)}(z) + \ldots\f$
@@ -57,7 +57,7 @@ cdbl Pgg1 (cdbl x) { return 0.; }
  * @param x momentum fraction
  * @return \f$\Delta\tilde P_{gg}^{(0)}(z)\f$
  */
-cdbl DeltaPgg0 (cdbl x) { return 2.*CA*(1/(1.-x) - 2.*x + 1.; }
+cdbl DeltaPgg0 (cdbl x) { return 2.*CA*(1./(1.-x) - 2.*x + 1.); }
 
 /**
  * @brief polarized unregulated hard part of gluon-splitting-gluon AP-kernel \f$\Delta\tilde P_{gg}(z) = \Delta\tilde P_{gg}^{(0)}(z) + \epsilon \Delta\tilde P_{gg}^{(1)}(z) + \ldots\f$
