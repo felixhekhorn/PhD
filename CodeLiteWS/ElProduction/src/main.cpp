@@ -25,11 +25,13 @@ int main(int argc, char **argv) {
     dbl q2 = -1.;
     uint nlf = 3;
     dbl Delta = 1e-6;
+    dbl rhoTilde = .9;
     dbl omega = .1;
+    dbl deltax = 1e-6;
     dbl deltay = 1e-6;
     dbl eta = 100.;
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
-    ExclusiveElProduction eG(m2,q2,G,nlf,omega,deltay);
+    ExclusiveElProduction eG(m2,q2,G,nlf,rhoTilde,omega,deltax,deltay);
     uint N = 21;
     for (uint j = 0; j < N; ++j) {
         eta = pow(10,-3.+6./(N-1)*j);

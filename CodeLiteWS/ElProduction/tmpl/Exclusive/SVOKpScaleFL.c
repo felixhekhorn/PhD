@@ -1,0 +1,1 @@
+(128*Pi*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*(11 + 24*ln(betaTil)))/(3.*Power(sp,2)*t1*u1)

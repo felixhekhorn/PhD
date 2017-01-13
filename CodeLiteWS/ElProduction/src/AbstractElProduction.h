@@ -93,7 +93,7 @@ protected:
 /**
  * @brief checks wether all partonic parameters are given
  */
-    void checkPartonic() const;
+    void virtual checkPartonic() const;
 
 /**
  * @brief constructor

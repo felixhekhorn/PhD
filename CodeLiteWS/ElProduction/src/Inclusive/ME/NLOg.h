@@ -3,8 +3,8 @@
  * @brief defines all kernels to NLO gluon cross sections for all projections
  */
  
-#ifndef NLOg_H_
-#define NLOg_H_
+#ifndef Inclusive_NLOg_H_
+#define Inclusive_NLOg_H_
 
 #include "../../config.h"
 
@@ -264,4 +264,4 @@ cdbl cgBarF1HP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 ///@}
 
-#endif // NLOg_H_
+#endif // Inclusive_NLOg_H_

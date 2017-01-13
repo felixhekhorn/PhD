@@ -13,18 +13,50 @@
 
 using namespace Exclusive;
 
-ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl omega, dbl deltay):
+ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl rhoTilde, dbl omega, dbl deltax, dbl deltay):
     AbstractElProduction(m2,q2,proj,nlf) {
+    this->setRhoTilde(rhoTilde);
     this->setOmega(omega);
-    if (deltay <= 0 || deltay >= this->omega)
-        throw domain_error("deltay has to be positive and smaller than omega!");
-    this->deltay = deltay;
+    this->setDeltax(deltax);
+    this->setDeltay(deltay);
+}
+
+void ExclusiveElProduction::checkPartonic() const {
+    if (!this->hasPartonicS)
+        throw invalid_argument("no partonic cm-energy given!");
+    cdbl rhoStar = (4.*m2 - q2)/this->sp;
+    if (this->rhoTilde <= rhoStar)
+        throw domain_error("rhoTilde has to be bigger than rhoStar!");
+    if (this->rhoTilde >= 1. - this->deltax)
+        throw domain_error("rhoTilde has to be smaller than 1-deltax!");
+}
+
+void ExclusiveElProduction::setRhoTilde(cdbl rhoTilde) {
+    if (rhoTilde >= 1)
+        throw domain_error("rhoTilde has to be smaller than 1!");
+    if (rhoTilde >= 1.-deltax)
+        throw domain_error("rhoTilde has to be smaller than 1-deltax!");
+    this->rhoTilde = rhoTilde;
 }
 
 void ExclusiveElProduction::setOmega(cdbl omega) {
     if (omega <= 0 || omega >= 2)
         throw domain_error("omega has to be within (0,2)!");
+    if (deltay >= omega)
+        throw domain_error("omega has to be bigger than deltay!");
     this->omega = omega;
+}
+
+void ExclusiveElProduction::setDeltax(cdbl deltax) {
+    if (deltax <= 0)
+        throw domain_error("deltax has to be positive!");
+    this->deltax = deltax;
+}
+
+void ExclusiveElProduction::setDeltay(cdbl deltay) {
+    if (deltay <= 0 || deltay >= this->omega)
+        throw domain_error("deltay has to be positive and smaller than omega!");
+    this->deltay = deltay;
 }
 
 fPtr4dbl ExclusiveElProduction::getBpQED() const {

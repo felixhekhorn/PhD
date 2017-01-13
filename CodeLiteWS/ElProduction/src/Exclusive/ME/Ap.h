@@ -1,5 +1,5 @@
-#ifndef Ap2_H_
-#define Ap2_H_
+#ifndef Ap_H_
+#define Ap_H_
 
 #include "../../config.h"
 
@@ -164,4 +164,4 @@ cdbl Ap3P(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
 } // namespace Exclusive
 
 
-#endif // Ap2_H_
+#endif // Ap_H_
