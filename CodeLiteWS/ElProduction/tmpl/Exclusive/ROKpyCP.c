@@ -1,0 +1,1 @@
+(2*sp*(2*Power(q2 - s5,2) + 3*(q2 - s5)*sp + 2*Power(sp,2))*(Power(sp,2) + 2*sp*t1c + 2*Power(t1c,2))*(2*m2*Power(sp,2) - ((q2 + s5)*t1c*u1c)/x)*Power(x,2))/(Power(q2 - s5,2)*(q2 + sp)*Power(t1c,2)*Power(u1c,2))

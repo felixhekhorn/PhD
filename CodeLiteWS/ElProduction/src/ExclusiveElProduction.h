@@ -34,6 +34,9 @@ class ExclusiveElProduction : public AbstractElProduction {
  */
     fPtr4dbl getBpQED() const;
     
+/** @name quark coefficient functions */
+///@{
+    
 /**
  * @brief returns \f$A'_{1}\f$
  * @return \f$A'_{1}\f$
@@ -47,6 +50,35 @@ class ExclusiveElProduction : public AbstractElProduction {
     fPtr6dbl getAp1Counter() const;
     
 /**
+ * @brief returns \f$A'_{2}\f$
+ * @return \f$A'_{2}\f$
+ */
+    fPtr7dbl getAp2() const;
+    
+/**
+ * @brief returns \f$A'_{3}\f$
+ * @return \f$A'_{3}\f$
+ */
+    fPtr7dbl getAp3() const;
+    
+///@}
+   
+/** @name Altarelli-Parisi kernels */
+///@{
+ 
+/**
+ * @brief return \f$P_{gg}^{(0)}(z)\f$
+ * @return \f$P_{gg}^{(0)}(z)\f$
+ */
+    fPtr1dbl getPgg0() const;
+    
+/**
+ * @brief return \f$P_{gg}^{(1)}(z)\f$
+ * @return \f$P_{gg}^{(1)}(z)\f$
+ */
+    fPtr1dbl getPgg1() const;
+ 
+/**
  * @brief return \f$P_{gq}^{(0)}(z)\f$
  * @return \f$P_{gq}^{(0)}(z)\f$
  */
@@ -58,17 +90,7 @@ class ExclusiveElProduction : public AbstractElProduction {
  */
     fPtr1dbl getPgq1() const;
     
-/**
- * @brief returns \f$A'_{2}\f$
- * @return \f$A'_{2}\f$
- */
-    fPtr7dbl getAp2() const;
-    
-/**
- * @brief returns \f$A'_{3}\f$
- * @return \f$A'_{3}\f$
- */
-    fPtr7dbl getAp3() const;
+///@}
     
 /**
  * @brief checks wether all partonic parameters are given

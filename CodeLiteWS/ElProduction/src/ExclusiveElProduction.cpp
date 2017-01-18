@@ -67,24 +67,18 @@ fPtr4dbl ExclusiveElProduction::getBpQED() const {
         default: throw invalid_argument("unknown projection!");
     }
 }
-
-fPtr1dbl ExclusiveElProduction::getPgq0() const {
-    switch(this->proj) {
-        case P: return &AltarelliParisi::DeltaPgq0;
-        case G: 
-        case L: return &AltarelliParisi::Pgq0;
-        default: throw invalid_argument("unknown projection!");
-    }
+#define getterAPker(n) fPtr1dbl ExclusiveElProduction::get##n() const {\
+    switch(this->proj) {\
+        case P: return &AltarelliParisi::Delta##n;\
+        case G: \
+        case L: return &AltarelliParisi::n;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
 }
-
-fPtr1dbl ExclusiveElProduction::getPgq1() const {
-    switch(this->proj) {
-        case P: return &AltarelliParisi::DeltaPgq1;
-        case G: 
-        case L: return &AltarelliParisi::Pgq1;
-        default: throw invalid_argument("unknown projection!");
-    }
-}
+getterAPker(Pgg0)
+getterAPker(Pgg1)
+getterAPker(Pgq0)
+getterAPker(Pgq1)
 
 #define getter6(n) fPtr6dbl ExclusiveElProduction::get##n() const {\
     switch(this->proj) {\

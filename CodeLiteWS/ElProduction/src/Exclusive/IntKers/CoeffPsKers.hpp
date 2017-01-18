@@ -30,16 +30,240 @@ protected:
     dbl sp;
     
 /**
+ * @brief lower x intergation bound \f$\rho^*\f$
+ */
+    dbl rhoStar;
+    
+/**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
  */
-    AbstractCoeffPsKer(dbl m2, dbl q2, dbl sp) : m2(m2), q2(q2), sp(sp) {};
+    AbstractCoeffPsKer(dbl m2, dbl q2, dbl sp) : m2(m2), q2(q2), sp(sp) {
+        this->rhoStar = (4.*m2 - q2)/sp;
+    };
 };
 
 /**
- * @brief exclusive phasespace kernel for \f$d_{q}^{(1)}\f$
+ * @brief exclusive phasespace kernel for \f$c_{g}^{(1)}\f$
+ */
+class PsKerCg1 : public AbstractCoeffPsKer {
+    
+/**
+ * @brief pointer to Born ME
+ */
+    fPtr4dbl BpQED;
+    
+/**
+ * @brief pointer to soft+virtual ME
+ */
+    fPtr5dbl SVp;
+    
+/**
+ * @brief pointer to full hard ME
+ */
+    fPtr7dbl Rp;
+    
+/**
+ * @brief pointer to soft limit of hard ME
+ */
+    fPtr6dbl RpxC;
+    
+/**
+ * @brief pointer to collinear limit of hard ME
+ */
+    fPtr6dbl ROKpyC;
+    
+/**
+ * @brief pointer to soft+collinear limit of hard ME
+ */
+    fPtr5dbl ROKpyxC;
+    
+/**
+ * @brief pointer to \f$P_{gg}^{(0)}(z)\f$
+ */
+    fPtr1dbl Pgg0;
+    
+/**
+ * @brief pointer to \f$P_{gg}^{(1)}(z)\f$
+ */
+    fPtr1dbl Pgg1;
+    
+/**
+ * @brief soft regulation parameter \f$\tilde\rho\f$
+ */
+    dbl rhoTilde;
+
+/**
+ * @brief soft regulation parameter \f$\tilde\beta\f$
+ */
+    dbl betaTilde;
+    
+/**
+ * @brief collinear regulation parameter \f$\omega\f$
+ */
+    dbl omega;
+    
+/**
+ * @brief offset to upper integration bound in x \f$\delta_x\f$
+ */
+    dbl deltax;
+    
+/**
+ * @brief offset to lower integration bound in y \f$\delta_y\f$
+ */
+    dbl deltay;
+    
+public:
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2< 0\f$
+ * @param sp current \f$s'\f$
+ * @param rhoTilde soft regulation parameter \f$\tilde\rho\f$
+ * @param omega collinear regulation parameter \f$\omega\f$
+ * @param deltax offset to upper integration bound in x \f$\delta_x\f$
+ * @param deltay offset to lower integration bound in y \f$\delta_y\f$
+ */
+    PsKerCg1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, dbl rhoTilde, dbl omega, dbl deltax, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
+        BpQED(0),SVp(0),Rp(0),RpxC(0),ROKpyC(0),ROKpyxC(0),Pgg0(0),Pgg1(0),
+        rhoTilde(rhoTilde),omega(omega),deltax(deltax),deltay(deltay) {
+        this->rhoStar = (4.*m2 - q2)/sp;
+        this->betaTilde = sqrt(1. - 4.*m2/rhoTilde);
+    };
+    
+/**
+ * @brief sets 2->2 MEs
+ * @param BpQED pointer to Born ME
+ * @param SVp pointer to soft+virtual ME
+ */
+    void setBorn(fPtr4dbl BpQED, fPtr5dbl SVp) {
+        this->BpQED = BpQED;
+        this->SVp = SVp;
+    }
+    
+/**
+ * @brief sets hard MEs
+ * @param Rp pointer to full hard ME
+ * @param RpxC pointer to soft limit of hard ME
+ * @param ROKpyC pointer to collinear limit of hard ME
+ * @param ROKpyxC pointer to soft+collinear limit of hard ME
+ */
+    void setRp(fPtr7dbl Rp, fPtr6dbl RpxC, fPtr6dbl ROKpyC, fPtr5dbl ROKpyxC) {
+        this->Rp = Rp;
+        this->RpxC = RpxC;
+        this->ROKpyC = ROKpyC;
+        this->ROKpyxC = ROKpyxC;
+    }
+    
+/**
+ * @brief sets Altarelli-Parisi kernels
+ * @param Pgg0 pointer to \f$P_{gg}^{(0)}(z)\f$
+ * @param Pgg1 pointer to \f$P_{gg}^{(1)}(z)\f$
+ */
+    void setPgg(fPtr1dbl Pgg0, fPtr1dbl Pgg1) {
+        this->Pgg0 = Pgg0;
+        this->Pgg1 = Pgg1;
+    }
+    
+/**
+ * @brief called function
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @param a3 integration variable
+ * @param a4 integration variable
+ * @return kernel
+ */
+    dbl operator() (cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
+        // protect from null pointer
+        if (0 == this->BpQED || 0 == this->SVp 
+            || 0 == this->Rp || 0 == this->RpxC || 0 == this->ROKpyC || 0 == this->ROKpyxC 
+            || 0 == this->Pgg0 || 0 == this->Pgg1)
+                throw invalid_argument("need to set all arguments!");
+        dbl r = 0.;
+        dbl jac = 1.;
+        // Theta1
+        cdbl Theta1 = M_PI * a3;
+        jac *= M_PI;
+        
+        // S+V contributions
+        {
+            cdbl beta = sqrt(1. - 4.*m2/sp);
+            cdbl t1 = -sp/2.*(1. - beta*cos(Theta1));
+            cdbl f = Kggg*NC*CF * 1./(4.*sp);
+            r += jac*f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(4.);
+        }
+        
+        // transform x with distribution for Event
+        cdbl xEmax = 1.-deltax;
+        cdbl xEmin = rhoStar;
+        cdbl xE = xEmin + (xEmax - xEmin)*a1;
+        // transform x with distribution for Counterevent
+        cdbl xCmax = xEmax;
+        cdbl xCmin = rhoTilde;
+        cdbl xC = xCmin + (xCmax - xCmin)*a1;
+        
+        // collinear contributions
+        {
+            cdbl s5E = q2 + xE*sp;
+            cdbl beta = sqrt(1. - 4.*m2/sp);
+            cdbl beta5E = sqrt(1. - 4.*m2/s5E);
+            cdbl t1 = -sp/2.*(1. - beta*cos(Theta1));
+            cdbl t1c = -.5*sp*(1.-beta5E*cos(Theta1));
+            cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
+            cdbl meC = BpQED(m2,q2,sp,t1);
+            cdbl f = Kggg*NC*CF* 1./sp;
+            cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.);
+            // (1-x)P_gg -> 2CA for x->1 for all projections
+            r += jac*(xEmax - xEmin) * f/xE*meE*(Pgg0(xE)     *l + 2.*log(1.-xE)        + 2.*Pgg1(xE));
+            r -= jac*(xCmax - xCmin) * f   *meC*(2.*CA/(1.-xC)*l + 2.*log(1.-xC)/(1.-xC));
+        }
+        
+        // Theta2
+        cdbl Theta2 = M_PI * a4;
+        jac *= M_PI;
+        // transform y with distribution for Event
+        cdbl yEmin = -1.+deltay;
+        cdbl yEmax = 1.;
+        cdbl yE = yEmin + (yEmax - yEmin)*a2;
+        //const KinematicVars vsE(m2,q2,sp,x,yE,Theta1,Theta2);
+        // transform y with distribution for Counterevent
+        cdbl yCmin = yEmin;
+        cdbl yCmax = -1.+omega;
+        cdbl yC = yCmin + (yCmax - yCmin)*a2;
+        
+        // hard contributions
+        {
+            cdbl s5R = q2 + xE*sp;
+            cdbl betaxC = sqrt(1. - 4.*m2/sp);
+            cdbl beta5R = sqrt(1. - 4.*m2/s5R);
+            cdbl f = Kggg*NC*CF * (sp+q2)/sp^2;
+        }
+        
+        /*
+        cdbl s5B = q2 + sp*x;
+        cdbl beta5B = sqrt(1. - 4.*m2/s5B);
+        cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
+        cdbl meB = BpQED(m2,q2,x*sp,x*t1c);
+        
+        cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
+        cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
+        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
+        cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-x)*(1.-x));
+        cdbl vPqg0 = Pgq0(x)/CF;
+        cdbl vPgq1 = Pgq1(x)/CF;
+        cdbl g = Kqgg*NC*CF * m2/(x*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(2.*vPgq1 + vPqg0*l);*/
+        // norm to cg1
+        r *= (m2/4.*M_PI);
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
+};
+
+/**
+ * @brief exclusive phasespace kernel for \f$c_{q}^{(1)}\f$
  */
 class PsKerCq1 : public AbstractCoeffPsKer {
     
@@ -49,12 +273,12 @@ class PsKerCq1 : public AbstractCoeffPsKer {
     fPtr4dbl BpQED;
     
 /**
- * @brief pointer to pole part of heavy quark charge ME
+ * @brief pointer to full heavy quark charge ME
  */
     fPtr7dbl Ap1;
     
 /**
- * @brief pointer to finite part of heavy quark charge ME
+ * @brief pointer to soft limit of heavy quark charge ME
  */
     fPtr6dbl Ap1Counter;
     
@@ -105,13 +329,12 @@ public:
     dbl operator() (cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
         dbl jac = 1.;
         // x
-        cdbl rhoStar = (4.*m2 - q2)/sp;
         cdbl x = rhoStar + (1.-rhoStar)*a1;
         jac *= (1.-rhoStar);
         // Theta1
         cdbl Theta1 = M_PI * a3;
         jac *= M_PI;
-        // Born contributions
+        // collinear contributions
         cdbl jacB = jac;
         // Theta2
         cdbl Theta2 = M_PI * a4;
@@ -181,7 +404,6 @@ public:
         cdbl Theta1 = M_PI * a3;
         cdbl Theta2 = M_PI * a4;
         jac *= M_PI * M_PI;
-        cdbl rhoStar = (4.*m2 - q2)/sp;
         cdbl x = rhoStar + (1.-rhoStar)*a1;
         jac *= (1.-rhoStar);
         cdbl y = -1. + 2.*a2;

@@ -21,4 +21,11 @@ Rp(G)
 Rp(L)
 Rp(P)
 
+#define RpxC(proj) cdbl RpxC##proj(cdbl m2, cdbl q2, cdbl sp, cdbl y, cdbl Theta1, cdbl Theta2) {\
+    return (CA * ROKpxC##proj(m2,q2,sp,y,Theta1,Theta2) + 2.*CF * RQEDpxC##proj(m2,q2,sp,y,Theta1,Theta2));\
+}
+RpxC(G)
+RpxC(L)
+RpxC(P)
+
 } // namespace Exclusive
