@@ -48,7 +48,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("Fq1", &InclusiveElProduction::Fq1)
     ;
     
-    class_<ExclusiveElProduction>("ExclusiveElProduction", "application class for exclusive electro production", init<double,double,projT,uint,double,double>())
+    class_<ExclusiveElProduction>("ExclusiveElProduction", "application class for exclusive electro production", init<double,double,projT,uint,double,double,double,double>())
         // global setter
         .def("setQ2", &ExclusiveElProduction::setQ2, "sets virtuality of photon q^2 < 0")
         .def("setM2", &ExclusiveElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")

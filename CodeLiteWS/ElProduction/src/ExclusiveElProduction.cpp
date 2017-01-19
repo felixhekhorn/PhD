@@ -6,7 +6,11 @@
 #include "Integration.h"
 
 #include "Exclusive/ME/BpQED.h"
+#include "Exclusive/ME/Rp.h"
+#include "Exclusive/ME/SVp.h"
+#include "Exclusive/ME/NLOg.h"
 #include "Exclusive/ME/Ap.h"
+
 #include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
@@ -59,14 +63,6 @@ void ExclusiveElProduction::setDeltay(cdbl deltay) {
     this->deltay = deltay;
 }
 
-fPtr4dbl ExclusiveElProduction::getBpQED() const {
-    switch(this->proj) {
-        case G: return &BpQEDG;
-        case L: return &BpQEDL;
-        case P: return &BpQEDP;
-        default: throw invalid_argument("unknown projection!");
-    }
-}
 #define getterAPker(n) fPtr1dbl ExclusiveElProduction::get##n() const {\
     switch(this->proj) {\
         case P: return &AltarelliParisi::Delta##n;\
@@ -80,6 +76,22 @@ getterAPker(Pgg1)
 getterAPker(Pgq0)
 getterAPker(Pgq1)
 
+#define getter4(n) fPtr4dbl ExclusiveElProduction::get##n() const {\
+    switch(this->proj) {\
+        case G: return &n##G;\
+        case L: return &n##L;\
+        case P: return &n##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
+#define getter5(n) fPtr5dbl ExclusiveElProduction::get##n() const {\
+    switch(this->proj) {\
+        case G: return &n##G;\
+        case L: return &n##L;\
+        case P: return &n##P;\
+        default: throw invalid_argument("unknown projection!");\
+    }\
+}
 #define getter6(n) fPtr6dbl ExclusiveElProduction::get##n() const {\
     switch(this->proj) {\
         case G: return &n##G;\
@@ -97,10 +109,30 @@ getterAPker(Pgq1)
     }\
 }
 
+getter4(BpQED)
+
+getter5(SVp)
+getter7(Rp)
+getter6(RpxC)
+getter6(ROKpyC)
+getter4(ROKpyxC)
+
 getter7(Ap1)
 getter6(Ap1Counter)
 getter7(Ap2)
 getter7(Ap3)
+
+dbl ExclusiveElProduction::cg1() const {
+    this->checkPartonic();
+    PsKerCg1 k(m2,q2,sp, rhoTilde, omega, deltax,deltay);
+    k.setBorn(this->getBpQED(),this->getSVp());
+    k.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
+    k.setPgg(this->getPgg0(),this->getPgg1());
+    gsl_monte_function f;
+    f.f = gsl::callFunctor4D<PsKerCg1>;
+    f.params = &k;
+    return int4D(&f);
+}
 
 dbl ExclusiveElProduction::cq1() const {
     this->checkPartonic();

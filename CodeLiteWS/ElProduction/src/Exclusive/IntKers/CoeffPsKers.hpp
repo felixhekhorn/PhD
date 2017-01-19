@@ -78,7 +78,7 @@ class PsKerCg1 : public AbstractCoeffPsKer {
 /**
  * @brief pointer to soft+collinear limit of hard ME
  */
-    fPtr5dbl ROKpyxC;
+    fPtr4dbl ROKpyxC;
     
 /**
  * @brief pointer to \f$P_{gg}^{(0)}(z)\f$
@@ -126,11 +126,10 @@ public:
  * @param deltax offset to upper integration bound in x \f$\delta_x\f$
  * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
-    PsKerCg1(dbl m2, dbl q2, dbl sp, fPtr4dbl BpQED, dbl rhoTilde, dbl omega, dbl deltax, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
+    PsKerCg1(dbl m2, dbl q2, dbl sp, dbl rhoTilde, dbl omega, dbl deltax, dbl deltay) : AbstractCoeffPsKer(m2,q2,sp), 
         BpQED(0),SVp(0),Rp(0),RpxC(0),ROKpyC(0),ROKpyxC(0),Pgg0(0),Pgg1(0),
         rhoTilde(rhoTilde),omega(omega),deltax(deltax),deltay(deltay) {
-        this->rhoStar = (4.*m2 - q2)/sp;
-        this->betaTilde = sqrt(1. - 4.*m2/rhoTilde);
+        this->betaTilde = sqrt(1. - rhoTilde);
     };
     
 /**
@@ -150,7 +149,7 @@ public:
  * @param ROKpyC pointer to collinear limit of hard ME
  * @param ROKpyxC pointer to soft+collinear limit of hard ME
  */
-    void setRp(fPtr7dbl Rp, fPtr6dbl RpxC, fPtr6dbl ROKpyC, fPtr5dbl ROKpyxC) {
+    void setRp(fPtr7dbl Rp, fPtr6dbl RpxC, fPtr6dbl ROKpyC, fPtr4dbl ROKpyxC) {
         this->Rp = Rp;
         this->RpxC = RpxC;
         this->ROKpyC = ROKpyC;
@@ -195,11 +194,11 @@ public:
             r += jac*f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(4.);
         }
         
-        // transform x with distribution for Event
+        // transform x with distribution for event
         cdbl xEmax = 1.-deltax;
         cdbl xEmin = rhoStar;
         cdbl xE = xEmin + (xEmax - xEmin)*a1;
-        // transform x with distribution for Counterevent
+        // transform x with distribution for counter event
         cdbl xCmax = xEmax;
         cdbl xCmin = rhoTilde;
         cdbl xC = xCmin + (xCmax - xCmin)*a1;
@@ -213,48 +212,37 @@ public:
             cdbl t1c = -.5*sp*(1.-beta5E*cos(Theta1));
             cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
             cdbl meC = BpQED(m2,q2,sp,t1);
-            cdbl f = Kggg*NC*CF* 1./sp;
+            cdbl f = Kggg*NC*CF* 1./sp * sin(Theta1);
             cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.);
             // (1-x)P_gg -> 2CA for x->1 for all projections
-            r += jac*(xEmax - xEmin) * f/xE*meE*(Pgg0(xE)     *l + 2.*log(1.-xE)        + 2.*Pgg1(xE));
-            r -= jac*(xCmax - xCmin) * f   *meC*(2.*CA/(1.-xC)*l + 2.*log(1.-xC)/(1.-xC));
+            r += jac*(xEmax - xEmin) * f*beta5E/xE*meE*(Pgg0(xE)     *l + 2.*log(1.-xE)        + 2.*Pgg1(xE));
+            r -= jac*(xCmax - xCmin) * f*beta     *meC*(2.*CA/(1.-xC)*l + 2.*log(1.-xC)/(1.-xC));
         }
         
         // Theta2
         cdbl Theta2 = M_PI * a4;
         jac *= M_PI;
-        // transform y with distribution for Event
+        // transform y with distribution for event
         cdbl yEmin = -1.+deltay;
         cdbl yEmax = 1.;
         cdbl yE = yEmin + (yEmax - yEmin)*a2;
-        //const KinematicVars vsE(m2,q2,sp,x,yE,Theta1,Theta2);
-        // transform y with distribution for Counterevent
+        // transform y with distribution for counter event
         cdbl yCmin = yEmin;
         cdbl yCmax = -1.+omega;
         cdbl yC = yCmin + (yCmax - yCmin)*a2;
         
         // hard contributions
         {
-            cdbl s5R = q2 + xE*sp;
-            cdbl betaxC = sqrt(1. - 4.*m2/sp);
-            cdbl beta5R = sqrt(1. - 4.*m2/s5R);
-            cdbl f = Kggg*NC*CF * (sp+q2)/sp^2;
+            const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
+            cdbl beta = sqrt(1. - 4.*m2/sp);
+            cdbl t1sc = -.5*sp*(1.-beta*cos(Theta1));
+            cdbl f = Kggg*NC*CF * (sp+q2)/(M_PI*pow(sp,3))*sin(Theta1);
+            r += jac*(xEmax - xEmin)*(yEmax - yEmin) * f*vsE.beta5/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
+            r -= jac*(xCmax - xCmin)*(yEmax - yEmin) * f*    beta /(1.-yE) * 1./(1.-xC)/(1.+yE) *    RpxC   (m2,q2,sp,yE,Theta1,Theta2);
+            r -= jac*(xEmax - xEmin)*(yCmax - yCmin) * f*vsE.beta5/2       * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
+            r += jac*(xCmax - xCmin)*(yCmax - yCmin) * f*    beta /2       * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
         }
         
-        /*
-        cdbl s5B = q2 + sp*x;
-        cdbl beta5B = sqrt(1. - 4.*m2/s5B);
-        cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
-        cdbl meB = BpQED(m2,q2,x*sp,x*t1c);
-        
-        cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
-        cdbl meC = Ap1Counter(m2,q2,sp,x,Theta1,Theta2);
-        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
-        cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-x)*(1.-x));
-        cdbl vPqg0 = Pgq0(x)/CF;
-        cdbl vPgq1 = Pgq1(x)/CF;
-        cdbl g = Kqgg*NC*CF * m2/(x*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-        cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(2.*vPgq1 + vPqg0*l);*/
         // norm to cg1
         r *= (m2/4.*M_PI);
         if (!isfinite(r)) return 0.;

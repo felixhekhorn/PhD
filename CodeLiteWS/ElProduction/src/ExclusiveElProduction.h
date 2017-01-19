@@ -33,6 +33,41 @@ class ExclusiveElProduction : public AbstractElProduction {
  * @return \f$B'_{QED}\f$
  */
     fPtr4dbl getBpQED() const;
+
+/** @name gluon coefficient functions */
+///@{
+    
+/**
+ * @brief returns \f$(S+V)'\f$
+ * @return \f$(S+V)'\f$
+ */
+    fPtr5dbl getSVp() const;
+    
+/**
+ * @brief returns \f$R'\f$
+ * @return \f$R'\f$
+ */
+    fPtr7dbl getRp() const;
+    
+/**
+ * @brief returns \f$R'(x=1)\f$
+ * @return \f$R'(x=1)\f$
+ */
+    fPtr6dbl getRpxC() const;
+    
+/**
+ * @brief returns \f$R'_{OK}(y=-1)\f$
+ * @return \f$R'_{OK}(y=-1)\f$
+ */
+    fPtr6dbl getROKpyC() const;
+    
+/**
+ * @brief returns \f$R'_{OK}(x=1,y=-1)\f$
+ * @return \f$R'_{OK}(x=1,y=-1)\f$
+ */
+    fPtr4dbl getROKpyxC() const;
+    
+///@}
     
 /** @name quark coefficient functions */
 ///@{
@@ -144,13 +179,19 @@ public:
 /** @name partonic coefficient functions */
 ///@{
 /**
- * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with heavy charges
+ * @brief NLO quark scaling function \f$c^{(1)}_g\f$
+ * @return \f$c^{(1)}_g\f$
+ */
+    dbl cg1() const;
+    
+/**
+ * @brief NLO quark scaling function \f$c^{(1)}_q\f$
  * @return \f$c^{(1)}_q\f$
  */
     dbl cq1() const;
     
 /**
- * @brief NLO quark scaling function \f$d^{(1)}_q\f$ with light charges
+ * @brief NLO quark scaling function \f$d^{(1)}_q\f$
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;

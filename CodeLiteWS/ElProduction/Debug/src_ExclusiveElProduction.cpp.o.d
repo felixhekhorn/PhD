@@ -2,7 +2,8 @@ Debug/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/ExclusiveElProduction.h src/AbstractElProduction.h src/config.h \
  src/Timer.h src/Pdf/PdfWrapper.h src/Pdf/../config.h src/gsl++.hpp \
  src/Integration.h src/Exclusive/ME/BpQED.h \
- src/Exclusive/ME/../../config.h src/Exclusive/ME/Ap.h \
+ src/Exclusive/ME/../../config.h src/Exclusive/ME/Rp.h \
+ src/Exclusive/ME/SVp.h src/Exclusive/ME/NLOg.h src/Exclusive/ME/Ap.h \
  src/Exclusive/ME/AltarelliParisi.hpp \
  src/Exclusive/IntKers/CoeffPsKers.hpp \
  src/Exclusive/IntKers/../../config.h \
@@ -27,6 +28,12 @@ src/Integration.h:
 src/Exclusive/ME/BpQED.h:
 
 src/Exclusive/ME/../../config.h:
+
+src/Exclusive/ME/Rp.h:
+
+src/Exclusive/ME/SVp.h:
+
+src/Exclusive/ME/NLOg.h:
 
 src/Exclusive/ME/Ap.h:
 
