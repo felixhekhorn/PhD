@@ -182,16 +182,16 @@ public:
                 throw invalid_argument("need to set all arguments!");
         dbl r = 0.;
         dbl jac = 1.;
+        cdbl beta = sqrt(1. - 4.*m2/sp);
         // Theta1
         cdbl Theta1 = M_PI * a3;
         jac *= M_PI;
         
         // S+V contributions
         {
-            cdbl beta = sqrt(1. - 4.*m2/sp);
             cdbl t1 = -sp/2.*(1. - beta*cos(Theta1));
             cdbl f = Kggg*NC*CF * 1./(4.*sp);
-            r += jac*f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(4.);
+            r += jac*f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
         }
         
         // transform x with distribution for event
@@ -206,7 +206,6 @@ public:
         // collinear contributions
         {
             cdbl s5E = q2 + xE*sp;
-            cdbl beta = sqrt(1. - 4.*m2/sp);
             cdbl beta5E = sqrt(1. - 4.*m2/s5E);
             cdbl t1 = -sp/2.*(1. - beta*cos(Theta1));
             cdbl t1c = -.5*sp*(1.-beta5E*cos(Theta1));
@@ -214,9 +213,9 @@ public:
             cdbl meC = BpQED(m2,q2,sp,t1);
             cdbl f = Kggg*NC*CF* 1./sp * sin(Theta1);
             cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.);
-            // (1-x)P_gg -> 2CA for x->1 for all projections
-            r += jac*(xEmax - xEmin) * f*beta5E/xE*meE*(Pgg0(xE)     *l + 2.*log(1.-xE)        + 2.*Pgg1(xE));
-            r -= jac*(xCmax - xCmin) * f*beta     *meC*(2.*CA/(1.-xC)*l + 2.*log(1.-xC)/(1.-xC));
+            // (1-x)P_gg^0 -> 2CA for x->1 for all projections
+            r += jac*(xEmax - xEmin) * f*beta5E/xE*meE*(Pgg0(xE) *(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*Pgg1(xE));
+            r -= jac*(xCmax - xCmin) * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC)));
         }
         
         // Theta2
@@ -234,13 +233,12 @@ public:
         // hard contributions
         {
             const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
-            cdbl beta = sqrt(1. - 4.*m2/sp);
-            cdbl t1sc = -.5*sp*(1.-beta*cos(Theta1));
+            cdbl t1sc = -sp/2.*(1. - beta*cos(Theta1));
             cdbl f = Kggg*NC*CF * (sp+q2)/(M_PI*pow(sp,3))*sin(Theta1);
             r += jac*(xEmax - xEmin)*(yEmax - yEmin) * f*vsE.beta5/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
             r -= jac*(xCmax - xCmin)*(yEmax - yEmin) * f*    beta /(1.-yE) * 1./(1.-xC)/(1.+yE) *    RpxC   (m2,q2,sp,yE,Theta1,Theta2);
-            r -= jac*(xEmax - xEmin)*(yCmax - yCmin) * f*vsE.beta5/2       * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
-            r += jac*(xCmax - xCmin)*(yCmax - yCmin) * f*    beta /2       * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
+            r -= jac*(xEmax - xEmin)*(yCmax - yCmin) * f*vsE.beta5/2.      * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
+            r += jac*(xCmax - xCmin)*(yCmax - yCmin) * f*    beta /2.      * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
         }
         
         // norm to cg1

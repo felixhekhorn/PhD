@@ -3,6 +3,9 @@
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
 
+#include "Exclusive/IntKers/KinematicVars.hpp"
+#include "Exclusive/ME/Ap.h"
+
 using namespace boost::python;
 
 //BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(ElProduction_setPdf_overloads, setPdf, 1, 2)
@@ -74,4 +77,16 @@ BOOST_PYTHON_MODULE(ElProduction)
         //.def("Fg1", &ExclusiveElProduction::Fg1)
         //.def("Fq1", &ExclusiveElProduction::Fq1)
     ;
+    
+    // Test
+    class_<Exclusive::KinematicVars>("ExclusiveKinematicVars",init<dbl,dbl,dbl,dbl,dbl,dbl,dbl>())
+        .def_readonly("t1", &Exclusive::KinematicVars::t1)
+        .def_readonly("u1", &Exclusive::KinematicVars::u1)
+        .def_readonly("tp", &Exclusive::KinematicVars::tp)
+        .def_readonly("up", &Exclusive::KinematicVars::up)
+    ;
+    def("ExclusiveAp1G",Exclusive::Ap1G);
+    def("ExclusiveAp1L",Exclusive::Ap1L);
+    def("ExclusiveAp2G",Exclusive::Ap2G);
+    def("ExclusiveAp2L",Exclusive::Ap2L);
 }

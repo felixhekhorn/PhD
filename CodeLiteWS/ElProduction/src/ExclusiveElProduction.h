@@ -9,6 +9,11 @@
 class ExclusiveElProduction : public AbstractElProduction {
     
 /**
+ * @brief factor to soft regulation parameter \f$\tilde\rho = 1-x_{\rho}(1-\rho^*)\f$
+ */
+    dbl rhoTildeFactor;
+    
+/**
  * @brief soft regulation parameter \f$\tilde\rho\f$
  */
     dbl rhoTilde;
@@ -140,21 +145,33 @@ public:
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param proj projection
  * @param nlf number of light flavours
- * @param rhoTilde soft regulation parameter \f$\tilde\rho\f$
+ * @param rhoTildeFactor factor to soft regulation parameter \f$\tilde\rho = 1-x_{\rho}(1-\rho^*)\f$
  * @param omega collinear regulation parameter \f$\omega\f$
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl rhoTilde, dbl omega, dbl deltax, dbl deltay);
+    ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl rhoTildeFactor, dbl omega, dbl deltax, dbl deltay);
 
 /** @name partonic coefficient functions */
 ///@{
+    
+/**
+ * @brief sets partonic center of mass energy
+ * @param s partonic cm-energy
+ */
+    void setPartonicS(dbl s);
+
+/**
+ * @brief sets rhoTildeFactor
+ * @param rhoTildeFactor factor to soft regulation parameter \f$\tilde\rho = 1-x_{\rho}(1-\rho^*)\f$
+ */
+    void setRhoTildeFactor(cdbl rhoTildeFactor);
 
 /**
  * @brief sets rhoTilde
  * @param rhoTilde soft regulation parameter \f$\tilde\rho\f$
  */
-    void setRhoTilde(cdbl omega);
+    void setRhoTilde(cdbl rhoTilde);
 
 /**
  * @brief sets omega

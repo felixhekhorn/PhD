@@ -7,8 +7,8 @@ using namespace Color;
 
 namespace Exclusive {
 
-#define SVp(proj) cdbl SVp##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil) {\
-    return (CA * SVOKp##proj(m2,q2,sp,t1,betaTil) + 2.*CF * SVQEDp##proj(m2,q2,sp,t1,betaTil));\
+#define SVp(proj) cdbl SVp##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde) {\
+    return (CA * SVOKp##proj(m2,q2,sp,t1,betaTilde) + 2.*CF * SVQEDp##proj(m2,q2,sp,t1,betaTilde));\
 }
 SVp(G)
 SVp(L)

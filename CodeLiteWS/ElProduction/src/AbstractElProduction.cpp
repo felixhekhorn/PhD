@@ -44,13 +44,6 @@ void AbstractElProduction::setEta(dbl eta) {
     this->setPartonicS(4.*m2*(1.+eta));
 }
 
-void AbstractElProduction::setPartonicS(dbl s) {
-    if (s < 4.*m2)
-        throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
-    this->sp = s - q2;
-    this->hasPartonicS = true;
-}
-
 void AbstractElProduction::checkPartonic() const {
     if (!this->hasPartonicS)
         throw invalid_argument("no partonic cm-energy given!");

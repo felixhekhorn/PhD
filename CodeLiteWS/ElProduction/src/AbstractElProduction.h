@@ -144,7 +144,7 @@ public:
  * @brief sets partonic center of mass energy
  * @param s partonic cm-energy
  */
-    void virtual setPartonicS(dbl s);
+    void virtual setPartonicS(dbl s) = 0;
 
 ///@}
 

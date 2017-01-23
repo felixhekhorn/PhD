@@ -6,8 +6,25 @@
 #include "ExclusiveElProduction.h"
 
 int runInclusive();
+
+#include "Exclusive/IntKers/KinematicVars.hpp"
 int test() {
-    printf("%e %e %e %e",-1.-(-1.+1e-17),-1.-(-1.+5e-17),-1.-(-1.+6e-17),-1.-(-1.+7e-17));
+    using namespace Exclusive;
+    dbl m2 = 4.75*4.75;
+    dbl q2 = -1.;
+    dbl sp = 2.*4.*m2;
+    dbl s = sp + q2;
+    dbl rhoStar = (4.*m2 - q2)/sp;
+    dbl x = rhoStar + .5*(1.-rhoStar);
+    dbl y = 0;
+    dbl Theta1 = M_PI/2.;
+    dbl Theta2 = M_PI/2.;
+    const KinematicVars vs(m2,q2,sp,x,y,Theta1,Theta2);
+    cdbl s3 = q2 - sp - vs.t1 - vs.tp - vs.u1 - vs.up;
+    cdbl s4 = sp + vs.t1 + vs.u1;
+    cdbl s5 = sp + vs.tp + vs.up;
+    cdbl u6 = -sp - vs.t1 - vs.tp;
+    cdbl u7 = q2 - sp - vs.u1 - vs.up;
     return EXIT_SUCCESS;
 }
 
@@ -18,23 +35,23 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
+    return test();
 	//return runInclusive();
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.;
     uint nlf = 4;
     dbl Delta = 1e-6;
-    dbl rhoTilde = .95;
-    dbl omega = .1;
+    dbl rhoTildeFactor = .8;
+    dbl omega = 1.;
     dbl deltax = 1e-6;
     dbl deltay = 1e-6;
     dbl eta = 1.;
     InclusiveElProduction iG(m2,q2,Delta,L,nlf);
-    ExclusiveElProduction eG(m2,q2,L,nlf,rhoTilde,omega,deltax,deltay);
+    ExclusiveElProduction eG(m2,q2,L,nlf,rhoTildeFactor,omega,deltax,deltay);
     uint N = 7;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-1.+2./(N-1)*j);
+        eta = pow(10,-.5+2.5/(N-1)*j);
         iG.setEta(eta);
         eG.setEta(eta);
         cdbl i = iG.cg1();

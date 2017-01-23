@@ -16,10 +16,10 @@ namespace Exclusive {
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
  * @return \f$(S+V)'_{G}\f$
  */
-cdbl SVpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
+cdbl SVpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
 
 /**
  * @brief full soft contribution in L-Projection
@@ -27,10 +27,10 @@ cdbl SVpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
  * @return \f$(S+V)'_{L}\f$
  */
-cdbl SVpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
+cdbl SVpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
 
 /**
  * @brief full soft contribution in P-Projection
@@ -38,10 +38,10 @@ cdbl SVpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
  * @return \f$(S+V)'_{P}\f$
  */
-cdbl SVpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
+cdbl SVpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
 
 /**
  * @brief full hard contribution in G-Projection
