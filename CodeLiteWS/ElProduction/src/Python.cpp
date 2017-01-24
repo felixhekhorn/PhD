@@ -4,7 +4,10 @@
 #include "ExclusiveElProduction.h"
 
 #include "Exclusive/IntKers/KinematicVars.hpp"
+#include "Exclusive/ME/BpQED.h"
 #include "Exclusive/ME/Ap.h"
+#include "Exclusive/ME/SVp.h"
+#include "Exclusive/ME/Rp.h"
 
 using namespace boost::python;
 
@@ -89,4 +92,26 @@ BOOST_PYTHON_MODULE(ElProduction)
     def("ExclusiveAp1L",Exclusive::Ap1L);
     def("ExclusiveAp2G",Exclusive::Ap2G);
     def("ExclusiveAp2L",Exclusive::Ap2L);
+    def("ExclusiveAp3G",Exclusive::Ap3G);
+    def("ExclusiveAp3L",Exclusive::Ap3L);
+    //def("ExclusiveBpQEDG",Exclusive::BpQEDG);
+    //def("ExclusiveBpQEDL",Exclusive::BpQEDL);
+    def("ExclusiveSVOKpG",Exclusive::SVOKpG);
+    def("ExclusiveSVOKpL",Exclusive::SVOKpL);
+    def("ExclusiveSVQEDpG",Exclusive::SVQEDpG);
+    def("ExclusiveSVQEDpL",Exclusive::SVQEDpL);
+    def("ExclusiveROK1pG",Exclusive::ROK1pG);
+    def("ExclusiveROK1pL",Exclusive::ROK1pL);
+    def("ExclusiveROK2pG",Exclusive::ROK2pG);
+    def("ExclusiveROK2pL",Exclusive::ROK2pL);
+    def("ExclusiveRQEDpG",Exclusive::RQEDpG);
+    def("ExclusiveRQEDpL",Exclusive::RQEDpL);
+    def("ExclusiveROKpxCG",Exclusive::ROKpxCG);
+    def("ExclusiveROKpxCL",Exclusive::ROKpxCL);
+    def("ExclusiveRQEDpxCG",Exclusive::RQEDpxCG);
+    def("ExclusiveRQEDpxCL",Exclusive::RQEDpxCL);
+    def("ExclusiveROKpyCG",Exclusive::ROKpyCG);
+    def("ExclusiveROKpyCL",Exclusive::ROKpyCL);
+    def("ExclusiveROKpyxCG",Exclusive::ROKpyxCG);
+    def("ExclusiveROKpyxCL",Exclusive::ROKpyxCL);
 }

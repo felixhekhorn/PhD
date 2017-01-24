@@ -17,9 +17,9 @@
 
 using namespace Exclusive;
 
-ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl rhoTildeFactor, dbl omega, dbl deltax, dbl deltay):
+ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay):
     AbstractElProduction(m2,q2,proj,nlf) {
-    this->setRhoTildeFactor(rhoTildeFactor);
+    this->setXTilde(xTilde);
     this->setOmega(omega);
     this->setDeltax(deltax);
     this->setDeltay(deltay);
@@ -31,7 +31,7 @@ void ExclusiveElProduction::setPartonicS(dbl s) {
     this->sp = s - q2;
     this->hasPartonicS = true;
     cdbl rhoStar = (4.*m2 - q2)/this->sp;
-    cdbl rhoTilde = 1. - this->rhoTildeFactor*(1. - rhoStar);
+    cdbl rhoTilde = 1. - this->xTilde*(1. - rhoStar);
     this->setRhoTilde(rhoTilde);
 }
 
@@ -45,10 +45,10 @@ void ExclusiveElProduction::checkPartonic() const {
         throw domain_error("rhoTilde has to be smaller than 1-deltax!");
 }
 
-void ExclusiveElProduction::setRhoTildeFactor(cdbl rhoTildeFactor) {
-    if (rhoTildeFactor <= 0. || rhoTildeFactor >= 1.)
-        throw domain_error("rhoTildeFactor has to be within (0,1)!");
-    this->rhoTildeFactor = rhoTildeFactor;
+void ExclusiveElProduction::setXTilde(cdbl xTilde) {
+    if (xTilde <= 0. || xTilde >= 1.)
+        throw domain_error("xTilde has to be within (0,1)!");
+    this->xTilde = xTilde;
 }
 
 void ExclusiveElProduction::setRhoTilde(cdbl rhoTilde) {

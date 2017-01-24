@@ -211,7 +211,7 @@ public:
             cdbl t1c = -.5*sp*(1.-beta5E*cos(Theta1));
             cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
             cdbl meC = BpQED(m2,q2,sp,t1);
-            cdbl f = Kggg*NC*CF* 1./sp * sin(Theta1);
+            cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
             cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.);
             // (1-x)P_gg^0 -> 2CA for x->1 for all projections
             r += jac*(xEmax - xEmin) * f*beta5E/xE*meE*(Pgg0(xE) *(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*Pgg1(xE));
