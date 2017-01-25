@@ -33,20 +33,27 @@ int main(int argc, char **argv) {
     ExclusiveElProduction eG(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
     uint N = 7;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-.5+2.5/(N-1)*j);
+        eta = pow(10,-4.+1./(N-1)*j);
         iG.setEta(eta);
         eG.setEta(eta);
         cdbl i = iG.cg1();
-        /*eG.setOmega(.3);
-        cdbl e1 = eG.cq1();
-        eG.setOmega(1.);
-        cdbl e2 = eG.cq1();
-        eG.setOmega(1.5);
-        cdbl e3 = eG.cq1();
+        /*eG.setXTilde(.3);
+        cdbl e1 = eG.cg1();
+        eG.setXTilde(.5);
+        cdbl e2 = eG.cg1();
+        eG.setXTilde(.8);
+        cdbl e3 = eG.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);*/
+        eG.setOmega(.5);
+        cdbl e1 = eG.cg1();
+        eG.setOmega(1.);
+        cdbl e2 = eG.cg1();
+        eG.setOmega(1.5);
+        cdbl e3 = eG.cg1();
+        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);
         
-        cdbl e = eG.cg1();
-        printf("%e\t%e\t%e\n",eta,i,e);
+        //cdbl e = eG.cg1();
+        //printf("%e\t%e\t%e\n",eta,i,e);
     }
     /*iG.setEta(eta);
     eG.setEta(eta);

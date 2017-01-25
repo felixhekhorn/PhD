@@ -49,6 +49,9 @@ void ExclusiveElProduction::setXTilde(cdbl xTilde) {
     if (xTilde <= 0. || xTilde >= 1.)
         throw domain_error("xTilde has to be within (0,1)!");
     this->xTilde = xTilde;
+    // update rhoTilde
+    if (this->hasPartonicS)
+        this->setPartonicS(this->sp + this->q2);
 }
 
 void ExclusiveElProduction::setRhoTilde(cdbl rhoTilde) {

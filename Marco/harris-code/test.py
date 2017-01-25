@@ -184,7 +184,7 @@ def check3sc():
 		#Harris = me.fglc_cacf(*a2)
 		fhe = 8./beps*fhe
 		print "% e\t% e\t=> % e"%(fhe,Harris,fhe if 0 == Harris else (fhe-Harris)/Harris)
-check3sc()
+#check3sc()
 
 
 def check2():
@@ -204,17 +204,17 @@ def check2():
 		a1 = (m2,q2,sp,t1,betaTilde)
 		a2 = (t1,sp,m2,-q2,rhoTilde)
 
-		#beps = .5
-		#fhe = ElProduction.ExclusiveSVOKpG(*a1)
-		#Harris = 2.*me.vokg2(*a2)
-		#fhe = ElProduction.ExclusiveSVQEDpG(*a1)
+		beps = .5
+		fhe = ElProduction.ExclusiveSVOKpG(*a1)
+		Harris = me.vokg2(*a2)
+		#fhe = 2.*ElProduction.ExclusiveSVQEDpG(*a1)
 		#Harris = me.vqedg2(*a2)
 
-		beps = 1.
+		#beps = 1.
 		#fhe = ElProduction.ExclusiveSVOKpL(*a1)
-		#Harris = 2.*me.vokl2(*a2)
-		#fhe = ElProduction.ExclusiveSVQEDpL(*a1)
+		#Harris = me.vokl2(*a2)
+		#fhe = 2.*ElProduction.ExclusiveSVQEDpL(*a1)
 		#Harris = me.vqedl2(*a2)
-		fhe = 1./beps*fhe/np.pi/2.
-		print fhe,Harris," => ",(fhe-Harris)/Harris
-#check2()
+		fhe = 1./beps*fhe/np.pi/4.
+		print "% e\t% e\t=> % e"%(fhe,Harris,fhe if 0 == Harris else (fhe-Harris)/Harris)
+check2()

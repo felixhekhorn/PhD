@@ -235,7 +235,7 @@ public:
             const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
             cdbl t1sc = -sp/2.*(1. - beta*cos(Theta1));
             cdbl f = Kggg*NC*CF * (sp+q2)/(M_PI*pow(sp,3))*sin(Theta1);
-            r += jac*(xEmax - xEmin)*(yEmax - yEmin) * f*vsE.beta5/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
+            r += jac*(xEmax - xEmin)*(yEmax - yEmin) * f*vsE.beta5/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,xE,yE,Theta1,Theta2);
             r -= jac*(xCmax - xCmin)*(yEmax - yEmin) * f*    beta /(1.-yE) * 1./(1.-xC)/(1.+yE) *    RpxC   (m2,q2,sp,yE,Theta1,Theta2);
             r -= jac*(xEmax - xEmin)*(yCmax - yCmin) * f*vsE.beta5/2.      * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
             r += jac*(xCmax - xCmin)*(yCmax - yCmin) * f*    beta /2.      * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
