@@ -30,36 +30,25 @@ void ExclusiveElProduction::setPartonicS(dbl s) {
         throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
     this->sp = s - q2;
     this->hasPartonicS = true;
-    cdbl rhoStar = (4.*m2 - q2)/this->sp;
-    cdbl rhoTilde = 1. - this->xTilde*(1. - rhoStar);
-    this->setRhoTilde(rhoTilde);
+    this->setRhoTilde();
 }
 
-void ExclusiveElProduction::checkPartonic() const {
+void ExclusiveElProduction::setRhoTilde() {
     if (!this->hasPartonicS)
-        throw invalid_argument("no partonic cm-energy given!");
+        throw domain_error("need partonic s to be set rhoTilde");
     cdbl rhoStar = (4.*m2 - q2)/this->sp;
-    if (this->rhoTilde <= rhoStar)
-        throw domain_error("rhoTilde has to be bigger than rhoStar!");
-    if (this->rhoTilde >= 1. - this->deltax)
+    cdbl rhoTilde = 1. - this->xTilde*(1. - rhoStar);
+    if (rhoTilde >= 1. - this->deltax)
         throw domain_error("rhoTilde has to be smaller than 1-deltax!");
+    this->rhoTilde = rhoTilde;
 }
 
 void ExclusiveElProduction::setXTilde(cdbl xTilde) {
     if (xTilde <= 0. || xTilde >= 1.)
         throw domain_error("xTilde has to be within (0,1)!");
     this->xTilde = xTilde;
-    // update rhoTilde
     if (this->hasPartonicS)
-        this->setPartonicS(this->sp + this->q2);
-}
-
-void ExclusiveElProduction::setRhoTilde(cdbl rhoTilde) {
-    if (rhoTilde >= 1.)
-        throw domain_error("rhoTilde has to be smaller than 1!");
-    if (rhoTilde >= 1.-deltax)
-        throw domain_error("rhoTilde has to be smaller than 1-deltax!");
-    this->rhoTilde = rhoTilde;
+        this->setRhoTilde();
 }
 
 void ExclusiveElProduction::setOmega(cdbl omega) {

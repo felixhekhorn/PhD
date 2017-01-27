@@ -1,5 +1,7 @@
 #include "Born.h"
 
+#include "../../Color.h"
+
 using namespace Color;
 
 cdbl cg0G(cdbl m2, cdbl q2, cdbl sp) {

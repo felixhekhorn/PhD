@@ -2,6 +2,7 @@
 #define psKers_H_
 
 #include "../../config.h"
+#include "../../Color.h"
 #include "IntKerBase.hpp"
 
 using namespace Color;
@@ -55,7 +56,6 @@ public:
     dbl operator()(dbl a) {
         this->setT1(a);
         dbl me = cg1SV(m2,q2,sp,t1);
-        //printf("a: %e t1:%e %e*%e\n",a,t1,jac,this->get(t1));
         return jac*me;
     }
 };

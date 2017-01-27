@@ -4,9 +4,9 @@ Py27/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Integration.h src/Exclusive/ME/BpQED.h \
  src/Exclusive/ME/../../config.h src/Exclusive/ME/Rp.h \
  src/Exclusive/ME/SVp.h src/Exclusive/ME/NLOg.h src/Exclusive/ME/Ap.h \
- src/Exclusive/ME/AltarelliParisi.hpp \
+ src/Exclusive/ME/AltarelliParisi.hpp src/Exclusive/ME/../../Color.h \
  src/Exclusive/IntKers/CoeffPsKers.hpp \
- src/Exclusive/IntKers/../../config.h \
+ src/Exclusive/IntKers/../../config.h src/Exclusive/IntKers/../../Color.h \
  src/Exclusive/IntKers/KinematicVars.hpp
 
 src/ExclusiveElProduction.h:
@@ -39,8 +39,12 @@ src/Exclusive/ME/Ap.h:
 
 src/Exclusive/ME/AltarelliParisi.hpp:
 
+src/Exclusive/ME/../../Color.h:
+
 src/Exclusive/IntKers/CoeffPsKers.hpp:
 
 src/Exclusive/IntKers/../../config.h:
+
+src/Exclusive/IntKers/../../Color.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:

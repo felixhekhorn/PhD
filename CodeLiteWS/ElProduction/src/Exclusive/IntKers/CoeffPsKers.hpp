@@ -2,6 +2,7 @@
 #define CoeffPsKers_HPP_
 
 #include "../../config.h"
+#include "../../Color.h"
 #include "KinematicVars.hpp"
 
 using namespace Color;
@@ -208,15 +209,20 @@ public:
         {
             cdbl s5E = q2 + xE*sp;
             cdbl beta5E = sqrt(1. - 4.*m2/s5E);
-            cdbl t1  = -.5*sp*(1. - beta  *cos(Theta1));
             cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));
+            cdbl t1  = -.5*sp*(1. - beta  *cos(Theta1));
             cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
             cdbl meC = BpQED(m2,q2,sp,t1);
             cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
-            cdbl l = log(sp/m2*sp/s*omega/2.);
+            cdbl l = log(sp/m2)+log(sp/s)+log(omega/2.);
             // (1-x)P_gg^0 -> 2CA for x->1 for all projections
             r += jac*(xEmax - xEmin) * f*beta5E/xE*meE*(Pgg0(xE) *(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*Pgg1(xE));
             r -= jac*(xCmax - xCmin) * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC)));
+            //cdbl p = (1.-xE)*(1.-xE)*(1.+1./xE/xE) + 1.;
+            //printf("%e %e %e\n",xE,Pgg0(xE)/xE,2.*CA*p/(1.-xE));
+            //cdbl px = 1.;
+            //r += jac*(xEmax - xEmin) * f*beta5E*meE*(2.*CA*p *(l + 2.*log(1.-xE))/(1.-xE));
+            //r -= jac*(xCmax - xCmin) * f*beta  *meC*(2.*CA*px*(l + 2.*log(1.-xC))/(1.-xC));
         }
         
         // Theta2
@@ -243,7 +249,7 @@ public:
         }
         
         // norm to cg1
-        r *= (m2/4.*M_PI);
+        r *= (m2/4.*M_PI) * /** @todo */ .101;
         if (!isfinite(r)) return 0.;
         return r;
     }

@@ -133,15 +133,9 @@ class ExclusiveElProduction : public AbstractElProduction {
 ///@}
     
 /**
- * @brief checks wether all partonic parameters are given
- */
-    void checkPartonic() const;
-
-/**
  * @brief sets rhoTilde
- * @param rhoTilde soft regulation parameter \f$\tilde\rho\f$
  */
-    void setRhoTilde(cdbl rhoTilde);
+    void setRhoTilde();
     
 public:
 
@@ -158,7 +152,7 @@ public:
  */
     ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
 
-/** @name partonic coefficient functions */
+/** @name global setter */
 ///@{
     
 /**

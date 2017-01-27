@@ -1,5 +1,7 @@
 #include "NLOq.h"
 
+#include "../../Color.h"
+
 #include "IntA.h"
 
 using namespace Color;
