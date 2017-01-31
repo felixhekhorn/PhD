@@ -34,4 +34,11 @@ dbl int3D(gsl_monte_function* F);
  */
 dbl int4D(gsl_monte_function* F);
     
+/**
+ * @brief integrates 5 dimension
+ * @param F kernel
+ * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
+ */
+dbl int5D(gsl_monte_function* F);
+    
 #endif // Integration_H_

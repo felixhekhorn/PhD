@@ -175,13 +175,13 @@ public:
 
 /**
  * @brief sets deltax
- * @param offset to upper integration bound in x
+ * @param deltax upper integration bound in x
  */
     void setDeltax(cdbl deltax);
 
 /**
  * @brief sets deltay
- * @param offset to lower integration bound in y
+ * @param deltay lower integration bound in y
  */
     void setDeltay(cdbl deltay);
     
@@ -206,6 +206,30 @@ public:
  * @return \f$d^{(1)}_q\f$
  */
     dbl dq1() const;
+    
+///@}
+
+
+/** @name hadronic structure functions */
+///@{
+    
+/*
+ * @brief LO structure function
+ * @return \f$F^{(0)}_g\f$
+ */
+    //dbl Fg0() const;
+    
+/*
+ * @brief NLO gluon structure function
+ * @return \f$F^{(1)}_g\f$
+ */
+    //dbl Fg1() const;
+    
+/**
+ * @brief NLO quark structure function
+ * @return \f$F^{(1)}_q\f$
+ */
+    dbl Fq1() const;
     
 ///@}
 

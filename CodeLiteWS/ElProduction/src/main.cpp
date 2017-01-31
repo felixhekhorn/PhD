@@ -21,7 +21,7 @@ int main(int argc, char **argv) {
 	//return runInclusive();
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
-    dbl q2 = -1.e2;
+    dbl q2 = -1.e-2;
     uint nlf = 4;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
@@ -29,8 +29,8 @@ int main(int argc, char **argv) {
     dbl deltax = 1e-5;
     dbl deltay = 1e-5;
     dbl eta = 1.;
-    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
-    ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    InclusiveElProduction iG(m2,q2,Delta,L,nlf);
+    ExclusiveElProduction eG(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
     uint N = 15;
     for (uint j = 0; j < N; ++j) {
         eta = pow(10,-3.+6./(N-1)*j);
@@ -46,13 +46,13 @@ int main(int argc, char **argv) {
         eG.setXTilde(.9);
         cdbl e4 = eG.cg1();
         printf("%e\t%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3,e4);*/
-        eG.setOmega(.5);
+        /*eG.setOmega(.5);
         cdbl e1 = eG.cg1();
         eG.setOmega(1.);
         cdbl e2 = eG.cg1();
         eG.setOmega(1.5);
         cdbl e3 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\n",eta,(i-e1)/i,(i-e2)/i,(i-e3)/i);
+        printf("%e\t%e\t%e\t%e\n",eta,(i-e1)/i,(i-e2)/i,(i-e3)/i);*/
         /*eG.setDeltax(1e-5);
         cdbl e1 = eG.cg1();
         eG.setDeltax(1e-6);
@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
         cdbl e3 = eG.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);*/
         
-        /*cdbl e = eG.cg1();
-        printf("%e\t%e\t%e\t%e\n",eta,i,e,i/e);*/
+        cdbl e = eG.cg1();
+        printf("%e\t%e\t%e\n",eta,i-e,(i-e)/i);
     }
     /*iG.setEta(eta);
     eG.setEta(eta);

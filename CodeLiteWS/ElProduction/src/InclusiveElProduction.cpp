@@ -140,23 +140,8 @@ dbl InclusiveElProduction::dq1() const {
     return int2D(&f);
 }
 
-void InclusiveElProduction::checkHardonic() const {
-    if (0 == this->pdf)
-        throw invalid_argument("no PDF given!");
-    if (!this->hasMuR2)
-        throw invalid_argument("no renormalisation scale given!");
-    if (!this->hasMuF2)
-        throw invalid_argument("no factorisation scale given!");
-    if (!this->hasBjorkenX)
-        throw invalid_argument("no Bjorken x given!");
-    if (!this->hasAlphaS)
-        throw invalid_argument("no strong coupling given!");
-    if (!this->pdf->inRangeQ2(this->muF2))
-        throw invalid_argument("PDF can't be evaluated at mu_F^2!");
-}
-
 dbl InclusiveElProduction::Fg0() const {
-    this->checkHardonic();
+    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
@@ -170,7 +155,7 @@ dbl InclusiveElProduction::Fg0() const {
 }
 
 dbl InclusiveElProduction::Fg1() const {
-    this->checkHardonic();
+    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
@@ -190,7 +175,7 @@ dbl InclusiveElProduction::Fg1() const {
 }
 
 dbl InclusiveElProduction::Fq1() const {
-    this->checkHardonic();
+    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;

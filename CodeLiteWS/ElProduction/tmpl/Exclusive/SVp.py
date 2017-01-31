@@ -77,7 +77,7 @@ vs = {
  * @param q2 virtuality of photon \\f$q^2< 0\\f$
  * @param sp center of mass energy \\f$s' = s - q^2\\f$
  * @param t1
- * @param betaTil \\f$\\tilde\\beta$\\f x-regulating parameter"""
+ * @param betaTil \\f$\\tilde\\beta\\f$ x-regulating parameter"""
 }
 tmpl = """#ifndef SVp_H_
 #define SVp_H_

@@ -11,7 +11,7 @@ namespace Exclusive {
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{G,OK}\f$
  */
 cdbl SVOKpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -22,7 +22,7 @@ cdbl SVOKpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{G,QED}\f$
  */
 cdbl SVQEDpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -33,7 +33,7 @@ cdbl SVQEDpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return renormalization scaling of \f$(S+V)_{G,OK}\f$
  */
 cdbl SVOKpScaleRG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -44,7 +44,7 @@ cdbl SVOKpScaleRG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return factorization scaling of \f$(S+V)_{G,OK}\f$
  */
 cdbl SVOKpScaleFG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -54,7 +54,7 @@ cdbl SVOKpScaleFG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{L,OK}\f$
  */
 cdbl SVOKpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -65,7 +65,7 @@ cdbl SVOKpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{L,QED}\f$
  */
 cdbl SVQEDpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -76,7 +76,7 @@ cdbl SVQEDpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return renormalization scaling of \f$(S+V)_{L,OK}\f$
  */
 cdbl SVOKpScaleRL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -87,7 +87,7 @@ cdbl SVOKpScaleRL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return factorization scaling of \f$(S+V)_{L,OK}\f$
  */
 cdbl SVOKpScaleFL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -97,7 +97,7 @@ cdbl SVOKpScaleFL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{P,OK}\f$
  */
 cdbl SVOKpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -108,7 +108,7 @@ cdbl SVOKpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)_{P,QED}\f$
  */
 cdbl SVQEDpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -119,7 +119,7 @@ cdbl SVQEDpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return renormalization scaling of \f$(S+V)_{P,OK}\f$
  */
 cdbl SVOKpScaleRP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
@@ -130,7 +130,7 @@ cdbl SVOKpScaleRP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1
- * @param betaTil \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTil \f$\tilde\beta\f$ x-regulating parameter
  * @return factorization scaling of \f$(S+V)_{P,OK}\f$
  */
 cdbl SVOKpScaleFP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTil);

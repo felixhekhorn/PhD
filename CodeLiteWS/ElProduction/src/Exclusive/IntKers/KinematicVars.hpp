@@ -4,18 +4,22 @@
 #include "../../config.h"
 
 namespace Exclusive {
-    
+
+/**
+ * @class KinematicVars
+ * @brief computes all 2-to-3-particle phase space variables
+ */
 struct KinematicVars {
     
-    /**
-     * @brief momentum variables
-     */
+    /** @name momentum variables */
+    ///@{
     dbl q0,k10,absq,cosPsi,sinPsi,beta5;
+    ///@}
     
-    /**
-     * @brief mandelstam variables
-     */
+    /** @name mandelstam variables */
+    ///@{
     dbl s5,tp,up,t1,u1;
+    ///@}
     
     /**
      * @brief constructor

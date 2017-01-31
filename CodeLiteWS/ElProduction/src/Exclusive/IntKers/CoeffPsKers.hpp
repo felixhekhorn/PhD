@@ -41,9 +41,20 @@ protected:
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
  */
-    AbstractCoeffPsKer(dbl m2, dbl q2, dbl sp) : m2(m2), q2(q2), sp(sp) {
-        this->rhoStar = (4.*m2 - q2)/sp;
+    AbstractCoeffPsKer(dbl m2, dbl q2, dbl sp) : m2(m2), q2(q2) {
+        this->setSp(sp);
     };
+    
+public:
+
+/**
+ * @brief sets s'
+ * @param sp s'
+ */
+    void setSp(dbl sp) {
+        this->sp = sp;
+        this->rhoStar = (4.*m2 - q2)/sp;
+    }
 };
 
 /**
@@ -249,7 +260,7 @@ public:
         }
         
         // norm to cg1
-        r *= (m2/4.*M_PI) * /** @todo */ .101;
+        r *= (m2/4.*M_PI) * /** @todo 1/pi^2? */ .101;
         if (!isfinite(r)) return 0.;
         return r;
     }
@@ -301,6 +312,7 @@ public:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
+ * @param BpQED pointer to Born ME
  * @param Ap1 pointer to pole part of ME
  * @param Ap1Counter pointer to finite part of heavy quark charge ME
  * @param Pgq0 pointer to \f$P_{gq}^{(0)}(z)\f$
@@ -403,6 +415,53 @@ public:
         jac *= 2.;
         const KinematicVars vs(m2,q2,sp,x,y,Theta1,Theta2);
         cdbl me = Ap2(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
+        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+y)*sin(Theta1);
+        cdbl r = jac * f * me;
+        return r;
+    }
+};
+
+/**
+ * @brief exclusive phasespace kernel for \f$o_{q}^{(1)}\f$
+ */
+class PsKerOq1 : public AbstractCoeffPsKer {
+    
+/**
+ * @param Ap3 pointer to ME
+ */
+    fPtr7dbl Ap3;
+    
+public:
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2< 0\f$
+ * @param sp current \f$s'\f$
+ * @param Ap3 pointer to ME
+ */
+    PsKerOq1(dbl m2, dbl q2, dbl sp, fPtr7dbl Ap3) : AbstractCoeffPsKer(m2,q2,sp), Ap3(Ap3) {};
+    
+/**
+ * @brief called function
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @param a3 integration variable
+ * @param a4 integration variable
+ * @return kernel
+ */
+    dbl operator() (dbl a1, dbl a2, dbl a3, dbl a4) {
+        // transform to x,y,Theta1,Theta2
+        // as there are no poles we can just proceed by linear transformations
+        dbl jac = 1.;
+        cdbl Theta1 = M_PI * a3;
+        cdbl Theta2 = M_PI * a4;
+        jac *= M_PI * M_PI;
+        cdbl x = rhoStar + (1.-rhoStar)*a1;
+        jac *= (1.-rhoStar);
+        cdbl y = -1. + 2.*a2;
+        jac *= 2.;
+        const KinematicVars vs(m2,q2,sp,x,y,Theta1,Theta2);
+        cdbl me = Ap3(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+y)*sin(Theta1);
         cdbl r = jac * f * me;
         return r;

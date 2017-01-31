@@ -15,11 +15,6 @@ class InclusiveElProduction : public AbstractElProduction {
     dbl Delta;
     
 /**
- * @brief checks wether all hadronic parameters are given
- */
-    void checkHardonic() const;
-    
-/**
  * @brief returns the corresponding kernel of \f$c^{(0)}_{g}\f$
  * @return kernel of \f$c^{(0)}_{g}\f$
  */

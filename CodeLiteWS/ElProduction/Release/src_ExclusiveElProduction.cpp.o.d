@@ -7,7 +7,11 @@ Release/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Exclusive/ME/AltarelliParisi.hpp src/Exclusive/ME/../../Color.h \
  src/Exclusive/IntKers/CoeffPsKers.hpp \
  src/Exclusive/IntKers/../../config.h src/Exclusive/IntKers/../../Color.h \
- src/Exclusive/IntKers/KinematicVars.hpp
+ src/Exclusive/IntKers/KinematicVars.hpp \
+ src/Exclusive/IntKers/PdfConvNLOq.hpp \
+ src/Exclusive/IntKers/PdfConvBase.hpp \
+ src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
+ src/Exclusive/IntKers/CoeffPsKers.hpp
 
 src/ExclusiveElProduction.h:
 
@@ -48,3 +52,11 @@ src/Exclusive/IntKers/../../config.h:
 src/Exclusive/IntKers/../../Color.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:
+
+src/Exclusive/IntKers/PdfConvNLOq.hpp:
+
+src/Exclusive/IntKers/PdfConvBase.hpp:
+
+src/Exclusive/IntKers/../../Pdf/PdfWrapper.h:
+
+src/Exclusive/IntKers/CoeffPsKers.hpp:

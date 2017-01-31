@@ -14,6 +14,7 @@
 #include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
+#include "Exclusive/IntKers/PdfConvNLOq.hpp"
 
 using namespace Exclusive;
 
@@ -158,4 +159,13 @@ dbl ExclusiveElProduction::dq1() const {
     f.f = gsl::callFunctor4D<PsKerDq1>;
     f.params = &k;
     return int4D(&f);
+}
+
+dbl ExclusiveElProduction::Fq1() const {
+    this->checkHadronic();
+    /*PsKerDq1 k(m2,q2,sp, this->getAp2());
+    gsl_monte_function f;
+    f.f = gsl::callFunctor4D<PsKerDq1>;
+    f.params = &k;
+    return int4D(&f);*/
 }

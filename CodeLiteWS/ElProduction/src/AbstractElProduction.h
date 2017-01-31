@@ -197,6 +197,11 @@ public:
  */
     void setBjorkenX(dbl bjorkenX);
     
+/**
+ * @brief checks wether all hadronic parameters are given
+ */
+    void checkHadronic() const;
+    
 ///@}
 
 };

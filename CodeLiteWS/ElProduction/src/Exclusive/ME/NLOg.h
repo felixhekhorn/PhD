@@ -1,5 +1,5 @@
 /**
- * @file NLOg.h
+ * @file Exclusive/ME/NLOg.h
  * @brief defines all kernels to NLO gluon cross sections for all projections
  */
  
@@ -16,7 +16,7 @@ namespace Exclusive {
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)'_{G}\f$
  */
 cdbl SVpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
@@ -27,7 +27,7 @@ cdbl SVpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)'_{L}\f$
  */
 cdbl SVpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
@@ -38,7 +38,7 @@ cdbl SVpL(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param t1 \f$t_1\f$
- * @param betaTilde \f$\tilde\beta$\f x-regulating parameter
+ * @param betaTilde \f$\tilde\beta\f$ x-regulating parameter
  * @return \f$(S+V)'_{P}\f$
  */
 cdbl SVpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
