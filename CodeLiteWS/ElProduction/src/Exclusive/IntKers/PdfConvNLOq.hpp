@@ -9,7 +9,7 @@ namespace Exclusive {
 /**
  * @brief NLO quark convolution
  */
-class PdfConvNLOq : public PdfConvBase {
+class PdfConvNLOq : public Exclusive::PdfConvBase {
 
 /**
  * @brief number of light flavours
@@ -62,6 +62,12 @@ public:
  * @return \f$1/z \sum\limits_q \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) \left(e_H^2 c_{q}^{(1)}(\eta,\xi) + e_L^2 d_{q}^{(1)}(\eta,\xi) + e_H E_L o_{q}^{(1)}(\eta,\xi)\right)\f$
  */
     dbl operator() (dbl a1, dbl a2, dbl a3, dbl a4, dbl a5) {
+        // order: z,x,y,Theta1,Theta2
+        this->setZ(a1);
+        this->setX(a2);
+        this->setY(a3);
+        this->setTheta1(a4);
+        this->setTheta2(a5);
         dbl r = 0.;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
