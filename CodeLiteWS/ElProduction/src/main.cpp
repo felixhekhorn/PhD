@@ -31,12 +31,12 @@ int main(int argc, char **argv) {
     dbl eta = 1.;
     InclusiveElProduction iG(m2,q2,Delta,L,nlf);
     ExclusiveElProduction eG(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
-    uint N = 15;
+    uint N = 7;
     for (uint j = 0; j < N; ++j) {
         eta = pow(10,-3.+6./(N-1)*j);
         iG.setEta(eta);
         eG.setEta(eta);
-        cdbl i = iG.cg1();
+        cdbl i = iG.dq1();
         /*eG.setXTilde(.3);
         cdbl e1 = eG.cg1();
         eG.setXTilde(.5);
@@ -61,7 +61,7 @@ int main(int argc, char **argv) {
         cdbl e3 = eG.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);*/
         
-        cdbl e = eG.cg1();
+        cdbl e = eG.dq1();
         printf("%e\t%e\t%e\n",eta,i-e,(i-e)/i);
     }
     /*iG.setEta(eta);

@@ -73,9 +73,19 @@ protected:
     dbl rhoTilde;
     
 /**
+ * @brief collinear regulation parameter \f$\omega\f$
+ */
+    dbl omega;
+    
+/**
  * @brief offset to upper integration bound in x \f$\delta_x\f$
  */
     dbl deltax;
+    
+/**
+ * @brief offset to lower integration bound in y \f$\delta_y\f$
+ */
+    dbl deltay;
     
 /**
  * @brief jacobian for x for event
@@ -96,16 +106,6 @@ protected:
  * @brief current x for counter event
  */
     dbl xC;
-    
-/**
- * @brief collinear regulation parameter \f$\omega\f$
- */
-    dbl omega;
-    
-/**
- * @brief offset to lower integration bound in y \f$\delta_y\f$
- */
-    dbl deltay;
     
 /**
  * @brief jacobian for y for event
@@ -152,11 +152,13 @@ protected:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
- * @param pdf parton distribution functions
- * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
+ * @param omega collinear regulation parameter \f$\omega\f$
+ * @param deltax offset to upper integration bound in x
+ * @param deltay offset to lower integration bound in y
  */
-    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
-        m2(m2), q2(q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2),
+    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
+        m2(m2), q2(q2), bjorkenX(bjorkenX), pdf(0), muF2(0),
         z(-0.), sp(-0.),
         xTilde(xTilde), omega(omega), deltax(deltax), deltay(deltay),
         Theta1(-0.), jacTheta1(M_PI), Theta2(-0.), jacTheta2(M_PI){
@@ -165,6 +167,16 @@ protected:
         cdbl ymin = -1.+deltay;
         this->jacyE = 1. - ymin;
         this->jacyC = (-1. + omega) - ymin;
+    }
+
+/**
+ * @brief sets pdf and muF2
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ */
+    void setPdf(PdfWrapper* pdf, dbl muF2) {
+        this->pdf = pdf;
+        this->muF2 = muF2;
     }
 
 /**

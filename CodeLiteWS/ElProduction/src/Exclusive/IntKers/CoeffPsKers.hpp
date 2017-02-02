@@ -4,6 +4,7 @@
 #include "../../config.h"
 #include "../../Color.h"
 #include "KinematicVars.hpp"
+#include "PdfConvNLOq.hpp"
 
 using namespace Color;
 
@@ -282,7 +283,7 @@ class PsKerCq1 : public AbstractCoeffPsKer {
     fPtr7dbl Ap1;
     
 /**
- * @brief pointer to soft limit of heavy quark charge ME
+ * @brief pointer to collinear limit of heavy quark charge ME
  */
     fPtr6dbl Ap1Counter;
     
@@ -377,14 +378,10 @@ public:
 /**
  * @brief exclusive phasespace kernel for \f$d_{q}^{(1)}\f$
  */
-class PsKerDq1 : public AbstractCoeffPsKer {
-    
-/**
- * @param Ap2 pointer to ME
- */
-    fPtr7dbl Ap2;
+class PsKerDq1 : public PdfConvNLOq {
     
 public:
+
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -392,7 +389,10 @@ public:
  * @param sp current \f$s'\f$
  * @param Ap2 pointer to ME
  */
-    PsKerDq1(dbl m2, dbl q2, dbl sp, fPtr7dbl Ap2) : AbstractCoeffPsKer(m2,q2,sp), Ap2(Ap2) {};
+    PsKerDq1(dbl m2, dbl q2, dbl sp, fPtr7dbl Ap2) : PdfConvNLOq(m2,q2,0.,0,0.,0.,0.,0.) {
+        this->setSpRaw(sp);
+        this->setAp2(Ap2);
+    };
     
 /**
  * @brief called function
@@ -403,71 +403,13 @@ public:
  * @return kernel
  */
     dbl operator() (dbl a1, dbl a2, dbl a3, dbl a4) {
-        // transform to x,y,Theta1,Theta2
-        // as there are no poles we can just proceed by linear transformations
-        dbl jac = 1.;
-        cdbl Theta1 = M_PI * a3;
-        cdbl Theta2 = M_PI * a4;
-        jac *= M_PI * M_PI;
-        cdbl x = rhoStar + (1.-rhoStar)*a1;
-        jac *= (1.-rhoStar);
-        cdbl y = -1. + 2.*a2;
-        jac *= 2.;
-        const KinematicVars vs(m2,q2,sp,x,y,Theta1,Theta2);
-        cdbl me = Ap2(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
-        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+y)*sin(Theta1);
-        cdbl r = jac * f * me;
-        return r;
+        this->setX(a1);
+        this->setY(a2);
+        this->setTheta1(a3);
+        this->setTheta2(a4);
+        return this->dq1();
     }
 };
-
-/**
- * @brief exclusive phasespace kernel for \f$o_{q}^{(1)}\f$
- */
-class PsKerOq1 : public AbstractCoeffPsKer {
-    
-/**
- * @param Ap3 pointer to ME
- */
-    fPtr7dbl Ap3;
-    
-public:
-/**
- * @brief constructor
- * @param m2 heavy quark mass squared \f$m^2 > 0\f$
- * @param q2 virtuality of the photon \f$q^2< 0\f$
- * @param sp current \f$s'\f$
- * @param Ap3 pointer to ME
- */
-    PsKerOq1(dbl m2, dbl q2, dbl sp, fPtr7dbl Ap3) : AbstractCoeffPsKer(m2,q2,sp), Ap3(Ap3) {};
-    
-/**
- * @brief called function
- * @param a1 integration variable
- * @param a2 integration variable
- * @param a3 integration variable
- * @param a4 integration variable
- * @return kernel
- */
-    dbl operator() (dbl a1, dbl a2, dbl a3, dbl a4) {
-        // transform to x,y,Theta1,Theta2
-        // as there are no poles we can just proceed by linear transformations
-        dbl jac = 1.;
-        cdbl Theta1 = M_PI * a3;
-        cdbl Theta2 = M_PI * a4;
-        jac *= M_PI * M_PI;
-        cdbl x = rhoStar + (1.-rhoStar)*a1;
-        jac *= (1.-rhoStar);
-        cdbl y = -1. + 2.*a2;
-        jac *= 2.;
-        const KinematicVars vs(m2,q2,sp,x,y,Theta1,Theta2);
-        cdbl me = Ap3(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
-        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+y)*sin(Theta1);
-        cdbl r = jac * f * me;
-        return r;
-    }
-};
-
 
 } // namespace Exclusive
 
