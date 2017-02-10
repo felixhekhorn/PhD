@@ -4,6 +4,7 @@
 #include "../../config.h"
 #include "../../Color.h"
 #include "IntKerBase.hpp"
+#include "../../Exclusive/ME/BpQED.h"
 
 using namespace Color;
 
@@ -56,7 +57,7 @@ public:
     dbl operator()(dbl a) {
         this->setT1(a);
         dbl me = cg1SV(m2,q2,sp,t1);
-        return jac*me;
+        return this->jac*me;
     }
 };
 

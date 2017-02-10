@@ -7,8 +7,9 @@ AbstractElProduction::AbstractElProduction(dbl m2, dbl q2,  projT proj, uint nlf
     // ordering is important!
     this->setM2(m2);
     this->setQ2(q2);
-    if (nlf < 3 || nlf > 5)
-        throw domain_error("number of light flavours has to be between 3 and 5!");
+/** @todo fix fermionLoopFactor */
+//    if (nlf < 3 || nlf > 5)
+//        throw domain_error("number of light flavours has to be between 3 and 5!");
 }
 
 AbstractElProduction::~AbstractElProduction() {

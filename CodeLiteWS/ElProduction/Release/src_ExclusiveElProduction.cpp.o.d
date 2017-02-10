@@ -8,10 +8,13 @@ Release/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Exclusive/IntKers/CoeffPsKers.hpp \
  src/Exclusive/IntKers/../../config.h src/Exclusive/IntKers/../../Color.h \
  src/Exclusive/IntKers/KinematicVars.hpp \
- src/Exclusive/IntKers/PdfConvNLOq.hpp \
+ src/Exclusive/IntKers/PdfConvNLOq.h \
  src/Exclusive/IntKers/PdfConvBase.hpp \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
- src/Exclusive/IntKers/CoeffPsKers.hpp
+ src/Exclusive/IntKers/CoeffPsKerNLOg.hpp \
+ src/Exclusive/IntKers/PdfConvNLOg.h \
+ src/Exclusive/IntKers/CoeffPsKerNLOq.hpp \
+ src/Exclusive/IntKers/PdfConvNLOq.h
 
 src/ExclusiveElProduction.h:
 
@@ -53,10 +56,16 @@ src/Exclusive/IntKers/../../Color.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:
 
-src/Exclusive/IntKers/PdfConvNLOq.hpp:
+src/Exclusive/IntKers/PdfConvNLOq.h:
 
 src/Exclusive/IntKers/PdfConvBase.hpp:
 
 src/Exclusive/IntKers/../../Pdf/PdfWrapper.h:
 
-src/Exclusive/IntKers/CoeffPsKers.hpp:
+src/Exclusive/IntKers/CoeffPsKerNLOg.hpp:
+
+src/Exclusive/IntKers/PdfConvNLOg.h:
+
+src/Exclusive/IntKers/CoeffPsKerNLOq.hpp:
+
+src/Exclusive/IntKers/PdfConvNLOq.h:

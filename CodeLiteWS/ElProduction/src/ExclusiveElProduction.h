@@ -189,17 +189,30 @@ public:
 
 /** @name partonic coefficient functions */
 ///@{
+    
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_g\f$
  * @return \f$c^{(1)}_g\f$
  */
     dbl cg1() const;
+
+/**
+ * @brief renormalization log scaling of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
+ * @return \f$\bar{c}^{R,(1)}_g\f$
+ */
+    dbl cgBarR1() const;
     
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$
  * @return \f$c^{(1)}_q\f$
  */
     dbl cq1() const;
+    
+/**
+ * @brief NLO quark scaling function \f$\bar c^{F,(1)}_q\f$
+ * @return \f$\bar c^{F,(1)}_q\f$
+ */
+    dbl cqBarF1() const;
     
 /**
  * @brief NLO quark scaling function \f$d^{(1)}_q\f$

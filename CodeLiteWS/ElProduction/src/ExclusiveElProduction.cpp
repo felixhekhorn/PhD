@@ -14,7 +14,9 @@
 #include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
-#include "Exclusive/IntKers/PdfConvNLOq.hpp"
+#include "Exclusive/IntKers/CoeffPsKerNLOg.hpp"
+#include "Exclusive/IntKers/CoeffPsKerNLOq.hpp"
+#include "Exclusive/IntKers/PdfConvNLOq.h"
 
 using namespace Exclusive;
 
@@ -36,7 +38,7 @@ void ExclusiveElProduction::setPartonicS(dbl s) {
 
 void ExclusiveElProduction::setRhoTilde() {
     if (!this->hasPartonicS)
-        throw domain_error("need partonic s to be set rhoTilde");
+        throw domain_error("need partonic s to set rhoTilde");
     cdbl rhoStar = (4.*m2 - q2)/this->sp;
     cdbl rhoTilde = 1. - this->xTilde*(1. - rhoStar);
     if (rhoTilde >= 1. - this->deltax)
@@ -133,7 +135,7 @@ getter7(Ap3)
 
 dbl ExclusiveElProduction::cg1() const {
     this->checkPartonic();
-    PsKerCg1 k(m2,q2,sp, rhoTilde, omega, deltax,deltay);
+    PsKerCg1 k(m2,q2,sp, xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),this->getSVp());
     k.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
     k.setPgg(this->getPgg0(),this->getPgg1());
@@ -143,13 +145,35 @@ dbl ExclusiveElProduction::cg1() const {
     return int4D(&f);
 }
 
+dbl ExclusiveElProduction::cgBarR1() const {
+    this->checkPartonic();
+    PsKerCgBarR1 k(m2,q2,sp,nlf);
+    k.setBorn(this->getBpQED(),0);
+    gsl_function f;
+    f.function = gsl::callFunctor<PsKerCgBarR1>;
+    f.params = &k;
+    return int1D(&f);
+}
+
 dbl ExclusiveElProduction::cq1() const {
     this->checkPartonic();
-    PsKerCq1 k(m2,q2,sp, this->getBpQED(),this->getAp1(), this->getAp1Counter(), this->getPgq0(), this->getPgq1(), omega, deltay);
+    PsKerCq1 k(m2,q2,sp, omega, deltay);
+    k.setAp1(this->getAp1(), this->getAp1Counter());
+    k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     gsl_monte_function f;
     f.f = gsl::callFunctor4D<PsKerCq1>;
     f.params = &k;
     return int4D(&f);
+}
+
+dbl ExclusiveElProduction::cqBarF1() const {
+    this->checkPartonic();
+    PsKerCqBarF1 k(m2,q2,sp);
+    k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
+    gsl_monte_function f;
+    f.f = gsl::callFunctor2D<PsKerCqBarF1>;
+    f.params = &k;
+    return int2D(&f);
 }
 
 dbl ExclusiveElProduction::dq1() const {
@@ -163,9 +187,16 @@ dbl ExclusiveElProduction::dq1() const {
 
 dbl ExclusiveElProduction::Fq1() const {
     this->checkHadronic();
-    /*PsKerDq1 k(m2,q2,sp, this->getAp2());
+    PdfConvNLOq k(m2,q2,bjorkenX,nlf,xTilde,omega,deltax,deltay);
+    k.setAp1(this->getAp1(), this->getAp1Counter());
+    k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
+    k.setAp2(this->getAp2());
+    k.setAp3(this->getAp3());
+    k.setPdf(this->pdf,this->muF2);
     gsl_monte_function f;
-    f.f = gsl::callFunctor4D<PsKerDq1>;
+    f.f = gsl::callFunctor5D<PdfConvNLOq>;
     f.params = &k;
-    return int4D(&f);*/
+    // multiply norm
+    dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
+    return n*int5D(&f);
 }

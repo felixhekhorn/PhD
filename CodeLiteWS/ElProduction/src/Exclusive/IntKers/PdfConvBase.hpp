@@ -26,6 +26,11 @@ protected:
  * @brief Bjorken scaling variable
  */
     dbl bjorkenX;
+
+/**
+ * @brief number of light flavours
+ */
+    uint nlf;
     
 /**
  * @brief parton distribution functions
@@ -157,26 +162,18 @@ protected:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
-        m2(m2), q2(q2), bjorkenX(bjorkenX), pdf(0), muF2(0),
-        z(-0.), sp(-0.),
-        xTilde(xTilde), omega(omega), deltax(deltax), deltay(deltay),
+    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
+        m2(m2), q2(q2), bjorkenX(bjorkenX), nlf(nlf), pdf(0), muF2(0),
+        z(-0.), sp(-0.), rhoStar(-0.),
+        xTilde(xTilde), rhoTilde(-0.),omega(omega), deltax(deltax), deltay(deltay),
+        jacxE(-0.),xE(-0.),jacxC(-0.),xC(-0.),
+        jacyE(-0.),yE(-0.),jacyC(-0.),yC(-0.),
         Theta1(-0.), jacTheta1(M_PI), Theta2(-0.), jacTheta2(M_PI){
         this->zMax = -q2/(4.*m2 - q2);
         this->jacZ = this->zMax - this->bjorkenX;
         cdbl ymin = -1.+deltay;
         this->jacyE = 1. - ymin;
         this->jacyC = (-1. + omega) - ymin;
-    }
-
-/**
- * @brief sets pdf and muF2
- * @param pdf parton distribution functions
- * @param muF2 factorisation scale \f$\mu_F^2\f$
- */
-    void setPdf(PdfWrapper* pdf, dbl muF2) {
-        this->pdf = pdf;
-        this->muF2 = muF2;
     }
 
 /**
@@ -206,9 +203,8 @@ protected:
  * @param a integration variable
  */
     void setX(dbl a) {
-        cdbl xmax = 1. - this->deltax;
-        this->xE = xmax - this->jacxE*a;
-        this->xC = xmax - this->jacxC*a;
+        this->xE = this->rhoStar + this->jacxE*a;
+        this->xC = this->rhoTilde + this->jacxC*a;
     }
 
 /**
@@ -235,6 +231,18 @@ protected:
  */
     void setTheta2(dbl a) {
         this->Theta2 = this->jacTheta2*a;
+    }
+    
+public:
+    
+/**
+ * @brief sets pdf and muF2
+ * @param pdf parton distribution function
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ */
+    void setPdf(PdfWrapper* pdf, dbl muF2) {
+        this->pdf = pdf;
+        this->muF2 = muF2;
     }
 };
 

@@ -73,14 +73,17 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setAlphaS", &ExclusiveElProduction::setAlphaS, "sets running strong coupling")
         .def("setBjorkenX", &ExclusiveElProduction::setBjorkenX, "sets Bjorken x")
         // partonic coefficient functions
+        .def("cg1", &ExclusiveElProduction::cg1)
         .def("cq1", &ExclusiveElProduction::cq1)
+        .def("cqBarF1", &InclusiveElProduction::cqBarF1)
         .def("dq1", &ExclusiveElProduction::dq1)
         // hadronic structure functions
         //.def("Fg0", &ExclusiveElProduction::Fg0)
         //.def("Fg1", &ExclusiveElProduction::Fg1)
-        //.def("Fq1", &ExclusiveElProduction::Fq1)
+        .def("Fq1", &ExclusiveElProduction::Fq1)
     ;
     
+    /*
     // Test
     class_<Exclusive::KinematicVars>("ExclusiveKinematicVars",init<dbl,dbl,dbl,dbl,dbl,dbl,dbl>())
         .def_readonly("t1", &Exclusive::KinematicVars::t1)
@@ -114,4 +117,5 @@ BOOST_PYTHON_MODULE(ElProduction)
     def("ExclusiveROKpyCL",Exclusive::ROKpyCL);
     def("ExclusiveROKpyxCG",Exclusive::ROKpyxCG);
     def("ExclusiveROKpyxCL",Exclusive::ROKpyxCL);
+     */
 }

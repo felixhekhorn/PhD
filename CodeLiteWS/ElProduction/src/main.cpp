@@ -6,9 +6,9 @@
 #include "ExclusiveElProduction.h"
 
 int runInclusive();
-int test() {
+/*int test() {
     return EXIT_SUCCESS;
-}
+}*/
 
 /**
  * @brief main
@@ -22,21 +22,32 @@ int main(int argc, char **argv) {
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.e-2;
-    uint nlf = 4;
+    uint nlf = 0;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
     dbl omega = 1.;
     dbl deltax = 1e-5;
     dbl deltay = 1e-5;
-    dbl eta = 1.;
+    dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
+    dbl mu02 = (4.*m2-q2);
     InclusiveElProduction iG(m2,q2,Delta,L,nlf);
     ExclusiveElProduction eG(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    
+    //iG.setPdf("MSTW2008nlo90cl",0);eG.setPdf("MSTW2008nlo90cl",0);
+    //iG.setMu2(mu02);eG.setMu2(mu02);
+    //iG.setAlphaS(aS);eG.setAlphaS(aS);
+    
     uint N = 7;
+    dbl eta = 1.;
+    //dbl bjorkenX = 1.;
     for (uint j = 0; j < N; ++j) {
         eta = pow(10,-3.+6./(N-1)*j);
+        //bjorkenX = pow(10,-2.+1./(N-1)*j);
         iG.setEta(eta);
         eG.setEta(eta);
-        cdbl i = iG.dq1();
+        //iG.setBjorkenX(bjorkenX);
+        //eG.setBjorkenX(bjorkenX);
+        cdbl i = iG.cgBarR1();
         /*eG.setXTilde(.3);
         cdbl e1 = eG.cg1();
         eG.setXTilde(.5);
@@ -61,8 +72,8 @@ int main(int argc, char **argv) {
         cdbl e3 = eG.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);*/
         
-        cdbl e = eG.dq1();
-        printf("%e\t%e\t%e\n",eta,i-e,(i-e)/i);
+        cdbl e = eG.cgBarR1();
+        printf("%e\t%e\n",eta,(i-e)/i);
     }
     /*iG.setEta(eta);
     eG.setEta(eta);

@@ -131,14 +131,14 @@ public:
     dbl cg0() const;
 
 /**
- * @brief NLO gluon scaling function \f$c^{(1)}_g\f$: H+Poles+S+V
+ * @brief NLO gluon scaling function \f$c^{(1)}_g\f$
  * @return \f$c^{(1)}_g\f$
  */
     dbl cg1() const;
 
 /**
- * @brief sum of scaling logs of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
- * @return \f$\bar{c}^{R,(1)}_g\f$
+ * @brief sum of scaling logs of NLO gluon scaling function \f$\bar{c}^{(1)}_g\f$
+ * @return \f$\bar{c}^{(1)}_g\f$
  */
     dbl cgBar1() const;
 

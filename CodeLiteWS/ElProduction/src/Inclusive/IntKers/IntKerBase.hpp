@@ -70,8 +70,10 @@ protected:
  */
     void setSpRaw(dbl sp) {
         this->sp = sp;
-        this->t1max = -(sp*(1. - Sqrt(1. - (4.*m2)/(q2 + sp))))/2.;
-        this->t1min = -(sp*(1. + Sqrt(1. - (4.*m2)/(q2 + sp))))/2.;
+        cdbl s = sp+q2;
+        cdbl beta = Sqrt(1. - (4.*m2)/s);
+        this->t1max = -(sp*(1. - beta))/2.;
+        this->t1min = -(sp*(1. + beta))/2.;
         if (this->t1min >= this->t1max)
             throw domain_error("t1_min has to be smaller than t1_max!");
     }
@@ -82,9 +84,9 @@ protected:
  */
     void setT1(dbl a) {
         this->t1 = t1min + (t1max-t1min)*a;
-        dbl s = sp+q2;
-        dbl beta = Sqrt(1 - (4*m2)/s);
-        this->s4max = (s*((sp*(1 - beta))/2. + t1)*((sp*(1 + beta))/2. + t1))/(sp*t1);
+        cdbl s = sp+q2;
+        cdbl beta = Sqrt(1. - (4.*m2)/s);
+        this->s4max = (s*((sp*(1. - beta))/2. + t1)*((sp*(1. + beta))/2. + t1))/(sp*t1);
         this->jac *= (t1max-t1min);
     }
 
