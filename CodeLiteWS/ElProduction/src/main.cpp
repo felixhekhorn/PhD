@@ -21,13 +21,13 @@ int main(int argc, char **argv) {
 	//return runInclusive();
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
-    dbl q2 = -1.e-2;
+    dbl q2 = -1.e2;
     uint nlf = 0;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
     dbl omega = 1.;
-    dbl deltax = 1e-5;
-    dbl deltay = 1e-5;
+    dbl deltax = 5e-7;
+    dbl deltay = 1e-6;
     dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = (4.*m2-q2);
     InclusiveElProduction iG(m2,q2,Delta,L,nlf);
@@ -37,43 +37,45 @@ int main(int argc, char **argv) {
     //iG.setMu2(mu02);eG.setMu2(mu02);
     //iG.setAlphaS(aS);eG.setAlphaS(aS);
     
-    uint N = 7;
+    uint N = 21;
     dbl eta = 1.;
     //dbl bjorkenX = 1.;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-3.+6./(N-1)*j);
+        eta = pow(10,-4.+4./(N-1)*j);
         //bjorkenX = pow(10,-2.+1./(N-1)*j);
         iG.setEta(eta);
         eG.setEta(eta);
         //iG.setBjorkenX(bjorkenX);
         //eG.setBjorkenX(bjorkenX);
-        cdbl i = iG.cgBarR1();
+        cdbl i = iG.cg1();
         /*eG.setXTilde(.3);
-        cdbl e1 = eG.cg1();
+        cdbl e1 = eG.cgBarF1();
         eG.setXTilde(.5);
-        cdbl e2 = eG.cg1();
+        cdbl e2 = eG.cgBarF1();
         eG.setXTilde(.8);
-        cdbl e3 = eG.cg1();
+        cdbl e3 = eG.cgBarF1();
         eG.setXTilde(.9);
-        cdbl e4 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3,e4);*/
-        /*eG.setOmega(.5);
+        cdbl e4 = eG.cgBarF1();
+        printf("%e\t%e\t%e\t%e\t%e\n",eta,(i-e1)/i,(i-e2)/i,(i-e3)/i,(i-e4)/i);*/
+        eG.setOmega(.5);
         cdbl e1 = eG.cg1();
         eG.setOmega(1.);
         cdbl e2 = eG.cg1();
         eG.setOmega(1.5);
         cdbl e3 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\n",eta,(i-e1)/i,(i-e2)/i,(i-e3)/i);*/
-        /*eG.setDeltax(1e-5);
+        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,(i-e1)/i,(i-e2)/i,(i-e3)/i);
+        /*eG.setDeltay(1e-5);
         cdbl e1 = eG.cg1();
-        eG.setDeltax(1e-6);
+        eG.setDeltay(1e-6);
         cdbl e2 = eG.cg1();
-        eG.setDeltax(1e-7);
+        eG.setDeltay(1e-7);
         cdbl e3 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e1,e2,e3);*/
+        eG.setDeltay(1e-8);
+        cdbl e4 = eG.cg1();
+        printf("%e\t%e\t%e\t%e\t%e\t%e\n",eta,i,(i-e1)/i,(i-e2)/i,(i-e3)/i,(i-e4)/i);*/
         
-        cdbl e = eG.cgBarR1();
-        printf("%e\t%e\n",eta,(i-e)/i);
+        //cdbl e = eG.cgBarR1();
+        //printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
     }
     /*iG.setEta(eta);
     eG.setEta(eta);

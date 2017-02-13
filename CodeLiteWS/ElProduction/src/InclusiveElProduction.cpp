@@ -96,7 +96,7 @@ dbl InclusiveElProduction::cgBarR1() const {
     f.function = gsl::callFunctor<PsKerNLOgSV>;
     f.params = &k;
     // take fermion loop into account!
-    return int1D(&f) + nlf*fermionLoopFactor*this->cg0();
+    return int1D(&f) - nlf*fermionLoopFactor*this->cg0();
 }
 
 dbl InclusiveElProduction::cgBarF1() const {
@@ -106,7 +106,7 @@ dbl InclusiveElProduction::cgBarF1() const {
     f.f = gsl::callFunctor2D<PsKerNLOg>;
     f.params = &k;
     // take fermion loop into account!
-    return int2D(&f) - nlf*fermionLoopFactor*this->cg0();
+    return int2D(&f) + nlf*fermionLoopFactor*this->cg0();
 }
 
 dbl InclusiveElProduction::cgBar1() const {

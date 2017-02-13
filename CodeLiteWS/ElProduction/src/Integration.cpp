@@ -40,7 +40,7 @@ dbl int2D(gsl_monte_function* F) {
         //printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
-    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
+//    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
     return res;
 }
 

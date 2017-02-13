@@ -74,6 +74,40 @@ public:
     }
 };
 
+/**
+ * @brief exclusive phasespace kernel for \f$\bar c_{g}^{F,(1)}\f$
+ */
+class PsKerCgBarF1 : public PdfConvNLOg {
+    
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2< 0\f$
+ * @param sp current \f$s'\f$
+ * @param nlf number of light flavours
+ * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
+ * @param deltax offset to upper integration bound in x \f$\delta_x\f$
+ */
+    PsKerCgBarF1(dbl m2, dbl q2, dbl sp, uint nlf, dbl xTilde, dbl deltax) : PdfConvNLOg(m2,q2,0.,nlf,xTilde,0.,deltax,0.) {
+        this->setSpRaw(sp);
+    }
+    
+    
+/**
+ * @brief called function
+ * @param aX integration variable mapped on x
+ * @param aTheta1 integration variable mapped on Theta1
+ * @return kernel
+ */
+    dbl operator() (cdbl ax, cdbl aTheta1) {
+        this->setX(ax);
+        this->setTheta1(aTheta1);
+        return this->cgBarF1();
+    }
+};
+
 } // namespace Exclusive
 
 

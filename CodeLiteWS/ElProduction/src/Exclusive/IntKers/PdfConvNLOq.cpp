@@ -3,10 +3,9 @@
 #include "KinematicVars.hpp"
 #include "../../Color.h"
 using namespace Color;
-
-namespace Exclusive {
+using namespace Exclusive;
     
-PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, cdbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
+PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay), 
     Ap1(0), Ap1Counter(0), BpQED(0), Pgq0(0), Pgq1(0),
     Ap2(0), Ap3(0){
@@ -120,5 +119,3 @@ dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aThet
     if (!isfinite(r)) return 0.;
     return r;
 }
-
-} // namespace Exclusive

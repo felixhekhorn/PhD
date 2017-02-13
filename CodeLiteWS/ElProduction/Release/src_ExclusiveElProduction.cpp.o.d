@@ -11,6 +11,8 @@ Release/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Exclusive/IntKers/PdfConvNLOq.h \
  src/Exclusive/IntKers/PdfConvBase.hpp \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
+ src/Exclusive/IntKers/CoeffPsKerLOg.hpp \
+ src/Exclusive/IntKers/PdfConvLOg.h \
  src/Exclusive/IntKers/CoeffPsKerNLOg.hpp \
  src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/CoeffPsKerNLOq.hpp \
@@ -61,6 +63,10 @@ src/Exclusive/IntKers/PdfConvNLOq.h:
 src/Exclusive/IntKers/PdfConvBase.hpp:
 
 src/Exclusive/IntKers/../../Pdf/PdfWrapper.h:
+
+src/Exclusive/IntKers/CoeffPsKerLOg.hpp:
+
+src/Exclusive/IntKers/PdfConvLOg.h:
 
 src/Exclusive/IntKers/CoeffPsKerNLOg.hpp:
 

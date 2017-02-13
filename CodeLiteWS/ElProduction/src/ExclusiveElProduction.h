@@ -191,6 +191,12 @@ public:
 ///@{
     
 /**
+ * @brief LO scaling function \f$c^{(0)}_g\f$
+ * @return \f$c^{(0)}_g\f$
+ */
+    dbl cg0() const;
+    
+/**
  * @brief NLO quark scaling function \f$c^{(1)}_g\f$
  * @return \f$c^{(1)}_g\f$
  */
@@ -201,6 +207,12 @@ public:
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
     dbl cgBarR1() const;
+
+/**
+ * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$
+ * @return \f$\bar{c}^{F,(1)}_g\f$
+ */
+    dbl cgBarF1() const;
     
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$

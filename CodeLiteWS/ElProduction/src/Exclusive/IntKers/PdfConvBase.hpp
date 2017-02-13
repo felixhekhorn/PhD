@@ -157,6 +157,7 @@ protected:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
+ * @param nlf number of light flavours
  * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
  * @param omega collinear regulation parameter \f$\omega\f$
  * @param deltax offset to upper integration bound in x

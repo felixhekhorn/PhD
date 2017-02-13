@@ -64,6 +64,12 @@ protected:
      */
     dbl cgBarR1() const;
 
+    /**
+     * @brief computes current value of kernel of \f$\bar c_g^{F,(1)}\f$
+     * @return kernel of \f$\bar c_g^{F,(1)}\f$
+     */
+    dbl cgBarF1() const;
+
 public:
 
 /**
@@ -97,8 +103,8 @@ public:
     
 /**
  * @brief sets Altarelli-Parisi kernels
- * @param Pgg0 pointer to \f$P_{gg}^{(0)}(z)\f$
- * @param Pgg1 pointer to \f$P_{gg}^{(1)}(z)\f$
+ * @param Pgg0 pointer to \f$P_{gg}^{H,(0)}(z)\f$
+ * @param Pgg1 pointer to \f$P_{gg}^{H,(1)}(z)\f$
  */
     void setPgg(fPtr1dbl Pgg0, fPtr1dbl Pgg1);
 };

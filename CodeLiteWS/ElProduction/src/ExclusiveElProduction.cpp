@@ -14,6 +14,7 @@
 #include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
+#include "Exclusive/IntKers/CoeffPsKerLOg.hpp"
 #include "Exclusive/IntKers/CoeffPsKerNLOg.hpp"
 #include "Exclusive/IntKers/CoeffPsKerNLOq.hpp"
 #include "Exclusive/IntKers/PdfConvNLOq.h"
@@ -133,6 +134,15 @@ getter6(Ap1Counter)
 getter7(Ap2)
 getter7(Ap3)
 
+dbl ExclusiveElProduction::cg0() const {
+    this->checkPartonic();
+    PsKerCg0 k(m2,q2,sp,this->getBpQED());
+    gsl_function f;
+    f.function = gsl::callFunctor<PsKerCg0>;
+    f.params = &k;
+    return int1D(&f);
+}
+
 dbl ExclusiveElProduction::cg1() const {
     this->checkPartonic();
     PsKerCg1 k(m2,q2,sp, xTilde, omega, deltax,deltay);
@@ -153,6 +163,17 @@ dbl ExclusiveElProduction::cgBarR1() const {
     f.function = gsl::callFunctor<PsKerCgBarR1>;
     f.params = &k;
     return int1D(&f);
+}
+
+dbl ExclusiveElProduction::cgBarF1() const {
+    this->checkPartonic();
+    PsKerCgBarF1 k(m2,q2,sp,nlf,xTilde,deltax);
+    k.setBorn(this->getBpQED(),0);
+    k.setPgg(this->getPgg0(),0);
+    gsl_monte_function f;
+    f.f = gsl::callFunctor2D<PsKerCgBarF1>;
+    f.params = &k;
+    return int2D(&f);
 }
 
 dbl ExclusiveElProduction::cq1() const {
