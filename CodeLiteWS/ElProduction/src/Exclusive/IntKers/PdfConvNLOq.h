@@ -79,12 +79,10 @@ public:
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
  * @param nlf number of light flavours
- * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
  * @param omega collinear regulation parameter \f$\omega\f$
- * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl omega, dbl deltay);
     
 /**
  * @brief sets pointer to ME ~ eH^2

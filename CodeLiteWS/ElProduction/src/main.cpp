@@ -5,8 +5,15 @@
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
 
+#include "gslpp/gslpp.Histogram.hpp"
+
 int runInclusive();
 /*int test() {
+    gsl::Histogram h(5);
+    h.setRangesLog10(1.,10.);
+    h.accumulate(1.,.1);
+    h.accumulate(9.9,10.);
+    h.fprintf(stdout,"%e","%e");
     return EXIT_SUCCESS;
 }*/
 
@@ -22,85 +29,43 @@ int main(int argc, char **argv) {
     //dbl m2 = 1.5*1.5;
     dbl m2 = 4.75*4.75;
     dbl q2 = -1.e2;
-    uint nlf = 0;
+    uint nlf = 4;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
-    dbl omega = 1.;
+    dbl omeOa = 1.;
     dbl deltax = 5e-7;
     dbl deltay = 1e-6;
     dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = (4.*m2-q2);
-    InclusiveElProduction iG(m2,q2,Delta,L,nlf);
-    ExclusiveElProduction eG(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    InclusiveElProduction iO(m2,q2,Delta,L,nlf);
+    ExclusiveElProduction eO(m2,q2,L,nlf,xTilde,omeOa,deltax,deltay);
     
-    //iG.setPdf("MSTW2008nlo90cl",0);eG.setPdf("MSTW2008nlo90cl",0);
-    //iG.setMu2(mu02);eG.setMu2(mu02);
-    //iG.setAlphaS(aS);eG.setAlphaS(aS);
+    iO.setPdf("MSTW2008nlo90cl",0);eO.setPdf("MSTW2008nlo90cl",0);
+    iO.setMu2(mu02);eO.setMu2(mu02);
+    iO.setAlphaS(aS);eO.setAlphaS(aS);
     
-    uint N = 21;
-    dbl eta = 1.;
-    //dbl bjorkenX = 1.;
+    /*uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        eta = pow(10,-4.+4./(N-1)*j);
-        //bjorkenX = pow(10,-2.+1./(N-1)*j);
-        iG.setEta(eta);
-        eG.setEta(eta);
-        //iG.setBjorkenX(bjorkenX);
-        //eG.setBjorkenX(bjorkenX);
-        cdbl i = iG.cg1();
-        /*eG.setXTilde(.3);
-        cdbl e1 = eG.cgBarF1();
-        eG.setXTilde(.5);
-        cdbl e2 = eG.cgBarF1();
-        eG.setXTilde(.8);
-        cdbl e3 = eG.cgBarF1();
-        eG.setXTilde(.9);
-        cdbl e4 = eG.cgBarF1();
-        printf("%e\t%e\t%e\t%e\t%e\n",eta,(i-e1)/i,(i-e2)/i,(i-e3)/i,(i-e4)/i);*/
-        eG.setOmega(.5);
-        cdbl e1 = eG.cg1();
-        eG.setOmega(1.);
-        cdbl e2 = eG.cg1();
-        eG.setOmega(1.5);
-        cdbl e3 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,(i-e1)/i,(i-e2)/i,(i-e3)/i);
-        /*eG.setDeltay(1e-5);
-        cdbl e1 = eG.cg1();
-        eG.setDeltay(1e-6);
-        cdbl e2 = eG.cg1();
-        eG.setDeltay(1e-7);
-        cdbl e3 = eG.cg1();
-        eG.setDeltay(1e-8);
-        cdbl e4 = eG.cg1();
-        printf("%e\t%e\t%e\t%e\t%e\t%e\n",eta,i,(i-e1)/i,(i-e2)/i,(i-e3)/i,(i-e4)/i);*/
-        
-        //cdbl e = eG.cgBarR1();
-        //printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
-    }
-    /*iG.setEta(eta);
-    eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.cg1(),eG.cg1());*/
-    /*m2 = 5*5;
-    iG.setM2(m2);
-    eG.setM2(m2);
-    eta = 1;
-    iG.setEta(eta);
-    eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
-    q2 = -10.;
-    iG.setQ2(q2);
-    eG.setQ2(q2);
-    eta = .01;
-    iG.setEta(eta);
-    eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());
-    q2 = -1000.;
-    iG.setQ2(q2);
-    eG.setQ2(q2);
-    eta = .001;
-    iG.setEta(eta);
-    eG.setEta(eta);
-    printf("%e\t%e\t%e\n",eta,iG.cq1(),eG.cq1());*/
+        cdbl eta = pow(10,-2.+4./(N-1)*j);
+        iO.setEta(eta);
+        eO.setEta(eta);
+        / *cdbl bjorkenX = pow(10,-2.+1./(N-1)*j);
+        iO.setBjorkenX(bjorkenX);
+        eO.setBjorkenX(bjorkenX);
+        cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
+        cdbl e = eO.F();* /
+        cdbl i = iO.cg1();
+        cdbl e = eO.cg1();
+        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
+    }*/
+    
+    iO.setBjorkenX(1e-2);
+    eO.setBjorkenX(1e-2);
+    eO.activateHistogram(Exclusive::histT::log10z,5);
+    cdbl i = 0.;//iO.Fg0() + iO.Fg1() + iO.Fq1();
+    cdbl e = eO.F();
+    printf("%e\t%e\n",i,e);
+    eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb-x_2-q2_2.dat");
     return EXIT_SUCCESS;
 }
 

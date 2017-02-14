@@ -32,6 +32,8 @@ typedef double dbl;
 /** @brief define floating point precision */
 typedef const double cdbl;
 
+/** @brief function pointer of 0 variables */
+typedef cdbl (*fPtr0dbl)();
 /** @brief function pointer of 1 variables */
 typedef cdbl (*fPtr1dbl)(cdbl x);
 /** @brief function pointer of 3 variables */

@@ -33,6 +33,14 @@ public:
  * @param BpQED pointer to Born ME
  */
     PdfConvLOg(dbl m2, dbl q2, dbl bjorkenX, fPtr4dbl BpQED);
+    
+/**
+ * @brief called function
+ * @param az integration variable mapped on z
+ * @param aTheta1 integration variable mapped on Theta1
+ * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(0)}(\eta,\xi)\f$
+ */
+    dbl operator() (cdbl az, cdbl aTheta1);
 
 };
 

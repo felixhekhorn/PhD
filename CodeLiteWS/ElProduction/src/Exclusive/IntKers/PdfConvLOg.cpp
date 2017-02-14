@@ -24,3 +24,15 @@ dbl PdfConvLOg::cg0() const {
     if (!isfinite(r)) return 0.;
     return r;
 }
+
+dbl PdfConvLOg::operator() (cdbl az, cdbl aTheta1) {
+    // protect from null pointer
+    if (0 == this->pdf)
+        throw invalid_argument("need to set all arguments!");
+    this->setZ(az);
+    this->setTheta1(aTheta1);
+    cdbl r = jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * this->cg0();
+    // Protect from ps corner cases
+    if (!isfinite(r)) return 0.;
+    return r;
+}

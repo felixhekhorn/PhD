@@ -1,7 +1,8 @@
 #ifndef EXCLUSIVEELPRODUCTION_H
 #define EXCLUSIVEELPRODUCTION_H
 
-#include "AbstractElProduction.h" // Base class: AbstractElProduction
+#include "AbstractElProduction.h"
+#include "ConfigExclusive.h"
 
 /**
  * @brief application class for exclusive electro production
@@ -107,20 +108,26 @@ class ExclusiveElProduction : public AbstractElProduction {
 ///@{
  
 /**
- * @brief return \f$P_{gg}^{(0)}(z)\f$
- * @return \f$P_{gg}^{(0)}(z)\f$
+ * @brief return \f$P_{\Pg\Pg}^{H,(0)}(z)\f$
+ * @return \f$P_{\Pg\Pg}^{H,(0)}(z)\f$
  */
-    fPtr1dbl getPgg0() const;
+    fPtr1dbl getPggH0() const;
     
 /**
- * @brief return \f$P_{gg}^{(1)}(z)\f$
- * @return \f$P_{gg}^{(1)}(z)\f$
+ * @brief return \f$P_{\Pg\Pg}^{H,(1)}(z)\f$
+ * @return \f$P_{\Pg\Pg}^{H,(1)}(z)\f$
  */
-    fPtr1dbl getPgg1() const;
+    fPtr1dbl getPggH1() const;
+    
+/**
+ * @brief return \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
+ * @return \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
+ */
+    fPtr0dbl getPggS1() const;
  
 /**
- * @brief return \f$P_{gq}^{(0)}(z)\f$
- * @return \f$P_{gq}^{(0)}(z)\f$
+ * @brief return \f$P_{\Pg\Pq}^{(0)}\f$
+ * @return \f$P_{\Pg\Pq}^{(0)}\f$
  */
     fPtr1dbl getPgq0() const;
     
@@ -151,6 +158,11 @@ public:
  * @param deltay offset to lower integration bound in y
  */
     ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    
+/**
+ * @brief destructor
+ */
+    ~ExclusiveElProduction();
 
 /** @name global setter */
 ///@{
@@ -238,23 +250,64 @@ public:
 /** @name hadronic structure functions */
 ///@{
     
-/*
+/**
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    //dbl Fg0() const;
+    dbl Fg0() const;
     
-/*
+/**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    //dbl Fg1() const;
+    dbl Fg1() const;
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
     dbl Fq1() const;
+    
+/**
+ * @brief full structure function
+ * @return \f$F\f$
+ */
+    dbl F() const;
+    
+///@}
+
+/** @name histograms */
+///@{
+    
+private:
+
+/**
+ * @brief map with histograms
+ */
+    Exclusive::histMapT histMap;
+    
+public:
+    
+/**
+ * @brief activates a histogram
+ * @param t histogram type
+ * @param size number of bins
+ */
+    void activateHistogram(Exclusive::histT t, uint size);
+    
+/*
+ * @brief gets a histogram (if it has been activated)
+ * @param t histogram type
+ */
+    //gslpp::Histogram* getHistogram(Exclusive::histT t);
+
+/**
+ * @brief prints a histogram (if it has been activated)
+ * @param t histogram type
+ * @param path file path
+ */
+    void printHistogram(Exclusive::histT t, str path);
+    
     
 ///@}
 

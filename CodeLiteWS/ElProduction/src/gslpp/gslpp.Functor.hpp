@@ -1,10 +1,10 @@
-#ifndef GSL_HPP
-#define GSL_HPP
+#ifndef gslpp_Functor_HPP
+#define gslpp_Functor_HPP
 
 /**
  * @brief object-oriented wrappers to GSL
  */
-namespace gsl {
+namespace gslpp {
 
 /**
  * @brief wrapper for gsl
@@ -79,4 +79,4 @@ template <class F> inline double callFunctor5D (double x[], size_t dim, void * p
 
 } // namespace gsl
 
-#endif // GSL_HPP
+#endif // gslpp_Functor_HPP

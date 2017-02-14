@@ -2,7 +2,7 @@
 
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
-#include "gsl++.hpp"
+#include "gslpp/gslpp.Functor.hpp"
 #include "Integration.h"
 
 #include "Inclusive/ME/Born.h"
@@ -84,7 +84,7 @@ dbl InclusiveElProduction::cg1() const {
     this->checkPartonic();
     PsKerNLOg k(m2,q2,sp,Delta,this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<PsKerNLOg>;
+    f.f = gslpp::callFunctor2D<PsKerNLOg>;
     f.params = &k;
     return int2D(&f);
 }
@@ -93,7 +93,7 @@ dbl InclusiveElProduction::cgBarR1() const {
     this->checkPartonic();
     PsKerNLOgSV k(m2,q2,sp,this->getCgBarR1SV());
     gsl_function f;
-    f.function = gsl::callFunctor<PsKerNLOgSV>;
+    f.function = gslpp::callFunctor<PsKerNLOgSV>;
     f.params = &k;
     // take fermion loop into account!
     return int1D(&f) - nlf*fermionLoopFactor*this->cg0();
@@ -103,7 +103,7 @@ dbl InclusiveElProduction::cgBarF1() const {
     this->checkPartonic();
     PsKerNLOg k(m2,q2,sp,Delta,this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),0,this->getCgBarF1H());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<PsKerNLOg>;
+    f.f = gslpp::callFunctor2D<PsKerNLOg>;
     f.params = &k;
     // take fermion loop into account!
     return int2D(&f) + nlf*fermionLoopFactor*this->cg0();
@@ -117,7 +117,7 @@ dbl InclusiveElProduction::cq1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getCq1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<PsKerNLOq>;
+    f.f = gslpp::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
@@ -126,7 +126,7 @@ dbl InclusiveElProduction::cqBarF1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getCqBarF1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<PsKerNLOq>;
+    f.f = gslpp::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
@@ -135,7 +135,7 @@ dbl InclusiveElProduction::dq1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getDq1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor2D<PsKerNLOq>;
+    f.f = gslpp::callFunctor2D<PsKerNLOq>;
     f.params = &k;
     return int2D(&f);
 }
@@ -147,7 +147,7 @@ dbl InclusiveElProduction::Fg0() const {
         return 0.;
     PdfConvLO k(m2, q2, bjorkenX, pdf, muF2, this->getCg0());
     gsl_function f;
-    f.function = gsl::callFunctor<PdfConvLO>;
+    f.function = gslpp::callFunctor<PdfConvLO>;
     f.params = &k;
     dbl eH = getElectricCharge(this->nlf + 1);
     dbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI) * eH*eH;
@@ -165,7 +165,7 @@ dbl InclusiveElProduction::Fg1() const {
     k.setCgBarR1(this->getCgBarR1SV());
     k.setCg0(this->getCg0());
     gsl_monte_function f;
-    f.f = gsl::callFunctor3D<PdfConvNLOg>;
+    f.f = gslpp::callFunctor3D<PdfConvNLOg>;
     f.params = &k;
     dbl Fg1 = int3D(&f);
     // multiply norm
@@ -182,7 +182,7 @@ dbl InclusiveElProduction::Fq1() const {
     // helper
     PdfConvNLOq k(m2,q2,bjorkenX,pdf,muF2,nlf,this->getCq1(),this->getCqBarF1(),this->getDq1());
     gsl_monte_function f;
-    f.f = gsl::callFunctor3D<PdfConvNLOq>;
+    f.f = gslpp::callFunctor3D<PdfConvNLOq>;
     f.params = &k;
     dbl Fq1 = int3D(&f);
     // multiply norm

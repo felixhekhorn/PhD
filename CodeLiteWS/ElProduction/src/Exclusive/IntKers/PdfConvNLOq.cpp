@@ -5,8 +5,8 @@
 using namespace Color;
 using namespace Exclusive;
     
-PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
-    PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay), 
+PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl omega, dbl deltay) :
+    PdfConvBase(m2, q2, bjorkenX, nlf, 0., omega, 0., deltay), 
     Ap1(0), Ap1Counter(0), BpQED(0), Pgq0(0), Pgq1(0),
     Ap2(0), Ap3(0){
 }
@@ -78,6 +78,7 @@ dbl PdfConvNLOq::dq1() const {
     cdbl me = Ap2(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
     cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+yE)*sin(Theta1);
     cdbl r = jac * f * me;
+    if (!isfinite(r)) return 0.;
     return r;
 }
 
@@ -93,6 +94,7 @@ dbl PdfConvNLOq::oq1() const {
     cdbl me = Ap3(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
     cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+yE)*sin(Theta1);
     cdbl r = jac * f * me;
+    if (!isfinite(r)) return 0.;
     return r;
 }
 

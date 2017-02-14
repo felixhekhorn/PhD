@@ -41,14 +41,24 @@ class PdfConvNLOg : public PdfConvBase {
     fPtr4dbl ROKpyxC;
     
 /**
- * @brief pointer to \f$P_{gg}^{(0)}(z)\f$
+ * @brief pointer to \f$P_{\Pg\Pg}^{H,(0)}(z)\f$
  */
-    fPtr1dbl Pgg0;
+    fPtr1dbl PggH0;
     
 /**
- * @brief pointer to \f$P_{gg}^{(1)}(z)\f$
+ * @brief pointer to \f$P_{\Pg\Pg}^{H,(1)}(z)\f$
  */
-    fPtr1dbl Pgg1;
+    fPtr1dbl PggH1;
+    
+/**
+ * @brief pointer to \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
+ */
+    fPtr0dbl PggS1;
+
+/**
+ * @brief renormalization scale
+ */
+    dbl muR2;
     
 protected:
 
@@ -103,10 +113,28 @@ public:
     
 /**
  * @brief sets Altarelli-Parisi kernels
- * @param Pgg0 pointer to \f$P_{gg}^{H,(0)}(z)\f$
- * @param Pgg1 pointer to \f$P_{gg}^{H,(1)}(z)\f$
+ * @param PggH0 pointer to \f$P_{\Pg\Pg}^{H,(0)}(z)\f$
+ * @param PggH1 pointer to \f$P_{\Pg\Pg}^{H,(1)}(z)\f$
+ * @param PggS1 pointer to \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
  */
-    void setPgg(fPtr1dbl Pgg0, fPtr1dbl Pgg1);
+    void setPgg(fPtr1dbl PggH0, fPtr1dbl PggH1, fPtr0dbl PggS1);
+
+/**
+ * @brief sets renormalization scale
+ * @param muR2 renormalization scale
+ */
+    void setMuR2(dbl muR2);
+    
+/**
+ * @brief called function
+ * @param az integration variable mapped on z
+ * @param ax integration variable mapped on x
+ * @param ay integration variable mapped on y
+ * @param aTheta1 integration variable mapped on Theta1
+ * @param aTheta2 integration variable mapped on Theta2
+ * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
+ */
+    dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
 };
 
 } // namespace Exclusive
