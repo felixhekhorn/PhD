@@ -40,6 +40,11 @@ class FKerAll : PdfConvBase {
  */
     const histMapT* histMap = 0;
     
+/**
+ * @brief number of points
+ */
+    size_t* count = 0;
+    
 public:
 
 /**
@@ -72,8 +77,9 @@ public:
 /**
  * @brief sets avtive histograms
  * @param histMap pointer to map of histgrams
+ * @param count number of points
  */
-    void setHistograms(const histMapT* histMap);
+    void setHistograms(const histMapT* histMap, size_t* count);
     
 /**
  * @brief called function

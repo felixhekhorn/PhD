@@ -297,11 +297,14 @@ dbl ExclusiveElProduction::F() const {
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     k.setAlphaS(alphaS);
     k.setKers(&LOg,&NLOg,&NLOq);
-    k.setHistograms(&(this->histMap));
+    size_t count = 0;
+    k.setHistograms(&(this->histMap), &count);
     gsl_monte_function f;
     f.f = gslpp::callFunctor5D<FKerAll>;
     f.params = &k;
-    return int5D(&f);
+    cdbl i = int5D(&f);
+    printf("c: %d\n",count);
+    return i;
 }
 
 ExclusiveElProduction::~ExclusiveElProduction() {
@@ -313,8 +316,8 @@ ExclusiveElProduction::~ExclusiveElProduction() {
 
 void ExclusiveElProduction::activateHistogram(histT t, uint size) {
     gslpp::Histogram* h = new gslpp::Histogram(size);
-    if(histT::log10z == t) {
-        h->setRangesLog10(this->bjorkenX,this->zMax);
+    if(histT::log10pdf == t) {
+        h->setRangesLog10(this->bjorkenX/this->zMax,1.);
     }
     this->histMap.insert({t,h});
 }
@@ -331,10 +334,8 @@ void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) {
     if (this->histMap.cend() == it)
         throw invalid_argument("histogram was not active!");
     FILE* f = fopen(path.c_str(),"w");
-    if (f == NULL) {
-        perror("open()");
-        return;
-    }
+    if (f == NULL)
+        throw ios::failure(strerror(errno));
     it->second->fprintf(f, "% e", "% e");
     fclose(f);
 }

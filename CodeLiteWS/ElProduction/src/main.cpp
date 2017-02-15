@@ -59,13 +59,14 @@ int main(int argc, char **argv) {
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
     }*/
     
-    iO.setBjorkenX(1e-2);
-    eO.setBjorkenX(1e-2);
-    eO.activateHistogram(Exclusive::histT::log10z,5);
+    cdbl bjorkenX = 1e-2;
+    iO.setBjorkenX(bjorkenX);
+    eO.setBjorkenX(bjorkenX);
+    eO.activateHistogram(Exclusive::histT::log10pdf,30);
     cdbl i = 0.;//iO.Fg0() + iO.Fg1() + iO.Fq1();
     cdbl e = eO.F();
     printf("%e\t%e\n",i,e);
-    eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb-x_2-q2_2.dat");
+    eO.printHistogram(Exclusive::histT::log10pdf, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2.dat");
     return EXIT_SUCCESS;
 }
 

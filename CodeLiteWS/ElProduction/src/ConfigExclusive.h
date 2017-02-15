@@ -10,13 +10,16 @@
 
 #include "gslpp/gslpp.Histogram.hpp"
 
+/**
+ * @brief subspace for exclusive calculations
+ */
 namespace Exclusive {
     
 /**
  * @brief histogram types
  */
 enum histT {
-    log10z /**< x_bj < z < z_max */
+    log10pdf /**< x_bj < z < z_max */
 };
 
 /**

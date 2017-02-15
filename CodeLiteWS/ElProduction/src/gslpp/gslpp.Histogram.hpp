@@ -20,7 +20,12 @@ class Histogram {
 /**
  * @brief histogram object
  */
-    gsl_histogram* h;
+    gsl_histogram* h = 0;
+    
+/**
+ * @brief histogram object
+ */
+    gsl_histogram* n = 0;
     
 public:
 
@@ -30,6 +35,7 @@ public:
  */
     Histogram(size_t size) : size(size) {
         this->h = gsl_histogram_alloc(size);
+        this->n = gsl_histogram_alloc(size);
     }
     
 /**
@@ -38,6 +44,8 @@ public:
     ~Histogram() {
         if(0 != this->h)
             gsl_histogram_free(this->h);
+        if(0 != this->n)
+            gsl_histogram_free(this->n);
     }
 
 /**
@@ -49,6 +57,7 @@ public:
     int setRangesUniform(double min, double max) {
         if (max <= min)
             throw std::invalid_argument("min < max!");
+        gsl_histogram_set_ranges_uniform(this->n,min,max);
         return gsl_histogram_set_ranges_uniform(this->h,min,max);
     }
 
@@ -71,6 +80,7 @@ public:
             r[j] = pow(10.,x);
             x += d;
         }
+        gsl_histogram_set_ranges(this->n,r,s);
         return gsl_histogram_set_ranges(this->h,r,s);
     }
     
@@ -80,7 +90,7 @@ public:
  * @return gsl_histogram_increment
  */
     int increment(double x) {
-        return gsl_histogram_increment(this->h, x);
+        return this->accumulate(x, 1.);
     }
     
 /**
@@ -90,18 +100,26 @@ public:
  * @return gsl_histogram_accumulate
  */
     int accumulate(double x, double w) {
+        gsl_histogram_increment(this->n, x);
         return gsl_histogram_accumulate(this->h, x, w);
     }
 
 /**
  * @brief outputs data
- * @param stream target strean
+ * @param stream target stream
  * @param range_format printf-format for bin ranges
  * @param bin_format printf-format for bin value
  * @return gsl_histogram_fprintf
  */
     int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
-        return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
+        gsl_histogram* c = gsl_histogram_alloc(this->size);
+        c = gsl_histogram_clone(this->h);
+        gsl_histogram_div(c,this->n);
+        //gsl_histogram_fprintf(stdout,n,"% e", "% e");
+        int r = gsl_histogram_fprintf(stream, c, range_format, bin_format);
+        gsl_histogram_free(c);
+        return r;
+        //return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
     }
 };
 

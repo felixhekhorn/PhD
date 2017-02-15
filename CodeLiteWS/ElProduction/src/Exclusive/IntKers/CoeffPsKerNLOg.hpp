@@ -97,7 +97,7 @@ public:
     
 /**
  * @brief called function
- * @param aX integration variable mapped on x
+ * @param ax integration variable mapped on x
  * @param aTheta1 integration variable mapped on Theta1
  * @return kernel
  */

@@ -1,5 +1,6 @@
 #include "Integration.h"
 
+#include <gsl/gsl_monte_plain.h>
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
 
@@ -127,6 +128,12 @@ dbl int5D(gsl_monte_function* F) {
         //printf("int5D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
     } while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free(s);
-//    printf("int5D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
+    printf("int5D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
+    
+    /*calls = 500000;
+    gsl_monte_plain_state *s = gsl_monte_plain_alloc(dim);
+    gsl_monte_plain_integrate(F, xl, xu, dim, calls, r, s, &res, &err);
+    gsl_monte_plain_free(s);
+    printf("int5D: res %e, err: %e\n",res,err);*/
     return res;
 }

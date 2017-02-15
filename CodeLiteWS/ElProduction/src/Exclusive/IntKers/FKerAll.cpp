@@ -34,8 +34,9 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     return w;
 }
 
-void FKerAll::setHistograms(const histMapT* histMap) {
+void FKerAll::setHistograms(const histMapT* histMap, size_t* count) {
     this->histMap = histMap;
+    this->count = count;
 }
 
 void FKerAll::fillHistograms(cdbl w) {
@@ -44,8 +45,9 @@ void FKerAll::fillHistograms(cdbl w) {
         return;
     if (this->histMap->empty())
         return;
-    // log10(z)
-    histMapT::const_iterator h_log10z = this->histMap->find(log10z);
-    if (h_log10z != this->histMap->end())
-        h_log10z->second->accumulate(this->z,w);
+    (*count)++;
+    // log10(x_bj/z)
+    histMapT::const_iterator hLog10pdf = this->histMap->find(log10pdf);
+    if (hLog10pdf != this->histMap->end())
+        hLog10pdf->second->accumulate(this->bjorkenX/this->z,w);
 }
