@@ -272,7 +272,7 @@ public:
  * @brief full structure function
  * @return \f$F\f$
  */
-    dbl F() const;
+    dbl F();
     
 ///@}
 
@@ -286,6 +286,17 @@ private:
  */
     Exclusive::histMapT histMap;
     
+/**
+ * @brief setups all active histograms
+ */
+    void setupHistograms();
+
+/**
+ * @brief rescales all histograms by the number of events
+ * @param count number of events
+ */
+    void rescaleHistograms(uint count);
+    
 public:
     
 /**
@@ -294,12 +305,6 @@ public:
  * @param size number of bins
  */
     void activateHistogram(Exclusive::histT t, uint size);
-    
-/*
- * @brief gets a histogram (if it has been activated)
- * @param t histogram type
- */
-    //gslpp::Histogram* getHistogram(Exclusive::histT t);
 
 /**
  * @brief prints a histogram (if it has been activated)
@@ -307,7 +312,6 @@ public:
  * @param path file path
  */
     void printHistogram(Exclusive::histT t, str path);
-    
     
 ///@}
 

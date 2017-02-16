@@ -1,5 +1,7 @@
 #include "ExclusiveElProduction.h"
 
+#include <errno.h>
+
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
 #include "gslpp/gslpp.Functor.hpp"
@@ -10,7 +12,6 @@
 #include "Exclusive/ME/SVp.h"
 #include "Exclusive/ME/NLOg.h"
 #include "Exclusive/ME/Ap.h"
-
 #include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
@@ -271,7 +272,7 @@ dbl ExclusiveElProduction::Fq1() const {
     return n*int5D(&f);
 }
 
-dbl ExclusiveElProduction::F() const {
+dbl ExclusiveElProduction::F() {
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -298,11 +299,15 @@ dbl ExclusiveElProduction::F() const {
     k.setAlphaS(alphaS);
     k.setKers(&LOg,&NLOg,&NLOq);
     size_t count = 0;
+    // setup histograms
+    this->setupHistograms();
     k.setHistograms(&(this->histMap), &count);
     gsl_monte_function f;
     f.f = gslpp::callFunctor5D<FKerAll>;
     f.params = &k;
     cdbl i = int5D(&f);
+    // rescale
+    this->rescaleHistograms(count);
     printf("c: %d\n",count);
     return i;
 }
@@ -316,18 +321,30 @@ ExclusiveElProduction::~ExclusiveElProduction() {
 
 void ExclusiveElProduction::activateHistogram(histT t, uint size) {
     gslpp::Histogram* h = new gslpp::Histogram(size);
-    if(histT::log10pdf == t) {
-        h->setRangesLog10(this->bjorkenX/this->zMax,1.);
-    }
     this->histMap.insert({t,h});
 }
+    
+void ExclusiveElProduction::setupHistograms() {
+    histMapT::const_iterator hLog10z = this->histMap.find(log10z);
+    if (this->histMap.cend() != hLog10z)
+        hLog10z->second->setRangesLog10(this->bjorkenX,this->zMax);
+    histMapT::const_iterator hLog10pdf = this->histMap.find(log10pdf);
+    if (this->histMap.cend() != hLog10pdf)
+        hLog10pdf->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
+    histMapT::const_iterator hTheta1 = this->histMap.find(Theta1);
+    if (this->histMap.cend() != hTheta1)
+        hTheta1->second->setRangesUniform(0.,M_PI);
+    histMapT::const_iterator hTheta2 = this->histMap.find(Theta2);
+    if (this->histMap.cend() != hTheta2)
+        hTheta2->second->setRangesUniform(0.,M_PI);
+}
 
-/*gslpp::Histogram* ExclusiveElProduction::getHistogram(Exclusive::histT t) {
-    histMapT::const_iterator it = this->histMap.find(t);
-    return it->second;
-}*/
-
-#include <errno.h>
+void ExclusiveElProduction::rescaleHistograms(uint count) {
+    double s = 1./((double)count);
+    for(auto it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
+        it->second->scale(s);
+    }
+}
 
 void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) {
     histMapT::const_iterator it = this->histMap.find(t);

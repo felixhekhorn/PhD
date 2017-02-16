@@ -19,7 +19,10 @@ namespace Exclusive {
  * @brief histogram types
  */
 enum histT {
-    log10pdf /**< x_bj < z < z_max */
+    log10z, /**< x_bj < z < z_max */
+    log10pdf, /**< x_bj/z_max < x_bj/z < 1. */
+    Theta1, /**< 0 < Theta1 < pi */
+    Theta2 /**< 0 < Theta2 < pi */
 };
 
 /**

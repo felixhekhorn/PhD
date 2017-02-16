@@ -25,7 +25,12 @@ class Histogram {
 /**
  * @brief histogram object
  */
-    gsl_histogram* n = 0;
+    //gsl_histogram* n = 0;
+    
+/**
+ * @brief are ranges set?
+ */
+    bool isInitialized = false;
     
 public:
 
@@ -35,7 +40,7 @@ public:
  */
     Histogram(size_t size) : size(size) {
         this->h = gsl_histogram_alloc(size);
-        this->n = gsl_histogram_alloc(size);
+        //this->n = gsl_histogram_alloc(size);
     }
     
 /**
@@ -44,8 +49,8 @@ public:
     ~Histogram() {
         if(0 != this->h)
             gsl_histogram_free(this->h);
-        if(0 != this->n)
-            gsl_histogram_free(this->n);
+        //if(0 != this->n)
+        //    gsl_histogram_free(this->n);
     }
 
 /**
@@ -57,8 +62,10 @@ public:
     int setRangesUniform(double min, double max) {
         if (max <= min)
             throw std::invalid_argument("min < max!");
-        gsl_histogram_set_ranges_uniform(this->n,min,max);
-        return gsl_histogram_set_ranges_uniform(this->h,min,max);
+        //gsl_histogram_set_ranges_uniform(this->n,min,max);
+        int r = gsl_histogram_set_ranges_uniform(this->h,min,max);
+        this->isInitialized = true;
+        return r;
     }
 
 /**
@@ -75,13 +82,15 @@ public:
         const double d = (ma - mi)/this->size;
         double x = mi;
         size_t s = this->size + 1;
-        double r[s];
+        double range[s];
         for (size_t j = 0; j < s; ++j) {
-            r[j] = pow(10.,x);
+            range[j] = pow(10.,x);
             x += d;
         }
-        gsl_histogram_set_ranges(this->n,r,s);
-        return gsl_histogram_set_ranges(this->h,r,s);
+        //gsl_histogram_set_ranges(this->n,range,s);
+        int ret = gsl_histogram_set_ranges(this->h,range,s);
+        this->isInitialized = true;
+        return ret;
     }
     
 /**
@@ -100,8 +109,17 @@ public:
  * @return gsl_histogram_accumulate
  */
     int accumulate(double x, double w) {
-        gsl_histogram_increment(this->n, x);
+        //gsl_histogram_increment(this->n, x);
         return gsl_histogram_accumulate(this->h, x, w);
+    }
+    
+/**
+ * @brief scales alle histogram bins
+ * @param s scale
+ * @return gsl_histogram_scale
+ */
+    int scale(double s) {
+        return gsl_histogram_scale(this->h,s);
     }
 
 /**
@@ -112,14 +130,17 @@ public:
  * @return gsl_histogram_fprintf
  */
     int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
-        gsl_histogram* c = gsl_histogram_alloc(this->size);
+        // empty?
+        if (!this->isInitialized)
+            return 0;
+        /*gsl_histogram* c = gsl_histogram_alloc(this->size);
         c = gsl_histogram_clone(this->h);
         gsl_histogram_div(c,this->n);
-        //gsl_histogram_fprintf(stdout,n,"% e", "% e");
+        gsl_histogram_fprintf(stdout,n,"% e", "% e");
         int r = gsl_histogram_fprintf(stream, c, range_format, bin_format);
         gsl_histogram_free(c);
-        return r;
-        //return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
+        return r;*/
+        return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
     }
 };
 

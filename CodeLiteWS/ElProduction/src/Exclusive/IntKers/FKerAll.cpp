@@ -46,8 +46,20 @@ void FKerAll::fillHistograms(cdbl w) {
     if (this->histMap->empty())
         return;
     (*count)++;
+    // log10(z)
+    histMapT::const_iterator hLog10z = this->histMap->find(log10z);
+    if (hLog10z != this->histMap->cend())
+        hLog10z->second->accumulate(this->z,w);
     // log10(x_bj/z)
     histMapT::const_iterator hLog10pdf = this->histMap->find(log10pdf);
-    if (hLog10pdf != this->histMap->end())
+    if (hLog10pdf != this->histMap->cend())
         hLog10pdf->second->accumulate(this->bjorkenX/this->z,w);
+    // Theta1
+    histMapT::const_iterator hTheta1 = this->histMap->find(histT::Theta1);
+    if (hTheta1 != this->histMap->cend())
+        hTheta1->second->accumulate(this->Theta1,w);
+    // Theta2
+    histMapT::const_iterator hTheta2 = this->histMap->find(histT::Theta2);
+    if (hTheta2 != this->histMap->cend())
+        hTheta2->second->accumulate(this->Theta2,w);
 }
