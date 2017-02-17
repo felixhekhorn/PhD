@@ -10,6 +10,22 @@ namespace Exclusive {
  * @brief Abstract base class for convolution with PDFs
  */
 class PdfConvBase {
+
+/**
+ * @brief lower x intergation bound \f$\rho^*\f$
+ */
+    dbl rhoStar = -0.;
+    
+/**
+ * @brief volume of x-for-event space
+ */
+    dbl VxE = -0.;
+    
+/**
+ * @brief volume of x-for-counter-event space
+ */
+    dbl VxC = -0.;
+    
 protected:
 
 /**
@@ -35,22 +51,22 @@ protected:
 /**
  * @brief parton distribution functions
  */
-    PdfWrapper* pdf;
+    PdfWrapper* pdf = 0;
 
 /**
  * @brief factorisation scale \f$\mu_F^2\f$
  */
-    dbl muF2;
+    dbl muF2 = -0.;
     
 /**
  * @brief current momentum fraction
  */
-    dbl z;
+    dbl z = -0.;
     
 /**
  * @brief current \f$s'\f$
  */
-    dbl sp;
+    dbl sp = -0.;
     
 /**
  * @brief upper z-integration limit
@@ -63,11 +79,6 @@ protected:
     dbl jacZ;
 
 /**
- * @brief lower x intergation bound \f$\rho^*\f$
- */
-    dbl rhoStar;
-
-/**
  * @brief soft regulation parameter \f$\tilde x\f$
  */
     dbl xTilde;
@@ -75,7 +86,7 @@ protected:
 /**
  * @brief soft regulation parameter \f$\tilde\rho\f$
  */
-    dbl rhoTilde;
+    dbl rhoTilde = -0.;
     
 /**
  * @brief collinear regulation parameter \f$\omega\f$
@@ -95,62 +106,62 @@ protected:
 /**
  * @brief jacobian for x for event
  */
-    dbl jacxE;
+    dbl jacxE = -0.;
     
 /**
  * @brief current x for event
  */
-    dbl xE;
+    dbl xE = -0.;
     
 /**
  * @brief jacobian for x for counter event
  */
-    dbl jacxC;
+    dbl jacxC = -0.;
     
 /**
  * @brief current x for counter event
  */
-    dbl xC;
+    dbl xC = -0.;
     
 /**
  * @brief jacobian for y for event
  */
-    dbl jacyE;
+    dbl jacyE = -0.;
     
 /**
  * @brief current y for event
  */
-    dbl yE;
+    dbl yE = -0.;
     
 /**
  * @brief jacobian for y for counter event
  */
-    dbl jacyC;
+    dbl jacyC = -0.;
     
 /**
  * @brief current y for counter event
  */
-    dbl yC;
+    dbl yC = -0.;
 
 /**
  * @brief current Theta1
  */ 
-    dbl Theta1;
+    dbl Theta1 = -0.;
 
 /**
  * @brief jacobian for Theta1
  */ 
-    cdbl jacTheta1;
+    cdbl jacTheta1 = M_PI;
 
 /**
  * @brief current Theta2
  */ 
-    dbl Theta2;
+    dbl Theta2 = -0.;
 
 /**
  * @brief jacobian for Theta2
  */ 
-    cdbl jacTheta2;
+    cdbl jacTheta2 = M_PI;
 
 /**
  * @brief constructor
@@ -164,12 +175,7 @@ protected:
  * @param deltay offset to lower integration bound in y
  */
     PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
-        m2(m2), q2(q2), bjorkenX(bjorkenX), nlf(nlf), pdf(0), muF2(0),
-        z(-0.), sp(-0.), rhoStar(-0.),
-        xTilde(xTilde), rhoTilde(-0.),omega(omega), deltax(deltax), deltay(deltay),
-        jacxE(-0.),xE(-0.),jacxC(-0.),xC(-0.),
-        jacyE(-0.),yE(-0.),jacyC(-0.),yC(-0.),
-        Theta1(-0.), jacTheta1(M_PI), Theta2(-0.), jacTheta2(M_PI){
+        m2(m2), q2(q2), bjorkenX(bjorkenX), nlf(nlf), xTilde(xTilde), omega(omega), deltax(deltax), deltay(deltay){
         this->zMax = -q2/(4.*m2 - q2);
         this->jacZ = this->zMax - this->bjorkenX;
         cdbl ymin = -1.+deltay;
@@ -194,9 +200,9 @@ protected:
         this->sp = sp;
         this->rhoStar = (4.*m2 - q2)/this->sp;
         cdbl xmax = 1. - this->deltax;
-        this->jacxE = xmax - this->rhoStar;
+        this->VxE = xmax - this->rhoStar;
         this->rhoTilde = 1. - this->xTilde*(1. - this->rhoStar);
-        this->jacxC = xmax - this->rhoTilde;
+        this->VxC = xmax - this->rhoTilde;
     }
 
 /**
@@ -204,8 +210,15 @@ protected:
  * @param a integration variable
  */
     void setX(dbl a) {
-        this->xE = this->rhoStar + this->jacxE*a;
-        this->xC = this->rhoTilde + this->jacxC*a;
+        cdbl xmax = 1. - this->deltax;
+        this->jacxE = .5 * this->VxE / sqrt(a);
+        this->jacxC = .5 * this->VxC / sqrt(a);
+        this->xE = rhoStar  + this->VxE * sqrt(a);
+        this->xC = rhoTilde + this->VxC * sqrt(a);
+        /*this->jacxE = this->VxE ;
+        this->jacxC = this->VxC ;
+        this->xE = rhoStar  + this->VxE * a;
+        this->xC = rhoTilde + this->VxC * a;*/
     }
 
 /**

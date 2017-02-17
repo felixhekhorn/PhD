@@ -20,7 +20,7 @@ def totWeights(d):
   return np.sum(s)
 
 
-ps = ["../data/Fb_L-x_2-q2_2-%s.dat"%v for v in ["z", "pdf", "Theta1", "Theta2"]]
+ps = ["../data/Fb_L-x_2-q2_2-%s.dat"%v for v in ["z", "pdf", "x", "y", "Theta1", "Theta2", "s5", "invHQMass"]]
 #d = read(p)
 #t = total(d)
 for p in ps:

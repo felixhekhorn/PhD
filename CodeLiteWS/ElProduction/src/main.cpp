@@ -32,13 +32,13 @@ int main(int argc, char **argv) {
     uint nlf = 4;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
-    dbl omeOa = 1.;
+    dbl omega = 1.;
     dbl deltax = 5e-7;
     dbl deltay = 1e-6;
     dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = (4.*m2-q2);
     InclusiveElProduction iO(m2,q2,Delta,L,nlf);
-    ExclusiveElProduction eO(m2,q2,L,nlf,xTilde,omeOa,deltax,deltay);
+    ExclusiveElProduction eO(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
     
     iO.setPdf("MSTW2008nlo90cl",0);eO.setPdf("MSTW2008nlo90cl",0);
     iO.setMu2(mu02);eO.setMu2(mu02);
@@ -59,21 +59,29 @@ int main(int argc, char **argv) {
         printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
     }*/
     
-    cdbl bjorkenX = .1;
+    cdbl bjorkenX = 1e-2;
     //printf("%e < z < %e\n",bjorkenX,-q2/(4.*m2-q2));
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
     eO.activateHistogram(Exclusive::histT::log10z,15);
     eO.activateHistogram(Exclusive::histT::log10pdf,15);
+    eO.activateHistogram(Exclusive::histT::x,15);
+    eO.activateHistogram(Exclusive::histT::y,15);
     eO.activateHistogram(Exclusive::histT::Theta1,15);
     eO.activateHistogram(Exclusive::histT::Theta2,15);
-    cdbl i = 0.;//iO.Fg0() + iO.Fg1() + iO.Fq1();
+    eO.activateHistogram(Exclusive::histT::s5,15);
+    eO.activateHistogram(Exclusive::histT::invHQMass,15, 2.*sqrt(m2),40.);
+    cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
     cdbl e = eO.F();
     printf("%e\t%e\n",i,e);
     eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-z.dat");
     eO.printHistogram(Exclusive::histT::log10pdf, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-pdf.dat");
+    eO.printHistogram(Exclusive::histT::x, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-x.dat");
+    eO.printHistogram(Exclusive::histT::y, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-y.dat");
     eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta1.dat");
     eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta2.dat");
+    eO.printHistogram(Exclusive::histT::s5, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-s5.dat");
+    eO.printHistogram(Exclusive::histT::invHQMass, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-invHQMass.dat");
     return EXIT_SUCCESS;
 }
 

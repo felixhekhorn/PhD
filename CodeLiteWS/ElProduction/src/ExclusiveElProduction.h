@@ -303,8 +303,10 @@ public:
  * @brief activates a histogram
  * @param t histogram type
  * @param size number of bins
+ * @param min optional min value (will be bined uniformly to max)
+ * @param max optional max value (will be bined uniformly from min)
  */
-    void activateHistogram(Exclusive::histT t, uint size);
+    void activateHistogram(Exclusive::histT t, uint size, dbl min = nan(""), dbl max = nan(""));
 
 /**
  * @brief prints a histogram (if it has been activated)

@@ -9,7 +9,10 @@
  * @brief object-oriented wrappers to GSL
  */
 namespace gslpp {
-    
+
+/**
+ * @brief wrapper to gsl_histogram
+ */
 class Histogram {
     
 /**
@@ -22,7 +25,7 @@ class Histogram {
  */
     gsl_histogram* h = 0;
     
-/**
+/*
  * @brief histogram object
  */
     //gsl_histogram* n = 0;
@@ -30,7 +33,7 @@ class Histogram {
 /**
  * @brief are ranges set?
  */
-    bool isInitialized = false;
+    bool initialized = false;
     
 public:
 
@@ -61,10 +64,10 @@ public:
  */
     int setRangesUniform(double min, double max) {
         if (max <= min)
-            throw std::invalid_argument("min < max!");
+            throw std::invalid_argument("expects min < max!");
         //gsl_histogram_set_ranges_uniform(this->n,min,max);
         int r = gsl_histogram_set_ranges_uniform(this->h,min,max);
-        this->isInitialized = true;
+        this->initialized = true;
         return r;
     }
 
@@ -89,12 +92,20 @@ public:
         }
         //gsl_histogram_set_ranges(this->n,range,s);
         int ret = gsl_histogram_set_ranges(this->h,range,s);
-        this->isInitialized = true;
+        this->initialized = true;
         return ret;
     }
     
 /**
- * @brief increments by 1.0
+ * @brief is histogram initialized? (i.e. are ranges set?)
+ * @return initialized?
+ */
+    bool isInitialized() {
+        return this->initialized;
+    }
+    
+/**
+ * @brief accumulates by 1.0
  * @param x value
  * @return gsl_histogram_increment
  */
@@ -103,7 +114,7 @@ public:
     }
     
 /**
- * @brief increments by w
+ * @brief adds w to the bin containing x
  * @param x value
  * @param w weight
  * @return gsl_histogram_accumulate
@@ -131,7 +142,7 @@ public:
  */
     int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
         // empty?
-        if (!this->isInitialized)
+        if (!this->isInitialized())
             return 0;
         /*gsl_histogram* c = gsl_histogram_alloc(this->size);
         c = gsl_histogram_clone(this->h);

@@ -85,6 +85,20 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("Fg1", &ExclusiveElProduction::Fg1)
         .def("Fq1", &ExclusiveElProduction::Fq1)
         .def("F", &ExclusiveElProduction::F)
+        // histograms
+        .def("activateHistogram", &ExclusiveElProduction::activateHistogram)
+        .def("printHistogram", &ExclusiveElProduction::printHistogram)
+    ;
+    
+    enum_<Exclusive::histT>("ExclusiveHistT")
+        .value("log10z", Exclusive::histT::log10z)
+        .value("log10pdf", Exclusive::histT::log10pdf)
+        .value("x", Exclusive::histT::x)
+        .value("y", Exclusive::histT::y)
+        .value("Theta1", Exclusive::histT::Theta1)
+        .value("Theta2", Exclusive::histT::Theta2)
+        .value("s5", Exclusive::histT::s5)
+        .value("invHQMass", Exclusive::histT::invHQMass)
     ;
     
     /*

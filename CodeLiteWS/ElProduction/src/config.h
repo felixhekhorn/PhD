@@ -22,14 +22,14 @@ using namespace std;
 
 /** @name shorthands */
 ///@{
-/** @brief int shorthand */
+/** @brief unsigned int shorthand */
 typedef unsigned int uint;
 /** @brief string shorthand */
 typedef string str;
 
-/** @brief define floating point precision */
+/** @brief defines floating point precision */
 typedef double dbl;
-/** @brief define floating point precision */
+/** @brief defines floating point precision */
 typedef const double cdbl;
 
 /** @brief function pointer of 0 variables */
@@ -60,7 +60,7 @@ typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl u1, cdbl t1, cdbl tp, c
 #define Sqrt(a) sqrt(a)
 ///@}
 
-/** @brief force x to be min <= x <= max  */
+/** @brief forces x to be min <= x <= max  */
 #define mima(x,mi,ma) min(max(x,mi),ma)
 
 /** @brief factor in front of fermion loop excluding the \f$n_{lf}\f$ - see eq. (3.7) */

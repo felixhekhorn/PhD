@@ -50,7 +50,6 @@ cdbl Ap1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param x
- * @param y
  * @param Theta1
  * @param Theta2
  * @return \f$A'_{1,G}(y=-1)\f$
@@ -63,7 +62,6 @@ cdbl Ap1CounterG(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param x
- * @param y
  * @param Theta1
  * @param Theta2
  * @return \f$A'_{1,L}(y=-1)\f$
@@ -76,7 +74,6 @@ cdbl Ap1CounterL(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param x
- * @param y
  * @param Theta1
  * @param Theta2
  * @return \f$A'_{1,P}(y=-1)\f$
