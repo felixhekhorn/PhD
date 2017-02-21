@@ -1,6 +1,8 @@
 #ifndef FKerAll_HPP_
 #define FKerAll_HPP_
 
+#include <dvegas/dvegas.h>
+
 #include "PdfConvBase.hpp"
 #include "PdfConvLOg.h"
 #include "PdfConvNLOg.h"
@@ -13,7 +15,7 @@ namespace Exclusive {
 /**
  * @brief kernel for full F
  */
-class FKerAll : PdfConvBase {
+class FKerAll : PdfConvBase, public HepSource::Integrand {
 
 /**
  * @brief pointer to LO kernel
@@ -36,7 +38,7 @@ class FKerAll : PdfConvBase {
     dbl alphaS = -0.;
     
 /**
- * @brief pointer to map of histgrams
+ * @brief pointer to map of histograms
  */
     const histMapT* histMap = 0;
     
@@ -44,6 +46,10 @@ class FKerAll : PdfConvBase {
  * @brief number of points
  */
     size_t* count = 0;
+    
+    dbl* sumWeights = 0;
+    
+    size_t n = 0;
     
 public:
 
@@ -76,13 +82,13 @@ public:
     
 /**
  * @brief sets avtive histograms
- * @param histMap pointer to map of histgrams
+ * @param histMap pointer to map of histograms
  * @param count number of points
  */
-    void setHistograms(const histMapT* histMap, size_t* count);
+    void setHistograms(const histMapT* histMap, size_t* count, dbl* sumWeights);
     
 /**
- * @brief called function
+ * @brief called function for gsl_monte
  * @param az integration variable mapped on z
  * @param ax integration variable mapped on x
  * @param ay integration variable mapped on y
@@ -91,12 +97,35 @@ public:
  * @return F
  */
     dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    
+/**
+ * @brief called function for Dvegas
+ * @param x correlated coords
+ * @param k discrete dimensions
+ * @param weight integration weight
+ * @param aux unadapted coords
+ * @param f result
+ */
+    void operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl f[]);
+    
+/**
+ * @brief called before collecting data
+ * @param nshots number of points
+ */
+    void beginIteration(HepSource::Int64 nshots);
+    
+/**
+ * @brief called after collecting data
+ * @param nshots number of points
+ */
+    void endIteration(HepSource::Int64 nshots);
 
 /**
  * @brief fills all avtive histograms
- * @param w weight
+ * @param i integrand
+ * @param weight integration weight
  */
-    void fillHistograms(dbl w);
+    void fillHistograms(dbl i, cdbl& weight);
 };
     
 } // namespace Exclusive

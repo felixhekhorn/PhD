@@ -24,4 +24,4 @@ ps = ["../data/Fb_L-x_2-q2_2-%s.dat"%v for v in ["z", "pdf", "x", "y", "Theta1",
 #d = read(p)
 #t = total(d)
 for p in ps:
-  print p,totWeights(read(p))
+  print "%s: %e"%(p,totWeights(read(p)))

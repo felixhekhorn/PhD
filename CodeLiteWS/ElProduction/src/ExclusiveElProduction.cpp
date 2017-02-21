@@ -299,16 +299,18 @@ dbl ExclusiveElProduction::F() {
     k.setAlphaS(alphaS);
     k.setKers(&LOg,&NLOg,&NLOq);
     size_t count = 0;
+    dbl sumWeights = 0.;
     // setup histograms
     this->setupHistograms();
-    k.setHistograms(&(this->histMap), &count);
-    gsl_monte_function f;
+    k.setHistograms(&(this->histMap), &count, &sumWeights);
+    /*gsl_monte_function f;
     f.f = gslpp::callFunctor5D<FKerAll>;
     f.params = &k;
-    cdbl i = int5D(&f);
+    cdbl i = int5D(&f);*/
+    cdbl i = int5D(k);
     // rescale
-    this->rescaleHistograms(count);
-    printf("c: %d\n",count);
+    printf("c: %d, s: %e\n",count,sumWeights);
+    //this->rescaleHistograms(1./sumWeights);
     return i;
 }
 
@@ -353,8 +355,7 @@ void ExclusiveElProduction::setupHistograms() {
         hInvHQMass->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
 }
 
-void ExclusiveElProduction::rescaleHistograms(uint count) {
-    double s = 1./((double)count);
+void ExclusiveElProduction::rescaleHistograms(dbl s) {
     for(auto it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
         it->second->scale(s);
     }

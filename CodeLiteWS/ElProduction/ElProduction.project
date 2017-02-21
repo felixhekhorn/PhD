@@ -111,6 +111,7 @@
         <Library Value="gslcblas"/>
         <Library Value="gfortran"/>
         <Library Value="libboost_timer"/>
+        <Library Value="dvegas"/>
       </Linker>
       <ResourceCompiler Options=""/>
     </GlobalSettings>
@@ -146,8 +147,7 @@
         <CustomPostBuild/>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
-	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-</CustomPreBuild>
+	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -236,7 +236,8 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
         <CustomPostBuild/>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
-	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

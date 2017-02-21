@@ -34,7 +34,7 @@ dbl int2D(gsl_monte_function* F) {
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
     gsl_monte_vegas_integrate (F, xl, xu, dim, 1000, r, s, &res, &err);
     //printf("int2D: res: %e, err: %e\n",res,err);
-    uint guard=0;
+    uint guard = 0;
     do {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
@@ -42,8 +42,36 @@ dbl int2D(gsl_monte_function* F) {
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free (s);
     gsl_rng_free (r);
-//    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
+    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
     return res;
+}
+
+dbl int2D(HepSource::Integrand& F) {
+    const uint dim = 2;
+    size_t calls = 10000;
+    using HepSource::Dvegas;
+    using HepSource::VEGAS;
+    using HepSource::IntegrandEstimate;
+    Dvegas dv(dim,50,1,F);
+    
+    dbl res; //,err;
+    
+    // warm-up
+    VEGAS(dv,1000,5,0,0);
+    IntegrandEstimate e = dv.stats(0);
+    res = e.integral();
+    uint guard = 0;
+    // run
+    do {
+        if (!isfinite(res)) return res;
+        VEGAS(dv,calls,5,1,0);
+        e = dv.stats(0);
+        res = e.integral();
+        //err = e.standardDeviation();
+        //printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,e.chiSquarePerIteration());
+    } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);
+//    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,e.chiSquarePerIteration());
+    return e.integral();
 }
 
 dbl int3D(gsl_monte_function* F) {
@@ -113,7 +141,7 @@ dbl int5D(gsl_monte_function* F) {
     const gsl_rng_type *T;
     gsl_rng *r;
     F->dim = dim;
-        
+    
     size_t calls = 50000;
     gsl_rng_env_setup();
     T = gsl_rng_default;
@@ -121,7 +149,7 @@ dbl int5D(gsl_monte_function* F) {
     
     dbl res,err;
     
-    /*gsl_monte_vegas_state *s = gsl_monte_vegas_alloc(dim);
+    gsl_monte_vegas_state *s = gsl_monte_vegas_alloc(dim);
     gsl_monte_vegas_integrate (F, xl, xu, dim, 3000, r, s, &res, &err);
     //printf("int5D: res: %e, err: %e\n",res,err);
     uint guard = 0;
@@ -132,13 +160,41 @@ dbl int5D(gsl_monte_function* F) {
     } while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > 0.5 && ++guard < 15);
     gsl_monte_vegas_free(s);
     gsl_rng_free (r);
-    printf("int5D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));*/
+    printf("int5D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,gsl_monte_vegas_chisq(s));
     
-    calls = 1000000;
+    /*calls = 1000000;
     gsl_monte_plain_state *s = gsl_monte_plain_alloc(dim);
     gsl_monte_plain_integrate(F, xl, xu, dim, calls, r, s, &res, &err);
     gsl_monte_plain_free(s);
     gsl_rng_free (r);
-    printf("int5D: res %e, err: %e\n",res,err);
+    printf("int5D: res %e, err: %e\n",res,err);*/
     return res;
+}
+
+dbl int5D(HepSource::Integrand& F) {
+    const uint dim = 5;
+    size_t calls = 50000;
+    using HepSource::Dvegas;
+    using HepSource::VEGAS;
+    using HepSource::IntegrandEstimate;
+    Dvegas dv(dim,50,1,F);
+    
+    dbl res,err;
+    
+    // warm-up
+    VEGAS(dv,3000,5,0,0);
+    IntegrandEstimate e = dv.stats(0);
+    res = e.integral();
+    uint guard = 0;
+    // run
+    do {
+        if (!isfinite(res)) return res;
+        VEGAS(dv,calls,5,1,0);
+        e = dv.stats(0);
+        res = e.integral();
+        err = e.standardDeviation();
+        printf("int5D: [%d] %e ± %e (%.3f%%) chi2/it: %f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
+    } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);
+    printf("int5D: [%d] %e ± %e (%.3f%%) chi2/it: %f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
+    return e.integral();
 }

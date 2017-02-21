@@ -293,9 +293,9 @@ private:
 
 /**
  * @brief rescales all histograms by the number of events
- * @param count number of events
+ * @param s factor
  */
-    void rescaleHistograms(uint count);
+    void rescaleHistograms(dbl s);
     
 public:
     

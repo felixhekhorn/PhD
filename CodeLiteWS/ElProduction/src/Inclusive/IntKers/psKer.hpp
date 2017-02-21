@@ -1,6 +1,8 @@
 #ifndef psKers_H_
 #define psKers_H_
 
+#include <dvegas/dvegas.h>
+
 #include "../../config.h"
 #include "../../Color.h"
 #include "IntKerBase.hpp"
@@ -147,7 +149,7 @@ public:
 /**
  * @brief phase space kernel of quark parts
  */
-class PsKerNLOq : public PsKerBase {
+class PsKerNLOq : public PsKerBase, public HepSource::Integrand {
 protected:
     
 /**
@@ -164,19 +166,34 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param gq1 pointer to matrix element
  */
-    PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) : PsKerBase(m2,q2,sp), gq1(gq1) {}
+    PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) :
+        PsKerBase(m2,q2,sp), HepSource::Integrand(2,1), gq1(gq1)
+        {}
 
 /**
- * @brief called function
+ * @brief called function for gsl_monte
  * @param a1
  * @param a2
  * @return quark part
  */
-    dbl operator()(dbl a1, dbl a2) {
+    dbl operator()(cdbl a1, cdbl a2) {
+        this->jac = 1.;
         this->setT1(a1);
         this->setS4(a2,0.);
         dbl me = gq1(m2,q2,sp,s4,t1);
         return jac*me;
+    }
+    
+/**
+ * @brief called function for Dvegas
+ * @param x correlated coords
+ * @param k discrete dimensions
+ * @param weight integration weight
+ * @param aux unadapted coords
+ * @param f result
+ */
+    void operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
+        f[0] = this->operator()(x[0],x[1]);
     }
 };
 

@@ -210,11 +210,11 @@ protected:
  * @param a integration variable
  */
     void setX(dbl a) {
-        cdbl xmax = 1. - this->deltax;
-        this->jacxE = .5 * this->VxE / sqrt(a);
-        this->jacxC = .5 * this->VxC / sqrt(a);
-        this->xE = rhoStar  + this->VxE * sqrt(a);
-        this->xC = rhoTilde + this->VxC * sqrt(a);
+        //cdbl xmax = 1. - this->deltax;
+        this->jacxE = 2. * this->VxE * a;
+        this->jacxC = 2. * this->VxC * a;
+        this->xE = rhoStar  + this->VxE * a*a;
+        this->xC = rhoTilde + this->VxC * a*a;
         /*this->jacxE = this->VxE ;
         this->jacxC = this->VxC ;
         this->xE = rhoStar  + this->VxE * a;

@@ -125,7 +125,7 @@ public:
     }
     
 /**
- * @brief scales alle histogram bins
+ * @brief scales all histogram bins
  * @param s scale
  * @return gsl_histogram_scale
  */
