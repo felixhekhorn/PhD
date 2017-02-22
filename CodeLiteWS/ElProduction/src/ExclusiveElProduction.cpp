@@ -321,7 +321,7 @@ ExclusiveElProduction::~ExclusiveElProduction() {
     }
 }
 
-void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min, dbl max) {
+void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan*/, dbl max /*=nan*/) {
     gslpp::Histogram* h = new gslpp::Histogram(size);
     if (!isnan(min) && !isnan(max))
         h->setRangesUniform(min,max);
@@ -355,11 +355,11 @@ void ExclusiveElProduction::setupHistograms() {
         hInvHQMass->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
 }
 
-void ExclusiveElProduction::rescaleHistograms(dbl s) {
+/*void ExclusiveElProduction::rescaleHistograms(dbl s) {
     for(auto it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
         it->second->scale(s);
     }
-}
+}*/
 
 void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) {
     histMapT::const_iterator it = this->histMap.find(t);

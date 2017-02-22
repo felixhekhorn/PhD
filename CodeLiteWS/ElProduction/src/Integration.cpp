@@ -171,13 +171,14 @@ dbl int5D(gsl_monte_function* F) {
     return res;
 }
 
-dbl int5D(HepSource::Integrand& F) {
+dbl int5D(Exclusive::FKerAll& F) {
     const uint dim = 5;
     size_t calls = 50000;
+    uint iterations = 5;
     using HepSource::Dvegas;
     using HepSource::VEGAS;
     using HepSource::IntegrandEstimate;
-    Dvegas dv(dim,50,1,F);
+    Dvegas dv(dim,125,1,F);
     
     dbl res,err;
     
@@ -188,13 +189,15 @@ dbl int5D(HepSource::Integrand& F) {
     uint guard = 0;
     // run
     do {
+        F.scaleHistograms(0.);
         if (!isfinite(res)) return res;
         VEGAS(dv,calls,5,1,0);
         e = dv.stats(0);
         res = e.integral();
         err = e.standardDeviation();
-        printf("int5D: [%d] %e ± %e (%.3f%%) chi2/it: %f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
+        //printf("int5D: [%d] %e ± %e (%.3f%%) chi2/it: %f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
     } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);
+    F.scaleHistograms(1./((double)iterations));
     printf("int5D: [%d] %e ± %e (%.3f%%) chi2/it: %f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
     return e.integral();
 }

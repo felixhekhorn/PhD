@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     //eO.activateHistogram(Exclusive::histT::Theta1,10);
     //eO.activateHistogram(Exclusive::histT::log10z,1);
     
-    cdbl i = 1./0.;//iO.Fg0() + iO.Fg1() + iO.Fq1();
+    cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
     cdbl e = eO.F();
     printf("%e\t%e\n",i,e);
     

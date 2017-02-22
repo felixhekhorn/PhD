@@ -291,11 +291,11 @@ private:
  */
     void setupHistograms();
 
-/**
+/*
  * @brief rescales all histograms by the number of events
  * @param s factor
  */
-    void rescaleHistograms(dbl s);
+//    void rescaleHistograms(dbl s);
     
 public:
     

@@ -108,17 +108,23 @@ public:
  */
     void operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl f[]);
     
-/**
+/*
  * @brief called before collecting data
  * @param nshots number of points
  */
-    void beginIteration(HepSource::Int64 nshots);
+//    void beginIteration(HepSource::Int64 nshots);
     
-/**
+/*
  * @brief called after collecting data
  * @param nshots number of points
  */
-    void endIteration(HepSource::Int64 nshots);
+//    void endIteration(HepSource::Int64 nshots);
+
+/**
+ * @brief scales all avtive histograms
+ * @param s factor
+ */
+    void scaleHistograms(dbl s);
 
 /**
  * @brief fills all avtive histograms

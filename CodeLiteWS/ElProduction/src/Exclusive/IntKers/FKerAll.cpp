@@ -1,5 +1,7 @@
 #include "FKerAll.h"
 
+#include <rk/rk.hh>
+
 #include "KinematicVars.hpp"
 
 using namespace Exclusive;
@@ -28,7 +30,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     this->setY(ay);
     this->setTheta1(aTheta1);
     this->setTheta2(aTheta2);
-    return aTheta1;
+    //return aTheta1;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
     cdbl nNLO = 4.*M_PI*alphaS;
@@ -48,12 +50,18 @@ void FKerAll::setHistograms(const histMapT* histMap, size_t* count, dbl* sumWeig
     this->sumWeights = sumWeights;
 }
 
+void FKerAll::scaleHistograms(dbl s) {
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
+        it->second->scale(s);
+    (*sumWeights) *= s;
+}
+
+/*
 void FKerAll::beginIteration(HepSource::Int64 nshots) {
     this->n++;
     printf("n: %d\n",n);
     if (1 == n%5)
-        for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
-            it->second->scale(0.);
+        this->scaleHistograms(0.);
 }
 
 void FKerAll::endIteration(HepSource::Int64 nshots) {
@@ -61,6 +69,7 @@ void FKerAll::endIteration(HepSource::Int64 nshots) {
         for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
             it->second->scale(.2);
 }
+*/
 
 void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     // smth active?

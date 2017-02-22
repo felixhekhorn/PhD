@@ -1,11 +1,18 @@
 Release/src_InclusiveElProduction.cpp.o: src/InclusiveElProduction.cpp \
  src/InclusiveElProduction.h src/config.h src/Timer.h \
  src/AbstractElProduction.h src/Pdf/PdfWrapper.h src/Pdf/../config.h \
- src/gslpp/gslpp.Functor.hpp src/Integration.h src/Inclusive/ME/Born.h \
- src/Inclusive/ME/../../config.h src/Inclusive/ME/NLOq.h \
- src/Inclusive/ME/NLOg.h src/Inclusive/IntKers/psKer.hpp \
- src/Inclusive/IntKers/../../config.h src/Inclusive/IntKers/../../Color.h \
- src/Inclusive/IntKers/IntKerBase.hpp \
+ src/gslpp/gslpp.Functor.hpp src/Integration.h \
+ src/Exclusive/IntKers/FKerAll.h src/Exclusive/IntKers/PdfConvBase.hpp \
+ src/Exclusive/IntKers/../../config.h \
+ src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
+ src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
+ src/Exclusive/IntKers/PdfConvNLOq.h \
+ src/Exclusive/IntKers/../../ConfigExclusive.h \
+ src/Exclusive/IntKers/../../gslpp/gslpp.Histogram.hpp \
+ src/Inclusive/ME/Born.h src/Inclusive/ME/../../config.h \
+ src/Inclusive/ME/NLOq.h src/Inclusive/ME/NLOg.h \
+ src/Inclusive/IntKers/psKer.hpp src/Inclusive/IntKers/../../config.h \
+ src/Inclusive/IntKers/../../Color.h src/Inclusive/IntKers/IntKerBase.hpp \
  src/Inclusive/IntKers/../../Exclusive/ME/BpQED.h \
  src/Inclusive/IntKers/../../Exclusive/ME/../../config.h \
  src/Inclusive/IntKers/PdfConvLO.hpp \
@@ -29,6 +36,24 @@ src/Pdf/../config.h:
 src/gslpp/gslpp.Functor.hpp:
 
 src/Integration.h:
+
+src/Exclusive/IntKers/FKerAll.h:
+
+src/Exclusive/IntKers/PdfConvBase.hpp:
+
+src/Exclusive/IntKers/../../config.h:
+
+src/Exclusive/IntKers/../../Pdf/PdfWrapper.h:
+
+src/Exclusive/IntKers/PdfConvLOg.h:
+
+src/Exclusive/IntKers/PdfConvNLOg.h:
+
+src/Exclusive/IntKers/PdfConvNLOq.h:
+
+src/Exclusive/IntKers/../../ConfigExclusive.h:
+
+src/Exclusive/IntKers/../../gslpp/gslpp.Histogram.hpp:
 
 src/Inclusive/ME/Born.h:
 
