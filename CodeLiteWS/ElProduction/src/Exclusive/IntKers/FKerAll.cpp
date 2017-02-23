@@ -1,6 +1,8 @@
 #include "FKerAll.h"
 
 #include <rk/rk.hh>
+#include <rk/geom3.hh>
+#include <gsl/gsl_rng.h>
 
 #include "KinematicVars.hpp"
 
@@ -113,4 +115,39 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     histMapT::const_iterator hInvHQMass = this->histMap->find(histT::invHQMass);
     if (hInvHQMass != this->histMap->cend())
         hInvHQMass->second->accumulate(sqrt(vs.s5),w);
+        
+    // relativistic kinematics
+    using rk::P4;
+    using rk::Boost;
+    using geom3::Vector3;
+    using geom3::UnitVector3;
+    using geom3::Rotation3;
+    UnitVector3 u (Theta1,Theta2);
+    P4 p1(vs.beta5*u,sqrt(m2));
+    P4 p2(-vs.beta5*u,sqrt(m2));
+    // reverse psi rotation
+    Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
+    p1.rotate(invPsi);
+    p2.rotate(invPsi);
+    //Vector3 k1(0,vs.sinPsi,vs.cosPsi);
+    //cout << invPsi*k1 << endl;
+    // randomize around z
+    const gsl_rng_type *T;
+    gsl_rng *r;
+    gsl_rng_env_setup();
+    T = gsl_rng_default;
+    r = gsl_rng_alloc(T);
+    Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
+    gsl_rng_free(r);
+    p1.rotate(randZ);
+    p2.rotate(randZ);
+    // boost to hadronic system
+    /*P4 k1 (vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
+    k1.rotate(invPsi);
+    k1.rotate(randZ);
+    cout << k1 << endl;
+    Boost b = k1.labBoost();
+    cout << "boost: " << b << "\tdir: " << b.direction() << " beta:" << b.beta() << endl;
+    cout << "Harris: " << (bjorkenX - z)/(z + bjorkenX - 2.*bjorkenX*z) << endl;
+    */
 }
