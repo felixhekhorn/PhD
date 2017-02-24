@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
     dbl Delta = 1e-6;
     dbl xTilde = .8;
     dbl omega = 1.;
-    dbl deltax = 5e-7;
+    dbl deltax = 7e-6;
     dbl deltay = 1e-6;
     dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = (4.*m2-q2);
@@ -44,22 +44,28 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2(mu02);
     iO.setAlphaS(aS);eO.setAlphaS(aS);
     
-    /*uint N = 11;
+    uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        cdbl eta = pow(10,-2.+4./(N-1)*j);
-        iO.setEta(eta);
-        eO.setEta(eta);
-        / *cdbl bjorkenX = pow(10,-2.+1./(N-1)*j);
-        iO.setBjorkenX(bjorkenX);
-        eO.setBjorkenX(bjorkenX);
+        /*cdbl a = pow(10,-2.+4./(N-1)*j);
+        iO.setEta(a);
+        eO.setEta(a);*/
+        cdbl a = pow(10,-2.+1./(N-1)*j);
+        iO.setBjorkenX(a);
+        eO.setBjorkenX(a);
         cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
-        cdbl e = eO.F();* /
-        cdbl i = iO.dq1();
-        cdbl e = eO.dq1();
-        printf("%e\t%e\t%e\t%e\t%e\n",eta,i,e,i-e,(i-e)/i);
-    }*/
+        //cdbl i = iO.cg1();
+        {eO.setDeltax(1e-5);
+        cdbl e = eO.F();
+        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+        {eO.setDeltax(1e-6);
+        cdbl e = eO.F();
+        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+        {eO.setDeltax(1e-7);
+        cdbl e = eO.F();
+        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+    }
     
-    cdbl bjorkenX = 1e-2;
+    /*cdbl bjorkenX = 1e-2;
     //printf("%e < z < %e\n",bjorkenX,-q2/(4.*m2-q2));
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
@@ -71,16 +77,13 @@ int main(int argc, char **argv) {
     eO.activateHistogram(Exclusive::histT::Theta2,15);
     eO.activateHistogram(Exclusive::histT::s5,15);
     eO.activateHistogram(Exclusive::histT::invHQMass,15, 2.*sqrt(m2),40.);
-    
-    //eO.activateHistogram(Exclusive::histT::Theta1,10);
-    //eO.activateHistogram(Exclusive::histT::log10z,1);
+    eO.activateHistogram(Exclusive::histT::AHQRapidity,15);
+    eO.activateHistogram(Exclusive::histT::AHQTransverseMomentum,15);
+    eO.activateHistogram(Exclusive::histT::DeltaPhiHQPair,15);
     
     cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
     cdbl e = eO.F();
     printf("%e\t%e\n",i,e);
-    
-    //eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-z.dat");
-    //eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta1.dat");
     
     eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-z.dat");
     eO.printHistogram(Exclusive::histT::log10pdf, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-pdf.dat");
@@ -90,6 +93,10 @@ int main(int argc, char **argv) {
     eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta2.dat");
     eO.printHistogram(Exclusive::histT::s5, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-s5.dat");
     eO.printHistogram(Exclusive::histT::invHQMass, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-invHQMass.dat");
+    eO.printHistogram(Exclusive::histT::AHQRapidity, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-rap.dat");
+    eO.printHistogram(Exclusive::histT::AHQTransverseMomentum, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-pt.dat");
+    eO.printHistogram(Exclusive::histT::DeltaPhiHQPair, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-dphi.dat");
+     */
     return EXIT_SUCCESS;
 }
 

@@ -46,16 +46,16 @@ void FKerAll::operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl 
     this->fillHistograms(i, weight);
 }
 
-void FKerAll::setHistograms(const histMapT* histMap, size_t* count, dbl* sumWeights) {
+void FKerAll::setHistograms(const histMapT* histMap /*, size_t* count, dbl* sumWeights*/) {
     this->histMap = histMap;
-    this->count = count;
-    this->sumWeights = sumWeights;
+//    this->count = count;
+//    this->sumWeights = sumWeights;
 }
 
 void FKerAll::scaleHistograms(dbl s) {
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
         it->second->scale(s);
-    (*sumWeights) *= s;
+//    (*sumWeights) *= s;
 }
 
 /*
@@ -79,75 +79,97 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
         return;
     if (this->histMap->empty())
         return;
-    (*count)++;
-    (*sumWeights) += weight;
-    cdbl w = i*weight;
+//    (*count)++;
+//    (*sumWeights) += weight;
+    cdbl val = i*weight;
     KinematicVars vs(this->m2, this->q2, this->sp, this->xE, this->yE, this->Theta1, this->Theta2);
-    // log10(z)
-    histMapT::const_iterator hLog10z = this->histMap->find(log10z);
-    if (hLog10z != this->histMap->cend())
-        hLog10z->second->accumulate(this->z,w);
-    // log10(x_bj/z)
-    histMapT::const_iterator hLog10pdf = this->histMap->find(log10pdf);
-    if (hLog10pdf != this->histMap->cend())
-        hLog10pdf->second->accumulate(this->bjorkenX/this->z,w);
-    // x
+    { // log10(z)
+    histMapT::const_iterator h = this->histMap->find(log10z);
+    if (h != this->histMap->cend())
+        h->second->accumulate(this->z,val);
+    } { // log10(x_bj/z)
+    histMapT::const_iterator h = this->histMap->find(log10pdf);
+    if (h != this->histMap->cend())
+        h->second->accumulate(this->bjorkenX/this->z,val);
+    } { // x
     histMapT::const_iterator hx = this->histMap->find(histT::x);
     if (hx != this->histMap->cend())
-        hx->second->accumulate(this->xE,w);
-    // y
+        hx->second->accumulate(this->xE,val);
+    } { // y
     histMapT::const_iterator hy = this->histMap->find(histT::y);
     if (hy != this->histMap->cend())
-        hy->second->accumulate(this->yE,w);
-    // Theta1
-    histMapT::const_iterator hTheta1 = this->histMap->find(histT::Theta1);
-    if (hTheta1 != this->histMap->cend())
-        hTheta1->second->accumulate(this->Theta1,w);
-    // Theta2
-    histMapT::const_iterator hTheta2 = this->histMap->find(histT::Theta2);
-    if (hTheta2 != this->histMap->cend())
-        hTheta2->second->accumulate(this->Theta2,w);
-    // s5
-    histMapT::const_iterator hs5 = this->histMap->find(histT::s5);
-    if (hs5 != this->histMap->cend())
-        hs5->second->accumulate(vs.s5,w);
-    // invHQMass
-    histMapT::const_iterator hInvHQMass = this->histMap->find(histT::invHQMass);
-    if (hInvHQMass != this->histMap->cend())
-        hInvHQMass->second->accumulate(sqrt(vs.s5),w);
-        
-    // relativistic kinematics
+        hy->second->accumulate(this->yE,val);
+    } { // Theta1
+    histMapT::const_iterator h = this->histMap->find(histT::Theta1);
+    if (h != this->histMap->cend())
+        h->second->accumulate(this->Theta1,val);
+    } { // Theta2
+    histMapT::const_iterator h = this->histMap->find(histT::Theta2);
+    if (h != this->histMap->cend())
+        h->second->accumulate(this->Theta2,val);
+    } { // s5
+    histMapT::const_iterator h = this->histMap->find(histT::s5);
+    if (h != this->histMap->cend())
+        h->second->accumulate(vs.s5,val);
+    } { // invHQMass
+    histMapT::const_iterator h = this->histMap->find(histT::invHQMass);
+    if (h != this->histMap->cend())
+        h->second->accumulate(sqrt(vs.s5),val);
+    }
+    
+    // setup relativistic kinematics
     using rk::P4;
-    using rk::Boost;
     using geom3::Vector3;
     using geom3::UnitVector3;
     using geom3::Rotation3;
+    P4 k1 (vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
+    P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
     UnitVector3 u (Theta1,Theta2);
     P4 p1(vs.beta5*u,sqrt(m2));
     P4 p2(-vs.beta5*u,sqrt(m2));
-    // reverse psi rotation
-    Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
-    p1.rotate(invPsi);
-    p2.rotate(invPsi);
-    //Vector3 k1(0,vs.sinPsi,vs.cosPsi);
-    //cout << invPsi*k1 << endl;
-    // randomize around z
-    const gsl_rng_type *T;
-    gsl_rng *r;
-    gsl_rng_env_setup();
-    T = gsl_rng_default;
-    r = gsl_rng_alloc(T);
-    Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
-    gsl_rng_free(r);
-    p1.rotate(randZ);
-    p2.rotate(randZ);
-    // boost to hadronic system
-    /*P4 k1 (vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
-    k1.rotate(invPsi);
-    k1.rotate(randZ);
-    cout << k1 << endl;
-    Boost b = k1.labBoost();
-    cout << "boost: " << b << "\tdir: " << b.direction() << " beta:" << b.beta() << endl;
-    cout << "Harris: " << (bjorkenX - z)/(z + bjorkenX - 2.*bjorkenX*z) << endl;
-    */
+    { // reverse psi rotation
+        Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
+        q.rotate(invPsi);
+        k1.rotate(invPsi);
+        p1.rotate(invPsi);
+        p2.rotate(invPsi);
+    } { // randomize around z
+        const gsl_rng_type *T;
+        gsl_rng *r;
+        gsl_rng_env_setup();
+        T = gsl_rng_default;
+        r = gsl_rng_alloc(T);
+        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
+        gsl_rng_free(r);
+        q.rotate(randZ);
+        k1.rotate(randZ);
+        p1.rotate(randZ);
+        p2.rotate(randZ);
+    } { // boost to virtual photon-hadron c.m.s.
+        using rk::Boost;
+        P4 psh = (z/bjorkenX)*k1 + q;
+        Boost hCMS = psh.restBoost();
+        p1.boost(hCMS);
+        p2.boost(hCMS);
+    }
+    
+    { // AHQRapidity
+    histMapT::const_iterator h = this->histMap->find(histT::AHQRapidity);
+    if (h != this->histMap->cend())
+        h->second->accumulate(p2.rapidity(),val);
+    } { // AHQTransverseMomentum
+    histMapT::const_iterator h = this->histMap->find(histT::AHQTransverseMomentum);
+    if (h != this->histMap->cend())
+        h->second->accumulate(p2.pt(),val);
+    } { // DeltaPhiHQPair
+    histMapT::const_iterator h = this->histMap->find(histT::DeltaPhiHQPair);
+    if (h != this->histMap->cend()) {
+        dbl phi1 = p1.momentum().phi();
+        dbl phi2 = p2.momentum().phi();
+        if (fabs(phi1 - phi2) > M_PI) {
+            if (phi1 > phi2) phi1 -= 2.*M_PI;
+            else phi2 -= 2.*M_PI;
+        }
+        h->second->accumulate(phi1-phi2,val);
+    } }
 }

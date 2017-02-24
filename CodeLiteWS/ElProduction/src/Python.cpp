@@ -85,6 +85,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("Fg1", &ExclusiveElProduction::Fg1)
         .def("Fq1", &ExclusiveElProduction::Fq1)
         .def("F", &ExclusiveElProduction::F)
+        .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
         // histograms
         .def("activateHistogram", &ExclusiveElProduction::activateHistogram)
         .def("printHistogram", &ExclusiveElProduction::printHistogram)
@@ -99,7 +100,19 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("Theta2", Exclusive::histT::Theta2)
         .value("s5", Exclusive::histT::s5)
         .value("invHQMass", Exclusive::histT::invHQMass)
+        .value("AHQRapidity", Exclusive::histT::AHQRapidity)
+        .value("AHQTransverseMomentum", Exclusive::histT::AHQTransverseMomentum)
+        .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
     ;
+    
+    class_<Exclusive::MCParams>("ExclusiveMCParams")
+        .def_readwrite("calls", &Exclusive::MCParams::calls)
+        .def_readwrite("iterations", &Exclusive::MCParams::iterations)
+        .def_readwrite("warmupCalls", &Exclusive::MCParams::warmupCalls)
+        .def_readwrite("warmupIterations", &Exclusive::MCParams::warmupIterations)
+        .def_readwrite("bins", &Exclusive::MCParams::bins)
+        .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2)
+        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity);
     
     /*
     // Test

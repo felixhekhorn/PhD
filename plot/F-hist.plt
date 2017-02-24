@@ -77,4 +77,17 @@ dL = "data/Fb_L-x_2-q2_2-invHQMass.dat"
 set out "./img/Fb_L-x_2-q2_2-invHQMass.png"
 plot dL u (($1+$2)/2):($3/($2-$1)) w boxes t "+", dL u (($1+$2)/2):(-$3/($2-$1)) w boxes t "-"
 
+set xlabel "rapidity []"
+set xrange [*:*]
+set boxwidth .3
+dL = "data/Fb_L-x_2-q2_2-rap.dat"
+set out "./img/Fb_L-x_2-q2_2-rap.png"
+plot dL u (($1+$2)/2):($3/($2-$1)) w boxes t "+", dL u (($1+$2)/2):(-$3/($2-$1)) w boxes t "-"
+
+set xlabel "p_t [GeV]"
+dL = "data/Fb_L-x_2-q2_2-pt.dat"
+set boxwidth 1.3
+set out "./img/Fb_L-x_2-q2_2-pt.png"
+plot dL u (($1+$2)/2):($3/($2-$1)) w boxes t "+", dL u (($1+$2)/2):(-$3/($2-$1)) w boxes t "-"
+
 set out

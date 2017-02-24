@@ -5,7 +5,7 @@
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
 #include "gslpp/gslpp.Functor.hpp"
-#include "Integration.h"
+#include "./Integration.h"
 
 #include "Exclusive/ME/BpQED.h"
 #include "Exclusive/ME/Rp.h"
@@ -298,19 +298,18 @@ dbl ExclusiveElProduction::F() {
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     k.setAlphaS(alphaS);
     k.setKers(&LOg,&NLOg,&NLOq);
-    size_t count = 0;
-    dbl sumWeights = 0.;
+//size_t count = 0;
+//dbl sumWeights = 0.;
     // setup histograms
     this->setupHistograms();
-    k.setHistograms(&(this->histMap), &count, &sumWeights);
-    /*gsl_monte_function f;
-    f.f = gslpp::callFunctor5D<FKerAll>;
-    f.params = &k;
-    cdbl i = int5D(&f);*/
-    cdbl i = int5D(k);
-    // rescale
-    printf("c: %d, s: %e\n",count,sumWeights);
-    //this->rescaleHistograms(1./sumWeights);
+//k.setHistograms(&(this->histMap), &count, &sumWeights);
+    k.setHistograms(&(this->histMap));
+/*gsl_monte_function f;
+f.f = gslpp::callFunctor5D<FKerAll>;
+f.params = &k;
+cdbl i = int5D(&f);*/
+    cdbl i = int5DDvegas(k, this->MCparams);
+//printf("c: %d, s: %e\n",count,sumWeights);
     return i;
 }
 
@@ -329,30 +328,58 @@ void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan
 }
     
 void ExclusiveElProduction::setupHistograms() {
-    histMapT::const_iterator hLog10z = this->histMap.find(log10z);
-    if (this->histMap.cend() != hLog10z && !hLog10z->second->isInitialized())
-        hLog10z->second->setRangesLog10(this->bjorkenX,this->zMax);
-    histMapT::const_iterator hLog10pdf = this->histMap.find(log10pdf);
-    if (this->histMap.cend() != hLog10pdf && !hLog10pdf->second->isInitialized())
-        hLog10pdf->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
+    {
+    histMapT::const_iterator h = this->histMap.find(log10z);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesLog10(this->bjorkenX,this->zMax);
+    } {
+    histMapT::const_iterator h = this->histMap.find(log10pdf);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
+    } {
     histMapT::const_iterator hx = this->histMap.find(x);
     if (this->histMap.cend() != hx && !hx->second->isInitialized())
         hx->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
+    } {
     histMapT::const_iterator hy = this->histMap.find(y);
     if (this->histMap.cend() != hy && !hy->second->isInitialized())
         hy->second->setRangesUniform(-1.,1.);
-    histMapT::const_iterator hTheta1 = this->histMap.find(Theta1);
-    if (this->histMap.cend() != hTheta1 && !hTheta1->second->isInitialized())
-        hTheta1->second->setRangesUniform(0.,M_PI);
+    } {
+    histMapT::const_iterator h = this->histMap.find(Theta1);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(0.,M_PI);
+    } {
     histMapT::const_iterator hTheta2 = this->histMap.find(Theta2);
     if (this->histMap.cend() != hTheta2 && !hTheta2->second->isInitialized())
         hTheta2->second->setRangesUniform(0.,M_PI);
-    histMapT::const_iterator hs5= this->histMap.find(s5);
-    if (this->histMap.cend() != hs5 && !hs5->second->isInitialized())
-        hs5->second->setRangesUniform(4.*this->m2,-this->q2*(1./this->bjorkenX - 1.));
-    histMapT::const_iterator hInvHQMass= this->histMap.find(invHQMass);
-    if (this->histMap.cend() != hInvHQMass && !hInvHQMass->second->isInitialized())
-        hInvHQMass->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
+    } {
+    histMapT::const_iterator h = this->histMap.find(s5);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(4.*this->m2,-this->q2*(1./this->bjorkenX - 1.));
+    } {
+    histMapT::const_iterator h = this->histMap.find(invHQMass);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
+    }
+    
+    // hadronic S
+    dbl S = q2*(1. - 1./this->bjorkenX); 
+    
+    {
+    histMapT::const_iterator h = this->histMap.find(AHQRapidity);
+    if (this->histMap.cend() != h && !h->second->isInitialized()) {
+        dbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
+        h->second->setRangesUniform(-y0,y0);
+    } } {
+    histMapT::const_iterator h = this->histMap.find(AHQTransverseMomentum);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(0.,sqrt(S/4. - this->m2));
+    } {
+    histMapT::const_iterator h = this->histMap.find(DeltaPhiHQPair);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(-M_PI,M_PI);
+    }
+        
 }
 
 /*void ExclusiveElProduction::rescaleHistograms(dbl s) {

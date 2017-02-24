@@ -2,7 +2,8 @@
 #define EXCLUSIVEELPRODUCTION_H
 
 #include "AbstractElProduction.h"
-#include "ConfigExclusive.h"
+#include "Exclusive/ConfigExclusive.h"
+#include "Exclusive/Int.h"
 
 /**
  * @brief application class for exclusive electro production
@@ -273,6 +274,11 @@ public:
  * @return \f$F\f$
  */
     dbl F();
+    
+/**
+ * @brief Monte Carlo parameter to F (and only F)
+ */
+    Exclusive::MCParams MCparams;
     
 ///@}
 

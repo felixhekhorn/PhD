@@ -8,7 +8,7 @@
 #include "PdfConvNLOg.h"
 #include "PdfConvNLOq.h"
 
-#include "../../ConfigExclusive.h"
+#include "../ConfigExclusive.h"
 
 namespace Exclusive {
 
@@ -42,14 +42,10 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
  */
     const histMapT* histMap = 0;
     
-/**
- * @brief number of points
- */
-    size_t* count = 0;
-    
-    dbl* sumWeights = 0;
-    
-    size_t n = 0;
+
+//    size_t* count = 0;
+//    dbl* sumWeights = 0;
+//    size_t n = 0;
     
 public:
 
@@ -85,7 +81,7 @@ public:
  * @param histMap pointer to map of histograms
  * @param count number of points
  */
-    void setHistograms(const histMapT* histMap, size_t* count, dbl* sumWeights);
+    void setHistograms(const histMapT* histMap/*, size_t* count, dbl* sumWeights*/);
     
 /**
  * @brief called function for gsl_monte

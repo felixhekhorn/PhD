@@ -199,7 +199,7 @@ protected:
     void setSpRaw(dbl sp) {
         this->sp = sp;
         this->rhoStar = (4.*m2 - q2)/this->sp;
-        cdbl xmax = 1. - this->deltax;
+        cdbl xmax = 1. - this->deltax/(this->z > 0. ? this->z : 1.);
         this->VxE = xmax - this->rhoStar;
         this->rhoTilde = 1. - this->xTilde*(1. - this->rhoStar);
         this->VxC = xmax - this->rhoTilde;

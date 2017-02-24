@@ -7,8 +7,6 @@
 #include <gsl/gsl_integration.h>
 #include <dvegas/dvegas.h>
 
-#include "Exclusive/IntKers/FKerAll.h"
-
 /**
  * @brief integrates 1 dimension
  * @param F kernel
@@ -50,12 +48,5 @@ dbl int4D(gsl_monte_function* F);
  * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
  */
 dbl int5D(gsl_monte_function* F);
-    
-/**
- * @brief integrates 5 dimension with Dvegas
- * @param k kernel
- * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
- */
-dbl int5D(Exclusive::FKerAll& k);
     
 #endif // Integration_H_
