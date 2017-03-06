@@ -4,8 +4,7 @@ Debug/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Exclusive/ConfigExclusive.h \
  src/Exclusive/../gslpp/gslpp.Histogram.hpp src/Exclusive/Int.h \
  src/Exclusive/../config.h src/Exclusive/IntKers/FKerAll.h \
- src/Exclusive/IntKers/PdfConvBase.hpp \
- src/Exclusive/IntKers/../../config.h \
+ src/Exclusive/IntKers/PdfConvBase.h src/Exclusive/IntKers/../../config.h \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
  src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/PdfConvNLOq.h \
@@ -44,7 +43,7 @@ src/Exclusive/../config.h:
 
 src/Exclusive/IntKers/FKerAll.h:
 
-src/Exclusive/IntKers/PdfConvBase.hpp:
+src/Exclusive/IntKers/PdfConvBase.h:
 
 src/Exclusive/IntKers/../../config.h:
 

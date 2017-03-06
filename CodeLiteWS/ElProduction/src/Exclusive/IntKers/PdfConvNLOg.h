@@ -1,7 +1,7 @@
 #ifndef PdfConvNLOg_H
 #define PdfConvNLOg_H
 
-#include "PdfConvBase.hpp"
+#include "PdfConvBase.h"
 
 namespace Exclusive {
 

@@ -271,9 +271,10 @@ public:
     
 /**
  * @brief full structure function
- * @return \f$F\f$
+ * @param order calculated order
+ * @return \f$F^{(order)}\f$
  */
-    dbl F();
+    dbl F(uint order = 1);
     
 /**
  * @brief Monte Carlo parameter to F (and only F)

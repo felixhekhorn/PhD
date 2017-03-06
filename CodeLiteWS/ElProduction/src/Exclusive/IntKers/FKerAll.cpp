@@ -22,6 +22,10 @@ void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
 void FKerAll::setAlphaS(dbl alphaS) {
     this->alphaS = alphaS;
 }
+
+void FKerAll::setOrder(uint order) {
+    this->order = order;
+}
     
 dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     // protect from null pointer
@@ -36,7 +40,9 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
     cdbl nNLO = 4.*M_PI*alphaS;
-    cdbl r = n * (eH*eH*(*this->LOg)(az,aTheta1) + nNLO * (eH*eH*(*this->NLOg)(az, ax, ay, aTheta1, aTheta2) + (*this->NLOq)(az, ax, ay, aTheta1, aTheta2)));
+    dbl r = n * eH*eH*(*this->LOg)(az,aTheta1);
+    if (this->order > 0)
+        r += n*nNLO * (eH*eH*(*this->NLOg)(az, ax, ay, aTheta1, aTheta2) + (*this->NLOq)(az, ax, ay, aTheta1, aTheta2));
     return isfinite(r) ? r : 0.;
 }
 
@@ -111,8 +117,8 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     histMapT::const_iterator h = this->histMap->find(histT::s5);
     if (h != this->histMap->cend())
         h->second->accumulate(vs.s5,val);
-    } { // invHQMass
-    histMapT::const_iterator h = this->histMap->find(histT::invHQMass);
+    } { // invMassHQPair
+    histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
     if (h != this->histMap->cend())
         h->second->accumulate(sqrt(vs.s5),val);
     }

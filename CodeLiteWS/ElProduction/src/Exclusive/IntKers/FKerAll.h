@@ -3,7 +3,7 @@
 
 #include <dvegas/dvegas.h>
 
-#include "PdfConvBase.hpp"
+#include "PdfConvBase.h"
 #include "PdfConvLOg.h"
 #include "PdfConvNLOg.h"
 #include "PdfConvNLOq.h"
@@ -36,6 +36,11 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
  * @brief running coupling
  */
     dbl alphaS = -0.;
+    
+/**
+ * @brief computed order
+ */
+    uint order = 1;
     
 /**
  * @brief pointer to map of histograms
@@ -75,6 +80,12 @@ public:
  * @param alphaS running coupling
  */
     void setAlphaS(dbl alphaS);
+    
+/**
+ * @brief sets computed order
+ * @param order computed order
+ */
+    void setOrder(uint order);
     
 /**
  * @brief sets avtive histograms

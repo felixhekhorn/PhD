@@ -1,7 +1,7 @@
 #ifndef Exclusive_PdfConvNLOq_H_
 #define Exclusive_PdfConvNLOq_H_
 
-#include "PdfConvBase.hpp"
+#include "PdfConvBase.h"
 
 namespace Exclusive {
 

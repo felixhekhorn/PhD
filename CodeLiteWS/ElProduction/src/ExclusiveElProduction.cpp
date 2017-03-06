@@ -1,6 +1,7 @@
 #include "ExclusiveElProduction.h"
 
 #include <errno.h>
+#include <boost/format.hpp>
 
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
@@ -61,7 +62,7 @@ void ExclusiveElProduction::setOmega(cdbl omega) {
     if (omega <= 0. || omega >= 2.)
         throw domain_error("omega has to be within (0,2)!");
     if (deltay >= omega)
-        throw domain_error("omega has to be bigger than deltay!");
+        throw domain_error((boost::format("omega (%e) has to be bigger than deltay (%e)!")%omega%deltay).str());
     this->omega = omega;
 }
 
@@ -272,7 +273,7 @@ dbl ExclusiveElProduction::Fq1() const {
     return n*int5D(&f);
 }
 
-dbl ExclusiveElProduction::F() {
+dbl ExclusiveElProduction::F(uint order/*= 1*/) {
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -357,7 +358,7 @@ void ExclusiveElProduction::setupHistograms() {
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesUniform(4.*this->m2,-this->q2*(1./this->bjorkenX - 1.));
     } {
-    histMapT::const_iterator h = this->histMap.find(invHQMass);
+    histMapT::const_iterator h = this->histMap.find(invMassHQPair);
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
     }

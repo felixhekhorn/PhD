@@ -15,14 +15,16 @@ dbl Exclusive::int5DDvegas(FKerAll& F, const MCParams& ps) {
     
     dbl res, err;
     
+    // clear histograms
+    F.scaleHistograms(0.);
     // warm-up
-    VEGAS(dv,ps.warmupCalls,ps.warmupIterations,0,ps.verbosity - 1);
+    VEGAS(dv,ps.warmupCalls,ps.warmupIterations,0,ps.verbosity - 2);
     IntegrandEstimate e = dv.stats(0);
     res = e.integral();
     uint guard = 0;
     // run
-    if (ps.adaptChi2) {
-        do { // adapt chi
+    if (ps.adaptChi2) { // adapt chi
+        do {
             if (!isfinite(res)) return res;
             F.scaleHistograms(0.);
             VEGAS(dv,calls,iterations,1,ps.verbosity - 1);

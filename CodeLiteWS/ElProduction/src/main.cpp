@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
     eO.activateHistogram(Exclusive::histT::Theta1,15);
     eO.activateHistogram(Exclusive::histT::Theta2,15);
     eO.activateHistogram(Exclusive::histT::s5,15);
-    eO.activateHistogram(Exclusive::histT::invHQMass,15, 2.*sqrt(m2),40.);
+    eO.activateHistogram(Exclusive::histT::invMassHQPair,15, 2.*sqrt(m2),40.);
     eO.activateHistogram(Exclusive::histT::AHQRapidity,15);
     eO.activateHistogram(Exclusive::histT::AHQTransverseMomentum,15);
     eO.activateHistogram(Exclusive::histT::DeltaPhiHQPair,15);
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
     eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta1.dat");
     eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-Theta2.dat");
     eO.printHistogram(Exclusive::histT::s5, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-s5.dat");
-    eO.printHistogram(Exclusive::histT::invHQMass, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-invHQMass.dat");
+    eO.printHistogram(Exclusive::histT::invMassHQPair, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-invMassHQPair.dat");
     eO.printHistogram(Exclusive::histT::AHQRapidity, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-rap.dat");
     eO.printHistogram(Exclusive::histT::AHQTransverseMomentum, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-pt.dat");
     eO.printHistogram(Exclusive::histT::DeltaPhiHQPair, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-dphi.dat");

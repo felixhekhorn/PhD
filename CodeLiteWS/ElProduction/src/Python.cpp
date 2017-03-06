@@ -30,9 +30,6 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setEta", &InclusiveElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &InclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
-        /*.def("setPdf", &ElProduction::setPdf, ElProduction_setPdf_overloads(
-                    args("lhaid|name|nmem", "memberid"), "sets pdf"
-                )[return_internal_reference<>()] oder? ElProduction_setPdf_overloads())*/
         .def("setPdf", &InclusiveElProduction::setPdf, "sets pdf")
         .def("setMuR2", &InclusiveElProduction::setMuR2, "sets renormalisation scale")
         .def("setMuF2", &InclusiveElProduction::setMuF2, "sets factorisation scale")
@@ -63,9 +60,6 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setEta", &ExclusiveElProduction::setEta, "sets partonic eta")
         .def("setPartonicS", &ExclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
-        /*.def("setPdf", &ElProduction::setPdf, ElProduction_setPdf_overloads(
-                    args("lhaid|name|nmem", "memberid"), "sets pdf"
-                )[return_internal_reference<>()] oder? ElProduction_setPdf_overloads())*/
         .def("setPdf", &ExclusiveElProduction::setPdf, "sets pdf")
         .def("setMuR2", &ExclusiveElProduction::setMuR2, "sets renormalisation scale")
         .def("setMuF2", &ExclusiveElProduction::setMuF2, "sets factorisation scale")
@@ -99,7 +93,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("Theta1", Exclusive::histT::Theta1)
         .value("Theta2", Exclusive::histT::Theta2)
         .value("s5", Exclusive::histT::s5)
-        .value("invHQMass", Exclusive::histT::invHQMass)
+        .value("invMassHQPair", Exclusive::histT::invMassHQPair)
         .value("AHQRapidity", Exclusive::histT::AHQRapidity)
         .value("AHQTransverseMomentum", Exclusive::histT::AHQTransverseMomentum)
         .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
@@ -112,7 +106,8 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("warmupIterations", &Exclusive::MCParams::warmupIterations)
         .def_readwrite("bins", &Exclusive::MCParams::bins)
         .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2)
-        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity);
+        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity)
+    ;
     
     /*
     // Test
