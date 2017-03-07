@@ -2,6 +2,7 @@
 #define Exclusive_PdfConvBase_HPP_
 
 #include "../../config.h"
+#include "../ConfigExclusive.h"
 #include "../../Pdf/PdfWrapper.h"
 
 namespace Exclusive {
@@ -10,11 +11,6 @@ namespace Exclusive {
  * @brief Abstract base class for convolution with PDFs
  */
 class PdfConvBase {
-
-/**
- * @brief lower x intergation bound \f$\rho^*\f$
- */
-    dbl rhoStar = -0.;
     
 /**
  * @brief volume of x-for-event space
@@ -27,6 +23,11 @@ class PdfConvBase {
     dbl VxC = -0.;
     
 protected:
+
+/**
+ * @brief lower x intergation bound \f$\rho^*\f$
+ */
+    dbl rhoStar = -0.;
 
 /**
  * @brief heavy quark mass squared \f$m^2 > 0\f$

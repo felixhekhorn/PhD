@@ -13,27 +13,27 @@ class ExclusiveElProduction : public AbstractElProduction {
 /**
  * @brief factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
  */
-    dbl xTilde;
+    dbl xTilde = -0.;
     
 /**
  * @brief soft regulation parameter \f$\tilde\rho\f$
  */
-    dbl rhoTilde;
+    dbl rhoTilde = -0.;
     
 /**
  * @brief collinear regulation parameter \f$\omega\f$
  */
-    dbl omega;
+    dbl omega = -0.;
     
 /**
  * @brief offset to upper integration bound in x \f$\delta_x\f$
  */
-    dbl deltax;
+    dbl deltax = -0.;
     
 /**
  * @brief offset to lower integration bound in y \f$\delta_y\f$
  */
-    dbl deltay;
+    dbl deltay = -0.;
     
 /**
  * @brief returns \f$B'_{QED}\f$

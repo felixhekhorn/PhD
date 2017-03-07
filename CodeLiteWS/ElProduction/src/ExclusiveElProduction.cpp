@@ -1,7 +1,6 @@
 #include "ExclusiveElProduction.h"
 
 #include <errno.h>
-#include <boost/format.hpp>
 
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
@@ -52,7 +51,7 @@ void ExclusiveElProduction::setRhoTilde() {
 
 void ExclusiveElProduction::setXTilde(cdbl xTilde) {
     if (xTilde <= 0. || xTilde >= 1.)
-        throw domain_error("xTilde has to be within (0,1)!");
+        throw domain_error((boost::format("xTilde (%e) has to be within (0,1)!")%xTilde).str());
     this->xTilde = xTilde;
     if (this->hasPartonicS)
         this->setRhoTilde();
@@ -60,21 +59,21 @@ void ExclusiveElProduction::setXTilde(cdbl xTilde) {
 
 void ExclusiveElProduction::setOmega(cdbl omega) {
     if (omega <= 0. || omega >= 2.)
-        throw domain_error("omega has to be within (0,2)!");
+        throw domain_error((boost::format("omega (%e) has to be within (0,2)!")%omega).str());
     if (deltay >= omega)
         throw domain_error((boost::format("omega (%e) has to be bigger than deltay (%e)!")%omega%deltay).str());
     this->omega = omega;
 }
 
 void ExclusiveElProduction::setDeltax(cdbl deltax) {
-    if (deltax <= 0)
-        throw domain_error("deltax has to be positive!");
+    if (deltax <= 0 || deltax >= 1)
+        throw domain_error((boost::format("deltax (%e) has to be positive and smaller then 1!")%deltax).str());
     this->deltax = deltax;
 }
 
 void ExclusiveElProduction::setDeltay(cdbl deltay) {
-    if (deltay <= 0 || deltay >= this->omega)
-        throw domain_error("deltay has to be positive and smaller than omega!");
+    if (deltay <= 0 || deltay >= 2 || deltay >= this->omega)
+        throw domain_error((boost::format("deltay (%e) has to be positive, smaller than 2 and smaller than omega (%e)!")%deltay%omega).str());
     this->deltay = deltay;
 }
 
@@ -298,6 +297,7 @@ dbl ExclusiveElProduction::F(uint order/*= 1*/) {
     // Full kernel
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     k.setAlphaS(alphaS);
+    k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
 //size_t count = 0;
 //dbl sumWeights = 0.;

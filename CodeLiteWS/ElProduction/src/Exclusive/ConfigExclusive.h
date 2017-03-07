@@ -7,6 +7,7 @@
 #define ConfigExclusive_H_
 
 #include <unordered_map>
+#include <boost/format.hpp>
 
 #include "../gslpp/gslpp.Histogram.hpp"
 

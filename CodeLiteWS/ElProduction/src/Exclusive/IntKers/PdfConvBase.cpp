@@ -19,9 +19,13 @@ void PdfConvBase::setZ(dbl a) {
 void PdfConvBase::setSpRaw(dbl sp) {
     this->sp = sp;
     this->rhoStar = (4.*m2 - q2)/this->sp;
-    cdbl xmax = 1. - this->deltax/(this->z > 0. ? this->z : 1.);
+    cdbl xmax = 1. - this->deltax/*/(this->z > 0. ? this->z : 1.)*/;
+    if (this->rhoStar > xmax)
+        throw domain_error((boost::format("rho* (%e) has to be smaller than 1-deltax (%e)!")%this->rhoStar%xmax).str());
     this->VxE = xmax - this->rhoStar;
     this->rhoTilde = 1. - this->xTilde*(1. - this->rhoStar);
+    if (this->rhoTilde > xmax)
+        throw domain_error((boost::format("rhoTilde (%e) has to be smaller than 1-deltax (%e)!")%this->rhoTilde%xmax).str());
     this->VxC = xmax - this->rhoTilde;
 }
 

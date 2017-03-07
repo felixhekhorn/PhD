@@ -26,14 +26,15 @@ int runInclusive();
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-    //dbl m2 = 1.5*1.5;
-    dbl m2 = 4.75*4.75;
-    dbl q2 = -1.e2;
-    uint nlf = 4;
+    dbl m2 = 1.5*1.5;
+    //dbl m2 = 4.75*4.75;
+    dbl q2 = -1.e1;
+    //uint nlf = 4;
+    uint nlf = 3;
     dbl Delta = 1e-6;
     dbl xTilde = .8;
     dbl omega = 1.;
-    dbl deltax = 7e-6;
+    dbl deltax = 1e-6;
     dbl deltay = 1e-6;
     dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
     dbl mu02 = (4.*m2-q2);
@@ -44,11 +45,11 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2(mu02);
     iO.setAlphaS(aS);eO.setAlphaS(aS);
     
-    uint N = 11;
+    /*uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        /*cdbl a = pow(10,-2.+4./(N-1)*j);
+        / *cdbl a = pow(10,-2.+4./(N-1)*j);
         iO.setEta(a);
-        eO.setEta(a);*/
+        eO.setEta(a);* /
         cdbl a = pow(10,-2.+1./(N-1)*j);
         iO.setBjorkenX(a);
         eO.setBjorkenX(a);
@@ -63,9 +64,9 @@ int main(int argc, char **argv) {
         {eO.setDeltax(1e-7);
         cdbl e = eO.F();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
-    }
+    }*/
     
-    /*cdbl bjorkenX = 1e-2;
+    cdbl bjorkenX = 8.5e-4;
     //printf("%e < z < %e\n",bjorkenX,-q2/(4.*m2-q2));
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
@@ -76,7 +77,7 @@ int main(int argc, char **argv) {
     eO.activateHistogram(Exclusive::histT::Theta1,15);
     eO.activateHistogram(Exclusive::histT::Theta2,15);
     eO.activateHistogram(Exclusive::histT::s5,15);
-    eO.activateHistogram(Exclusive::histT::invMassHQPair,15, 2.*sqrt(m2),40.);
+    eO.activateHistogram(Exclusive::histT::invMassHQPair,15, 0.,40.);
     eO.activateHistogram(Exclusive::histT::AHQRapidity,15);
     eO.activateHistogram(Exclusive::histT::AHQTransverseMomentum,15);
     eO.activateHistogram(Exclusive::histT::DeltaPhiHQPair,15);
@@ -84,7 +85,7 @@ int main(int argc, char **argv) {
     cdbl i = iO.Fg0() + iO.Fg1() + iO.Fq1();
     cdbl e = eO.F();
     printf("%e\t%e\n",i,e);
-    
+    /*
     eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-z.dat");
     eO.printHistogram(Exclusive::histT::log10pdf, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-pdf.dat");
     eO.printHistogram(Exclusive::histT::x, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-x.dat");
