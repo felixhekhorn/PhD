@@ -1,0 +1,1 @@
+(-32*q2*sp*(m2/(t1*u1) + (-q2 + t1 + u1)/Power(t1 + u1,2))*(sp + beta*(-t1 + u1)*Cos(Theta1)))/(s*(-2 + Power(beta,2) + Power(beta,2)*Cos(2*Theta1)))

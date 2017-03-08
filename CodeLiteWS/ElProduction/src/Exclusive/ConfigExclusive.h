@@ -38,6 +38,36 @@ enum histT {
  */
 typedef unordered_map<histT,gslpp::Histogram*> histMapT;
 
+/**
+ * @brief computes dynamic scales, defaults to 4m²-q²
+ */
+struct DynamicScaleFactors {
+    
+/**
+ * @brief factor to m²
+ */
+    dbl cM2 = 4.;
+    
+/**
+ * @brief factor to q² (!NOT! to Q²)
+ */
+    dbl cQ2 = -1.;
+
+/**
+ * @brief factor to s5
+ */
+    dbl cS5 = 0.;
+    
+/**
+ * @brief constructor
+ * @param cM2 factor to m²
+ * @param cQ2 factor to q² (!NOT! to Q²)
+ * @param cS5 factor to s5
+ */
+    DynamicScaleFactors(dbl cM2 = 4., dbl cQ2 = -1., dbl cS5 = 0.) :
+        cM2(cM2), cQ2(cQ2), cS5(cS5) {};
+};
+
 } // namespace Exclusive
 
 #endif // ConfigExclusive_H_

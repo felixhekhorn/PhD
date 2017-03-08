@@ -6,11 +6,15 @@ def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
 def _pok(): return '\033[92m'+"[OK]"+'\033[0m'
 def _pinfo(): return "[INFO]"
 
+from multiprocessing import Process, Queue, JoinableQueue, cpu_count
+from Queue import Empty as QEmpty
+import sys
+import os
 import numpy as np
 
-from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams
+from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams, ExclusiveDynamicScaleFactors
 
-path = "/home/Felix/Physik/PhD/data/PLB353-535/"
+pathOut = "/home/Felix/Physik/PhD/data/PLB353-535/"
 
 # @brief running strong coupling
 # taken from eq. 10 in G. Altarelli, M. Diemoz, G. Martinelli, and P. Nason, Nucl. Phys. B308 (1988) 724
@@ -23,62 +27,106 @@ def AlphaS(Q2,f):
   def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
   return 1./(b(f)*t)*(1. - (bp(f)*np.log(t))/(b(f)*t))
 
+qIn = JoinableQueue()
+
 xTilde = .8
 omega = 1.
 deltax = 1e-6
 deltay = 1e-6
 
-# runner
-def run(m2,q2,proj,nlf,bjorkenX):
-  o = ExclusiveElProduction(m2,q2,proj,nlf,xTilde,omega,deltax,deltay)
-  o.setPdf("cteq66",0)
-  mu02 = 4.*m2 - q2
-  o.setMu2(mu02)
-  aS = AlphaS(mu02, nlf+1)
-  o.setAlphaS(aS)
-  o.setBjorkenX(bjorkenX)
-  o.activateHistogram(ExclusiveHistT.invMassHQPair,40,0,40)
-  o.MCparams.verbosity = 2
-  o.MCparams.calls = 200000
-  qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
-  def _F(n):
-    o.F(n)
-    fp = path+"F%s%s_x-%g_q2-%g_%d.dat"%(proj,qL,bjorkenX*1e5,-q2*1e1,n)
-    o.printHistogram(ExclusiveHistT.invMassHQPair,fp)
-    print _pok(), fp
-  # LO
-  _F(0)
-  # NLO
-  _F(1)
+# compute all data points
+def run(nProcesses = cpu_count()):
+	# add EOF
+	lenParams = qIn.qsize()
+	for n in xrange(nProcesses):
+		qIn.put(None)
+	# start processes
+	threadArgs = (qIn, )
+        processes = []
+	for j in xrange(nProcesses):
+		processes.append(Process(target=_threadWorker, args=threadArgs))
+	[p.start() for p in processes]
+	# run
+	try:
+		qIn.join()
+	except KeyboardInterrupt:
+		[p.terminate() for p in processes]
+		print "\n",_pwarn(),"aborting at",(lenParams-qIn.qsize()-nProcesses),"/",lenParams
+		qIn.close()
+	sys.stdout.write("\n")
 
-def runCharmL(q2,bjorkenX):
-  run(1.5**2,q2,projT.L,3,bjorkenX)
+# thread worker
+def _threadWorker(qIn):
+	while True:
+		# get
+		p = qIn.get()
+		if None == p: # EOF?
+			qIn.task_done()
+			break
+		# compute
+		o = ExclusiveElProduction(*p["oArgs"])
+		o.setPdf("cteq66",0)
+		o.setMu2Factors(ExclusiveDynamicScaleFactors(*p["mu2"]))
+		o.setLambdaQCD(p["lambdaQCD"])
+		o.setBjorkenX(p["bjorkenX"])
+		o.activateHistogram(ExclusiveHistT.invMassHQPair,40,0,40)
+		o.MCparams.calls = 500000
+		o.MCparams.warmupCalls = 5000
+		o.MCparams.verbosity = 2
+		o.F(p["n"])
+		fp = p["fp"]
+		o.printHistogram(ExclusiveHistT.invMassHQPair,fp)
+		qIn.task_done()
+		print _pok(), fp
 
-def fig2():
-  runCharmL(-8.5,8.5e-4)
-  runCharmL(-12.,8.5e-4)
-  runCharmL(-25.,8.5e-4)
-  runCharmL(-50.,8.5e-4)
+# add data point
+def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
+	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
+	fp = pathOut+"F%s%s_x-%g_q2-%g_%d.dat"%(proj,qL,bjorkenX*1e5,-q2*1e1,n)
+	qIn.put({"oArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,), "nlf":nlf, "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, "n":n, "fp":fp})
 
-def fig4():
-  runCharmL(-12.,4.2e-4)
-  #runCharmL(-12.,8.5e-4)
-  runCharmL(-12.,1.6e-3)
-  runCharmL(-12.,2.7e-3)
+def addCharm(q2,proj,bjorkenX):
+	m2 = 1.5**2
+	nlf = 3
+	lambdaQCD = 0.239
+	mu2 = (4.,-1.,1.,)
+	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
+	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
-def runBottomL(q2,bjorkenX):
-  run(4.75**2,q2,projT.L,4,bjorkenX)
+def addBotttom(q2,proj,bjorkenX):
+	m2 = 4.75**2
+	nlf = 4
+	lambdaQCD = 0.158
+	mu2 = (1.,-1.,.25,)
+	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
+	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
-def fig6():
-  runBottomL(-8.5,8.5e-4)
-  runBottomL(-12.,8.5e-4)
-  runBottomL(-25.,8.5e-4)
-  runBottomL(-50.,8.5e-4)
+def addFig2():
+  addCharm(-8.5,projT.L,8.5e-4)
+  addCharm(-12.,projT.L,8.5e-4)
+  addCharm(-25.,projT.L,8.5e-4)
+  addCharm(-50.,projT.L,8.5e-4)
 
-def fig8():
-  runBottomL(-12.,4.2e-4)
-  #runBottomL(-12.,8.5e-4)
-  runBottomL(-12.,1.6e-3)
-  runBottomL(-12.,2.7e-3)
+def addFig4():
+  addCharm(-12.,projT.L,4.2e-4)
+  #addCharm(-12.,projT.L,8.5e-4)
+  addCharm(-12.,projT.L,1.6e-3)
+  addCharm(-12.,projT.L,2.7e-3)
 
-fig6()
+def addFig6():
+  addBotttom(-8.5,projT.L,8.5e-4)
+  addBotttom(-12.,projT.L,8.5e-4)
+  addBotttom(-25.,projT.L,8.5e-4)
+  addBotttom(-50.,projT.L,8.5e-4)
+
+def addFig8():
+  addBotttom(-12.,projT.L,4.2e-4)
+  #addBotttom(-12.,projT.L,8.5e-4)
+  addBotttom(-12.,projT.L,1.6e-3)
+  addBotttom(-12.,projT.L,2.7e-3)
+
+addFig2()
+addFig4()
+addFig6()
+addFig8()
+run()

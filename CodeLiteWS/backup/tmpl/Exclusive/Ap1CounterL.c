@@ -1,0 +1,1 @@
+(4*Power(q2,2))/(Power(sp,2)*Power(x,2)) + (4*q2)/(sp*x) - (4*q2*(m2*Power(x,2) + Power(beta5,2)*s5*(-1 + x)*Power(Cos(Theta2),2)*Power(Sin(Theta1),2)))/(t1c*u1c*Power(x,3))

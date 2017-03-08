@@ -7,6 +7,10 @@
 #include <string>
 #include <boost/timer/timer.hpp>
 
+/**
+ * @class Timer
+ * @brief helper class for measuring call time
+ */
 class Timer {
     
     /**

@@ -200,6 +200,90 @@ public:
     
 ///@}
 
+
+
+/** @name hadronic setter */
+///@{
+    
+/**
+ * @brief removed method use setMuR2Factors instead
+ * @param muR2 -
+ */
+    void setMuR2(dbl muR2);
+    
+/**
+ * @brief removed method use setMuF2Factors instead
+ * @param muF2 -
+ */
+    void setMuF2(dbl muF2);
+    
+/**
+ * @brief removed method use setMu2Factors instead
+ * @param mu2 -
+ */
+    void setMu2(dbl mu2);
+    
+/**
+ * @brief removed method use setLambdaQCD instead
+ * @param alphaS -
+ */
+    void setAlphaS(dbl alphaS);
+    
+private:
+
+/**
+ * @brief factors for \f$\mu_R^2\f$
+ */
+    Exclusive::DynamicScaleFactors muR2Factors;
+
+/**
+ * @brief factors for \f$\mu_F^2\f$
+ */
+    Exclusive::DynamicScaleFactors muF2Factors;
+    
+public:
+    
+/**
+ * @brief sets factors for \f$\mu_R^2\f$
+ * @param muR2Factors factors for \f$\mu_R^2\f$
+ */
+    void setMuR2Factors(Exclusive::DynamicScaleFactors muR2Factors);
+    
+/**
+ * @brief sets factors for \f$\mu_F^2\f$
+ * @param muF2Factors factors for \f$\mu_F^2\f$
+ */
+    void setMuF2Factors(Exclusive::DynamicScaleFactors muF2Factors);
+    
+/**
+ * @brief sets factors for common scale \f$\mu^2 = \mu_R^2 = \mu_F^2\f$
+ * @param mu2Factors factors for common scale \f$\mu^2 = \mu_R^2 = \mu_F^2\f$
+ */
+    void setMu2Factors(Exclusive::DynamicScaleFactors mu2Factors);
+    
+private:
+
+/**
+ * @brief \f$\Lambda_{QCD,n_{lf+1}}\f$
+ */
+    dbl lambdaQCD = -0.;
+    
+/**
+ * @brief running strong coupling as provided by LHAPDF
+ */
+    LHAPDF::AlphaS_Analytic aS;
+    
+public:
+    
+/**
+ * @brief sets \f$\Lambda_{QCD,n_{lf+1}}\f$
+ * @param lambdaQCD \f$\Lambda_{QCD,n_{lf+1}}\f$
+ */
+    void setLambdaQCD(dbl lambdaQCD);
+    
+///@}
+
+
 /** @name partonic coefficient functions */
 ///@{
     
@@ -316,7 +400,7 @@ public:
     void activateHistogram(Exclusive::histT t, uint size, dbl min = nan(""), dbl max = nan(""));
 
 /**
- * @brief prints a histogram (if it has been activated)
+ * @brief prints a histogram to file (if it has been activated)
  * @param t histogram type
  * @param path file path
  */

@@ -20,69 +20,58 @@
 
 using namespace std;
 
-/** @brief shorthand */
+/** @name shorthands */
+///@{
+/** @brief unsigned int shorthand */
 typedef unsigned int uint;
-/** @brief shorthand */
+/** @brief string shorthand */
 typedef string str;
 
-/** @brief define floating point precision */
+/** @brief defines floating point precision */
 typedef double dbl;
+/** @brief defines floating point precision */
+typedef const double cdbl;
 
-/** @brief function pointer */
-typedef dbl (*fPtr3dbl)(dbl m2, dbl q2, dbl sp);
-/** @brief function pointer */
-typedef dbl (*fPtr4dbl)(dbl m2, dbl q2, dbl sp, dbl t1);
-/** @brief function pointer */
-typedef dbl (*fPtr5dbl)(dbl m2, dbl q2, dbl sp, dbl s4, dbl t1);
+/** @brief function pointer of 0 variables */
+typedef cdbl (*fPtr0dbl)();
+/** @brief function pointer of 1 variables */
+typedef cdbl (*fPtr1dbl)(cdbl x);
+/** @brief function pointer of 3 variables */
+typedef cdbl (*fPtr3dbl)(cdbl m2, cdbl q2, cdbl sp);
+/** @brief function pointer of 4 variables */
+typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
+/** @brief function pointer of 5 variables */
+typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+/** @brief function pointer of 6 variables */
+typedef cdbl (*fPtr6dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
+/** @brief function pointer of 7 variables */
+typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl u1, cdbl t1, cdbl tp, cdbl up);
+///@}
 
-// MMa functions can be treated as macros
+/** @name Mathematica functions
+ * functions can be treated as macros
+ */
+///@{
 /** @brief MMa port */
 #define Power(a,b) pow(a,b)
 /** @brief MMa port */
 #define Log(a) log(a)
 /** @brief MMa port */
 #define Sqrt(a) sqrt(a)
+///@}
+
+/** @brief forces x to be min <= x <= max  */
+#define mima(x,mi,ma) min(max(x,mi),ma)
 
 /** @brief factor in front of fermion loop excluding the \f$n_{lf}\f$ - see eq. (3.7) */
 #define fermionLoopFactor 2./3.*(1./(4.*4.*M_PI*M_PI))
-
-/**
- * @brief constants related to color space
- */
-namespace Color {
-    
-    /**
-     * @brief number of Colors \f$N_C \f$
-     */
-    const uint NC = 3;
-    
-    /**
-     * @brief Casimir constant of fundamental representation \f$C_F=\frac{N_C^2 - 1}{2N_C} \f$
-     */
-    const dbl CF = (NC*NC -1)/(2.*NC);
-    
-    /**
-     * @brief Casimir constant of adjoint representation \f$C_A=N_C \f$
-     */
-    const dbl CA = (dbl)NC;
-    
-    /**
-     * @brief Color avarage of \f$\Pg\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pg\Pgg} = \frac 1 {N_C^2 -1}\f$
-     */
-    const dbl Kggg = 1./(NC*NC - 1.);
-    
-    /**
-     * @brief Color avarage of \f$\Pq\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pq\Pgg} = \frac 1 {N_C}\f$
-     */
-    const dbl Kqgg = 1./(NC);
-}
 
 /**
  * @brief returns electric charge of particle
  * @param pid PDG particle id
  * @return electric charge
  */
-inline dbl getElectricCharge(int pid) {
+inline cdbl getElectricCharge(const int pid) {
     switch(pid) {
         case 1: case -1: // u+ubar
         case 3: case -3: // s+sbar

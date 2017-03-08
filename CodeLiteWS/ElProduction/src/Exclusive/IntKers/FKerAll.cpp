@@ -1,6 +1,5 @@
 #include "FKerAll.h"
 
-#include <rk/rk.hh>
 #include <rk/geom3.hh>
 #include <gsl/gsl_rng.h>
 
@@ -10,7 +9,7 @@ using namespace Exclusive;
 
 FKerAll::FKerAll(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    HepSource::Integrand(5,1){
+    HepSource::Integrand(5,1), vs(m2,q2,4.*m2,0.,0.,0.,0.){
 }
     
 void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
@@ -19,30 +18,94 @@ void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
     this->NLOq = NLOq;
 }
 
-void FKerAll::setAlphaS(dbl alphaS) {
+void FKerAll::setAlphaS(LHAPDF::AlphaS* alphaS) {
     this->alphaS = alphaS;
 }
 
 void FKerAll::setOrder(uint order) {
     this->order = order;
 }
+
+void FKerAll::setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors) {
+    this->muR2Factors = muR2Factors;
+    this->muF2Factors = muF2Factors;
+}
+
+
+void FKerAll::setupKinematics() {
+    this->vs = KinematicVars(this->m2, this->q2, this->sp, this->xE, this->yE, this->Theta1, this->Theta2);
+    // setup relativistic kinematics
+    using rk::P4;
+    using geom3::Vector3;
+    using geom3::UnitVector3;
+    using geom3::Rotation3;
+    this->k1 = P4(vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
+    this->q = P4(vs.q0,vs.absq*UnitVector3::zAxis());
+    UnitVector3 u (Theta1,Theta2);
+    this->p1 = P4(vs.beta5*u,sqrt(m2));
+    this->p2 = P4(-vs.beta5*u,sqrt(m2));
+    { // reverse psi rotation
+        Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
+        q.rotate(invPsi);
+        k1.rotate(invPsi);
+        p1.rotate(invPsi);
+        p2.rotate(invPsi);
+    } { // randomize around z
+        const gsl_rng_type *T;
+        gsl_rng *r;
+        gsl_rng_env_setup();
+        T = gsl_rng_default;
+        r = gsl_rng_alloc(T);
+        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
+        gsl_rng_free(r);
+        q.rotate(randZ);
+        k1.rotate(randZ);
+        p1.rotate(randZ);
+        p2.rotate(randZ);
+    } { // boost to virtual photon-hadron c.m.s.
+        using rk::Boost;
+        P4 psh = (z/bjorkenX)*k1 + q;
+        Boost hCMS = psh.restBoost();
+        p1.boost(hCMS);
+        p2.boost(hCMS);
+    }
+}
+    
+dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
+    dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cS5 * this->vs.s5;
+    if (mu2 < 0.)
+        throw domain_error("all scales have to be positive!");
+    return mu2;
+}
     
 dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     // protect from null pointer
     if (0 == this->LOg || 0 == this->NLOg || 0 == this->NLOq)
         throw invalid_argument("need to set all arguments!");
+    // set variables
     this->setZ(az);
     this->setX(ax);
     this->setY(ay);
     this->setTheta1(aTheta1);
     this->setTheta2(aTheta2);
-    //return aTheta1;
+//return aTheta1;
+    // setup kinematics
+    this->setupKinematics();
+    dbl muR2 = this->getDynamicScale(this->muR2Factors);
+    dbl muF2 = this->getDynamicScale(this->muF2Factors);
+    this->alphaS->setOrderQCD(1 + this->order);
+    dbl aS = this->alphaS->alphasQ2(muR2);
     cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
-    cdbl nNLO = 4.*M_PI*alphaS;
+    cdbl n = aS/m2 * (-q2)/(4.*M_PI*M_PI);
+    cdbl nNLO = 4.*M_PI*aS;
+    this->LOg->setMuF2(muF2);
     dbl r = n * eH*eH*(*this->LOg)(az,aTheta1);
-    if (this->order > 0)
+    if (this->order > 0) {
+        this->NLOg->setMuF2(muF2);
+        this->NLOg->setMuR2(muR2);
+        this->NLOq->setMuF2(muF2);
         r += n*nNLO * (eH*eH*(*this->NLOg)(az, ax, ay, aTheta1, aTheta2) + (*this->NLOq)(az, ax, ay, aTheta1, aTheta2));
+    }
     return isfinite(r) ? r : 0.;
 }
 
@@ -80,7 +143,7 @@ void FKerAll::endIteration(HepSource::Int64 nshots) {
 */
 
 void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
-    // smth active?
+    // something active?
     if (0 == this->histMap)
         return;
     if (this->histMap->empty())
@@ -88,7 +151,6 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
 //    (*count)++;
 //    (*sumWeights) += weight;
     cdbl val = i*weight;
-    KinematicVars vs(this->m2, this->q2, this->sp, this->xE, this->yE, this->Theta1, this->Theta2);
     { // log10(z)
     histMapT::const_iterator h = this->histMap->find(log10z);
     if (h != this->histMap->cend())
@@ -121,42 +183,6 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
     if (h != this->histMap->cend())
         h->second->accumulate(sqrt(vs.s5),val);
-    }
-    
-    // setup relativistic kinematics
-    using rk::P4;
-    using geom3::Vector3;
-    using geom3::UnitVector3;
-    using geom3::Rotation3;
-    P4 k1 (vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
-    P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
-    UnitVector3 u (Theta1,Theta2);
-    P4 p1(vs.beta5*u,sqrt(m2));
-    P4 p2(-vs.beta5*u,sqrt(m2));
-    { // reverse psi rotation
-        Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
-        q.rotate(invPsi);
-        k1.rotate(invPsi);
-        p1.rotate(invPsi);
-        p2.rotate(invPsi);
-    } { // randomize around z
-        const gsl_rng_type *T;
-        gsl_rng *r;
-        gsl_rng_env_setup();
-        T = gsl_rng_default;
-        r = gsl_rng_alloc(T);
-        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
-        gsl_rng_free(r);
-        q.rotate(randZ);
-        k1.rotate(randZ);
-        p1.rotate(randZ);
-        p2.rotate(randZ);
-    } { // boost to virtual photon-hadron c.m.s.
-        using rk::Boost;
-        P4 psh = (z/bjorkenX)*k1 + q;
-        Boost hCMS = psh.restBoost();
-        p1.boost(hCMS);
-        p2.boost(hCMS);
     }
     
     { // AHQRapidity

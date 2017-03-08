@@ -15,7 +15,7 @@ set yrange [1e-8:.1]
 #set style fill solid noborder
 set style fill empty border
 
-set key left bottom box opaque
+#set key left bottom box opaque
 
 set xlabel "M [GeV]"
 set xrange [0:40.]
@@ -32,7 +32,7 @@ f31 = pin . "FLc_x-85_q2-500_1.dat"
 x0(l,r) = .5*l+.5*r
 x1(l,r) = .5*l+.5*r
 
-set title "Fig. 2) dF_L(x = 8.5e-4,Q²,m_c²)/dM"
+set title "Fig. 2) dF_L(x = 8.5e-4,Q²,m_c²,M)/dM"
 set out pout . "fig2.png"
 plot f01 u (x1($1,$2)):($3/($2-$1)) w boxes t "NLO(Q²=8.5)" lc rgb "#ff0000", f00 u (x0($1,$2)):(1.3*$3/($2-$1)) w p pt 4  lc rgb "#990000" t "LO(Q²=8.5)",\
      f11 u (x1($1,$2)):($3/($2-$1)) w boxes t "NLO(Q²=12)"  lc rgb "#00ff00", f10 u (x0($1,$2)):(1.3*$3/($2-$1)) w p pt 5  lc rgb "#009900" t "LO(Q²=12)",\

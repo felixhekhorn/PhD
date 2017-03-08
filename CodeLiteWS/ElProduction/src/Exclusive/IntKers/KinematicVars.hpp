@@ -21,6 +21,8 @@ struct KinematicVars {
     dbl s5,tp,up,t1,u1;
     ///@}
     
+    
+    
     /**
      * @brief constructor
      * @param m2

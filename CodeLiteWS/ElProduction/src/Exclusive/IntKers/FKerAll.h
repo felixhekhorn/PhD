@@ -2,6 +2,7 @@
 #define FKerAll_HPP_
 
 #include <dvegas/dvegas.h>
+#include <rk/rk.hh>
 
 #include "PdfConvBase.h"
 #include "PdfConvLOg.h"
@@ -9,6 +10,7 @@
 #include "PdfConvNLOq.h"
 
 #include "../ConfigExclusive.h"
+#include "KinematicVars.hpp"
 
 namespace Exclusive {
 
@@ -33,9 +35,19 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
     PdfConvNLOq* NLOq = 0;
 
 /**
- * @brief running coupling
+ * @brief factors for \f$\mu_R^2\f$
  */
-    dbl alphaS = -0.;
+    DynamicScaleFactors muR2Factors;
+
+/**
+ * @brief factors for \f$\mu_F^2\f$
+ */
+    DynamicScaleFactors muF2Factors;
+
+/**
+ * @brief running strong coupling
+ */
+    LHAPDF::AlphaS* alphaS = 0;
     
 /**
  * @brief computed order
@@ -47,10 +59,45 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
  */
     const histMapT* histMap = 0;
     
-
 //    size_t* count = 0;
 //    dbl* sumWeights = 0;
 //    size_t n = 0;
+
+/**
+ * @brief kinematic vars
+ */
+    KinematicVars vs;
+
+/**
+ * @brief incoming (hadronic-) parton
+ */
+    rk::P4 k1;
+
+/**
+ * @brief incoming (virtual) photon
+ */
+    rk::P4 q;
+
+/**
+ * @brief outgoing heavy quark
+ */
+    rk::P4 p1;
+
+/**
+ * @brief outgoing heavy anti quark
+ */
+    rk::P4 p2;
+
+/**
+ * @brief computes all kinematic variables
+ */
+    void setupKinematics();
+    
+/**
+ * @brief computes a scale by given factors
+ * @param factors
+ */
+    dbl getDynamicScale(DynamicScaleFactors factors);
     
 public:
 
@@ -76,10 +123,17 @@ public:
     void setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq);
 
 /**
- * @brief sets running coupling
- * @param alphaS running coupling
+ * @brief sets running strong coupling
+ * @param alphaS running strong coupling
  */
-    void setAlphaS(dbl alphaS);
+    void setAlphaS(LHAPDF::AlphaS* alphaS);
+    
+/**
+ * @brief sets factors for \f$\mu_R^2\f$ and \f$\mu_F^2\f$
+ * @param muR2Factors factors for \f$\mu_R^2\f$
+ * @param muF2Factors factors for \f$\mu_F^2\f$
+ */
+    void setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors);
     
 /**
  * @brief sets computed order

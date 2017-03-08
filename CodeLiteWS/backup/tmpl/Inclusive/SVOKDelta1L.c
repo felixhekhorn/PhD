@@ -1,0 +1,1 @@
+(-16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*((-2*m2 + s)*ln(chi) + beta*s*ln(t1/u1)))/(beta*s*Power(sp,2)*t1*u1)

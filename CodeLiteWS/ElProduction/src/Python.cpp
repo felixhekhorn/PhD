@@ -61,10 +61,10 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setPartonicS", &ExclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
         .def("setPdf", &ExclusiveElProduction::setPdf, "sets pdf")
-        .def("setMuR2", &ExclusiveElProduction::setMuR2, "sets renormalisation scale")
-        .def("setMuF2", &ExclusiveElProduction::setMuF2, "sets factorisation scale")
-        .def("setMu2", &ExclusiveElProduction::setMu2, "sets common scale")
-        .def("setAlphaS", &ExclusiveElProduction::setAlphaS, "sets running strong coupling")
+        .def("setMuR2Factors", &ExclusiveElProduction::setMuR2Factors, "sets factors for renormalisation scale")
+        .def("setMuF2Factors", &ExclusiveElProduction::setMuF2Factors, "sets factors for factorisation scale")
+        .def("setMu2Factors", &ExclusiveElProduction::setMu2Factors, "sets factors for common scale")
+        .def("setLambdaQCD", &ExclusiveElProduction::setLambdaQCD, "sets lambda_{QCD,f}")
         .def("setBjorkenX", &ExclusiveElProduction::setBjorkenX, "sets Bjorken x")
         // partonic coefficient functions
         .def("cg0", &ExclusiveElProduction::cg0)
@@ -75,9 +75,9 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cqBarF1", &InclusiveElProduction::cqBarF1)
         .def("dq1", &ExclusiveElProduction::dq1)
         // hadronic structure functions
-        .def("Fg0", &ExclusiveElProduction::Fg0)
-        .def("Fg1", &ExclusiveElProduction::Fg1)
-        .def("Fq1", &ExclusiveElProduction::Fq1)
+        //.def("Fg0", &ExclusiveElProduction::Fg0)
+        //.def("Fg1", &ExclusiveElProduction::Fg1)
+        //.def("Fq1", &ExclusiveElProduction::Fq1)
         .def("F", &ExclusiveElProduction::F)
         .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
         // histograms
@@ -107,6 +107,12 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("bins", &Exclusive::MCParams::bins)
         .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2)
         .def_readwrite("verbosity", &Exclusive::MCParams::verbosity)
+    ;
+    
+    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double>())
+        .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
+        .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
+        .def_readwrite("cS5", &Exclusive::DynamicScaleFactors::cS5, "factor to s5")
     ;
     
     /*

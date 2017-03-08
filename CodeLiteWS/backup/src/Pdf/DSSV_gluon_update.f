@@ -1,4 +1,4 @@
-c       Example
+c       Example 
 c        INTEGER IX, NX, IQ NQ
 c        PARAMETER (NX=47, NQ=30)
 c        DOUBLE PRECISION QS(NQ), XB(NX)
@@ -120,7 +120,9 @@ C...
       END
 C
 C---------------------------
-      SUBROUTINE DSSVINI
+      SUBROUTINE DSSVINI(RPATH,IMEMBER)
+cf2py intent(in) RPATH
+cf2py intent(in) IMEMBER
 C---------------------------
       IMPLICIT NONE
 C...
@@ -135,6 +137,12 @@ C...
       DOUBLE PRECISION XB0, XB1
       INTEGER M, N
       INTEGER IQ, IX
+
+      INTEGER IMEMBER
+      CHARACTER*100 RPATH
+      CHARACTER*30 FPATH
+      CHARACTER*130 PATH
+
 C...
       COMMON/ DSSVGRID/XUF, XDF, XUBF, XDBF, XSF, XGF,
      1                NA, ARRF
@@ -158,11 +166,26 @@ C...
 C      imode= 0 best fit DSSV
 
 
-c      if (imode.eq.0) then
-            OPEN(UNIT=71,FILE='DSSV_GLUON_UPDATE.NLO',STATUS='OLD')
-c       else
-c            write(6,*) "wrong fit"
-c      endif      
+c CHARACTER(100) :: fileplace
+c WRITE(fileplace,*) "/home/vijay/data1/process-folder1/"
+c OPEN(unit=10, status="old", file=TRIM(ADJUSTL(fileplace))//"file1.dat")
+
+      if (IMEMBER.eq.0) then
+          write(FPATH,*) 'DSSV_GLUON_UPDATE.NLO'
+      else
+          if((IMEMBER.lt.1) .or. (IMEMBER.gt.22)) then
+              write(6,*) "IMEMBER has to be in range [0,22]"
+              return
+          endif
+          if ((IMEMBER.lt.10)) then
+              write(FPATH,'(a,i1,a)') 'DSSV_V',IMEMBER,'.GRID'
+          else
+              write(FPATH,'(a,i2,a)') 'DSSV_V',IMEMBER,'.GRID'
+          endif
+      endif
+      WRITE (PATH,'(a,a)') TRIM(ADJUSTL(RPATH)),
+     1 TRIM(ADJUSTL(FPATH))
+      OPEN(UNIT=71,FILE=PATH,STATUS='OLD')
 
 C...
       DO 15 M = 1, NX-1

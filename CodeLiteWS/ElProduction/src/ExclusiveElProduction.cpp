@@ -218,12 +218,15 @@ dbl ExclusiveElProduction::dq1() const {
 }
 
 dbl ExclusiveElProduction::Fg0() const {
+/** @todo reimplement! delegate? */
+throw logic_error("TODO: reimplement! delegate?");
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     PdfConvLOg k(m2,q2,bjorkenX,this->getBpQED());
-    k.setPdf(this->pdf,this->muF2);
+    k.setPdf(this->pdf);
+    k.setMuF2(this->muF2);
     gsl_monte_function f;
     f.f = gslpp::callFunctor2D<PdfConvLOg>;
     f.params = &k;
@@ -234,6 +237,8 @@ dbl ExclusiveElProduction::Fg0() const {
 }
 
 dbl ExclusiveElProduction::Fg1() const {
+/** @todo reimplement! delegate? */
+throw logic_error("TODO: reimplement! delegate?");
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -242,7 +247,8 @@ dbl ExclusiveElProduction::Fg1() const {
     k.setBorn(this->getBpQED(),this->getSVp());
     k.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
     k.setPgg(this->getPggH0(),this->getPggH1(),this->getPggS1());
-    k.setPdf(this->pdf,this->muF2);
+    k.setPdf(this->pdf);
+    k.setMuF2(this->muF2);
     k.setMuR2(this->muR2);
     gsl_monte_function f;
     f.f = gslpp::callFunctor5D<PdfConvNLOg>;
@@ -254,6 +260,8 @@ dbl ExclusiveElProduction::Fg1() const {
 }
 
 dbl ExclusiveElProduction::Fq1() const {
+/** @todo reimplement! delegate? */
+throw logic_error("TODO: reimplement! delegate?");
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -263,7 +271,8 @@ dbl ExclusiveElProduction::Fq1() const {
     k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     k.setAp2(this->getAp2());
     k.setAp3(this->getAp3());
-    k.setPdf(this->pdf,this->muF2);
+    k.setPdf(this->pdf);
+    k.setMuF2(this->muF2);
     gsl_monte_function f;
     f.f = gslpp::callFunctor5D<PdfConvNLOq>;
     f.params = &k;
@@ -272,31 +281,70 @@ dbl ExclusiveElProduction::Fq1() const {
     return n*int5D(&f);
 }
 
+void ExclusiveElProduction::setMuR2(dbl muR2) {
+    throw logic_error("use setMuR2Factors instead!");
+}
+
+void ExclusiveElProduction::setMuF2(dbl muR2) {
+    throw logic_error("use setMuF2Factors instead!");
+}
+
+void ExclusiveElProduction::setMu2(dbl muR2) {
+    throw logic_error("use setMu2Factors instead!");
+}
+
+void ExclusiveElProduction::setAlphaS(dbl muR2) {
+    throw logic_error("use setLambdaQCD instead!");
+}
+    
+void ExclusiveElProduction::setMuR2Factors(Exclusive::DynamicScaleFactors muR2Factors) {
+    this->muR2Factors = muR2Factors;
+    this->hasMuR2 = true;
+}
+    
+void ExclusiveElProduction::setMuF2Factors(Exclusive::DynamicScaleFactors muF2Factors) {
+    this->muF2Factors = muF2Factors;
+    this->hasMuF2 = true;
+}
+    
+void ExclusiveElProduction::setMu2Factors(Exclusive::DynamicScaleFactors mu2Factors) {
+    this->setMuF2Factors(mu2Factors);
+    this->setMuR2Factors(mu2Factors);
+}
+
+void ExclusiveElProduction::setLambdaQCD(dbl lambdaQCD) {
+    this->lambdaQCD = lambdaQCD;
+    this->aS.setLambda(this->nlf + 1, lambdaQCD);
+    this->hasAlphaS = true;
+}
+
 dbl ExclusiveElProduction::F(uint order/*= 1*/) {
+    if (order > 1)
+        throw domain_error((boost::format("order has to be either 0 or 1")%order).str());
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     // LO kernel
     PdfConvLOg LOg(m2,q2,bjorkenX,this->getBpQED());
-    LOg.setPdf(this->pdf,this->muF2);
+    LOg.setPdf(this->pdf);
     // NLO gluon kernel 
     PdfConvNLOg NLOg(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     NLOg.setBorn(this->getBpQED(),this->getSVp());
     NLOg.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
     NLOg.setPgg(this->getPggH0(),this->getPggH1(),this->getPggS1());
-    NLOg.setPdf(this->pdf,this->muF2);
-    NLOg.setMuR2(this->muR2);
+    NLOg.setPdf(this->pdf);
     // NLO quark kernel
     PdfConvNLOq NLOq(m2,q2,bjorkenX,nlf,omega,deltay);
     NLOq.setAp1(this->getAp1(), this->getAp1Counter());
     NLOq.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     NLOq.setAp2(this->getAp2());
     NLOq.setAp3(this->getAp3());
-    NLOq.setPdf(this->pdf,this->muF2);
+    NLOq.setPdf(this->pdf);
     // Full kernel
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
-    k.setAlphaS(alphaS);
+    k.setAlphaS(&(this->aS));
+    k.setMuRF2Factors(this->muR2Factors,this->muF2Factors);
     k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
 //size_t count = 0;

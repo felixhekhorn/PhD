@@ -216,11 +216,16 @@ protected:
 public:
     
 /**
- * @brief sets pdf and muF2
+ * @brief sets pdf 
  * @param pdf parton distribution function
+ */
+    void setPdf(PdfWrapper* pdf);
+    
+/**
+ * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    void setPdf(PdfWrapper* pdf, dbl muF2);
+    void setMuF2(dbl muF2);
 };
 
 } // namespace Exclusive

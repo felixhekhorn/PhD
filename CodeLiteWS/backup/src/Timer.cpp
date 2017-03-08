@@ -21,7 +21,7 @@ void Timer::end() {
 
 void Timer::log(std::ostream& o) {
     std::size_t n = this->ls.size();
-    if (0 >= n) {
+    if (0 == n) {
         o << "no data" << std::endl;
         return;
     }

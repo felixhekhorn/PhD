@@ -105,6 +105,6 @@ void AbstractElProduction::checkHadronic() const {
         throw invalid_argument("no Bjorken x given!");
     if (!this->hasAlphaS)
         throw invalid_argument("no strong coupling given!");
-    if (!this->pdf->inRangeQ2(this->muF2))
-        throw invalid_argument("PDF can't be evaluated at mu_F^2!");
+    //if (!this->pdf->inRangeQ2(this->muF2))
+    //    throw invalid_argument("PDF can't be evaluated at mu_F^2!");
 }

@@ -93,7 +93,12 @@ protected:
 /**
  * @brief checks wether all partonic parameters are given
  */
-    void virtual checkPartonic() const;
+    virtual void checkPartonic() const;
+    
+/**
+ * @brief checks wether all hadronic parameters are given
+ */
+    void checkHadronic() const;
 
 /**
  * @brief constructor
@@ -144,7 +149,7 @@ public:
  * @brief sets partonic center of mass energy
  * @param s partonic cm-energy
  */
-    void virtual setPartonicS(dbl s) = 0;
+    virtual void setPartonicS(dbl s) = 0;
 
 ///@}
 
@@ -171,36 +176,31 @@ public:
  * @brief sets renormalisation scale \f$\mu_R^2\f$
  * @param muR2 renormalisation scale \f$\mu_R^2\f$
  */
-    void setMuR2(dbl muR2);
+    virtual void setMuR2(dbl muR2);
     
 /**
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    void setMuF2(dbl muF2);
+    virtual void setMuF2(dbl muF2);
     
 /**
  * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  */
-    void setMu2(dbl mu2);
+    virtual void setMu2(dbl mu2);
     
 /**
  * @brief sets strong coupling
  * @param alphaS strong coupling
  */
-    void setAlphaS(dbl alphaS);
+    virtual void setAlphaS(dbl alphaS);
     
 /**
  * @brief sets Bjorken x
  * @param bjorkenX Bjorken x
  */
     void setBjorkenX(dbl bjorkenX);
-    
-/**
- * @brief checks wether all hadronic parameters are given
- */
-    void checkHadronic() const;
     
 ///@}
 
