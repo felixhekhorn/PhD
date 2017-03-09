@@ -54,18 +54,18 @@ struct DynamicScaleFactors {
     dbl cQ2 = -1.;
 
 /**
- * @brief factor to s5
+ * @brief factor to \f$(p_{T,\HepGenParticle{Q}{}{}}+p_{T,\HepGenAntiParticle{Q}{}{}})^2\f$
  */
-    dbl cS5 = 0.;
+    dbl cSqrPtSumHQPair = 0.;
     
 /**
  * @brief constructor
  * @param cM2 factor to m²
  * @param cQ2 factor to q² (!NOT! to Q²)
- * @param cS5 factor to s5
+ * @param cSqrPtSumHQPair factor to \f$(p_{T,\HepGenParticle{Q}{}{}}+p_{T,\HepGenAntiParticle{Q}{}{}})^2\f$
  */
-    DynamicScaleFactors(dbl cM2 = 4., dbl cQ2 = -1., dbl cS5 = 0.) :
-        cM2(cM2), cQ2(cQ2), cS5(cS5) {};
+    DynamicScaleFactors(dbl cM2 = 4., dbl cQ2 = -1., dbl cSqrPtSumHQPair = 0.) :
+        cM2(cM2), cQ2(cQ2), cSqrPtSumHQPair(cSqrPtSumHQPair) {};
 };
 
 } // namespace Exclusive

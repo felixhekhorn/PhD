@@ -99,7 +99,7 @@ dbl PdfConvNLOq::oq1() const {
 }
 
 dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
-    if(0 == this->pdf || 0. == this->muF2)
+    if(0 == this->pdf)
         throw invalid_argument("need to set all arguments!");
     this->setZ(az);
     this->setX(ax);

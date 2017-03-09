@@ -100,19 +100,19 @@ BOOST_PYTHON_MODULE(ElProduction)
     ;
     
     class_<Exclusive::MCParams>("ExclusiveMCParams")
-        .def_readwrite("calls", &Exclusive::MCParams::calls)
-        .def_readwrite("iterations", &Exclusive::MCParams::iterations)
-        .def_readwrite("warmupCalls", &Exclusive::MCParams::warmupCalls)
-        .def_readwrite("warmupIterations", &Exclusive::MCParams::warmupIterations)
-        .def_readwrite("bins", &Exclusive::MCParams::bins)
-        .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2)
-        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity)
+        .def_readwrite("calls", &Exclusive::MCParams::calls, "calls")
+        .def_readwrite("iterations", &Exclusive::MCParams::iterations, "calls during warmup")
+        .def_readwrite("warmupCalls", &Exclusive::MCParams::warmupCalls, "iterations")
+        .def_readwrite("warmupIterations", &Exclusive::MCParams::warmupIterations, "iterations during warmup")
+        .def_readwrite("bins", &Exclusive::MCParams::bins, "number of bins")
+        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity, "level of output")
+        .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2, "iterate until |chi2-1| < 0.5?")
     ;
     
     class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double>())
         .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
         .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
-        .def_readwrite("cS5", &Exclusive::DynamicScaleFactors::cS5, "factor to s5")
+        .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{T,Q}+p_{T,Qbar)^2")
     ;
     
     /*

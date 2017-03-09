@@ -3,8 +3,15 @@ reset
 
 set term png
 
-pin = "data/PLB353-535/"
-pout = "img/PLB353-535/"
+if (ARGC < 1) {
+  print "USAGE: ".ARG0." pdf"
+  exit
+}
+#pdf = "MSTW2008nlo90cl"
+#pdf = "cteq66"
+pdf = ARG1
+pin = "data/PLB353-535-" . pdf . "/"
+pout = "img/PLB353-535-" . pdf . "/"
 
 set logscale y
 set ytics format "%.1e"
@@ -32,7 +39,7 @@ f31 = pin . "FLb_x-270_q2-120_1.dat"
 x0(l,r) = .5*l+.5*r
 x1(l,r) = .5*l+.5*r
 
-set title "Fig. 8) dF_L(x,Q²=12GeV²,m_b²,M)/dM"
+set title sprintf("Fig. 8) dF_L(x,Q²=12GeV²,m_b²,M)/dM with %s",pdf)
 set out pout . "fig8.png"
 plot f01 u (x1($1,$2)):($3/($2-$1)) w boxes t "NLO(x=4.2e-4)" lc rgb "#ff0000", f00 u (x0($1,$2)):(1.3*$3/($2-$1)) w p pt 4  lc rgb "#990000" t "LO(x=4.2e-4)",\
      f11 u (x1($1,$2)):($3/($2-$1)) w boxes t "NLO(x=8.5e-4)" lc rgb "#00ff00", f10 u (x0($1,$2)):(1.3*$3/($2-$1)) w p pt 5  lc rgb "#009900" t "LO(x=8.5e-4)",\

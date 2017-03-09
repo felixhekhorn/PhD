@@ -11,7 +11,6 @@ using namespace Exclusive;
  */
 dbl b0(uint nf) { return (11.*CA - 2.*nf)/3.; };
 
-
 PdfConvNLOg::PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay):
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
     BpQED(0),SVp(0),Rp(0),RpxC(0),ROKpyC(0),ROKpyxC(0),PggH0(0),PggH1(0), muR2(-0.){

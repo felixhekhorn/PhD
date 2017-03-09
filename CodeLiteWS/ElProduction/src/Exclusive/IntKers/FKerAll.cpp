@@ -39,12 +39,43 @@ void FKerAll::setupKinematics() {
     using geom3::Vector3;
     using geom3::UnitVector3;
     using geom3::Rotation3;
-    this->k1 = P4(vs.k10*Vector3(0,vs.sinPsi,vs.cosPsi),0.);
-    this->q = P4(vs.q0,vs.absq*UnitVector3::zAxis());
+    P4 k1(vs.k10*UnitVector3(0,vs.sinPsi,vs.cosPsi),0.);
+    P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
     UnitVector3 u (Theta1,Theta2);
     this->p1 = P4(vs.beta5*u,sqrt(m2));
     this->p2 = P4(-vs.beta5*u,sqrt(m2));
-    { // reverse psi rotation
+    P4 ph = (z/bjorkenX)*k1;
+    { // boost to virtual photon-hadron c.m.s.
+        using rk::Boost;
+        P4 pCMS = ph + q;
+        Boost hCMS = pCMS.restBoost();
+        p1.boost(hCMS);
+        p2.boost(hCMS);
+//        k1.boost(hCMS);
+//        ph.boost(hCMS);
+//        cout << ph << endl;
+    } { // align ph to z
+        Rotation3 toZ(UnitVector3::xAxis(),ph.momentum().angle(UnitVector3::zAxis()));
+        p1.rotate(toZ);
+        p2.rotate(toZ);
+//        k1.rotate(toZ);
+//        ph.rotate(toZ);
+//        cout << ph << endl;
+    } { // randomize around z
+        const gsl_rng_type *T;
+        gsl_rng *r;
+        gsl_rng_env_setup();
+        T = gsl_rng_default;
+        r = gsl_rng_alloc(T);
+        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
+        gsl_rng_free(r);
+        p1.rotate(randZ);
+        p2.rotate(randZ);
+//        k1.rotate(randZ);
+//        ph.rotate(randZ);
+//        cout << ph << endl;
+    }
+    /*{ // reverse psi rotation
         Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
         q.rotate(invPsi);
         k1.rotate(invPsi);
@@ -68,11 +99,12 @@ void FKerAll::setupKinematics() {
         Boost hCMS = psh.restBoost();
         p1.boost(hCMS);
         p2.boost(hCMS);
-    }
+    }*/
 }
     
 dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
-    dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cS5 * this->vs.s5;
+    dbl ptSumHQPair = (this->p1 + this->p2).pt();
+    dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair;
     if (mu2 < 0.)
         throw domain_error("all scales have to be positive!");
     return mu2;
@@ -89,7 +121,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     this->setTheta1(aTheta1);
     this->setTheta2(aTheta2);
 //return aTheta1;
-    // setup kinematics
+    // setup kinematics, scales and norms
     this->setupKinematics();
     dbl muR2 = this->getDynamicScale(this->muR2Factors);
     dbl muF2 = this->getDynamicScale(this->muF2Factors);
@@ -99,6 +131,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     cdbl n = aS/m2 * (-q2)/(4.*M_PI*M_PI);
     cdbl nNLO = 4.*M_PI*aS;
     this->LOg->setMuF2(muF2);
+    // combine elements
     dbl r = n * eH*eH*(*this->LOg)(az,aTheta1);
     if (this->order > 0) {
         this->NLOg->setMuF2(muF2);
@@ -127,21 +160,6 @@ void FKerAll::scaleHistograms(dbl s) {
 //    (*sumWeights) *= s;
 }
 
-/*
-void FKerAll::beginIteration(HepSource::Int64 nshots) {
-    this->n++;
-    printf("n: %d\n",n);
-    if (1 == n%5)
-        this->scaleHistograms(0.);
-}
-
-void FKerAll::endIteration(HepSource::Int64 nshots) {
-    if (0 == n%5)
-        for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
-            it->second->scale(.2);
-}
-*/
-
 void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     // something active?
     if (0 == this->histMap)
@@ -152,11 +170,11 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
 //    (*sumWeights) += weight;
     cdbl val = i*weight;
     { // log10(z)
-    histMapT::const_iterator h = this->histMap->find(log10z);
+    histMapT::const_iterator h = this->histMap->find(histT::log10z);
     if (h != this->histMap->cend())
         h->second->accumulate(this->z,val);
     } { // log10(x_bj/z)
-    histMapT::const_iterator h = this->histMap->find(log10pdf);
+    histMapT::const_iterator h = this->histMap->find(histT::log10pdf);
     if (h != this->histMap->cend())
         h->second->accumulate(this->bjorkenX/this->z,val);
     } { // x
@@ -183,9 +201,7 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
     histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
     if (h != this->histMap->cend())
         h->second->accumulate(sqrt(vs.s5),val);
-    }
-    
-    { // AHQRapidity
+    } { // AHQRapidity
     histMapT::const_iterator h = this->histMap->find(histT::AHQRapidity);
     if (h != this->histMap->cend())
         h->second->accumulate(p2.rapidity(),val);

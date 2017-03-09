@@ -14,20 +14,10 @@ import numpy as np
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams, ExclusiveDynamicScaleFactors
 
-pathOut = "/home/Felix/Physik/PhD/data/PLB353-535/"
+#pdf = "MSTW2008nlo90cl"
+pdf = "cteq66"
+pathOut = "/home/Felix/Physik/PhD/data/PLB353-535-%s/"%pdf
 
-# @brief running strong coupling
-# taken from eq. 10 in G. Altarelli, M. Diemoz, G. Martinelli, and P. Nason, Nucl. Phys. B308 (1988) 724
-def AlphaS(Q2,f):
-  #lams = {4: 0.194, 5: 0.126}
-  lams = {4: 0.239, 5: 0.158}
-  lam2 = lams[f]**2
-  t = np.log(Q2/lam2)
-  def b(f): return (33. - 2.*f)/(12.*np.pi)
-  def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
-  return 1./(b(f)*t)*(1. - (bp(f)*np.log(t))/(b(f)*t))
-
-qIn = JoinableQueue()
 
 xTilde = .8
 omega = 1.
@@ -35,6 +25,7 @@ deltax = 1e-6
 deltay = 1e-6
 
 # compute all data points
+qIn = JoinableQueue()
 def run(nProcesses = cpu_count()):
 	# add EOF
 	lenParams = qIn.qsize()
@@ -51,7 +42,7 @@ def run(nProcesses = cpu_count()):
 		qIn.join()
 	except KeyboardInterrupt:
 		[p.terminate() for p in processes]
-		print "\n",_pwarn(),"aborting at",(lenParams-qIn.qsize()-nProcesses),"/",lenParams
+		print "\n",_pwarn(),"aborting at",(lenParams-(qIn.qsize()-nProcesses)),"/",lenParams
 		qIn.close()
 	sys.stdout.write("\n")
 
@@ -65,7 +56,7 @@ def _threadWorker(qIn):
 			break
 		# compute
 		o = ExclusiveElProduction(*p["oArgs"])
-		o.setPdf("cteq66",0)
+		o.setPdf(pdf,0)
 		o.setMu2Factors(ExclusiveDynamicScaleFactors(*p["mu2"]))
 		o.setLambdaQCD(p["lambdaQCD"])
 		o.setBjorkenX(p["bjorkenX"])
@@ -79,7 +70,7 @@ def _threadWorker(qIn):
 		qIn.task_done()
 		print _pok(), fp
 
-# add data point
+# add a data point
 def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
 	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
 	fp = pathOut+"F%s%s_x-%g_q2-%g_%d.dat"%(proj,qL,bjorkenX*1e5,-q2*1e1,n)
@@ -101,32 +92,56 @@ def addBotttom(q2,proj,bjorkenX):
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
+def addPreFig1():
+  addCharm(-8.5,projT.G,8.5e-4)
+  addCharm(-12.,projT.G,8.5e-4)
+  addCharm(-25.,projT.G,8.5e-4)
+  addCharm(-50.,projT.G,8.5e-4)
 def addFig2():
   addCharm(-8.5,projT.L,8.5e-4)
   addCharm(-12.,projT.L,8.5e-4)
   addCharm(-25.,projT.L,8.5e-4)
   addCharm(-50.,projT.L,8.5e-4)
 
+def addPreFig3():
+  addCharm(-12.,projT.G,4.2e-4)
+  #addCharm(-12.,projT.G,8.5e-4)
+  addCharm(-12.,projT.G,1.6e-3)
+  addCharm(-12.,projT.G,2.7e-3)
 def addFig4():
   addCharm(-12.,projT.L,4.2e-4)
   #addCharm(-12.,projT.L,8.5e-4)
   addCharm(-12.,projT.L,1.6e-3)
   addCharm(-12.,projT.L,2.7e-3)
 
+def addPreFig5():
+  addBotttom(-8.5,projT.G,8.5e-4)
+  addBotttom(-12.,projT.G,8.5e-4)
+  addBotttom(-25.,projT.G,8.5e-4)
+  addBotttom(-50.,projT.G,8.5e-4)
 def addFig6():
   addBotttom(-8.5,projT.L,8.5e-4)
   addBotttom(-12.,projT.L,8.5e-4)
   addBotttom(-25.,projT.L,8.5e-4)
   addBotttom(-50.,projT.L,8.5e-4)
 
+def addPreFig7():
+  addBotttom(-12.,projT.G,4.2e-4)
+  #addBotttom(-12.,projT.G,8.5e-4)
+  addBotttom(-12.,projT.G,1.6e-3)
+  addBotttom(-12.,projT.G,2.7e-3)
 def addFig8():
   addBotttom(-12.,projT.L,4.2e-4)
   #addBotttom(-12.,projT.L,8.5e-4)
   addBotttom(-12.,projT.L,1.6e-3)
   addBotttom(-12.,projT.L,2.7e-3)
 
-addFig2()
-addFig4()
-addFig6()
-addFig8()
+addPreFig1()
+#addFig2()
+addPreFig3()
+#addFig4()
+addPreFig5()
+#addFig6()
+addPreFig7()
+#addFig8()
 run()

@@ -68,15 +68,15 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
  */
     KinematicVars vs;
 
-/**
+/*
  * @brief incoming (hadronic-) parton
  */
-    rk::P4 k1;
+//    rk::P4 k1;
 
-/**
+/*
  * @brief incoming (virtual) photon
  */
-    rk::P4 q;
+//    rk::P4 q;
 
 /**
  * @brief outgoing heavy quark
@@ -144,7 +144,6 @@ public:
 /**
  * @brief sets avtive histograms
  * @param histMap pointer to map of histograms
- * @param count number of points
  */
     void setHistograms(const histMapT* histMap/*, size_t* count, dbl* sumWeights*/);
     
@@ -168,18 +167,6 @@ public:
  * @param f result
  */
     void operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl f[]);
-    
-/*
- * @brief called before collecting data
- * @param nshots number of points
- */
-//    void beginIteration(HepSource::Int64 nshots);
-    
-/*
- * @brief called after collecting data
- * @param nshots number of points
- */
-//    void endIteration(HepSource::Int64 nshots);
 
 /**
  * @brief scales all avtive histograms
