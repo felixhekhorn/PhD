@@ -3,7 +3,7 @@
 
 # http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
 def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
-def _pok(): return '\033[92m'+"[OK]"+'\033[0m'
+def _psucc(): return '\033[92m'+"[SUCC]"+'\033[0m'
 def _pinfo(): return "[INFO]"
 
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
@@ -42,7 +42,7 @@ def run(nProcesses = cpu_count()):
 		qIn.join()
 	except KeyboardInterrupt:
 		[p.terminate() for p in processes]
-		print "\n",_pwarn(),"aborting at",(lenParams-(qIn.qsize()-nProcesses)),"/",lenParams
+		print "\n",_pwarn(),"aborting at",(lenParams-qIn.qsize()),"/",lenParams
 		qIn.close()
 	sys.stdout.write("\n")
 
@@ -68,7 +68,7 @@ def _threadWorker(qIn):
 		fp = p["fp"]
 		o.printHistogram(ExclusiveHistT.invMassHQPair,fp)
 		qIn.task_done()
-		print _pok(), fp
+		print _psucc(), fp
 
 # add a data point
 def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
@@ -81,7 +81,7 @@ def addCharm(q2,proj,bjorkenX):
 	nlf = 3
 	lambdaQCD = 0.239
 	mu2 = (4.,-1.,1.,)
-	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
+	#add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
 def addBotttom(q2,proj,bjorkenX):
@@ -93,10 +93,10 @@ def addBotttom(q2,proj,bjorkenX):
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
 def addPreFig1():
-  addCharm(-8.5,projT.G,8.5e-4)
-  addCharm(-12.,projT.G,8.5e-4)
+  #addCharm(-8.5,projT.G,8.5e-4)
+  #addCharm(-12.,projT.G,8.5e-4)
   addCharm(-25.,projT.G,8.5e-4)
-  addCharm(-50.,projT.G,8.5e-4)
+  #addCharm(-50.,projT.G,8.5e-4)
 def addFig2():
   addCharm(-8.5,projT.L,8.5e-4)
   addCharm(-12.,projT.L,8.5e-4)
@@ -138,10 +138,10 @@ def addFig8():
 
 addPreFig1()
 #addFig2()
-addPreFig3()
+#addPreFig3()
 #addFig4()
-addPreFig5()
+#addPreFig5()
 #addFig6()
-addPreFig7()
+#addPreFig7()
 #addFig8()
-run()
+run(1)

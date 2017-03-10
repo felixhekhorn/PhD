@@ -105,8 +105,39 @@ void FKerAll::setupKinematics() {
 dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
     dbl ptSumHQPair = (this->p1 + this->p2).pt();
     dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair;
-    if (mu2 < 0.)
-        throw domain_error("all scales have to be positive!");
+    if (!isfinite(mu2) || mu2 < 0) {
+cout << boost::format("z=%e\nx=%e\ny=%e\nTheta1=%e\nTheta2=%e\n")%this->z%this->xE%this->yE%this->Theta1%this->Theta2;
+using rk::P4;
+using geom3::UnitVector3;
+P4 k1(vs.k10*UnitVector3(0,vs.sinPsi,vs.cosPsi),0.);
+P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
+UnitVector3 u (Theta1,Theta2);
+cout << "s5 = " << vs.s5 << " => beta5 = " << vs.beta5 << endl;
+cout << "s5 - 4m2 = " << vs.s5 << "-" << 4.*m2 << " = " << (vs.s5 - 4.*m2) << endl; 
+P4 p1p(vs.beta5*u,sqrt(m2));
+P4 p2p(-vs.beta5*u,sqrt(m2));
+cout << "k1: " << k1 << endl;
+cout << "q: (" << q.e() << "," << q.momentum() << ")"  << endl;
+cout << "p1p: " << p1p << endl;
+cout << "p2p: " << p2p << endl;
+P4 ph = (z/bjorkenX)*k1;
+cout << "ph: " << ph << endl;
+{ // boost to virtual photon-hadron c.m.s.
+using rk::Boost;
+P4 pCMS = ph + q;
+Boost hCMS = pCMS.restBoost();
+cout << "hCMS: " << hCMS << endl;
+cout << "pCMS':" << pCMS.boost(hCMS) << endl;
+p1p.boost(hCMS);
+p2p.boost(hCMS);
+//        k1.boost(hCMS);
+//        ph.boost(hCMS);
+cout << "p1p: " << p1p << endl;
+cout << "p2p: " << p2p << endl;
+//        cout << ph << endl;
+}
+        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair).str());
+    }
     return mu2;
 }
     
