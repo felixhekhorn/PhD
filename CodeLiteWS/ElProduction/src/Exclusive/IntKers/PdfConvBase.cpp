@@ -18,7 +18,9 @@ void PdfConvBase::setZ(dbl a) {
     
 void PdfConvBase::setSpRaw(dbl sp) {
     this->sp = sp;
-    cdbl xmax = 1. - this->deltax/*/(this->z > 0. ? this->z : 1.)*/;
+    cdbl eta = (sp + q2)/(4.*m2) - 1.;
+    cdbl xmax = 1. - this->deltax*pow(eta,2./3.);
+    // make hard cut instead of throwing an error
     this->rhoStar = min((4.*m2 - q2)/this->sp,xmax);
     //if (this->rhoStar > xmax)
     //    throw domain_error((boost::format("rho* (%e) has to be smaller than 1-deltax (%e)!")%this->rhoStar%xmax).str());

@@ -13,52 +13,52 @@ class PdfConvNLOg : public PdfConvBase {
 /**
  * @brief pointer to Born ME
  */
-    fPtr4dbl BpQED;
+    fPtr4dbl BpQED = 0;
     
 /**
  * @brief pointer to soft+virtual ME
  */
-    fPtr5dbl SVp;
+    fPtr5dbl SVp = 0;
     
 /**
  * @brief pointer to full hard ME
  */
-    fPtr7dbl Rp;
+    fPtr7dbl Rp = 0;
     
 /**
  * @brief pointer to soft limit of hard ME
  */
-    fPtr6dbl RpxC;
+    fPtr6dbl RpxC = 0;
     
 /**
  * @brief pointer to collinear limit of hard ME
  */
-    fPtr6dbl ROKpyC;
+    fPtr6dbl ROKpyC = 0;
     
 /**
  * @brief pointer to soft+collinear limit of hard ME
  */
-    fPtr4dbl ROKpyxC;
+    fPtr4dbl ROKpyxC = 0;
     
 /**
  * @brief pointer to \f$P_{\Pg\Pg}^{H,(0)}(z)\f$
  */
-    fPtr1dbl PggH0;
+    fPtr1dbl PggH0 = 0;
     
 /**
  * @brief pointer to \f$P_{\Pg\Pg}^{H,(1)}(z)\f$
  */
-    fPtr1dbl PggH1;
+    fPtr1dbl PggH1 = 0;
     
 /**
  * @brief pointer to \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
  */
-    fPtr0dbl PggS1;
+    fPtr0dbl PggS1 = 0;
 
 /**
  * @brief renormalization scale
  */
-    dbl muR2;
+    dbl muR2 = -0.;
     
 protected:
 

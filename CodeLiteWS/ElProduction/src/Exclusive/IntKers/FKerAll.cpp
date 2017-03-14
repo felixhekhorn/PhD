@@ -36,15 +36,53 @@ void FKerAll::setupKinematics() {
     this->vs = KinematicVars(this->m2, this->q2, this->sp, this->xE, this->yE, this->Theta1, this->Theta2);
     // setup relativistic kinematics
     using rk::P4;
+    using rk::Boost;
     using geom3::Vector3;
     using geom3::UnitVector3;
     using geom3::Rotation3;
-    P4 k1(vs.k10*UnitVector3(0,vs.sinPsi,vs.cosPsi),0.);
+    P4 k1(vs.k10*UnitVector3(0.,vs.sinPsi,vs.cosPsi),0.);
     P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
     UnitVector3 u (Theta1,Theta2);
     this->p1 = P4(vs.beta5*u,sqrt(m2));
     this->p2 = P4(-vs.beta5*u,sqrt(m2));
-    P4 ph = (z/bjorkenX)*k1;
+    P4 k2 (k1.momentum() + q.momentum(),0.);
+    { // boost to virtual photon-parton c.m.s.
+        P4 ps = q+k1;
+        Boost partonCMS = ps.restBoost();
+        k1.boost(partonCMS);
+        this->p1.boost(partonCMS);
+        this->p2.boost(partonCMS);
+        k2.boost(partonCMS);
+        q = p1+p2+k2-k1; // trick, as space-like vectors can't be boosted
+    } { // align k1 to z
+        Vector3 k1vec = k1.momentum();
+        Rotation3 toZ(k1vec.cross(UnitVector3::zAxis()).direction(),k1vec.angle(UnitVector3::zAxis()));
+        q.rotate(toZ);
+        k1.rotate(toZ);
+        this->p1.rotate(toZ);
+        this->p2.rotate(toZ);
+        k2.rotate(toZ);
+    }{ // randomize around z
+        const gsl_rng_type *T;
+        gsl_rng *r;
+        gsl_rng_env_setup();
+        T = gsl_rng_default;
+        r = gsl_rng_alloc(T);
+        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
+        gsl_rng_free(r);
+        q.rotate(randZ);
+        k1.rotate(randZ);
+        this->p1.rotate(randZ);
+        this->p2.rotate(randZ);
+        k2.rotate(randZ);
+    }{ // boost to virtual photon-hadron c.m.s.
+        P4 ph = (z/bjorkenX)*k1;
+        P4 pCMS = ph + q;
+        Boost hCMS = pCMS.restBoost();
+        this->p1.boost(hCMS);
+        this->p2.boost(hCMS);
+    }
+/*  P4 ph = (z/bjorkenX)*k1;
     { // boost to virtual photon-hadron c.m.s.
         using rk::Boost;
         P4 pCMS = ph + q;
@@ -52,14 +90,14 @@ void FKerAll::setupKinematics() {
         p1.boost(hCMS);
         p2.boost(hCMS);
 //        k1.boost(hCMS);
-//        ph.boost(hCMS);
+        ph.boost(hCMS);
 //        cout << ph << endl;
     } { // align ph to z
         Rotation3 toZ(UnitVector3::xAxis(),ph.momentum().angle(UnitVector3::zAxis()));
         p1.rotate(toZ);
         p2.rotate(toZ);
 //        k1.rotate(toZ);
-//        ph.rotate(toZ);
+        ph.rotate(toZ);
 //        cout << ph << endl;
     } { // randomize around z
         const gsl_rng_type *T;
@@ -75,7 +113,8 @@ void FKerAll::setupKinematics() {
 //        ph.rotate(randZ);
 //        cout << ph << endl;
     }
-    /*{ // reverse psi rotation
+*/
+/*  { // reverse psi rotation
         Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
         q.rotate(invPsi);
         k1.rotate(invPsi);
@@ -99,7 +138,8 @@ void FKerAll::setupKinematics() {
         Boost hCMS = psh.restBoost();
         p1.boost(hCMS);
         p2.boost(hCMS);
-    }*/
+    }
+*/
 }
     
 dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
@@ -160,11 +200,11 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     dbl aS = this->alphaS->alphasQ2(muR2);
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl n = aS/m2 * (-q2)/(4.*M_PI*M_PI);
-    cdbl nNLO = 4.*M_PI*aS;
     this->LOg->setMuF2(muF2);
     // combine elements
     dbl r = n * eH*eH*(*this->LOg)(az,aTheta1);
     if (this->order > 0) {
+        cdbl nNLO = 4.*M_PI*aS;
         this->NLOg->setMuF2(muF2);
         this->NLOg->setMuR2(muR2);
         this->NLOq->setMuF2(muF2);

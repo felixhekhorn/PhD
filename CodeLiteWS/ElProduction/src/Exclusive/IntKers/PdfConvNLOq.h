@@ -13,37 +13,37 @@ class PdfConvNLOq : public PdfConvBase {
 /**
  * @brief pointer to full heavy quark charge ME
  */
-    fPtr7dbl Ap1;
+    fPtr7dbl Ap1 = 0;
     
 /**
  * @brief pointer to collinear limit of heavy quark charge ME
  */
-    fPtr6dbl Ap1Counter;
+    fPtr6dbl Ap1Counter = 0;
     
 /**
  * @brief pointer to Born ME
  */
-    fPtr4dbl BpQED;
+    fPtr4dbl BpQED = 0;
     
 /**
  * @brief pointer to \f$P_{gq}^{(0)}(z)\f$
  */
-    fPtr1dbl Pgq0;
+    fPtr1dbl Pgq0 = 0;
     
 /**
  * @brief pointer to \f$P_{gq}^{(1)}(z)\f$
  */
-    fPtr1dbl Pgq1;
+    fPtr1dbl Pgq1 = 0;
     
 /**
  * @brief pointer to ME ~ eL^2
  */
-    fPtr7dbl Ap2;
+    fPtr7dbl Ap2 = 0;
     
 /**
  * @brief pointer to ME ~ eH eL
  */
-    fPtr7dbl Ap3;
+    fPtr7dbl Ap3 = 0;
     
 protected:
 

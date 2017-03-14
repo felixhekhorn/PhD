@@ -12,8 +12,7 @@ using namespace Exclusive;
 dbl b0(uint nf) { return (11.*CA - 2.*nf)/3.; };
 
 PdfConvNLOg::PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay):
-    PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    BpQED(0),SVp(0),Rp(0),RpxC(0),ROKpyC(0),ROKpyxC(0),PggH0(0),PggH1(0), muR2(-0.){
+    PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay){
 }
 
 void PdfConvNLOg::setBorn(fPtr4dbl BpQED, fPtr5dbl SVp) {
@@ -73,9 +72,9 @@ dbl PdfConvNLOg::cg1() const {
         cdbl meC = BpQED(m2,q2,sp,t1);
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = log(sp/m2)+log(sp/s)+log(omega/2.);
-        // (1-x)P_gg^0 -> 2CA for x->1 for all projections
-        r += jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
-        r -= jacxC*jacTheta1 * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC)));
+        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
+        r += jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE)*(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
+        r -= jacxC*jacTheta1 * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
     }
     
     // hard contributions

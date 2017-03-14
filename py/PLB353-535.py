@@ -14,15 +14,15 @@ import numpy as np
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams, ExclusiveDynamicScaleFactors
 
-#pdf = "MSTW2008nlo90cl"
-pdf = "cteq66"
+pdf = "MSTW2008nlo90cl"
+#pdf = "cteq66"
 pathOut = "/home/Felix/Physik/PhD/data/PLB353-535-%s/"%pdf
 
 
 xTilde = .8
 omega = 1.
 deltax = 1e-6
-deltay = 1e-6
+deltay = 7e-6
 
 # compute all data points
 qIn = JoinableQueue()
@@ -81,8 +81,8 @@ def addCharm(q2,proj,bjorkenX):
 	nlf = 3
 	lambdaQCD = 0.239
 	mu2 = (4.,-1.,1.,)
-	#add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
-	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
+	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
+	#add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
 def addBotttom(q2,proj,bjorkenX):
 	m2 = 4.75**2
@@ -93,10 +93,10 @@ def addBotttom(q2,proj,bjorkenX):
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
 def addPreFig1():
-  #addCharm(-8.5,projT.G,8.5e-4)
-  #addCharm(-12.,projT.G,8.5e-4)
+  addCharm(-8.5,projT.G,8.5e-4)
+  addCharm(-12.,projT.G,8.5e-4)
   addCharm(-25.,projT.G,8.5e-4)
-  #addCharm(-50.,projT.G,8.5e-4)
+  addCharm(-50.,projT.G,8.5e-4)
 def addFig2():
   addCharm(-8.5,projT.L,8.5e-4)
   addCharm(-12.,projT.L,8.5e-4)
@@ -137,11 +137,11 @@ def addFig8():
   addBotttom(-12.,projT.L,2.7e-3)
 
 addPreFig1()
-#addFig2()
-#addPreFig3()
-#addFig4()
+addFig2()
+addPreFig3()
+addFig4()
 #addPreFig5()
 #addFig6()
 #addPreFig7()
 #addFig8()
-run(1)
+run()

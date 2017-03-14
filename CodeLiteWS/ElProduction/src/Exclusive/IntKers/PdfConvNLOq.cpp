@@ -6,9 +6,7 @@ using namespace Color;
 using namespace Exclusive;
     
 PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl omega, dbl deltay) :
-    PdfConvBase(m2, q2, bjorkenX, nlf, 0., omega, 0., deltay), 
-    Ap1(0), Ap1Counter(0), BpQED(0), Pgq0(0), Pgq1(0),
-    Ap2(0), Ap3(0){
+    PdfConvBase(m2, q2, bjorkenX, nlf, 0., omega, 0., deltay){
 }
 
 void PdfConvNLOq::setAp1(fPtr7dbl Ap1, fPtr6dbl Ap1Counter) {
@@ -55,7 +53,7 @@ dbl PdfConvNLOq::cqBarF1() const {
     // collinear contributions
     cdbl s5B = q2 + sp*xE;
     cdbl beta5B = sqrt(1. - 4.*m2/s5B);
-    cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
+    cdbl t1c = -.5*sp*(1. - beta5B*cos(Theta1));
     cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
     cdbl jacB = jacxE*jacTheta1;
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
@@ -109,12 +107,12 @@ dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aThet
     cdbl meCq1 = cq1() + log(muF2/m2) * cqBarF1();
     cdbl meDq1 = dq1();
     cdbl meOq1 = oq1();
-    cdbl y = this->bjorkenX/z;
+    cdbl xi = this->bjorkenX/z;
     dbl fqs = 0.;
     cdbl eH = getElectricCharge(this->nlf + 1);
     for (uint q = 1; q < this->nlf + 1; ++q) {
         cdbl eL = getElectricCharge(q);
-        fqs += (this->pdf->xfxQ2((int)q,y,this->muF2) + this->pdf->xfxQ2(-((int)q),y,this->muF2))*(eH*eH*meCq1 + eL*eL*meDq1 + eH*eL*meOq1);
+        fqs += (this->pdf->xfxQ2((int)q,xi,this->muF2) + this->pdf->xfxQ2(-((int)q),xi,this->muF2))*(eH*eH*meCq1 + eL*eL*meDq1 + eH*eL*meOq1);
     }
     cdbl r = jacZ * 1./this->z * fqs;
     // Protect from ps corner cases
