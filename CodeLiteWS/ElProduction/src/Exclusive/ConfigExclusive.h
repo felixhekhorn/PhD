@@ -21,7 +21,7 @@ namespace Exclusive {
  */
 enum histT {
     log10z, /**< x_bj < z < z_max */
-    log10pdf, /**< x_bj/z_max < x_bj/z < 1. */
+    log10xi, /**< x_bj/z_max < xi < 1. */
     x, /**< x_bj/z_max < x < 1 */
     y, /**< -1 < y < 1 */
     Theta1, /**< 0 < Theta1 < pi */

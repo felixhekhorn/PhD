@@ -12,6 +12,8 @@ dbl Exclusive::int5DDvegas(FKerAll& F, const MCParams& ps) {
     using HepSource::VEGAS;
     using HepSource::IntegrandEstimate;
     Dvegas dv(dim,ps.bins,1,F);
+    /** @todo activate correlation between z and x? */
+    //Dvegas dv(dim,ps.bins,2,{},0,1,F);
     
     dbl res, err;
     

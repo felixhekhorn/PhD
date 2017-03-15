@@ -150,8 +150,8 @@ dbl InclusiveElProduction::Fg0() const {
     f.function = gslpp::callFunctor<PdfConvLO>;
     f.params = &k;
     dbl eH = getElectricCharge(this->nlf + 1);
-    dbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI) * eH*eH;
-    return n*int1D(&f);
+    dbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
+    return n * eH*eH * int1D(&f);
 }
 
 dbl InclusiveElProduction::Fg1() const {

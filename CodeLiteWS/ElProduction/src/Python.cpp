@@ -87,7 +87,7 @@ BOOST_PYTHON_MODULE(ElProduction)
     
     enum_<Exclusive::histT>("ExclusiveHistT")
         .value("log10z", Exclusive::histT::log10z)
-        .value("log10pdf", Exclusive::histT::log10pdf)
+        .value("log10xi", Exclusive::histT::log10xi)
         .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
         .value("Theta1", Exclusive::histT::Theta1)

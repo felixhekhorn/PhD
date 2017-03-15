@@ -35,11 +35,11 @@ public:
  */
     dbl operator() (dbl a) {
         this->setSp(a);
-        dbl me = cg0(m2,q2,sp);
+        cdbl me = cg0(m2,q2,sp);
         //if (this->bjorkenX/z < this->pdf->xMin()) {
         //    printf("x/z out of range: %e\n",this->bjorkenX/z);
         //}
-        dbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
+        cdbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;

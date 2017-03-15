@@ -61,8 +61,8 @@ def _threadWorker(qIn):
 		o.setLambdaQCD(p["lambdaQCD"])
 		o.setBjorkenX(p["bjorkenX"])
 		o.activateHistogram(ExclusiveHistT.invMassHQPair,40,0,40)
-		o.MCparams.calls = 500000
-		o.MCparams.warmupCalls = 5000
+		#o.MCparams.calls = 50000
+		#o.MCparams.warmupCalls = 5000
 		o.MCparams.verbosity = 2
 		o.F(p["n"])
 		fp = p["fp"]
@@ -90,7 +90,7 @@ def addBotttom(q2,proj,bjorkenX):
 	lambdaQCD = 0.158
 	mu2 = (1.,-1.,.25,)
 	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,0)
-	add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
+	#add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,1)
 
 def addPreFig1():
   addCharm(-8.5,projT.G,8.5e-4)
@@ -140,8 +140,8 @@ addPreFig1()
 addFig2()
 addPreFig3()
 addFig4()
-#addPreFig5()
-#addFig6()
-#addPreFig7()
-#addFig8()
+addPreFig5()
+addFig6()
+addPreFig7()
+addFig8()
 run()

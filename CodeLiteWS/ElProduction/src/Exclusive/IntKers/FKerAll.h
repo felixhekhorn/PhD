@@ -59,24 +59,12 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
  */
     const histMapT* histMap = 0;
     
-//    size_t* count = 0;
 //    dbl* sumWeights = 0;
-//    size_t n = 0;
 
 /**
  * @brief kinematic vars
  */
     KinematicVars vs;
-
-/*
- * @brief incoming (hadronic-) parton
- */
-//    rk::P4 k1;
-
-/*
- * @brief incoming (virtual) photon
- */
-//    rk::P4 q;
 
 /**
  * @brief outgoing heavy quark
@@ -145,7 +133,7 @@ public:
  * @brief sets avtive histograms
  * @param histMap pointer to map of histograms
  */
-    void setHistograms(const histMapT* histMap/*, size_t* count, dbl* sumWeights*/);
+    void setHistograms(const histMapT* histMap/*, dbl* sumWeights*/);
     
 /**
  * @brief called function for gsl_monte

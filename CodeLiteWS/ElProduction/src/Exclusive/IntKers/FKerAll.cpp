@@ -9,7 +9,7 @@ using namespace Exclusive;
 
 FKerAll::FKerAll(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    HepSource::Integrand(5,1), vs(m2,q2,4.*m2,0.,0.,0.,0.){
+    HepSource::Integrand(5,1), vs(m2,q2,4.*m2-q2,0.,0.,0.,0.){
 }
     
 void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
@@ -43,8 +43,8 @@ void FKerAll::setupKinematics() {
     P4 k1(vs.k10*UnitVector3(0.,vs.sinPsi,vs.cosPsi),0.);
     P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
     UnitVector3 u (Theta1,Theta2);
-    this->p1 = P4(vs.beta5*u,sqrt(m2));
-    this->p2 = P4(-vs.beta5*u,sqrt(m2));
+    this->p1 = P4(.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
+    this->p2 = P4(-.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
     P4 k2 (k1.momentum() + q.momentum(),0.);
     { // boost to virtual photon-parton c.m.s.
         P4 ps = q+k1;
@@ -82,102 +82,13 @@ void FKerAll::setupKinematics() {
         this->p1.boost(hCMS);
         this->p2.boost(hCMS);
     }
-/*  P4 ph = (z/bjorkenX)*k1;
-    { // boost to virtual photon-hadron c.m.s.
-        using rk::Boost;
-        P4 pCMS = ph + q;
-        Boost hCMS = pCMS.restBoost();
-        p1.boost(hCMS);
-        p2.boost(hCMS);
-//        k1.boost(hCMS);
-        ph.boost(hCMS);
-//        cout << ph << endl;
-    } { // align ph to z
-        Rotation3 toZ(UnitVector3::xAxis(),ph.momentum().angle(UnitVector3::zAxis()));
-        p1.rotate(toZ);
-        p2.rotate(toZ);
-//        k1.rotate(toZ);
-        ph.rotate(toZ);
-//        cout << ph << endl;
-    } { // randomize around z
-        const gsl_rng_type *T;
-        gsl_rng *r;
-        gsl_rng_env_setup();
-        T = gsl_rng_default;
-        r = gsl_rng_alloc(T);
-        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
-        gsl_rng_free(r);
-        p1.rotate(randZ);
-        p2.rotate(randZ);
-//        k1.rotate(randZ);
-//        ph.rotate(randZ);
-//        cout << ph << endl;
-    }
-*/
-/*  { // reverse psi rotation
-        Rotation3 invPsi (UnitVector3::xAxis(),acos(vs.cosPsi));
-        q.rotate(invPsi);
-        k1.rotate(invPsi);
-        p1.rotate(invPsi);
-        p2.rotate(invPsi);
-    } { // randomize around z
-        const gsl_rng_type *T;
-        gsl_rng *r;
-        gsl_rng_env_setup();
-        T = gsl_rng_default;
-        r = gsl_rng_alloc(T);
-        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
-        gsl_rng_free(r);
-        q.rotate(randZ);
-        k1.rotate(randZ);
-        p1.rotate(randZ);
-        p2.rotate(randZ);
-    } { // boost to virtual photon-hadron c.m.s.
-        using rk::Boost;
-        P4 psh = (z/bjorkenX)*k1 + q;
-        Boost hCMS = psh.restBoost();
-        p1.boost(hCMS);
-        p2.boost(hCMS);
-    }
-*/
 }
     
 dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
     dbl ptSumHQPair = (this->p1 + this->p2).pt();
     dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair;
-    if (!isfinite(mu2) || mu2 < 0) {
-cout << boost::format("z=%e\nx=%e\ny=%e\nTheta1=%e\nTheta2=%e\n")%this->z%this->xE%this->yE%this->Theta1%this->Theta2;
-using rk::P4;
-using geom3::UnitVector3;
-P4 k1(vs.k10*UnitVector3(0,vs.sinPsi,vs.cosPsi),0.);
-P4 q (vs.q0,vs.absq*UnitVector3::zAxis());
-UnitVector3 u (Theta1,Theta2);
-cout << "s5 = " << vs.s5 << " => beta5 = " << vs.beta5 << endl;
-cout << "s5 - 4m2 = " << vs.s5 << "-" << 4.*m2 << " = " << (vs.s5 - 4.*m2) << endl; 
-P4 p1p(vs.beta5*u,sqrt(m2));
-P4 p2p(-vs.beta5*u,sqrt(m2));
-cout << "k1: " << k1 << endl;
-cout << "q: (" << q.e() << "," << q.momentum() << ")"  << endl;
-cout << "p1p: " << p1p << endl;
-cout << "p2p: " << p2p << endl;
-P4 ph = (z/bjorkenX)*k1;
-cout << "ph: " << ph << endl;
-{ // boost to virtual photon-hadron c.m.s.
-using rk::Boost;
-P4 pCMS = ph + q;
-Boost hCMS = pCMS.restBoost();
-cout << "hCMS: " << hCMS << endl;
-cout << "pCMS':" << pCMS.boost(hCMS) << endl;
-p1p.boost(hCMS);
-p2p.boost(hCMS);
-//        k1.boost(hCMS);
-//        ph.boost(hCMS);
-cout << "p1p: " << p1p << endl;
-cout << "p2p: " << p2p << endl;
-//        cout << ph << endl;
-}
+    if (!isfinite(mu2) || mu2 < 0)
         throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair).str());
-    }
     return mu2;
 }
     
@@ -219,9 +130,8 @@ void FKerAll::operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl 
     this->fillHistograms(i, weight);
 }
 
-void FKerAll::setHistograms(const histMapT* histMap /*, size_t* count, dbl* sumWeights*/) {
+void FKerAll::setHistograms(const histMapT* histMap /*, dbl* sumWeights*/) {
     this->histMap = histMap;
-//    this->count = count;
 //    this->sumWeights = sumWeights;
 }
 
@@ -237,15 +147,14 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
         return;
     if (this->histMap->empty())
         return;
-//    (*count)++;
 //    (*sumWeights) += weight;
     cdbl val = i*weight;
     { // log10(z)
     histMapT::const_iterator h = this->histMap->find(histT::log10z);
     if (h != this->histMap->cend())
         h->second->accumulate(this->z,val);
-    } { // log10(x_bj/z)
-    histMapT::const_iterator h = this->histMap->find(histT::log10pdf);
+    } { // log10(xi)
+    histMapT::const_iterator h = this->histMap->find(histT::log10xi);
     if (h != this->histMap->cend())
         h->second->accumulate(this->bjorkenX/this->z,val);
     } { // x

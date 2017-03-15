@@ -296,7 +296,7 @@ void ExclusiveElProduction::setMu2(dbl muR2) {
 void ExclusiveElProduction::setAlphaS(dbl muR2) {
     throw logic_error("use setLambdaQCD instead!");
 }
-    
+
 void ExclusiveElProduction::setMuR2Factors(Exclusive::DynamicScaleFactors muR2Factors) {
     this->muR2Factors = muR2Factors;
     this->hasMuR2 = true;
@@ -347,18 +347,12 @@ dbl ExclusiveElProduction::F(uint order/*= 1*/) {
     k.setMuRF2Factors(this->muR2Factors,this->muF2Factors);
     k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
-//size_t count = 0;
 //dbl sumWeights = 0.;
     // setup histograms
     this->setupHistograms();
-//k.setHistograms(&(this->histMap), &count, &sumWeights);
+//k.setHistograms(&(this->histMap), &sumWeights);
     k.setHistograms(&(this->histMap));
-/*gsl_monte_function f;
-f.f = gslpp::callFunctor5D<FKerAll>;
-f.params = &k;
-cdbl i = int5D(&f);*/
     cdbl i = int5DDvegas(k, this->MCparams);
-//printf("c: %d, s: %e\n",count,sumWeights);
     return i;
 }
 
@@ -382,7 +376,7 @@ void ExclusiveElProduction::setupHistograms() {
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesLog10(this->bjorkenX,this->zMax);
     } {
-    histMapT::const_iterator h = this->histMap.find(log10pdf);
+    histMapT::const_iterator h = this->histMap.find(log10xi);
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
     } {

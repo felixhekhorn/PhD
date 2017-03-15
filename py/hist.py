@@ -15,6 +15,7 @@ def read(p):
 def totWeights(d):
   s = [e[2] for e in d]
   return np.sum(s)
+
 if len(sys.argv) < 2:
   print "USAGE: %s pdf"%sys.argv[0]
   exit()
