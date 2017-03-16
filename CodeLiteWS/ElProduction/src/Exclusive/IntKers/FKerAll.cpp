@@ -149,6 +149,7 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
         return;
 //    (*sumWeights) += weight;
     cdbl val = i*weight;
+    /*
     { // log10(z)
     histMapT::const_iterator h = this->histMap->find(histT::log10z);
     if (h != this->histMap->cend())
@@ -200,4 +201,5 @@ void FKerAll::fillHistograms(cdbl i, cdbl& weight) {
         }
         h->second->accumulate(phi1-phi2,val);
     } }
+     */
 }
