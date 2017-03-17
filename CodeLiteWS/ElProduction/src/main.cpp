@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <fstream>
 
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
@@ -31,16 +32,42 @@ int test() {
     dbl aS = alphaS.alphasQ2(mu02);
     
     InclusiveElProduction iO(m2,q2,Delta,L,nlf);
-    uint N = 51;
+    uint N = 31;
     cdbl eH = getElectricCharge(nlf + 1);
+    cdbl n = -q2*aS/(4.*M_PI*M_PI*m2) * eH*eH;
+    //cdbl zmax = -q2/(4.*m2  - q2);
+    cdbl dM =(40.5 - 2.*sqrt(m2))/((dbl)N);
+    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_M.dat");
     for (uint j = 0; j < N; ++j) {
-        cdbl M = .1 + 2.*sqrt(m2) + 31.*j/((dbl)(N-1));
-        cdbl s = M*M;
-        iO.setPartonicS(s);
-        cdbl f = 2.*M/(s-q2)*pdf.xfxQ2(21,(s-q2)*bjorkenX/(-q2),mu02) * iO.cg0();
-        cdbl g = -q2*aS/(4.*M_PI*M_PI*m2) * eH*eH * f;
-        printf("%e\t%e\n",sqrt(s),g);
+        cdbl M = 2.*sqrt(m2) + (j+.5)*dM;
+        cdbl z = -q2/(M*M-q2);
+        iO.setPartonicS(M*M);
+        cdbl f = 2.*M*z*z/(-q2) * 1./(z) * pdf.xfxQ2(21,bjorkenX/(z),mu02) * iO.cg0();
+        cdbl g = n * f;
+        o << boost::format("%e\t%e\n")%M%g;
     }
+    o.close();
+    /*cdbl dlnz2 =(log(zmax*zmax) - log(bjorkenX*bjorkenX))/((dbl)(N));
+    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_z2.dat");
+    for (uint j = 0; j < N; ++j) {
+        cdbl z2 = exp(log(bjorkenX*bjorkenX) + (j + .5)*dlnz2);
+        iO.setPartonicS(-q2/(sqrt(z2)) + q2);
+        cdbl f = 1./(2.*sqrt(z2)) * 1./(sqrt(z2)) * pdf.xfxQ2(21,bjorkenX/(sqrt(z2)),mu02) * iO.cg0();
+        cdbl g = n * f;
+        o << boost::format("%e\t%e\n")%z2%g;
+    }
+    o.close();*/
+    /*cdbl k = 3.;
+    cdbl dlnkz =(log(k*zmax) - log(k*bjorkenX))/((dbl)(N));
+    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_kz.dat");
+    for (uint j = 0; j < N; ++j) {
+        cdbl kz = exp(log(k*bjorkenX) + (j + .5)*dlnkz);
+        iO.setPartonicS(-q2/(kz/k) + q2);
+        cdbl f = 1./k * 1./(kz/k) * pdf.xfxQ2(21,bjorkenX/(kz/k),mu02) * iO.cg0();
+        cdbl g = n * f;
+        o << boost::format("%e\t%e\n")%kz%g;
+    }
+    o.close();*/
     return EXIT_SUCCESS;
 }
 
@@ -123,8 +150,9 @@ int main(int argc, char **argv) {
     //printf("%e < z < %e\n",bjorkenX,-q2/(4.*m2-q2));
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
-    eO.activateHistogram(Exclusive::histT::log10z,15);
-    eO.activateHistogram(Exclusive::histT::log10xi,15);
+    eO.activateHistogram(Exclusive::histT::log10z,100);
+    eO.activateHistogram(Exclusive::histT::invMassHQPair,31, 2.*sqrt(m2),40.5);
+    /*eO.activateHistogram(Exclusive::histT::log10xi,15);
     eO.activateHistogram(Exclusive::histT::x,15);
     eO.activateHistogram(Exclusive::histT::y,15);
     eO.activateHistogram(Exclusive::histT::Theta1,15);
@@ -133,14 +161,14 @@ int main(int argc, char **argv) {
     eO.activateHistogram(Exclusive::histT::invMassHQPair,100, 2.*sqrt(m2)-.5,2.*sqrt(m2)+31.5);
     eO.activateHistogram(Exclusive::histT::AHQRapidity,15);
     eO.activateHistogram(Exclusive::histT::AHQTransverseMomentum,15);
-    eO.activateHistogram(Exclusive::histT::DeltaPhiHQPair,15);
+    eO.activateHistogram(Exclusive::histT::DeltaPhiHQPair,15);*/
     
     cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
-    eO.MCparams.calls = 50000;
+    eO.MCparams.calls = 500000;
     eO.MCparams.warmupCalls = 5000;
     cdbl e = eO.F(n);
-    eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/log10z.dat");
-    eO.printHistogram(Exclusive::histT::invMassHQPair, "/home/Felix/Physik/PhD/data/invMassHQPair.dat");
+    eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/hist/log10z.dat");
+    eO.printHistogram(Exclusive::histT::invMassHQPair, "/home/Felix/Physik/PhD/data/hist/invMassHQPair.dat");
     printf("%e\t%e\n",i,e);
     /*
     eO.printHistogram(Exclusive::histT::log10z, "/home/Felix/Physik/PhD/data/Fb_L-x_2-q2_2-z.dat");

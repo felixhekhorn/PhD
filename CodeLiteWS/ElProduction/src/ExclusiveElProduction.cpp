@@ -371,6 +371,17 @@ void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan
 }
     
 void ExclusiveElProduction::setupHistograms() {
+/** @todo */
+    {
+    histMapT::const_iterator h = this->histMap.find(log10z);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesLog10(this->bjorkenX,this->zMax);
+    } {
+    histMapT::const_iterator h = this->histMap.find(invMassHQPair);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(2.*sqrt(this->m2),sqrt(-this->q2*(1./this->bjorkenX - 1.)));
+    }
+/*
     {
     histMapT::const_iterator h = this->histMap.find(log10z);
     if (this->histMap.cend() != h && !h->second->isInitialized())
@@ -422,7 +433,7 @@ void ExclusiveElProduction::setupHistograms() {
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesUniform(-M_PI,M_PI);
     }
-        
+*/
 }
 
 /*void ExclusiveElProduction::rescaleHistograms(dbl s) {

@@ -112,7 +112,7 @@ protected:
 /**
  * @brief current x for event
  */
-    dbl xE = -0.;
+    dbl xE = -1.;
     
 /**
  * @brief jacobian for x for counter event
@@ -122,7 +122,7 @@ protected:
 /**
  * @brief current x for counter event
  */
-    dbl xC = -0.;
+    dbl xC = -1.;
     
 /**
  * @brief jacobian for y for event
@@ -132,7 +132,7 @@ protected:
 /**
  * @brief current y for event
  */
-    dbl yE = -0.;
+    dbl yE = -1.;
     
 /**
  * @brief jacobian for y for counter event
@@ -142,7 +142,7 @@ protected:
 /**
  * @brief current y for counter event
  */
-    dbl yC = -0.;
+    dbl yC = -1.;
 
 /**
  * @brief current Theta1

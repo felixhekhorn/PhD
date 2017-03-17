@@ -28,7 +28,7 @@ void InclusiveElProduction::setDelta(dbl Delta) {
 void InclusiveElProduction::setPartonicS(dbl s) {
     if (s < 4.*m2)
         throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
-    dbl s4maxV = s*(1.-Sqrt(4.*m2/s));
+    dbl s4maxV = sqrt(s)*(sqrt(s)-sqrt(4.*m2));
     if (Delta > s4maxV)
         throw domain_error("Delta has to be smaller than s4_max!");
     this->sp = s - q2;

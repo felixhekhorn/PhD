@@ -129,10 +129,11 @@ public:
  * @param w weight
  * @return gsl_histogram_accumulate
  */
-    /*int accumulate(double x, double w) {
+    int accumulate(double x, double w) {
+        /** @todo */
         //gsl_histogram_increment(this->n, x);
         return gsl_histogram_accumulate(this->h, x, w);
-    }*/
+    }
     
 /**
  * @brief scales all histogram bins
@@ -140,6 +141,7 @@ public:
  * @return gsl_histogram_scale
  */
     int scale(double s) {
+        /** @todo */
         gsl_histogram_scale(this->n,s);
         gsl_histogram_scale(this->ws,s);
         return gsl_histogram_scale(this->h,s);
@@ -152,22 +154,23 @@ public:
  * @param bin_format printf-format for bin value
  * @return gsl_histogram_fprintf
  */
-    /*int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
+    int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
+        /** @todo */
         // empty?
         if (!this->isInitialized())
             return 0;
-        / *gsl_histogram* c = gsl_histogram_alloc(this->size);
+        /*gsl_histogram* c = gsl_histogram_alloc(this->size);
         c = gsl_histogram_clone(this->h);
         gsl_histogram_div(c,this->n);
         gsl_histogram_fprintf(stdout,n,"% e", "% e");
         int r = gsl_histogram_fprintf(stream, c, range_format, bin_format);
         gsl_histogram_free(c);
-        return r;* /
+        return r;*/
         return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
-    }*/
+    }
     
     void write(str path) {
-        
+        /** @todo */
     }
 };
 

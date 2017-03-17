@@ -67,6 +67,16 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
     KinematicVars vs;
 
 /**
+ * @brief incoming parton
+ */
+    rk::P4 k1;
+
+/**
+ * @brief incoming photon
+ */
+    rk::P4 q;
+
+/**
  * @brief outgoing heavy quark
  */
     rk::P4 p1;
@@ -77,15 +87,48 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
     rk::P4 p2;
 
 /**
- * @brief computes all kinematic variables
+ * @brief outgoing parton
  */
-    void setupKinematics();
+    rk::P4 k2;
+    
+/**
+ * @brief integration weight determined by VEGAS
+ */
+    cdbl* vegasWeight = 0;
+
+/**
+ * @brief computes all LO kinematic variables
+ */
+    void setupLOKinematics();
+
+/**
+ * @brief computes all NLO kinematic variables
+ */
+    void setupNLOKinematics();
+
+/**
+ * @brief shifts all vectors to the final (observatory-) frame
+ */
+    void applyLTsToFinalFrame();
     
 /**
  * @brief computes a scale by given factors
  * @param factors
  */
     dbl getDynamicScale(DynamicScaleFactors factors);
+
+/**
+ * @brief fills all avtive histograms available in all orders
+ * These histograms may only depend on LO variables such as z, p1, p2, k1, q
+ * @param i integrand
+ */
+    void fillAllOrderHistograms(dbl i);
+
+/**
+ * @brief fills all avtive histograms available in NLO
+ * @param i integrand
+ */
+    void fillNLOHistograms(dbl i);
     
 public:
 
@@ -161,13 +204,6 @@ public:
  * @param s factor
  */
     void scaleHistograms(dbl s);
-
-/**
- * @brief fills all avtive histograms
- * @param i integrand
- * @param weight integration weight
- */
-    void fillHistograms(dbl i, cdbl& weight);
 };
     
 } // namespace Exclusive
