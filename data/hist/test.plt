@@ -17,8 +17,8 @@ set ytics format "%.1e"
 #set style fill solid noborder
 #set style fill empty border
 
-#set key left bottom box opaque
-set key left top box
+set key right top box opaque
+#set key left top box
 
 #set xlabel "M [GeV]"
 #set xrange [0:40.]

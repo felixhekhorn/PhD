@@ -9,6 +9,7 @@ Release/src_ExclusiveElProduction.cpp.o: src/ExclusiveElProduction.cpp \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
  src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/PdfConvNLOq.h \
+ src/Exclusive/IntKers/PhasespacePoint.h \
  src/Exclusive/IntKers/KinematicVars.hpp src/gslpp/gslpp.Functor.hpp \
  src/./Integration.h src/./config.h src/Exclusive/ME/BpQED.h \
  src/Exclusive/ME/../../config.h src/Exclusive/ME/Rp.h \
@@ -56,6 +57,8 @@ src/Exclusive/IntKers/PdfConvLOg.h:
 src/Exclusive/IntKers/PdfConvNLOg.h:
 
 src/Exclusive/IntKers/PdfConvNLOq.h:
+
+src/Exclusive/IntKers/PhasespacePoint.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:
 

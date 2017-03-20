@@ -8,6 +8,7 @@ Debug/src_Exclusive_IntKers_FKerAll.cpp.o: \
  src/Exclusive/IntKers/../../Pdf/../config.h \
  src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/PdfConvNLOq.h \
+ src/Exclusive/IntKers/PhasespacePoint.h \
  src/Exclusive/IntKers/KinematicVars.hpp
 
 src/Exclusive/IntKers/FKerAll.h:
@@ -31,5 +32,7 @@ src/Exclusive/IntKers/PdfConvLOg.h:
 src/Exclusive/IntKers/PdfConvNLOg.h:
 
 src/Exclusive/IntKers/PdfConvNLOq.h:
+
+src/Exclusive/IntKers/PhasespacePoint.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:

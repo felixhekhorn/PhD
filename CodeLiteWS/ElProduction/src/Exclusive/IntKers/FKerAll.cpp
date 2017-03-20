@@ -1,15 +1,10 @@
 #include "FKerAll.h"
 
-#include <rk/geom3.hh>
-#include <gsl/gsl_rng.h>
-
-#include "KinematicVars.hpp"
-
 using namespace Exclusive;
 
 FKerAll::FKerAll(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    HepSource::Integrand(5,1), vs(m2,q2,4.*m2-q2,0.,0.,0.,0.){
+    HepSource::Integrand(5,1){
 }
     
 void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
@@ -29,89 +24,6 @@ void FKerAll::setOrder(uint order) {
 void FKerAll::setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors) {
     this->muR2Factors = muR2Factors;
     this->muF2Factors = muF2Factors;
-}
-
-void FKerAll::setupLOKinematics() {
-    this->vs = KinematicVars(this->m2, this->q2, this->sp, 1., -1., this->Theta1, 0.);
-    using rk::P4;
-    using geom3::UnitVector3;
-    
-    cdbl sqrts = sqrt(this->sp + this->q2);
-    this->k1 = P4(sp/(2.*sqrts) * UnitVector3::zAxis(),0.);
-    this->q = P4((sp + 2.*q2)/(2.*sqrts),-k1.momentum());
-    UnitVector3 u (Theta1,0.);
-    this->p1 = P4(.5*sqrts*vs.beta5*u,sqrt(m2));
-    this->p2 = P4(-.5*sqrts*vs.beta5*u,sqrt(m2));
-    this->k2 = P4();
-    
-    this->applyLTsToFinalFrame();
-}
-
-void FKerAll::setupNLOKinematics() {
-    this->vs = KinematicVars(this->m2, this->q2, this->sp, this->xE, this->yE, this->Theta1, this->Theta2);
-    using rk::P4;
-    using geom3::UnitVector3;
-    
-    this->k1 = P4(vs.k10*UnitVector3(0.,vs.sinPsi,vs.cosPsi),0.);
-    this->q = P4(vs.q0,vs.absq*UnitVector3::zAxis());
-    UnitVector3 u (Theta1,Theta2);
-    this->p1 = P4(.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
-    this->p2 = P4(-.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
-    this->k2 = P4(k1.momentum() + q.momentum(),0.);
-    
-    this->applyLTsToFinalFrame();
-}
-
-void FKerAll::applyLTsToFinalFrame() {
-    using rk::P4;
-    using rk::Boost;
-    using geom3::Vector3;
-    using geom3::UnitVector3;
-    using geom3::Rotation3;
-    { // boost to virtual photon-parton c.m.s.
-        P4 ps = q+k1;
-        Boost partonCMS = ps.restBoost();
-        k1.boost(partonCMS);
-        this->p1.boost(partonCMS);
-        this->p2.boost(partonCMS);
-        k2.boost(partonCMS);
-        q = p1+p2+k2-k1; // trick, as space-like vectors can't be boosted
-    } { // align k1 to z
-        Vector3 k1vec = k1.momentum();
-        Rotation3 toZ(k1vec.cross(UnitVector3::zAxis()).direction(),k1vec.angle(UnitVector3::zAxis()));
-        q.rotate(toZ);
-        k1.rotate(toZ);
-        this->p1.rotate(toZ);
-        this->p2.rotate(toZ);
-        k2.rotate(toZ);
-    }{ // randomize around z
-        const gsl_rng_type *T;
-        gsl_rng *r;
-        gsl_rng_env_setup();
-        T = gsl_rng_default;
-        r = gsl_rng_alloc(T);
-        Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
-        gsl_rng_free(r);
-        q.rotate(randZ);
-        k1.rotate(randZ);
-        this->p1.rotate(randZ);
-        this->p2.rotate(randZ);
-        k2.rotate(randZ);
-    }{ // boost to virtual photon-hadron c.m.s.
-        P4 ph = (z/bjorkenX)*k1;
-        P4 pCMS = ph + q;
-        Boost hCMS = pCMS.restBoost();
-        this->p1.boost(hCMS);
-        this->p2.boost(hCMS);
-    }
-}
-    
-dbl FKerAll::getDynamicScale(DynamicScaleFactors factors) {
-    dbl ptSumHQPair = (this->p1 + this->p2).pt();
-    dbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair;
-    if (!isfinite(mu2) || mu2 < 0)
-        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair).str());
-    return mu2;
 }
     
 dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
@@ -133,36 +45,89 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     this->alphaS->setOrderQCD(1 + this->order);
     
     { // LO
-        this->setupLOKinematics();
-        cdbl muR2 = this->getDynamicScale(this->muR2Factors);
-        cdbl muF2 = this->getDynamicScale(this->muF2Factors);
-        cdbl aS = this->alphaS->alphasQ2(muR2);
+        PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
+        p.setupLO(this->z, this->Theta1);
+        cdbl aS = this->alphaS->alphasQ2(p.getMuR2());
         cdbl nLO = aS*n0;
-        this->LOg->setMuF2(muF2);
+        this->LOg->setMuF2(p.getMuF2());
         cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
-        this->fillAllOrderHistograms(fLO);
+        this->fillAllOrderHistograms(p, fLO);
         r += fLO;
     }
     
-    if (this->order > 0) { // NLO
-        this->setupNLOKinematics();
-        cdbl muR2 = this->getDynamicScale(this->muR2Factors);
-        cdbl muF2 = this->getDynamicScale(this->muF2Factors);
-        cdbl aS = this->alphaS->alphasQ2(muR2);
-        cdbl nNLO = 4.*M_PI*aS*aS*n0;
-        this->NLOg->setMuF2(muF2);
-        this->NLOg->setMuR2(muR2);
-        this->NLOq->setMuF2(muF2);
-        cdbl fNLO = nNLO * (eH*eH*(*this->NLOg)(az, ax, ay, aTheta1, aTheta2) + (*this->NLOq)(az, ax, ay, aTheta1, aTheta2));
-        this->fillAllOrderHistograms(fNLO);
-        this->fillNLOHistograms(fNLO);
-        r += fNLO;
+    // NLO
+    if (this->order > 0) {
+        { // gluon channel
+            // compute kernels
+            PhasespaceValues cg1 = this->NLOg->cg1();
+            PhasespaceValues cgBarR1 = this->NLOg->cgBarR1();
+            PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
+            // combine all 4 points: Event & soft & collinear & soft+collinear
+            r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
+            r += this->combineNLOg(this->xC, this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
+            r += this->combineNLOg(this->xE, this->yC, cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
+            r += this->combineNLOg(this->xC, this->yC, cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+        } { // quark channel
+            // compute kernels
+            PhasespaceValues cq1 = this->NLOq->cq1();
+            PhasespaceValues cqBarF1 = this->NLOq->cqBarF1();
+            PhasespaceValues dq1 = this->NLOq->dq1();
+            PhasespaceValues oq1 = this->NLOq->oq1();
+            // combine 2 points: Event & collinear
+            r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
+            r += this->combineNLOq(this->xE, this->yC, cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
+        }
     }
     return isfinite(r) ? r : 0.;
 }
 
+dbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
+    PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
+    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
+    cdbl muR2 = p.getMuR2();
+    cdbl muF2 = p.getMuF2();
+    cdbl aS = this->alphaS->alphasQ2(muR2);
+    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    // combine
+    cdbl nNLOg = this->jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,muF2);
+    cdbl fNLOg = nNLO * eH*eH * nNLOg * (cg1 + log(muR2/this->m2)*cgBarR1 + log(muF2/this->m2)*cgBarF1);
+    if (!isfinite(fNLOg))
+        return 0.;
+    // fill histograms
+    this->fillAllOrderHistograms(p, fNLOg);
+    this->fillNLOHistograms(p, fNLOg);
+    return fNLOg;
+}
+
+dbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1) {
+    PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
+    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
+    cdbl muR2 = p.getMuR2();
+    cdbl muF2 = p.getMuF2();
+    cdbl aS = this->alphaS->alphasQ2(muR2);
+    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    // combine
+    dbl fqs = 0.;
+    cdbl xi = this->bjorkenX/z;
+    for (uint q = 1; q < this->nlf + 1; ++q) {
+        cdbl eL = getElectricCharge(q);
+        fqs += (this->pdf->xfxQ2((int)q,xi,muF2) + this->pdf->xfxQ2(-((int)q),xi,muF2))
+                * (eH*eH*(cq1 + log(muF2/m2)*cqBarF1) + eL*eL*dq1 + eH*eL*oq1);
+    }
+    cdbl fNLOq = nNLO * (this->jacZ * 1./this->z) * fqs ;
+    if (!isfinite(fNLOq))
+        return 0.;
+    // fill histograms
+    this->fillAllOrderHistograms(p, fNLOq);
+    this->fillNLOHistograms(p, fNLOq);
+    return fNLOq;
+}
+
 void FKerAll::operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl f[]) {
     this->vegasWeight = &weight;
+//    (*sumWeights) += weight;
     cdbl i = this->operator()(x[0],x[1],x[2],x[3],x[4]);
     f[0] = i;
 }
@@ -172,29 +137,28 @@ void FKerAll::setHistograms(const histMapT* histMap /*, dbl* sumWeights*/) {
 //    this->sumWeights = sumWeights;
 }
 
-void FKerAll::scaleHistograms(dbl s) {
+void FKerAll::scaleHistograms(dbl s) const {
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
         it->second->scale(s);
 //    (*sumWeights) *= s;
 }
 
-void FKerAll::fillAllOrderHistograms(cdbl i) {
+void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
     // something active?
     if (0 == this->histMap)
         return;
     if (this->histMap->empty())
         return;
-//    (*sumWeights) += weight;
     cdbl val = i*(*this->vegasWeight);
     
     { // log10(z)
     histMapT::const_iterator h = this->histMap->find(histT::log10z);
     if (h != this->histMap->cend())
-        h->second->accumulate(this->z,val);
+        h->second->accumulate(p.getZ(),val);
     } { // invMassHQPair
     histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
     if (h != this->histMap->cend()) {
-        cdbl M2 = (this->p1 + this->p2).squared();
+        cdbl M2 = (p.getP1() + p.getP2()).squared();
         h->second->accumulate(sqrt(M2),val);
     } }
     /** @todo */
@@ -206,10 +170,6 @@ void FKerAll::fillAllOrderHistograms(cdbl i) {
     histMapT::const_iterator h = this->histMap->find(histT::s5);
     if (h != this->histMap->cend())
         h->second->accumulate(vs.s5,val);
-    } { // invMassHQPair
-    histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
-    if (h != this->histMap->cend())
-        h->second->accumulate(sqrt(vs.s5),val);
     } { // AHQRapidity
     histMapT::const_iterator h = this->histMap->find(histT::AHQRapidity);
     if (h != this->histMap->cend())
@@ -232,14 +192,13 @@ void FKerAll::fillAllOrderHistograms(cdbl i) {
      */
 }
 
-void FKerAll::fillNLOHistograms(cdbl i) {
+void FKerAll::fillNLOHistograms(PhasespacePoint p, cdbl i) const {
     /** @todo */
     /*// something active?
     if (0 == this->histMap)
         return;
     if (this->histMap->empty())
         return;
-//    (*sumWeights) += weight;
     cdbl val = i*(*this->vegasWeight);
      { // x
     histMapT::const_iterator hx = this->histMap->find(histT::x);

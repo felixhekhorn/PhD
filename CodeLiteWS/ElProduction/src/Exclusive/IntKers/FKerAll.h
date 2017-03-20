@@ -2,7 +2,6 @@
 #define FKerAll_HPP_
 
 #include <dvegas/dvegas.h>
-#include <rk/rk.hh>
 
 #include "PdfConvBase.h"
 #include "PdfConvLOg.h"
@@ -10,7 +9,7 @@
 #include "PdfConvNLOq.h"
 
 #include "../ConfigExclusive.h"
-#include "KinematicVars.hpp"
+#include "PhasespacePoint.h"
 
 namespace Exclusive {
 
@@ -60,75 +59,49 @@ class FKerAll : PdfConvBase, public HepSource::Integrand {
     const histMapT* histMap = 0;
     
 //    dbl* sumWeights = 0;
-
-/**
- * @brief kinematic vars
- */
-    KinematicVars vs;
-
-/**
- * @brief incoming parton
- */
-    rk::P4 k1;
-
-/**
- * @brief incoming photon
- */
-    rk::P4 q;
-
-/**
- * @brief outgoing heavy quark
- */
-    rk::P4 p1;
-
-/**
- * @brief outgoing heavy anti quark
- */
-    rk::P4 p2;
-
-/**
- * @brief outgoing parton
- */
-    rk::P4 k2;
     
 /**
  * @brief integration weight determined by VEGAS
  */
     cdbl* vegasWeight = 0;
-
-/**
- * @brief computes all LO kinematic variables
- */
-    void setupLOKinematics();
-
-/**
- * @brief computes all NLO kinematic variables
- */
-    void setupNLOKinematics();
-
-/**
- * @brief shifts all vectors to the final (observatory-) frame
- */
-    void applyLTsToFinalFrame();
     
 /**
- * @brief computes a scale by given factors
- * @param factors
+ * @brief combines all parts to NLOg
+ * @param x
+ * @param y
+ * @param cg1
+ * @param cgBarR1
+ * @param cgBarF1
+ * @return total kernel
  */
-    dbl getDynamicScale(DynamicScaleFactors factors);
+    dbl combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1);
+    
+/**
+ * @brief combines all parts of NLOq
+ * @param x
+ * @param y
+ * @param cq1
+ * @param cqBarF1
+ * @param dq1
+ * @param oq1
+ * @return total kernel
+ */
+    dbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1);
 
 /**
  * @brief fills all avtive histograms available in all orders
  * These histograms may only depend on LO variables such as z, p1, p2, k1, q
+ * @param p current phase space point
  * @param i integrand
  */
-    void fillAllOrderHistograms(dbl i);
+    void fillAllOrderHistograms(PhasespacePoint p, dbl i) const;
 
 /**
  * @brief fills all avtive histograms available in NLO
+ * @param p current phase space point
  * @param i integrand
  */
-    void fillNLOHistograms(dbl i);
+    void fillNLOHistograms(PhasespacePoint p, dbl i) const;
     
 public:
 
@@ -203,7 +176,7 @@ public:
  * @brief scales all avtive histograms
  * @param s factor
  */
-    void scaleHistograms(dbl s);
+    void scaleHistograms(dbl s) const;
 };
     
 } // namespace Exclusive

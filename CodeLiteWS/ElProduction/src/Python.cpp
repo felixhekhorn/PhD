@@ -87,17 +87,17 @@ BOOST_PYTHON_MODULE(ElProduction)
     
     enum_<Exclusive::histT>("ExclusiveHistT")
         .value("log10z", Exclusive::histT::log10z)
-        .value("log10xi", Exclusive::histT::log10xi)
+        .value("invMassHQPair", Exclusive::histT::invMassHQPair)
+/*        .value("log10xi", Exclusive::histT::log10xi)
         .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
         .value("Theta1", Exclusive::histT::Theta1)
         .value("Theta2", Exclusive::histT::Theta2)
         .value("s5", Exclusive::histT::s5)
-        .value("invMassHQPair", Exclusive::histT::invMassHQPair)
         .value("AHQRapidity", Exclusive::histT::AHQRapidity)
         .value("AHQTransverseMomentum", Exclusive::histT::AHQTransverseMomentum)
         .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
-    ;
+*/    ;
     
     class_<Exclusive::MCParams>("ExclusiveMCParams")
         .def_readwrite("calls", &Exclusive::MCParams::calls, "calls")

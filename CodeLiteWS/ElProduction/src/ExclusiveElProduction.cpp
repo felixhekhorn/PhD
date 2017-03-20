@@ -220,7 +220,7 @@ dbl ExclusiveElProduction::dq1() const {
 dbl ExclusiveElProduction::Fg0() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
-    this->checkHadronic();
+/*    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
@@ -233,13 +233,13 @@ throw logic_error("TODO: reimplement! delegate?");
     // multiply norm
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI) * eH*eH;
-    return n*int2D(&f);
+    return n*int2D(&f);*/
 }
 
 dbl ExclusiveElProduction::Fg1() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
-    this->checkHadronic();
+/*    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
@@ -256,13 +256,13 @@ throw logic_error("TODO: reimplement! delegate?");
     // multiply norm
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI)* eH*eH;
-    return n*int5D(&f);
+    return n*int5D(&f);*/
 }
 
 dbl ExclusiveElProduction::Fq1() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
-    this->checkHadronic();
+/*    this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
@@ -278,7 +278,7 @@ throw logic_error("TODO: reimplement! delegate?");
     f.params = &k;
     // multiply norm
     cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
-    return n*int5D(&f);
+    return n*int5D(&f);*/
 }
 
 void ExclusiveElProduction::setMuR2(dbl muR2) {

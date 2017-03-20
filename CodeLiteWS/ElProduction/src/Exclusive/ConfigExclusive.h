@@ -21,16 +21,16 @@ namespace Exclusive {
  */
 enum histT {
     log10z, /**< x_bj < z < z_max */
-    log10xi, /**< x_bj/z_max < xi < 1. */
-    x, /**< x_bj/z_max < x < 1 */
-    y, /**< -1 < y < 1 */
-    Theta1, /**< 0 < Theta1 < pi */
-    Theta2, /**< 0 < Theta2 < pi */
-    s5, /**< 4m^2 < s5 < -q2(1/x_bj - 1) */
     invMassHQPair, /**< 2m < invMassHQPair < sqrt(-q2(1/x_bj - 1)) */
-    AHQRapidity, /**< -y0 < AHQRapidity < y0 where y0 = artanh(sqrt(1-4m2/S)) */
-    AHQTransverseMomentum, /**< 0 < AHQTransverseMomentum < sqrt(S/4-m2)) */
-    DeltaPhiHQPair /**< -pi < DeltaPhiHQPair < pi */
+//    log10xi, /**< x_bj/z_max < xi < 1. */
+//    x, /**< x_bj/z_max < x < 1 */
+//    y, /**< -1 < y < 1 */
+//    Theta1, /**< 0 < Theta1 < pi */
+//    Theta2, /**< 0 < Theta2 < pi */
+//    s5, /**< 4m^2 < s5 < -q2(1/x_bj - 1) */
+//    AHQRapidity, /**< -y0 < AHQRapidity < y0 where y0 = artanh(sqrt(1-4m2/S)) */
+//    AHQTransverseMomentum, /**< 0 < AHQTransverseMomentum < sqrt(S/4-m2)) */
+//    DeltaPhiHQPair /**< -pi < DeltaPhiHQPair < pi */
 };
 
 /**
@@ -66,6 +66,40 @@ struct DynamicScaleFactors {
  */
     DynamicScaleFactors(dbl cM2 = 4., dbl cQ2 = -1., dbl cSqrPtSumHQPair = 0.) :
         cM2(cM2), cQ2(cQ2), cSqrPtSumHQPair(cSqrPtSumHQPair) {};
+};
+
+/**
+ * @brief holds the values of all kernels
+ */
+struct PhasespaceValues {
+    
+/**
+ * @brief kernel at event x and event y
+ */
+    dbl xEyE = 0.;
+    
+/**
+ * @brief kernel at counter event x and event y
+ */
+    dbl xCyE = 0.;
+    
+/**
+ * @brief kernel at event x and counter event y
+ */
+    dbl xEyC = 0.;
+    
+/**
+ * @brief kernel at counter event x and counter event y
+ */
+    dbl xCyC = 0.;
+    
+/**
+ * @brief total weight
+ * @return sum of all parts
+ */
+    dbl tot() const {
+        return this->xEyE + this->xCyE + this->xEyC + this->xCyC;
+    }
 };
 
 } // namespace Exclusive

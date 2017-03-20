@@ -9,6 +9,7 @@ Py27/src_Python.cpp.o: src/Python.cpp src/InclusiveElProduction.h \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
  src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/PdfConvNLOq.h \
+ src/Exclusive/IntKers/PhasespacePoint.h \
  src/Exclusive/IntKers/KinematicVars.hpp \
  src/Exclusive/IntKers/KinematicVars.hpp src/Exclusive/ME/BpQED.h \
  src/Exclusive/ME/../../config.h src/Exclusive/ME/Ap.h \
@@ -51,6 +52,8 @@ src/Exclusive/IntKers/PdfConvLOg.h:
 src/Exclusive/IntKers/PdfConvNLOg.h:
 
 src/Exclusive/IntKers/PdfConvNLOq.h:
+
+src/Exclusive/IntKers/PhasespacePoint.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:
 

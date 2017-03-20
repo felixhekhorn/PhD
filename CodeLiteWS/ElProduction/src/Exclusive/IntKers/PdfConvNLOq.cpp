@@ -20,36 +20,39 @@ void PdfConvNLOq::setSplitting(fPtr4dbl BpQED, fPtr1dbl Pgq0, fPtr1dbl Pgq1) {
     this->Pgq1 = Pgq1;
 }
 
-dbl PdfConvNLOq::cq1() const {
+PhasespaceValues PdfConvNLOq::cq1() const {
     if(0 == this->Ap1 || 0 == this->Ap1Counter || 
         0 == this->BpQED || 0 == this->Pgq0 || 0 == this->Pgq1)
         throw invalid_argument("need to set all arguments!");
-    // collinear contributions
-    cdbl s5B = q2 + sp*xE;
-    cdbl beta5B = sqrt(1. - 4.*m2/s5B);
-    cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
-    cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
-    cdbl jacB = jacxE*jacTheta1;
-    cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-    cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
-    cdbl vPqg0 = Pgq0(xE)/CF;
-    cdbl vPgq1 = Pgq1(xE)/CF;
-    
-    // hard contributions
-    const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
-    cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
-    cdbl jacE = jacxE*jacyE*jacTheta1*jacTheta2;
-    cdbl meC = Ap1Counter(m2,q2,sp,xE,Theta1,Theta2);
-    cdbl jacC = jacxE*jacyC*jacTheta1*jacTheta2;
-    cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
-    cdbl r = f * (jacE*meE/(1.+yE) - jacC*meC/(1.+yC)) + g*jacB*meB*(2.*vPgq1 + vPqg0*l);
-    if (!isfinite(r)) return 0.;
+    PhasespaceValues r;
+    { // collinear contributions
+        cdbl s5B = q2 + sp*xE;
+        cdbl beta5B = sqrt(1. - 4.*m2/s5B);
+        cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
+        cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
+        cdbl jacB = jacxE*jacTheta1;
+        cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+        cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
+        cdbl vPqg0 = Pgq0(xE)/CF;
+        cdbl vPgq1 = Pgq1(xE)/CF;
+        r.xEyE += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
+    } { // hard contributions
+        const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
+        cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
+        cdbl jacE = jacxE*jacyE*jacTheta1*jacTheta2;
+        cdbl meC = Ap1Counter(m2,q2,sp,xE,Theta1,Theta2);
+        cdbl jacC = jacxE*jacyC*jacTheta1*jacTheta2;
+        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
+        r.xEyE += f * jacE*meE/(1.+yE);
+        r.xEyC -= f * jacC*meC/(1.+yC);
+    }
     return r;
 }
 
-dbl PdfConvNLOq::cqBarF1() const {
+PhasespaceValues PdfConvNLOq::cqBarF1() const {
     if(0 == this->BpQED || 0 == this->Pgq0)
         throw invalid_argument("need to set all arguments!");
+    PhasespaceValues r;
     // collinear contributions
     cdbl s5B = q2 + sp*xE;
     cdbl beta5B = sqrt(1. - 4.*m2/s5B);
@@ -59,8 +62,7 @@ dbl PdfConvNLOq::cqBarF1() const {
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
     cdbl l = -1.;
     cdbl vPqg0 = Pgq0(xE)/CF;
-    cdbl r = g*jacB*meB*vPqg0*l;
-    if (!isfinite(r)) return 0.;
+    r.xEyE += g*jacB*meB*vPqg0*l;
     return r;
 }
     
@@ -68,15 +70,15 @@ void PdfConvNLOq::setAp2(fPtr7dbl Ap2) {
     this->Ap2 = Ap2;
 }
 
-dbl PdfConvNLOq::dq1() const {
+PhasespaceValues PdfConvNLOq::dq1() const {
     if(0 == this->Ap2)
         throw invalid_argument("need to set all arguments!");
+    PhasespaceValues r;
     cdbl jac = jacxE*jacyE*jacTheta1*jacTheta2;
     const KinematicVars vs(m2,q2,sp,xE,yE,Theta1,Theta2);
     cdbl me = Ap2(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
     cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+yE)*sin(Theta1);
-    cdbl r = jac * f * me;
-    if (!isfinite(r)) return 0.;
+    r.xEyE += jac * f * me;
     return r;
 }
 
@@ -84,19 +86,19 @@ void PdfConvNLOq::setAp3(fPtr7dbl Ap3) {
     this->Ap3 = Ap3;
 }
 
-dbl PdfConvNLOq::oq1() const {
+PhasespaceValues PdfConvNLOq::oq1() const {
     if(0 == this->Ap3)
         throw invalid_argument("need to set all arguments!");
+    PhasespaceValues r;
     cdbl jac = jacxE*jacyE*jacTheta1*jacTheta2;
     const KinematicVars vs(m2,q2,sp,xE,yE,Theta1,Theta2);
     cdbl me = Ap3(m2,q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
     cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vs.beta5/(1.+yE)*sin(Theta1);
-    cdbl r = jac * f * me;
-    if (!isfinite(r)) return 0.;
+    r.xEyE += jac * f * me;
     return r;
 }
 
-dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
+/*dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     if(0 == this->pdf)
         throw invalid_argument("need to set all arguments!");
     this->setZ(az);
@@ -118,4 +120,4 @@ dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aThet
     // Protect from ps corner cases
     if (!isfinite(r)) return 0.;
     return r;
-}
+}*/

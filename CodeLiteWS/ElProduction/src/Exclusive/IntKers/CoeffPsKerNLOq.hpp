@@ -38,7 +38,8 @@ public:
         this->setY(ay);
         this->setTheta1(aTheta1);
         this->setTheta2(aTheta2);
-        return this->cq1();
+        cdbl r = this->cq1().tot();
+        return isfinite(r) ? r : 0.;
     }
 };
 
@@ -69,7 +70,8 @@ public:
     dbl operator() (cdbl ax, cdbl aTheta1) {
         this->setX(ax);
         this->setTheta1(aTheta1);
-        return this->cqBarF1();
+        cdbl r = this->cqBarF1().tot();
+        return isfinite(r) ? r : 0.;
     }
 };
 
@@ -105,7 +107,8 @@ public:
         this->setY(ay);
         this->setTheta1(aTheta1);
         this->setTheta2(aTheta2);
-        return this->dq1();
+        cdbl r = this->dq1().tot();
+        return isfinite(r) ? r : 0.;
     }
 };
 

@@ -59,26 +59,6 @@ class PdfConvNLOg : public PdfConvBase {
  * @brief renormalization scale
  */
     dbl muR2 = -0.;
-    
-protected:
-
-    /**
-     * @brief computes current value of kernel of \f$c_g^{(1)}\f$
-     * @return kernel of \f$c_g^{(1)}\f$
-     */
-    dbl cg1() const;
-
-    /**
-     * @brief computes current value of kernel of \f$\bar c_g^{R,(1)}\f$
-     * @return kernel of \f$\bar c_g^{R,(1)}\f$
-     */
-    dbl cgBarR1() const;
-
-    /**
-     * @brief computes current value of kernel of \f$\bar c_g^{F,(1)}\f$
-     * @return kernel of \f$\bar c_g^{F,(1)}\f$
-     */
-    dbl cgBarF1() const;
 
 public:
 
@@ -124,8 +104,27 @@ public:
  * @param muR2 renormalization scale
  */
     void setMuR2(dbl muR2);
-    
+
 /**
+ * @brief computes current value of kernel of \f$c_g^{(1)}\f$
+ * @return kernel of \f$c_g^{(1)}\f$
+ */
+    PhasespaceValues cg1() const;
+
+/**
+ * @brief computes current value of kernel of \f$\bar c_g^{R,(1)}\f$
+ * @return kernel of \f$\bar c_g^{R,(1)}\f$
+ */
+    PhasespaceValues cgBarR1() const;
+
+/**
+ * @brief computes current value of kernel of \f$\bar c_g^{F,(1)}\f$
+ * @return kernel of \f$\bar c_g^{F,(1)}\f$
+ */
+    PhasespaceValues cgBarF1() const;
+    
+/*
+ * @todo
  * @brief called function
  * @param az integration variable mapped on z
  * @param ax integration variable mapped on x
@@ -134,7 +133,7 @@ public:
  * @param aTheta2 integration variable mapped on Theta2
  * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
  */
-    dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    //dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
 };
 
 } // namespace Exclusive

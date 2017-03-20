@@ -45,32 +45,6 @@ class PdfConvNLOq : public PdfConvBase {
  */
     fPtr7dbl Ap3 = 0;
     
-protected:
-
-    /**
-     * @brief computes current value of kernel of \f$c_q^{(1)}\f$
-     * @return kernel of \f$c_q^{(1)}\f$
-     */
-    dbl cq1() const;
-
-    /**
-     * @brief computes current value of kernel of \f$\bar c_q^{F,(1)}\f$
-     * @return kernel of \f$\bar c_q^{F,(1)}\f$
-     */
-    dbl cqBarF1() const;
-
-    /**
-     * @brief computes current value of kernel of \f$d_q^{(1)}\f$
-     * @return kernel of \f$d_q^{(1)}\f$
-     */
-    dbl dq1() const;
-
-    /**
-     * @brief computes current value of kernel of \f$o_q^{(1)}\f$
-     * @return kernel of \f$o_q^{(1)}\f$
-     */
-    dbl oq1() const;
-    
 public:
 
 /**
@@ -111,7 +85,8 @@ public:
  */
     void setAp3(fPtr7dbl Ap3);
     
-/**
+/*
+ * @todo
  * @brief called function
  * @param az integration variable mapped on z
  * @param ax integration variable mapped on x
@@ -120,7 +95,31 @@ public:
  * @param aTheta2 integration variable mapped on Theta2
  * @return \f$1/z \sum\limits_q \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) \left(e_H^2 c_{q}^{(1)}(\eta,\xi) + e_L^2 d_{q}^{(1)}(\eta,\xi) + e_H E_L o_{q}^{(1)}(\eta,\xi)\right)\f$
  */
-    dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    //dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    
+    /**
+     * @brief computes current value of kernel of \f$c_q^{(1)}\f$
+     * @return kernel of \f$c_q^{(1)}\f$
+     */
+    PhasespaceValues cq1() const;
+
+    /**
+     * @brief computes current value of kernel of \f$\bar c_q^{F,(1)}\f$
+     * @return kernel of \f$\bar c_q^{F,(1)}\f$
+     */
+    PhasespaceValues cqBarF1() const;
+
+    /**
+     * @brief computes current value of kernel of \f$d_q^{(1)}\f$
+     * @return kernel of \f$d_q^{(1)}\f$
+     */
+    PhasespaceValues dq1() const;
+
+    /**
+     * @brief computes current value of kernel of \f$o_q^{(1)}\f$
+     * @return kernel of \f$o_q^{(1)}\f$
+     */
+    PhasespaceValues oq1() const;
 };
 
 } // namespace Exclusive

@@ -112,7 +112,7 @@ protected:
 /**
  * @brief current x for event
  */
-    dbl xE = -1.;
+    dbl xE = 1.;
     
 /**
  * @brief jacobian for x for counter event
@@ -122,7 +122,7 @@ protected:
 /**
  * @brief current x for counter event
  */
-    dbl xC = -1.;
+    dbl xC = 1.;
     
 /**
  * @brief jacobian for y for event
