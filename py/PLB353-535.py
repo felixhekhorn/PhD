@@ -14,8 +14,8 @@ import numpy as np
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams, ExclusiveDynamicScaleFactors
 
-pdf = "MSTW2008nlo90cl"
-#pdf = "cteq66"
+#pdf = "MSTW2008nlo90cl"
+pdf = "cteq66"
 pathOut = "/home/Felix/Physik/PhD/data/PLB353-535-%s/"%pdf
 
 

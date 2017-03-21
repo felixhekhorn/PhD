@@ -21,6 +21,10 @@ void FKerAll::setOrder(uint order) {
     this->order = order;
 }
 
+void FKerAll::setMuF2(dbl muF2) {
+    throw logic_error("use setMuRF2Factors instead!");
+}
+
 void FKerAll::setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors) {
     this->muR2Factors = muR2Factors;
     this->muF2Factors = muF2Factors;

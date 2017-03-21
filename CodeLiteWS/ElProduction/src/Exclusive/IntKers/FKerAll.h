@@ -16,7 +16,7 @@ namespace Exclusive {
 /**
  * @brief kernel for full F
  */
-class FKerAll : PdfConvBase, public HepSource::Integrand {
+class FKerAll : public PdfConvBase, public HepSource::Integrand {
 
 /**
  * @brief pointer to LO kernel
@@ -131,6 +131,12 @@ public:
  * @param alphaS running strong coupling
  */
     void setAlphaS(LHAPDF::AlphaS* alphaS);
+    
+/**
+ * @brief removed method - use setMuRF2Factors instead
+ * @param muF2 -
+ */
+    void setMuF2(dbl muF2);
     
 /**
  * @brief sets factors for \f$\mu_R^2\f$ and \f$\mu_F^2\f$

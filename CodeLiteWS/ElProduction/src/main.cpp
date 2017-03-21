@@ -6,8 +6,6 @@
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
 
-#include "gslpp/gslpp.Histogram.hpp"
-
 int runInclusive();
 int test() {
     PdfWrapper pdf("MSTW2008nlo90cl",0);
@@ -101,7 +99,7 @@ int main(int argc, char **argv) {
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
-    uint n = 0;
+    uint n = 1;
     alphaS.setOrderQCD(1 + n);
     dbl aS = alphaS.alphasQ2(mu02);
     

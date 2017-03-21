@@ -225,7 +225,7 @@ public:
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    void setMuF2(dbl muF2);
+    virtual void setMuF2(dbl muF2);
 };
 
 } // namespace Exclusive

@@ -333,20 +333,21 @@ dbl ExclusiveElProduction::F(uint order/*= 1*/) {
     NLOg.setBorn(this->getBpQED(),this->getSVp());
     NLOg.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
     NLOg.setPgg(this->getPggH0(),this->getPggH1(),this->getPggS1());
-    NLOg.setPdf(this->pdf);
+//    NLOg.setPdf(this->pdf);
     // NLO quark kernel
     PdfConvNLOq NLOq(m2,q2,bjorkenX,nlf,omega,deltay);
     NLOq.setAp1(this->getAp1(), this->getAp1Counter());
     NLOq.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     NLOq.setAp2(this->getAp2());
     NLOq.setAp3(this->getAp3());
-    NLOq.setPdf(this->pdf);
+//    NLOq.setPdf(this->pdf);
     // Full kernel
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     k.setAlphaS(&(this->aS));
     k.setMuRF2Factors(this->muR2Factors,this->muF2Factors);
     k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
+    k.setPdf(this->pdf);
 //dbl sumWeights = 0.;
     // setup histograms
     this->setupHistograms();

@@ -206,19 +206,19 @@ public:
 ///@{
     
 /**
- * @brief removed method use setMuR2Factors instead
+ * @brief removed method - use setMuR2Factors instead
  * @param muR2 -
  */
     void setMuR2(dbl muR2);
     
 /**
- * @brief removed method use setMuF2Factors instead
+ * @brief removed method - use setMuF2Factors instead
  * @param muF2 -
  */
     void setMuF2(dbl muF2);
     
 /**
- * @brief removed method use setMu2Factors instead
+ * @brief removed method - use setMu2Factors instead
  * @param mu2 -
  */
     void setMu2(dbl mu2);
