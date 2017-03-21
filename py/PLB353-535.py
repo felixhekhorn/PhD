@@ -18,7 +18,6 @@ from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, Exclusive
 pdf = "cteq66"
 pathOut = "/home/Felix/Physik/PhD/data/PLB353-535-%s/"%pdf
 
-
 xTilde = .8
 omega = 1.
 deltax = 1e-6

@@ -26,16 +26,6 @@ class Histogram {
     gsl_histogram* h = 0;
     
 /**
- * @brief counts
- */
-    gsl_histogram* n = 0;
-    
-/**
- * @brief weights
- */
-    gsl_histogram* ws = 0;
-    
-/**
  * @brief are ranges set?
  */
     bool initialized = false;
@@ -48,8 +38,6 @@ public:
  */
     Histogram(size_t size) : size(size) {
         this->h = gsl_histogram_alloc(size);
-        this->n = gsl_histogram_alloc(size);
-        this->ws = gsl_histogram_alloc(size);
     }
     
 /**
@@ -58,10 +46,6 @@ public:
     ~Histogram() {
         if(0 != this->h)
             gsl_histogram_free(this->h);
-        if(0 != this->n)
-            gsl_histogram_free(this->n);
-        if(0 != this->ws)
-            gsl_histogram_free(this->ws);
     }
 
 /**
@@ -74,8 +58,6 @@ public:
         if (max <= min)
             throw std::invalid_argument("expects min < max!");
         int r = gsl_histogram_set_ranges_uniform(this->h,min,max);
-        gsl_histogram_set_ranges_uniform(this->n,min,max);
-        gsl_histogram_set_ranges_uniform(this->ws,min,max);
         this->initialized = true;
         return r;
     }
@@ -100,8 +82,6 @@ public:
             x += d;
         }
         int ret = gsl_histogram_set_ranges(this->h,range,s);
-        gsl_histogram_set_ranges(this->n,range,s);
-        gsl_histogram_set_ranges(this->ws,range,s);
         this->initialized = true;
         return ret;
     }
@@ -114,24 +94,22 @@ public:
         return this->initialized;
     }
     
-/*
+/**
  * @brief accumulates by 1.0
  * @param x value
  * @return gsl_histogram_increment
  */
-    /*int increment(double x) {
+    int increment(double x) {
         return this->accumulate(x, 1.);
-    }*/
+    }
     
-/*
+/**
  * @brief adds w to the bin containing x
  * @param x value
  * @param w weight
  * @return gsl_histogram_accumulate
  */
     int accumulate(double x, double w) {
-        /** @todo */
-        //gsl_histogram_increment(this->n, x);
         return gsl_histogram_accumulate(this->h, x, w);
     }
     
@@ -141,13 +119,10 @@ public:
  * @return gsl_histogram_scale
  */
     int scale(double s) {
-        /** @todo */
-        gsl_histogram_scale(this->n,s);
-        gsl_histogram_scale(this->ws,s);
         return gsl_histogram_scale(this->h,s);
     }
 
-/*
+/**
  * @brief outputs data
  * @param stream target stream
  * @param range_format printf-format for bin ranges
@@ -155,23 +130,12 @@ public:
  * @return gsl_histogram_fprintf
  */
     int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
-        /** @todo */
         // empty?
         if (!this->isInitialized())
             return 0;
-        /*gsl_histogram* c = gsl_histogram_alloc(this->size);
-        c = gsl_histogram_clone(this->h);
-        gsl_histogram_div(c,this->n);
-        gsl_histogram_fprintf(stdout,n,"% e", "% e");
-        int r = gsl_histogram_fprintf(stream, c, range_format, bin_format);
-        gsl_histogram_free(c);
-        return r;*/
         return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
     }
     
-    void write(str path) {
-        /** @todo */
-    }
 };
 
 } // namespace gsl

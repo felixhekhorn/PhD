@@ -15,7 +15,7 @@ pout = "img/NPB392-229-" . pdf . "/"
 
 set logscale y
 set ytics format "%.1e"
-set yrange [1e-7:.001]
+set yrange [1e-5:.1]
 
 #set boxwidth 0.5 relative
 #set boxwidth 0.1
@@ -24,13 +24,13 @@ set yrange [1e-7:.001]
 set key left top
 
 set xlabel "y []"
-set xrange [-2.:2.]
+set xrange [-5.5:5.5]
 
-f0 = pin . "dFLc_dy_x-1_0.dat"
-f1 = pin . "dFLc_dy_x-1_1.dat"
+f0 = pin . "dF2c_dy_x-4_0.dat"
+f1 = pin . "dF2c_dy_x-4_1.dat"
 
-set out pout . "fig16.png"
-set title "dF_{L}(x=0.1,Q²=10GeV^2,m_c^2,y)/dy"
+set out pout . "fig14.png"
+set title "dF_{2}(x=0.0001,Q²=10GeV^2,m_c^2,y)/dy"
 plot f1 u (-.5*$1-.5*$2):($3/($2-$1)) t "NLO",\
      f0 u (-.5*$1-.5*$2):($3/($2-$1))t "LO"
 

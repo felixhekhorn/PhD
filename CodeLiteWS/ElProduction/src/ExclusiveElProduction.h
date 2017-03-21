@@ -200,8 +200,6 @@ public:
     
 ///@}
 
-
-
 /** @name hadronic setter */
 ///@{
     
@@ -381,12 +379,6 @@ private:
  * @brief setups all active histograms
  */
     void setupHistograms();
-
-/*
- * @brief rescales all histograms by the number of events
- * @param s factor
- */
-//    void rescaleHistograms(dbl s);
     
 public:
     
