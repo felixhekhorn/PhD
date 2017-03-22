@@ -19,7 +19,7 @@ void PdfConvBase::setZ(dbl a) {
 void PdfConvBase::setSpRaw(dbl sp) {
     this->sp = sp;
     cdbl eta = (sp + q2)/(4.*m2) - 1.;
-    cdbl xmax = 1. - this->deltax*pow(eta,2./3.);
+    this->xmax = 1. - this->deltax*pow(eta,2./3.);
     // make hard cut instead of throwing an error
     this->rhoStar = min((4.*m2 - q2)/this->sp,xmax);
     //if (this->rhoStar > xmax)

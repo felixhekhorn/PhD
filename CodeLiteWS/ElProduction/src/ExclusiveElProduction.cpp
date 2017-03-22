@@ -372,7 +372,7 @@ void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan
 }
     
 void ExclusiveElProduction::setupHistograms() {
-/** @todo */
+/** @todo change to foreach and switch? */
     // hadronic S
     dbl S = -this->q2*(1./this->bjorkenX - 1.); 
     {
@@ -393,6 +393,7 @@ void ExclusiveElProduction::setupHistograms() {
         dbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
         h->second->setRangesUniform(-y0,y0);
     } }
+/** @todo add more? */
 /*{
     histMapT::const_iterator hx = this->histMap.find(x);
     if (this->histMap.cend() != hx && !hx->second->isInitialized())

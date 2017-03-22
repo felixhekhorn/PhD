@@ -62,6 +62,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     if (this->order > 0) {
         { // gluon channel
             // compute kernels
+            this->NLOg->setVars(az,ax,ay,aTheta1,aTheta2);
             PhasespaceValues cg1 = this->NLOg->cg1();
             PhasespaceValues cgBarR1 = this->NLOg->cgBarR1();
             PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
@@ -72,13 +73,14 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             r += this->combineNLOg(this->xC, this->yC, cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
         } { // quark channel
             // compute kernels
+            this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
             PhasespaceValues cq1 = this->NLOq->cq1();
             PhasespaceValues cqBarF1 = this->NLOq->cqBarF1();
             PhasespaceValues dq1 = this->NLOq->dq1();
             PhasespaceValues oq1 = this->NLOq->oq1();
             // combine 2 points: Event & collinear
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
-            r += this->combineNLOq(this->xE, this->yC, cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
+            r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
         }
     }
     return isfinite(r) ? r : 0.;
@@ -154,27 +156,23 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
         return;
     if (0 == this->vegasWeight)
         return;
-    cdbl val = i*(*this->vegasWeight);
+    cdbl value = i*(*this->vegasWeight);
     
-    {
-    histMapT::const_iterator h = this->histMap->find(histT::log10z);
-    if (h != this->histMap->cend())
-        h->second->accumulate(p.getZ(),val);
-    } {
-    histMapT::const_iterator h = this->histMap->find(histT::log10xi);
-    if (h != this->histMap->cend())
-        h->second->accumulate(this->bjorkenX/p.getZ(),val);
-    } {
-    histMapT::const_iterator h = this->histMap->find(histT::invMassHQPair);
-    if (h != this->histMap->cend()) {
-        cdbl M2 = (p.getP1() + p.getP2()).squared();
-        h->second->accumulate(sqrt(M2),val);
-    } } {
-    histMapT::const_iterator h = this->histMap->find(histT::HAQRapidity);
-    if (h != this->histMap->cend())
-        h->second->accumulate(p.getP2().rapidity(),val);
-    } 
-    /** @todo */
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
+        dbl var = nan("");
+        switch (it->first) {
+            case histT::log10z:         var = p.getZ();                 break;
+            case histT::log10xi:        var = this->bjorkenX/p.getZ();  break;
+            case histT::invMassHQPair: 
+                {cdbl M2 = (p.getP1() + p.getP2()).squared();
+                var = sqrt(M2);}
+                break;
+            case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
+            default: continue;
+        }
+        it->second->accumulate(var,value);
+    }
+    /** @todo add more */
 /*    { // AHQTransverseMomentum
     histMapT::const_iterator h = this->histMap->find(histT::AHQTransverseMomentum);
     if (h != this->histMap->cend())
@@ -194,7 +192,7 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
 }
 
 void FKerAll::fillNLOHistograms(PhasespacePoint p, cdbl i) const {
-    /** @todo */
+    /** @todo add smth? */
     /*// something active?
     if (0 == this->histMap)
         return;

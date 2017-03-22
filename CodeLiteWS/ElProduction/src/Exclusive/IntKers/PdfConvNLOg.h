@@ -104,6 +104,16 @@ public:
  * @param muR2 renormalization scale
  */
     void setMuR2(dbl muR2);
+    
+/**
+ * @brief sets all integration variables
+ * @param az integration variable mapped on z
+ * @param ax integration variable mapped on x
+ * @param ay integration variable mapped on y
+ * @param aTheta1 integration variable mapped on Theta1
+ * @param aTheta2 integration variable mapped on Theta2
+ */
+    void setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
 
 /**
  * @brief computes current value of kernel of \f$c_g^{(1)}\f$

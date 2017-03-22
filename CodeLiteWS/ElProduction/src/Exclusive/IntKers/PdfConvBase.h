@@ -105,6 +105,11 @@ protected:
     dbl deltay;
     
 /**
+ * @brief upper integration limit for x
+ */
+    dbl xmax = 1.;
+    
+/**
  * @brief jacobian for x for event
  */
     dbl jacxE = -0.;

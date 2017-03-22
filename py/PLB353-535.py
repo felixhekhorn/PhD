@@ -14,8 +14,8 @@ import numpy as np
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveMCParams, ExclusiveDynamicScaleFactors
 
-#pdf = "MSTW2008nlo90cl"
-pdf = "cteq66"
+pdf = "MSTW2008nlo90cl"
+#pdf = "cteq66"
 pathOut = "/home/Felix/Physik/PhD/data/PLB353-535-%s/"%pdf
 
 xTilde = .8
@@ -66,6 +66,7 @@ def _threadWorker(qIn):
 		o.F(p["n"])
 		fp = p["fp"]
 		o.printHistogram(ExclusiveHistT.invMassHQPair,fp)
+		# complete
 		qIn.task_done()
 		print _psucc(), fp
 
@@ -135,10 +136,10 @@ def addFig8():
   addBotttom(-12.,projT.L,1.6e-3)
   addBotttom(-12.,projT.L,2.7e-3)
 
-#addPreFig1()
-#addFig2()
-#addPreFig3()
-#addFig4()
+addPreFig1()
+addFig2()
+addPreFig3()
+addFig4()
 addPreFig5()
 addFig6()
 addPreFig7()

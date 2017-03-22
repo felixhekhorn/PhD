@@ -37,6 +37,14 @@ void PdfConvNLOg::setMuR2(dbl muR2) {
     this->muR2 = muR2;
 }
 
+void PdfConvNLOg::setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
+    this->setZ(az);
+    this->setX(ax);
+    this->setY(ay);
+    this->setTheta1(aTheta1);
+    this->setTheta2(aTheta2);
+}
+
 PhasespaceValues PdfConvNLOg::cg1() const {
     // protect from null pointer
     if (0 == this->BpQED || 0 == this->SVp 
@@ -120,6 +128,36 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
     
+    // soft events
+    if (this->xE > this->rhoTilde) {
+        // S+V contributions
+        cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
+        cdbl f = 2. * Kggg*NC*CF * 1./(4.*sp);
+        // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
+        r.xCyE -= ncg1 * jacTheta1*jacxE/(this->xmax-rhoTilde) * f * (b0(nlf) + 4.*CA*log(1.-rhoTilde)) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
+    }
+    
+    // collinear events
+    if (yE < -1+omega) {
+        // collinear contributions
+        cdbl s5E = q2 + xE*sp;
+        cdbl beta5E = sqrt(1. - 4.*m2/s5E);
+        cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));
+        cdbl t1  = -.5*sp*(1. - beta  *cos(Theta1));
+        cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
+        cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
+        cdbl l = -1.;
+        r.xEyC += ncg1 *     jacTheta1*jacxE*jacyE/(omega-deltay) * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l));
+        // soft+collinear events
+        if (this->xE > this->rhoTilde) {
+            // collinear counter event
+            cdbl meC = BpQED(m2,q2,sp,t1);
+            // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
+            r.xCyC -= ncg1 * jacTheta1*jacxE*jacyE/(omega-deltay) * f*beta     *meC*(2.*CA     *(    1./(1.-xE)*l));
+        }
+    }
+    
+/*
     // S+V contributions
     {
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
@@ -139,10 +177,10 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = -1.;
         // (1-x)P_gg^0 -> 2CA for x->1 for all projections
-        r.xEyE += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l));
+        r.xEyE += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/ *(1-x)/(1-x)* /l));
         r.xCyE -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA     *(    1./(1.-xC)*l));
     }
-    
+*/
     return r;
 }
 

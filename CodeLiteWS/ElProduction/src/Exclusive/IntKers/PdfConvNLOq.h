@@ -85,6 +85,16 @@ public:
  */
     void setAp3(fPtr7dbl Ap3);
     
+/**
+ * @brief sets all integration variables
+ * @param az integration variable mapped on z
+ * @param ax integration variable mapped on x
+ * @param ay integration variable mapped on y
+ * @param aTheta1 integration variable mapped on Theta1
+ * @param aTheta2 integration variable mapped on Theta2
+ */
+    void setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    
 /*
  * @todo
  * @brief called function
