@@ -68,9 +68,9 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
             // combine all 4 points: Event & soft & collinear & soft+collinear
             r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
-            r += this->combineNLOg(this->xC, this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
-            r += this->combineNLOg(this->xE, this->yC, cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
-            r += this->combineNLOg(this->xC, this->yC, cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+            r += this->combineNLOg(1.,       this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
+            r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
+            r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
         } { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);

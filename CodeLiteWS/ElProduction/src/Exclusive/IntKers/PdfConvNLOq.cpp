@@ -33,7 +33,7 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         0 == this->BpQED || 0 == this->Pgq0 || 0 == this->Pgq1)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
-    
+/*    
     // hard event
     const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
     cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
@@ -58,8 +58,8 @@ PhasespaceValues PdfConvNLOq::cq1() const {
             r.xEyC += jacxE*jacTheta1*jacyE/(omega-deltay) * g*meB*(2.*vPgq1 + vPqg0*l);
         }
     }
-    
-/*    { // collinear contributions
+*/
+    { // collinear contributions
         cdbl s5B = q2 + sp*xE;
         cdbl beta5B = sqrt(1. - 4.*m2/s5B);
         cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
@@ -69,18 +69,18 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
         cdbl vPqg0 = Pgq0(xE)/CF;
         cdbl vPgq1 = Pgq1(xE)/CF;
-        r.xEyE += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
+        r.xEyC += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
     } { // hard contributions
         const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
         cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
-        cdbl jacE = jacxE*jacyE*jacTheta1*jacTheta2;
         cdbl meC = Ap1Counter(m2,q2,sp,xE,Theta1,Theta2);
+        cdbl jacE = jacxE*jacyE*jacTheta1*jacTheta2;
         cdbl jacC = jacxE*jacyC*jacTheta1*jacTheta2;
         cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
         r.xEyE += f * jacE*meE/(1.+yE);
         r.xEyC -= f * jacC*meC/(1.+yC);
     }
-*/
+
     return r;
 }
 
@@ -97,7 +97,7 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
     cdbl l = -1.;
     cdbl vPqg0 = Pgq0(xE)/CF;
-    r.xEyE += g*jacB*meB*vPqg0*l;
+    r.xEyC += g*jacB*meB*vPqg0*l;
     return r;
 }
     

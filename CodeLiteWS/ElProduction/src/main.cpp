@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
     
-    uint N = 41;
+    uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
         /*cdbl a = pow(10,-1.-3./(N-1)*j);
@@ -129,17 +129,17 @@ int main(int argc, char **argv) {
         cdbl a = pow(10,-3.+6./(N-1)*j);
         iO.setEta(a);
         eO.setEta(a);
-        cdbl i = iO.cgBarF1();
+        cdbl i = iO.cg1();
         /*{cdbl e = eO.cq1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}*/
         {eO.setDeltay(7e-5);
-        cdbl e = eO.cgBarF1();
+        cdbl e = eO.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         {eO.setDeltay(7e-6);
-        cdbl e = eO.cgBarF1();
+        cdbl e = eO.cg1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
         {eO.setDeltay(7e-7);
-        cdbl e = eO.cgBarF1();
+        cdbl e = eO.cg1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
         printf("\n");
     }
