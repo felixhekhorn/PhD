@@ -390,9 +390,13 @@ void ExclusiveElProduction::setupHistograms() {
     } {
     histMapT::const_iterator h = this->histMap.find(HAQRapidity);
     if (this->histMap.cend() != h && !h->second->isInitialized()) {
-        dbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
+        cdbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
         h->second->setRangesUniform(-y0,y0);
-    } }
+    } } {
+    histMapT::const_iterator h = this->histMap.find(HAQTransverseMomentum);
+    if (this->histMap.cend() != h && !h->second->isInitialized())
+        h->second->setRangesUniform(0.,sqrt(S/4. - this->m2));
+    } 
 /** @todo add more? */
 /*{
     histMapT::const_iterator hx = this->histMap.find(x);

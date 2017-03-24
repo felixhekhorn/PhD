@@ -3,11 +3,13 @@
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
 
+/*
 #include "Exclusive/IntKers/KinematicVars.hpp"
 #include "Exclusive/ME/BpQED.h"
 #include "Exclusive/ME/Ap.h"
 #include "Exclusive/ME/SVp.h"
 #include "Exclusive/ME/Rp.h"
+*/
 
 using namespace boost::python;
 
@@ -90,11 +92,11 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("log10xi", Exclusive::histT::log10xi)
         .value("invMassHQPair", Exclusive::histT::invMassHQPair)
         .value("HAQRapidity", Exclusive::histT::HAQRapidity)
+        .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
 /*        .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
         .value("Theta1", Exclusive::histT::Theta1)
         .value("Theta2", Exclusive::histT::Theta2)
-        .value("AHQTransverseMomentum", Exclusive::histT::AHQTransverseMomentum)
         .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
 */    ;
     
@@ -108,10 +110,11 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2, "iterate until |chi2-1| < 0.5?")
     ;
     
-    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double>())
+    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
         .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
         .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
         .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{T,Q}+p_{T,Qbar)^2")
+        .def_readwrite("cSqrPtHAQ", &Exclusive::DynamicScaleFactors::cSqrPtHAQ, "factor to p_{T,Qbar)^2")
     ;
     
     /*

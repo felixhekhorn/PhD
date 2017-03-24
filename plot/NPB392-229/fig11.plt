@@ -30,7 +30,7 @@ f0 = pin . "dF2c_dy_x-1_0.dat"
 f1 = pin . "dF2c_dy_x-1_1.dat"
 
 set out pout . "fig11.png"
-set title "dF_{2}(x=0.1,Q²=10GeV^2,m_c^2,y)/dy"
+set title sprintf("dF_{2}(x=0.1,Q²=10GeV^2,m_c^2,y)/dy with %s",pdf)
 plot f1 u (-.5*$1-.5*$2):($3/($2-$1)) t "NLO",\
      f0 u (-.5*$1-.5*$2):($3/($2-$1))t "LO"
 

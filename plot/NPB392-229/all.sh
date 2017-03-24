@@ -8,6 +8,16 @@ fi;
 
 curd=$PWD/`dirname $0`
 
+gnuplot -c $curd/fig01.plt $1 &
+gnuplot -c $curd/fig02.plt $1 &
+gnuplot -c $curd/fig03.plt $1 &
+gnuplot -c $curd/fig04.plt $1 &
+
+gnuplot -c $curd/fig06.plt $1 &
+gnuplot -c $curd/fig07.plt $1 &
+gnuplot -c $curd/fig08.plt $1 &
+gnuplot -c $curd/fig09.plt $1 &
+
 gnuplot -c $curd/fig11.plt $1 &
 gnuplot -c $curd/fig12.plt $1 &
 gnuplot -c $curd/fig13.plt $1 &

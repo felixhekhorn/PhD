@@ -156,16 +156,14 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
     }
 */
 
-    // S+V contributions
-    {
+    { // S+V contributions
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = 2. * Kggg*NC*CF * 1./(4.*sp);
         // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
         r.xCyE -= ncg1 * jacTheta1 * f * (b0(nlf) + 4.*CA*log(1.-rhoTilde)) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
     }
     
-    // collinear contributions
-    {
+    { // collinear contributions
         cdbl s5E = q2 + xE*sp;
         cdbl beta5E = sqrt(1. - 4.*m2/s5E);
         cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));

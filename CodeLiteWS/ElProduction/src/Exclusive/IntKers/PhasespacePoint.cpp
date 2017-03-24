@@ -46,21 +46,21 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
         using rk::Boost;
         const P4 ps = q+k1;
         const Boost partonCMS = ps.restBoost();
-        k1.boost(partonCMS);
+        this->k1.boost(partonCMS);
         this->p1.boost(partonCMS);
         this->p2.boost(partonCMS);
         k2.boost(partonCMS);
-        q = p1+p2+k2-k1; // trick, as space-like vectors can't be boosted
+        this->q = p1+p2+k2-k1; // trick, as space-like vectors can't be boosted
     } { // align k1 to z
         using geom3::Rotation3;
         using geom3::Vector3;
         Vector3 k1vec = k1.momentum();
         const Rotation3 toZ(k1vec.cross(UnitVector3::zAxis()).direction(),k1vec.angle(UnitVector3::zAxis()));
-        q.rotate(toZ);
-        k1.rotate(toZ);
+        this->q.rotate(toZ);
+        this->k1.rotate(toZ);
         this->p1.rotate(toZ);
         this->p2.rotate(toZ);
-        k2.rotate(toZ);
+        //k2.rotate(toZ);
     }
     
     // move to final frame
@@ -82,7 +82,7 @@ void PhasespacePoint::applyLTsToFinalFrame() {
         k1.rotate(randZ);
         this->p1.rotate(randZ);
         this->p2.rotate(randZ);
-    }{ // boost to virtual photon-hadron c.m.s.
+    } { // boost to virtual photon-hadron c.m.s.
         using rk::P4;
         using rk::Boost;
         const P4 ph = (this->z/this->bjorkenX)*k1;
@@ -95,7 +95,11 @@ void PhasespacePoint::applyLTsToFinalFrame() {
 
 dbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
     cdbl ptSumHQPair = (this->p1 + this->p2).pt();
-    cdbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair;
+    cdbl ptHAQ = this->p2.pt();
+    cdbl mu2 = factors.cM2 * this->m2 +
+                factors.cQ2 * this->q2 + 
+                factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair +
+                factors.cSqrPtHAQ * ptHAQ*ptHAQ;
     if (!isfinite(mu2) || mu2 < 0)
         throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair).str());
     return mu2;

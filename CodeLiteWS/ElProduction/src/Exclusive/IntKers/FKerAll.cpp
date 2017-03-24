@@ -168,6 +168,8 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
                 var = sqrt(M2);}
                 break;
             case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
+            case histT::HAQTransverseMomentum:
+                                        var = p.getP2().pt();           break;
             default: continue;
         }
         it->second->accumulate(var,value);
