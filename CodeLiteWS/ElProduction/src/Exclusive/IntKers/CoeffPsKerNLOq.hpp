@@ -20,7 +20,7 @@ public:
  * @param omega collinear factorisation parameter \f$\omega\f$
  * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
-    PsKerCq1(dbl m2, dbl q2, dbl sp, dbl omega, dbl deltay) : PdfConvNLOq(m2,q2,0.,0,omega,deltay) {
+    PsKerCq1(cdbl m2, cdbl q2, cdbl sp, cdbl omega, cdbl deltay) : PdfConvNLOq(m2,q2,0.,0,omega,deltay) {
         this->setSpRaw(sp);
     }
     
@@ -56,7 +56,7 @@ public:
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
  */
-    PsKerCqBarF1(dbl m2, dbl q2, dbl sp) : PdfConvNLOq(m2,q2,0.,0,0.,0.) {
+    PsKerCqBarF1(dbl m2, dbl q2, dbl sp, cdbl omega, cdbl deltay) : PdfConvNLOq(m2,q2,0.,0,omega,deltay) {
         this->setSpRaw(sp);
     }
     

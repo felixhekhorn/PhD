@@ -168,23 +168,27 @@ dbl ExclusiveElProduction::cg1() const {
 
 dbl ExclusiveElProduction::cgBarR1() const {
     this->checkPartonic();
-    PsKerCgBarR1 k(m2,q2,sp,nlf);
+    PsKerCgBarR1 k(m2,q2,sp,nlf,xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),0);
-    gsl_function f;
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<PsKerCgBarR1>;
+    f.params = &k;
+    return int2D(&f);
+    /*gsl_function f;
     f.function = gslpp::callFunctor<PsKerCgBarR1>;
     f.params = &k;
-    return int1D(&f);
+    return int1D(&f);*/
 }
 
 dbl ExclusiveElProduction::cgBarF1() const {
     this->checkPartonic();
-    PsKerCgBarF1 k(m2,q2,sp,nlf,xTilde,deltax);
+    PsKerCgBarF1 k(m2,q2,sp,nlf,xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),0);
     k.setPgg(this->getPggH0(),0,0);
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PsKerCgBarF1>;
+    f.f = gslpp::callFunctor3D<PsKerCgBarF1>;
     f.params = &k;
-    return int2D(&f);
+    return int3D(&f);
 }
 
 dbl ExclusiveElProduction::cq1() const {
@@ -200,7 +204,7 @@ dbl ExclusiveElProduction::cq1() const {
 
 dbl ExclusiveElProduction::cqBarF1() const {
     this->checkPartonic();
-    PsKerCqBarF1 k(m2,q2,sp);
+    PsKerCqBarF1 k(m2,q2,sp, omega, deltay);
     k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     gsl_monte_function f;
     f.f = gslpp::callFunctor2D<PsKerCqBarF1>;

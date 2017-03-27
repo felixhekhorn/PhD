@@ -33,7 +33,7 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         0 == this->BpQED || 0 == this->Pgq0 || 0 == this->Pgq1)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
-/*    
+  
     // hard event
     const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
     cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
@@ -55,10 +55,11 @@ PhasespaceValues PdfConvNLOq::cq1() const {
             cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
             cdbl vPqg0 = Pgq0(xE)/CF;
             cdbl vPgq1 = Pgq1(xE)/CF;
-            r.xEyC += jacxE*jacTheta1*jacyE/(omega-deltay) * g*meB*(2.*vPgq1 + vPqg0*l);
+            r.xEyC += jacxE*jacTheta1*jacyE/jacyC * g*meB*(2.*vPgq1 + vPqg0*l);
         }
     }
-*/
+
+/*
     { // collinear contributions
         cdbl s5B = q2 + sp*xE;
         cdbl beta5B = sqrt(1. - 4.*m2/s5B);
@@ -80,7 +81,7 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         r.xEyE += f * jacE*meE/(1.+yE);
         r.xEyC -= f * jacC*meC/(1.+yC);
     }
-
+*/
     return r;
 }
 
@@ -88,6 +89,24 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
     if(0 == this->BpQED || 0 == this->Pgq0)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
+    
+    /** @todo for eta=1e-4 there is a relative error of -3.598609e-05 and that remains up until eta~1e0  */
+
+    // collinear events
+    if (yE < -1+omega) {
+        { // collinear contributions
+            cdbl s5B = q2 + sp*xE;
+            cdbl beta5B = sqrt(1. - 4.*m2/s5B);
+            cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
+            cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
+            cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+            cdbl l = -1.;// + 3.2e-5;
+            cdbl vPqg0 = Pgq0(xE)/CF;
+            r.xEyC += jacxE*jacTheta1/(jacyC) * g*meB*(0. + vPqg0*l);
+        }
+    }
+
+/*
     // collinear contributions
     cdbl s5B = q2 + sp*xE;
     cdbl beta5B = sqrt(1. - 4.*m2/s5B);
@@ -95,9 +114,10 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
     cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
     cdbl jacB = jacxE*jacTheta1;
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-    cdbl l = -1.;
+    cdbl l = -1.;// + .35e-4;
     cdbl vPqg0 = Pgq0(xE)/CF;
     r.xEyC += g*jacB*meB*vPqg0*l;
+*/
     return r;
 }
     

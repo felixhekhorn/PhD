@@ -68,9 +68,13 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
             // combine all 4 points: Event & soft & collinear & soft+collinear
             r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
-            r += this->combineNLOg(1.,       this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
-            r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
-            r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+            if (this->xE > this->rhoTilde)
+                r += this->combineNLOg(1.,       this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
+            if (yE < -1.+omega) {
+                r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
+                if (this->xE > this->rhoTilde)
+                    r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+            }
         } { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
@@ -80,7 +84,8 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             PhasespaceValues oq1 = this->NLOq->oq1();
             // combine 2 points: Event & collinear
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
-            r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
+            if (yE < -1.+omega) 
+                r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
         }
     }
     return isfinite(r) ? r : 0.;

@@ -115,49 +115,46 @@ int main(int argc, char **argv) {
     eO.MCparams.calls = 500000;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
-    
+/*    
     uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
-        /*cdbl a = pow(10,-1.-3./(N-1)*j);
+        / *cdbl a = pow(10,-1.-3./(N-1)*j);
         iO.setBjorkenX(a);
         eO.setBjorkenX(a);
         cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
         {cdbl e = eO.F(n);
-        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}*/
+        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}* /
         
-        cdbl a = pow(10,-3.+6./(N-1)*j);
+        cdbl a = pow(10,-4.+8./(N-1)*j);
         iO.setEta(a);
         eO.setEta(a);
         cdbl i = iO.cg1();
-        /*{cdbl e = eO.cq1();
-        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}*/
-        {eO.setDeltay(7e-5);
+        / *{cdbl e = eO.cq1();
+        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}* /
+        {eO.setXTilde(.6);
         cdbl e = eO.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
-        {eO.setDeltay(7e-6);
+        {eO.setXTilde(.8);
         cdbl e = eO.cg1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
-        {eO.setDeltay(7e-7);
+        {eO.setXTilde(.9);
         cdbl e = eO.cg1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
         printf("\n");
     }
+*/
 
-    
-/*
     cdbl bjorkenX = 8.5e-4;
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
-    eO.activateHistogram(Exclusive::histT::invMassHQPair,50, 2.*sqrt(m2),8);
+    eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, 0.,8.);
     
     cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
-    //eO.MCparams.calls = 500000;
-    //eO.MCparams.warmupCalls = 5000;
     cdbl e = eO.F(n);
-    eO.printHistogram(Exclusive::histT::invMassHQPair, "/home/Felix/Physik/PhD/data/hist/invMassHQPair.dat");
+    eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, "/home/Felix/Physik/PhD/data/hist/pt.dat");
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
-*/
+
     return EXIT_SUCCESS;
 }
 
