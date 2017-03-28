@@ -55,7 +55,9 @@ PhasespaceValues PdfConvNLOg::cg1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
-    
+
+#ifdef CounterByHeavyside
+
     // hard event
     cdbl s5E = q2 + xE*sp;
     cdbl beta5E = sqrt(1. - 4.*m2/s5E);
@@ -111,20 +113,21 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         }
     }
     
+#else // CounterByHeavyside
     
-/*    
+    cdbl beta = sqrt(1. - 4.*m2/s);
     { // S+V contributions
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = Kggg*NC*CF * 1./(4.*sp);
         cdbl betaTilde = sqrt(1. - this->rhoTilde);
         r.xCyE += ncg1 * jacTheta1 * f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-        / ** @todo hats?
+        /** @todo hats?
         // hat contributions
         if (0. != PggS1()) {
             cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
             //r -= jacTheta1 * g * BpQED(m2,q2,sp,t1) * PggS1() * beta*sin(Theta1)/(16.*M_PI);
         }
-         * /
+         */
     }
     
     { // collinear contributions
@@ -137,7 +140,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = log(sp/m2)+log(sp/s)+log(omega/2.);
         // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
-        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE)*(/ *(1-x)/(1-x)* /l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
+        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE)*(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
         r.xCyC -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
     }
     
@@ -151,7 +154,8 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         r.xEyC -= ncg1 * jacxE*jacyC*jacTheta1*jacTheta2 * f*beta5E/2.      * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
         r.xCyC += ncg1 * jacxC*jacyC*jacTheta1*jacTheta2 * f*beta  /2.      * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
     }
-*/    
+#endif // CounterByHeavyside
+
     return r;
 }
 
@@ -162,6 +166,8 @@ PhasespaceValues PdfConvNLOg::cgBarR1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
+
+#ifdef CounterByHeavyside
     // soft events
     if (this->xE > this->rhoTilde) {
         // S+V contributions
@@ -172,7 +178,9 @@ PhasespaceValues PdfConvNLOg::cgBarR1() const {
         // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
         r.xCyE += ncg1 * jacTheta1*jacxE/jacxC * f * b0(nlf) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
     }
-/*
+
+#else // CounterByHeavyside
+
     // S+V contributions
     cdbl s = sp + q2;
     cdbl beta = sqrt(1. - 4.*m2/s);
@@ -180,7 +188,9 @@ PhasespaceValues PdfConvNLOg::cgBarR1() const {
     cdbl f = 2. * Kggg*NC*CF * 1./(4.*sp);
     // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
     r.xCyE += ncg1 * jacTheta1 * f * b0(nlf) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
-*/
+
+#endif // CounterByHeavyside
+
     return r;
 }
 
@@ -193,7 +203,9 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
-    
+
+#ifdef CounterByHeavyside
+
     // soft events
     if (this->xE > this->rhoTilde) {
         // S+V contributions
@@ -223,7 +235,8 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
         }
     }
 
-/*
+#else // CounterByHeavyside
+
     { // S+V contributions
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = 2. * Kggg*NC*CF * 1./(4.*sp);
@@ -241,10 +254,12 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = -1.;
         // (1-x)P_gg^0 -> 2CA for x->1 for all projections
-        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/ *(1-x)/(1-x)* /l));
+        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l));
         r.xCyC -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA     *(    1./(1.-xC)*l));
     }
-*/
+
+#endif // CounterByHeavyside
+
     return r;
 }
 

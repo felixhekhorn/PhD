@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     21452,        529]
-NotebookOptionsPosition[     21137,        513]
-NotebookOutlinePosition[     21475,        528]
-CellTagsIndexPosition[     21432,        525]
+NotebookDataLength[     21036,        525]
+NotebookOptionsPosition[     20569,        504]
+NotebookOutlinePosition[     20907,        519]
+CellTagsIndexPosition[     20864,        516]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -30,7 +30,6 @@ Cell[BoxData[
       ",", "absq", ",", "k10", ",", "k20", ",", "cos\[Psi]", ","}], 
     "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
    RowBox[{
-    RowBox[{"m2", "=", "1"}], ";", "\[IndentingNewLine]", 
     RowBox[{
      RowBox[{"s", "[", "eta_", "]"}], ":=", 
      RowBox[{"4", "*", "m2", 
@@ -190,6 +189,57 @@ Cell[BoxData[
         RowBox[{"absq", "[", 
          RowBox[{"q2", ",", "eta", ",", "xx", ",", "y"}], "]"}]}], ")"}]}]}], 
     ";", "\[IndentingNewLine]", 
+    RowBox[{"Print", "@", 
+     RowBox[{"Limit", "[", 
+      RowBox[{
+       RowBox[{"cos\[Psi]", "[", 
+        RowBox[{"q2", ",", "eta", ",", "xx", ",", "y"}], "]"}], ",", 
+       RowBox[{"y", "\[Rule]", " ", 
+        RowBox[{"-", "1"}]}], ",", 
+       RowBox[{"Assumptions", "\[Rule]", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"eta", ">", "0"}], ",", 
+          RowBox[{"q2", "<", "0"}], ",", 
+          RowBox[{"m2", ">", "0"}], ",", 
+          RowBox[{"0", "<", "xx", "<", "1"}]}], "}"}]}]}], "]"}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Print", "[", 
+     RowBox[{"Limit", "[", 
+      RowBox[{
+       RowBox[{"k10", "[", 
+        RowBox[{"q2", ",", "eta", ",", "xx", ",", "y"}], "]"}], ",", 
+       RowBox[{"y", "\[Rule]", " ", 
+        RowBox[{"-", "1"}]}], ",", 
+       RowBox[{"Assumptions", "\[Rule]", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"eta", ">", "0"}], ",", 
+          RowBox[{"q2", "<", "0"}], ",", 
+          RowBox[{"m2", ">", "0"}], ",", 
+          RowBox[{"0", "<", "xx", "<", "1"}]}], "}"}]}]}], "]"}], "]"}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Print", "[", 
+     RowBox[{"Simplify", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"sp", "[", 
+         RowBox[{"q2", ",", "eta"}], "]"}], "/", 
+        RowBox[{"(", 
+         RowBox[{"2", 
+          RowBox[{"Sqrt", "[", 
+           RowBox[{"s5", "[", 
+            RowBox[{"q2", ",", "eta", ",", "xx"}], "]"}], "]"}]}], ")"}]}], 
+       ",", 
+       RowBox[{"Assumptions", "\[Rule]", " ", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"eta", ">", "0"}], ",", 
+          RowBox[{"q2", "<", "0"}], ",", 
+          RowBox[{"m2", ">", "0"}], ",", 
+          RowBox[{"0", "<", "xx", "<", "1"}]}], "}"}]}]}], "]"}], "]"}], ";", 
+    "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    RowBox[{"m2", "=", "1"}], ";", "\[IndentingNewLine]", 
     RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{"Graphics", "[", 
@@ -215,9 +265,10 @@ Cell[BoxData[
              RowBox[{"{", 
               RowBox[{
                RowBox[{
-                RowBox[{"k10", "[", 
-                 RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                "*", 
+                RowBox[{"-", 
+                 RowBox[{"k10", "[", 
+                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
+                  "]"}]}], "*", 
                 RowBox[{"Sqrt", "[", 
                  RowBox[{"1", "-", 
                   RowBox[{
@@ -225,9 +276,10 @@ Cell[BoxData[
                     RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
                     "]"}], "^", "2"}]}], "]"}]}], ",", 
                RowBox[{
-                RowBox[{"k10", "[", 
-                 RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                "*", 
+                RowBox[{"-", 
+                 RowBox[{"k10", "[", 
+                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
+                  "]"}]}], "*", 
                 RowBox[{"cos\[Psi]", "[", 
                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
                  "]"}]}]}], "}"}], ",", 
@@ -242,10 +294,9 @@ Cell[BoxData[
              RowBox[{"{", 
               RowBox[{
                RowBox[{
-                RowBox[{"-", 
-                 RowBox[{"k10", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                  "]"}]}], "*", 
+                RowBox[{"k10", "[", 
+                 RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
+                "*", 
                 RowBox[{"Sqrt", "[", 
                  RowBox[{"1", "-", 
                   RowBox[{
@@ -255,7 +306,7 @@ Cell[BoxData[
                RowBox[{
                 RowBox[{"absq", "[", 
                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                "-", 
+                "+", 
                 RowBox[{
                  RowBox[{"k10", "[", 
                   RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
@@ -294,113 +345,6 @@ Cell[BoxData[
          RowBox[{"vy", ",", 
           RowBox[{"-", ".4"}], ",", "\"\<y\>\""}], "}"}], ",", 
         RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}]}]}], 
-  "\[IndentingNewLine]", 
-  RowBox[{"(*", 
-   RowBox[{"Manipulate", "[", "\[IndentingNewLine]", 
-    RowBox[{
-     RowBox[{"Graphics3D", "[", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"Red", ",", 
-         RowBox[{"Arrowheads", "[", "0.1", "]"}], ",", "\[IndentingNewLine]", 
-         
-         RowBox[{"Arrow", "[", 
-          RowBox[{"Tube", "[", 
-           RowBox[{
-            RowBox[{"{", 
-             RowBox[{
-              RowBox[{"{", 
-               RowBox[{"0", ",", "0", ",", 
-                RowBox[{"-", 
-                 RowBox[{"absq", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                  "]"}]}]}], "}"}], ",", 
-              RowBox[{"{", 
-               RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
-            "0.05"}], "]"}], "]"}], ",", "\[IndentingNewLine]", 
-         RowBox[{"Arrow", "[", 
-          RowBox[{"Tube", "[", 
-           RowBox[{
-            RowBox[{"{", 
-             RowBox[{
-              RowBox[{"{", 
-               RowBox[{"0", ",", 
-                RowBox[{
-                 RowBox[{"k10", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                 "*", 
-                 RowBox[{"Sqrt", "[", 
-                  RowBox[{"1", "-", 
-                   RowBox[{
-                    RowBox[{"cos\[Psi]", "[", 
-                    RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                    "]"}], "^", "2"}]}], "]"}]}], ",", 
-                RowBox[{
-                 RowBox[{"k10", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                 "*", 
-                 RowBox[{"cos\[Psi]", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                  "]"}]}]}], "}"}], ",", 
-              RowBox[{"{", 
-               RowBox[{"0", ",", "0", ",", "0"}], "}"}]}], "}"}], ",", 
-            "0.05"}], "]"}], "]"}], ",", "\[IndentingNewLine]", "Blue", ",", 
-         "\[IndentingNewLine]", 
-         RowBox[{"Arrow", "[", 
-          RowBox[{"Tube", "[", 
-           RowBox[{
-            RowBox[{"{", 
-             RowBox[{
-              RowBox[{"{", 
-               RowBox[{"0", ",", "0", ",", "0"}], "}"}], ",", 
-              RowBox[{"{", 
-               RowBox[{"0", ",", 
-                RowBox[{
-                 RowBox[{"-", 
-                  RowBox[{"k10", "[", 
-                   RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                   "]"}]}], "*", 
-                 RowBox[{"Sqrt", "[", 
-                  RowBox[{"1", "-", 
-                   RowBox[{
-                    RowBox[{"cos\[Psi]", "[", 
-                    RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                    "]"}], "^", "2"}]}], "]"}]}], ",", 
-                RowBox[{
-                 RowBox[{"absq", "[", 
-                  RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}], 
-                 "-", 
-                 RowBox[{
-                  RowBox[{"k10", "[", 
-                   RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], "]"}],
-                   "*", 
-                  RowBox[{"cos\[Psi]", "[", 
-                   RowBox[{"vq2", ",", "veta", ",", "vxx", ",", "vy"}], 
-                   "]"}]}]}]}], "}"}]}], "}"}], ",", "0.05"}], "]"}], "]"}]}],
-         "\[IndentingNewLine]", "}"}], ",", 
-       RowBox[{"PlotRange", "\[Rule]", " ", "8"}]}], "]"}], ",", 
-     "\[IndentingNewLine]", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"vq2", ",", 
-         RowBox[{"-", "1"}], ",", "\"\<q\.b2\>\""}], "}"}], ",", 
-       RowBox[{"-", "10"}], ",", "0"}], "}"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"veta", ",", "0.1", ",", "\"\<\[Eta]\>\""}], "}"}], ",", "0", 
-       ",", "10"}], "}"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"vxx", ",", ".5", ",", "\"\<xx\>\""}], "}"}], ",", "0", ",", 
-       "1"}], "}"}], ",", "\[IndentingNewLine]", 
-     RowBox[{"{", 
-      RowBox[{
-       RowBox[{"{", 
-        RowBox[{"vy", ",", "0.1", ",", "\"\<y\>\""}], "}"}], ",", 
-       RowBox[{"-", "1"}], ",", "1"}], "}"}]}], "]"}], "*)"}], 
   "\[IndentingNewLine]", "]"}]], "Input",
  CellChangeTimes->{{3.69815178679522*^9, 3.698151941790752*^9}, {
    3.69815267649282*^9, 3.698152801909298*^9}, {3.6981529830473413`*^9, 
@@ -421,14 +365,58 @@ Cell[BoxData[
    3.698405327798436*^9}, {3.69840537498053*^9, 3.6984053889526*^9}, {
    3.698405446004827*^9, 3.698405465087923*^9}, {3.698405640881033*^9, 
    3.698405641375798*^9}, 3.698405882923493*^9, {3.6984060887961807`*^9, 
-   3.698406095807022*^9}}],
+   3.698406095807022*^9}, {3.699698050110409*^9, 3.699698086942906*^9}, {
+   3.6996981383776627`*^9, 3.699698181998592*^9}, {3.699698226111166*^9, 
+   3.699698258034696*^9}, {3.69969840999649*^9, 3.69969841568071*^9}, {
+   3.699699067083786*^9, 3.6996991070245733`*^9}, {3.699699156778077*^9, 
+   3.699699213961178*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"-", "1"}]], "Print",
+ CellChangeTimes->{
+  3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
+   3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
+   3.699699214566494*^9, 3.699703785959119*^9}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{"4", " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "eta"}], ")"}], " ", "m2$713"}], "-", "q2"}], 
+  RowBox[{"4", " ", 
+   SqrtBox[
+    RowBox[{"m2$713", "+", 
+     RowBox[{"eta", " ", "m2$713", " ", "xx"}]}]]}]]], "Print",
+ CellChangeTimes->{
+  3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
+   3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
+   3.699699214566494*^9, 3.699703786012525*^9}],
+
+Cell[BoxData[
+ FractionBox[
+  RowBox[{
+   RowBox[{"4", " ", 
+    RowBox[{"(", 
+     RowBox[{"1", "+", "eta"}], ")"}], " ", "m2$713"}], "-", "q2"}], 
+  RowBox[{"4", " ", 
+   SqrtBox[
+    RowBox[{"m2$713", "+", 
+     RowBox[{"eta", " ", "m2$713", " ", "xx"}]}]]}]]], "Print",
+ CellChangeTimes->{
+  3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
+   3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
+   3.699699214566494*^9, 3.699703786015568*^9}]
+}, Open  ]],
 
 Cell[BoxData[
  TagBox[
   StyleBox[
    DynamicModuleBox[{$CellContext`veta$$ = 
     7, $CellContext`vq2$$ = -9, $CellContext`vxx$$ = 
-    0.3, $CellContext`vy$$ = -0.4, Typeset`show$$ = True, 
+    0.3, $CellContext`vy$$ = -0.775, Typeset`show$$ = True, 
     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
     "\"untitled\"", Typeset`specs$$ = {{{
@@ -437,18 +425,18 @@ Cell[BoxData[
        Hold[$CellContext`vxx$$], 0.3, "xx"}, 0, 1}, {{
        Hold[$CellContext`vy$$], -0.4, "y"}, -1, 1}}, Typeset`size$$ = {
     360., {178., 182.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
-    Typeset`skipInitDone$$ = True, $CellContext`vq2$692$$ = 
-    0, $CellContext`veta$697$$ = 0, $CellContext`vxx$698$$ = 
-    0, $CellContext`vy$699$$ = 0}, 
+    Typeset`skipInitDone$$ = True, $CellContext`vq2$729$$ = 
+    0, $CellContext`veta$730$$ = 0, $CellContext`vxx$731$$ = 
+    0, $CellContext`vy$732$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {$CellContext`veta$$ = 
         7, $CellContext`vq2$$ = -9, $CellContext`vxx$$ = 
         0.3, $CellContext`vy$$ = -0.4}, "ControllerVariables" :> {
-        Hold[$CellContext`vq2$$, $CellContext`vq2$692$$, 0], 
-        Hold[$CellContext`veta$$, $CellContext`veta$697$$, 0], 
-        Hold[$CellContext`vxx$$, $CellContext`vxx$698$$, 0], 
-        Hold[$CellContext`vy$$, $CellContext`vy$699$$, 0]}, 
+        Hold[$CellContext`vq2$$, $CellContext`vq2$729$$, 0], 
+        Hold[$CellContext`veta$$, $CellContext`veta$730$$, 0], 
+        Hold[$CellContext`vxx$$, $CellContext`vxx$731$$, 0], 
+        Hold[$CellContext`vy$$, $CellContext`vy$732$$, 0]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -456,26 +444,26 @@ Cell[BoxData[
          Typeset`skipInitDone$$}, "Body" :> Graphics[{Red, 
          Arrowheads[0.1], 
          Arrow[{{
-           0, -$CellContext`absq$691[$CellContext`vq2$$, $CellContext`veta$$, \
+           0, -$CellContext`absq$713[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]}, {0, 0}}], Green, 
-         Arrow[{{$CellContext`k10$691[$CellContext`vq2$$, \
-$CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$] 
-            Sqrt[1 - $CellContext`cos\[Psi]$691[$CellContext`vq2$$, \
+         Arrow[{{(-$CellContext`k10$713[$CellContext`vq2$$, \
+$CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]) 
+            Sqrt[1 - $CellContext`cos\[Psi]$713[$CellContext`vq2$$, \
 $CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]^2], \
-$CellContext`k10$691[$CellContext`vq2$$, $CellContext`veta$$, \
-$CellContext`vxx$$, $CellContext`vy$$] \
-$CellContext`cos\[Psi]$691[$CellContext`vq2$$, $CellContext`veta$$, \
+(-$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`vxx$$, $CellContext`vy$$]) \
+$CellContext`cos\[Psi]$713[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]}, {0, 0}}], Blue, 
          Arrow[{{0, 
-           0}, {(-$CellContext`k10$691[$CellContext`vq2$$, \
-$CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]) 
-            Sqrt[1 - $CellContext`cos\[Psi]$691[$CellContext`vq2$$, \
+           0}, {$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`vxx$$, $CellContext`vy$$] 
+            Sqrt[1 - $CellContext`cos\[Psi]$713[$CellContext`vq2$$, \
 $CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]^2], \
-$CellContext`absq$691[$CellContext`vq2$$, $CellContext`veta$$, \
-$CellContext`vxx$$, $CellContext`vy$$] - \
-$CellContext`k10$691[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`absq$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`vxx$$, $CellContext`vy$$] + \
+$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$] \
-$CellContext`cos\[Psi]$691[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`cos\[Psi]$713[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]}}]}, PlotRange -> 10], 
       "Specifications" :> {{{$CellContext`vq2$$, -9, "q\.b2"}, -10, 
          0}, {{$CellContext`veta$$, 7, "\[Eta]"}, 0, 
@@ -508,7 +496,10 @@ $CellContext`vxx$$, $CellContext`vy$$]}}]}, PlotRange -> 10],
    3.698405275698923*^9, 3.698405298200754*^9}, 3.6984053283914824`*^9, 
    3.698405389458659*^9, {3.6984054486298532`*^9, 3.6984054656477222`*^9}, 
    3.698405641921362*^9, 3.698405883385454*^9, 3.698406096412775*^9, 
-   3.698476934614835*^9}]
+   3.698476934614835*^9, 3.699696534690733*^9, 3.699698050660907*^9, 
+   3.699698091628141*^9, {3.69969814607158*^9, 3.699698182557456*^9}, 
+   3.699698258897338*^9, 3.699698417296084*^9, 3.699699107799632*^9, 
+   3.699699214708482*^9, 3.699703786820915*^9}]
 }, Open  ]]
 },
 WindowSize->{960, 1016},
@@ -528,8 +519,13 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 15833, 401, 981, "Input"],
-Cell[16415, 425, 4706, 85, 542, "Output"]
+Cell[579, 22, 13749, 349, 791, "Input"],
+Cell[CellGroupData[{
+Cell[14353, 375, 259, 5, 23, "Print"],
+Cell[14615, 382, 488, 13, 53, "Print"],
+Cell[15106, 397, 488, 13, 53, "Print"]
+}, Open  ]],
+Cell[15609, 413, 4944, 88, 542, "Output"]
 }, Open  ]]
 }
 ]

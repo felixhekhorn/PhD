@@ -46,7 +46,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     /** @todo set order local? */
     this->alphaS->setOrderQCD(1 + this->order);
     
-    { // LO
+    /*{ // LO
         PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
         p.setupLO(this->z, this->Theta1);
         cdbl aS = this->alphaS->alphasQ2(p.getMuR2());
@@ -56,7 +56,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
         cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
         this->fillAllOrderHistograms(p, fLO);
         r += fLO;
-    }
+    }*/
     
     // NLO
     if (this->order > 0) {
@@ -67,15 +67,22 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             PhasespaceValues cgBarR1 = this->NLOg->cgBarR1();
             PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
             // combine all 4 points: Event & soft & collinear & soft+collinear
+#ifdef CounterByHeavyside
             r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
             if (this->xE > this->rhoTilde)
-                r += this->combineNLOg(1.,       this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
-            if (yE < -1.+omega) {
-                r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
+                r += this->combineNLOg(1., this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
+            if (this->yE < -1.+omega) {
+                r += this->combineNLOg(this->xE, -1., cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
                 if (this->xE > this->rhoTilde)
-                    r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+                    r += this->combineNLOg(1., -1., cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
             }
-        } { // quark channel
+#else // CounterByHeavyside
+            r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
+            r += this->combineNLOg(1.,       this->yE, cg1.xCyE, cgBarR1.xCyE, cgBarF1.xCyE);
+            r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
+            r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
+#endif // CounterByHeavyside
+        } /* { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
             PhasespaceValues cq1 = this->NLOq->cq1();
@@ -83,10 +90,15 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
             PhasespaceValues dq1 = this->NLOq->dq1();
             PhasespaceValues oq1 = this->NLOq->oq1();
             // combine 2 points: Event & collinear
+#ifdef CounterByHeavyside
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
-            if (yE < -1.+omega) 
-                r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
-        }
+            if (this->yE < -1.+omega) 
+                r += this->combineNLOq(this->xE, -1., cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
+#else // CounterByHeavyside
+            r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
+            r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
+#endif // CounterByHeavyside
+        } */
     }
     return isfinite(r) ? r : 0.;
 }
@@ -102,7 +114,7 @@ dbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
     // combine
     cdbl nNLOg = this->jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,muF2);
     cdbl fNLOg = nNLO * eH*eH * nNLOg * (cg1 + log(muR2/this->m2)*cgBarR1 + log(muF2/this->m2)*cgBarF1);
-    if (!isfinite(fNLOg))
+    if (!isfinite(fNLOg) || 0. == fNLOg)
         return 0.;
     // fill histograms
     this->fillAllOrderHistograms(p, fNLOg);
@@ -127,7 +139,7 @@ dbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl 
                 * (eH*eH*(cq1 + log(muF2/m2)*cqBarF1) + eL*eL*dq1 + eH*eL*oq1);
     }
     cdbl fNLOq = nNLO * (this->jacZ * 1./this->z) * fqs ;
-    if (!isfinite(fNLOq))
+    if (!isfinite(fNLOq) || 0. == fNLOq)
         return 0.;
     // fill histograms
     this->fillAllOrderHistograms(p, fNLOq);

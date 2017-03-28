@@ -33,7 +33,9 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         0 == this->BpQED || 0 == this->Pgq0 || 0 == this->Pgq1)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
-  
+
+#ifdef CounterByHeavyside
+ 
     // hard event
     const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
     cdbl meE = Ap1(m2,q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up);
@@ -59,7 +61,8 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         }
     }
 
-/*
+#else // CounterByHeavyside
+
     { // collinear contributions
         cdbl s5B = q2 + sp*xE;
         cdbl beta5B = sqrt(1. - 4.*m2/s5B);
@@ -81,7 +84,9 @@ PhasespaceValues PdfConvNLOq::cq1() const {
         r.xEyE += f * jacE*meE/(1.+yE);
         r.xEyC -= f * jacC*meC/(1.+yC);
     }
-*/
+    
+#endif // CounterByHeavyside
+
     return r;
 }
 
@@ -90,7 +95,10 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
     
-    /** @todo for eta=1e-4 there is a relative error of -3.598609e-05 and that remains up until eta~1e0  */
+    /** @todo for eta=1e-4 there is a systematic relative error of -3.598609e-05 and that remains up until eta~1e0, 
+     * seems to be independent of q2,m2??? */
+
+#ifdef CounterByHeavyside
 
     // collinear events
     if (yE < -1+omega) {
@@ -106,7 +114,8 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
         }
     }
 
-/*
+#else // CounterByHeavyside
+
     // collinear contributions
     cdbl s5B = q2 + sp*xE;
     cdbl beta5B = sqrt(1. - 4.*m2/s5B);
@@ -114,10 +123,12 @@ PhasespaceValues PdfConvNLOq::cqBarF1() const {
     cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
     cdbl jacB = jacxE*jacTheta1;
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-    cdbl l = -1.;// + .35e-4;
+    cdbl l = -1.;// + .35e-3/(sp+q2);
     cdbl vPqg0 = Pgq0(xE)/CF;
     r.xEyC += g*jacB*meB*vPqg0*l;
-*/
+
+#endif // CounterByHeavyside
+
     return r;
 }
     

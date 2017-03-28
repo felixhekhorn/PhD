@@ -54,7 +54,7 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     } { // align k1 to z
         using geom3::Rotation3;
         using geom3::Vector3;
-        Vector3 k1vec = k1.momentum();
+        Vector3 k1vec = this->k1.momentum();
         const Rotation3 toZ(k1vec.cross(UnitVector3::zAxis()).direction(),k1vec.angle(UnitVector3::zAxis()));
         this->q.rotate(toZ);
         this->k1.rotate(toZ);

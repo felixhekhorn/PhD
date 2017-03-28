@@ -11,6 +11,8 @@
 
 #include "../gslpp/gslpp.Histogram.hpp"
 
+#define CounterByHeavyside 1
+
 /**
  * @brief subspace for exclusive calculations
  */
