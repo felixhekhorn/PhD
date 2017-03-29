@@ -10,6 +10,7 @@ Release/src_Exclusive_Int.cpp.o: src/Exclusive/Int.cpp \
  src/Exclusive/./IntKers/PdfConvLOg.h \
  src/Exclusive/./IntKers/PdfConvNLOg.h \
  src/Exclusive/./IntKers/PdfConvNLOq.h \
+ src/Exclusive/./IntKers/PhasespacePoint.h \
  src/Exclusive/./IntKers/KinematicVars.hpp
 
 src/Exclusive/./Int.h:
@@ -37,5 +38,7 @@ src/Exclusive/./IntKers/PdfConvLOg.h:
 src/Exclusive/./IntKers/PdfConvNLOg.h:
 
 src/Exclusive/./IntKers/PdfConvNLOq.h:
+
+src/Exclusive/./IntKers/PhasespacePoint.h:
 
 src/Exclusive/./IntKers/KinematicVars.hpp:

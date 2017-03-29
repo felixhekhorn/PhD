@@ -55,6 +55,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
+return r;
 
 #ifdef CounterByHeavyside
 
@@ -62,12 +63,12 @@ PhasespaceValues PdfConvNLOg::cg1() const {
     cdbl s5E = q2 + xE*sp;
     cdbl beta5E = sqrt(1. - 4.*m2/s5E);
     cdbl f = Kggg*NC*CF * s/(M_PI*pow(sp,3))*sin(Theta1);
-    r.xEyE += ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta5E/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,xE,yE,Theta1,Theta2);
+//    r.xEyE += ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta5E/(1.-yE) * 1./(1.-xE)/(1.+yE) *    Rp     (m2,q2,sp,xE,yE,Theta1,Theta2);
     
     // collinear events
     if (yE < -1.+omega) {
         // hard counter event
-        r.xEyC -= ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta5E/2.      * 1./(1.-xE)/(1.+yE) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
+//        r.xEyC -= ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta5E/2.      * 1./(1.-xE)/(1.+yE) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
         
         // collinear contribution
         cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));
@@ -77,6 +78,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
         r.xEyC += ncg1 * jacxE*jacTheta1*jacyE/jacyC * g*beta5E/xE*meE*(PggH0(xE)*(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
     }
+
     
     // soft events
     if (this->xE > this->rhoTilde) {
@@ -84,25 +86,26 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         
         // hard counter event
-        r.xCyE -= ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta  /(1.-yE) * 1./(1.-xE)/(1.+yE) *    RpxC   (m2,q2,sp,yE,Theta1,Theta2);
-        
+//        r.xCyE -= ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta  /(1.-yE) * 1./(1.-xE)/(1.+yE) *    RpxC   (m2,q2,sp,yE,Theta1,Theta2);
+/*        
         { // S+V contributions
             cdbl h = Kggg*NC*CF * 1./(4.*sp);
             cdbl betaTilde = sqrt(1. - this->rhoTilde);
             r.xCyE += ncg1 * jacTheta1*jacxE/jacxC * h * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-            /** @todo hats?
+            / ** @todo hats?
             // hat contributions
             if (0. != PggS1()) {
                 cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
                 //r -= jacTheta1 * g * BpQED(m2,q2,sp,t1) * PggS1() * beta*sin(Theta1)/(16.*M_PI);
             }
-             */
+             * /
         }
+*/
         
         // soft and collinear events
         if (yE < -1.+omega) {
             // hard counter event
-            r.xCyC += ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta  /2.      * 1./(1.-xE)/(1.+yE) * CA*ROKpyxC(m2,q2,sp,t1);
+//            r.xCyC += ncg1 * jacxE*jacyE*jacTheta1*jacTheta2 * f*beta  /2.      * 1./(1.-xE)/(1.+yE) * CA*ROKpyxC(m2,q2,sp,t1);
             
             // collinear counter event
             cdbl meC = BpQED(m2,q2,   sp,   t1);
@@ -116,20 +119,21 @@ PhasespaceValues PdfConvNLOg::cg1() const {
 #else // CounterByHeavyside
     
     cdbl beta = sqrt(1. - 4.*m2/s);
-    { // S+V contributions
+/*    { // S+V contributions
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = Kggg*NC*CF * 1./(4.*sp);
         cdbl betaTilde = sqrt(1. - this->rhoTilde);
         r.xCyE += ncg1 * jacTheta1 * f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-        /** @todo hats?
+        / ** @todo hats?
         // hat contributions
         if (0. != PggS1()) {
             cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
             //r -= jacTheta1 * g * BpQED(m2,q2,sp,t1) * PggS1() * beta*sin(Theta1)/(16.*M_PI);
         }
-         */
+         * /
     }
-    
+*/
+   
     { // collinear contributions
         cdbl s5E = q2 + xE*sp;
         cdbl beta5E = sqrt(1. - 4.*m2/s5E);
@@ -143,7 +147,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE)*(/*(1-x)/(1-x)*/l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
         r.xCyC -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA    *(    1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
     }
-    
+/*    
     { // hard contributions
         cdbl s5E = q2 + xE*sp;
         cdbl beta5E = sqrt(1. - 4.*m2/s5E);
@@ -154,6 +158,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         r.xEyC -= ncg1 * jacxE*jacyC*jacTheta1*jacTheta2 * f*beta5E/2.      * 1./(1.-xE)/(1.+yC) * CA*ROKpyC (m2,q2,sp,xE,Theta1,Theta2);
         r.xCyC += ncg1 * jacxC*jacyC*jacTheta1*jacTheta2 * f*beta  /2.      * 1./(1.-xC)/(1.+yC) * CA*ROKpyxC(m2,q2,sp,t1sc);
     }
+*/
 #endif // CounterByHeavyside
 
     return r;
@@ -166,7 +171,7 @@ PhasespaceValues PdfConvNLOg::cgBarR1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
-
+/*
 #ifdef CounterByHeavyside
     // soft events
     if (this->xE > this->rhoTilde) {
@@ -190,7 +195,7 @@ PhasespaceValues PdfConvNLOg::cgBarR1() const {
     r.xCyE += ncg1 * jacTheta1 * f * b0(nlf) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
 
 #endif // CounterByHeavyside
-
+*/
     return r;
 }
 
@@ -205,7 +210,7 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
     PhasespaceValues r;
 
 #ifdef CounterByHeavyside
-
+/*
     // soft events
     if (this->xE > this->rhoTilde) {
         // S+V contributions
@@ -214,21 +219,21 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
         // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
         r.xCyE -= ncg1 * jacTheta1*jacxE/jacxC * f * (b0(nlf) + 4.*CA*log(1.-rhoTilde)) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
     }
-    
+*/  
     // collinear events
     if (yE < -1.+omega) {
         // collinear contributions
         cdbl s5E = q2 + xE*sp;
         cdbl beta5E = sqrt(1. - 4.*m2/s5E);
         cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));
-        cdbl t1  = -.5*sp*(1. - beta  *cos(Theta1));
         cdbl meE = BpQED(m2,q2,xE*sp,xE*t1c);
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = -1.;
-        r.xEyC += ncg1 *     jacTheta1*jacxE*jacyE/jacyC * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l));
+        r.xEyC += ncg1 *     jacTheta1*jacxE*jacyE/jacyC * f*beta5E/xE*meE*(PggH0(xE) *(l));
         // soft+collinear events
         if (this->xE > this->rhoTilde) {
             // collinear counter event
+            cdbl t1  = -.5*sp*(1. - beta  *cos(Theta1));
             cdbl meC = BpQED(m2,q2,sp,t1);
             // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
             r.xCyC -= ncg1 * jacTheta1*jacxE*jacyE/jacyC * f*beta     *meC*(2.*CA     *(    1./(1.-xE)*l));
@@ -236,14 +241,14 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
     }
 
 #else // CounterByHeavyside
-
+/*
     { // S+V contributions
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = 2. * Kggg*NC*CF * 1./(4.*sp);
         // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
         r.xCyE -= ncg1 * jacTheta1 * f * (b0(nlf) + 4.*CA*log(1.-rhoTilde)) * BpQED(m2,q2,sp,t1) * beta*sin(Theta1);
     }
-    
+*/
     { // collinear contributions
         cdbl s5E = q2 + xE*sp;
         cdbl beta5E = sqrt(1. - 4.*m2/s5E);
@@ -253,11 +258,11 @@ PhasespaceValues PdfConvNLOg::cgBarF1() const {
         cdbl meC = BpQED(m2,q2,sp,t1);
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = -1.;
-        // (1-x)P_gg^0 -> 2CA for x->1 for all projections
-        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(/*(1-x)/(1-x)*/l));
+        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
+        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE) *(l));
         r.xCyC -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA     *(    1./(1.-xC)*l));
     }
-
+    
 #endif // CounterByHeavyside
 
     return r;

@@ -14,7 +14,7 @@ using namespace Color;
  * \f[(\Delta)P_{\Pg\Pg}^H(z) = (\Delta) P_{\Pg\Pg}^{H,(0)}(z) + \epsilon (\Delta) P_{\Pg\Pg}^{H,(1)}(z)\f]
  * \f[(\Delta)P_{\Pg\Pg}^S(z) = \frac {\beta_0}{2} + \epsilon (\Delta) P_{\Pg\Pg}^{S,(1)}\f]
  * 
- * gluon splitting a quark:
+ * quaark splitting a gluon:
  * \f[(\Delta)P_{\Pg\Pq}(z) = (\Delta)P_{\Pg\Pq}^{(0)}(z) + \epsilon (\Delta)P_{\Pg\Pq}^{(1)}(z)\f]
  */
 namespace AltarelliParisi {

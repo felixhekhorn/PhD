@@ -44,6 +44,6 @@ dbl Exclusive::int5DDvegas(FKerAll& F, const MCParams& ps) {
     }
     F.scaleHistograms(1./((double)iterations));
     if (ps.verbosity > 0)
-        printf("[INFO] int5D(Dvegas): [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());
+        printf("[INFO] int5D(Dvegas): [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),e.chiSquarePerIteration());
     return e.integral();
 }

@@ -45,27 +45,6 @@ int test() {
         o << boost::format("%e\t%e\n")%M%g;
     }
     o.close();
-    /*cdbl dlnz2 =(log(zmax*zmax) - log(bjorkenX*bjorkenX))/((dbl)(N));
-    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_z2.dat");
-    for (uint j = 0; j < N; ++j) {
-        cdbl z2 = exp(log(bjorkenX*bjorkenX) + (j + .5)*dlnz2);
-        iO.setPartonicS(-q2/(sqrt(z2)) + q2);
-        cdbl f = 1./(2.*sqrt(z2)) * 1./(sqrt(z2)) * pdf.xfxQ2(21,bjorkenX/(sqrt(z2)),mu02) * iO.cg0();
-        cdbl g = n * f;
-        o << boost::format("%e\t%e\n")%z2%g;
-    }
-    o.close();*/
-    /*cdbl k = 3.;
-    cdbl dlnkz =(log(k*zmax) - log(k*bjorkenX))/((dbl)(N));
-    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_kz.dat");
-    for (uint j = 0; j < N; ++j) {
-        cdbl kz = exp(log(k*bjorkenX) + (j + .5)*dlnkz);
-        iO.setPartonicS(-q2/(kz/k) + q2);
-        cdbl f = 1./k * 1./(kz/k) * pdf.xfxQ2(21,bjorkenX/(kz/k),mu02) * iO.cg0();
-        cdbl g = n * f;
-        o << boost::format("%e\t%e\n")%kz%g;
-    }
-    o.close();*/
     return EXIT_SUCCESS;
 }
 
@@ -79,7 +58,7 @@ int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
     dbl q2 = -50.;
-    dbl m2 = 1.5*1.5;
+    dbl m2 = 1.5*1.5*4;
     uint nlf = 5;
     cdbl lambdaQCD = .239; // nlf=3
     //cdbl lambdaQCD = .194; // nlf=3
@@ -114,7 +93,7 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000;
+    eO.MCparams.calls = 500000*2;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
     
@@ -136,8 +115,8 @@ int main(int argc, char **argv) {
         cdbl a = pow(10,-4.+8./(N-1)*j);
         iO.setEta(a);
         eO.setEta(a);
-        cdbl i = iO.cqBarF1();
-        {cdbl e = eO.cqBarF1();
+        cdbl i = iO.cgBarF1();
+        {cdbl e = eO.cgBarF1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         / *{eO.setXTilde(.6);
         cdbl e = eO.cg1();
@@ -151,7 +130,6 @@ int main(int argc, char **argv) {
         printf("\n");* /
     }
 */
-
 
     cdbl bjorkenX = 8.5e-4;
     iO.setBjorkenX(bjorkenX);
