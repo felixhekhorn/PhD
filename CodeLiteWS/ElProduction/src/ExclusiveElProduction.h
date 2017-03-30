@@ -356,7 +356,7 @@ public:
  * @param order calculated order
  * @return \f$F^{(order)}\f$
  */
-    dbl F(uint order = 1);
+    cdbl F(uint order = 1);
     
 /**
  * @brief Monte Carlo parameter to F (and only F)
@@ -378,7 +378,7 @@ private:
 /**
  * @brief setups all active histograms
  */
-    void setupHistograms();
+    void setupHistograms() const;
     
 public:
     
@@ -396,7 +396,7 @@ public:
  * @param t histogram type
  * @param path file path
  */
-    void printHistogram(Exclusive::histT t, str path);
+    void printHistogram(Exclusive::histT t, str path) const;
     
 ///@}
 

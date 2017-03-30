@@ -10,7 +10,9 @@ PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, DynamicScaleFa
 }
 
 void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
+    this->order = 0;
     this->z = z;
+    this->Theta1 = Theta1;
     cdbl sp = -q2/z;
     this->vs = KinematicVars(this->m2, this->q2, sp, 1., -1., Theta1, 0.);
     // with x = 1 is s5 = s and beta5 = beta
@@ -30,7 +32,11 @@ void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
 }
 
 void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2) {
+    this->order = 1;
     this->z = z;
+    this->x = x;
+    this->Theta1 = Theta1;
+    this->Theta2 = Theta2;
     this->vs = KinematicVars(this->m2, this->q2, -q2/z, x, y, Theta1, Theta2);
     using rk::P4;
     using geom3::UnitVector3;
@@ -93,7 +99,7 @@ void PhasespacePoint::applyLTsToFinalFrame() {
     }
 }
 
-dbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
+cdbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
     cdbl ptSumHQPair = (this->p1 + this->p2).pt();
     cdbl ptHAQ = this->p2.pt();
     cdbl mu2 = factors.cM2 * this->m2 +
@@ -105,22 +111,42 @@ dbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
     return mu2;
 }
 
-dbl PhasespacePoint::getZ() const {
+cdbl PhasespacePoint::getZ() const {
     return this->z;
 }
 
-rk::P4 PhasespacePoint::getP1() const {
+cdbl PhasespacePoint::getTheta1() const {
+    return this->Theta1;
+}
+
+const rk::P4 PhasespacePoint::getP1() const {
     return this->p1;
 }
     
-rk::P4 PhasespacePoint::getP2() const {
+const rk::P4 PhasespacePoint::getP2() const {
     return this->p2;
 }
 
-dbl PhasespacePoint::getMuR2() const {
+cdbl PhasespacePoint::getMuR2() const {
     return this->getDynamicScale(this->muR2Factors);
 }
     
-dbl PhasespacePoint::getMuF2() const {
+cdbl PhasespacePoint::getMuF2() const {
     return this->getDynamicScale(this->muF2Factors);
+}
+
+bool PhasespacePoint::isNLO() const {
+    return 1 == this->order;
+}
+    
+cdbl PhasespacePoint::getX() const {
+    if (!this->isNLO())
+        throw domain_error("only NLO phasespace points have a x value");
+    return this->x;
+}
+    
+cdbl PhasespacePoint::getTheta2() const {
+    if (!this->isNLO())
+        throw domain_error("only NLO phasespace points have a Theta2 value");
+    return this->Theta2;
 }

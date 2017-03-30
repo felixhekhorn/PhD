@@ -74,7 +74,7 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @param cgBarF1
  * @return total kernel
  */
-    dbl combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1);
+    cdbl combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1);
     
 /**
  * @brief combines all parts of NLOq
@@ -86,7 +86,7 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @param oq1
  * @return total kernel
  */
-    dbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1);
+    cdbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1);
 
 /**
  * @brief fills all avtive histograms available in all orders
@@ -94,14 +94,14 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @param p current phase space point
  * @param i integrand
  */
-    void fillAllOrderHistograms(PhasespacePoint p, dbl i) const;
+    void fillAllOrderHistograms(const PhasespacePoint p, dbl i) const;
 
 /**
  * @brief fills all avtive histograms available in NLO
  * @param p current phase space point
  * @param i integrand
  */
-    void fillNLOHistograms(PhasespacePoint p, dbl i) const;
+    void fillNLOHistograms(const PhasespacePoint p, dbl i) const;
     
 public:
 
@@ -166,7 +166,7 @@ public:
  * @param aTheta2 integration variable mapped on Theta2
  * @return F
  */
-    dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    cdbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
     
 /**
  * @brief called function for Dvegas

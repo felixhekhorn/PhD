@@ -24,68 +24,68 @@ namespace AltarelliParisi {
  * @param x momentum fraction
  * @return \f$P_{\Pg\Pq}^{(0)}(x)\f$
  */
-cdbl Pgq0 (cdbl x) { return CF*(1.+pow(1.-x,2))/x; }
+inline cdbl Pgq0 (cdbl x) { return CF*(1.+pow(1.-x,2))/x; }
 
 /**
  * @brief quark-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$P_{\Pg\Pq}^{(1)}(x)\f$
  */
-cdbl Pgq1 (cdbl x) { return CF*x/2.; }
+inline cdbl Pgq1 (cdbl x) { return CF*x/2.; }
     
 /**
  * @brief polarized quark-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$\Delta P_{\Pg\Pq}^{(0)}(x)\f$
  */
-cdbl DeltaPgq0 (cdbl x) { return CF*(2.-x); }
+inline cdbl DeltaPgq0 (cdbl x) { return CF*(2.-x); }
 
 /**
  * @brief polarized quark-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$\Delta P_{\Pg\Pq}^{(1)}(x)\f$
  */
-cdbl DeltaPgq1 (cdbl x) { return CF*(-(1.-x)); }
+inline cdbl DeltaPgq1 (cdbl x) { return CF*(-(1.-x)); }
 
 /**
  * @brief unregulated hard part of gluon-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$P_{\Pg\Pg}^{H,(0)}(x)\f$
  */
-cdbl PggH0 (cdbl x) { return 2.*CA*(x/(1.-x) + (1.-x)/x + x*(1.-x)); }
+inline cdbl PggH0 (cdbl x) { return 2.*CA*(x/(1.-x) + (1.-x)/x + x*(1.-x)); }
 
 /**
  * @brief unregulated hard part of gluon-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$P_{\Pg\Pg}^{H,(1)}(x)\f$
  */
-cdbl PggH1 (cdbl x) { return 0.; }
+inline cdbl PggH1 (cdbl x) { return 0.; }
 
 /**
  * @brief polarized unregulated hard part of gluon-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$\Delta P_{\Pg\Pg}^{H,(0)}(x)\f$
  */
-cdbl DeltaPggH0 (cdbl x) { return 2.*CA*(1./(1.-x) - 2.*x + 1.); }
+inline cdbl DeltaPggH0 (cdbl x) { return 2.*CA*(1./(1.-x) - 2.*x + 1.); }
 
 /**
  * @brief polarized unregulated hard part of gluon-splitting-gluon AP-kernel
  * @param x momentum fraction
  * @return \f$\Delta P_{\Pg\Pg}^{H,(1)}(x)\f$
  */
-cdbl DeltaPggH1 (cdbl x) { return 2.*CA*(-(1.-x)); }
+inline cdbl DeltaPggH1 (cdbl x) { return 2.*CA*(-(1.-x)); }
 
 /**
  * @brief soft part of gluon-splitting-gluon AP-kernel
  * @return \f$P_{\Pg\Pg}^{S,(1)}\f$
  */
-cdbl PggS1 () { return 0.; }
+inline cdbl PggS1 () { return 0.; }
 
 /**
  * @brief polarized soft part of gluon-splitting-gluon AP-kernel
  * @return \f$\Delta P_{\Pg\Pg}^{S,(1)}\f$
  */
-cdbl DeltaPggS1 () { return -((dbl)NC)/12.; }
+inline cdbl DeltaPggS1 () { return -((dbl)NC)/12.; }
 
 } // namespace AltarelliParisi
 

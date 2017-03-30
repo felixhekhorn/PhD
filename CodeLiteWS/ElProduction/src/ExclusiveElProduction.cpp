@@ -322,7 +322,7 @@ void ExclusiveElProduction::setLambdaQCD(dbl lambdaQCD) {
     this->hasAlphaS = true;
 }
 
-dbl ExclusiveElProduction::F(uint order/*= 1*/) {
+cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
     if (order > 1)
         throw domain_error((boost::format("order has to be either 0 or 1")%order).str());
     this->checkHadronic();
@@ -375,53 +375,32 @@ void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan
     this->histMap.insert({t,h});
 }
     
-void ExclusiveElProduction::setupHistograms() {
-/** @todo change to foreach and switch? */
+void ExclusiveElProduction::setupHistograms() const {
     // hadronic S
-    dbl S = -this->q2*(1./this->bjorkenX - 1.); 
-    {
-    histMapT::const_iterator h = this->histMap.find(log10z);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesLog10(this->bjorkenX,this->zMax);
-    } {
-    histMapT::const_iterator h = this->histMap.find(log10xi);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
-    } {
-    histMapT::const_iterator h = this->histMap.find(invMassHQPair);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesUniform(2.*sqrt(this->m2),sqrt(S));
-    } {
-    histMapT::const_iterator h = this->histMap.find(HAQRapidity);
-    if (this->histMap.cend() != h && !h->second->isInitialized()) {
-        cdbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
-        h->second->setRangesUniform(-y0,y0);
-    } } {
-    histMapT::const_iterator h = this->histMap.find(HAQTransverseMomentum);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesUniform(0.,sqrt(S/4. - this->m2));
-    } 
+    cdbl S = -this->q2*(1./this->bjorkenX - 1.);
+    for (histMapT::const_iterator it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
+        if (it->second->isInitialized())
+            continue;
+        switch (it->first) {
+            case histT::log10z:                 it->second->setRangesLog10(this->bjorkenX,this->zMax);      break;
+            case histT::log10xi:                it->second->setRangesLog10(this->bjorkenX/this->zMax,1.);   break;
+            case histT::Theta1:
+            case histT::Theta2:                 it->second->setRangesUniform(0.,M_PI);                      break;
+            case histT::invMassHQPair:          it->second->setRangesUniform(2.*sqrt(this->m2),sqrt(S));    break;
+            case histT::HAQRapidity:
+                {cdbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
+                it->second->setRangesUniform(-y0,y0);}
+                break;
+            case histT::HAQTransverseMomentum:  it->second->setRangesUniform(0.,sqrt(S/4. - this->m2));     break;
+            case histT::x:                      it->second->setRangesLog10(this->bjorkenX/this->zMax,1.);   break;
+            default: continue;
+        }
+    }
 /** @todo add more? */
-/*{
-    histMapT::const_iterator hx = this->histMap.find(x);
-    if (this->histMap.cend() != hx && !hx->second->isInitialized())
-        hx->second->setRangesLog10(this->bjorkenX/this->zMax,1.);
-    } {
+/* {
     histMapT::const_iterator hy = this->histMap.find(y);
     if (this->histMap.cend() != hy && !hy->second->isInitialized())
         hy->second->setRangesUniform(-1.,1.);
-    } {
-    histMapT::const_iterator h = this->histMap.find(Theta1);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesUniform(0.,M_PI);
-    } {
-    histMapT::const_iterator hTheta2 = this->histMap.find(Theta2);
-    if (this->histMap.cend() != hTheta2 && !hTheta2->second->isInitialized())
-        hTheta2->second->setRangesUniform(0.,M_PI);
-    } {
-    histMapT::const_iterator h = this->histMap.find(AHQTransverseMomentum);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesUniform(0.,sqrt(S/4. - this->m2));
     } {
     histMapT::const_iterator h = this->histMap.find(DeltaPhiHQPair);
     if (this->histMap.cend() != h && !h->second->isInitialized())
@@ -430,7 +409,7 @@ void ExclusiveElProduction::setupHistograms() {
 */
 }
 
-void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) {
+void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) const {
     histMapT::const_iterator it = this->histMap.find(t);
     if (this->histMap.cend() == it)
         throw invalid_argument("histogram was not active!");

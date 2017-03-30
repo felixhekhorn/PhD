@@ -43,6 +43,26 @@ class PhasespacePoint {
  * @brief current z
  */
     dbl z = -0.;
+    
+/**
+ * @bried order
+ */
+    uint order;
+    
+/**
+ * @brief current Theta1
+ */
+    dbl Theta1 = -0.;
+    
+/**
+ * @brief current x
+ */
+    dbl x = -0.;
+    
+/**
+ * @brief current Theta2
+ */
+    dbl Theta2 = -0.;
 
 /**
  * @brief kinematic vars
@@ -78,7 +98,7 @@ class PhasespacePoint {
  * @brief computes a scale by given factors
  * @param factors
  */
-    dbl getDynamicScale(DynamicScaleFactors factors) const;
+    cdbl getDynamicScale(DynamicScaleFactors factors) const;
     
 public:
     
@@ -113,31 +133,55 @@ public:
  * @brief current z
  * @return z
  */
-    dbl getZ() const;
+    cdbl getZ() const;
     
 /**
  * @brief momentum of outgoing heavy quark
  * @return p1
  */
-    rk::P4 getP1() const;
+    const rk::P4 getP1() const;
     
 /**
  * @brief momentum of outgoing heavy anti quark
  * @return p2
  */
-    rk::P4 getP2() const;
+    const rk::P4 getP2() const;
 
 /**
  * @brief computes \f$\mu_R^2\f$
  * @return \f$\mu_R^2\f$
  */
-    dbl getMuR2() const;
+    cdbl getMuR2() const;
     
 /**
  * @brief computes \f$\mu_F^2\f$
  * @return \f$\mu_F^2\f$
  */
-    dbl getMuF2() const;
+    cdbl getMuF2() const;
+    
+/**
+ * @brief current Theta1
+ * @return Theta1
+ */
+    cdbl getTheta1() const;
+    
+/**
+ * @brief is NLO point?
+ * @return is NLO?
+ */
+    bool isNLO() const;
+    
+/**
+ * @brief current x if is NLO
+ * @return x
+ */
+    cdbl getX() const;
+    
+/**
+ * @brief current Theta2 if is NLO
+ * @return Theta2
+ */
+    cdbl getTheta2() const;
 };
 
 } // namespace Exclusive

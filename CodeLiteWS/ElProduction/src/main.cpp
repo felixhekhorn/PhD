@@ -58,14 +58,14 @@ int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
     dbl q2 = -50.;
-    dbl m2 = 1.5*1.5*4;
+    dbl m2 = 1.5*1.5;
     uint nlf = 5;
     cdbl lambdaQCD = .239; // nlf=3
     //cdbl lambdaQCD = .194; // nlf=3
-    dbl mu02 = (4.*m2-q2);
-    Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
-    //dbl mu02 = 100.*m2;
-    //Exclusive::DynamicScaleFactors mu02F(100.,0.,0.);
+    /*dbl mu02 = (4.*m2-q2);
+    Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);*/
+    dbl mu02 = 1.*m2;
+    Exclusive::DynamicScaleFactors mu02F(1.,0.,0.);
     /*dbl m2 = 4.75*4.75;
     uint nlf = 4;
     cdbl lambdaQCD = .158; // nlf=4
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000*2;
+    eO.MCparams.calls = 500000;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
     
@@ -135,10 +135,16 @@ int main(int argc, char **argv) {
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
     eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, 0.,8.);
+    eO.activateHistogram(Exclusive::histT::x, 50);
+    eO.activateHistogram(Exclusive::histT::Theta1, 50);
+    eO.activateHistogram(Exclusive::histT::Theta2, 50);
     
     cdbl i = iO.Fg1();//iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
     eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, "/home/Felix/Physik/PhD/data/hist/pt.dat");
+    eO.printHistogram(Exclusive::histT::x, "/home/Felix/Physik/PhD/data/hist/x.dat");
+    eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/hist/Theta1.dat");
+    eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/hist/Theta2.dat");
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
 
     return EXIT_SUCCESS;

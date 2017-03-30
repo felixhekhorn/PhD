@@ -30,7 +30,7 @@ void FKerAll::setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFacto
     this->muF2Factors = muF2Factors;
 }
     
-dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
+cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     // protect from null pointer
     if (0 == this->LOg || 0 == this->NLOg || 0 == this->NLOq)
         throw invalid_argument("need to set all arguments!");
@@ -43,7 +43,6 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
 //return aTheta1;
     dbl r = 0.;
    
-    /** @todo set order local? */
     this->alphaS->setOrderQCD(1 + this->order);
     
     /*{ // LO
@@ -103,7 +102,7 @@ dbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) 
     return isfinite(r) ? r : 0.;
 }
 
-dbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
+cdbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
     PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
     p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
     cdbl muR2 = p.getMuR2();
@@ -122,7 +121,7 @@ dbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
     return fNLOg;
 }
 
-dbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1) {
+cdbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1) {
     PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
     p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
     cdbl muR2 = p.getMuR2();
@@ -165,7 +164,7 @@ void FKerAll::scaleHistograms(dbl s) const {
 //    (*sumWeights) *= s;
 }
 
-void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
+void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
     // something active?
     if (0 == this->histMap)
         return;
@@ -180,6 +179,7 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
         switch (it->first) {
             case histT::log10z:         var = p.getZ();                 break;
             case histT::log10xi:        var = this->bjorkenX/p.getZ();  break;
+            case histT::Theta1:         var = p.getTheta1();            break;
             case histT::invMassHQPair: 
                 {cdbl M2 = (p.getP1() + p.getP2()).squared();
                 var = sqrt(M2);}
@@ -192,11 +192,7 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
         it->second->accumulate(var,value);
     }
     /** @todo add more */
-/*    { // AHQTransverseMomentum
-    histMapT::const_iterator h = this->histMap->find(histT::AHQTransverseMomentum);
-    if (h != this->histMap->cend())
-        h->second->accumulate(p2.pt(),val);
-    } { // DeltaPhiHQPair
+/*  { // DeltaPhiHQPair
     histMapT::const_iterator h = this->histMap->find(histT::DeltaPhiHQPair);
     if (h != this->histMap->cend()) {
         dbl phi1 = p1.momentum().phi();
@@ -210,32 +206,31 @@ void FKerAll::fillAllOrderHistograms(PhasespacePoint p, cdbl i) const {
      */
 }
 
-void FKerAll::fillNLOHistograms(PhasespacePoint p, cdbl i) const {
-    /** @todo add smth? */
-    /*// something active?
+void FKerAll::fillNLOHistograms(const PhasespacePoint p, cdbl i) const {
+    // something active?
     if (0 == this->histMap)
         return;
     if (this->histMap->empty())
         return;
     if (0 == this->vegasWeight)
         return;
+    if (!p.isNLO())
+        return;
     cdbl val = i*(*this->vegasWeight);
-     { // x
-    histMapT::const_iterator hx = this->histMap->find(histT::x);
-    if (hx != this->histMap->cend())
-        hx->second->accumulate(this->xE,val);
-    } { // y
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
+        dbl var = nan("");
+        switch (it->first) {
+            case histT::x:      var = p.getX();         break;
+            case histT::Theta2: var = p.getTheta2();    break;
+            default: continue;
+        }
+        it->second->accumulate(var,val);
+    }
+    /** @todo add more? */
+ /*{ // y
     histMapT::const_iterator hy = this->histMap->find(histT::y);
     if (hy != this->histMap->cend())
         hy->second->accumulate(this->yE,val);
-    } { // Theta1
-    histMapT::const_iterator h = this->histMap->find(histT::Theta1);
-    if (h != this->histMap->cend())
-        h->second->accumulate(this->Theta1,val);
-    } { // Theta2
-    histMapT::const_iterator h = this->histMap->find(histT::Theta2);
-    if (h != this->histMap->cend())
-        h->second->accumulate(this->Theta2,val);
     }
      */
 }
