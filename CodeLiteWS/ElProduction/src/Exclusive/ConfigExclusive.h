@@ -106,7 +106,7 @@ struct PhasespaceValues {
  * @brief total weight
  * @return sum of all parts
  */
-    dbl tot() const {
+    inline cdbl tot() const {
         return this->xEyE + this->xCyE + this->xEyC + this->xCyC;
     }
 };

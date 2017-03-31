@@ -5,46 +5,21 @@
 
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
+#include "Exclusive/IntKers/KinematicVars.hpp"
 
 int runInclusive();
 int test() {
     PdfWrapper pdf("MSTW2008nlo90cl",0);
-    dbl q2 = -8.5;
-    cdbl bjorkenX = 8.5e-4;
+    cdbl m2 = 1.5*1.5;
+    cdbl q2 = -8.5;
     
-    /*dbl m2 = 1.5*1.5;
-    uint nlf = 3;
-    cdbl lambdaQCD = .239; // nlf=3
-    dbl mu02 = (4.*m2-q2);
-    //Exclusive::DynamicScaleFactors mu02F(4.,-1.,1.);*/
-    dbl m2 = 4.75*4.75;
-    uint nlf = 4;
-    cdbl lambdaQCD = .158; // nlf=4
-    dbl mu02 = (1.*m2-q2);
-    //Exclusive::DynamicScaleFactors mu02F(1.,-1.,.25);
-    dbl Delta = 1e-11;
-    
-    LHAPDF::AlphaS_Analytic alphaS;
-    alphaS.setLambda(nlf + 1,lambdaQCD);
-    alphaS.setOrderQCD(1);
-    dbl aS = alphaS.alphasQ2(mu02);
-    
-    InclusiveElProduction iO(m2,q2,Delta,L,nlf);
-    uint N = 31;
-    cdbl eH = getElectricCharge(nlf + 1);
-    cdbl n = -q2*aS/(4.*M_PI*M_PI*m2) * eH*eH;
-    //cdbl zmax = -q2/(4.*m2  - q2);
-    cdbl dM =(40.5 - 2.*sqrt(m2))/((dbl)N);
-    ofstream o ("/home/Felix/Physik/PhD/data/hist/b_q2_85_x_85_M.dat");
+    uint N = 8;
     for (uint j = 0; j < N; ++j) {
-        cdbl M = 2.*sqrt(m2) + (j+.5)*dM;
-        cdbl z = -q2/(M*M-q2);
-        iO.setPartonicS(M*M);
-        cdbl f = 2.*M*z*z/(-q2) * 1./(z) * pdf.xfxQ2(21,bjorkenX/(z),mu02) * iO.cg0();
-        cdbl g = n * f;
-        o << boost::format("%e\t%e\n")%M%g;
+        cdbl y = -1. + pow(10.,-(dbl)j);
+        Exclusive::KinematicVars vs(m2,q2,4.*m2-q2+m2,1.,y,0.,0.);
+        printf("%e\t%e\t%e\t%e\t%e\n",y,vs.k10,vs.q0,vs.absq,vs.cosPsi);
     }
-    o.close();
+    
     return EXIT_SUCCESS;
 }
 
@@ -62,10 +37,10 @@ int main(int argc, char **argv) {
     uint nlf = 5;
     cdbl lambdaQCD = .239; // nlf=3
     //cdbl lambdaQCD = .194; // nlf=3
-    /*dbl mu02 = (4.*m2-q2);
-    Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);*/
-    dbl mu02 = 1.*m2;
-    Exclusive::DynamicScaleFactors mu02F(1.,0.,0.);
+    dbl mu02 = (4.*m2-q2);
+    Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
+    //dbl mu02 = 1.*m2;
+    //Exclusive::DynamicScaleFactors mu02F(1.,0.,0.);
     /*dbl m2 = 4.75*4.75;
     uint nlf = 4;
     cdbl lambdaQCD = .158; // nlf=4
@@ -116,18 +91,18 @@ int main(int argc, char **argv) {
         iO.setEta(a);
         eO.setEta(a);
         cdbl i = iO.cgBarF1();
-        {cdbl e = eO.cgBarF1();
-        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
-        / *{eO.setXTilde(.6);
-        cdbl e = eO.cg1();
+        //{cdbl e = eO.cgBarF1();
+        //printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+        {eO.setXTilde(.6);
+        cdbl e = eO.cgBarF1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         {eO.setXTilde(.8);
-        cdbl e = eO.cg1();
+        cdbl e = eO.cgBarF1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
         {eO.setXTilde(.9);
-        cdbl e = eO.cg1();
+        cdbl e = eO.cgBarF1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
-        printf("\n");* /
+        printf("\n");
     }
 */
 
@@ -146,7 +121,7 @@ int main(int argc, char **argv) {
     eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/hist/Theta1.dat");
     eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/hist/Theta2.dat");
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
-
+   
     return EXIT_SUCCESS;
 }
 

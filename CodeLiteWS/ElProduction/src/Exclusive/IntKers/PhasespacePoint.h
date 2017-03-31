@@ -169,7 +169,7 @@ public:
  * @brief is NLO point?
  * @return is NLO?
  */
-    bool isNLO() const;
+    const bool isNLO() const;
     
 /**
  * @brief current x if is NLO

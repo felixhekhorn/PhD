@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[     21036,        525]
-NotebookOptionsPosition[     20569,        504]
-NotebookOutlinePosition[     20907,        519]
-CellTagsIndexPosition[     20864,        516]
+NotebookDataLength[     21869,        535]
+NotebookOptionsPosition[     21403,        514]
+NotebookOutlinePosition[     21741,        529]
+CellTagsIndexPosition[     21698,        526]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -223,14 +223,28 @@ Cell[BoxData[
      RowBox[{"Simplify", "[", 
       RowBox[{
        RowBox[{
-        RowBox[{"sp", "[", 
-         RowBox[{"q2", ",", "eta"}], "]"}], "/", 
-        RowBox[{"(", 
-         RowBox[{"2", 
-          RowBox[{"Sqrt", "[", 
-           RowBox[{"s5", "[", 
-            RowBox[{"q2", ",", "eta", ",", "xx"}], "]"}], "]"}]}], ")"}]}], 
-       ",", 
+        RowBox[{"Limit", "[", 
+         RowBox[{
+          RowBox[{"k10", "[", 
+           RowBox[{"q2", ",", "eta", ",", "xx", ",", "y"}], "]"}], ",", 
+          RowBox[{"y", "\[Rule]", " ", 
+           RowBox[{"-", "1"}]}], ",", 
+          RowBox[{"Assumptions", "\[Rule]", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"eta", ">", "0"}], ",", 
+             RowBox[{"q2", "<", "0"}], ",", 
+             RowBox[{"m2", ">", "0"}], ",", 
+             RowBox[{"0", "<", "xx", "<", "1"}]}], "}"}]}]}], "]"}], "-", 
+        RowBox[{
+         RowBox[{"sp", "[", 
+          RowBox[{"q2", ",", "eta"}], "]"}], "/", 
+         RowBox[{"(", 
+          RowBox[{"2", 
+           RowBox[{"Sqrt", "[", 
+            RowBox[{"s5", "[", 
+             RowBox[{"q2", ",", "eta", ",", "xx"}], "]"}], "]"}]}], ")"}]}]}],
+        ",", 
        RowBox[{"Assumptions", "\[Rule]", " ", 
         RowBox[{"{", 
          RowBox[{
@@ -369,7 +383,8 @@ Cell[BoxData[
    3.6996981383776627`*^9, 3.699698181998592*^9}, {3.699698226111166*^9, 
    3.699698258034696*^9}, {3.69969840999649*^9, 3.69969841568071*^9}, {
    3.699699067083786*^9, 3.6996991070245733`*^9}, {3.699699156778077*^9, 
-   3.699699213961178*^9}}],
+   3.699699213961178*^9}, {3.699954635288292*^9, 3.699954635656226*^9}, {
+   3.699954696968882*^9, 3.69995472775935*^9}}],
 
 Cell[CellGroupData[{
 
@@ -378,37 +393,31 @@ Cell[BoxData[
  CellChangeTimes->{
   3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
    3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
-   3.699699214566494*^9, 3.699703785959119*^9}],
+   3.699699214566494*^9, 3.699703785959119*^9, 3.6999545189406013`*^9, 
+   3.699954636082765*^9, {3.699954707717857*^9, 3.699954728799747*^9}}],
 
 Cell[BoxData[
  FractionBox[
   RowBox[{
    RowBox[{"4", " ", 
     RowBox[{"(", 
-     RowBox[{"1", "+", "eta"}], ")"}], " ", "m2$713"}], "-", "q2"}], 
+     RowBox[{"1", "+", "eta"}], ")"}], " ", "m2$1506"}], "-", "q2"}], 
   RowBox[{"4", " ", 
    SqrtBox[
-    RowBox[{"m2$713", "+", 
-     RowBox[{"eta", " ", "m2$713", " ", "xx"}]}]]}]]], "Print",
+    RowBox[{"m2$1506", "+", 
+     RowBox[{"eta", " ", "m2$1506", " ", "xx"}]}]]}]]], "Print",
  CellChangeTimes->{
   3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
    3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
-   3.699699214566494*^9, 3.699703786012525*^9}],
+   3.699699214566494*^9, 3.699703785959119*^9, 3.6999545189406013`*^9, 
+   3.699954636082765*^9, {3.699954707717857*^9, 3.699954728868918*^9}}],
 
-Cell[BoxData[
- FractionBox[
-  RowBox[{
-   RowBox[{"4", " ", 
-    RowBox[{"(", 
-     RowBox[{"1", "+", "eta"}], ")"}], " ", "m2$713"}], "-", "q2"}], 
-  RowBox[{"4", " ", 
-   SqrtBox[
-    RowBox[{"m2$713", "+", 
-     RowBox[{"eta", " ", "m2$713", " ", "xx"}]}]]}]]], "Print",
+Cell[BoxData["0"], "Print",
  CellChangeTimes->{
   3.6996980914424267`*^9, {3.699698145991097*^9, 3.6996981825026817`*^9}, 
    3.6996982588269653`*^9, 3.699698417203905*^9, 3.699699107666193*^9, 
-   3.699699214566494*^9, 3.699703786015568*^9}]
+   3.699699214566494*^9, 3.699703785959119*^9, 3.6999545189406013`*^9, 
+   3.699954636082765*^9, {3.699954707717857*^9, 3.699954728870491*^9}}]
 }, Open  ]],
 
 Cell[BoxData[
@@ -416,7 +425,7 @@ Cell[BoxData[
   StyleBox[
    DynamicModuleBox[{$CellContext`veta$$ = 
     7, $CellContext`vq2$$ = -9, $CellContext`vxx$$ = 
-    0.3, $CellContext`vy$$ = -0.775, Typeset`show$$ = True, 
+    0.274, $CellContext`vy$$ = 0.0050000000000001155`, Typeset`show$$ = True, 
     Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
     Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
     "\"untitled\"", Typeset`specs$$ = {{{
@@ -425,18 +434,18 @@ Cell[BoxData[
        Hold[$CellContext`vxx$$], 0.3, "xx"}, 0, 1}, {{
        Hold[$CellContext`vy$$], -0.4, "y"}, -1, 1}}, Typeset`size$$ = {
     360., {178., 182.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
-    Typeset`skipInitDone$$ = True, $CellContext`vq2$729$$ = 
-    0, $CellContext`veta$730$$ = 0, $CellContext`vxx$731$$ = 
-    0, $CellContext`vy$732$$ = 0}, 
+    Typeset`skipInitDone$$ = True, $CellContext`vq2$1509$$ = 
+    0, $CellContext`veta$1510$$ = 0, $CellContext`vxx$1511$$ = 
+    0, $CellContext`vy$1512$$ = 0}, 
     DynamicBox[Manipulate`ManipulateBoxes[
      1, StandardForm, 
       "Variables" :> {$CellContext`veta$$ = 
         7, $CellContext`vq2$$ = -9, $CellContext`vxx$$ = 
         0.3, $CellContext`vy$$ = -0.4}, "ControllerVariables" :> {
-        Hold[$CellContext`vq2$$, $CellContext`vq2$729$$, 0], 
-        Hold[$CellContext`veta$$, $CellContext`veta$730$$, 0], 
-        Hold[$CellContext`vxx$$, $CellContext`vxx$731$$, 0], 
-        Hold[$CellContext`vy$$, $CellContext`vy$732$$, 0]}, 
+        Hold[$CellContext`vq2$$, $CellContext`vq2$1509$$, 0], 
+        Hold[$CellContext`veta$$, $CellContext`veta$1510$$, 0], 
+        Hold[$CellContext`vxx$$, $CellContext`vxx$1511$$, 0], 
+        Hold[$CellContext`vy$$, $CellContext`vy$1512$$, 0]}, 
       "OtherVariables" :> {
        Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
         Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
@@ -444,33 +453,33 @@ Cell[BoxData[
          Typeset`skipInitDone$$}, "Body" :> Graphics[{Red, 
          Arrowheads[0.1], 
          Arrow[{{
-           0, -$CellContext`absq$713[$CellContext`vq2$$, $CellContext`veta$$, \
-$CellContext`vxx$$, $CellContext`vy$$]}, {0, 0}}], Green, 
-         Arrow[{{(-$CellContext`k10$713[$CellContext`vq2$$, \
+           0, -$CellContext`absq$1506[$CellContext`vq2$$, \
+$CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]}, {0, 0}}], Green, 
+         Arrow[{{(-$CellContext`k10$1506[$CellContext`vq2$$, \
 $CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]) 
-            Sqrt[1 - $CellContext`cos\[Psi]$713[$CellContext`vq2$$, \
+            Sqrt[1 - $CellContext`cos\[Psi]$1506[$CellContext`vq2$$, \
 $CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]^2], \
-(-$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
+(-$CellContext`k10$1506[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]) \
-$CellContext`cos\[Psi]$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`cos\[Psi]$1506[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]}, {0, 0}}], Blue, 
          Arrow[{{0, 
-           0}, {$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
-$CellContext`vxx$$, $CellContext`vy$$] 
-            Sqrt[1 - $CellContext`cos\[Psi]$713[$CellContext`vq2$$, \
+           0}, {$CellContext`k10$1506[$CellContext`vq2$$, \
+$CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$] 
+            Sqrt[1 - $CellContext`cos\[Psi]$1506[$CellContext`vq2$$, \
 $CellContext`veta$$, $CellContext`vxx$$, $CellContext`vy$$]^2], \
-$CellContext`absq$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`absq$1506[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$] + \
-$CellContext`k10$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`k10$1506[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$] \
-$CellContext`cos\[Psi]$713[$CellContext`vq2$$, $CellContext`veta$$, \
+$CellContext`cos\[Psi]$1506[$CellContext`vq2$$, $CellContext`veta$$, \
 $CellContext`vxx$$, $CellContext`vy$$]}}]}, PlotRange -> 10], 
       "Specifications" :> {{{$CellContext`vq2$$, -9, "q\.b2"}, -10, 
          0}, {{$CellContext`veta$$, 7, "\[Eta]"}, 0, 
          10}, {{$CellContext`vxx$$, 0.3, "xx"}, 0, 
          1}, {{$CellContext`vy$$, -0.4, "y"}, -1, 1}}, "Options" :> {}, 
       "DefaultOptions" :> {}],
-     ImageSizeCache->{405., {260., 265.}},
+     ImageSizeCache->{405., {272., 277.}},
      SingleEvaluation->True],
     Deinitialization:>None,
     DynamicModuleValues:>{},
@@ -499,7 +508,8 @@ $CellContext`vxx$$, $CellContext`vy$$]}}]}, PlotRange -> 10],
    3.698476934614835*^9, 3.699696534690733*^9, 3.699698050660907*^9, 
    3.699698091628141*^9, {3.69969814607158*^9, 3.699698182557456*^9}, 
    3.699698258897338*^9, 3.699698417296084*^9, 3.699699107799632*^9, 
-   3.699699214708482*^9, 3.699703786820915*^9}]
+   3.699699214708482*^9, 3.699703786820915*^9, 3.699954519860238*^9, 
+   3.699954636184037*^9, {3.699954707898465*^9, 3.69995472894263*^9}}]
 }, Open  ]]
 },
 WindowSize->{960, 1016},
@@ -519,13 +529,13 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 13749, 349, 791, "Input"],
+Cell[579, 22, 14409, 364, 810, "Input"],
 Cell[CellGroupData[{
-Cell[14353, 375, 259, 5, 23, "Print"],
-Cell[14615, 382, 488, 13, 53, "Print"],
-Cell[15106, 397, 488, 13, 53, "Print"]
+Cell[15013, 390, 355, 6, 23, "Print"],
+Cell[15371, 398, 587, 14, 53, "Print"],
+Cell[15961, 414, 338, 5, 23, "Print"]
 }, Open  ]],
-Cell[15609, 413, 4944, 88, 542, "Output"]
+Cell[16314, 422, 5073, 89, 566, "Output"]
 }, Open  ]]
 }
 ]

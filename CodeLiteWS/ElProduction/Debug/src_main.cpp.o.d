@@ -10,6 +10,7 @@ Debug/src_main.cpp.o: src/main.cpp src/config.h src/Timer.h \
  src/Exclusive/IntKers/PdfConvLOg.h src/Exclusive/IntKers/PdfConvNLOg.h \
  src/Exclusive/IntKers/PdfConvNLOq.h \
  src/Exclusive/IntKers/PhasespacePoint.h \
+ src/Exclusive/IntKers/KinematicVars.hpp \
  src/Exclusive/IntKers/KinematicVars.hpp
 
 src/config.h:
@@ -51,5 +52,7 @@ src/Exclusive/IntKers/PdfConvNLOg.h:
 src/Exclusive/IntKers/PdfConvNLOq.h:
 
 src/Exclusive/IntKers/PhasespacePoint.h:
+
+src/Exclusive/IntKers/KinematicVars.hpp:
 
 src/Exclusive/IntKers/KinematicVars.hpp:

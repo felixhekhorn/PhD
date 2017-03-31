@@ -135,7 +135,7 @@ cdbl PhasespacePoint::getMuF2() const {
     return this->getDynamicScale(this->muF2Factors);
 }
 
-bool PhasespacePoint::isNLO() const {
+const bool PhasespacePoint::isNLO() const {
     return 1 == this->order;
 }
     
