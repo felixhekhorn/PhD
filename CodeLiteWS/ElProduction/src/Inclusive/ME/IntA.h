@@ -3,6 +3,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /**
  * @brief \f$\int A_{G,1}\,d\Omega\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -101,5 +103,7 @@ cdbl IntAP1ScaleF(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
  * @return \f$\int \Delta A_{2}\,d\Omega\f$
  */
 cdbl IntAP2(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+
+} // namespace Inclusive
 
 #endif // IntA_H_

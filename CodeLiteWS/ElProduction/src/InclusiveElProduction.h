@@ -99,7 +99,7 @@ public:
  * @param proj projection
  * @param nlf number of light flavours
  */
-    InclusiveElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf);
+    InclusiveElProduction(cdbl m2, cdbl q2, cdbl Delta, projT proj, uint nlf);
 
 ///@}
 
@@ -110,13 +110,13 @@ public:
  * @brief sets phase space slice
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
-    void setDelta(dbl Delta);
+    void setDelta(cdbl Delta);
     
 /**
  * @brief sets partonic center of mass energy
  * @param s partonic cm-energy
  */
-    void setPartonicS(dbl s);
+    void setPartonicS(cdbl s);
     
 ///@}
 
@@ -128,49 +128,49 @@ public:
  * @brief LO scaling function \f$c^{(0)}_g\f$
  * @return \f$c^{(0)}_g\f$
  */
-    dbl cg0() const;
+    cdbl cg0() const;
 
 /**
  * @brief NLO gluon scaling function \f$c^{(1)}_g\f$
  * @return \f$c^{(1)}_g\f$
  */
-    dbl cg1() const;
+    cdbl cg1() const;
 
 /**
  * @brief sum of scaling logs of NLO gluon scaling function \f$\bar{c}^{(1)}_g\f$
  * @return \f$\bar{c}^{(1)}_g\f$
  */
-    dbl cgBar1() const;
+    cdbl cgBar1() const;
 
 /**
  * @brief renormalization log scaling of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
-    dbl cgBarR1() const;
+    cdbl cgBarR1() const;
 
 /**
  * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$
  * @return \f$\bar{c}^{F,(1)}_g\f$
  */
-    dbl cgBarF1() const;
+    cdbl cgBarF1() const;
 
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$ with heavy charges
  * @return \f$c^{(1)}_q\f$
  */
-    dbl cq1() const;
+    cdbl cq1() const;
 
 /**
  * @brief factorization log scaling of NLO quark scaling function \f$\bar{c}^{F,(1)}_q\f$
  * @return \f$\bar{c}^{F,(1)}_q\f$
  */
-    dbl cqBarF1() const;
+    cdbl cqBarF1() const;
 
 /**
  * @brief NLO quark scaling function \f$d^{(1)}_q\f$ with light charges
  * @return \f$d^{(1)}_q\f$
  */
-    dbl dq1() const;
+    cdbl dq1() const;
     
 ///@}
 
@@ -182,19 +182,19 @@ public:
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    dbl Fg0() const;
+    cdbl Fg0() const;
     
 /**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    dbl Fg1() const;
+    cdbl Fg1() const;
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
-    dbl Fq1() const;
+    cdbl Fq1() const;
     
 ///@}
 

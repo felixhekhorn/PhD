@@ -5,6 +5,8 @@
 #include "IntKerBase.hpp"
 #include "../../Pdf/PdfWrapper.h"
 
+namespace Inclusive {
+
 /**
  * @brief Abstract base class for convolution with PDFs
  */
@@ -34,7 +36,7 @@ protected:
 /**
  * @brief current momentum fraction
  */
-    dbl z;
+    dbl z = -0.;
 
 /**
  * @brief constructor
@@ -45,8 +47,7 @@ protected:
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
     PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2) :
-        IntKerBase(m2, q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2),
-        z(0.){
+        IntKerBase(m2, q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2){
         this->zMax = -q2/(4.*m2 - q2);
     }
 
@@ -60,5 +61,7 @@ protected:
         this->jac *= (this->zMax - this->bjorkenX);
     }
 };
+
+} // namespace Inclusive
 
 #endif // PdfConvBase_H_

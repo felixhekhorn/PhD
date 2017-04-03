@@ -55,6 +55,8 @@ public:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
+ * @param omega collinear factorisation parameter \f$\omega\f$
+ * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
     PsKerCqBarF1(dbl m2, dbl q2, dbl sp, cdbl omega, cdbl deltay) : PdfConvNLOq(m2,q2,0.,0,omega,deltay) {
         this->setSpRaw(sp);

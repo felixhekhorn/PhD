@@ -33,10 +33,6 @@ void PdfConvNLOg::setPgg(fPtr1dbl PggH0, fPtr1dbl PggH1, fPtr0dbl PggS1) {
     this->PggS1 = PggS1;
 }
 
-void PdfConvNLOg::setMuR2(dbl muR2) {
-    this->muR2 = muR2;
-}
-
 void PdfConvNLOg::setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     this->setZ(az);
     this->setX(ax);
@@ -45,7 +41,7 @@ void PdfConvNLOg::setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     this->setTheta2(aTheta2);
 }
 
-PhasespaceValues PdfConvNLOg::cg1() const {
+const PhasespaceValues PdfConvNLOg::cg1() const {
     // protect from null pointer
     if (0 == this->BpQED || 0 == this->SVp 
         || 0 == this->Rp || 0 == this->RpxC || 0 == this->ROKpyC || 0 == this->ROKpyxC 
@@ -91,7 +87,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
             cdbl h = Kggg*NC*CF * 1./(4.*sp);
             cdbl betaTilde = sqrt(1. - this->rhoTilde);
             r.xCyE += ncg1 * jacTheta1*jacxE/VxC * h * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-            // @todo hats?
+            /// @todo hats?
             // // hat contributions
             // if (0. != PggS1()) {
             //     cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
@@ -122,7 +118,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         cdbl f = Kggg*NC*CF * 1./(4.*sp);
         cdbl betaTilde = sqrt(1. - this->rhoTilde);
         r.xCyE += ncg1 * jacTheta1 * f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-        // @todo hats?
+        /// @todo hats?
         // // hat contributions
         // if (0. != PggS1()) {
         //    cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
@@ -139,9 +135,9 @@ PhasespaceValues PdfConvNLOg::cg1() const {
         cdbl meC = BpQED(m2,q2,   sp,   t1sc);
         cdbl f = Kggg*NC*CF * 1./sp * sin(Theta1);
         cdbl l = log(sp/m2)+log(sp/s)+log(omega/2.);
-        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
-        r.xEyC += ncg1 * jacxE*jacTheta1 * f*beta5E/xE*meE*(PggH0(xE)*(           l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
-        r.xCyC -= ncg1 * jacxC*jacTheta1 * f*beta     *meC*(2.*CA    *(1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
+        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections (G,L,P)
+        r.xEyC += ncg1 * jacxE*jacTheta1 * f/xE*beta5E*meE * (PggH0(xE)*(           l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
+        r.xCyC -= ncg1 * jacxC*jacTheta1 * f   *beta  *meC * (2.*CA    *(1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
     }
 
     { // hard contributions
@@ -160,7 +156,7 @@ PhasespaceValues PdfConvNLOg::cg1() const {
     return r;
 }
 
-PhasespaceValues PdfConvNLOg::cgBarR1() const {
+const PhasespaceValues PdfConvNLOg::cgBarR1() const {
     // protect from null pointer
     if (0 == this->BpQED)
         throw invalid_argument("need to set all arguments!");
@@ -196,7 +192,7 @@ return r;
     return r;
 }
 
-PhasespaceValues PdfConvNLOg::cgBarF1() const {
+const PhasespaceValues PdfConvNLOg::cgBarF1() const {
     // protect from null pointer
     if (0 == this->BpQED || 0 == this->PggH0)
             throw invalid_argument("need to set all arguments!");
@@ -268,20 +264,3 @@ return r;
 
     return r;
 }
-
-/*dbl PdfConvNLOg::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
-    // protect from null pointer
-    if (0 == this->pdf)
-        throw invalid_argument("need to set all arguments!");
-    this->setZ(az);
-    this->setX(ax);
-    this->setY(ay);
-    this->setTheta1(aTheta1);
-    this->setTheta2(aTheta2);
-    cdbl lnF = log(this->muF2/this->m2);
-    cdbl lnR = log(this->muR2/this->m2);
-    cdbl r = jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * (cg1() + lnF * cgBarF1() + lnR * cgBarR1());
-    // Protect from ps corner cases
-    if (!isfinite(r)) return 0.;
-    return r;
-}*/

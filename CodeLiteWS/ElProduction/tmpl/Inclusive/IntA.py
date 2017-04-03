@@ -5,50 +5,50 @@ tmpl = """#include "../../config.h"
 
 #define Pi M_PI
 
-cdbl IntAG1({sig}) {{
+cdbl Inclusive::IntAG1({sig}) {{
 {init}
 return {IntAG1};
 }}
 
-cdbl IntAG1ScaleF({sig}) {{
+cdbl Inclusive::IntAG1ScaleF({sig}) {{
 {initScale}
 return {IntAG1ScaleF};
 }}
 
-cdbl IntAG2({sig}) {{
+cdbl Inclusive::IntAG2({sig}) {{
 {init}
 cdbl s = sp + q2;
 return {IntAG2};
 }}
 
-cdbl IntAL1({sig}) {{
+cdbl Inclusive::IntAL1({sig}) {{
 {init}
 return {IntAL1};
 }}
 
-cdbl IntAL2({sig}) {{
+cdbl Inclusive::IntAL2({sig}) {{
 {init}
 cdbl s = sp + q2;
 return {IntAL2};
 }}
 
-cdbl IntAL1ScaleF({sig}) {{
+cdbl Inclusive::IntAL1ScaleF({sig}) {{
 {initScale}
 return {IntAL1ScaleF};
 }}
 
-cdbl IntAP1({sig}) {{
+cdbl Inclusive::IntAP1({sig}) {{
 {init}
 return {IntAP1};
 }}
 
-cdbl IntAP2({sig}) {{
+cdbl Inclusive::IntAP2({sig}) {{
 {init}
 cdbl s = sp + q2;
 return {IntAP2};
 }}
 
-cdbl IntAP1ScaleF({sig}) {{
+cdbl Inclusive::IntAP1ScaleF({sig}) {{
 {initScale}
 return {IntAP1ScaleF};
 }}

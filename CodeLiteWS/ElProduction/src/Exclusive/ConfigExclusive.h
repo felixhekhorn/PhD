@@ -31,8 +31,8 @@ enum histT {
     HAQTransverseMomentum, /**< 0 < HAQTransverseMomentum < sqrt(S/4-m2)) */
 // NLO:
     x, /**< x_bj/z_max < x < 1 */
+    y, /**< -1 < y < 1 */
     Theta2, /**< 0 < Theta2 < pi */
-//    y, /**< -1 < y < 1 */
 //    DeltaPhiHQPair /**< -pi < DeltaPhiHQPair < pi */
 };
 

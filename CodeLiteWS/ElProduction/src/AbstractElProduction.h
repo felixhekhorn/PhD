@@ -107,7 +107,7 @@ protected:
  * @param proj projection
  * @param nlf number of light flavours
  */
-    AbstractElProduction(dbl m2, dbl q2, projT proj, uint nlf);
+    AbstractElProduction(cdbl m2, cdbl q2, projT proj, uint nlf);
     
 public:
     
@@ -125,13 +125,13 @@ public:
  * This functions unsets partonic cm-energy
  * @param m2 mass of heavy quark \f$m^2 > 0\f$
  */
-    void setM2(dbl m2);
+    void setM2(cdbl m2);
     
 /**
  * @brief sets virtuality of photon \f$q^2< 0\f$
  * @param q2 virtuality of photon \f$q^2< 0\f$
  */
-    void setQ2(dbl q2);
+    void setQ2(cdbl q2);
     
 ///@}
 
@@ -143,13 +143,13 @@ public:
  * @brief sets partonic eta
  * @param eta partonic eta
  */
-    void setEta(dbl eta);
+    void setEta(cdbl eta);
     
 /**
  * @brief sets partonic center of mass energy
  * @param s partonic cm-energy
  */
-    virtual void setPartonicS(dbl s) = 0;
+    virtual void setPartonicS(cdbl s) = 0;
 
 ///@}
 
@@ -176,31 +176,31 @@ public:
  * @brief sets renormalisation scale \f$\mu_R^2\f$
  * @param muR2 renormalisation scale \f$\mu_R^2\f$
  */
-    virtual void setMuR2(dbl muR2);
+    virtual void setMuR2(cdbl muR2);
     
 /**
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    virtual void setMuF2(dbl muF2);
+    virtual void setMuF2(cdbl muF2);
     
 /**
  * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  */
-    virtual void setMu2(dbl mu2);
+    virtual void setMu2(cdbl mu2);
     
 /**
  * @brief sets strong coupling
  * @param alphaS strong coupling
  */
-    virtual void setAlphaS(dbl alphaS);
+    virtual void setAlphaS(cdbl alphaS);
     
 /**
  * @brief sets Bjorken x
  * @param bjorkenX Bjorken x
  */
-    void setBjorkenX(dbl bjorkenX);
+    void setBjorkenX(cdbl bjorkenX);
     
 ///@}
 

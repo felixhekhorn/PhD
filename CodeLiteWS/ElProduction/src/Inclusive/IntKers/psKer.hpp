@@ -10,8 +10,10 @@
 
 using namespace Color;
 
+namespace Inclusive {
+
 /**
- * @brief abstract phase space kernel
+ * @brief abstract Inclusive phasespace kernel
  */
 class PsKerBase : public IntKerBase {
 protected:
@@ -22,7 +24,7 @@ protected:
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  */
-    PsKerBase(dbl m2, dbl q2, dbl sp) : IntKerBase(m2, q2){
+    PsKerBase(cdbl m2, cdbl q2, cdbl sp) : IntKerBase(m2, q2){
         this->setSpRaw(sp);
     }
 
@@ -30,7 +32,7 @@ protected:
 
 
 /**
- * @brief phase space kernel of soft+virtual contributions
+ * @brief Inclusive phasespace kernel of soft+virtual contributions
  */
 class PsKerNLOgSV : public PsKerBase {
 protected:
@@ -49,22 +51,22 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param cg1SV pointer to matrix element
  */
-    PsKerNLOgSV(dbl m2, dbl q2, dbl sp, fPtr4dbl cg1SV) : PsKerBase(m2,q2,sp), cg1SV(cg1SV) {}
+    PsKerNLOgSV(cdbl m2, cdbl q2, cdbl sp, fPtr4dbl cg1SV) : PsKerBase(m2,q2,sp), cg1SV(cg1SV) {}
 
 /**
  * @brief called function
  * @param a
  * @return kernel
  */
-    dbl operator()(dbl a) {
+    cdbl operator()(cdbl a) {
         this->setT1(a);
-        dbl me = cg1SV(m2,q2,sp,t1);
+        cdbl me = cg1SV(m2,q2,sp,t1);
         return this->jac*me;
     }
 };
 
 /**
- * @brief phase space kernel of hard part
+ * @brief Inclusive phasespace kernel of hard part
  */
 class PsKerNLOg : public PsKerBase {
 protected:
@@ -106,7 +108,7 @@ public:
  * @param hg1SVDelta2 pointer to double Delta-logs of S+V matrix element
  * @param hg1H pointer to hard matrix element
  */
-    PsKerNLOg(dbl m2, dbl q2, dbl sp, dbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) : PsKerBase(m2,q2,sp),
+    PsKerNLOg(cdbl m2, cdbl q2, cdbl sp, cdbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) : PsKerBase(m2,q2,sp),
         Delta(Delta), hg1SV(hg1SV), hg1SVDelta1(hg1SVDelta1), hg1SVDelta2(hg1SVDelta2), hg1H(hg1H) {}
 
 /**
@@ -115,29 +117,29 @@ public:
  * @param a2
  * @return hard part
  */
-    dbl operator()(dbl a1, dbl a2) {
+    cdbl operator()(cdbl a1, cdbl a2) {
         this->setT1(a1);
         this->setS4(a2,Delta);
         //Timer::start("hg1SV");
-        dbl A0 = 1./(s4max - Delta);
+        cdbl A0 = 1./(s4max - Delta);
         dbl fakeMESV = hg1SV(m2,q2,sp,t1) * A0;
         //if (isnan(fakeMESV)) printf("hg1SV\n");
         //Timer::end("hg1SV");
         
         //Timer::start("hg1SVDelta");
-        dbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
+        cdbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
         fakeMESV += hg1SVDelta1(m2,q2,sp,t1) * A1;
         if (isnan(fakeMESV)) printf("hg1SVDelta1\n");
         
         if (0 != hg1SVDelta2) {
-            dbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
+            cdbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
             fakeMESV += hg1SVDelta2(m2,q2,sp,t1) * A2;
             //if (isnan(fakeMESV)) printf("hg1SVDelta2\n");
         }
         //Timer::end("hg1SVDelta");
         
         //Timer::start("hg1H");
-        dbl meH = hg1H(m2,q2,sp,s4,t1);
+        cdbl meH = hg1H(m2,q2,sp,s4,t1);
         //Timer::end("hg1H");
         cdbl r = jac*(meH + fakeMESV);
         // Protect from ps corner cases
@@ -147,7 +149,7 @@ public:
 };
 
 /**
- * @brief phase space kernel of quark parts
+ * @brief Inclusive phasespace kernel of quark parts
  */
 class PsKerNLOq : public PsKerBase, public HepSource::Integrand {
 protected:
@@ -176,11 +178,11 @@ public:
  * @param a2
  * @return quark part
  */
-    dbl operator()(cdbl a1, cdbl a2) {
+    cdbl operator()(cdbl a1, cdbl a2) {
         this->jac = 1.;
         this->setT1(a1);
         this->setS4(a2,0.);
-        dbl me = gq1(m2,q2,sp,s4,t1);
+        cdbl me = gq1(m2,q2,sp,s4,t1);
         return jac*me;
     }
     
@@ -196,5 +198,7 @@ public:
         f[0] = this->operator()(x[0],x[1]);
     }
 };
+
+} // namespace Inclusive
 
 #endif // psKers_H_

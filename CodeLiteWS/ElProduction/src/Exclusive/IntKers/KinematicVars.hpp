@@ -11,12 +11,12 @@ namespace Exclusive {
  */
 struct KinematicVars {
     
-    /** @name momentum variables */
+    /** @name momentum variables computed in the cms of the heavy quark pair and q || z */
     ///@{
     dbl q0,k10,absq,cosPsi,sinPsi,beta5;
     ///@}
     
-    /** @name mandelstam variables */
+    /** @name mandelstam variables (Lorentz invariants) */
     ///@{
     dbl s5,tp,up,t1,u1;
     ///@}

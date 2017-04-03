@@ -1,7 +1,9 @@
-#ifndef PdfConvLO_H_
-#define PdfConvLO_H_
+#ifndef Inclusive_PdfConvLO_H_
+#define Inclusive_PdfConvLO_H_
 
 #include "PdfConvBase.hpp"
+
+namespace Inclusive {
 
 /**
  * @brief LO gluon convolution
@@ -24,7 +26,7 @@ public:
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  * @param cg0 pointer to matrix element
  */
-    PdfConvLO(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, fPtr3dbl cg0) :
+    PdfConvLO(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr3dbl cg0) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), cg0(cg0) {
     }
     
@@ -33,7 +35,7 @@ public:
  * @param a integration variable
  * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(0)}(\eta,\xi)\f$
  */
-    dbl operator() (dbl a) {
+    cdbl operator() (cdbl a) {
         this->setSp(a);
         cdbl me = cg0(m2,q2,sp);
         //if (this->bjorkenX/z < this->pdf->xMin()) {
@@ -46,4 +48,6 @@ public:
     }
 };
 
-#endif // PdfConvLO_H_
+} // namespace Inclusive
+
+#endif // Inclusive_PdfConvLO_H_

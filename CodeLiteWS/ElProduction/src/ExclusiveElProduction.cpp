@@ -23,7 +23,7 @@
 
 using namespace Exclusive;
 
-ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay):
+ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, projT proj, uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
     AbstractElProduction(m2,q2,proj,nlf) {
     this->setXTilde(xTilde);
     this->setOmega(omega);
@@ -31,7 +31,7 @@ ExclusiveElProduction::ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nl
     this->setDeltay(deltay);
 }
 
-void ExclusiveElProduction::setPartonicS(dbl s) {
+void ExclusiveElProduction::setPartonicS(cdbl s) {
     if (s < 4.*m2)
         throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
     this->sp = s - q2;
@@ -145,7 +145,7 @@ getter6(Ap1Counter)
 getter7(Ap2)
 getter7(Ap3)
 
-dbl ExclusiveElProduction::cg0() const {
+cdbl ExclusiveElProduction::cg0() const {
     this->checkPartonic();
     PsKerCg0 k(m2,q2,sp,this->getBpQED());
     gsl_function f;
@@ -154,7 +154,7 @@ dbl ExclusiveElProduction::cg0() const {
     return int1D(&f);
 }
 
-dbl ExclusiveElProduction::cg1() const {
+cdbl ExclusiveElProduction::cg1() const {
     this->checkPartonic();
     PsKerCg1 k(m2,q2,sp, xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),this->getSVp());
@@ -166,7 +166,7 @@ dbl ExclusiveElProduction::cg1() const {
     return int4D(&f);
 }
 
-dbl ExclusiveElProduction::cgBarR1() const {
+cdbl ExclusiveElProduction::cgBarR1() const {
     this->checkPartonic();
     PsKerCgBarR1 k(m2,q2,sp,nlf,xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),0);
@@ -180,7 +180,7 @@ dbl ExclusiveElProduction::cgBarR1() const {
     return int1D(&f);*/
 }
 
-dbl ExclusiveElProduction::cgBarF1() const {
+cdbl ExclusiveElProduction::cgBarF1() const {
     this->checkPartonic();
     PsKerCgBarF1 k(m2,q2,sp,nlf,xTilde, omega, deltax,deltay);
     k.setBorn(this->getBpQED(),0);
@@ -191,7 +191,7 @@ dbl ExclusiveElProduction::cgBarF1() const {
     return int3D(&f);
 }
 
-dbl ExclusiveElProduction::cq1() const {
+cdbl ExclusiveElProduction::cq1() const {
     this->checkPartonic();
     PsKerCq1 k(m2,q2,sp, omega, deltay);
     k.setAp1(this->getAp1(), this->getAp1Counter());
@@ -202,7 +202,7 @@ dbl ExclusiveElProduction::cq1() const {
     return int4D(&f);
 }
 
-dbl ExclusiveElProduction::cqBarF1() const {
+cdbl ExclusiveElProduction::cqBarF1() const {
     this->checkPartonic();
     PsKerCqBarF1 k(m2,q2,sp, omega, deltay);
     k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
@@ -212,7 +212,7 @@ dbl ExclusiveElProduction::cqBarF1() const {
     return int2D(&f);
 }
 
-dbl ExclusiveElProduction::dq1() const {
+cdbl ExclusiveElProduction::dq1() const {
     this->checkPartonic();
     PsKerDq1 k(m2,q2,sp, this->getAp2());
     gsl_monte_function f;
@@ -221,7 +221,7 @@ dbl ExclusiveElProduction::dq1() const {
     return int4D(&f);
 }
 
-dbl ExclusiveElProduction::Fg0() const {
+cdbl ExclusiveElProduction::Fg0() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
 /*    this->checkHadronic();
@@ -240,7 +240,7 @@ throw logic_error("TODO: reimplement! delegate?");
     return n*int2D(&f);*/
 }
 
-dbl ExclusiveElProduction::Fg1() const {
+cdbl ExclusiveElProduction::Fg1() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
 /*    this->checkHadronic();
@@ -263,7 +263,7 @@ throw logic_error("TODO: reimplement! delegate?");
     return n*int5D(&f);*/
 }
 
-dbl ExclusiveElProduction::Fq1() const {
+cdbl ExclusiveElProduction::Fq1() const {
 /** @todo reimplement! delegate? */
 throw logic_error("TODO: reimplement! delegate?");
 /*    this->checkHadronic();
@@ -285,19 +285,19 @@ throw logic_error("TODO: reimplement! delegate?");
     return n*int5D(&f);*/
 }
 
-void ExclusiveElProduction::setMuR2(dbl muR2) {
+void ExclusiveElProduction::setMuR2(cdbl muR2) {
     throw logic_error("use setMuR2Factors instead!");
 }
 
-void ExclusiveElProduction::setMuF2(dbl muR2) {
+void ExclusiveElProduction::setMuF2(cdbl muR2) {
     throw logic_error("use setMuF2Factors instead!");
 }
 
-void ExclusiveElProduction::setMu2(dbl muR2) {
+void ExclusiveElProduction::setMu2(cdbl muR2) {
     throw logic_error("use setMu2Factors instead!");
 }
 
-void ExclusiveElProduction::setAlphaS(dbl muR2) {
+void ExclusiveElProduction::setAlphaS(cdbl muR2) {
     throw logic_error("use setLambdaQCD instead!");
 }
 
@@ -316,7 +316,7 @@ void ExclusiveElProduction::setMu2Factors(Exclusive::DynamicScaleFactors mu2Fact
     this->setMuR2Factors(mu2Factors);
 }
 
-void ExclusiveElProduction::setLambdaQCD(dbl lambdaQCD) {
+void ExclusiveElProduction::setLambdaQCD(cdbl lambdaQCD) {
     this->lambdaQCD = lambdaQCD;
     this->aS.setLambda(this->nlf + 1, lambdaQCD);
     this->hasAlphaS = true;
@@ -368,7 +368,7 @@ ExclusiveElProduction::~ExclusiveElProduction() {
     }
 }
 
-void ExclusiveElProduction::activateHistogram(histT t, uint size, dbl min /*=nan*/, dbl max /*=nan*/) {
+void ExclusiveElProduction::activateHistogram(histT t, uint size, cdbl min /*=nan*/, cdbl max /*=nan*/) {
     gslpp::Histogram* h = new gslpp::Histogram(size);
     if (!isnan(min) && !isnan(max))
         h->setRangesUniform(min,max);
@@ -393,15 +393,12 @@ void ExclusiveElProduction::setupHistograms() const {
                 break;
             case histT::HAQTransverseMomentum:  it->second->setRangesUniform(0.,sqrt(S/4. - this->m2));     break;
             case histT::x:                      it->second->setRangesLog10(this->bjorkenX/this->zMax,1.);   break;
+            case histT::y:                      it->second->setRangesUniform(-1.,1.);                       break;
             default: continue;
         }
     }
-/** @todo add more? */
-/* {
-    histMapT::const_iterator hy = this->histMap.find(y);
-    if (this->histMap.cend() != hy && !hy->second->isInitialized())
-        hy->second->setRangesUniform(-1.,1.);
-    } {
+/** @todo add more dists? */
+/*  {
     histMapT::const_iterator h = this->histMap.find(DeltaPhiHQPair);
     if (this->histMap.cend() != h && !h->second->isInitialized())
         h->second->setRangesUniform(-M_PI,M_PI);

@@ -19,7 +19,7 @@ void Timer::end() {
     //std::cout << this->clck.format();
 }
 
-void Timer::log(std::ostream& o) {
+void Timer::log(std::ostream& o) const {
     std::size_t n = this->ls.size();
     if (0 == n) {
         o << "no data" << std::endl;

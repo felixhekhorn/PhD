@@ -5,7 +5,7 @@
 #define Li2(z) gsl_sf_dilog(z)
 #define zeta2 1.64493406684823 // pi^2/6
 
-cdbl SVOKG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -75,7 +75,7 @@ r += c18*v18;
 return r;
 }
 
-cdbl SVQEDG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -138,7 +138,7 @@ r += c16*v16;
 
 return r;
 }
-cdbl SVOKDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -147,7 +147,7 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (2*(-4*Power(m2,2)*Power(sp,2) + t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) - 2*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))*((-2*m2 + s)*ln(chi) + beta*s*ln(t1/u1)))/(beta*s*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVQEDDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -156,31 +156,31 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (2*(4*Power(m2,2)*Power(sp,2) - t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) + 2*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))*(beta*s + (-2*m2 + s)*ln(chi)))/(beta*s*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKDelta2G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta2G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (-8*Power(m2,2)*Power(sp,2) + 2*t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) - 4*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))/(Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleRG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleRG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (11*(-4*Power(m2,2)*Power(sp,2) + t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) - 2*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2)))))/(6.*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleFG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return ((-4*Power(m2,2)*Power(sp,2) + t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) - 2*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))*(-11 + 12*ln(-(u1/m2))))/(6.*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleFDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFDelta1G(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (8*Power(m2,2)*Power(sp,2) - 2*t1*u1*(2*Power(q2,2) + 2*q2*sp + Power(t1,2) + Power(u1,2)) + 4*m2*(-2*sp*t1*u1 + q2*(Power(t1,2) + Power(u1,2))))/(Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -241,7 +241,7 @@ r += c15*v15;
 return r;
 }
 
-cdbl SVQEDL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -295,7 +295,7 @@ r += c13*v13;
 
 return r;
 }
-cdbl SVOKDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -304,7 +304,7 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (-16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*((-2*m2 + s)*ln(chi) + beta*s*ln(t1/u1)))/(beta*s*Power(sp,2)*t1*u1);
 }
 
-cdbl SVQEDDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -313,31 +313,31 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*(beta*s + (-2*m2 + s)*ln(chi)))/(beta*s*Power(sp,2)*t1*u1);
 }
 
-cdbl SVOKDelta2L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta2L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (-16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1))/(Power(sp,2)*t1*u1);
 }
 
-cdbl SVOKScaleRL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleRL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (-44*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1))/(3.*Power(sp,2)*t1*u1);
 }
 
-cdbl SVOKScaleFL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFL(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (-4*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1)*(-11 + 12*ln(-(u1/m2))))/(3.*Power(sp,2)*t1*u1);
 }
 
-cdbl SVOKScaleFDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFDelta1L(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (16*q2*(-(m2*Power(sp,2)) + (q2 + sp)*t1*u1))/(Power(sp,2)*t1*u1);
 }
 
-cdbl SVOKP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -410,7 +410,7 @@ r += c19*v19;
 return r;
 }
 
-cdbl SVQEDP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -470,7 +470,7 @@ r += c15*v15;
 
 return r;
 }
-cdbl SVOKDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -479,7 +479,7 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (2*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2))*((-2*m2 + s)*ln(chi) + beta*s*ln(t1/u1)))/(beta*s*sp*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVQEDDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVQEDDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 cdbl s = sp+q2;
 cdbl beta = sqrt(1.-4.*m2/s);
@@ -488,25 +488,25 @@ cdbl chi = (1.-beta)/(1.+beta);
 return (-2*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2))*(beta*s + (-2*m2 + s)*ln(chi)))/(beta*s*sp*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKDelta2P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKDelta2P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (2*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2)))/(sp*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleRP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleRP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (11*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2)))/(6.*sp*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleFP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFP(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return ((2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2))*(-11 + 12*ln(-(u1/m2))))/(6.*sp*Power(t1,2)*Power(u1,2));
 }
 
-cdbl SVOKScaleFDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
+cdbl Inclusive::SVOKScaleFDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = -sp-t1;
 
 return (-2*(2*m2*Power(sp,2) - (2*q2 + sp)*t1*u1)*(Power(t1,2) + Power(u1,2)))/(sp*Power(t1,2)*Power(u1,2));

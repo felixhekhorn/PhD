@@ -16,7 +16,7 @@ int test() {
     uint N = 8;
     for (uint j = 0; j < N; ++j) {
         cdbl y = -1. + pow(10.,-(dbl)j);
-        Exclusive::KinematicVars vs(m2,q2,4.*m2-q2+m2,1.,y,0.,0.);
+        const Exclusive::KinematicVars vs(m2,q2,4.*m2-q2+m2,1.,y,0.,0.);
         printf("%e\t%e\t%e\t%e\t%e\n",y,vs.k10,vs.q0,vs.absq,vs.cosPsi);
     }
     
@@ -111,6 +111,7 @@ int main(int argc, char **argv) {
     eO.setBjorkenX(bjorkenX);
     eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, 0.,8.);
     eO.activateHistogram(Exclusive::histT::x, 50);
+    eO.activateHistogram(Exclusive::histT::y, 50);
     eO.activateHistogram(Exclusive::histT::Theta1, 50);
     eO.activateHistogram(Exclusive::histT::Theta2, 50);
     
@@ -118,6 +119,7 @@ int main(int argc, char **argv) {
     cdbl e = eO.F(n);
     eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, "/home/Felix/Physik/PhD/data/hist/pt.dat");
     eO.printHistogram(Exclusive::histT::x, "/home/Felix/Physik/PhD/data/hist/x.dat");
+    eO.printHistogram(Exclusive::histT::y, "/home/Felix/Physik/PhD/data/hist/y.dat");
     eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/hist/Theta1.dat");
     eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/hist/Theta2.dat");
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);

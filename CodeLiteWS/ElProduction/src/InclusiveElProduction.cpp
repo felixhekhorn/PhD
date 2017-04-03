@@ -14,21 +14,23 @@
 #include "Inclusive/IntKers/PdfConvNLOg.hpp"
 #include "Inclusive/IntKers/PdfConvNLOq.hpp"
 
-InclusiveElProduction::InclusiveElProduction(dbl m2, dbl q2, dbl Delta, projT proj, uint nlf) : 
+using namespace Inclusive;
+
+InclusiveElProduction::InclusiveElProduction(cdbl m2, cdbl q2, cdbl Delta, projT proj, uint nlf) : 
     AbstractElProduction(m2,q2,proj,nlf) {
     this->setDelta(Delta);
 }
 
-void InclusiveElProduction::setDelta(dbl Delta) {
+void InclusiveElProduction::setDelta(cdbl Delta) {
     if (Delta < 0.)
         throw domain_error("Delta has to be positive!");
     this->Delta = Delta;
 }
 
-void InclusiveElProduction::setPartonicS(dbl s) {
+void InclusiveElProduction::setPartonicS(cdbl s) {
     if (s < 4.*m2)
         throw domain_error("partonic cm-energy has to be larger than threshold 4m^2!");
-    dbl s4maxV = sqrt(s)*(sqrt(s)-sqrt(4.*m2));
+    cdbl s4maxV = sqrt(s)*(sqrt(s)-sqrt(4.*m2));
     if (Delta > s4maxV)
         throw domain_error("Delta has to be smaller than s4_max!");
     this->sp = s - q2;
@@ -44,7 +46,7 @@ fPtr3dbl InclusiveElProduction::getCg0() const {
     }
 }
 
-dbl InclusiveElProduction::cg0() const {
+cdbl InclusiveElProduction::cg0() const {
     this->checkPartonic();
     fPtr3dbl cg0 = this->getCg0();
     return cg0(m2,q2,sp);
@@ -80,7 +82,7 @@ getter5(Cq1,cq1)
 getter5(CqBarF1,cqBarF1)
 getter5(Dq1,dq1)
 
-dbl InclusiveElProduction::cg1() const {
+cdbl InclusiveElProduction::cg1() const {
     this->checkPartonic();
     PsKerNLOg k(m2,q2,sp,Delta,this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     gsl_monte_function f;
@@ -89,7 +91,7 @@ dbl InclusiveElProduction::cg1() const {
     return int2D(&f);
 }
 
-dbl InclusiveElProduction::cgBarR1() const {
+cdbl InclusiveElProduction::cgBarR1() const {
     this->checkPartonic();
     PsKerNLOgSV k(m2,q2,sp,this->getCgBarR1SV());
     gsl_function f;
@@ -99,7 +101,7 @@ dbl InclusiveElProduction::cgBarR1() const {
     return int1D(&f) - nlf*fermionLoopFactor*this->cg0();
 }
 
-dbl InclusiveElProduction::cgBarF1() const {
+cdbl InclusiveElProduction::cgBarF1() const {
     this->checkPartonic();
     PsKerNLOg k(m2,q2,sp,Delta,this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),0,this->getCgBarF1H());
     gsl_monte_function f;
@@ -109,11 +111,11 @@ dbl InclusiveElProduction::cgBarF1() const {
     return int2D(&f) + nlf*fermionLoopFactor*this->cg0();
 }
 
-dbl InclusiveElProduction::cgBar1() const {
+cdbl InclusiveElProduction::cgBar1() const {
     return this->cgBarF1()+this->cgBarR1();
 }
 
-dbl InclusiveElProduction::cq1() const {
+cdbl InclusiveElProduction::cq1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getCq1());
     gsl_monte_function f;
@@ -122,7 +124,7 @@ dbl InclusiveElProduction::cq1() const {
     return int2D(&f);
 }
 
-dbl InclusiveElProduction::cqBarF1() const {
+cdbl InclusiveElProduction::cqBarF1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getCqBarF1());
     gsl_monte_function f;
@@ -131,7 +133,7 @@ dbl InclusiveElProduction::cqBarF1() const {
     return int2D(&f);
 }
 
-dbl InclusiveElProduction::dq1() const {
+cdbl InclusiveElProduction::dq1() const {
     this->checkPartonic();
     PsKerNLOq k(m2,q2,sp,this->getDq1());
     gsl_monte_function f;
@@ -140,7 +142,7 @@ dbl InclusiveElProduction::dq1() const {
     return int2D(&f);
 }
 
-dbl InclusiveElProduction::Fg0() const {
+cdbl InclusiveElProduction::Fg0() const {
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -149,12 +151,12 @@ dbl InclusiveElProduction::Fg0() const {
     gsl_function f;
     f.function = gslpp::callFunctor<PdfConvLO>;
     f.params = &k;
-    dbl eH = getElectricCharge(this->nlf + 1);
-    dbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
     return n * eH*eH * int1D(&f);
 }
 
-dbl InclusiveElProduction::Fg1() const {
+cdbl InclusiveElProduction::Fg1() const {
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -167,14 +169,14 @@ dbl InclusiveElProduction::Fg1() const {
     gsl_monte_function f;
     f.f = gslpp::callFunctor3D<PdfConvNLOg>;
     f.params = &k;
-    dbl Fg1 = int3D(&f);
+    cdbl Fg1 = int3D(&f);
     // multiply norm
-    dbl eH = getElectricCharge(this->nlf + 1);
-    dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI) * eH*eH;
     return n*Fg1;
 }
 
-dbl InclusiveElProduction::Fq1() const {
+cdbl InclusiveElProduction::Fq1() const {
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -184,8 +186,8 @@ dbl InclusiveElProduction::Fq1() const {
     gsl_monte_function f;
     f.f = gslpp::callFunctor3D<PdfConvNLOq>;
     f.params = &k;
-    dbl Fq1 = int3D(&f);
+    cdbl Fq1 = int3D(&f);
     // multiply norm
-    dbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
+    cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
     return n*Fq1;
 }

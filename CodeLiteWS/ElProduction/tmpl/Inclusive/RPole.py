@@ -3,32 +3,32 @@
 
 tmpl = """#include "../../config.h"
 
-dbl RPoleG({sig}) {{
+dbl Inclusive::RPoleG({sig}) {{
 {init}
 return {RPoleG};
 }}
 
-dbl RPoleL({sig}) {{
+dbl Inclusive::RPoleL({sig}) {{
 {init}
 return {RPoleL};
 }}
 
-dbl RPoleP({sig}) {{
+dbl Inclusive::RPoleP({sig}) {{
 {init}
 return {RPoleP};
 }}
 
-dbl RPoleGScaleF({sig}) {{
+dbl Inclusive::RPoleGScaleF({sig}) {{
 {init}
 return {RPoleGScaleF};
 }}
 
-dbl RPoleLScaleF({sig}) {{
+dbl Inclusive::RPoleLScaleF({sig}) {{
 {init}
 return {RPoleLScaleF};
 }}
 
-dbl RPolePScaleF({sig}) {{
+dbl Inclusive::RPolePScaleF({sig}) {{
 {init}
 return {RPolePScaleF};
 }}"""

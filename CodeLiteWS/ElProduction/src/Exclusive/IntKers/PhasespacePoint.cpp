@@ -35,6 +35,7 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     this->order = 1;
     this->z = z;
     this->x = x;
+    this->y = y;
     this->Theta1 = Theta1;
     this->Theta2 = Theta2;
     this->vs = KinematicVars(this->m2, this->q2, -q2/z, x, y, Theta1, Theta2);
@@ -143,6 +144,12 @@ cdbl PhasespacePoint::getX() const {
     if (!this->isNLO())
         throw domain_error("only NLO phasespace points have a x value");
     return this->x;
+}
+    
+cdbl PhasespacePoint::getY() const {
+    if (!this->isNLO())
+        throw domain_error("only NLO phasespace points have a y value");
+    return this->y;
 }
     
 cdbl PhasespacePoint::getTheta2() const {

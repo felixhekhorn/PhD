@@ -93,12 +93,13 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("invMassHQPair", Exclusive::histT::invMassHQPair)
         .value("HAQRapidity", Exclusive::histT::HAQRapidity)
         .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
-/*        .value("x", Exclusive::histT::x)
+        .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
         .value("Theta1", Exclusive::histT::Theta1)
         .value("Theta2", Exclusive::histT::Theta2)
-        .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
-*/    ;
+        /// @todo promote dists to python
+//        .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
+    ;
     
     class_<Exclusive::MCParams>("ExclusiveMCParams")
         .def_readwrite("calls", &Exclusive::MCParams::calls, "calls")

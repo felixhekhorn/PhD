@@ -28,7 +28,7 @@ void PdfConvNLOq::setVars(cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     this->setTheta2(aTheta2);
 }
 
-PhasespaceValues PdfConvNLOq::cq1() const {
+const PhasespaceValues PdfConvNLOq::cq1() const {
     if(0 == this->Ap1 || 0 == this->Ap1Counter || 
         0 == this->BpQED || 0 == this->Pgq0 || 0 == this->Pgq1)
         throw invalid_argument("need to set all arguments!");
@@ -90,7 +90,7 @@ PhasespaceValues PdfConvNLOq::cq1() const {
     return r;
 }
 
-PhasespaceValues PdfConvNLOq::cqBarF1() const {
+const PhasespaceValues PdfConvNLOq::cqBarF1() const {
     if(0 == this->BpQED || 0 == this->Pgq0)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
@@ -136,7 +136,7 @@ void PdfConvNLOq::setAp2(fPtr7dbl Ap2) {
     this->Ap2 = Ap2;
 }
 
-PhasespaceValues PdfConvNLOq::dq1() const {
+const PhasespaceValues PdfConvNLOq::dq1() const {
     if(0 == this->Ap2)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
@@ -152,7 +152,7 @@ void PdfConvNLOq::setAp3(fPtr7dbl Ap3) {
     this->Ap3 = Ap3;
 }
 
-PhasespaceValues PdfConvNLOq::oq1() const {
+const PhasespaceValues PdfConvNLOq::oq1() const {
     if(0 == this->Ap3)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
@@ -163,27 +163,3 @@ PhasespaceValues PdfConvNLOq::oq1() const {
     r.xEyE += jac * f * me;
     return r;
 }
-
-/*dbl PdfConvNLOq::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
-    if(0 == this->pdf)
-        throw invalid_argument("need to set all arguments!");
-    this->setZ(az);
-    this->setX(ax);
-    this->setY(ay);
-    this->setTheta1(aTheta1);
-    this->setTheta2(aTheta2);
-    cdbl meCq1 = cq1() + log(muF2/m2) * cqBarF1();
-    cdbl meDq1 = dq1();
-    cdbl meOq1 = oq1();
-    cdbl xi = this->bjorkenX/z;
-    dbl fqs = 0.;
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    for (uint q = 1; q < this->nlf + 1; ++q) {
-        cdbl eL = getElectricCharge(q);
-        fqs += (this->pdf->xfxQ2((int)q,xi,this->muF2) + this->pdf->xfxQ2(-((int)q),xi,this->muF2))*(eH*eH*meCq1 + eL*eL*meDq1 + eH*eL*meOq1);
-    }
-    cdbl r = jacZ * 1./this->z * fqs;
-    // Protect from ps corner cases
-    if (!isfinite(r)) return 0.;
-    return r;
-}*/

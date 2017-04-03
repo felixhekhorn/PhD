@@ -4,6 +4,11 @@
 #include "../../config.h"
 
 /**
+ * @brief subspace for inclusive calculations
+ */
+namespace Inclusive {
+
+/**
  * @brief Abstract base class for integral kernels
  */
 class IntKerBase {
@@ -22,53 +27,50 @@ protected:
 /**
  * @brief current \f$s'\f$
  */
-    dbl sp;
+    dbl sp = -0.;
     
 /**
  * @brief current \f$t_1^{min}\f$
  */
-    dbl t1min;
+    dbl t1min = -0.;
     
 /**
  * @brief current \f$t_1^{max}\f$
  */
-    dbl t1max;
+    dbl t1max = -0.;
     
 /**
  * @brief current \f$t_1\f$
  */
-    dbl t1;
+    dbl t1 = -0.;
     
 /**
  * @brief current \f$s_1^{max}\f$
  */
-    dbl s4max;
+    dbl s4max = -0.;
     
 /**
  * @brief current \f$s_4\f$
  */
-    dbl s4;
+    dbl s4 = -0.;
     
 /**
  * @brief current jacobian determinant
  */
-    dbl jac;
+    dbl jac = 1.;
 
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  */
-    IntKerBase(dbl m2, dbl q2) : m2(m2), q2(q2), 
-        sp(0.),t1min(0.),t1max(0.),t1(0.),s4max(0.),s4(0.),
-        jac(1.){
-    }
+    IntKerBase(dbl m2, dbl q2) : m2(m2), q2(q2){}
 
 /**
  * @brief sets real s'
  * @param sp
  */
-    void setSpRaw(dbl sp) {
+    void setSpRaw(cdbl sp) {
         this->sp = sp;
         cdbl s = sp+q2;
         cdbl beta = Sqrt(1. - (4.*m2)/s);
@@ -82,7 +84,7 @@ protected:
  * @brief sets t1 by integration
  * @param a integration variable
  */
-    void setT1(dbl a) {
+    void setT1(cdbl a) {
         this->t1 = t1min + (t1max-t1min)*a;
         cdbl s = sp+q2;
         cdbl beta = Sqrt(1. - (4.*m2)/s);
@@ -95,10 +97,12 @@ protected:
  * @param a integration variable
  * @param s4min minimum value for s4
  */
-    void setS4(dbl a, dbl s4min) {
+    void setS4(cdbl a, cdbl s4min) {
         this->s4 = s4min + (s4max - s4min)*a;
         this->jac *= (s4max - s4min);
     }
 };
+
+} // namespace Inclusive
 
 #endif // IntKerBase_H_

@@ -59,7 +59,7 @@ public:
      * @brief outputs statistical data similar to UNIX' ping
      * @param o stream
      */
-    void log(std::ostream& o);
+    void log(std::ostream& o) const;
     
     /**
      * @brief create Timer

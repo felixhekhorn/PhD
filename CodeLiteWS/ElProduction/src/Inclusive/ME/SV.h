@@ -3,6 +3,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /**
  * @brief \f$(S+V)_{G,OK}\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -241,5 +243,7 @@ cdbl SVOKScaleFP(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
  */
 cdbl SVOKScaleFDelta1P(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
 
+
+} // namespace Inclusive
 
 #endif // SV_H_

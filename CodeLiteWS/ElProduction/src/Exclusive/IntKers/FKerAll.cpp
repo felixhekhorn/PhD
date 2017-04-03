@@ -102,14 +102,16 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     return isfinite(r) ? r : 0.;
 }
 
+#define combineNLOInit PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);\
+    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);\
+    cdbl muR2 = p.getMuR2();\
+    cdbl muF2 = p.getMuF2();\
+    cdbl aS = this->alphaS->alphasQ2(muR2);\
+    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);\
+    cdbl eH = getElectricCharge(this->nlf + 1);\
+
 cdbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
-    PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
-    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
-    cdbl muR2 = p.getMuR2();
-    cdbl muF2 = p.getMuF2();
-    cdbl aS = this->alphaS->alphasQ2(muR2);
-    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);
-    cdbl eH = getElectricCharge(this->nlf + 1);
+    combineNLOInit
     // combine
     cdbl nNLOg = this->jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,muF2);
     cdbl fNLOg = nNLO * eH*eH * nNLOg * (cg1 + log(muR2/this->m2)*cgBarR1 + log(muF2/this->m2)*cgBarF1);
@@ -122,13 +124,7 @@ cdbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) 
 }
 
 cdbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1) {
-    PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
-    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);
-    cdbl muR2 = p.getMuR2();
-    cdbl muF2 = p.getMuF2();
-    cdbl aS = this->alphaS->alphasQ2(muR2);
-    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);
-    cdbl eH = getElectricCharge(this->nlf + 1);
+    combineNLOInit
     // combine
     dbl fqs = 0.;
     cdbl xi = this->bjorkenX/z;
@@ -191,7 +187,7 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
         }
         it->second->accumulate(var,value);
     }
-    /** @todo add more */
+    /** @todo add more dists */
 /*  { // DeltaPhiHQPair
     histMapT::const_iterator h = this->histMap->find(histT::DeltaPhiHQPair);
     if (h != this->histMap->cend()) {
@@ -221,16 +217,10 @@ void FKerAll::fillNLOHistograms(const PhasespacePoint p, cdbl i) const {
         dbl var = nan("");
         switch (it->first) {
             case histT::x:      var = p.getX();         break;
+            case histT::y:      var = p.getY();         break;
             case histT::Theta2: var = p.getTheta2();    break;
             default: continue;
         }
         it->second->accumulate(var,val);
     }
-    /** @todo add more? */
- /*{ // y
-    histMapT::const_iterator hy = this->histMap->find(histT::y);
-    if (hy != this->histMap->cend())
-        hy->second->accumulate(this->yE,val);
-    }
-     */
 }

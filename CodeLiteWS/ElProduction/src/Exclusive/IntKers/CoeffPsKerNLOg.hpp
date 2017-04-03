@@ -58,6 +58,10 @@ public:
  * @param q2 virtuality of the photon \f$q^2< 0\f$
  * @param sp current \f$s'\f$
  * @param nlf number of light flavours
+ * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
+ * @param omega collinear regulation parameter \f$\omega\f$
+ * @param deltax offset to upper integration bound in x \f$\delta_x\f$
+ * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
     PsKerCgBarR1(cdbl m2, cdbl q2, cdbl sp, uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) : PdfConvNLOg(m2,q2,0.,nlf,xTilde,omega,deltax,deltay) {
         this->setSpRaw(sp);
@@ -66,6 +70,7 @@ public:
     
 /**
  * @brief called function
+ * @param ax integration variable mapped on x
  * @param aTheta1 integration variable mapped on Theta1
  * @return kernel
  */
@@ -91,7 +96,9 @@ public:
  * @param sp current \f$s'\f$
  * @param nlf number of light flavours
  * @param xTilde factor to soft regulation parameter \f$\tilde\rho = 1-\tilde x(1-\rho^*)\f$
+ * @param omega collinear regulation parameter \f$\omega\f$
  * @param deltax offset to upper integration bound in x \f$\delta_x\f$
+ * @param deltay offset to lower integration bound in y \f$\delta_y\f$
  */
     PsKerCgBarF1(cdbl m2, cdbl q2, cdbl sp, uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) : PdfConvNLOg(m2,q2,0.,nlf,xTilde,omega,deltax,deltay) {
         this->setSpRaw(sp);
@@ -101,6 +108,7 @@ public:
 /**
  * @brief called function
  * @param ax integration variable mapped on x
+ * @param ay integration variable mapped on y
  * @param aTheta1 integration variable mapped on Theta1
  * @return kernel
  */

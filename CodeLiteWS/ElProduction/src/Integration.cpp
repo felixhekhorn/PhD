@@ -4,7 +4,7 @@
 #include <gsl/gsl_monte_plain.h>
 #include <gsl/gsl_monte_vegas.h>
 
-dbl int1D(gsl_function* F) {
+cdbl int1D(gsl_function* F) {
     //size_t reNevals;
     size_t calls = 10000;
     dbl res,err;
@@ -16,7 +16,7 @@ dbl int1D(gsl_function* F) {
     return res;
 }
 
-dbl int2D(gsl_monte_function* F) {
+cdbl int2D(gsl_monte_function* F) {
     const uint dim = 2;
     double xl[dim] = {0., 0.};
     double xu[dim] = {1., 1.};
@@ -44,7 +44,7 @@ dbl int2D(gsl_monte_function* F) {
     return res;
 }
 
-dbl int2D(HepSource::Integrand& F) {
+cdbl int2D(HepSource::Integrand& F) {
     const uint dim = 2;
     size_t calls = 10000;
     using HepSource::Dvegas;
@@ -72,7 +72,7 @@ dbl int2D(HepSource::Integrand& F) {
     return e.integral();
 }
 
-dbl int3D(gsl_monte_function* F) {
+cdbl int3D(gsl_monte_function* F) {
     const uint dim = 3;
     double xl[dim] = {0., 0., 0.};
     double xu[dim] = {1., 1., 1.};
@@ -101,7 +101,7 @@ dbl int3D(gsl_monte_function* F) {
     return res;
 }
 
-dbl int4D(gsl_monte_function* F) {
+cdbl int4D(gsl_monte_function* F) {
     const uint dim = 4;
     double xl[dim] = {0., 0., 0., 0.};
     double xu[dim] = {1., 1., 1., 1.};
@@ -130,7 +130,7 @@ dbl int4D(gsl_monte_function* F) {
     return res;
 }
 
-dbl int5D(gsl_monte_function* F) {
+cdbl int5D(gsl_monte_function* F) {
     const uint dim = 5;
     double xl[dim] = {0., 0., 0., 0., 0.};
     double xu[dim] = {1., 1., 1., 1., 1.};

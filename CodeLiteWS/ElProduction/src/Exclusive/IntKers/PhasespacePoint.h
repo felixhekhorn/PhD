@@ -60,6 +60,11 @@ class PhasespacePoint {
     dbl x = -0.;
     
 /**
+ * @brief current y
+ */
+    dbl y = -0.;
+    
+/**
  * @brief current Theta2
  */
     dbl Theta2 = -0.;
@@ -176,6 +181,12 @@ public:
  * @return x
  */
     cdbl getX() const;
+    
+/**
+ * @brief current y if is NLO
+ * @return y
+ */
+    cdbl getY() const;
     
 /**
  * @brief current Theta2 if is NLO

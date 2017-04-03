@@ -8,6 +8,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /** @name soft+virtual contributions */
 ///@{
 
@@ -263,5 +265,7 @@ cdbl cgBarF1HL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 cdbl cgBarF1HP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
 
 ///@}
+
+} // namespace Inclusive
 
 #endif // Inclusive_NLOg_H_

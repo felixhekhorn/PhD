@@ -45,20 +45,20 @@ for proj in projs:
     vs["proj"] = proj
     for l in rawLs:
         vs[l] = vs[l+proj]
-    tmpl += """cdbl SVOK{proj}({sig}) {{
+    tmpl += """cdbl Inclusive::SVOK{proj}({sig}) {{
 {init}
 {SVOK}
 {final}
 }}
 
-cdbl SVQED{proj}({sig}) {{
+cdbl Inclusive::SVQED{proj}({sig}) {{
 {init}
 {SVQED}
 {final}
 }}
 """.format(**vs)
     for l in rawLs[2:]:
-        tmpl += (("""cdbl %s({sig}) {{
+        tmpl += (("""cdbl Inclusive::%s({sig}) {{
 {%s}
 return {%s};
 }}
@@ -82,6 +82,8 @@ tmpl = """#ifndef SV_H_
 #define SV_H_
 
 #include "../../config.h"
+
+namespace Inclusive {
 
 """
 for proj in projs:
@@ -145,7 +147,9 @@ cdbl SVOKScaleFDelta1{proj}({sig});
 
 tmpl += """
 
-#endif // SV_H_""".format(**vs)
+} // namespace Inclusive
+
+#endif // SV_H_"""
 
 with open("../../src/Inclusive/ME/SV.h", "w") as f:
     f.write(tmpl)

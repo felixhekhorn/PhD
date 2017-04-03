@@ -1,6 +1,6 @@
 #include "AbstractElProduction.h"
 
-AbstractElProduction::AbstractElProduction(dbl m2, dbl q2,  projT proj, uint nlf) : 
+AbstractElProduction::AbstractElProduction(cdbl m2, cdbl q2,  projT proj, uint nlf) : 
     m2(0.), q2(0.), sp(0.), hasPartonicS(false), proj(proj), nlf(nlf),
     pdf(0), muR2(0.), hasMuR2(false), muF2(0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
     alphaS(0.), hasAlphaS(false), zMax(0.) {
@@ -16,7 +16,7 @@ AbstractElProduction::~AbstractElProduction() {
         delete (this->pdf);
 }
 
-void AbstractElProduction::setM2(dbl m2) {
+void AbstractElProduction::setM2(cdbl m2) {
     if (m2 <= 0.)
         throw domain_error("mass m2 has to be positive!");
     this->m2 = m2;
@@ -28,7 +28,7 @@ void AbstractElProduction::setM2(dbl m2) {
     this->hasPartonicS = false;
 }
 
-void AbstractElProduction::setQ2(dbl q2) {
+void AbstractElProduction::setQ2(cdbl q2) {
     if (q2 >= 0.)
         throw domain_error("virtuality q2 has to be negative! (this is NOT Q2!)");
     dbl s = this->hasPartonicS ? this->sp + this->q2 : 0.;
@@ -38,7 +38,7 @@ void AbstractElProduction::setQ2(dbl q2) {
         this->setPartonicS(s);
 }
 
-void AbstractElProduction::setEta(dbl eta) {
+void AbstractElProduction::setEta(cdbl eta) {
     if (eta < 0)
         throw domain_error("partonic eta has to be larger than 0!");
     this->setPartonicS(4.*m2*(1.+eta));
@@ -61,33 +61,33 @@ void AbstractElProduction::setPdf(str name, int member) {
     LHAPDF::setVerbosity(v);
 }*/
     
-void AbstractElProduction::setMuR2(dbl muR2) {
+void AbstractElProduction::setMuR2(cdbl muR2) {
     if (muR2 <= 0.)
         throw domain_error("renormalisation scale has to be positive!");
     this->muR2 = muR2;
     this->hasMuR2 = true;
 }
     
-void AbstractElProduction::setMuF2(dbl muF2) {
+void AbstractElProduction::setMuF2(cdbl muF2) {
     if (muF2 <= 0.)
         throw domain_error("factorisation scale has to be positive!");
     this->muF2 = muF2;
     this->hasMuF2 = true;
 }
 
-void AbstractElProduction::setMu2(dbl mu2) {
+void AbstractElProduction::setMu2(cdbl mu2) {
     this->setMuF2(mu2);
     this->setMuR2(mu2);
 }
 
-void AbstractElProduction::setAlphaS(dbl alphaS) {
+void AbstractElProduction::setAlphaS(cdbl alphaS) {
     if (alphaS <= 0.)
         throw domain_error("strong coupling has to be positive!");
     this->alphaS = alphaS;
     this->hasAlphaS = true;
 }
     
-void AbstractElProduction::setBjorkenX(dbl bjorkenX) {
+void AbstractElProduction::setBjorkenX(cdbl bjorkenX) {
     if (bjorkenX <= 0. || bjorkenX > 1. || !isfinite(bjorkenX))
         throw domain_error("Bjorken x has to be between 0 and 1!");
     this->bjorkenX = bjorkenX;

@@ -3,6 +3,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /**
  * @brief \f$R_{G,OK,finite}\f$
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -68,5 +70,7 @@ cdbl IntRQEDfiniteL(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
  * @return \f$R_{P,QED,finite}\f$
  */
 cdbl IntRQEDfiniteP(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+
+} // namespace Inclusive
 
 #endif // IntRFinite_H_

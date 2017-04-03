@@ -8,6 +8,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /**
  * @brief LO contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -35,5 +37,6 @@ cdbl cg0L(cdbl m2, cdbl q2, cdbl sp);
  */
 cdbl cg0P(cdbl m2, cdbl q2, cdbl sp);
 
+} // namespace Inclusive
 
 #endif // Born_H_

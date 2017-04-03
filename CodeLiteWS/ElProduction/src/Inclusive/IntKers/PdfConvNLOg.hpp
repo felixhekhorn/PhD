@@ -1,7 +1,9 @@
-#ifndef PdfConvNLOg_H_
-#define PdfConvNLOg_H_
+#ifndef Inclusive_PdfConvNLOg_H_
+#define Inclusive_PdfConvNLOg_H_
 
 #include "PdfConvBase.hpp"
+
+namespace Inclusive {
 
 /**
  * @brief NLO gluon convolution
@@ -26,47 +28,47 @@ class PdfConvNLOg : public PdfConvBase {
 /**
  * @brief pointer to S+V matrix element
  */
-    fPtr4dbl cg1SVDelta0;
+    fPtr4dbl cg1SVDelta0 = 0;
     
 /**
  * @brief pointer to Delta-logs of S+V matrix element
  */
-    fPtr4dbl cg1SVDelta1;
+    fPtr4dbl cg1SVDelta1 = 0;
     
 /**
  * @brief pointer to double Delta-logs of S+V matrix element
  */
-    fPtr4dbl cg1SVDelta2;
+    fPtr4dbl cg1SVDelta2 = 0;
     
 /**
  * @brief pointer to hard matrix element
  */
-    fPtr5dbl cg1H;
+    fPtr5dbl cg1H = 0;
     
 /**
  * @brief pointer to factorisation part of S+V matrix element
  */
-    fPtr4dbl cgBarF1SVDelta0;
+    fPtr4dbl cgBarF1SVDelta0 = 0;
     
 /**
  * @brief pointer to Delta-logs of factorisation part of S+V matrix element
  */
-    fPtr4dbl cgBarF1SVDelta1;
+    fPtr4dbl cgBarF1SVDelta1 = 0;
     
 /**
  * @brief pointer to factorisation part of hard matrix element
  */
-    fPtr5dbl cgBarF1H;
+    fPtr5dbl cgBarF1H = 0;
     
 /**
  * @brief pointer to renormalisation part of S+V matrix element
  */
-    fPtr4dbl cgBarR1SVDelta0;
+    fPtr4dbl cgBarR1SVDelta0 = 0;
     
 /**
  * @brief pointer to LO matrix element
  */
-    fPtr3dbl cg0;
+    fPtr3dbl cg0 = 0;
 
 /**
  * @brief \f$\ln(\mu_F^2/m^2)\f$
@@ -91,11 +93,8 @@ public:
  * @param nlf number of light flavours
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
-    PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2, dbl muR2, uint nlf, dbl Delta) :
-        PdfConvBase(m2, q2, bjorkenX, pdf, muF2), muR2(muR2), nlf(nlf), Delta(Delta),
-        cg1SVDelta0(0), cg1SVDelta1(0), cg1SVDelta2(0), cg1H(0),
-        cgBarF1SVDelta0(0), cgBarF1SVDelta1(0), cgBarF1H(0),
-        cgBarR1SVDelta0(0), cg0(0){
+    PdfConvNLOg(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
+        PdfConvBase(m2, q2, bjorkenX, pdf, muF2), muR2(muR2), nlf(nlf), Delta(Delta){
         this->lnF = log(this->muF2/this->m2);
         this->lnR = log(this->muR2/this->m2);
     }
@@ -149,7 +148,7 @@ public:
  * @param a3 integration variable
  * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
  */
-    dbl operator() (dbl a1, dbl a2, dbl a3) {
+    cdbl operator() (cdbl a1, cdbl a2, cdbl a3) {
         // protect from null pointer
         if (0 == this->cg1SVDelta0 || 0 == this->cg1SVDelta1 || 0 == this->cg1SVDelta2 || 0 == this->cg1H
             || 0 == this->cgBarF1SVDelta0 || 0 == this->cgBarF1SVDelta1 || 0 == this->cgBarF1H 
@@ -158,33 +157,35 @@ public:
         this->setSp(a1);
         this->setT1(a2);
         this->setS4(a3,Delta);
-        dbl A0 = 1./(s4max - Delta);
+        cdbl A0 = 1./(s4max - Delta);
         dbl fakeCg1SV = cg1SVDelta0(m2,q2,sp,t1) * A0;
         dbl fakeCgBarF1SV = cgBarF1SVDelta0(m2,q2,sp,t1) * A0;
         dbl fakeCgBarR1SV = cgBarR1SVDelta0(m2,q2,sp,t1) * A0;
         
-        dbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
+        cdbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
         fakeCg1SV += cg1SVDelta1(m2,q2,sp,t1) * A1;
         fakeCgBarF1SV += cgBarF1SVDelta1(m2,q2,sp,t1) * A1;
         
-        dbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
+        cdbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
         fakeCg1SV += cg1SVDelta2(m2,q2,sp,t1) * A2;
         
-        dbl meCg1H = cg1H(m2,q2,sp,s4,t1);
-        dbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
+        cdbl meCg1H = cg1H(m2,q2,sp,s4,t1);
+        cdbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
         
         // take fermion loop into account
-        dbl B0 = A0/(this->t1max-this->t1min);
-        dbl meCg0 = cg0(m2,q2,sp);
+        cdbl B0 = A0/(this->t1max-this->t1min);
+        cdbl meCg0 = cg0(m2,q2,sp);
         fakeCgBarF1SV += nlf * fermionLoopFactor * meCg0 * B0;
         fakeCgBarR1SV -= nlf * fermionLoopFactor * meCg0 * B0;
         
-        dbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
-        dbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,this->muF2) * me;
+        cdbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
+        cdbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,this->muF2) * me;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;
     }
 };
 
-#endif // PdfConvNLOg_H_
+} // namespace Inclusive
+
+#endif // Inclusive_PdfConvNLOg_H_

@@ -158,7 +158,7 @@ public:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    ExclusiveElProduction(dbl m2, dbl q2, projT proj, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    ExclusiveElProduction(cdbl m2, cdbl q2, projT proj, uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay);
     
 /**
  * @brief destructor
@@ -172,7 +172,7 @@ public:
  * @brief sets partonic center of mass energy
  * @param s partonic cm-energy
  */
-    void setPartonicS(dbl s);
+    void setPartonicS(cdbl s);
 
 /**
  * @brief sets xTilde
@@ -207,25 +207,25 @@ public:
  * @brief removed method - use setMuR2Factors instead
  * @param muR2 -
  */
-    void setMuR2(dbl muR2);
+    void setMuR2(cdbl muR2);
     
 /**
  * @brief removed method - use setMuF2Factors instead
  * @param muF2 -
  */
-    void setMuF2(dbl muF2);
+    void setMuF2(cdbl muF2);
     
 /**
  * @brief removed method - use setMu2Factors instead
  * @param mu2 -
  */
-    void setMu2(dbl mu2);
+    void setMu2(cdbl mu2);
     
 /**
  * @brief removed method use setLambdaQCD instead
  * @param alphaS -
  */
-    void setAlphaS(dbl alphaS);
+    void setAlphaS(cdbl alphaS);
     
 private:
 
@@ -277,7 +277,7 @@ public:
  * @brief sets \f$\Lambda_{QCD,n_{lf+1}}\f$
  * @param lambdaQCD \f$\Lambda_{QCD,n_{lf+1}}\f$
  */
-    void setLambdaQCD(dbl lambdaQCD);
+    void setLambdaQCD(cdbl lambdaQCD);
     
 ///@}
 
@@ -289,43 +289,43 @@ public:
  * @brief LO scaling function \f$c^{(0)}_g\f$
  * @return \f$c^{(0)}_g\f$
  */
-    dbl cg0() const;
+    cdbl cg0() const;
     
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_g\f$
  * @return \f$c^{(1)}_g\f$
  */
-    dbl cg1() const;
+    cdbl cg1() const;
 
 /**
  * @brief renormalization log scaling of NLO gluon scaling function \f$\bar{c}^{R,(1)}_g\f$
  * @return \f$\bar{c}^{R,(1)}_g\f$
  */
-    dbl cgBarR1() const;
+    cdbl cgBarR1() const;
 
 /**
  * @brief factorization log scaling of NLO gluon scaling function \f$\bar{c}^{F,(1)}_g\f$
  * @return \f$\bar{c}^{F,(1)}_g\f$
  */
-    dbl cgBarF1() const;
+    cdbl cgBarF1() const;
     
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$
  * @return \f$c^{(1)}_q\f$
  */
-    dbl cq1() const;
+    cdbl cq1() const;
     
 /**
  * @brief NLO quark scaling function \f$\bar c^{F,(1)}_q\f$
  * @return \f$\bar c^{F,(1)}_q\f$
  */
-    dbl cqBarF1() const;
+    cdbl cqBarF1() const;
     
 /**
  * @brief NLO quark scaling function \f$d^{(1)}_q\f$
  * @return \f$d^{(1)}_q\f$
  */
-    dbl dq1() const;
+    cdbl dq1() const;
     
 ///@}
 
@@ -337,19 +337,19 @@ public:
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    dbl Fg0() const;
+    cdbl Fg0() const;
     
 /**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    dbl Fg1() const;
+    cdbl Fg1() const;
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
-    dbl Fq1() const;
+    cdbl Fq1() const;
     
 /**
  * @brief full structure function
@@ -389,7 +389,7 @@ public:
  * @param min optional min value (will be bined uniformly to max)
  * @param max optional max value (will be bined uniformly from min)
  */
-    void activateHistogram(Exclusive::histT t, uint size, dbl min = nan(""), dbl max = nan(""));
+    void activateHistogram(Exclusive::histT t, uint size, cdbl min = nan(""), cdbl max = nan(""));
 
 /**
  * @brief prints a histogram to file (if it has been activated)

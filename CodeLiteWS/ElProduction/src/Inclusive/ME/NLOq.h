@@ -8,6 +8,8 @@
 
 #include "../../config.h"
 
+namespace Inclusive {
+
 /**
  * @brief NLO heavy quark contribution
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -106,5 +108,7 @@ cdbl dq1L(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
  * @return kernel to \f$d^{(1)}_{q}\f$
  */
 cdbl dq1P(cdbl m2, cdbl q2, cdbl sp, cdbl s4, cdbl t1);
+
+} // namespace Inclusive
 
 #endif // NLOq_H_

@@ -98,12 +98,6 @@ public:
  * @param PggS1 pointer to \f$P_{\Pg\Pg}^{S,(1)}(z)\f$
  */
     void setPgg(fPtr1dbl PggH0, fPtr1dbl PggH1, fPtr0dbl PggS1);
-
-/**
- * @brief sets renormalization scale
- * @param muR2 renormalization scale
- */
-    void setMuR2(dbl muR2);
     
 /**
  * @brief sets all integration variables
@@ -119,31 +113,19 @@ public:
  * @brief computes current value of kernel of \f$c_g^{(1)}\f$
  * @return kernel of \f$c_g^{(1)}\f$
  */
-    PhasespaceValues cg1() const;
+    const PhasespaceValues cg1() const;
 
 /**
  * @brief computes current value of kernel of \f$\bar c_g^{R,(1)}\f$
  * @return kernel of \f$\bar c_g^{R,(1)}\f$
  */
-    PhasespaceValues cgBarR1() const;
+    const PhasespaceValues cgBarR1() const;
 
 /**
  * @brief computes current value of kernel of \f$\bar c_g^{F,(1)}\f$
  * @return kernel of \f$\bar c_g^{F,(1)}\f$
  */
-    PhasespaceValues cgBarF1() const;
-    
-/*
- * @todo
- * @brief called function
- * @param az integration variable mapped on z
- * @param ax integration variable mapped on x
- * @param ay integration variable mapped on y
- * @param aTheta1 integration variable mapped on Theta1
- * @param aTheta2 integration variable mapped on Theta2
- * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
- */
-    //dbl operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2);
+    const PhasespaceValues cgBarF1() const;
 };
 
 } // namespace Exclusive
