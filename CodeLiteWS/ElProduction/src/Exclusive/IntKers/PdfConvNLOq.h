@@ -56,7 +56,7 @@ public:
  * @param omega collinear regulation parameter \f$\omega\f$
  * @param deltay offset to lower integration bound in y
  */
-    PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl omega, dbl deltay);
+    PdfConvNLOq(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl omega, cdbl deltay);
     
 /**
  * @brief sets pointer to ME ~ eH^2

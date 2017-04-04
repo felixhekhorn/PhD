@@ -97,4 +97,18 @@ enum projT {
     P /**< polarized projection */
 };
 
+/**
+ * @brief stringify projection type
+ * @param proj
+ * @return (str) proj
+ */
+inline const str projToStr(const projT proj) {
+    switch (proj) {
+        case G: return "G";
+        case L: return "L";
+        case P: return "P";
+        default: return "unknown projection";
+    }
+}
+
 #endif // Config_H_

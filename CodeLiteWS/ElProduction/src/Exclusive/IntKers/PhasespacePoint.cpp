@@ -13,8 +13,8 @@ void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
     this->order = 0;
     this->z = z;
     this->Theta1 = Theta1;
-    cdbl sp = -q2/z;
-    this->vs = KinematicVars(this->m2, this->q2, sp, 1., -1., Theta1, 0.);
+    this->sp = -q2/z;
+    this->vs = KinematicVars(this->m2, this->q2, this->sp, 1., -1., Theta1, 0.);
     // with x = 1 is s5 = s and beta5 = beta
     
     // use photon-parton c.m.s.
@@ -34,11 +34,12 @@ void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
 void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2) {
     this->order = 1;
     this->z = z;
+    this->sp = -q2/z;
     this->x = x;
     this->y = y;
     this->Theta1 = Theta1;
     this->Theta2 = Theta2;
-    this->vs = KinematicVars(this->m2, this->q2, -q2/z, x, y, Theta1, Theta2);
+    this->vs = KinematicVars(this->m2, this->q2, this->sp, x, y, Theta1, Theta2);
     using rk::P4;
     using geom3::UnitVector3;
     
@@ -61,7 +62,7 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     } { // align k1 to z
         using geom3::Rotation3;
         using geom3::Vector3;
-        Vector3 k1vec = this->k1.momentum();
+        const Vector3 k1vec = this->k1.momentum();
         const Rotation3 toZ(k1vec.cross(UnitVector3::zAxis()).direction(),k1vec.angle(UnitVector3::zAxis()));
         this->q.rotate(toZ);
         this->k1.rotate(toZ);
@@ -126,6 +127,11 @@ const rk::P4 PhasespacePoint::getP1() const {
     
 const rk::P4 PhasespacePoint::getP2() const {
     return this->p2;
+}
+
+cdbl PhasespacePoint::getPtAQ2() const {
+    cdbl mt2 = (this->sp+this->q2) * this->vs.t1 * this->vs.u1 / this->sp / this->sp;
+    return mt2 - this->m2;
 }
 
 cdbl PhasespacePoint::getMuR2() const {

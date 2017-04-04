@@ -27,22 +27,27 @@ class PhasespacePoint {
 /**
  * @brief Bjorken scaling variable
  */
-    dbl bjorkenX;
+    cdbl bjorkenX;
     
 /**
  * @brief factors for \f$\mu_R^2\f$
  */
-    DynamicScaleFactors muR2Factors;
+    const DynamicScaleFactors muR2Factors;
 
 /**
  * @brief factors for \f$\mu_F^2\f$
  */
-    DynamicScaleFactors muF2Factors;
+    const DynamicScaleFactors muF2Factors;
     
 /**
  * @brief current z
  */
     dbl z = -0.;
+    
+/**
+ * @brief current s'
+ */
+    dbl sp = -0.;
     
 /**
  * @bried order
@@ -151,6 +156,12 @@ public:
  * @return p2
  */
     const rk::P4 getP2() const;
+
+/**
+ * @brief computes \f$p_{t,2}^2\f$ by invariants
+ * @return \f$p_{t,2}^2\f$
+ */
+    cdbl getPtAQ2() const;
 
 /**
  * @brief computes \f$\mu_R^2\f$

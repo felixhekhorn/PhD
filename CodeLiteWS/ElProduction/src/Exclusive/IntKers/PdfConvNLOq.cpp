@@ -5,7 +5,7 @@
 using namespace Color;
 using namespace Exclusive;
     
-PdfConvNLOq::PdfConvNLOq(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl omega, dbl deltay) :
+PdfConvNLOq::PdfConvNLOq(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl omega, cdbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, 0., omega, 0., deltay){
 }
 
@@ -110,7 +110,7 @@ const PhasespaceValues PdfConvNLOq::cqBarF1() const {
             cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
             cdbl l = -1.;// + 3.2e-5;
             cdbl vPqg0 = Pgq0(xE)/CF;
-            r.xEyC += jacxE*jacTheta1/(jacyC) * g*meB*(0. + vPqg0*l);
+            r.xEyC += jacxE*jacTheta1/(jacyC) * g*meB*vPqg0*l;
         }
     }
 
@@ -125,7 +125,7 @@ const PhasespaceValues PdfConvNLOq::cqBarF1() const {
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
     cdbl l = -1.;// + .35e-3/(sp+q2);
     cdbl vPqg0 = Pgq0(xE)/CF;
-    r.xEyC += g*jacB*meB*vPqg0*l;
+    r.xEyC += jacB * g*meB*vPqg0*l;
 
 #endif // CounterByHeavyside
 

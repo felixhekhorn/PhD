@@ -73,7 +73,7 @@ public:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    PdfConvNLOg(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay);
 
 /**
  * @brief sets 2->2 MEs

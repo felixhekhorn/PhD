@@ -13,6 +13,11 @@ namespace Exclusive {
 class PdfConvBase {
     
 /**
+ * @brief upper integration limit for x
+ */
+    dbl xmax = 1.;
+    
+/**
  * @brief volume of x-for-event space
  */
     dbl VxE = -0.;
@@ -105,11 +110,6 @@ protected:
     dbl deltay;
     
 /**
- * @brief upper integration limit for x
- */
-    dbl xmax = 1.;
-    
-/**
  * @brief jacobian for x for event
  */
     dbl jacxE = -0.;
@@ -180,43 +180,43 @@ protected:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    PdfConvBase(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay);
 
 /**
  * @brief sets z (and  s') by integration
  * @param a integration variable
  */
-    void setZ(dbl a);
+    void setZ(cdbl a);
     
 /**
  * @brief sets raw s' and its dependences
  * @param sp
  */
-    void setSpRaw(dbl sp);
+    void setSpRaw(cdbl sp);
 
 /**
  * @brief sets x by integration
  * @param a integration variable
  */
-    void setX(dbl a);
+    void setX(cdbl a);
 
 /**
  * @brief sets y by integration
  * @param a integration variable
  */
-    void setY(dbl a);
+    void setY(cdbl a);
 
 /**
  * @brief sets Theta1 by integration
  * @param a integration variable
  */
-    void setTheta1(dbl a);
+    void setTheta1(cdbl a);
 
 /**
  * @brief sets Theta2 by integration
  * @param a integration variable
  */
-    void setTheta2(dbl a);
+    void setTheta2(cdbl a);
     
 public:
     
@@ -230,7 +230,7 @@ public:
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    virtual void setMuF2(dbl muF2);
+    virtual void setMuF2(cdbl muF2);
 };
 
 } // namespace Exclusive

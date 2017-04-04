@@ -9,9 +9,9 @@ using namespace Exclusive;
  * @brief first coefficient of running coupling beta function
  * @return \f$b_0^f\f$
  */
-dbl b0(uint nf) { return (11.*CA - 2.*nf)/3.; };
+cdbl b0(const uint nf) { return (11.*CA - 2.*nf)/3.; };
 
-PdfConvNLOg::PdfConvNLOg(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay):
+PdfConvNLOg::PdfConvNLOg(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay){
 }
 
@@ -163,7 +163,6 @@ const PhasespaceValues PdfConvNLOg::cgBarR1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
-return r;
 
 #ifdef CounterByHeavyside
     // soft events
@@ -201,7 +200,6 @@ const PhasespaceValues PdfConvNLOg::cgBarF1() const {
     // norm to cg1
     cdbl ncg1 = (m2/(4.*M_PI));
     PhasespaceValues r;
-return r;
 
 #ifdef CounterByHeavyside
 

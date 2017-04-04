@@ -45,7 +45,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
    
     this->alphaS->setOrderQCD(1 + this->order);
     
-    /*{ // LO
+    { // LO
         PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
         p.setupLO(this->z, this->Theta1);
         cdbl aS = this->alphaS->alphasQ2(p.getMuR2());
@@ -55,7 +55,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
         cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
         this->fillAllOrderHistograms(p, fLO);
         r += fLO;
-    }*/
+    }
     
     // NLO
     if (this->order > 0) {
@@ -81,7 +81,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
             r += this->combineNLOg(this->xE, -1.,      cg1.xEyC, cgBarR1.xEyC, cgBarF1.xEyC);
             r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
 #endif // CounterByHeavyside
-        } /* { // quark channel
+        } { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
             PhasespaceValues cq1 = this->NLOq->cq1();
@@ -97,7 +97,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
             r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
 #endif // CounterByHeavyside
-        } */
+        }
     }
     return isfinite(r) ? r : 0.;
 }
@@ -182,7 +182,11 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
                 break;
             case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
             case histT::HAQTransverseMomentum:
-                                        var = p.getP2().pt();           break;
+                {//printf("%sLO: pt22 = %e =? %e\n",(p.isNLO()?"N":""),p.getP2().pt(),sqrt(p.getPtAQ2()));
+                //var = p.getP2().pt();
+                var = sqrt(p.getPtAQ2());
+                }
+                break;
             default: continue;
         }
         it->second->accumulate(var,value);

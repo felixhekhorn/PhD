@@ -83,6 +83,7 @@ def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n,calls):
 		"activatedHistogram": activatedHistogram, "printedHistogram": printedHistogram,
 		"calls": calls, "msg": fp
 	})
+# add pt data points
 def addPtCharm(proj,bjorkenX,ptmax,callsLO,callsNLO):
 	m2 = 1.5**2
 	nlf = 3
