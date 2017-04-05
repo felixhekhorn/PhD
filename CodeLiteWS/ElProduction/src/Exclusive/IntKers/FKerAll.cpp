@@ -183,8 +183,8 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
             case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
             case histT::HAQTransverseMomentum:
                 {//printf("%sLO: pt22 = %e =? %e\n",(p.isNLO()?"N":""),p.getP2().pt(),sqrt(p.getPtAQ2()));
-                var = p.getP2().pt();
-                //var = sqrt(p.getPtAQ2());
+                //var = p.getP2().pt();
+                var = sqrt(p.getPtAQ2());
                 }
                 break;
             default: continue;
