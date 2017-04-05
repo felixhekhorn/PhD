@@ -86,8 +86,8 @@ void PhasespacePoint::applyLTsToFinalFrame() {
         r = gsl_rng_alloc(T);
         const Rotation3 randZ (UnitVector3::zAxis(),2.*M_PI*gsl_rng_uniform(r));
         gsl_rng_free(r);
-        q.rotate(randZ);
-        k1.rotate(randZ);
+        this->q.rotate(randZ);
+        this->k1.rotate(randZ);
         this->p1.rotate(randZ);
         this->p2.rotate(randZ);
     } { // boost to virtual photon-hadron c.m.s.
@@ -130,7 +130,9 @@ const rk::P4 PhasespacePoint::getP2() const {
 }
 
 cdbl PhasespacePoint::getPtAQ2() const {
-    cdbl mt2 = (this->sp+this->q2) * this->vs.t1 * this->vs.u1 / this->sp / this->sp;
+    //cdbl mt2_ = (this->sp+this->q2) * this->vs.t1 * this->vs.u1 / this->sp / this->sp;
+    cdbl mt2 = (sp*vs.t1*vs.u1-q2*vs.t1*vs.t1-q2*sp*vs.t1)/this->sp/this->sp;
+    //printf("%sLO: p2t = %e =? %e =? %e\n",(this->isNLO()?"N":""),this->p2.pt(),sqrt(mt2-m2),sqrt(mt2_-m2));
     return mt2 - this->m2;
 }
 

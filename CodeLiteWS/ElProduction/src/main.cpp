@@ -32,7 +32,7 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-    cdbl q2 = -50.;
+    cdbl q2 = -10.;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
-    const uint n = 0;
+    const uint n = 1;
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     
@@ -71,7 +71,8 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000;
+    eO.MCparams.calls = 500000*4;
+    eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
     
@@ -109,23 +110,28 @@ int main(int argc, char **argv) {
     }
 */
 
-    cdbl bjorkenX = 8.5e-4;
+    cdbl bjorkenX = 1e-4;
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
     eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, 0.,8.);
-/*    eO.activateHistogram(Exclusive::histT::x, 50);
+    eO.activateHistogram(Exclusive::histT::HAQRapidity, 50);
+    eO.activateHistogram(Exclusive::histT::log10z, 50);
+    eO.activateHistogram(Exclusive::histT::x, 50);
     eO.activateHistogram(Exclusive::histT::y, 50);
     eO.activateHistogram(Exclusive::histT::Theta1, 50);
     eO.activateHistogram(Exclusive::histT::Theta2, 50);
-*/    
+    
     cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
-    eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, "/home/Felix/Physik/PhD/data/hist/pt.dat");
-/*    eO.printHistogram(Exclusive::histT::x, "/home/Felix/Physik/PhD/data/hist/x.dat");
-    eO.printHistogram(Exclusive::histT::y, "/home/Felix/Physik/PhD/data/hist/y.dat");
-    eO.printHistogram(Exclusive::histT::Theta1, "/home/Felix/Physik/PhD/data/hist/Theta1.dat");
-    eO.printHistogram(Exclusive::histT::Theta2, "/home/Felix/Physik/PhD/data/hist/Theta2.dat");
-*/    printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
+    const str path = "/home/Felix/Physik/PhD/data/hist/";
+    eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, path+"pt.dat");
+    eO.printHistogram(Exclusive::histT::HAQRapidity,           path+"rap.dat");
+    eO.printHistogram(Exclusive::histT::log10z,                path+"log10z.dat");
+    eO.printHistogram(Exclusive::histT::x,                     path+"x.dat");
+    eO.printHistogram(Exclusive::histT::y,                     path+"y.dat");
+    eO.printHistogram(Exclusive::histT::Theta1,                path+"Theta1.dat");
+    eO.printHistogram(Exclusive::histT::Theta2,                path+"Theta2.dat");
+    printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
 
     return EXIT_SUCCESS;
 }
