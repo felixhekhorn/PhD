@@ -45,7 +45,8 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     
     this->k1 = P4(vs.k10*UnitVector3(0.,vs.sinPsi,vs.cosPsi),0.);
     this->q = P4(vs.q0,vs.absq*UnitVector3::zAxis());
-    const UnitVector3 u (Theta1,Theta2);
+    //const UnitVector3 u (Theta1,Theta2);
+    const UnitVector3 u(sin(Theta2)*sin(Theta1),cos(Theta2)*sin(Theta1),cos(Theta1));
     this->p1 = P4(.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
     this->p2 = P4(-.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
     P4 k2 (k1.momentum() + q.momentum(),0.);
@@ -130,9 +131,8 @@ const rk::P4 PhasespacePoint::getP2() const {
 }
 
 cdbl PhasespacePoint::getPtAQ2() const {
-    //cdbl mt2_ = (this->sp+this->q2) * this->vs.t1 * this->vs.u1 / this->sp / this->sp;
     cdbl mt2 = (sp*vs.t1*vs.u1-q2*vs.t1*vs.t1-q2*sp*vs.t1)/this->sp/this->sp;
-    //printf("%sLO: p2t = %e =? %e =? %e\n",(this->isNLO()?"N":""),this->p2.pt(),sqrt(mt2-m2),sqrt(mt2_-m2));
+    //printf("%sLO: p2t = %e =? %e\n",(this->isNLO()?"N":""),this->p2.pt(),sqrt(mt2-m2));
     return mt2 - this->m2;
 }
 

@@ -4,12 +4,13 @@
 #include "ExclusiveElProduction.h"
 
 /*
-#include "Exclusive/IntKers/KinematicVars.hpp"
 #include "Exclusive/ME/BpQED.h"
 #include "Exclusive/ME/Ap.h"
 #include "Exclusive/ME/SVp.h"
 #include "Exclusive/ME/Rp.h"
 */
+#include "Exclusive/IntKers/KinematicVars.hpp"
+#include "Exclusive/IntKers/PhasespacePoint.h"
 
 using namespace boost::python;
 
@@ -119,12 +120,26 @@ BOOST_PYTHON_MODULE(ElProduction)
     ;
     
     /*
-    // Test
+    // Tests
     class_<Exclusive::KinematicVars>("ExclusiveKinematicVars",init<dbl,dbl,dbl,dbl,dbl,dbl,dbl>())
         .def_readonly("t1", &Exclusive::KinematicVars::t1)
         .def_readonly("u1", &Exclusive::KinematicVars::u1)
         .def_readonly("tp", &Exclusive::KinematicVars::tp)
         .def_readonly("up", &Exclusive::KinematicVars::up)
+        .def_readonly("beta5", &Exclusive::KinematicVars::beta5)
+    ;
+    class_<Exclusive::PhasespacePoint>("ExclusivePhasespacePoint",init<dbl,dbl,dbl,Exclusive::DynamicScaleFactors,Exclusive::DynamicScaleFactors>())
+        .def("setupLO", &Exclusive::PhasespacePoint::setupLO)
+        .def("setupNLO", &Exclusive::PhasespacePoint::setupNLO)
+        .def("isNLO", &Exclusive::PhasespacePoint::isNLO)
+        .def("getP1", &Exclusive::PhasespacePoint::getP1)
+        .def("getP2", &Exclusive::PhasespacePoint::getP2)
+    ;
+    class_<rk::P4>("rkP4",init<>())
+        .def("e", &rk::P4::e)
+        .def("px", &rk::P4::px)
+        .def("py", &rk::P4::py)
+        .def("pz", &rk::P4::pz)
     ;
     def("ExclusiveAp1G",Exclusive::Ap1G);
     def("ExclusiveAp1L",Exclusive::Ap1L);

@@ -1,3 +1,4 @@
+cfhe EDIT
 C.--------------------------------------------------------
 C. MAPPING AND DILOG ROUTINES
 C.--------------------------------------------------------
@@ -531,6 +532,8 @@ C.---------------------------------------------------------------.C
      &  X,Y,CTH1,THETA2,
      &  T1,U1,TP,UP,S3,S4,S5,U6,U7,BETA5,DA,DB,
      &  P1,P2,K2)
+cf2py double precision intent(in) :: X,Y,CTH1,THETA2
+cf2py double precision intent(out) :: T1,U1,TP,UP,S3,S4,S5,U6,U7,BETA5,DA,DB,P1,P2,K2
 
       IMPLICIT DOUBLE PRECISION (A-Z)
       DIMENSION P1(0:3),P2(0:3),Q(0:3),K1(0:3),K2(0:3)
