@@ -1,9 +1,11 @@
 #include "ExclusiveElProduction.h"
 
 #include <errno.h>
+#include <boost/filesystem.hpp>
 
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
+
 #include "gslpp/gslpp.Functor.hpp"
 #include "./Integration.h"
 
@@ -358,6 +360,10 @@ cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
 //k.setHistograms(&(this->histMap), &sumWeights);
     k.setHistograms(&(this->histMap));
     cdbl i = int5DDvegas(k, this->MCparams);
+    // write histograms
+    for (histMapT::const_iterator it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
+        it->second->writeToFile();
+    }
     return i;
 }
 
@@ -368,10 +374,18 @@ ExclusiveElProduction::~ExclusiveElProduction() {
     }
 }
 
-void ExclusiveElProduction::activateHistogram(histT t, uint size, cdbl min /*=nan*/, cdbl max /*=nan*/) {
+void ExclusiveElProduction::activateHistogram(histT t, uint size, str path, cdbl min /*=nan*/, cdbl max /*=nan*/) {
+    // assert existance of path
+    boost::filesystem::path fp (path);
+    boost::filesystem::path par = fp.parent_path();
+    if(!boost::filesystem::exists(par))
+        throw ios::failure("path \""+par.string()+"\" does not exist!");
+    // create
     gslpp::Histogram* h = new gslpp::Histogram(size);
     if (!isnan(min) && !isnan(max))
         h->setRangesUniform(min,max);
+    h->setPath(path);
+    // insert
     this->histMap.insert({t,h});
 }
     
@@ -404,15 +418,4 @@ void ExclusiveElProduction::setupHistograms() const {
         h->second->setRangesUniform(-M_PI,M_PI);
     }
 */
-}
-
-void ExclusiveElProduction::printHistogram(Exclusive::histT t, str path) const {
-    histMapT::const_iterator it = this->histMap.find(t);
-    if (this->histMap.cend() == it)
-        throw invalid_argument("histogram was not active!");
-    FILE* f = fopen(path.c_str(),"w");
-    if (f == NULL)
-        throw ios::failure(strerror(errno));
-    it->second->fprintf(f, "% e", "% e");
-    fclose(f);
 }

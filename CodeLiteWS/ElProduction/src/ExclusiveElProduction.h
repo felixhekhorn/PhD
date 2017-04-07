@@ -386,17 +386,11 @@ public:
  * @brief activates a histogram
  * @param t histogram type
  * @param size number of bins
+ * @param path file path
  * @param min optional min value (will be bined uniformly to max)
  * @param max optional max value (will be bined uniformly from min)
  */
-    void activateHistogram(Exclusive::histT t, uint size, cdbl min = nan(""), cdbl max = nan(""));
-
-/**
- * @brief prints a histogram to file (if it has been activated)
- * @param t histogram type
- * @param path file path
- */
-    void printHistogram(Exclusive::histT t, str path) const;
+    void activateHistogram(Exclusive::histT t, uint size, str path, cdbl min = nan(""), cdbl max = nan(""));
     
 ///@}
 

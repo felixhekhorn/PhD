@@ -85,7 +85,6 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
         // histograms
         .def("activateHistogram", &ExclusiveElProduction::activateHistogram)
-        .def("printHistogram", &ExclusiveElProduction::printHistogram)
     ;
     
     enum_<Exclusive::histT>("ExclusiveHistT")

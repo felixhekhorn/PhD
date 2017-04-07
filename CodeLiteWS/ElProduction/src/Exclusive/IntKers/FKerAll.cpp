@@ -220,8 +220,20 @@ void FKerAll::fillNLOHistograms(const PhasespacePoint p, cdbl i) const {
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
         dbl var = nan("");
         switch (it->first) {
-            case histT::x:      var = p.getX();         break;
-            case histT::y:      var = p.getY();         break;
+            case histT::x:
+                {var = p.getX();
+                // exclude counter term
+                if (1. == var)
+                    continue;
+                }
+                break;
+            case histT::y:
+                {var = p.getY();
+                // exclude counter term
+                if (-1. == var)
+                    continue;
+                }
+                break;
             case histT::Theta2: var = p.getTheta2();    break;
             default: continue;
         }

@@ -60,11 +60,12 @@ def _threadWorker(qIn):
 		o.setBjorkenX(p["bjorkenX"])
 		for e in p["activatedHistograms"]:
 			o.activateHistogram(*e)
-		o.MCparams.calls = p["calls"]
-		o.MCparams.verbosity = 2
+		if p.has_key("calls"): 		o.MCparams.calls = p["calls"]
+		if p.has_key("iterations"): 	o.MCparams.iterations = p["iterations"]
+		if p.has_key("bins"): 		o.MCparams.bins = p["bins"]
+		if p.has_key("adaptChi2"): 	o.MCparams.adaptChi2 = p["adaptChi2"]
+		if p.has_key("verbosity"): 	o.MCparams.verbosity = p["verbosity"]
 		# run
 		o.F(p["n"])
-		for e in p["printedHistograms"]:
-			o.printHistogram(*e)
 		qIn.task_done()
 		print _psucc(), p["msg"]

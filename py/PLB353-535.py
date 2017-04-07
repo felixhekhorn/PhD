@@ -27,13 +27,12 @@ def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
 	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
 	fp = pathOut+"F%s%s_x-%g_q2-%g_%d.dat"%(proj,qL,bjorkenX*1e5,-q2*1e1,n)
 	q2 = -10.
-	activatedHistograms = [(ExclusiveHistT.invMassHQPair,40,0,40.)]
-	printedHistograms = [(ExclusiveHistT.invMassHQPair,fp,)]
+	activatedHistograms = [(ExclusiveHistT.invMassHQPair,40,fp,0.,40.)]
 	r.add({
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,),
 		"lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, "n":n,
-		"activatedHistograms": activatedHistograms, "printedHistograms": printedHistograms,
+		"activatedHistograms": activatedHistograms,
 		"calls": 500000, "msg": "proj = %s, n = %d, bjorkenX = %g"%(proj,n,bjorkenX)
 	})
 

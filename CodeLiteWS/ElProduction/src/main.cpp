@@ -71,7 +71,9 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000;
+    eO.MCparams.calls = 500000*2;
+    eO.MCparams.iterations = 5*4;
+    eO.MCparams.bins = 125*2;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;
@@ -113,24 +115,17 @@ int main(int argc, char **argv) {
     cdbl bjorkenX = 1e-4;
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
-    eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, 0.,8.);
-    eO.activateHistogram(Exclusive::histT::HAQRapidity, 50);
-    eO.activateHistogram(Exclusive::histT::log10z, 50);
-    eO.activateHistogram(Exclusive::histT::x, 50);
-    eO.activateHistogram(Exclusive::histT::y, 50);
-    eO.activateHistogram(Exclusive::histT::Theta1, 50);
-    eO.activateHistogram(Exclusive::histT::Theta2, 50);
+    const str path = "/home/Felix/Physik/PhD/data/hist/";
+    eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, path+"pt.dat",0.,8.);
+    eO.activateHistogram(Exclusive::histT::HAQRapidity,           50, path+"rap.dat");
+    eO.activateHistogram(Exclusive::histT::log10z,                50, path+"log10z.dat");
+    eO.activateHistogram(Exclusive::histT::x,                     50, path+"x.dat");
+    eO.activateHistogram(Exclusive::histT::y,                     50, path+"y.dat");
+    eO.activateHistogram(Exclusive::histT::Theta1,                50, path+"Theta1.dat");
+    eO.activateHistogram(Exclusive::histT::Theta2,                50, path+"Theta2.dat");
     
     cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
-    const str path = "/home/Felix/Physik/PhD/data/hist/";
-    eO.printHistogram(Exclusive::histT::HAQTransverseMomentum, path+"pt.dat");
-    eO.printHistogram(Exclusive::histT::HAQRapidity,           path+"rap.dat");
-    eO.printHistogram(Exclusive::histT::log10z,                path+"log10z.dat");
-    eO.printHistogram(Exclusive::histT::x,                     path+"x.dat");
-    eO.printHistogram(Exclusive::histT::y,                     path+"y.dat");
-    eO.printHistogram(Exclusive::histT::Theta1,                path+"Theta1.dat");
-    eO.printHistogram(Exclusive::histT::Theta2,                path+"Theta2.dat");
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
 
     return EXIT_SUCCESS;

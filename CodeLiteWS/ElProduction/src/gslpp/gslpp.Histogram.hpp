@@ -2,6 +2,7 @@
 #define gslpp_Histogram_HPP
 
 #include <stdexcept>
+#include <string>
 
 #include <gsl/gsl_histogram.h>
 
@@ -29,6 +30,11 @@ class Histogram {
  * @brief are ranges set?
  */
     bool initialized = false;
+    
+/**
+ * @brief file path
+ */
+    std::string path;
     
 public:
 
@@ -90,8 +96,16 @@ public:
  * @brief is histogram initialized? (i.e. are ranges set?)
  * @return initialized?
  */
-    bool isInitialized() {
+    bool isInitialized() const {
         return this->initialized;
+    }
+    
+/**
+ * @brief sets file path
+ * @param path file path
+ */
+    void setPath(std::string path) {
+        this->path = path;
     }
     
 /**
@@ -99,7 +113,7 @@ public:
  * @param x value
  * @return gsl_histogram_increment
  */
-    int increment(double x) {
+    int increment(double x) const {
         return this->accumulate(x, 1.);
     }
     
@@ -109,7 +123,7 @@ public:
  * @param w weight
  * @return gsl_histogram_accumulate
  */
-    int accumulate(double x, double w) {
+    int accumulate(double x, double w) const {
         return gsl_histogram_accumulate(this->h, x, w);
     }
     
@@ -118,7 +132,7 @@ public:
  * @param s scale
  * @return gsl_histogram_scale
  */
-    int scale(double s) {
+    int scale(double s) const {
         return gsl_histogram_scale(this->h,s);
     }
 
@@ -129,11 +143,22 @@ public:
  * @param bin_format printf-format for bin value
  * @return gsl_histogram_fprintf
  */
-    int fprintf(FILE * stream, const char * range_format, const char * bin_format) {
+    int fprintf(FILE * stream, const char * range_format, const char * bin_format) const {
         // empty?
         if (!this->isInitialized())
             return 0;
         return gsl_histogram_fprintf(stream, this->h, range_format, bin_format);
+    }
+    
+/**
+ * @brief writes histogram to the file path
+ */
+    void writeToFile() const {
+        FILE* f = fopen(this->path.c_str(),"w");
+        if (f == NULL)
+            throw ios::failure(strerror(errno));
+        this->fprintf(f, "% e", "% e");
+        fclose(f);
     }
     
 };
