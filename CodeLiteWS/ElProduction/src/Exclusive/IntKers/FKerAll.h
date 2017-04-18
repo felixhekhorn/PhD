@@ -94,14 +94,14 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @param p current phase space point
  * @param i integrand
  */
-    void fillAllOrderHistograms(const PhasespacePoint p, dbl i) const;
+    void fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const;
 
 /**
  * @brief fills all avtive histograms available in NLO
  * @param p current phase space point
  * @param i integrand
  */
-    void fillNLOHistograms(const PhasespacePoint p, dbl i) const;
+    void fillNLOHistograms(const PhasespacePoint p, cdbl i) const;
     
 public:
 
@@ -116,7 +116,7 @@ public:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    FKerAll(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay);
+    FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay);
     
 /**
  * @brief sets all kernels
@@ -136,20 +136,20 @@ public:
  * @brief removed method - use setMuRF2Factors instead
  * @param muF2 -
  */
-    void setMuF2(dbl muF2);
+    void setMuF2(cdbl muF2);
     
 /**
  * @brief sets factors for \f$\mu_R^2\f$ and \f$\mu_F^2\f$
  * @param muR2Factors factors for \f$\mu_R^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
-    void setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors);
+    void setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors);
     
 /**
  * @brief sets computed order
  * @param order computed order
  */
-    void setOrder(uint order);
+    void setOrder(const uint order);
     
 /**
  * @brief sets avtive histograms
@@ -182,7 +182,7 @@ public:
  * @brief scales all avtive histograms
  * @param s factor
  */
-    void scaleHistograms(dbl s) const;
+    void scaleHistograms(cdbl s) const;
 };
     
 } // namespace Exclusive

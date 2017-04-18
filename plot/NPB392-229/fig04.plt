@@ -2,9 +2,10 @@
 reset
 
 set term png
+set size square
 
 if (ARGC < 1) {
-  print "USAGE: ".ARG0." pdf"
+  print "USAGE: gnuplot -c ".ARG0." pdf"
   exit
 }
 #pdf = "MSTW2008nlo90cl"
@@ -28,6 +29,8 @@ set xrange [0.:20.]
 
 f0 = pin . "dF2c_dpt_x-4_0.dat"
 f1 = pin . "dF2c_dpt_x-4_1.dat"
+
+n = 1.42
 
 set out pout . "fig04.png"
 set title sprintf("dF_{2}(x=0.0001,Q²=10GeV^2,m_c^2,p_t)/dp_t with %s",pdf)

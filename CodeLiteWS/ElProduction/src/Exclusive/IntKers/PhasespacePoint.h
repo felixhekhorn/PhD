@@ -32,12 +32,12 @@ class PhasespacePoint {
 /**
  * @brief factors for \f$\mu_R^2\f$
  */
-    const DynamicScaleFactors muR2Factors;
+    DynamicScaleFactors muR2Factors;
 
 /**
  * @brief factors for \f$\mu_F^2\f$
  */
-    const DynamicScaleFactors muF2Factors;
+    DynamicScaleFactors muF2Factors;
     
 /**
  * @brief current z
@@ -108,7 +108,7 @@ class PhasespacePoint {
  * @brief computes a scale by given factors
  * @param factors
  */
-    cdbl getDynamicScale(DynamicScaleFactors factors) const;
+    cdbl getDynamicScale(const DynamicScaleFactors factors) const;
     
 public:
     
@@ -120,7 +120,7 @@ public:
  * @param muR2Factors factors for \f$\mu_R^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
-    PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors);
+    PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors);
     
 /**
  * @brief sets a LO phase space point

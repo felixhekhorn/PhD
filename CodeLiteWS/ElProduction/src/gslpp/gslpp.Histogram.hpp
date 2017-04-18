@@ -42,7 +42,7 @@ public:
  * @brief constructor - initializes histogram
  * @param size number of bins
  */
-    Histogram(size_t size) : size(size) {
+    Histogram(const std::size_t size) : size(size) {
         this->h = gsl_histogram_alloc(size);
     }
     
@@ -60,10 +60,10 @@ public:
  * @param max maximum value
  * @return gsl_histogram_set_ranges_uniform
  */
-    int setRangesUniform(double min, double max) {
+    const int setRangesUniform(const double min, const double max) {
         if (max <= min)
             throw std::invalid_argument("expects min < max!");
-        int r = gsl_histogram_set_ranges_uniform(this->h,min,max);
+        const int r = gsl_histogram_set_ranges_uniform(this->h,min,max);
         this->initialized = true;
         return r;
     }
@@ -74,7 +74,7 @@ public:
  * @param max maximum value
  * @return gsl_histogram_set_ranges
  */
-    int setRangesLog10(double min, double max) {
+    const int setRangesLog10(const double min, const double max) {
         if (min <= 0. || max <= 0. || max <= min)
             throw std::invalid_argument("expects 0 < min < max!");
         const double mi = log10(min);
@@ -87,7 +87,7 @@ public:
             range[j] = pow(10.,x);
             x += d;
         }
-        int ret = gsl_histogram_set_ranges(this->h,range,s);
+        const int ret = gsl_histogram_set_ranges(this->h,range,s);
         this->initialized = true;
         return ret;
     }
@@ -96,7 +96,7 @@ public:
  * @brief is histogram initialized? (i.e. are ranges set?)
  * @return initialized?
  */
-    bool isInitialized() const {
+    const bool isInitialized() const {
         return this->initialized;
     }
     
@@ -104,7 +104,7 @@ public:
  * @brief sets file path
  * @param path file path
  */
-    void setPath(std::string path) {
+    void setPath(const std::string path) {
         this->path = path;
     }
     
@@ -113,7 +113,7 @@ public:
  * @param x value
  * @return gsl_histogram_increment
  */
-    int increment(double x) const {
+    const int increment(const double x) const {
         return this->accumulate(x, 1.);
     }
     
@@ -123,7 +123,7 @@ public:
  * @param w weight
  * @return gsl_histogram_accumulate
  */
-    int accumulate(double x, double w) const {
+    const int accumulate(const double x, const double w) const {
         return gsl_histogram_accumulate(this->h, x, w);
     }
     
@@ -132,7 +132,7 @@ public:
  * @param s scale
  * @return gsl_histogram_scale
  */
-    int scale(double s) const {
+    const int scale(const double s) const {
         return gsl_histogram_scale(this->h,s);
     }
 
@@ -143,7 +143,7 @@ public:
  * @param bin_format printf-format for bin value
  * @return gsl_histogram_fprintf
  */
-    int fprintf(FILE * stream, const char * range_format, const char * bin_format) const {
+    const int fprintf(FILE * stream, const char * range_format, const char * bin_format) const {
         // empty?
         if (!this->isInitialized())
             return 0;

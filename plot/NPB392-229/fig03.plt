@@ -2,6 +2,7 @@
 reset
 
 set term png
+set size square
 
 if (ARGC < 1) {
   print "USAGE: ".ARG0." pdf"

@@ -3,11 +3,14 @@
 
 #include "../../config.h"
 
+/** @brief forces x to be min <= x <= max  */
+#define mima(x,mi,ma) min(max(x,mi),ma)
+
 namespace Exclusive {
 
 /**
  * @class KinematicVars
- * @brief computes all 2-to-3-particle phase space variables
+ * @brief computes all 2-to-3-particle phasespace variables
  */
 struct KinematicVars {
     
@@ -20,8 +23,6 @@ struct KinematicVars {
     ///@{
     dbl s5,tp,up,t1,u1;
     ///@}
-    
-    
     
     /**
      * @brief constructor

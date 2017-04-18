@@ -25,12 +25,19 @@
 
 using namespace Exclusive;
 
-ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, projT proj, uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
+ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, const projT proj, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
     AbstractElProduction(m2,q2,proj,nlf) {
     this->setXTilde(xTilde);
     this->setOmega(omega);
     this->setDeltax(deltax);
     this->setDeltay(deltay);
+}
+
+ExclusiveElProduction::~ExclusiveElProduction() {
+    // delete all histograms
+    for(auto it : this->histMap) {
+        delete (it.second);
+    }
 }
 
 void ExclusiveElProduction::setPartonicS(cdbl s) {
@@ -303,17 +310,17 @@ void ExclusiveElProduction::setAlphaS(cdbl muR2) {
     throw logic_error("use setLambdaQCD instead!");
 }
 
-void ExclusiveElProduction::setMuR2Factors(Exclusive::DynamicScaleFactors muR2Factors) {
+void ExclusiveElProduction::setMuR2Factors(const Exclusive::DynamicScaleFactors muR2Factors) {
     this->muR2Factors = muR2Factors;
     this->hasMuR2 = true;
 }
     
-void ExclusiveElProduction::setMuF2Factors(Exclusive::DynamicScaleFactors muF2Factors) {
+void ExclusiveElProduction::setMuF2Factors(const Exclusive::DynamicScaleFactors muF2Factors) {
     this->muF2Factors = muF2Factors;
     this->hasMuF2 = true;
 }
     
-void ExclusiveElProduction::setMu2Factors(Exclusive::DynamicScaleFactors mu2Factors) {
+void ExclusiveElProduction::setMu2Factors(const Exclusive::DynamicScaleFactors mu2Factors) {
     this->setMuF2Factors(mu2Factors);
     this->setMuR2Factors(mu2Factors);
 }
@@ -367,14 +374,7 @@ cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
     return i;
 }
 
-ExclusiveElProduction::~ExclusiveElProduction() {
-    // delete all histograms
-    for(auto it : this->histMap) {
-        delete (it.second);
-    }
-}
-
-void ExclusiveElProduction::activateHistogram(histT t, uint size, str path, cdbl min /*=nan*/, cdbl max /*=nan*/) {
+void ExclusiveElProduction::activateHistogram(const histT t, const uint size, const str path, cdbl min /*=nan*/, cdbl max /*=nan*/) {
     // assert existance of path
     boost::filesystem::path fp (path);
     boost::filesystem::path par = fp.parent_path();

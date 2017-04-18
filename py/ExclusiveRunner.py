@@ -8,6 +8,7 @@ def _pinfo(): return "[INFO]"
 
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 import sys
+import os
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveDynamicScaleFactors
 
@@ -29,6 +30,9 @@ class ExclusiveRunner:
 		lenParams = self.__qIn.qsize()
 		for n in xrange(nProcesses):
 			self.__qIn.put(None)
+		# secure DSSV2014
+		# TODO respect different systems 
+		os.environ["DSSV2014_GRIDS"] = "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/"
 		# start processes
 		threadArgs = (self.__qIn, )
 		processes = []

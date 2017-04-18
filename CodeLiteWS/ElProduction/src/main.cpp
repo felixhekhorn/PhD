@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
     //const str pdf = "cteq66";
     const str pdf = "MSTW2008nlo90cl";
     //const str pdf = "MorfinTungB";
+    //const str pdf = "DSSV2014";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
@@ -71,9 +72,9 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000*2;
-    eO.MCparams.iterations = 5*4;
-    eO.MCparams.bins = 125*2;
+    eO.MCparams.calls = 500000/100;
+    eO.MCparams.iterations = 5;
+    eO.MCparams.bins = 125;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;

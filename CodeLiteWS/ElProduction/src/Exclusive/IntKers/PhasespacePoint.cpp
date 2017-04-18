@@ -5,27 +5,29 @@
 
 using namespace Exclusive;
 
-PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors) :
+PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) :
     m2(m2), q2(q2), bjorkenX(bjorkenX), muR2Factors(muR2Factors), muF2Factors(muF2Factors), vs(m2,q2,4.*m2-q2,1.,-1.,0.,0.){
 }
 
 void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
     this->order = 0;
     this->z = z;
-    this->Theta1 = Theta1;
     this->sp = -q2/z;
+    this->Theta1 = Theta1;
+    cdbl s = sp + q2;
+    cdbl beta = sqrt(1. - 4.*m2/s);
     this->vs = KinematicVars(this->m2, this->q2, this->sp, 1., -1., Theta1, 0.);
     // with x = 1 is s5 = s and beta5 = beta
     
     // use photon-parton c.m.s.
     using rk::P4;
     using geom3::UnitVector3;
-    cdbl sqrts = sqrt(vs.s5);
+    cdbl sqrts = sqrt(s);
     this->k1 = P4(sp/(2.*sqrts) * UnitVector3::zAxis(),0.);
     this->q = P4((sp + 2.*q2)/(2.*sqrts),-k1.momentum());
-    const UnitVector3 u (Theta1,0.);
-    this->p1 = P4(.5*sqrts*vs.beta5*u,sqrt(m2));
-    this->p2 = P4(-.5*sqrts*vs.beta5*u,sqrt(m2));
+    const UnitVector3 u(0., sin(Theta1),cos(Theta2));
+    this->p1 = P4(.5*sqrts*beta*u,sqrt(m2));
+    this->p2 = P4(-.5*sqrts*beta*u,sqrt(m2));
     
     // move to final frame
     this->applyLTsToFinalFrame();
@@ -35,9 +37,9 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     this->order = 1;
     this->z = z;
     this->sp = -q2/z;
+    this->Theta1 = Theta1;
     this->x = x;
     this->y = y;
-    this->Theta1 = Theta1;
     this->Theta2 = Theta2;
     this->vs = KinematicVars(this->m2, this->q2, this->sp, x, y, Theta1, Theta2);
     using rk::P4;
@@ -102,7 +104,7 @@ void PhasespacePoint::applyLTsToFinalFrame() {
     }
 }
 
-cdbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
+cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors factors) const {
     cdbl ptSumHQPair = (this->p1 + this->p2).pt();
     cdbl ptHAQ = this->p2.pt();
     cdbl mu2 = factors.cM2 * this->m2 +
@@ -110,7 +112,7 @@ cdbl PhasespacePoint::getDynamicScale(DynamicScaleFactors factors) const {
                 factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair +
                 factors.cSqrPtHAQ * ptHAQ*ptHAQ;
     if (!isfinite(mu2) || mu2 < 0)
-        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair).str());
+        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2 + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair%factors.cSqrPtHAQ%ptHAQ).str());
     return mu2;
 }
 

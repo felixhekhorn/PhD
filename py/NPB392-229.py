@@ -22,14 +22,29 @@ xTilde = .8
 omega = 1.
 deltax = 1e-6
 deltay = 7e-6
-# add data point
-def add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,y0,n):
+# add pt data point
+def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n):
 	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
 	fpPt = pathOut+"dF%s%s_dpt_x-%g_%d.dat"%(proj,qL,-np.log10(bjorkenX),n)
+	q2 = -10.
+	activatedHistograms = [
+		(ExclusiveHistT.HAQTransverseMomentum,100,fpPt,0.,ptmax,)
+	]
+	its = 5 if 0 == n else 20
+	calls = 500000 if 0 == n else 2000000
+	r.add({
+		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
+		"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, 
+		"activatedHistograms": activatedHistograms, "n":n,
+		"calls": calls, "bins": 250, "iterations": its, "verbosity": 2, "adaptChi2": False,
+		"msg": "proj = %s, n = %d, bjorkenX = %g"%(proj,n,bjorkenX)
+	})
+# add rapidity data point
+def addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,n):
+	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
 	fpRap = pathOut+"dF%s%s_dy_x-%g_%d.dat"%(proj,qL,-np.log10(bjorkenX),n)
 	q2 = -10.
 	activatedHistograms = [
-		(ExclusiveHistT.HAQTransverseMomentum,100,fpPt,0.,ptmax,),
 		(ExclusiveHistT.HAQRapidity,100,fpRap,-y0,y0,)
 	]
 	its = 5 if 0 == n else 20
@@ -42,25 +57,45 @@ def add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,y0,n):
 		"msg": "proj = %s, n = %d, bjorkenX = %g"%(proj,n,bjorkenX)
 	})
 # add charm data points
-def addCharm(proj,bjorkenX,ptmax,y0):
+def addPtCharm(proj,bjorkenX,ptmax):
 	m2 = 1.5**2
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,4.,)
-	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,y0,0)
-	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,y0,1)
-def addCharmG():
-	addCharm(projT.G, .1,     5.,2. )
-	addCharm(projT.G, .01,    8.,3.5)
-	addCharm(projT.G, .001,  15.,4.5)
-	addCharm(projT.G, .0001, 20.,5.5)
-def addCharmL():
-	addCharm(projT.L, .1,     5.,2. )
-	addCharm(projT.L, .01,    8.,3.5)
-	addCharm(projT.L, .001,  15.,4.5)
-	addCharm(projT.L, .0001, 20.,5.5)
+	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,0)
+	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
+def addRapCharm(proj,bjorkenX,y0):
+	m2 = 1.5**2
+	nlf = 3
+	lambdaQCD = 0.194
+	mu2 = (4.,-1.,0.,0.,)
+	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,0)
+	add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
+# add plots
+def addPtCharmG():
+	addPtCharm(projT.G, .1,     5.)
+	addPtCharm(projT.G, .01,    8.)
+	addPtCharm(projT.G, .001,  15.)
+	addPtCharm(projT.G, .0001, 20.)
+def addPtCharmL():
+	addPtCharm(projT.L, .1,     5.)
+	addPtCharm(projT.L, .01,    8.)
+	addPtCharm(projT.L, .001,  15.)
+	addPtCharm(projT.L, .0001, 20.)
+def addRapCharmG():
+	addRapCharm(projT.G, .1,    2. )
+	addRapCharm(projT.G, .01,   3.5)
+	addRapCharm(projT.G, .001,  4.5)
+	addRapCharm(projT.G, .0001, 5.5)
+def addRapCharmL():
+	addRapCharm(projT.L, .1,    2. )
+	addRapCharm(projT.L, .01,   3.5)
+	addRapCharm(projT.L, .001,  4.5)
+	addRapCharm(projT.L, .0001, 5.5)
 
-addCharmG()
-addCharmL()
+addPtCharmG()
+addPtCharmL()
+addRapCharmG()
+addRapCharmL()
 r.run()
 

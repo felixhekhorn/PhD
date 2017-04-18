@@ -15,7 +15,7 @@ struct MCParams {
 /**
  * @brief calls
  */
-    HepSource::Int64 calls = 50000;
+    HepSource::Int64 calls = 100000;
     
 /**
  * @brief calls during warmup
@@ -25,7 +25,7 @@ struct MCParams {
 /**
  * @brief iterations
  */
-    uint iterations = 5;
+    uint iterations = 10;
     
 /**
  * @brief iterations during warmup
@@ -35,7 +35,7 @@ struct MCParams {
 /**
  * @brief number of bins
  */
-    uint bins = 125;
+    uint bins = 250;
     
 /**
  * @brief level of output
@@ -55,7 +55,7 @@ struct MCParams {
  * @param ps params
  * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
  */
-dbl int5DDvegas(FKerAll& k, const MCParams& ps);
+const dbl int5DDvegas(FKerAll& k, const MCParams& ps);
 
 } // namespace Exclusive
     

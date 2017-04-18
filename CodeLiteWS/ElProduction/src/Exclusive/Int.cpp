@@ -4,10 +4,10 @@
 
 using namespace Exclusive;
 
-dbl Exclusive::int5DDvegas(FKerAll& F, const MCParams& ps) {
+const dbl Exclusive::int5DDvegas(FKerAll& F, const MCParams& ps) {
     const uint dim = 5;
-    size_t calls = ps.calls;
-    uint iterations = ps.iterations;
+    const size_t calls = ps.calls;
+    const uint iterations = ps.iterations;
     using HepSource::Dvegas;
     using HepSource::VEGAS;
     using HepSource::IntegrandEstimate;

@@ -29,11 +29,11 @@ enum histT {
     invMassHQPair, /**< 2m < invMassHQPair < sqrt(S) */
     HAQRapidity, /**< -y0 < HAQRapidity < y0 where y0 = artanh(sqrt(1-4m2/S)) */
     HAQTransverseMomentum, /**< 0 < HAQTransverseMomentum < sqrt(S/4-m2)) */
+//    DeltaPhiHQPair, /**< -pi < DeltaPhiHQPair < pi */
 // NLO:
     x, /**< x_bj/z_max < x < 1 */
     y, /**< -1 < y < 1 */
-    Theta2, /**< 0 < Theta2 < pi */
-//    DeltaPhiHQPair /**< -pi < DeltaPhiHQPair < pi */
+    Theta2 /**< 0 < Theta2 < pi */
 };
 
 /**
@@ -73,7 +73,7 @@ struct DynamicScaleFactors {
  * @param cSqrPtSumHQPair factor to \f$(p_{T,\HepGenParticle{Q}{}{}}+p_{T,\HepGenAntiParticle{Q}{}{}})^2\f$
  * @param cSqrPtHAQ factor to \f$p_{T,\HepGenAntiParticle{Q}{}{}}^2\f$
  */
-    DynamicScaleFactors(cdbl cM2 = 4., cdbl cQ2 = -1., cdbl cSqrPtSumHQPair = 0., cdbl cSqrPtHAQ = 0.) :
+    inline DynamicScaleFactors(cdbl cM2 = 4., cdbl cQ2 = -1., cdbl cSqrPtSumHQPair = 0., cdbl cSqrPtHAQ = 0.) :
         cM2(cM2), cQ2(cQ2), cSqrPtSumHQPair(cSqrPtSumHQPair), cSqrPtHAQ(cSqrPtHAQ) {};
 };
 

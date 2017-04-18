@@ -54,6 +54,9 @@ class PartonicRunner2:
         return g
     # start processes
     def _compute(self,g):
+        # secure DSSV2014
+        # TODO respect different systems 
+        os.environ["DSSV2014_GRIDS"] = "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/"
         # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),

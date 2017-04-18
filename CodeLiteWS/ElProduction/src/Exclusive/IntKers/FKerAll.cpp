@@ -2,7 +2,7 @@
 
 using namespace Exclusive;
 
-FKerAll::FKerAll(dbl m2, dbl q2, dbl bjorkenX, uint nlf, dbl xTilde, dbl omega, dbl deltax, dbl deltay) :
+FKerAll::FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
     HepSource::Integrand(5,1){
 }
@@ -17,15 +17,15 @@ void FKerAll::setAlphaS(LHAPDF::AlphaS* alphaS) {
     this->alphaS = alphaS;
 }
 
-void FKerAll::setOrder(uint order) {
+void FKerAll::setOrder(const uint order) {
     this->order = order;
 }
 
-void FKerAll::setMuF2(dbl muF2) {
+void FKerAll::setMuF2(cdbl muF2) {
     throw logic_error("use setMuRF2Factors instead!");
 }
 
-void FKerAll::setMuRF2Factors(DynamicScaleFactors muR2Factors, DynamicScaleFactors muF2Factors) {
+void FKerAll::setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) {
     this->muR2Factors = muR2Factors;
     this->muF2Factors = muF2Factors;
 }
@@ -102,13 +102,14 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     return isfinite(r) ? r : 0.;
 }
 
-#define combineNLOInit PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);\
+#define combineNLOInit \
+    PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);\
     p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);\
     cdbl muR2 = p.getMuR2();\
     cdbl muF2 = p.getMuF2();\
     cdbl aS = this->alphaS->alphasQ2(muR2);\
     cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);\
-    cdbl eH = getElectricCharge(this->nlf + 1);\
+    cdbl eH = getElectricCharge(this->nlf + 1);
 
 cdbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
     combineNLOInit
@@ -154,7 +155,7 @@ void FKerAll::setHistograms(const histMapT* histMap /*, dbl* sumWeights*/) {
 //    this->sumWeights = sumWeights;
 }
 
-void FKerAll::scaleHistograms(dbl s) const {
+void FKerAll::scaleHistograms(cdbl s) const {
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
         it->second->scale(s);
 //    (*sumWeights) *= s;
