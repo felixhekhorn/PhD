@@ -9,17 +9,9 @@
 
 int runInclusive();
 int test() {
-    PdfWrapper pdf("MSTW2008nlo90cl",0);
-    cdbl m2 = 1.5*1.5;
-    cdbl q2 = -8.5;
-    
-    uint N = 8;
-    for (uint j = 0; j < N; ++j) {
-        cdbl y = -1. + pow(10.,-(dbl)j);
-        const Exclusive::KinematicVars vs(m2,q2,4.*m2-q2+m2,1.,y,0.,0.);
-        printf("%e\t%e\t%e\t%e\t%e\n",y,vs.k10,vs.q0,vs.absq,vs.cosPsi);
-    }
-    
+    cout << geom3::deltaPhi(geom3::Vector3(0.,1.,0.),geom3::Vector3(1.,0.,0.)) << endl;
+    cout << geom3::deltaPhi(geom3::Vector3(1.,0.,0.),geom3::Vector3(0.,1.,0.)) << endl;
+    cout << geom3::deltaPhi(geom3::Vector3(0.,1.,0.),geom3::Vector3(-1.,0.,0.)) << endl;
     return EXIT_SUCCESS;
 }
 

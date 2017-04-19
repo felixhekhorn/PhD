@@ -47,7 +47,6 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     
     this->k1 = P4(vs.k10*UnitVector3(0.,vs.sinPsi,vs.cosPsi),0.);
     this->q = P4(vs.q0,vs.absq*UnitVector3::zAxis());
-    //const UnitVector3 u (Theta1,Theta2);
     const UnitVector3 u(sin(Theta2)*sin(Theta1),cos(Theta2)*sin(Theta1),cos(Theta1));
     this->p1 = P4(.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
     this->p2 = P4(-.5*sqrt(vs.s5)*vs.beta5*u,sqrt(m2));
@@ -111,7 +110,7 @@ cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors factors) const {
                 factors.cQ2 * this->q2 + 
                 factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair +
                 factors.cSqrPtHAQ * ptHAQ*ptHAQ;
-    if (!isfinite(mu2) || mu2 < 0)
+    if (!isfinite(mu2) || mu2 < 0.)
         throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2 + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair%factors.cSqrPtHAQ%ptHAQ).str());
     return mu2;
 }
@@ -134,7 +133,6 @@ const rk::P4 PhasespacePoint::getP2() const {
 
 cdbl PhasespacePoint::getPtAQ2() const {
     cdbl mt2 = (sp*vs.t1*vs.u1-q2*vs.t1*vs.t1-q2*sp*vs.t1)/this->sp/this->sp;
-    //printf("%sLO: p2t = %e =? %e\n",(this->isNLO()?"N":""),this->p2.pt(),sqrt(mt2-m2));
     return mt2 - this->m2;
 }
 

@@ -1,7 +1,6 @@
 Py27/src_Python.cpp.o: src/Python.cpp src/InclusiveElProduction.h \
  src/config.h src/Timer.h src/AbstractElProduction.h src/Pdf/PdfWrapper.h \
- src/Pdf/../config.h src/ExclusiveElProduction.h \
- src/Exclusive/ConfigExclusive.h \
+ src/ExclusiveElProduction.h src/Exclusive/ConfigExclusive.h \
  src/Exclusive/../gslpp/gslpp.Histogram.hpp src/Exclusive/Int.h \
  src/Exclusive/../config.h src/Exclusive/IntKers/FKerAll.h \
  src/Exclusive/IntKers/PdfConvBase.h src/Exclusive/IntKers/../../config.h \
@@ -23,8 +22,6 @@ src/Timer.h:
 src/AbstractElProduction.h:
 
 src/Pdf/PdfWrapper.h:
-
-src/Pdf/../config.h:
 
 src/ExclusiveElProduction.h:
 

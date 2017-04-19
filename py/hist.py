@@ -7,19 +7,32 @@ import sys
 
 dataPath = "/home/Felix/Physik/PhD/data/"
 
-def PLB353_535(pdf):
-  pathOut = dataPath+"PLB353-535-%s/"%pdf
+def getHarrisParams():
   ps = []
   for q2 in [-8.5,-12.,-25.,-50.]:
     ps.append((q2,8.5e-4,))
   for x in [4.2e-4,8.5e-4,1.6e-3,2.7e-3]:
     ps.append((-12.,x))
+  return ps
+
+def PLB353_535(pdf):
+  pathOut = dataPath+"PLB353-535-%s/"%pdf
   for qL in ["c", "b"]:
-    for p in ps:
+    for p in getHarrisParams():
       q2,bjorkenX = p
       for n in [0,1]:
-        tmpl = pathOut+"F%%s%s_x-%g_q2-%g_%d.dat"%(qL,bjorkenX*1e5,-q2*1e1,n)
+        tmpl = pathOut+"dF%%s%s_dM_x-%g_q2-%g_%d.dat"%(qL,bjorkenX*1e5,-q2*1e1,n)
         Histogram.compute2ByTemplate(tmpl)
+
+def PLB452_109(pdf):
+  pathOut = dataPath+"PLB452-109-%s/"%pdf
+  for qL in ["c", "b"]:
+    for p in getHarrisParams():
+      q2,bjorkenX = p
+      for var in ["Dphi","Pt","R"]:
+        for n in [0,1]:
+          tmpl = pathOut+"dF%%s%s_d%s_x-%g_q2-%g_%d.dat"%(qL,var,bjorkenX*1e5,-q2*1e1,n)
+          Histogram.compute2ByTemplate(tmpl)
 
 def NPB392_229(pdf):
   pathOut = dataPath+"NPB392-229-%s/"%pdf
@@ -40,6 +53,8 @@ pdf = sys.argv[2]
 
 if "PLB353-535" == paper:
   PLB353_535(pdf)
+elif "PLB452-109" == paper:
+  PLB452_109(pdf)
 elif "NPB392-229" == paper:
   NPB392_229(pdf)
 else:

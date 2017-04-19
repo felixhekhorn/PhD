@@ -37,7 +37,7 @@ def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n):
 		"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, 
 		"activatedHistograms": activatedHistograms, "n":n,
 		"calls": calls, "bins": 250, "iterations": its, "verbosity": 2, "adaptChi2": False,
-		"msg": "proj = %s, n = %d, bjorkenX = %g"%(proj,n,bjorkenX)
+		"msg": fpPt
 	})
 # add rapidity data point
 def addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,n):
@@ -54,7 +54,7 @@ def addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,n):
 		"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, 
 		"activatedHistograms": activatedHistograms, "n":n,
 		"calls": calls, "bins": 250, "iterations": its, "verbosity": 2, "adaptChi2": False,
-		"msg": "proj = %s, n = %d, bjorkenX = %g"%(proj,n,bjorkenX)
+		"msg": fpRap
 	})
 # add charm data points
 def addPtCharm(proj,bjorkenX,ptmax):

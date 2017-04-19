@@ -27,14 +27,14 @@ set style fill empty border
 set xlabel "M [GeV]"
 set xrange [0:40.]
 
-f00 = pin . "FLc_x-42_q2-120_0.dat"
-f01 = pin . "FLc_x-42_q2-120_1.dat"
-f10 = pin . "FLc_x-85_q2-120_0.dat"
-f11 = pin . "FLc_x-85_q2-120_1.dat"
-f20 = pin . "FLc_x-160_q2-120_0.dat"
-f21 = pin . "FLc_x-160_q2-120_1.dat"
-f30 = pin . "FLc_x-270_q2-120_0.dat"
-f31 = pin . "FLc_x-270_q2-120_1.dat"
+f00 = pin . "dFLc_dM_x-42_q2-120_0.dat"
+f01 = pin . "dFLc_dM_x-42_q2-120_1.dat"
+f10 = pin . "dFLc_dM_x-85_q2-120_0.dat"
+f11 = pin . "dFLc_dM_x-85_q2-120_1.dat"
+f20 = pin . "dFLc_dM_x-160_q2-120_0.dat"
+f21 = pin . "dFLc_dM_x-160_q2-120_1.dat"
+f30 = pin . "dFLc_dM_x-270_q2-120_0.dat"
+f31 = pin . "dFLc_dM_x-270_q2-120_1.dat"
 
 x0(l,r) = .5*l+.5*r
 x1(l,r) = .5*l+.5*r

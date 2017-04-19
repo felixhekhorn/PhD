@@ -15,7 +15,7 @@ struct MCParams {
 /**
  * @brief calls
  */
-    HepSource::Int64 calls = 100000;
+    HepSource::Int64 calls = 1000000;
     
 /**
  * @brief calls during warmup

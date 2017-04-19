@@ -171,16 +171,44 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
         return;
     cdbl value = i*(*this->vegasWeight);
     
+    /*dbl HQPairDeltaPhi;
+    {
+        dbl phi1 = p.getP1().momentum().phi();
+        dbl phi2 = p.getP2().momentum().phi();
+        if (fabs(phi1 - phi2) > M_PI) {
+            if (phi1 > phi2) phi1 -= 2.*M_PI;
+            else phi2 -= 2.*M_PI;
+        }
+        HQPairDeltaPhi = phi1-phi2;
+    }*/
+    
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
         dbl var = nan("");
         switch (it->first) {
             case histT::log10z:         var = p.getZ();                 break;
             case histT::log10xi:        var = this->bjorkenX/p.getZ();  break;
             case histT::Theta1:         var = p.getTheta1();            break;
-            case histT::invMassHQPair: 
-                {cdbl M2 = (p.getP1() + p.getP2()).squared();
-                var = sqrt(M2);}
+            
+            case histT::HQPairInvMass: 
+                /*{
+                    cdbl M2 = (p.getP1() + p.getP2()).
+                    var = sqrt(M2);
+                }*/
+                var = (p.getP1() + p.getP2()).m();
                 break;
+            case histT::HQPairDeltaPhi: var = abs(geom3::deltaPhi(p.getP1(),p.getP2())); break;
+            case histT::HQPairTransverseMomentum:
+                var = (p.getP1() + p.getP2()).pt();
+                break; 
+            case histT::HQPairConeSizeVariable:
+                /*{
+                    cdbl HQPairDeltaPseudoRap = p.getP1().eta() - p.getP2().eta();
+                    cdbl R2 = HQPairDeltaPhi*HQPairDeltaPhi + HQPairDeltaPseudoRap*HQPairDeltaPseudoRap;
+                    var = sqrt(R2);
+                }*/
+                var = geom3::deltaR(p.getP1(),p.getP2());
+                break;                      
+                
             case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
             case histT::HAQTransverseMomentum:
                 {//printf("%sLO: pt22 = %e =? %e\n",(p.isNLO()?"N":""),p.getP2().pt(),sqrt(p.getPtAQ2()));
@@ -192,19 +220,6 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
         }
         it->second->accumulate(var,value);
     }
-    /** @todo add more dists */
-/*  { // DeltaPhiHQPair
-    histMapT::const_iterator h = this->histMap->find(histT::DeltaPhiHQPair);
-    if (h != this->histMap->cend()) {
-        dbl phi1 = p1.momentum().phi();
-        dbl phi2 = p2.momentum().phi();
-        if (fabs(phi1 - phi2) > M_PI) {
-            if (phi1 > phi2) phi1 -= 2.*M_PI;
-            else phi2 -= 2.*M_PI;
-        }
-        h->second->accumulate(phi1-phi2,val);
-    } }
-     */
 }
 
 void FKerAll::fillNLOHistograms(const PhasespacePoint p, cdbl i) const {

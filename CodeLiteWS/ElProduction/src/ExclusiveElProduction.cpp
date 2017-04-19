@@ -400,22 +400,27 @@ void ExclusiveElProduction::setupHistograms() const {
             case histT::log10xi:                it->second->setRangesLog10(this->bjorkenX/this->zMax,1.);   break;
             case histT::Theta1:
             case histT::Theta2:                 it->second->setRangesUniform(0.,M_PI);                      break;
-            case histT::invMassHQPair:          it->second->setRangesUniform(2.*sqrt(this->m2),sqrt(S));    break;
+            
+            case histT::HQPairInvMass:          it->second->setRangesUniform(2.*sqrt(this->m2),sqrt(S));    break;
+            case histT::HQPairDeltaPhi:         it->second->setRangesUniform(-M_PI,M_PI);                   break;
+            case histT::HQPairTransverseMomentum:
+                /** @todo defalt upper limit of HQPairTransverseMomentum is actually smaller, than 2p_{2,t,max} */
+                it->second->setRangesUniform(0.,2.*sqrt(S/4. - this->m2));
+                break;
+            case histT::HQPairConeSizeVariable:
+                /** @todo determine default upper limit of HQPairConeSizeVariable */
+                throw domain_error("default upper limit of HQPairConeSizeVariable currently unknown!");
+                break;
+            
             case histT::HAQRapidity:
                 {cdbl y0 = atanh(sqrt(1. - 4.*this->m2/S));
                 it->second->setRangesUniform(-y0,y0);}
                 break;
             case histT::HAQTransverseMomentum:  it->second->setRangesUniform(0.,sqrt(S/4. - this->m2));     break;
+            
             case histT::x:                      it->second->setRangesLog10(this->bjorkenX/this->zMax,1.);   break;
             case histT::y:                      it->second->setRangesUniform(-1.,1.);                       break;
             default: continue;
         }
     }
-/** @todo add more dists? */
-/*  {
-    histMapT::const_iterator h = this->histMap.find(DeltaPhiHQPair);
-    if (this->histMap.cend() != h && !h->second->isInitialized())
-        h->second->setRangesUniform(-M_PI,M_PI);
-    }
-*/
 }

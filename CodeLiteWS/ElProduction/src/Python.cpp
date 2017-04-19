@@ -90,15 +90,19 @@ BOOST_PYTHON_MODULE(ElProduction)
     enum_<Exclusive::histT>("ExclusiveHistT")
         .value("log10z", Exclusive::histT::log10z)
         .value("log10xi", Exclusive::histT::log10xi)
-        .value("invMassHQPair", Exclusive::histT::invMassHQPair)
+        .value("Theta1", Exclusive::histT::Theta1)
+        
+        .value("HQPairInvMass", Exclusive::histT::HQPairInvMass)
+        .value("HQPairDeltaPhi", Exclusive::histT::HQPairDeltaPhi)
+        .value("HQPairTransverseMomentum", Exclusive::histT::HQPairTransverseMomentum)
+        .value("HQPairConeSizeVariable", Exclusive::histT::HQPairConeSizeVariable)
+        
         .value("HAQRapidity", Exclusive::histT::HAQRapidity)
         .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
+        
         .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
-        .value("Theta1", Exclusive::histT::Theta1)
         .value("Theta2", Exclusive::histT::Theta2)
-        /// @todo promote dists to python
-//        .value("DeltaPhiHQPair", Exclusive::histT::DeltaPhiHQPair)
     ;
     
     class_<Exclusive::MCParams>("ExclusiveMCParams")
@@ -114,8 +118,8 @@ BOOST_PYTHON_MODULE(ElProduction)
     class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
         .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
         .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
-        .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{T,Q}+p_{T,Qbar)^2")
-        .def_readwrite("cSqrPtHAQ", &Exclusive::DynamicScaleFactors::cSqrPtHAQ, "factor to p_{T,Qbar)^2")
+        .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{Q,T}+p_{Qbar,T})^2")
+        .def_readwrite("cSqrPtHAQ", &Exclusive::DynamicScaleFactors::cSqrPtHAQ, "factor to p_{Qbar,T)^2")
     ;
     
     /*
