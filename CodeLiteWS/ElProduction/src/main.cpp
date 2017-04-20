@@ -9,9 +9,24 @@
 
 int runInclusive();
 int test() {
-    cout << geom3::deltaPhi(geom3::Vector3(0.,1.,0.),geom3::Vector3(1.,0.,0.)) << endl;
-    cout << geom3::deltaPhi(geom3::Vector3(1.,0.,0.),geom3::Vector3(0.,1.,0.)) << endl;
-    cout << geom3::deltaPhi(geom3::Vector3(0.,1.,0.),geom3::Vector3(-1.,0.,0.)) << endl;
+    geom3::Vector3 v(0.,1.,0.);
+    double c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    v=geom3::Vector3 (1.,1.,0.);
+    c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    v=geom3::Vector3 (0.,1.,1.);
+    c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    v=geom3::Vector3 (0.,1.,10.);
+    c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    v=geom3::Vector3 (0.,-1.,10.);
+    c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    v=geom3::Vector3 (0.,1.,-10.);
+    c = v.cosTheta();
+    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
     return EXIT_SUCCESS;
 }
 
@@ -64,9 +79,8 @@ int main(int argc, char **argv) {
     iO.setMu2(mu02);eO.setMu2Factors(mu02F);
     iO.setAlphaS(aS);eO.setLambdaQCD(lambdaQCD);
     
-    eO.MCparams.calls = 500000/100;
+    eO.MCparams.calls = 500000;
     eO.MCparams.iterations = 5;
-    eO.MCparams.bins = 125;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 3;

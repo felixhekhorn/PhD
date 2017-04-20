@@ -14,6 +14,13 @@ pout = "img/PLB452-109-" . pdf . "/"
 
 set ytics format "%g"
 set yrange [-.4:.4]
+set ytics .2
+set mytics 5
+
+set xlabel "P_t [GeV]"
+set xrange [0:20.]
+set xtics 10
+set mxtics 10
 
 #set boxwidth 0.5 relative
 #set boxwidth .5
@@ -21,9 +28,6 @@ set yrange [-.4:.4]
 set style fill empty border
 
 #set key left bottom box opaque
-
-set xlabel "P_t [GeV]"
-set xrange [0:20.]
 
 f10 = pin . "dF2c_dPt_x-42_q2-120_1.dat"
 f11 = pin . "dF2c_dPt_x-85_q2-120_1.dat"

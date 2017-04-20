@@ -29,17 +29,19 @@ def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
 	qL = "c" if 3 == nlf else ("b" if 4 == nlf else "t")
 	a = (proj,qL,bjorkenX*1e5,-q2*1e1,n,)
 	activatedHistograms = [
-		(ExclusiveHistT.HQPairInvMass,  		40,pathData+pathM+"dF%s%s_dM_x-%g_q2-%g_%d.dat"%a,0.,40.),
-		(ExclusiveHistT.HQPairTransverseMomentum, 	36,pathData+pathR+"dF%s%s_dPt_x-%g_q2-%g_%d.dat"%a,0.,20.),
-		(ExclusiveHistT.HQPairDeltaPhi, 		36,pathData+pathR+"dF%s%s_dDphi_x-%g_q2-%g_%d.dat"%a,0.,np.pi+0.001),
-		(ExclusiveHistT.HQPairConeSizeVariable, 	36,pathData+pathR+"dF%s%s_dR_x-%g_q2-%g_%d.dat"%a,0.,20.)
+		(ExclusiveHistT.HQPairInvMass,  		40,pathData+pathM+"dF%s%s_dM_x-%g_q2-%g_%d.dat"%a,   0.,40.),
+		(ExclusiveHistT.HQPairTransverseMomentum, 	40,pathData+pathR+"dF%s%s_dPt_x-%g_q2-%g_%d.dat"%a,  0.,20.),
+		(ExclusiveHistT.HQPairDeltaPhi, 		40,pathData+pathR+"dF%s%s_dDphi_x-%g_q2-%g_%d.dat"%a,0.,3.2),
+		(ExclusiveHistT.HQPairConeSizeVariable, 	40,pathData+pathR+"dF%s%s_dR_x-%g_q2-%g_%d.dat"%a,   0.,10.)
 	]
+	its = 5 if 0 == n else 10
+	calls = 500000 if 0 == n else 1000000
 	r.add({
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,),
 		"lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, "n":n,
 		"activatedHistograms": activatedHistograms,
-		"verbosity": 1, "adaptChi2": False,
+		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": 0 == n,
 		"msg": "F%s%s%d(q2=%g,bjorkenX=%g)"%(proj,qL,n,q2,bjorkenX)
 	})
 

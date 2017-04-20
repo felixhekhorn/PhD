@@ -13,7 +13,14 @@ pin = "data/PLB452-109-" . pdf . "/"
 pout = "img/PLB452-109-" . pdf . "/"
 
 set ytics format "%g"
-#set yrange [-.12:.12]
+set yrange [-.12:.12]
+set ytics .1
+set mytics 10
+
+set xlabel "Δϕ []"
+set xrange [0:3.2]
+set xtics 1.
+set mxtics 10
 
 #set boxwidth 0.5 relative
 #set boxwidth .5
@@ -21,9 +28,6 @@ set ytics format "%g"
 set style fill empty border
 
 set key left top
-
-set xlabel "Δϕ []"
-set xrange [0:3.2]
 
 f10 = pin . "dF2b_dDphi_x-42_q2-120_1.dat"
 f11 = pin . "dF2b_dDphi_x-85_q2-120_1.dat"

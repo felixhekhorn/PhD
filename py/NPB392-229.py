@@ -36,7 +36,7 @@ def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n):
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, 
 		"activatedHistograms": activatedHistograms, "n":n,
-		"calls": calls, "bins": 250, "iterations": its, "verbosity": 2, "adaptChi2": False,
+		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": False,
 		"msg": fpPt
 	})
 # add rapidity data point
