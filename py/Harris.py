@@ -11,8 +11,8 @@ import numpy as np
 from ElProduction import projT, ExclusiveHistT
 from ExclusiveRunner import ExclusiveRunner
 
-pdf = "MSTW2008nlo90cl"
-#pdf = "cteq66"
+#pdf = "MSTW2008nlo90cl"
+pdf = "cteq66"
 pathData = "/home/Felix/Physik/PhD/data/"
 pathM = "PLB353-535-%s/"%pdf
 pathR = "PLB452-109-%s/"%pdf
@@ -31,11 +31,11 @@ def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
 	activatedHistograms = [
 		(ExclusiveHistT.HQPairInvMass,  		40,pathData+pathM+"dF%s%s_dM_x-%g_q2-%g_%d.dat"%a,   0.,40.),
 		(ExclusiveHistT.HQPairTransverseMomentum, 	40,pathData+pathR+"dF%s%s_dPt_x-%g_q2-%g_%d.dat"%a,  0.,20.),
-		(ExclusiveHistT.HQPairDeltaPhi, 		40,pathData+pathR+"dF%s%s_dDphi_x-%g_q2-%g_%d.dat"%a,0.,3.2),
+		(ExclusiveHistT.HQPairDeltaPhi, 		40,pathData+pathR+"dF%s%s_dDphi_x-%g_q2-%g_%d.dat"%a,0.,np.pi+0.0001),
 		(ExclusiveHistT.HQPairConeSizeVariable, 	40,pathData+pathR+"dF%s%s_dR_x-%g_q2-%g_%d.dat"%a,   0.,10.)
 	]
-	its = 5 if 0 == n else 10
-	calls = 500000 if 0 == n else 1000000
+	its = 5 if 0 == n else 15
+	calls = 500000 if 0 == n else 1500000
 	r.add({
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,),
