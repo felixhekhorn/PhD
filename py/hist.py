@@ -46,8 +46,8 @@ def NPB392_229(pdf):
 # CLI
 if len(sys.argv) < 3:
   print "USAGE: %s paper pdf"%sys.argv[0]
-  print "\tPLB353-535:\tMSTW2008nlo90cl, cteq66"
-  print "\tPLB452-109:\tMSTW2008nlo90cl, cteq66"
+  print "\tPLB353-535:\tCTEQ3M, cteq66, MSTW2008nlo90cl"
+  print "\tPLB452-109:\tCTEQ3M, cteq66, MSTW2008nlo90cl"
   print "\tNPB392-229:\tMorfinTungB, MSTW2008nlo90cl"
   exit()
 

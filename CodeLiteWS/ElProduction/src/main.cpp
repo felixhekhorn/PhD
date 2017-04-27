@@ -9,24 +9,16 @@
 
 int runInclusive();
 int test() {
-    geom3::Vector3 v(0.,1.,0.);
-    double c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
-    v=geom3::Vector3 (1.,1.,0.);
-    c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
-    v=geom3::Vector3 (0.,1.,1.);
-    c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
-    v=geom3::Vector3 (0.,1.,10.);
-    c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
-    v=geom3::Vector3 (0.,-1.,10.);
-    c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
-    v=geom3::Vector3 (0.,1.,-10.);
-    c = v.cosTheta();
-    cout << "v = " << v << "\t"<<v.eta()<<"\t"<< .5*log((1.+c)/(1.-c)) << endl;
+    PdfWrapper a("CTEQ3M",0);
+    PdfWrapper b("cteq66",0);
+    const int pid = 2;
+    for (uint j = 0; j < 10; ++j) {
+        cdbl Q2 = 5.+j*3;
+        for (uint k = 0; k < 10; ++k) {
+            cdbl x = pow(10.,-.05 - k*4./10.);
+            printf("%e\t%e\t%e\t%e\n",Q2,x,a.xfxQ2(pid,x,Q2),b.xfxQ2(pid,x,Q2));
+        }
+    }
     return EXIT_SUCCESS;
 }
 
@@ -59,14 +51,15 @@ int main(int argc, char **argv) {
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
     cdbl deltay = 7e-6;
-    //const str pdf = "cteq66";
-    const str pdf = "MSTW2008nlo90cl";
     //const str pdf = "MorfinTungB";
+    const str pdf = "CTEQ3M";
+    //const str pdf = "cteq66";
+    //const str pdf = "MSTW2008nlo90cl";
     //const str pdf = "DSSV2014";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
-    const uint n = 1;
+    const uint n = 0;
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     

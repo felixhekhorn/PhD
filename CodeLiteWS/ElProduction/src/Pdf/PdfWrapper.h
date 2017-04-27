@@ -14,6 +14,11 @@ class PdfWrapper {
  * @brief port to DSSV?
  */
     bool isDSSV;
+
+/**
+ * @brief port to CTEQ3?
+ */
+    bool isCTEQ3;
     
 /**
  * @brief set name

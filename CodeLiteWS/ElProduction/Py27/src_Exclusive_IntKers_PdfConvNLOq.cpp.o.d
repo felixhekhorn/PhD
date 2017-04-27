@@ -5,7 +5,6 @@ Py27/src_Exclusive_IntKers_PdfConvNLOq.cpp.o: \
  src/Exclusive/IntKers/../ConfigExclusive.h \
  src/Exclusive/IntKers/../../gslpp/gslpp.Histogram.hpp \
  src/Exclusive/IntKers/../../Pdf/PdfWrapper.h \
- src/Exclusive/IntKers/../../Pdf/../config.h \
  src/Exclusive/IntKers/KinematicVars.hpp \
  src/Exclusive/IntKers/../../Color.h
 
@@ -22,8 +21,6 @@ src/Exclusive/IntKers/../ConfigExclusive.h:
 src/Exclusive/IntKers/../../gslpp/gslpp.Histogram.hpp:
 
 src/Exclusive/IntKers/../../Pdf/PdfWrapper.h:
-
-src/Exclusive/IntKers/../../Pdf/../config.h:
 
 src/Exclusive/IntKers/KinematicVars.hpp:
 

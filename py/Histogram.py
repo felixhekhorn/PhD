@@ -39,6 +39,7 @@ def joinTo2(dG, dL):
     if eG[0] != eL[0] or eG[1] != eL[1]:
       print "histograms do not match!"
       print "line",j,":",eG,"vs.",eL
+      return 
     d2.append([eG[0],eG[1],eG[2] + 1.5*eL[2]])
   return d2
 

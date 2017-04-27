@@ -8,10 +8,7 @@ import numpy as np
 import time
 
 import ElProduction
-
-# http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
-def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
-def _pinfo(): return "[INFO]"
+import Util
 
 class HadronicRunner2:
     def __init__(self, m2, q2, Delta, nlf, pdfs, pdfMem, mu02, aS, fs, fp, nProcesses = cpu_count()):
@@ -117,14 +114,13 @@ class HadronicRunner2:
         # fill
         for e in g:
             self.__qIn.put(e)
-        print _pinfo(),"computing %d elements"%self.__qIn.qsize()
+        Util.pInfo("computing %d elements"%self.__qIn.qsize())
         # add EOF
         for n in xrange(self.nProcesses):
             self.__qIn.put(None)
         self.__qOut = Queue()
-        # secure DSSV2014
-        # TODO respect different systems 
-        os.environ["DSSV2014_GRIDS"] = "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/"
+	# setup DSSV2014
+	Util.setupDSSV()
         # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),
@@ -143,7 +139,8 @@ class HadronicRunner2:
             self.__qIn.join()
         except KeyboardInterrupt:
             [p.terminate() for p in processes]
-            print "\n",_pwarn(),"aborting at",self.__qOut.qsize(),"/",lenParams
+            print
+            Util.pWarn("aborting at %d/%d"%(self.__qOut.qsize(),lenParams))
             self.__qIn.close()
         sys.stdout.write("\n")
     # reorder in 1D
@@ -222,7 +219,7 @@ class HadronicRunner2:
     # compute grid in 1D
     def _run1(self,g):
         if len(g) == 0:
-            print _pwarn(),"no data!"
+            Util.pWarn("no data!")
             return
         self._compute(g)
         self._reorder1()
@@ -230,7 +227,7 @@ class HadronicRunner2:
     # compute grid in 2D
     def _run2(self,g):
         if len(g) == 0:
-            print _pwarn(),"no data!"
+            Util.pWarn("no data!")
             return
         self._compute(g)
         self._reorder2()
@@ -250,7 +247,7 @@ class HadronicRunner2:
     def runPdf(self,Nx,proj, pdf, Npdfmem):
         g = self._getGridPdf(Nx,proj, pdf, Npdfmem)
         if len(g) == 0:
-            print _pwarn(),"no data!"
+            Util.pWarn("no data!")
             return
         self._compute(g)
         self._reorderPdf()
@@ -295,7 +292,7 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
        elif "Fg0" == f: p["res"] = o.Fg0()
        elif "Fg1" == f: p["res"] = o.Fg1()
        elif "Fq1" == f: p["res"] = o.Fq1()
-       if np.isnan(p["res"]): print _pwarn(), "NaN result: ",p
+       if np.isnan(p["res"]): Util.pWarn("NaN result: %e"%p)
        qo.put(p)
        qi.task_done()
 

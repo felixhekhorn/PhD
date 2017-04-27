@@ -79,7 +79,7 @@ struct DynamicScaleFactors {
 /**
  * @brief shorthand for map of histograms
  */
-typedef unordered_map<histT,gslpp::Histogram*> histMapT;
+typedef /*unordered_*/map<histT,gslpp::Histogram*> histMapT;
 
 /**
  * @brief holds the values of all kernels

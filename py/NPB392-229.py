@@ -1,20 +1,16 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
-def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
-def _psucc(): return '\033[92m'+"[SUCC]"+'\033[0m'
-def _pinfo(): return "[INFO]"
-
 import numpy as np
 
 from ElProduction import projT, ExclusiveHistT
 from ExclusiveRunner import ExclusiveRunner
+import Util
 
 #pdf = "MSTW2008nlo90cl"
 pdf = "MorfinTungB"
 pathOut = "/home/Felix/Physik/PhD/data/NPB392-229-%s/"%pdf
-print _pinfo(),"Computing files for NPB392-229 with",pdf,"..."
+Util.pinfo("Computing files for NPB392-229 with "+pdf+" ...")
 
 r = ExclusiveRunner();
 

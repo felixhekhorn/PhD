@@ -129,7 +129,7 @@ public:
         //Timer::start("hg1SVDelta");
         cdbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
         fakeMESV += hg1SVDelta1(m2,q2,sp,t1) * A1;
-        if (isnan(fakeMESV)) printf("hg1SVDelta1\n");
+        //if (isnan(fakeMESV)) printf("hg1SVDelta1\n");
         
         if (0 != hg1SVDelta2) {
             cdbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;

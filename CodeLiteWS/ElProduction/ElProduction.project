@@ -21,6 +21,7 @@
       <File Name="src/Pdf/DSSV_gluon_update.f"/>
       <File Name="src/Pdf/PdfWrapper.cpp"/>
       <File Name="src/Pdf/PdfWrapper.h"/>
+      <File Name="src/Pdf/cteq3.f"/>
     </VirtualDirectory>
     <File Name="src/config.h"/>
     <File Name="src/main.cpp" ExcludeProjConfig="Py27"/>
@@ -109,7 +110,7 @@
       <Compiler Options="-std=c++11;`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="`lhapdf-config --ldflags`;$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o">
+      <Linker Options="`lhapdf-config --ldflags`;$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o;$(IntermediateDirectory)/src_Pdf_cteq3.f.o">
         <LibraryPath Value="."/>
         <Library Value="m"/>
         <Library Value="gsl"/>
@@ -132,7 +133,7 @@
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[DSSV2014_GRIDS=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="yes">
         <DebuggerSearchPaths/>
@@ -153,9 +154,16 @@
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild/>
-        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
-	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -g -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -171,7 +179,6 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
       <Linker Options="-Wl,--export-dynamic" Required="yes">
-        <LibraryPath Value="/usr/lib/python2.7/config"/>
         <Library Value="python2.7"/>
         <Library Value="boost_python"/>
       </Linker>
@@ -200,9 +207,15 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild/>
-        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
-	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -221,7 +234,7 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
       <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
       <BuildSystem Name="Default"/>
       <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
-        <![CDATA[DSSV2014_GRIDS=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/]]>
+        <![CDATA[]]>
       </Environment>
       <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
         <DebuggerSearchPaths/>
@@ -242,10 +255,15 @@ $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)
       </CustomBuild>
       <AdditionalRules>
         <CustomPostBuild/>
-        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
 	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
-</CustomPreBuild>
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

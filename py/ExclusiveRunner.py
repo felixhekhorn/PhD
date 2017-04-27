@@ -1,16 +1,12 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# http://stackoverflow.com/questions/287871/print-in-terminal-with-colors-using-python
-def _pwarn(): return '\033[93m'+"[WARN]"+'\033[0m'
-def _psucc(): return '\033[92m'+"[SUCC]"+'\033[0m'
-def _pinfo(): return "[INFO]"
-
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 import sys
 import os
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveDynamicScaleFactors
+import Util
 
 # compute all data points
 class ExclusiveRunner:
@@ -30,9 +26,8 @@ class ExclusiveRunner:
 		lenParams = self.__qIn.qsize()
 		for n in xrange(nProcesses):
 			self.__qIn.put(None)
-		# secure DSSV2014
-		# TODO respect different systems 
-		os.environ["DSSV2014_GRIDS"] = "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/"
+		# setup DSSV2014
+		Util.setupDSSV()
 		# start processes
 		threadArgs = (self.__qIn, )
 		processes = []
@@ -44,7 +39,8 @@ class ExclusiveRunner:
 			self.__qIn.join()
 		except KeyboardInterrupt:
 			[p.terminate() for p in processes]
-			print "\n",_pwarn(),"aborting at",(lenParams-self.__qIn.qsize()),"/",lenParams
+			print
+			Util.pWarn("aborting at %d/%d"%((lenParams-self.__qIn.qsize()),lenParams))
 			self.__qIn.close()
 		sys.stdout.write("\n")
 
@@ -72,4 +68,4 @@ def _threadWorker(qIn):
 		# run
 		o.F(p["n"])
 		qIn.task_done()
-		print _psucc(), p["msg"]
+		Util.pSucc(p["msg"])

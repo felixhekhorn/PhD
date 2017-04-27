@@ -8,6 +8,7 @@ import numpy as np
 #import time
 
 import ElProduction
+import Util
 
 class PartonicRunner2:
     def __init__(self, m2, q2, Delta, nlf, f,fp, Neta, nProcesses = cpu_count()):
@@ -54,9 +55,8 @@ class PartonicRunner2:
         return g
     # start processes
     def _compute(self,g):
-        # secure DSSV2014
-        # TODO respect different systems 
-        os.environ["DSSV2014_GRIDS"] = "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/"
+        # setup DSSV2014
+        Util.setupDSSV()
         # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),
