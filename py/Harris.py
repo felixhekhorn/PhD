@@ -1,10 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+import Util
+Util.setupLibs()
+
 import numpy as np
 
 from ElProduction import projT, ExclusiveHistT
 from ExclusiveRunner import ExclusiveRunner
-import Util
 
 pdf = "CTEQ3M"
 #pdf = "cteq66"

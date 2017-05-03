@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
-    const uint n = 0;
+    const uint n = 1;
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     
@@ -112,6 +112,8 @@ int main(int argc, char **argv) {
     }
 */
 
+//Timer::make("me@NLOg");
+
     cdbl bjorkenX = 1e-4;
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
@@ -127,6 +129,9 @@ int main(int argc, char **argv) {
     cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
+    
+//Timer::logAll(cout);
+//Timer::deleteAll();
 
     return EXIT_SUCCESS;
 }

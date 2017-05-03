@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import sys
 import os
 import platform
 
@@ -18,13 +19,17 @@ def pInfo(msg):	print tagINFO,msg
 def isFHe15():
   (system, node, release, version, machine, processor) = platform.uname()
   return "FHe15" == node
-def isQuark02():
-  (system, node, release, version, machine, processor) = platform.uname()
-  return "quark02" == node
+def isTachyon():
+  return os.path.exists("/home/hekhorn/")
+
+def setupLibs():
+  if isTachyon():
+    sys.path.append("/home/hekhorn/usr/local/lib64/python2.7/lib-dynload")
 
 # file helper
 def getAbsProjectPath():
   if isFHe15(): return "/home/Felix/Physik/PhD/"
+  if isTachyon(): return "/home/hekhorn/PhD/"
   raise "Could not determine absolute project path"
 
 def setupDSSV():

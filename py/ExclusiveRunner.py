@@ -1,12 +1,14 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import Util
+Util.setupLibs()
+
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 import sys
 import os
 
 from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveDynamicScaleFactors
-import Util
 
 # compute all data points
 class ExclusiveRunner:

@@ -1,5 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+import Util
+Util.setupLibs()
+
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 from Queue import Empty as QEmpty
 import sys
@@ -8,7 +12,6 @@ import numpy as np
 #import time
 
 import ElProduction
-import Util
 
 class PartonicRunner2:
     def __init__(self, m2, q2, Delta, nlf, f,fp, Neta, nProcesses = cpu_count()):

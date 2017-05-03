@@ -2,7 +2,14 @@
 
 #include <algorithm>
 
-// http://stackoverflow.com/questions/10163485/passing-char-arrays-from-c-to-fortran
+/**
+ * @brief converst a c-style string to a fortran-style string
+ * needed for DSSV2014
+ * @see http://stackoverflow.com/questions/10163485/passing-char-arrays-from-c-to-fortran
+ * @param fstring pointer to fortran-style string
+ * @param fstring_len length of fortran-style string
+ * @param cstring c-style string
+ */
 void ConvertToFortran(char* fstring, const std::size_t fstring_len, const char* cstring);
 void ConvertToFortran(char* fstring, const std::size_t fstring_len, const char* cstring) {
     std::size_t inlen = std::strlen(cstring);
@@ -23,6 +30,7 @@ double ctq3pd_(int* Iset, int* Iparton, double* X, double* Q, int* Irt);
 
 /**
  * @brief read environment variable
+ * needed for DSSV2014
  * @see http://stackoverflow.com/questions/631664/accessing-environment-variables-in-c
  * @param key name
  * @return value
@@ -55,8 +63,13 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         const std::size_t l = 100;
         char rpath[l];
         ConvertToFortran(rpath,l,path.c_str());
+        /** @todo verbosity flag? */
+        std::cout << "[INFO] PdfWrapper loading DSSV2014 member #"<<member<<" from "<<path<<std::endl;
+        // init
         dssvini_(rpath,&m);
     } else if(this->isCTEQ3) {
+        /** @todo verbosity flag? */
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<std::endl;
         // no init needed - it's analytic
     } else {
         this->lha = LHAPDF::mkPDF(setname,member);
