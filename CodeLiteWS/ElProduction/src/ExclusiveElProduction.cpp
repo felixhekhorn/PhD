@@ -340,20 +340,17 @@ cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
         return 0.;
     // LO kernel
     PdfConvLOg LOg(m2,q2,bjorkenX,this->getBpQED());
-    LOg.setPdf(this->pdf);
     // NLO gluon kernel 
     PdfConvNLOg NLOg(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     NLOg.setBorn(this->getBpQED(),this->getSVp());
     NLOg.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
     NLOg.setPgg(this->getPggH0(),this->getPggH1(),this->getPggS1());
-//    NLOg.setPdf(this->pdf);
     // NLO quark kernel
     PdfConvNLOq NLOq(m2,q2,bjorkenX,nlf,omega,deltay);
     NLOq.setAp1(this->getAp1(), this->getAp1Counter());
     NLOq.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
     NLOq.setAp2(this->getAp2());
     NLOq.setAp3(this->getAp3());
-//    NLOq.setPdf(this->pdf);
     // Full kernel
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
     k.setAlphaS(&(this->aS));
@@ -361,10 +358,8 @@ cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
     k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
     k.setPdf(this->pdf);
-//dbl sumWeights = 0.;
     // setup histograms
     this->setupHistograms();
-//k.setHistograms(&(this->histMap), &sumWeights);
     k.setHistograms(&(this->histMap));
     cdbl i = int5DDvegas(k, this->MCparams);
     // write histograms

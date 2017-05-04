@@ -50,7 +50,7 @@ void Timer::log(std::ostream& o) const {
 }
 
 void Timer::make(std::string name) {
-    Timer::mp.insert(std::pair<std::string, Timer*>(name, new Timer()));
+    Timer::mp.insert(std::make_pair(name, new Timer()));
 }
     
 Timer* Timer::get(std::string name) {

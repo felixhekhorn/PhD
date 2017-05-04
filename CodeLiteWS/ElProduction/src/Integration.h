@@ -10,7 +10,6 @@
 
 #include <gsl/gsl_monte.h>
 #include <gsl/gsl_integration.h>
-#include <dvegas/dvegas.h>
 
 /**
  * @brief integrates 1 dimension
@@ -25,13 +24,6 @@ cdbl int1D(gsl_function* F);
  * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
 cdbl int2D(gsl_monte_function* F);
-
-/**
- * @brief integrates 2 dimension with Dvegas
- * @param k kernel
- * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
- */
-cdbl int2D(HepSource::Integrand& k);
     
 /**
  * @brief integrates 3 dimension

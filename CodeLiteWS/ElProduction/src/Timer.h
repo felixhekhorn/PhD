@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <list>
-#include <map>
+#include <unordered_map>
 #include <string>
 #include <boost/timer/timer.hpp>
 
@@ -31,7 +31,7 @@ class Timer {
     /**
      * @brief type for global map
      */
-    typedef std::map<std::string, Timer*> mType;
+    typedef std::unordered_map<std::string, Timer*> mType;
     
     /**
      * @brief global map

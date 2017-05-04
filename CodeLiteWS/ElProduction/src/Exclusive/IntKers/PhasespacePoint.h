@@ -75,11 +75,6 @@ class PhasespacePoint {
     dbl Theta2 = -0.;
 
 /**
- * @brief kinematic vars
- */
-    KinematicVars vs;
-
-/**
  * @brief incoming parton
  */
     rk::P4 k1;

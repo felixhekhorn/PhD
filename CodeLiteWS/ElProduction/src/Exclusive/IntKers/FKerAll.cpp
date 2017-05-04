@@ -13,16 +13,16 @@ void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
     this->NLOq = NLOq;
 }
 
+void FKerAll::setPdf(PdfWrapper* pdf) {
+    this->pdf = pdf;
+}
+
 void FKerAll::setAlphaS(LHAPDF::AlphaS* alphaS) {
     this->alphaS = alphaS;
 }
 
 void FKerAll::setOrder(const uint order) {
     this->order = order;
-}
-
-void FKerAll::setMuF2(cdbl muF2) {
-    throw logic_error("use setMuRF2Factors instead!");
 }
 
 void FKerAll::setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) {
@@ -48,13 +48,19 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     { // LO
         PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
         p.setupLO(this->z, this->Theta1);
-        cdbl aS = this->alphaS->alphasQ2(p.getMuR2());
-        this->LOg->setMuF2(p.getMuF2());
-        cdbl nLO = aS * 1./m2 * (-q2)/(4.*M_PI*M_PI);
+        cdbl muR2 = p.getMuR2();
+        cdbl muF2 = p.getMuF2();
+        cdbl aS = this->alphaS->alphasQ2(muR2);
         cdbl eH = getElectricCharge(this->nlf + 1);
-        cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
-        this->fillAllOrderHistograms(p, fLO);
-        r += fLO;
+        //this->LOg->setMuF2(p.getMuF2());
+        cdbl nLO = aS * 1./m2 * (-q2)/(4.*M_PI*M_PI);
+        cdbl nLOg = this->jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,muF2);
+        this->LOg->setVars(az,aTheta1);
+        cdbl cg0 = this->LOg->cg0();
+        cdbl fLOg = nLO * eH*eH * nLOg * cg0;
+        //cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
+        this->fillAllOrderHistograms(p, fLOg);
+        r += fLOg;
     }
     
     // NLO
@@ -109,8 +115,8 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     cdbl muR2 = p.getMuR2();\
     cdbl muF2 = p.getMuF2();\
     cdbl aS = this->alphaS->alphasQ2(muR2);\
-    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);\
-    cdbl eH = getElectricCharge(this->nlf + 1);
+    cdbl eH = getElectricCharge(this->nlf + 1);\
+    cdbl nNLO = aS*aS * 1./m2 * (-q2)/(M_PI);
 
 cdbl FKerAll::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
     combineNLOInit
@@ -146,20 +152,17 @@ cdbl FKerAll::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl
 
 void FKerAll::operator()(cdbl x[], const int k[], cdbl& weight, cdbl aux[], dbl f[]) {
     this->vegasWeight = &weight;
-//    (*sumWeights) += weight;
     cdbl i = this->operator()(x[0],x[1],x[2],x[3],x[4]);
     f[0] = i;
 }
 
-void FKerAll::setHistograms(const histMapT* histMap /*, dbl* sumWeights*/) {
+void FKerAll::setHistograms(const histMapT* histMap) {
     this->histMap = histMap;
-//    this->sumWeights = sumWeights;
 }
 
 void FKerAll::scaleHistograms(cdbl s) const {
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
         it->second->scale(s);
-//    (*sumWeights) *= s;
 }
 
 void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
@@ -172,17 +175,6 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
         return;
     cdbl value = i*(*this->vegasWeight);
     
-    /*dbl HQPairDeltaPhi;
-    {
-        dbl phi1 = p.getP1().momentum().phi();
-        dbl phi2 = p.getP2().momentum().phi();
-        if (fabs(phi1 - phi2) > M_PI) {
-            if (phi1 > phi2) phi1 -= 2.*M_PI;
-            else phi2 -= 2.*M_PI;
-        }
-        HQPairDeltaPhi = phi1-phi2;
-    }*/
-    
     for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
         dbl var = nan("");
         switch (it->first) {
@@ -190,33 +182,13 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
             case histT::log10xi:        var = this->bjorkenX/p.getZ();  break;
             case histT::Theta1:         var = p.getTheta1();            break;
             
-            case histT::HQPairInvMass: 
-                /*{
-                    cdbl M2 = (p.getP1() + p.getP2()).
-                    var = sqrt(M2);
-                }*/
-                var = (p.getP1() + p.getP2()).m();
-                break;
-            case histT::HQPairDeltaPhi: var = abs(geom3::deltaPhi(p.getP1(),p.getP2())); break;
-            case histT::HQPairTransverseMomentum:
-                var = (p.getP1() + p.getP2()).pt();
-                break; 
-            case histT::HQPairConeSizeVariable:
-                /*{
-                    cdbl HQPairDeltaPseudoRap = p.getP1().eta() - p.getP2().eta();
-                    cdbl R2 = HQPairDeltaPhi*HQPairDeltaPhi + HQPairDeltaPseudoRap*HQPairDeltaPseudoRap;
-                    var = sqrt(R2);
-                }*/
-                var = geom3::deltaR(p.getP1(),p.getP2());
-                break;                      
+            case histT::HQPairInvMass:            var = (p.getP1() + p.getP2()).m();               break;
+            case histT::HQPairDeltaPhi:           var = abs(geom3::deltaPhi(p.getP1(),p.getP2())); break;
+            case histT::HQPairTransverseMomentum: var = (p.getP1() + p.getP2()).pt();              break; 
+            case histT::HQPairConeSizeVariable:   var = geom3::deltaR(p.getP1(),p.getP2());        break;                      
                 
-            case histT::HAQRapidity:    var = p.getP2().rapidity();     break;
-            case histT::HAQTransverseMomentum:
-                {//printf("%sLO: pt22 = %e =? %e\n",(p.isNLO()?"N":""),p.getP2().pt(),sqrt(p.getPtAQ2()));
-                var = p.getP2().pt();
-                //var = sqrt(p.getPtAQ2());
-                }
-                break;
+            case histT::HAQRapidity:           var = p.getP2().rapidity();     break;
+            case histT::HAQTransverseMomentum: var = p.getP2().pt();           break;
             default: continue;
         }
         it->second->accumulate(var,value);

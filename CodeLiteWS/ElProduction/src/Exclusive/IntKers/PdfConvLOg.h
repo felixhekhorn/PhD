@@ -14,14 +14,6 @@ class PdfConvLOg : public PdfConvBase {
  * @brief pointer to Born ME
  */
     fPtr4dbl BpQED;
-    
-protected:
-
-    /**
-     * @brief computes current value of kernel of \f$c_g^{(0)}\f$
-     * @return kernel of \f$c_g^{(0)}\f$
-     */
-    dbl cg0() const;
 
 public:
 
@@ -32,15 +24,20 @@ public:
  * @param bjorkenX Bjorken scaling variable
  * @param BpQED pointer to Born ME
  */
-    PdfConvLOg(dbl m2, dbl q2, dbl bjorkenX, fPtr4dbl BpQED);
+    PdfConvLOg(cdbl m2, cdbl q2, cdbl bjorkenX, fPtr4dbl BpQED);
+
+/**
+ * @brief computes current value of kernel of \f$c_g^{(0)}\f$
+ * @return kernel of \f$c_g^{(0)}\f$
+ */
+    cdbl cg0() const;
     
 /**
- * @brief called function
+ * @brief sets all integration variables
  * @param az integration variable mapped on z
  * @param aTheta1 integration variable mapped on Theta1
- * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(0)}(\eta,\xi)\f$
  */
-    dbl operator() (cdbl az, cdbl aTheta1);
+    void setVars(cdbl az, cdbl aTheta1);
 
 };
 

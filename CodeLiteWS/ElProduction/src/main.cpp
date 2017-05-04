@@ -31,7 +31,7 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-    cdbl q2 = -10.;
+    cdbl q2 = -1.e-2;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
@@ -52,10 +52,10 @@ int main(int argc, char **argv) {
     cdbl deltax = 1e-6;
     cdbl deltay = 7e-6;
     //const str pdf = "MorfinTungB";
-    const str pdf = "CTEQ3M";
+    //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
     //const str pdf = "MSTW2008nlo90cl";
-    //const str pdf = "DSSV2014";
+    const str pdf = "DSSV2014";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     
-    const projT proj = L;
+    const projT proj = G;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     printf("[INFO] m2 = %g, q2 = %g, proj = %s\n",m2,q2,projToStr(proj).c_str());
@@ -89,17 +89,17 @@ int main(int argc, char **argv) {
         {cdbl e = eO.F(n);
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }*/
-/*
-    uint N = 31;
+
+    uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
-        cdbl a = pow(10,-4.+8./(N-1)*j);
+        cdbl a = pow(10,-5.+3./(N-1)*j);
         iO.setEta(a);
         eO.setEta(a);
-        cdbl i = iO.cqBarF1();
-        {cdbl e = eO.cqBarF1();
+        cdbl i = iO.cg1();
+        {cdbl e = eO.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
-        / *{eO.setOmega(.8);
+        /*{eO.setOmega(.8);
         cdbl e = eO.cgBarF1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         {eO.setOmega(1.);
@@ -108,18 +108,19 @@ int main(int argc, char **argv) {
         {eO.setOmega(1.2);
         cdbl e = eO.cgBarF1();
         printf("\t\t\t\t%e\t%e\t%e\n",e,i-e,(i-e)/i);}
-        printf("\n");* /
+        printf("\n");*/
     }
-*/
 
-//Timer::make("me@NLOg");
+
+/*
+//Timer::make("pdf@combineNLOg");
 
     cdbl bjorkenX = 1e-4;
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
     const str path = "/home/Felix/Physik/PhD/data/hist/";
-    eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, path+"pt.dat",0.,8.);
-    eO.activateHistogram(Exclusive::histT::HAQRapidity,           50, path+"rap.dat");
+    eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum, 50, path+"pt.dat",0.,10.);
+    eO.activateHistogram(Exclusive::histT::HAQRapidity,           50, path+"rap.dat", -3., 3.);
     eO.activateHistogram(Exclusive::histT::log10z,                50, path+"log10z.dat");
     eO.activateHistogram(Exclusive::histT::x,                     50, path+"x.dat");
     eO.activateHistogram(Exclusive::histT::y,                     50, path+"y.dat");
@@ -132,7 +133,7 @@ int main(int argc, char **argv) {
     
 //Timer::logAll(cout);
 //Timer::deleteAll();
-
+*/
     return EXIT_SUCCESS;
 }
 

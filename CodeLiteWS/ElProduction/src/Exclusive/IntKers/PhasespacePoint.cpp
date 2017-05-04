@@ -6,7 +6,7 @@
 using namespace Exclusive;
 
 PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) :
-    m2(m2), q2(q2), bjorkenX(bjorkenX), muR2Factors(muR2Factors), muF2Factors(muF2Factors), vs(m2,q2,4.*m2-q2,1.,-1.,0.,0.){
+    m2(m2), q2(q2), bjorkenX(bjorkenX), muR2Factors(muR2Factors), muF2Factors(muF2Factors){
 }
 
 void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
@@ -14,20 +14,18 @@ void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
     this->z = z;
     this->sp = -q2/z;
     this->Theta1 = Theta1;
-    cdbl s = sp + q2;
-    cdbl beta = sqrt(1. - 4.*m2/s);
-    this->vs = KinematicVars(this->m2, this->q2, this->sp, 1., -1., Theta1, 0.);
-    // with x = 1 is s5 = s and beta5 = beta
     
-    // use photon-parton c.m.s.
+    // use virtual photon-parton c.m.s.
     using rk::P4;
     using geom3::UnitVector3;
+    cdbl s = sp + q2;
     cdbl sqrts = sqrt(s);
+    cdbl beta = sqrt(1. - 4.*m2/s);
     this->k1 = P4(sp/(2.*sqrts) * UnitVector3::zAxis(),0.);
-    this->q = P4((sp + 2.*q2)/(2.*sqrts),-k1.momentum());
+    this->q = P4((s + q2)/(2.*sqrts),-k1.momentum());
     const UnitVector3 u(0., sin(Theta1),cos(Theta2));
-    this->p1 = P4(.5*sqrts*beta*u,sqrt(m2));
-    this->p2 = P4(-.5*sqrts*beta*u,sqrt(m2));
+    this->p1 = P4(-.5*sqrts*beta*u,sqrt(m2));
+    this->p2 = P4(.5*sqrts*beta*u,sqrt(m2));
     
     // move to final frame
     this->applyLTsToFinalFrame();
@@ -41,7 +39,7 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
     this->x = x;
     this->y = y;
     this->Theta2 = Theta2;
-    this->vs = KinematicVars(this->m2, this->q2, this->sp, x, y, Theta1, Theta2);
+    const KinematicVars vs(this->m2, this->q2, this->sp, x, y, Theta1, Theta2);
     using rk::P4;
     using geom3::UnitVector3;
     
@@ -78,7 +76,7 @@ void PhasespacePoint::setupNLO(cdbl z, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2)
 }
 
 void PhasespacePoint::applyLTsToFinalFrame() {
-    { // randomize around z
+    { // randomize around z-axis
         using geom3::Rotation3;
         using geom3::UnitVector3;
         const gsl_rng_type *T;
@@ -129,11 +127,6 @@ const rk::P4 PhasespacePoint::getP1() const {
     
 const rk::P4 PhasespacePoint::getP2() const {
     return this->p2;
-}
-
-cdbl PhasespacePoint::getPtAQ2() const {
-    cdbl mt2 = (sp*vs.t1*vs.u1-q2*vs.t1*vs.t1-q2*sp*vs.t1)/this->sp/this->sp;
-    return mt2 - this->m2;
 }
 
 cdbl PhasespacePoint::getMuR2() const {

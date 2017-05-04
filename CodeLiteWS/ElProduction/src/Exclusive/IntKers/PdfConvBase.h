@@ -55,16 +55,6 @@ protected:
     uint nlf;
     
 /**
- * @brief parton distribution functions
- */
-    PdfWrapper* pdf = 0;
-
-/**
- * @brief factorisation scale \f$\mu_F^2\f$
- */
-    dbl muF2 = -0.;
-    
-/**
  * @brief current momentum fraction
  */
     dbl z = -0.;
@@ -217,20 +207,6 @@ protected:
  * @param a integration variable
  */
     void setTheta2(cdbl a);
-    
-public:
-    
-/**
- * @brief sets pdf 
- * @param pdf parton distribution function
- */
-    void setPdf(PdfWrapper* pdf);
-    
-/**
- * @brief sets factorisation scale \f$\mu_F^2\f$
- * @param muF2 factorisation scale \f$\mu_F^2\f$
- */
-    virtual void setMuF2(cdbl muF2);
 };
 
 } // namespace Exclusive

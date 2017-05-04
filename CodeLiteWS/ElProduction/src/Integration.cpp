@@ -38,38 +38,10 @@ cdbl int2D(gsl_monte_function* F) {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
-//    printf("[INFO] int2D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),gsl_monte_vegas_chisq(s));
+    printf("[INFO] int2D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),gsl_monte_vegas_chisq(s));
     gsl_monte_vegas_free (s);
     gsl_rng_free (r);
     return res;
-}
-
-cdbl int2D(HepSource::Integrand& F) {
-    const uint dim = 2;
-    size_t calls = 10000;
-    using HepSource::Dvegas;
-    using HepSource::VEGAS;
-    using HepSource::IntegrandEstimate;
-    Dvegas dv(dim,50,1,F);
-    
-    dbl res; //,err;
-    
-    // warm-up
-    VEGAS(dv,1000,5,0,0);
-    IntegrandEstimate e = dv.stats(0);
-    res = e.integral();
-    uint guard = 0;
-    // run
-    do {
-        if (!isfinite(res)) return res;
-        VEGAS(dv,calls,5,1,0);
-        e = dv.stats(0);
-        res = e.integral();
-        //err = e.standardDeviation();
-        //printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,e.chiSquarePerIteration());
-    } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);
-//    printf("int2D: guard: %d, res: %e, err: %e, chi: %f\n",guard,res,err,e.chiSquarePerIteration());
-    return e.integral();
 }
 
 cdbl int3D(gsl_monte_function* F) {

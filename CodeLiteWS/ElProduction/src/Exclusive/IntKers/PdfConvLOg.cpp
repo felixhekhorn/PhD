@@ -4,12 +4,12 @@
 using namespace Color;
 using namespace Exclusive;
 
-PdfConvLOg::PdfConvLOg(dbl m2, dbl q2, dbl bjorkenX, fPtr4dbl BpQED):
+PdfConvLOg::PdfConvLOg(cdbl m2, cdbl q2, cdbl bjorkenX, fPtr4dbl BpQED):
     PdfConvBase(m2, q2, bjorkenX, 0, 0., 0., 0., 0.),
     BpQED(BpQED){
 }
 
-dbl PdfConvLOg::cg0() const {
+cdbl PdfConvLOg::cg0() const {
     // protect from null pointer
     if (0 == this->BpQED)
         throw invalid_argument("need to set all arguments!");
@@ -25,14 +25,7 @@ dbl PdfConvLOg::cg0() const {
     return r;
 }
 
-dbl PdfConvLOg::operator() (cdbl az, cdbl aTheta1) {
-    // protect from null pointer
-    if (0 == this->pdf)
-        throw invalid_argument("need to set all arguments!");
+void PdfConvLOg::setVars(cdbl az, cdbl aTheta1) {
     this->setZ(az);
     this->setTheta1(aTheta1);
-    cdbl r = jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * this->cg0();
-    // Protect from ps corner cases
-    if (!isfinite(r)) return 0.;
-    return r;
 }

@@ -56,11 +56,3 @@ void PdfConvBase::setTheta1(cdbl a) {
 void PdfConvBase::setTheta2(cdbl a) {
     this->Theta2 = this->jacTheta2*a;
 }
-    
-void PdfConvBase::setPdf(PdfWrapper* pdf) {
-    this->pdf = pdf;
-}
-
-void PdfConvBase::setMuF2(cdbl muF2) {
-    this->muF2 = muF2;
-}

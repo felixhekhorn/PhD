@@ -42,6 +42,11 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @brief factors for \f$\mu_F^2\f$
  */
     DynamicScaleFactors muF2Factors;
+    
+/**
+ * @brief parton distribution functions
+ */
+    PdfWrapper* pdf = 0;
 
 /**
  * @brief running strong coupling
@@ -57,8 +62,6 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @brief pointer to map of histograms
  */
     const histMapT* histMap = 0;
-    
-//    dbl* sumWeights = 0;
     
 /**
  * @brief integration weight determined by VEGAS
@@ -133,17 +136,17 @@ public:
     void setAlphaS(LHAPDF::AlphaS* alphaS);
     
 /**
- * @brief removed method - use setMuRF2Factors instead
- * @param muF2 -
- */
-    void setMuF2(cdbl muF2);
-    
-/**
  * @brief sets factors for \f$\mu_R^2\f$ and \f$\mu_F^2\f$
  * @param muR2Factors factors for \f$\mu_R^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
     void setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors);
+
+/**
+ * @brief sets pdf 
+ * @param pdf parton distribution function
+ */
+    void setPdf(PdfWrapper* pdf);
     
 /**
  * @brief sets computed order
@@ -155,7 +158,7 @@ public:
  * @brief sets avtive histograms
  * @param histMap pointer to map of histograms
  */
-    void setHistograms(const histMapT* histMap/*, dbl* sumWeights*/);
+    void setHistograms(const histMapT* histMap);
     
 /**
  * @brief called function for gsl_monte
