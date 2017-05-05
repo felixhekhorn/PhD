@@ -62,12 +62,12 @@ class PhasespacePoint {
 /**
  * @brief current x
  */
-    dbl x = -0.;
+    dbl x = 1.;
     
 /**
  * @brief current y
  */
-    dbl y = -0.;
+    dbl y = -1.;
     
 /**
  * @brief current Theta2

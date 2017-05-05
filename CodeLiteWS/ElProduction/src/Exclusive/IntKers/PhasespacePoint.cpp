@@ -18,12 +18,12 @@ void PhasespacePoint::setupLO(cdbl z, cdbl Theta1) {
     // use virtual photon-parton c.m.s.
     using rk::P4;
     using geom3::UnitVector3;
-    cdbl s = sp + q2;
+    cdbl s = this->sp + this->q2;
     cdbl sqrts = sqrt(s);
     cdbl beta = sqrt(1. - 4.*m2/s);
-    this->k1 = P4(sp/(2.*sqrts) * UnitVector3::zAxis(),0.);
-    this->q = P4((s + q2)/(2.*sqrts),-k1.momentum());
-    const UnitVector3 u(0., sin(Theta1),cos(Theta2));
+    this->k1 = P4(this->sp/(2.*sqrts) * UnitVector3::zAxis(),0.);
+    this->q = P4((s + this->q2)/(2.*sqrts),-k1.momentum());
+    const UnitVector3 u(0., sin(this->Theta1),cos(this->Theta1));
     this->p1 = P4(-.5*sqrts*beta*u,sqrt(m2));
     this->p2 = P4(.5*sqrts*beta*u,sqrt(m2));
     
