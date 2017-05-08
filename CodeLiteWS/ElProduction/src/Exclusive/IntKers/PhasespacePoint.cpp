@@ -5,7 +5,7 @@
 
 using namespace Exclusive;
 
-PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) :
+PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors) :
     m2(m2), q2(q2), bjorkenX(bjorkenX), muR2Factors(muR2Factors), muF2Factors(muF2Factors){
 }
 
@@ -101,7 +101,7 @@ void PhasespacePoint::applyLTsToFinalFrame() {
     }
 }
 
-cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors factors) const {
+cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors& factors) const {
     cdbl ptSumHQPair = (this->p1 + this->p2).pt();
     cdbl ptHAQ = this->p2.pt();
     cdbl mu2 = factors.cM2 * this->m2 +

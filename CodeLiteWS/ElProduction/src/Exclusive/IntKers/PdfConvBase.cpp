@@ -19,7 +19,11 @@ void PdfConvBase::setZ(cdbl a) {
 void PdfConvBase::setSpRaw(cdbl sp) {
     this->sp = sp;
     cdbl eta = (sp + q2)/(4.*m2) - 1.;
-    this->xmax = 1. - this->deltax*pow(eta,2./3.);
+    cdbl cut = this->deltax*pow(eta,2./3.);
+    this->xmax = 1. - cut;
+    // reached numeric limit?
+    if (1. == xmax)
+        throw domain_error((boost::format("x_max = 1-deltax*eta^(2/3) = 1. - %e = %e has to be smaller than 1!")%cut%xmax).str());
     // make hard cut instead of throwing an error
     this->rhoStar = min((4.*m2 - q2)/this->sp,xmax);
     //if (this->rhoStar > xmax)

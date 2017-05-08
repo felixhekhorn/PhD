@@ -31,7 +31,7 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-    cdbl q2 = -10.;
+    cdbl q2 = -100.;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
@@ -51,11 +51,11 @@ int main(int argc, char **argv) {
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
     cdbl deltay = 7e-6;
-    const str pdf = "MorfinTungB";
+    //const str pdf = "MorfinTungB";
     //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
     //const str pdf = "MSTW2008nlo90cl";
-    //const str pdf = "DSSV2014";
+    const str pdf = "DSSV2014";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
@@ -63,8 +63,10 @@ int main(int argc, char **argv) {
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     
-    const projT proj = L;
+    const projT proj = P;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
+    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction iL(m2,q2,Delta,L,nlf);
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     printf("[INFO] m2 = %g, q2 = %g, proj = %s\n",m2,q2,projToStr(proj).c_str());
     
@@ -89,20 +91,20 @@ int main(int argc, char **argv) {
         {cdbl e = eO.F(n);
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }*/
-/*
+
     uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
-        cdbl a = pow(10,-5.+3./(N-1)*j);
+        cdbl a = pow(10,-4.+2.*j/(N-1));
         iO.setEta(a);
         eO.setEta(a);
         cdbl i = iO.cg1();
         {cdbl e = eO.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }
-*/
 
 
+/*
 //Timer::make("pdf@combineNLOg");
 
     cdbl bjorkenX = 1e-1;
@@ -123,6 +125,7 @@ int main(int argc, char **argv) {
     
 //Timer::logAll(cout);
 //Timer::deleteAll();
+*/
 
     return EXIT_SUCCESS;
 }

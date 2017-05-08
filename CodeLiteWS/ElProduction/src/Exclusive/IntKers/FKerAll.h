@@ -97,14 +97,14 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
  * @param p current phase space point
  * @param i integrand
  */
-    void fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const;
+    void fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const;
 
 /**
  * @brief fills all avtive histograms available in NLO
  * @param p current phase space point
  * @param i integrand
  */
-    void fillNLOHistograms(const PhasespacePoint p, cdbl i) const;
+    void fillNLOHistograms(const PhasespacePoint& p, cdbl i) const;
     
 public:
 
@@ -140,7 +140,7 @@ public:
  * @param muR2Factors factors for \f$\mu_R^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
-    void setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors);
+    void setMuRF2Factors(const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors);
 
 /**
  * @brief sets pdf 

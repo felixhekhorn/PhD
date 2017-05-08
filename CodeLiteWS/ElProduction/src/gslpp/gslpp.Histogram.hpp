@@ -104,7 +104,7 @@ public:
  * @brief sets file path
  * @param path file path
  */
-    void setPath(const std::string path) {
+    void setPath(const std::string& path) {
         this->path = path;
     }
     

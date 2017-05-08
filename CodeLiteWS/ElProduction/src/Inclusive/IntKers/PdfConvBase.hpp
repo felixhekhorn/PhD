@@ -46,7 +46,7 @@ protected:
  * @param pdf parton distribution functions
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    PdfConvBase(dbl m2, dbl q2, dbl bjorkenX, PdfWrapper* pdf, dbl muF2) :
+    PdfConvBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2) :
         IntKerBase(m2, q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2){
         this->zMax = -q2/(4.*m2 - q2);
     }
@@ -55,7 +55,7 @@ protected:
  * @brief sets s' by integration
  * @param a integration variable
  */
-    void setSp(dbl a) {
+    void setSp(cdbl a) {
         this->z = this->bjorkenX + (this->zMax - this->bjorkenX)*a;
         this->setSpRaw(-q2/z);
         this->jac *= (this->zMax - this->bjorkenX);

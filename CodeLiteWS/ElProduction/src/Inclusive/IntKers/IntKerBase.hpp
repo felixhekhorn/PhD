@@ -64,7 +64,7 @@ protected:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  */
-    IntKerBase(dbl m2, dbl q2) : m2(m2), q2(q2){}
+    IntKerBase(cdbl m2, cdbl q2) : m2(m2), q2(q2){}
 
 /**
  * @brief sets real s'

@@ -4,7 +4,7 @@ using namespace Exclusive;
 
 FKerAll::FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    HepSource::Integrand(5,1){
+    HepSource::Integrand(5,1), histMap(0){
 }
     
 void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
@@ -25,7 +25,7 @@ void FKerAll::setOrder(const uint order) {
     this->order = order;
 }
 
-void FKerAll::setMuRF2Factors(const DynamicScaleFactors muR2Factors, const DynamicScaleFactors muF2Factors) {
+void FKerAll::setMuRF2Factors(const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors) {
     this->muR2Factors = muR2Factors;
     this->muF2Factors = muF2Factors;
 }
@@ -165,7 +165,7 @@ void FKerAll::scaleHistograms(cdbl s) const {
         it->second->scale(s);
 }
 
-void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
+void FKerAll::fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const {
     // something active?
     if (0 == this->histMap)
         return;
@@ -197,7 +197,7 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint p, cdbl i) const {
     }
 }
 
-void FKerAll::fillNLOHistograms(const PhasespacePoint p, cdbl i) const {
+void FKerAll::fillNLOHistograms(const PhasespacePoint& p, cdbl i) const {
     // something active?
     if (0 == this->histMap)
         return;

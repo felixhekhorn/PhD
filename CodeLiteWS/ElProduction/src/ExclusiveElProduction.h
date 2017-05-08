@@ -245,19 +245,19 @@ public:
  * @brief sets factors for \f$\mu_R^2\f$
  * @param muR2Factors factors for \f$\mu_R^2\f$
  */
-    void setMuR2Factors(const Exclusive::DynamicScaleFactors muR2Factors);
+    void setMuR2Factors(const Exclusive::DynamicScaleFactors& muR2Factors);
     
 /**
  * @brief sets factors for \f$\mu_F^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
-    void setMuF2Factors(const Exclusive::DynamicScaleFactors muF2Factors);
+    void setMuF2Factors(const Exclusive::DynamicScaleFactors& muF2Factors);
     
 /**
  * @brief sets factors for common scale \f$\mu^2 = \mu_R^2 = \mu_F^2\f$
  * @param mu2Factors factors for common scale \f$\mu^2 = \mu_R^2 = \mu_F^2\f$
  */
-    void setMu2Factors(const Exclusive::DynamicScaleFactors mu2Factors);
+    void setMu2Factors(const Exclusive::DynamicScaleFactors& mu2Factors);
     
 private:
 
@@ -390,7 +390,7 @@ public:
  * @param min optional min value (will be bined uniformly to max)
  * @param max optional max value (will be bined uniformly from min)
  */
-    void activateHistogram(const Exclusive::histT t, const uint size, const str path, cdbl min = nan(""), cdbl max = nan(""));
+    void activateHistogram(const Exclusive::histT t, const uint size, const str& path, cdbl min = nan(""), cdbl max = nan(""));
     
 ///@}
 

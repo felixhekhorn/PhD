@@ -26,7 +26,7 @@
 using namespace Exclusive;
 
 ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, const projT proj, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
-    AbstractElProduction(m2,q2,proj,nlf) {
+    AbstractElProduction(m2,q2,proj,nlf), aS() {
     this->setXTilde(xTilde);
     this->setOmega(omega);
     this->setDeltax(deltax);
@@ -310,17 +310,17 @@ void ExclusiveElProduction::setAlphaS(cdbl muR2) {
     throw logic_error("use setLambdaQCD instead!");
 }
 
-void ExclusiveElProduction::setMuR2Factors(const Exclusive::DynamicScaleFactors muR2Factors) {
+void ExclusiveElProduction::setMuR2Factors(const Exclusive::DynamicScaleFactors& muR2Factors) {
     this->muR2Factors = muR2Factors;
     this->hasMuR2 = true;
 }
     
-void ExclusiveElProduction::setMuF2Factors(const Exclusive::DynamicScaleFactors muF2Factors) {
+void ExclusiveElProduction::setMuF2Factors(const Exclusive::DynamicScaleFactors& muF2Factors) {
     this->muF2Factors = muF2Factors;
     this->hasMuF2 = true;
 }
     
-void ExclusiveElProduction::setMu2Factors(const Exclusive::DynamicScaleFactors mu2Factors) {
+void ExclusiveElProduction::setMu2Factors(const Exclusive::DynamicScaleFactors& mu2Factors) {
     this->setMuF2Factors(mu2Factors);
     this->setMuR2Factors(mu2Factors);
 }
@@ -369,7 +369,7 @@ cdbl ExclusiveElProduction::F(uint order/*= 1*/) {
     return i;
 }
 
-void ExclusiveElProduction::activateHistogram(const histT t, const uint size, const str path, cdbl min /*=nan*/, cdbl max /*=nan*/) {
+void ExclusiveElProduction::activateHistogram(const histT t, const uint size, const str& path, cdbl min /*=nan*/, cdbl max /*=nan*/) {
     // assert existance of path
     boost::filesystem::path fp (path);
     boost::filesystem::path par = fp.parent_path();

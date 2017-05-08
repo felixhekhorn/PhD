@@ -1,7 +1,7 @@
 #!/usr/bin/gnuplot
 reset
 
-set term png
+set term png size 640,640
 set size square
 
 if (ARGC < 1) {
@@ -17,6 +17,7 @@ pout = "img/NPB392-229-" . pdf . "/"
 set logscale y
 set ytics format "%.1e"
 set yrange [1e-5:.01]
+set mytics 10
 
 #set boxwidth 0.5 relative
 #set boxwidth 0.1
@@ -26,6 +27,8 @@ set yrange [1e-5:.01]
 
 set xlabel "p_t [GeV]"
 set xrange [0.:20.]
+set xtics 5
+set mxtics 5
 
 f0 = pin . "dFLc_dpt_x-4_0.dat"
 f1 = pin . "dFLc_dpt_x-4_1.dat"
