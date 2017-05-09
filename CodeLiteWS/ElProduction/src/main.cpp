@@ -9,9 +9,9 @@
 
 int runInclusive();
 int test() {
-    PdfWrapper a("CTEQ3M",0);
-    PdfWrapper b("cteq66",0);
-    const int pid = 2;
+    PdfWrapper a("DSSV2014",0);
+    PdfWrapper b("GRSV96STDNLO",0);
+    const int pid = 1;
     for (uint j = 0; j < 10; ++j) {
         cdbl Q2 = 5.+j*3;
         for (uint k = 0; k < 10; ++k) {
@@ -29,7 +29,7 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
+    return test();
 	//return runInclusive();
     cdbl q2 = -100.;
     cdbl m2 = 1.5*1.5;
@@ -38,7 +38,7 @@ int main(int argc, char **argv) {
     cdbl lambdaQCD = .194; // nlf=3
     cdbl mu02 = (4.*m2-q2);
     const Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
-    //dbl mu02 = 1.*m2;
+    //cdbl mu02 = 1.*m2;
     //Exclusive::DynamicScaleFactors mu02F(1.,0.,0.);
     /*cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }*/
 
-    uint N = 11;
+    const uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
         cdbl a = pow(10,-4.+2.*j/(N-1));
@@ -142,14 +142,14 @@ int runInclusive(){
     Timer::make("hg1SVDelta");
     Timer::make("hg1H");*/
     
-    //dbl m2 = 1.5*1.5;
-    //uint nlf = 3;
-    dbl m2 = 4.75*4.75;
-    uint nlf = 4;
-    dbl Delta = 1e-6;
-    dbl q2 = -1e2;
-    dbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
-    dbl mu02 = 4.*m2-q2;
+    //cdbl m2 = 1.5*1.5;
+    //const uint nlf = 3;
+    cdbl m2 = 4.75*4.75;
+    const uint nlf = 4;
+    cdbl Delta = 1e-6;
+    cdbl q2 = -1e2;
+    cdbl aS = 0.152761042522;// Q²=1e1 -> 0.189663591654;// Q²=1e2 -> 0.152761042522;
+    cdbl mu02 = 4.*m2-q2;
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
     InclusiveElProduction oL(m2,q2,Delta,L,nlf);
     InclusiveElProduction oP(m2,q2,Delta,P,nlf);
@@ -166,11 +166,11 @@ int runInclusive(){
     oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
     uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        dbl x = pow(10,-4./(100.)*(49.+(dbl)j));
+        cdbl x = pow(10,-4./(100.)*(49.+(dbl)j));
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        dbl g = oG.Fg0();
-        dbl l = oL.Fg0();
-        dbl p = oP.Fg0();
+        cdbl g = oG.Fg0();
+        cdbl l = oL.Fg0();
+        cdbl p = oP.Fg0();
         printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
     }
     /*uint N = 11;

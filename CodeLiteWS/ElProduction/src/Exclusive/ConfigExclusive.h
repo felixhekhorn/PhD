@@ -34,6 +34,7 @@ enum histT {
     
     HAQRapidity, /**< -y0 < HAQRapidity < y0 where y0 = artanh(sqrt(1-4m2/S)) */
     HAQTransverseMomentum, /**< 0 < HAQTransverseMomentum < sqrt(S/4-m2) */
+    HAQTransverseMomentumScaling, /**< 0 < HAQTransverseMomentumScaling < 1 */
 // NLO:
     x, /**< x_bj/z_max < x < 1 */
     y, /**< -1 < y < 1 */

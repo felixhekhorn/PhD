@@ -189,8 +189,10 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const {
             case histT::HQPairTransverseMomentum: var = (p.getP1() + p.getP2()).pt();              break; 
             case histT::HQPairConeSizeVariable:   var = geom3::deltaR(p.getP1(),p.getP2());        break;                      
                 
-            case histT::HAQRapidity:           var = p.getP2().rapidity();     break;
-            case histT::HAQTransverseMomentum: var = p.getP2().pt();           break;
+            case histT::HAQRapidity:                  var = p.getP2().rapidity();     break;
+            case histT::HAQTransverseMomentum:        var = p.getP2().pt();           break;
+            case histT::HAQTransverseMomentumScaling:
+                {cdbl ptmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pt()/ptmax;}    break;
             default: continue;
         }
         it->second->accumulate(var,value);

@@ -153,10 +153,10 @@ public:
     const rk::P4 getP2() const;
 
 /**
- * @brief computes \f$p_{t,2}^2\f$ by invariants
- * @return \f$p_{t,2}^2\f$
+ * @brief current hadronic S
+ * @return \f$S_h\f$
  */
-    cdbl getPtAQ2() const;
+    cdbl getSh() const;
 
 /**
  * @brief computes \f$\mu_R^2\f$

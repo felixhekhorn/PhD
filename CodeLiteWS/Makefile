@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ ElProduction - Release ]----------"
+	@echo "----------Building project:[ ElProduction - Debug ]----------"
 	@cd "ElProduction" && "$(MAKE)" -f  "ElProduction.mk" PrePreBuild && "$(MAKE)" -f  "ElProduction.mk"
 clean:
-	@echo "----------Cleaning project:[ ElProduction - Release ]----------"
+	@echo "----------Cleaning project:[ ElProduction - Debug ]----------"
 	@cd "ElProduction" && "$(MAKE)" -f  "ElProduction.mk" clean

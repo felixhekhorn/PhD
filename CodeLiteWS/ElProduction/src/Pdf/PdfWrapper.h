@@ -19,6 +19,11 @@ class PdfWrapper {
  * @brief port to CTEQ3?
  */
     bool isCTEQ3;
+
+/**
+ * @brief port to GRSV96?
+ */
+    bool isGRSV96;
     
 /**
  * @brief set name
@@ -34,6 +39,11 @@ class PdfWrapper {
  * @brief parton distribution function
  */
     LHAPDF::PDF* lha;
+    
+/**
+ * @brief path to active GRSV96 file
+ */
+    std::string GRSV96_path;
     
 public:
 

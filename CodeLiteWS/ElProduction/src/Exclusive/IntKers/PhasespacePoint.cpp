@@ -117,6 +117,10 @@ cdbl PhasespacePoint::getZ() const {
     return this->z;
 }
 
+cdbl PhasespacePoint::getSh() const {
+    return -this->q2*(1./this->bjorkenX - 1.);
+}
+
 cdbl PhasespacePoint::getTheta1() const {
     return this->Theta1;
 }

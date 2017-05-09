@@ -260,11 +260,6 @@ public:
     void setMu2Factors(const Exclusive::DynamicScaleFactors& mu2Factors);
     
 private:
-
-/**
- * @brief \f$\Lambda_{QCD,n_{lf+1}}\f$
- */
-    dbl lambdaQCD = -0.;
     
 /**
  * @brief running strong coupling as provided by LHAPDF
@@ -356,7 +351,7 @@ public:
  * @param order calculated order
  * @return \f$F^{(order)}\f$
  */
-    cdbl F(uint order = 1);
+    cdbl F(const uint order);
     
 /**
  * @brief Monte Carlo parameter to F (and only F)

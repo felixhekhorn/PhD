@@ -14,7 +14,7 @@
 
 using namespace boost::python;
 
-//BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(ElProduction_setPdf_overloads, setPdf, 1, 2)
+BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(ExclusiveElProduction_activateHistogram_overloads, activateHistogram, 3, 5)
 
 BOOST_PYTHON_MODULE(ElProduction)
 {
@@ -84,7 +84,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("F", &ExclusiveElProduction::F)
         .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
         // histograms
-        .def("activateHistogram", &ExclusiveElProduction::activateHistogram)
+        .def("activateHistogram", &ExclusiveElProduction::activateHistogram, ExclusiveElProduction_activateHistogram_overloads())
     ;
     
     enum_<Exclusive::histT>("ExclusiveHistT")
@@ -99,6 +99,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         
         .value("HAQRapidity", Exclusive::histT::HAQRapidity)
         .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
+        .value("HAQTransverseMomentumScaling", Exclusive::histT::HAQTransverseMomentumScaling)
         
         .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
@@ -115,7 +116,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2, "iterate until |chi2-1| < 0.5?")
     ;
     
-    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
+    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<optional<double,double,double,double>>())
         .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
         .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
         .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{Q,T}+p_{Qbar,T})^2")
