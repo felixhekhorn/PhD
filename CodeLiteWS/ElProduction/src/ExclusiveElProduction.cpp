@@ -411,7 +411,8 @@ void ExclusiveElProduction::setupHistograms() const {
                 it->second->setRangesUniform(-y0,y0);}
                 break;
             case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,sqrt(Sh/4. - this->m2));     break;
-            case histT::HAQTransverseMomentumScaling:  it->second->setRangesLog10(1.e-3,1.);                       break;
+            case histT::HAQTransverseMomentumScaling:  it->second->setRangesLog10(1.e-3,1.);                        break;
+            case histT::HAQFeynmanX:                   it->second->setRangesUniform(-1.,1.);                        break;
             
             case histT::x:                      it->second->setRangesLog10(this->bjorkenX/this->zMax,1.+1e-5); break;
             case histT::y:                      it->second->setRangesUniform(-1.,1.+1e-5);                     break;

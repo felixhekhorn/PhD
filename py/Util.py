@@ -22,15 +22,12 @@ def isFHe15():
 def isTachyon():
   return os.path.exists("/home/hekhorn/")
 
-def setupLibs():
-  if isTachyon():
-    sys.path.append("/home/hekhorn/usr/local/lib64/python2.7/lib-dynload")
-
 # file helper
 def getAbsProjectPath():
   if isFHe15(): return "/home/Felix/Physik/PhD/"
   if isTachyon(): return "/home/hekhorn/PhD/"
   raise "Could not determine absolute project path"
 
-def setupDSSV():
+def setupPDFs():
   os.environ["DSSV2014_GRIDS"] = getAbsProjectPath() + "PDF/DSSV2014/grids/"
+  os.environ["GRSV96_GRIDS"] = getAbsProjectPath() + "PDF/GRSV96/"

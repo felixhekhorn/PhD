@@ -24,19 +24,18 @@ void ConvertToFortran(char* fstring, const std::size_t fstring_len, const char* 
 /** @brief Fortran wrappers */
 const unsigned int DSSV2014_fp_len = 100;
 const unsigned int GRSV96_fp_len = 130;
-extern"C" {
+extern "C" {
 // DSSV
 void dssvini_(char rpath[DSSV2014_fp_len], int* member);
 void dssvgupdate_(double* X, double* Q2, double* DUV, double* DDV, double* DUBAR, double* DDBAR, double* DSTR, double* DGLU);
 // CTEQ3
 double ctq3pd_(int* Iset, int* Iparton, double* X, double* Q, int* Irt);
 // GRSV96
-double parpol_ (char path[GRSV96_fp_len], double* X, double* Q2, double* UV, double* DV, double* QB, double* ST, double* GL);
+double parpol_(char path[GRSV96_fp_len], double* X, double* Q2, double* UV, double* DV, double* QB, double* ST, double* GL);
 }
 
 /**
  * @brief read environment variable
- * needed for DSSV2014
  * @see http://stackoverflow.com/questions/631664/accessing-environment-variables-in-c
  * @param key name
  * @return value
@@ -60,6 +59,8 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
     this->isDSSV = ("DSSV2014" == setname);
     this->isCTEQ3 = ("CTEQ3M" == setname);
     this->isGRSV96 = ("GRSV96STDNLO" == setname);
+    if ((this->isCTEQ3 || this->isGRSV96) && 0 != member)
+        throw LHAPDF::UserError("pdf "+setname+" has only a central member!");
     /** @todo verbosity flag? */
     if (this->isDSSV) {
         // setup path
@@ -70,11 +71,11 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         const std::string path = getEnvVar(pathName);//= "/home/Felix/Physik/PhD/PDF/DSSV2014/grids/";
         char rpath[DSSV2014_fp_len];
         ConvertToFortran(rpath,DSSV2014_fp_len,path.c_str());
-        std::cout << "[INFO] PdfWrapper loading DSSV2014 member #"<<member<<" from "<<path<<std::endl;
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<" from "<<path<<std::endl;
         // init
         dssvini_(rpath,&m);
     } else if(this->isCTEQ3) {
-        std::cout << "[INFO] PdfWrapper loading "<<setname<<std::endl;
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<std::endl;
         // no init needed - it's analytic and caching deactivated
     } else if(this->isGRSV96) {
         // find path
@@ -88,7 +89,7 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         // add file
         if ("GRSV96STDNLO" == setname) p /= "STDNLO.GRID";
         this->GRSV96_path = p.string();
-        std::cout << "[INFO] PdfWrapper loading "<<setname<<" from "<<this->GRSV96_path<<std::endl;
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<" from "<<this->GRSV96_path<<std::endl;
     } else {
         this->lha = LHAPDF::mkPDF(setname,member);
     }

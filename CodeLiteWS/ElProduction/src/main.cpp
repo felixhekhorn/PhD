@@ -11,13 +11,15 @@ int runInclusive();
 int test() {
     PdfWrapper a("DSSV2014",0);
     PdfWrapper b("GRSV96STDNLO",0);
-    const int pid = 1;
+    const int pid = 2;
+    cout << "pid = " << pid << endl;
     for (uint j = 0; j < 10; ++j) {
         cdbl Q2 = 5.+j*3;
         for (uint k = 0; k < 10; ++k) {
             cdbl x = pow(10.,-.05 - k*4./10.);
             printf("%e\t%e\t%e\t%e\n",Q2,x,a.xfxQ2(pid,x,Q2),b.xfxQ2(pid,x,Q2));
         }
+        cout << endl;
     }
     return EXIT_SUCCESS;
 }

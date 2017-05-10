@@ -193,6 +193,8 @@ void FKerAll::fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const {
             case histT::HAQTransverseMomentum:        var = p.getP2().pt();           break;
             case histT::HAQTransverseMomentumScaling:
                 {cdbl ptmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pt()/ptmax;}    break;
+            case histT::HAQFeynmanX:
+                {cdbl plmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pz()/plmax;}    break;
             default: continue;
         }
         it->second->accumulate(var,value);

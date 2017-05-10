@@ -119,8 +119,8 @@ class HadronicRunner2:
         for n in xrange(self.nProcesses):
             self.__qIn.put(None)
         self.__qOut = Queue()
-	# setup DSSV2014
-	Util.setupDSSV()
+	# setup PDFs
+	Util.setupPDFs()
         # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),

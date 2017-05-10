@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import Util
-Util.setupLibs()
-
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 from Queue import Empty as QEmpty
 import sys
@@ -12,6 +9,7 @@ import numpy as np
 #import time
 
 import ElProduction
+import Util
 
 class PartonicRunner2:
     def __init__(self, m2, q2, Delta, nlf, f,fp, Neta, nProcesses = cpu_count()):
@@ -58,8 +56,8 @@ class PartonicRunner2:
         return g
     # start processes
     def _compute(self,g):
-        # setup DSSV2014
-        Util.setupDSSV()
+        # setup PDFs
+        Util.setupPDFs()
         # start processes
         oArgs = {
             "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),

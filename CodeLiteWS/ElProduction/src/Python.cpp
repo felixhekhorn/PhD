@@ -100,6 +100,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("HAQRapidity", Exclusive::histT::HAQRapidity)
         .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
         .value("HAQTransverseMomentumScaling", Exclusive::histT::HAQTransverseMomentumScaling)
+        .value("HAQFeynmanX", Exclusive::histT::HAQFeynmanX)
         
         .value("x", Exclusive::histT::x)
         .value("y", Exclusive::histT::y)
