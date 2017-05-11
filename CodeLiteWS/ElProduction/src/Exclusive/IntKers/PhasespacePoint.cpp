@@ -110,6 +110,9 @@ cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors& factors) const 
                 factors.cSqrPtHAQ * ptHAQ*ptHAQ;
     if (!isfinite(mu2) || mu2 < 0.)
         throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2 + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair%factors.cSqrPtHAQ%ptHAQ).str());
+    if (mu2 > 1e4) {
+        cout << "Sh = " << this->getSh() <<endl;
+    }
     return mu2;
 }
 

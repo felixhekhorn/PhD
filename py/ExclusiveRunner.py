@@ -55,7 +55,9 @@ def _threadWorker(qIn):
 		# compute
 		o = ExclusiveElProduction(*p["objArgs"])
 		o.setPdf(*p["pdf"])
-		o.setMu2Factors(ExclusiveDynamicScaleFactors(*p["mu2"]))
+		if p.has_key("mu2"):  o.setMu2Factors (ExclusiveDynamicScaleFactors(*p["mu2"]))
+		if p.has_key("muR2"): o.setMuR2Factors(ExclusiveDynamicScaleFactors(*p["muR2"]))
+		if p.has_key("muF2"): o.setMuF2Factors(ExclusiveDynamicScaleFactors(*p["muF2"]))
 		o.setLambdaQCD(p["lambdaQCD"])
 		o.setBjorkenX(p["bjorkenX"])
 		for e in p["activatedHistograms"]:

@@ -30,10 +30,11 @@ f_1 = pin . "dFP_dxF-GRSV96STDNLO-sqrtSh_10_1.dat"
 q2 = -1e-2
 aem = 1./137.
 n = -q2/(4.*pi*pi*aem)
-toNbTimesGeV2 = 3894./10000.*1e6
+nbTimesGeV2 = 3894./10000.*1e6
 
 set out pout . "fig12.png"
 set title sprintf("dΔσ(Q²=%gGeV^2,√S=10GeV,m_c^2,x_F)/dx_F with GRSV96STDNLO",-q2)
-plot f_0  u (.5*$1+.5*$2):($3/($2-$1)/n*toNbTimesGeV2)    t "LO",
+plot f_0  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)    t "LO",\
+     f_1  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)    t "NLO"
 
 set out

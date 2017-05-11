@@ -3,6 +3,8 @@
 
 #include <string>
 
+#include <boost/filesystem.hpp>
+
 #include "LHAPDF/LHAPDF.h"
 
 /**
@@ -13,7 +15,7 @@ class PdfWrapper {
 /**
  * @brief port to DSSV?
  */
-    bool isDSSV;
+    bool isDSSV2014;
 
 /**
  * @brief port to CTEQ3?
@@ -24,6 +26,11 @@ class PdfWrapper {
  * @brief port to GRSV96?
  */
     bool isGRSV96;
+
+/**
+ * @brief port to GRV94?
+ */
+    bool isGRV94;
     
 /**
  * @brief set name
@@ -44,6 +51,13 @@ class PdfWrapper {
  * @brief path to active GRSV96 file
  */
     std::string GRSV96_path;
+    
+/**
+ * @brief reads a path from an environment variable
+ * @param pathName environment variable
+ * @return path
+ */
+    const boost::filesystem::path getPathByEnv(const std::string& pathName);
     
 public:
 

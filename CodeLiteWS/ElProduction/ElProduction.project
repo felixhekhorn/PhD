@@ -23,6 +23,7 @@
       <File Name="src/Pdf/PdfWrapper.h"/>
       <File Name="src/Pdf/cteq3.f"/>
       <File Name="src/Pdf/grsvpol.f"/>
+      <File Name="src/Pdf/grv94.f"/>
     </VirtualDirectory>
     <File Name="src/config.h"/>
     <File Name="src/main.cpp" ExcludeProjConfig="Py27"/>
@@ -106,12 +107,12 @@
       <File Name="src/gslpp/gslpp.Histogram.hpp"/>
     </VirtualDirectory>
   </VirtualDirectory>
-  <Settings Type="Executable">
+  <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="-std=c++11;`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
       </Compiler>
-      <Linker Options="`lhapdf-config --ldflags`;$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o;$(IntermediateDirectory)/src_Pdf_cteq3.f.o;$(IntermediateDirectory)/src_Pdf_grsvpol.f.o">
+      <Linker Options="`lhapdf-config --ldflags`;$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o;$(IntermediateDirectory)/src_Pdf_cteq3.f.o;$(IntermediateDirectory)/src_Pdf_grsvpol.f.o;$(IntermediateDirectory)/src_Pdf_grv94.f.o">
         <LibraryPath Value="."/>
         <Library Value="m"/>
         <Library Value="gsl"/>
@@ -159,7 +160,8 @@ GRSV96_GRIDS=/home/Felix/Physik/PhD/PDF/GRSV96/]]>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
 $(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
 					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
-					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o
 	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
 
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
@@ -169,7 +171,10 @@ $(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/
 	gfortran -c src/Pdf/cteq3.f -g -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
 
 $(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
-	gfortran -c src/Pdf/grsvpol.f -g -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/grsvpol.f -g -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -g -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -216,7 +221,8 @@ $(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pd
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
 $(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
 					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
-					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o
 	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
 
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
@@ -226,7 +232,11 @@ $(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/
 	gfortran -c src/Pdf/cteq3.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
 
 $(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
-	gfortran -c src/Pdf/grsvpol.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/grsvpol.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -270,7 +280,8 @@ GRSV96_GRIDS=/home/Felix/Physik/PhD/PDF/GRSV96/]]>
         <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
 $(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
 					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
-					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o
 	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
 
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
@@ -281,7 +292,9 @@ $(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/
 
 $(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
 	gfortran -c src/Pdf/grsvpol.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
-</CustomPreBuild>
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

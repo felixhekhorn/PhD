@@ -64,8 +64,7 @@ cfhe
      3          QS(NQ), XB(NX), XT(NARG), NA(NARG), ARRF(NX+NQ) 
       COMMON / INTINI / IINI
 
-cfhe  deactivate caching
-cfhe      SAVE XUVF, XDVF, XQBF, XSF, XGF, XGPF, XGNF, NA, ARRF
+       SAVE XUVF, XDVF, XQBF, XSF, XGF, XGPF, XGNF, NA, ARRF
 *...BJORKEN-X AND Q**2 VALUES OF THE GRID :
        DATA QS / 0.4D0, 0.75D0, 1.0D0, 1.5D0, 2.5D0, 
      1           4.0D0, 6.4D0, 1.0D1, 1.5D1, 2.5D1, 4.0D1, 6.4D1,
@@ -98,7 +97,7 @@ C          GOTO 60
 *                                                  GRID: 1.731E-03 )     
 *    FILE - NO. = 44 FOR  LO 'VALENCE'  SCENARIO ( FIRST NUMBER IN THE 
 *                                                  GRID: 1.846E-03 )     
-cfhe      IF (IINI.NE.0) GOTO 16
+       IF (IINI.NE.0) GOTO 16
 cfhe      IF (ISET.EQ.1) THEN
 cfhe       IIREAD=11       
 cfhe       OPEN(UNIT=11,FILE='STDNLO.GRID',STATUS='OLD')

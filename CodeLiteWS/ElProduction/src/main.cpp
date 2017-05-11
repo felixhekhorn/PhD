@@ -9,9 +9,9 @@
 
 int runInclusive();
 int test() {
-    PdfWrapper a("DSSV2014",0);
-    PdfWrapper b("GRSV96STDNLO",0);
-    const int pid = 2;
+    PdfWrapper a("GRV94NLO",0);
+    PdfWrapper b("CTEQ3M",0);
+    const int pid = 3;
     cout << "pid = " << pid << endl;
     for (uint j = 0; j < 10; ++j) {
         cdbl Q2 = 5.+j*3;
@@ -31,17 +31,18 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
 	//return runInclusive();
-    cdbl q2 = -100.;
+    cdbl q2 = -1.e-2;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
-    cdbl lambdaQCD = .194; // nlf=3
-    cdbl mu02 = (4.*m2-q2);
-    const Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
-    //cdbl mu02 = 1.*m2;
-    //Exclusive::DynamicScaleFactors mu02F(1.,0.,0.);
+    //cdbl lambdaQCD = .194; // nlf=3
+    cdbl lambdaQCD = .2; // nlf=3
+    //cdbl mu02 = (4.*m2-q2);
+    //const Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
+    cdbl mu02 = 2.*m2;
+    Exclusive::DynamicScaleFactors mu02F(2.,0.,0.,2.);
     /*cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
     cdbl lambdaQCD = .158; // nlf=4
@@ -57,7 +58,8 @@ int main(int argc, char **argv) {
     //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
     //const str pdf = "MSTW2008nlo90cl";
-    const str pdf = "DSSV2014";
+    //const str pdf = "DSSV2014";
+    const str pdf = "GRSV96STDLO";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
@@ -93,7 +95,7 @@ int main(int argc, char **argv) {
         {cdbl e = eO.F(n);
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }*/
-
+/*
     const uint N = 11;
     printf("a\t\ti\t\te\t\tabs\t\trel\n");
     for (uint j = 0; j < N; ++j) {
@@ -104,12 +106,13 @@ int main(int argc, char **argv) {
         {cdbl e = eO.cg1();
         printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
     }
+*/
 
 
-/*
 //Timer::make("pdf@combineNLOg");
 
-    cdbl bjorkenX = 1e-1;
+    cdbl sqrtSh = 200.;
+    cdbl bjorkenX = -q2/(sqrtSh*sqrtSh - q2);
     iO.setBjorkenX(bjorkenX);
     eO.setBjorkenX(bjorkenX);
     const str path = "/home/Felix/Physik/PhD/data/hist/";
@@ -121,13 +124,13 @@ int main(int argc, char **argv) {
     eO.activateHistogram(Exclusive::histT::Theta1,                50, path+"Theta1.dat");
     eO.activateHistogram(Exclusive::histT::Theta2,                50, path+"Theta2.dat");
     
-    cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
+    cdbl i = 0.;//iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
     
 //Timer::logAll(cout);
 //Timer::deleteAll();
-*/
+
 
     return EXIT_SUCCESS;
 }
