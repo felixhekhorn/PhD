@@ -59,7 +59,8 @@ def _threadWorker(qIn):
 		if p.has_key("muR2"): o.setMuR2Factors(ExclusiveDynamicScaleFactors(*p["muR2"]))
 		if p.has_key("muF2"): o.setMuF2Factors(ExclusiveDynamicScaleFactors(*p["muF2"]))
 		o.setLambdaQCD(p["lambdaQCD"])
-		o.setBjorkenX(p["bjorkenX"])
+		if p.has_key("bjorkenX"):  o.setBjorkenX(p["bjorkenX"])
+		if p.has_key("hadronicS"): o.setHadronicS(p["hadronicS"])
 		for e in p["activatedHistograms"]:
 			o.activateHistogram(*e)
 		if p.has_key("calls"): 		o.MCparams.calls = p["calls"]

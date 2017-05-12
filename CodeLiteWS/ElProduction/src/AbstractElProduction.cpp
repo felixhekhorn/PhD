@@ -94,6 +94,12 @@ void AbstractElProduction::setBjorkenX(cdbl bjorkenX) {
     this->hasBjorkenX = true;
 }
 
+void AbstractElProduction::setHadronicS(cdbl Sh) {
+    if (Sh < 4.*this->m2)
+        throw domain_error("hadronic cm-energy has to be larger than threshold 4m^2!");
+    this->setBjorkenX(-this->q2/(Sh - this->q2));
+}
+
 void AbstractElProduction::checkHadronic() const {
     if (0 == this->pdf)
         throw invalid_argument("no PDF given!");
@@ -102,9 +108,7 @@ void AbstractElProduction::checkHadronic() const {
     if (!this->hasMuF2)
         throw invalid_argument("no factorisation scale given!");
     if (!this->hasBjorkenX)
-        throw invalid_argument("no Bjorken x given!");
+        throw invalid_argument("no Bjorken x or hadronic S given!");
     if (!this->hasAlphaS)
         throw invalid_argument("no strong coupling given!");
-    //if (!this->pdf->inRangeQ2(this->muF2))
-    //    throw invalid_argument("PDF can't be evaluated at mu_F^2!");
 }

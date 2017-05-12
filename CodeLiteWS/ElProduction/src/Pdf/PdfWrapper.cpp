@@ -34,6 +34,7 @@ extern struct {
 } intini_;
 double parpol_(char path[GRSV96_fp_len], double* X, double* Q2, double* UV, double* DV, double* QB, double* ST, double* GL);
 // GRV94
+double grv94lo_(double* X, double* Q2, double* UV, double* DV, double* DEL, double* UDB, double* SB, double* GL);
 double grv94ho_(double* X, double* Q2, double* UV, double* DV, double* DEL, double* UDB, double* SB, double* GL);
 }
 
@@ -62,7 +63,7 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
     this->isDSSV2014 = ("DSSV2014" == setname);
     this->isCTEQ3 = ("CTEQ3M" == setname);
     this->isGRSV96 = ("GRSV96STDLO" == setname) || ("GRSV96STDNLO" == setname);
-    this->isGRV94 = ("GRV94NLO" == setname);
+    this->isGRV94 = ("GRV94LO" == setname) || ("GRV94NLO" == setname);
     if ((this->isCTEQ3 || this->isGRSV96 || this->isGRV94) && 0 != member)
         throw LHAPDF::UserError("pdf "+setname+" has only a central member!");
     /** @todo verbosity flag? */
@@ -76,8 +77,8 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         // init
         dssvini_(rpath,&m);
     } else if(this->isCTEQ3 || this->isGRV94) {
-        std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<std::endl;
-        // no init needed - it's analytic and caching deactivated
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<std::endl;
+        // no init needed - it's analytic (and caching deactivated)
     } else if(this->isGRSV96) {
         // find path
         boost::filesystem::path p = this->getPathByEnv("GRSV96_GRIDS");
@@ -85,7 +86,7 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         if ("GRSV96STDLO" == setname) p /= "STDLO.GRID";
         else if ("GRSV96STDNLO" == setname) p /= "STDNLO.GRID";
         this->GRSV96_path = p.string();
-        std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<" from "<<this->GRSV96_path<<std::endl;
+        std::cout << "[INFO] PdfWrapper loading "<<setname<<" from "<<this->GRSV96_path<<std::endl;
         intini_.iini = 0;
     } else {
         this->lha = LHAPDF::mkPDF(setname,member);
@@ -109,11 +110,11 @@ const boost::filesystem::path PdfWrapper::getPathByEnv(const std::string& pathNa
 
 const bool PdfWrapper::inRangeQ2(const double Q2) const {
     if (this->isDSSV2014) {
-        return (Q2 >= .8) && (Q2 <= 1e6);
+        return (Q2 >= .8)      && (Q2 <= 1e6);
     } else if (this->isCTEQ3) {
-        return (Q2 >= 1.6*1.6) && (Q2 < 10e3*10e3);
+        return (Q2 >= 1.6*1.6) && (Q2 <= 10e3*10e3);
     } else if (this->isGRSV96) {
-        return (Q2 >= .4) && (Q2 < 1e4);
+        return (Q2 >= .4)      && (Q2 <= 1e4);
     } else if (this->isGRV94) {
         return true; // no limits of fit given
     }
@@ -133,10 +134,8 @@ const double PdfWrapper::xfxQ2(const int pid, const double x, const double Q2) c
         return 0.;
     } else if (this->isCTEQ3) {
         int set, ret;
-        if ("CTEQ3M" == setname)
-            set = 1;
-        else
-            throw LHAPDF::ReadError("unknown CTEQ3 set \""+setname+"\"!");
+        if ("CTEQ3M" == setname) set = 1;
+        else throw LHAPDF::UserError("unknown CTEQ3 set \""+setname+"\"!");
         int parton = (pid == 21) ? 0 : pid;
         double x_ = x, Q_ = sqrt(Q2);
         double f = ctq3pd_(&set,&parton,&x_,&Q_,&ret);
@@ -157,7 +156,9 @@ const double PdfWrapper::xfxQ2(const int pid, const double x, const double Q2) c
         return 0.;
     } else if (this->isGRV94) {
         double x_ = x, Q2_ = Q2,uv, dv, del, udb, sb, gl;
-        grv94ho_(&x_,&Q2_,&uv,&dv,&del,&udb,&sb,&gl);
+        if ("GRV94LO" == setname)       grv94lo_(&x_,&Q2_,&uv,&dv,&del,&udb,&sb,&gl);
+        else if ("GRV94NLO" == setname) grv94ho_(&x_,&Q2_,&uv,&dv,&del,&udb,&sb,&gl);
+        else throw LHAPDF::UserError("unknown GRV94 set \""+setname+"\"!");
         const double ub = (udb - del)/2.;
         const double db = (udb + del)/2.;
         if (21 == pid) return gl;

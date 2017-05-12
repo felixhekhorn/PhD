@@ -164,13 +164,6 @@ public:
  * @see LHAPDF::mkPDF()
  */
     void setPdf(str name, int member);
-
-/*
- * @brief sets PDF
- * @param nmem LHAPDF name / member index
- * @see LHAPDF::mkPDF()
- */
-    //void setPdf(str nmem);
     
 /**
  * @brief sets renormalisation scale \f$\mu_R^2\f$
@@ -201,6 +194,12 @@ public:
  * @param bjorkenX Bjorken x
  */
     void setBjorkenX(cdbl bjorkenX);
+    
+/**
+ * @brief sets hadronic S
+ * @param Sh hadronic S
+ */
+    void setHadronicS(cdbl Sh);
     
 ///@}
 
