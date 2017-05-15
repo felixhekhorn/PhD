@@ -48,7 +48,7 @@ def NPB543_345():
   tmplIn = "dFP_dxt-%s-sqrtSh_%g-cMuF2_%g-cMuR2_%g-%d.dat"
   tmplOut = "dFP_dxt-%s-sqrtSh_%g-%d.dat"
   sqrtSh = 10.
-  for n,pdf in [(0,"GRSV96STDLO")]: #[(0,"GRSV96STDLO"),(1,"GRSV96STDNLO")]:
+  for n,pdf in [(0,"GRSV96STDLO"),(1,"GRSV96STDNLO")]:
     data = {}
     for cMuF2 in [.25,.5,1.,2.,4.]:
       for cMuR2 in [.25,.5,1.,2.,4.]:

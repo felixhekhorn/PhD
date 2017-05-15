@@ -6,7 +6,6 @@
 #include "../../config.h"
 #include "../../Color.h"
 #include "IntKerBase.hpp"
-#include "../../Exclusive/ME/BpQED.h"
 
 using namespace Color;
 

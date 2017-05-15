@@ -196,6 +196,13 @@ public:
  */
     cdbl Fq1() const;
     
+/**
+ * @brief derivative of LO structure function to pt of heavy anti quark
+ * @param pt pt of heavy anti quark
+ * @return dFg0_dpt(pt)
+ */
+    cdbl dFg0_dHAQTransverseMomentum(cdbl pt) const;
+    
 ///@}
 
 };

@@ -3,7 +3,7 @@
 
 #include "../../config.h"
 
-namespace Exclusive {
+namespace Common {
     
 /**
  * @brief Born contribution in G-Projection

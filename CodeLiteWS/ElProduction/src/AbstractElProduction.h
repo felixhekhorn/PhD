@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "Pdf/PdfWrapper.h"
+#include "Common/ME/BpQED.h"
 
 /**
  * @brief base class
@@ -99,6 +100,37 @@ protected:
  * @brief checks wether all hadronic parameters are given
  */
     void checkHadronic() const;
+    
+/**
+ * @brief get hadronic hadronic S
+ * @return hadronic S
+ */
+    inline cdbl getHadronicS() const {
+        if (!this->hasBjorkenX)
+            throw invalid_argument("no Bjorken x or hadronic S given!");
+        return -this->q2*(1./this->bjorkenX - 1.);
+    };
+    
+/**
+ * @brief get maximum value of pt of heavy anti quark
+ * @return pt_Qbar^max
+ */
+    inline cdbl getHAQptMax() const {
+        return sqrt(this->getHadronicS()/4. - this->m2);
+    }
+   
+/**
+ * @brief returns \f$B'_{QED}\f$
+ * @return \f$B'_{QED}\f$
+ */
+    inline fPtr4dbl getBpQED() const {
+        switch(this->proj) {
+            case G: return &Common::BpQEDG;
+            case L: return &Common::BpQEDL;
+            case P: return &Common::BpQEDP;
+            default: throw invalid_argument("unknown projection!");
+        }
+    }
 
 /**
  * @brief constructor

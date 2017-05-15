@@ -8,6 +8,7 @@
 #include "Exclusive/IntKers/KinematicVars.hpp"
 
 int runInclusive();
+int runInclusive2();
 int test() {
     PdfWrapper a("GRV94NLO",0);
     PdfWrapper b("CTEQ3M",0);
@@ -32,7 +33,7 @@ int test() {
  */
 int main(int argc, char **argv) {
     //return test();
-	//return runInclusive();
+	return runInclusive2();
     cdbl q2 = -1.e-2;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
@@ -110,7 +111,7 @@ int main(int argc, char **argv) {
 
 
 //Timer::make("pdf@combineNLOg");
-
+/*
     cdbl sqrtSh = 200.;
     cdbl bjorkenX = -q2/(sqrtSh*sqrtSh - q2);
     iO.setBjorkenX(bjorkenX);
@@ -127,12 +128,49 @@ int main(int argc, char **argv) {
     cdbl i = 0.;//iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
     cdbl e = eO.F(n);
     printf("%e\t%e\t%e\t%e\n",i,e,i-e,(i-e)/i);
-    
+*/
 //Timer::logAll(cout);
 //Timer::deleteAll();
 
 
     return EXIT_SUCCESS;
+}
+
+
+int runInclusive2(){
+// Timer::make("hg1SV");
+    
+    cdbl m2 = 1.5*1.5;
+    const uint nlf = 3;
+    cdbl lambdaQCD = .194; // nlf=3
+    //cdbl m2 = 4.75*4.75;
+    //const uint nlf = 4;
+    cdbl Delta = 1e-6;
+    cdbl q2 = -10.;
+    LHAPDF::AlphaS_Analytic alphaS;
+    alphaS.setLambda(nlf + 1,lambdaQCD);
+    
+    InclusiveElProduction oG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction oL(m2,q2,Delta,L,nlf);
+    InclusiveElProduction oP(m2,q2,Delta,P,nlf);    
+    
+    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    //oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
+    //oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
+    
+    oL.setBjorkenX(.1);
+    const uint N = 99;
+    for (uint j = 0; j < N; ++j) {
+        cdbl pt = 2.5e-2 + 5e-2*j;
+        cdbl mu2 = 4.*m2 - q2 + 4.*pt*pt;
+        oL.setMu2(mu2);
+        oL.setAlphaS(alphaS.alphasQ2(mu2));
+        cdbl l = oL.dFg0_dHAQTransverseMomentum(pt);
+        printf("%e\t%e\n",pt,l);
+    }
+    /*Timer::logAll(cout);
+    Timer::deleteAll();*/
+	return EXIT_SUCCESS;
 }
 
 int runInclusive(){

@@ -154,7 +154,7 @@ public:
             || 0 == this->cgBarF1SVDelta0 || 0 == this->cgBarF1SVDelta1 || 0 == this->cgBarF1H 
             || 0 == this->cgBarR1SVDelta0 || 0 == this->cg0)
                 throw invalid_argument("need to set all arguments!");
-        this->setSp(a1);
+        this->setZ(a1);
         this->setT1(a2);
         this->setS4(a3,Delta);
         cdbl A0 = 1./(s4max - Delta);

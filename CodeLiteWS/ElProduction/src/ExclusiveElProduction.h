@@ -34,12 +34,6 @@ class ExclusiveElProduction : public AbstractElProduction {
  * @brief offset to lower integration bound in y \f$\delta_y\f$
  */
     dbl deltay = -0.;
-    
-/**
- * @brief returns \f$B'_{QED}\f$
- * @return \f$B'_{QED}\f$
- */
-    fPtr4dbl getBpQED() const;
 
 /** @name gluon coefficient functions */
 ///@{
@@ -163,7 +157,7 @@ public:
 /**
  * @brief destructor
  */
-    ~ExclusiveElProduction();
+    virtual ~ExclusiveElProduction();
 
 /** @name global setter */
 ///@{

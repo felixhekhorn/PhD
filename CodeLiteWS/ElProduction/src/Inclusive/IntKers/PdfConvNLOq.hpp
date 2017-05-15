@@ -62,7 +62,7 @@ public:
  * @return \f$1/z \sum\limits_q \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) \left(e_H^2 c_{q}^{(1)}(\eta,\xi) + e_q^2 d_{q}^{(1)}(\eta,\xi)\right)\f$
  */
     cdbl operator() (cdbl a1, cdbl a2, cdbl a3) {
-        this->setSp(a1);
+        this->setZ(a1);
         this->setT1(a2);
         this->setS4(a3,0.);
         cdbl meCq1 = cq1(m2,q2,sp,s4,t1) + this->lnF * cqBarF1(m2,q2,sp,s4,t1);

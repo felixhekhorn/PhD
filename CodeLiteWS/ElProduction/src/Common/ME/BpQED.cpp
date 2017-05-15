@@ -1,6 +1,6 @@
 #include "BpQED.h"
 
-namespace Exclusive {
+namespace Common {
 
 cdbl BpQEDG(cdbl m2, cdbl q2, cdbl sp, cdbl t1) {
 cdbl u1 = - sp - t1;
@@ -17,4 +17,4 @@ cdbl u1 = - sp - t1;
 return (m2*sp)/Power(t1,2) + (m2*sp)/Power(u1,2) + ((-0.5 - q2/sp)*t1)/u1 + ((-0.5 - q2/sp)*u1)/t1;
 }
 
-} // namespace Exclusive
+} // namespace Common

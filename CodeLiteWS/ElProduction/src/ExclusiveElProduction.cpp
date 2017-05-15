@@ -9,12 +9,12 @@
 #include "gslpp/gslpp.Functor.hpp"
 #include "./Integration.h"
 
-#include "Exclusive/ME/BpQED.h"
+#include "Common/ME/BpQED.h"
+#include "Common/ME/AltarelliParisi.hpp"
 #include "Exclusive/ME/Rp.h"
 #include "Exclusive/ME/SVp.h"
 #include "Exclusive/ME/NLOg.h"
 #include "Exclusive/ME/Ap.h"
-#include "Exclusive/ME/AltarelliParisi.hpp"
 
 #include "Exclusive/IntKers/CoeffPsKers.hpp"
 #include "Exclusive/IntKers/CoeffPsKerLOg.hpp"
@@ -23,6 +23,7 @@
 #include "Exclusive/IntKers/PdfConvNLOq.h"
 #include "Exclusive/IntKers/FKerAll.h"
 
+using namespace Common;
 using namespace Exclusive;
 
 ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, const projT proj, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
@@ -140,8 +141,6 @@ fPtr0dbl ExclusiveElProduction::getPggS1() const {
         default: throw invalid_argument("unknown projection!");\
     }\
 }
-
-getter4(BpQED)
 
 getter5(SVp)
 getter7(Rp)
@@ -385,7 +384,7 @@ void ExclusiveElProduction::activateHistogram(const histT t, const uint size, co
     
 void ExclusiveElProduction::setupHistograms() const {
     // hadronic S
-    cdbl Sh = -this->q2*(1./this->bjorkenX - 1.);
+    cdbl Sh = this->getHadronicS();
     for (histMapT::const_iterator it = this->histMap.cbegin(); it != this->histMap.cend(); ++it) {
         if (it->second->isInitialized())
             continue;
@@ -399,7 +398,7 @@ void ExclusiveElProduction::setupHistograms() const {
             case histT::HQPairDeltaPhi:         it->second->setRangesUniform(-M_PI,M_PI);                   break;
             case histT::HQPairTransverseMomentum:
                 /** @todo defalt upper limit of HQPairTransverseMomentum is actually smaller, than 2p_{2,t,max} */
-                it->second->setRangesUniform(0.,2.*sqrt(Sh/4. - this->m2));
+                it->second->setRangesUniform(0.,2.*this->getHAQptMax());
                 break;
             case histT::HQPairConeSizeVariable:
                 /** @todo determine default upper limit of HQPairConeSizeVariable */
@@ -410,7 +409,7 @@ void ExclusiveElProduction::setupHistograms() const {
                 {cdbl y0 = atanh(sqrt(1. - 4.*this->m2/Sh));
                 it->second->setRangesUniform(-y0,y0);}
                 break;
-            case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,sqrt(Sh/4. - this->m2));     break;
+            case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,this->getHAQptMax());        break;
             case histT::HAQTransverseMomentumScaling:  it->second->setRangesLog10(1.e-3,1.);                        break;
             case histT::HAQFeynmanX:                   it->second->setRangesUniform(-1.,1.);                        break;
             
