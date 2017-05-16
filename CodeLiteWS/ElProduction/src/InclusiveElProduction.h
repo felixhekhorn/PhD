@@ -203,6 +203,13 @@ public:
  */
     cdbl dFg0_dHAQTransverseMomentum(cdbl pt) const;
     
+/**
+ * @brief derivative of LO structure function to rapidity of heavy anti quark
+ * @param y rapidity of heavy anti quark
+ * @return dFg0_dy(y)
+ */
+    cdbl dFg0_dHAQRapidity(cdbl y) const;
+    
 ///@}
 
 };

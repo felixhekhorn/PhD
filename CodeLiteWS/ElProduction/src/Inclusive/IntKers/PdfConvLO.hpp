@@ -41,16 +41,12 @@ public:
     inline virtual cdbl operator() (cdbl az) {
         this->setZ(az);
         cdbl me = cg0(m2,q2,sp);
-        //if (this->bjorkenX/z < this->pdf->xMin()) {
-        //    printf("x/z out of range: %e\n",this->bjorkenX/z);
-        //}
         cdbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;
     }
 };
-
 
 /**
  * @brief LO gluon convolution differentiated to pt
@@ -101,7 +97,7 @@ public:
  * @return kernel
  */
     inline cdbl operator() (cdbl ay) {
-        cdbl y = -this->y0 + 2.*this->y0 * ay;
+        cdbl y = this->y0*(-1. + 2.*ay);
         cdbl ey = exp(y);
         cdbl Sh = this->getHadronicS();
         cdbl Shp = Sh - this->q2;
@@ -109,9 +105,77 @@ public:
         cdbl U1 = this->q2 - this->mt*(Sh/ey + this->q2*ey)/sqrt(Sh);
         cdbl xi = - U1/(Shp + T1);
         
-        cdbl me = 2.*Kggg*NC*CF*M_PI * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);
+        cdbl me = 4.*M_PI * Kggg*NC*CF * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);
         
         cdbl r = (2.*this->y0) * 2.*pt/Shp/(Shp+T1) * 1./xi*this->pdf->xfxQ2(21,xi,this->muF2) * me;
+        // Protect from ps corner cases
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
+    
+};
+
+/**
+ * @brief LO gluon convolution differentiated to y
+ */
+class PdfConvLO_dy : public PdfConvBase {
+    
+/**
+ * @brief pointer to Born matrix element
+ */
+    fPtr4dbl BpQED;
+    
+/**
+ * @brief rapidity of HAQ
+ */
+    dbl y;
+    
+/**
+ * @brief exponential of rapidity of HAQ
+ */
+    dbl ey;
+    
+/**
+ * @brief maximum of transverse mass of HAQ
+ */
+    dbl mt2Max;
+    
+public:
+    
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param BpQED pointer to Born matrix element
+ * @param y current y of HAQ
+ */
+    inline PdfConvLO_dy(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl y) :
+        PdfConvBase(m2, q2, bjorkenX, pdf, muF2),
+        BpQED(BpQED), y(y), ey(exp(y)){
+        cdbl coshy = cosh(y);
+        this->mt2Max = this->getHadronicS()/(4.*coshy*coshy);
+    }
+    
+/**
+ * @brief called function
+ * @param amt2 integration variable mapped on transverse mass mt2
+ * @return kernel
+ */
+    inline cdbl operator() (cdbl amt2) {
+        cdbl mt2 = this->m2 + (this->mt2Max - this->m2)*amt2;
+        cdbl mt = sqrt(mt2);
+        cdbl Sh = this->getHadronicS();
+        cdbl Shp = Sh - this->q2;
+        cdbl T1 = - Shp/Sqrt(Sh) * mt / ey;
+        cdbl U1 = this->q2 - mt*(Sh*ey + this->q2/ey)/sqrt(Sh);
+        cdbl xi = - U1/(Shp + T1);
+        
+        cdbl me = 4.*M_PI * Kggg*NC*CF * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);
+        
+        cdbl r = (this->mt2Max - this->m2) * 1./Shp/(Shp+T1) * 1./xi*this->pdf->xfxQ2(21,xi,this->muF2) * me;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;

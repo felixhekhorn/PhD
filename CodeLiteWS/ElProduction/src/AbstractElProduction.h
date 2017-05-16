@@ -118,6 +118,14 @@ protected:
     inline cdbl getHAQptMax() const {
         return sqrt(this->getHadronicS()/4. - this->m2);
     }
+    
+/**
+ * @brief get maximum value of rapidity of heavy anti quark
+ * @return y_Qbar^max
+ */
+    inline cdbl getHAQyMax() const {
+        return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS()));
+    }
    
 /**
  * @brief returns \f$B'_{QED}\f$

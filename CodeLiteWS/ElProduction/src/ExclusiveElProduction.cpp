@@ -406,7 +406,7 @@ void ExclusiveElProduction::setupHistograms() const {
                 break;
             
             case histT::HAQRapidity:
-                {cdbl y0 = atanh(sqrt(1. - 4.*this->m2/Sh));
+                {cdbl y0 = this->getHAQyMax();
                 it->second->setRangesUniform(-y0,y0);}
                 break;
             case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,this->getHAQptMax());        break;

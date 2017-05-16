@@ -205,3 +205,17 @@ cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) const {
     cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
     return n * eH*eH * int1D(&f);
 }
+
+cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) const {
+    this->checkHadronic();
+    // threshold cut off
+    if (this->bjorkenX >= this->zMax || y >= this->getHAQyMax() || y <= -this->getHAQyMax())
+        return 0.;
+    PdfConvLO_dy k(m2, q2, bjorkenX, pdf, muF2, this->getBpQED(), y);
+    gsl_function f;
+    f.function = gslpp::callFunctor<PdfConvLO_dy>;
+    f.params = &k;
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
+    return n * eH*eH * int1D(&f);
+}
