@@ -1,6 +1,7 @@
 #include "ExclusiveElProduction.h"
 
 #include <errno.h>
+#include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 
 #include <gsl/gsl_monte_vegas.h>

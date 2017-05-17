@@ -1,5 +1,7 @@
 #include "PdfConvBase.h"
 
+#include <boost/format.hpp>
+
 using namespace Exclusive;
 
 PdfConvBase::PdfConvBase(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) :

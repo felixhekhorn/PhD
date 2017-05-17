@@ -1,5 +1,7 @@
 #include "PhasespacePoint.h"
 
+#include <boost/format.hpp>
+
 #include <rk/geom3.hh>
 #include <gsl/gsl_rng.h>
 

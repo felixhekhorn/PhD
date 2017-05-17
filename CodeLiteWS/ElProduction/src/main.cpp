@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
 int runInclusive2(){
 // Timer::make("hg1SV");
     
-    cdbl m2 = 1.5*1.5;
+    cdbl m2 = 1.5*1.5*2.*2.;
     const uint nlf = 3;
     cdbl lambdaQCD = .194; // nlf=3
     //cdbl m2 = 4.75*4.75;
@@ -151,17 +151,17 @@ int runInclusive2(){
     alphaS.setLambda(nlf + 1,lambdaQCD);
     
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
-    InclusiveElProduction oL(m2,q2,Delta,G,nlf);
+    InclusiveElProduction oL(m2,q2,Delta,L,nlf);
     InclusiveElProduction oP(m2,q2,Delta,P,nlf);    
     
-    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    oG.setPdf("MorfinTungB",0);oL.setPdf("MorfinTungB",0);//oP.setPdf("DSSV2014",0);
     //oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
     //oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
     
-    /*oL.setBjorkenX(.1);
+    /*oL.setBjorkenX(1e-4);
     const uint N = 99;
     for (uint j = 0; j < N; ++j) {
-        cdbl pt = 2.5e-2 + 5e-2*j;
+        cdbl pt = 20.*(j+.5)/(N+1);
         cdbl mu2 = 4.*m2 - q2 + 4.*pt*pt;
         oL.setMu2(mu2);
         oL.setAlphaS(alphaS.alphasQ2(mu2));
@@ -169,16 +169,34 @@ int runInclusive2(){
         printf("%e\t%e\n",pt,l);
     }*/
     
-    oL.setBjorkenX(1e-4);
+    cdbl bjorkenX = .1;
+    cdbl Sh = -q2*(1/bjorkenX - 1.);
+    oL.setHadronicS(Sh);
+    const uint N = 99;
+    cdbl mu2 = 4.*m2 - q2;
+    cdbl y0 = atanh(sqrt(1. - 4.*m2/Sh));
+    printf("Sh = %e\ty0 = %e\n\n",Sh,y0);
+    oL.setMu2(mu2);
+    oL.setAlphaS(alphaS.alphasQ2(mu2));
+    for (uint j = 0; j < N; ++j) {
+        cdbl y = y0*(-1. + 2./(N+1)*(.5+j));
+        cdbl l = oL.dFg0_dHAQRapidity(y);
+        printf("%e\t%e\n",y,l);
+    }
+    printf("\n\nint = %e =?= %e\n",oL.Fg0_(),oL.Fg0());
+    
+    /*
     const uint N = 99;
     cdbl mu2 = 4.*m2 - q2;
     oL.setMu2(mu2);
     oL.setAlphaS(alphaS.alphasQ2(mu2));
     for (uint j = 0; j < N; ++j) {
-        cdbl y = 5.5*(-1. + 2./(N+1)*(.5+j));
-        cdbl l = oL.dFg0_dHAQRapidity(y);
-        printf("%e\t%e\n",y,l);
-    }
+        cdbl x = pow(10,-1. - 3.*j/(N+1));
+        oL.setBjorkenX(x);
+        cdbl a = oL.Fg0();
+        cdbl b = oL.Fg0_();
+        printf("%e\t%e\t%e\t%e\n",x,a,b,b/a);
+    }*/
     
     /*Timer::logAll(cout);
     Timer::deleteAll();*/

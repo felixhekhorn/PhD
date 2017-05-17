@@ -1,7 +1,9 @@
 #include "InclusiveElProduction.h"
 
+#include <boost/format.hpp>
 #include <gsl/gsl_monte_vegas.h>
 #include <gsl/gsl_integration.h>
+
 #include "gslpp/gslpp.Functor.hpp"
 #include "Integration.h"
 
@@ -192,6 +194,20 @@ cdbl InclusiveElProduction::Fq1() const {
     return n*Fq1;
 }
 
+cdbl InclusiveElProduction::Fg0_() const {
+    this->checkHadronic();
+    // threshold cut off
+    if (this->bjorkenX >= this->zMax)
+        return 0.;
+    PdfConvLO_dmt2dy k(m2, q2, bjorkenX, pdf, muF2, this->getBpQED());
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<PdfConvLO_dmt2dy>;
+    f.params = &k;
+    cdbl eH = getElectricCharge(this->nlf + 1);
+    cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI);
+    return n * eH*eH * int2D(&f);
+}
+
 cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) const {
     this->checkHadronic();
     // threshold cut off
@@ -209,8 +225,13 @@ cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) const {
 cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) const {
     this->checkHadronic();
     // threshold cut off
-    if (this->bjorkenX >= this->zMax || y >= this->getHAQyMax() || y <= -this->getHAQyMax())
-        return 0.;
+    cdbl y0 = this->getHAQyMax();
+    if (this->bjorkenX > this->zMax)
+        throw invalid_argument((boost::format("invalid x_bj range! 0 < x_bj=%e < z_max=%e")%this->bjorkenX%this->zMax).str());
+    if (y < -y0 || y > y0)
+        throw invalid_argument((boost::format("invalid y range! |y=%e| < y_0=%e")%y%y0).str());
+    //if (this->bjorkenX >= this->zMax || y >= this->getHAQyMax() || y <= -this->getHAQyMax())
+    //    return 0.;
     PdfConvLO_dy k(m2, q2, bjorkenX, pdf, muF2, this->getBpQED(), y);
     gsl_function f;
     f.function = gslpp::callFunctor<PdfConvLO_dy>;
