@@ -34,16 +34,16 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	return runInclusive2();
-    cdbl q2 = -1.e-2;
+    cdbl q2 = -10.;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
-    //cdbl lambdaQCD = .194; // nlf=3
-    cdbl lambdaQCD = .2; // nlf=3
-    //cdbl mu02 = (4.*m2-q2);
-    //const Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
-    cdbl mu02 = 2.*m2;
-    Exclusive::DynamicScaleFactors mu02F(2.,0.,0.,2.);
+    cdbl lambdaQCD = .194; // nlf=3
+    //cdbl lambdaQCD = .2; // nlf=3
+    cdbl mu02 = (4.*m2-q2);
+    const Exclusive::DynamicScaleFactors mu02F(4.,-1.,0.*1.);
+    //cdbl mu02 = 2.*m2;
+    //Exclusive::DynamicScaleFactors mu02F(2.,0.,0.,0.);
     /*cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
     cdbl lambdaQCD = .158; // nlf=4
@@ -58,9 +58,9 @@ int main(int argc, char **argv) {
     //const str pdf = "MorfinTungB";
     //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
-    //const str pdf = "MSTW2008nlo90cl";
+    const str pdf = "MSTW2008nlo90cl";
     //const str pdf = "DSSV2014";
-    const str pdf = "GRSV96STDLO";
+    //const str pdf = "GRSV96STDLO";
     
     LHAPDF::AlphaS_Analytic alphaS;
     alphaS.setLambda(nlf + 1,lambdaQCD);
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     alphaS.setOrderQCD(1 + n);
     cdbl aS = alphaS.alphasQ2(mu02);
     
-    const projT proj = P;
+    const projT proj = L;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
     InclusiveElProduction iL(m2,q2,Delta,L,nlf);
@@ -83,32 +83,33 @@ int main(int argc, char **argv) {
     eO.MCparams.iterations = 5;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
-    eO.MCparams.verbosity = 3;
+    eO.MCparams.verbosity = 0;
     
-    /*
-    uint N = 11;
-    printf("a\t\ti\t\te\t\tabs\t\trel\n");
-    for (uint j = 0; j < N; ++j) {
-        cdbl a = pow(10,-1.-3./(N-1)*j);
-        iO.setBjorkenX(a);
-        eO.setBjorkenX(a);
-        cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
-        {cdbl e = eO.F(n);
-        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
-    }*/
-/*
-    const uint N = 11;
-    printf("a\t\ti\t\te\t\tabs\t\trel\n");
-    for (uint j = 0; j < N; ++j) {
-        cdbl a = pow(10,-4.+2.*j/(N-1));
-        iO.setEta(a);
-        eO.setEta(a);
-        cdbl i = iO.cg1();
-        {cdbl e = eO.cg1();
-        printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+    {
+        uint N = 11;
+        printf("a\t\ti\t\te\t\tabs\t\trel\n");
+        for (uint j = 0; j < N; ++j) {
+            cdbl a = pow(10,-1.-3./(N-1)*j);
+            iO.setBjorkenX(a);
+            eO.setBjorkenX(a);
+            cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
+            {cdbl e = eO.F(n);
+            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+        }
     }
-*/
 
+    /*{
+        const uint N = 101;
+        printf("a\t\ti\t\te\t\tabs\t\trel\n");
+        for (uint j = 0; j < N; ++j) {
+            cdbl a = pow(10,-4.+8.*j/(N-1));
+            iO.setEta(a);
+            eO.setEta(a);
+            cdbl i = iO.cg0();
+            {cdbl e = eO.cg0();
+            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+        }
+    }*/
 
 //Timer::make("pdf@combineNLOg");
 /*
@@ -132,7 +133,6 @@ int main(int argc, char **argv) {
 //Timer::logAll(cout);
 //Timer::deleteAll();
 
-
     return EXIT_SUCCESS;
 }
 
@@ -140,62 +140,84 @@ int main(int argc, char **argv) {
 int runInclusive2(){
 // Timer::make("hg1SV");
     
-    cdbl m2 = 1.5*1.5*2.*2.;
+    cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
     cdbl lambdaQCD = .194; // nlf=3
     //cdbl m2 = 4.75*4.75;
     //const uint nlf = 4;
-    cdbl Delta = 1e-6;
     cdbl q2 = -10.;
     LHAPDF::AlphaS_Analytic alphaS;
+    alphaS.setOrderQCD(1);
     alphaS.setLambda(nlf + 1,lambdaQCD);
+    const str pdf = "MorfinTungB";
+    projT proj = L;
     
-    InclusiveElProduction oG(m2,q2,Delta,G,nlf);
-    InclusiveElProduction oL(m2,q2,Delta,L,nlf);
-    InclusiveElProduction oP(m2,q2,Delta,P,nlf);    
+    cdbl Delta = 1e-6;
+    cdbl xTilde = .8;
+    cdbl omega = 1.;
+    cdbl deltax = 1e-6;
+    cdbl deltay = 7e-6;
     
-    oG.setPdf("MorfinTungB",0);oL.setPdf("MorfinTungB",0);//oP.setPdf("DSSV2014",0);
-    //oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
-    //oG.setAlphaS(aS);oL.setAlphaS(aS);oP.setAlphaS(aS);
+    InclusiveElProduction iO(m2,q2,Delta,proj,nlf);    
+    ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     
-    /*oL.setBjorkenX(1e-4);
-    const uint N = 99;
-    for (uint j = 0; j < N; ++j) {
-        cdbl pt = 20.*(j+.5)/(N+1);
-        cdbl mu2 = 4.*m2 - q2 + 4.*pt*pt;
+    eO.MCparams.calls = 500000;
+    eO.MCparams.iterations = 5;
+    eO.MCparams.adaptChi2 = false;
+    eO.MCparams.warmupCalls = 5000;
+    eO.MCparams.verbosity = 2;
+    
+    iO.setPdf(pdf,0);eO.setPdf(pdf,0);
+    
+    {
+        cdbl bjorkenX = 1e-4;
+        iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
+        const uint N = 99;
+        for (uint j = 0; j < N; ++j) {
+            cdbl pt = 20.*(j+.5)/(N+1);
+            cdbl mu2 = 4.*m2 - 1.*q2 + 4.*pt*pt;
+            iO.setMu2(mu2);
+            iO.setAlphaS(alphaS.alphasQ2(mu2));
+            cdbl l = iO.dFg0_dHAQTransverseMomentum(pt);
+            printf("%e\t%e\n",pt,l);
+        }
+        cout << endl << endl;
+        eO.setLambdaQCD(lambdaQCD);
+        eO.setMu2Factors(Exclusive::DynamicScaleFactors(4.,-1.,0.,4.));
+        printf("int_ex = %e <-> int_inc = %e =?= %e\n",eO.F(0),iO.Fg0_(),iO.Fg0());
+    }
+    
+    /*{
+        cdbl bjorkenX = .01;
+        cdbl Sh = -q2*(1/bjorkenX - 1.);
+        oL.setHadronicS(Sh);
+        const uint N = 99;
+        cdbl mu2 = 4.*m2 - q2;
+        cdbl y0 = atanh(sqrt(1. - 4.*m2/Sh));
+        printf("Sh = %e\ty0 = %e\n\n",Sh,y0);
         oL.setMu2(mu2);
         oL.setAlphaS(alphaS.alphasQ2(mu2));
-        cdbl l = oL.dFg0_dHAQTransverseMomentum(pt);
-        printf("%e\t%e\n",pt,l);
+        for (uint j = 0; j < N; ++j) {
+            cdbl y = 3.5*(-1. + 2./(N+1)*(.5+j));
+            cdbl l = oL.dFg0_dHAQRapidity(y);
+            printf("%e\t%e\n",y,l);
+        }
+        printf("\n\nint = %e =?= %e\n",oL.Fg0_(),oL.Fg0());
     }*/
     
-    cdbl bjorkenX = .1;
-    cdbl Sh = -q2*(1/bjorkenX - 1.);
-    oL.setHadronicS(Sh);
-    const uint N = 99;
-    cdbl mu2 = 4.*m2 - q2;
-    cdbl y0 = atanh(sqrt(1. - 4.*m2/Sh));
-    printf("Sh = %e\ty0 = %e\n\n",Sh,y0);
-    oL.setMu2(mu2);
-    oL.setAlphaS(alphaS.alphasQ2(mu2));
-    for (uint j = 0; j < N; ++j) {
-        cdbl y = y0*(-1. + 2./(N+1)*(.5+j));
-        cdbl l = oL.dFg0_dHAQRapidity(y);
-        printf("%e\t%e\n",y,l);
-    }
-    printf("\n\nint = %e =?= %e\n",oL.Fg0_(),oL.Fg0());
-    
-    /*
-    const uint N = 99;
-    cdbl mu2 = 4.*m2 - q2;
-    oL.setMu2(mu2);
-    oL.setAlphaS(alphaS.alphasQ2(mu2));
-    for (uint j = 0; j < N; ++j) {
-        cdbl x = pow(10,-1. - 3.*j/(N+1));
-        oL.setBjorkenX(x);
-        cdbl a = oL.Fg0();
-        cdbl b = oL.Fg0_();
-        printf("%e\t%e\t%e\t%e\n",x,a,b,b/a);
+    /*{
+        const uint N = 99;
+        cdbl mu2 = 4.*m2 - q2;
+        oL.setMu2(mu2);
+        oL.setAlphaS(alphaS.alphasQ2(mu2));
+        printf("x\t\ta\t\tb\t\tabs\t\trel\n");
+        for (uint j = 0; j < N; ++j) {
+            cdbl x = pow(10,-1. - 3.*j/(N+1));
+            oL.setBjorkenX(x);
+            cdbl a = oL.Fg0();
+            cdbl b = oL.Fg0_();
+            printf("%e\t%e\t%e\t%e\t%e\n",x,a,b,a-b,(a-b)/a);
+        }
     }*/
     
     /*Timer::logAll(cout);

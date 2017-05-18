@@ -1,5 +1,5 @@
-#ifndef ElProduction_H_
-#define ElProduction_H_
+#ifndef InclusiveElProduction_H_
+#define InclusiveElProduction_H_
 
 #include "config.h"
 #include "AbstractElProduction.h"
@@ -197,12 +197,6 @@ public:
     cdbl Fq1() const;
     
 /**
- * @brief LO structure function
- * @return \f$F^{(0)}_g\f$
- */
-    cdbl Fg0_() const;
-    
-/**
  * @brief derivative of LO structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @return dFg0_dpt(pt)
@@ -221,4 +215,4 @@ public:
 };
 
 
-#endif // ElProduction_H_
+#endif // InclusiveElProduction_H_

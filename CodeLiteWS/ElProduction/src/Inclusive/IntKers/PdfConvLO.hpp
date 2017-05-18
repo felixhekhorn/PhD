@@ -72,7 +72,6 @@ protected:
  * @return pdf * matrix element
  */
     inline cdbl PdfMe(cdbl ey, cdbl mt) {
-//return 1.;
         cdbl Sh = this->getHadronicS();
         cdbl Shp = Sh - this->q2;
         cdbl T1 = - Shp/Sqrt(Sh) * mt / ey;
@@ -81,7 +80,7 @@ protected:
         
         cdbl me = 4.*M_PI * Kggg*NC*CF * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);
         
-        return 1./Shp/(Shp+T1) * 1./xi*this->pdf->xfxQ2(21,xi,this->muF2) * me;
+        return 1./Shp/(Shp+T1) * 1./xi/xi*this->pdf->xfxQ2(21,xi,this->muF2) * me;
     }
     
 public:
@@ -119,7 +118,6 @@ public:
         if (!isfinite(r)) return 0.;
         return r;
     }
-    
 };
 
 /**

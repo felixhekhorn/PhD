@@ -29,7 +29,6 @@ protected:
 
 };
 
-
 /**
  * @brief Inclusive phasespace kernel of soft+virtual contributions
  */

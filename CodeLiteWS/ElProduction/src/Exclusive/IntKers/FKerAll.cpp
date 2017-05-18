@@ -53,7 +53,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
         cdbl aS = this->alphaS->alphasQ2(muR2);
         cdbl eH = getElectricCharge(this->nlf + 1);
         //this->LOg->setMuF2(p.getMuF2());
-        cdbl nLO = aS * 1./m2 * (-q2)/(4.*M_PI*M_PI);
+        cdbl nLO = aS/m2 * (-q2)/(4.*M_PI*M_PI);
         cdbl nLOg = this->jacZ * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,muF2);
         this->LOg->setVars(az,aTheta1);
         cdbl cg0 = this->LOg->cg0();
