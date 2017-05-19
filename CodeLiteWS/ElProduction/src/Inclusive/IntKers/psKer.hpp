@@ -4,7 +4,7 @@
 #include <dvegas/dvegas.h>
 
 #include "../../config.h"
-#include "../../Color.h"
+#include "../../Common/Color.h"
 #include "IntKerBase.hpp"
 
 using namespace Color;

@@ -8,7 +8,7 @@
 #include <gsl/gsl_integration.h>
 
 #include "gslpp/gslpp.Functor.hpp"
-#include "./Integration.h"
+#include "Common/Integration.h"
 
 #include "Common/ME/BpQED.h"
 #include "Common/ME/AltarelliParisi.hpp"
@@ -28,7 +28,7 @@ using namespace Common;
 using namespace Exclusive;
 
 ExclusiveElProduction::ExclusiveElProduction(cdbl m2, cdbl q2, const projT proj, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay):
-    AbstractElProduction(m2,q2,proj,nlf), aS() {
+    AbstractElProduction(m2,q2,proj,nlf) {
     this->setXTilde(xTilde);
     this->setOmega(omega);
     this->setDeltax(deltax);
@@ -294,42 +294,6 @@ throw logic_error("TODO: reimplement! delegate?");
     return n*int5D(&f);*/
 }
 
-void ExclusiveElProduction::setMuR2(cdbl muR2) {
-    throw logic_error("use setMuR2Factors instead!");
-}
-
-void ExclusiveElProduction::setMuF2(cdbl muR2) {
-    throw logic_error("use setMuF2Factors instead!");
-}
-
-void ExclusiveElProduction::setMu2(cdbl muR2) {
-    throw logic_error("use setMu2Factors instead!");
-}
-
-void ExclusiveElProduction::setAlphaS(cdbl muR2) {
-    throw logic_error("use setLambdaQCD instead!");
-}
-
-void ExclusiveElProduction::setMuR2Factors(const Exclusive::DynamicScaleFactors& muR2Factors) {
-    this->muR2Factors = muR2Factors;
-    this->hasMuR2 = true;
-}
-    
-void ExclusiveElProduction::setMuF2Factors(const Exclusive::DynamicScaleFactors& muF2Factors) {
-    this->muF2Factors = muF2Factors;
-    this->hasMuF2 = true;
-}
-    
-void ExclusiveElProduction::setMu2Factors(const Exclusive::DynamicScaleFactors& mu2Factors) {
-    this->setMuF2Factors(mu2Factors);
-    this->setMuR2Factors(mu2Factors);
-}
-
-void ExclusiveElProduction::setLambdaQCD(cdbl lambdaQCD) {
-    this->aS.setLambda(this->nlf + 1, lambdaQCD);
-    this->hasAlphaS = true;
-}
-
 cdbl ExclusiveElProduction::F(const uint order) {
     if (order > 1)
         throw domain_error((boost::format("order has to be either 0 or 1")%order).str());
@@ -351,9 +315,8 @@ cdbl ExclusiveElProduction::F(const uint order) {
     NLOq.setAp2(this->getAp2());
     NLOq.setAp3(this->getAp3());
     // Full kernel
-    FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
+    FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay,this->muR2,this->muF2);
     k.setAlphaS(&(this->aS));
-    k.setMuRF2Factors(this->muR2Factors,this->muF2Factors);
     k.setOrder(order);
     k.setKers(&LOg,&NLOg,&NLOq);
     k.setPdf(this->pdf);

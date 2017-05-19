@@ -1,6 +1,6 @@
 #include "PdfConvLOg.h"
 
-#include "../../Color.h"
+#include "../../Common/Color.h"
 using namespace Color;
 using namespace Exclusive;
 

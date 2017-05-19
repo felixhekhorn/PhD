@@ -2,9 +2,9 @@
 
 using namespace Exclusive;
 
-FKerAll::FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay) :
+FKerAll::FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay, const Common::DynamicScaleFactors& muR2Factors, const Common::DynamicScaleFactors& muF2Factors) :
     PdfConvBase(m2, q2, bjorkenX, nlf, xTilde, omega, deltax, deltay),
-    HepSource::Integrand(5,1), histMap(0){
+    HepSource::Integrand(5,1), muR2Factors(muR2Factors), muF2Factors(muF2Factors), histMap(0){
 }
     
 void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
@@ -23,11 +23,6 @@ void FKerAll::setAlphaS(LHAPDF::AlphaS* alphaS) {
 
 void FKerAll::setOrder(const uint order) {
     this->order = order;
-}
-
-void FKerAll::setMuRF2Factors(const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors) {
-    this->muR2Factors = muR2Factors;
-    this->muF2Factors = muF2Factors;
 }
     
 cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {

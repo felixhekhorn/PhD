@@ -2,7 +2,7 @@
 #define AltarelliParisi_HPP
 
 #include "../../config.h"
-#include "../../Color.h"
+#include "../../Common/Color.h"
 
 using namespace Color;
 

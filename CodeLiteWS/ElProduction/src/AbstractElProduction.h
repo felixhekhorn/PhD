@@ -4,6 +4,7 @@
 #include "config.h"
 #include "Pdf/PdfWrapper.h"
 #include "Common/ME/BpQED.h"
+#include "Common/DynamicScaleFactors.hpp"
 
 /**
  * @brief base class
@@ -47,9 +48,9 @@ protected:
     PdfWrapper* pdf;
     
 /**
- * @brief renormalisation scale \f$\mu_R^2\f$
+ * @brief factors for renormalisation scale \f$\mu_R^2\f$
  */
-    dbl muR2;
+    Common::DynamicScaleFactors muR2;
 
 /**
  * @brief has renormalisation scale been set?
@@ -57,9 +58,9 @@ protected:
     bool hasMuR2;
     
 /**
- * @brief factorisation scale \f$\mu_F^2\f$
+ * @brief factors for factorisation scale \f$\mu_F^2\f$
  */
-    dbl muF2;
+    Common::DynamicScaleFactors muF2;
 
 /**
  * @brief has factorisation scale \f$\mu_F^2\f$ been set?
@@ -77,9 +78,9 @@ protected:
     bool hasBjorkenX;
     
 /**
- * @brief running strong coupling
+ * @brief running strong coupling as provided by LHAPDF
  */
-    dbl alphaS;
+    LHAPDF::AlphaS_Analytic aS;
     
 /**
  * has running strong coupling been set
@@ -209,25 +210,25 @@ public:
  * @brief sets renormalisation scale \f$\mu_R^2\f$
  * @param muR2 renormalisation scale \f$\mu_R^2\f$
  */
-    virtual void setMuR2(cdbl muR2);
+    void setMuR2(const Common::DynamicScaleFactors& muR2);
     
 /**
  * @brief sets factorisation scale \f$\mu_F^2\f$
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
-    virtual void setMuF2(cdbl muF2);
+    void setMuF2(const Common::DynamicScaleFactors& muF2);
     
 /**
  * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
  */
-    virtual void setMu2(cdbl mu2);
+    void setMu2(const Common::DynamicScaleFactors& mu2);
     
 /**
- * @brief sets strong coupling
- * @param alphaS strong coupling
+ * @brief sets \f$\Lambda_{QCD,n_{lf+1}}\f$
+ * @param lambdaQCD \f$\Lambda_{QCD,n_{lf+1}}\f$
  */
-    virtual void setAlphaS(cdbl alphaS);
+    void setLambdaQCD(cdbl lambdaQCD);
     
 /**
  * @brief sets Bjorken x

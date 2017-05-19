@@ -43,42 +43,6 @@ enum histT {
 };
 
 /**
- * @brief computes dynamic scales, defaults to 4m²-q²
- */
-struct DynamicScaleFactors {
-    
-/**
- * @brief factor to m²
- */
-    dbl cM2 = 4.;
-    
-/**
- * @brief factor to q² (!NOT! to Q²)
- */
-    dbl cQ2 = -1.;
-
-/**
- * @brief factor to \f$(p_{\HepGenParticle{Q}{}{},T}+p_{\HepGenAntiParticle{Q}{}{}},T)^2\f$
- */
-    dbl cSqrPtSumHQPair = 0.;
-
-/**
- * @brief factor to \f$p_{\HepGenAntiParticle{Q}{}{},T}^2\f$
- */
-    dbl cSqrPtHAQ = 0.;
-    
-/**
- * @brief constructor
- * @param cM2 factor to m²
- * @param cQ2 factor to q² (!NOT! to Q²)
- * @param cSqrPtSumHQPair factor to \f$(p_{\HepGenParticle{Q}{}{},T}+p_{\HepGenAntiParticle{Q}{}{}},T)^2\f$
- * @param cSqrPtHAQ factor to \f$p_{\HepGenAntiParticle{Q}{}{},T}^2\f$
- */
-    inline DynamicScaleFactors(cdbl cM2 = 4., cdbl cQ2 = -1., cdbl cSqrPtSumHQPair = 0., cdbl cSqrPtHAQ = 0.) :
-        cM2(cM2), cQ2(cQ2), cSqrPtSumHQPair(cSqrPtSumHQPair), cSqrPtHAQ(cSqrPtHAQ) {};
-};
-
-/**
  * @brief shorthand for map of histograms
  */
 typedef unordered_map<histT,gslpp::Histogram*> histMapT;

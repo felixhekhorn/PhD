@@ -1,7 +1,7 @@
 #include "PdfConvNLOq.h"
 
 #include "KinematicVars.hpp"
-#include "../../Color.h"
+#include "../../Common/Color.h"
 using namespace Color;
 using namespace Exclusive;
     

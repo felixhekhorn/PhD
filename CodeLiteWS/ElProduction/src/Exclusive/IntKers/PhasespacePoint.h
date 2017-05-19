@@ -6,6 +6,7 @@
 #include "../../config.h"
 #include "../ConfigExclusive.h"
 #include "KinematicVars.hpp"
+#include "../../Common/DynamicScaleFactors.hpp"
 
 namespace Exclusive {
 
@@ -32,12 +33,12 @@ class PhasespacePoint {
 /**
  * @brief factors for \f$\mu_R^2\f$
  */
-    DynamicScaleFactors muR2Factors;
+    Common::DynamicScaleFactors muR2Factors;
 
 /**
  * @brief factors for \f$\mu_F^2\f$
  */
-    DynamicScaleFactors muF2Factors;
+    Common::DynamicScaleFactors muF2Factors;
     
 /**
  * @brief current z
@@ -103,7 +104,7 @@ class PhasespacePoint {
  * @brief computes a scale by given factors
  * @param factors
  */
-    cdbl getDynamicScale(const DynamicScaleFactors& factors) const;
+    cdbl getDynamicScale(const Common::DynamicScaleFactors& factors) const;
     
 public:
     
@@ -115,7 +116,7 @@ public:
  * @param muR2Factors factors for \f$\mu_R^2\f$
  * @param muF2Factors factors for \f$\mu_F^2\f$
  */
-    PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors);
+    PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const Common::DynamicScaleFactors& muR2Factors, const Common::DynamicScaleFactors& muF2Factors);
     
 /**
  * @brief sets a LO phase space point

@@ -36,12 +36,12 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
 /**
  * @brief factors for \f$\mu_R^2\f$
  */
-    DynamicScaleFactors muR2Factors;
+    Common::DynamicScaleFactors muR2Factors;
 
 /**
  * @brief factors for \f$\mu_F^2\f$
  */
-    DynamicScaleFactors muF2Factors;
+    Common::DynamicScaleFactors muF2Factors;
     
 /**
  * @brief parton distribution functions
@@ -119,7 +119,7 @@ public:
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
  */
-    FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay);
+    FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay, const Common::DynamicScaleFactors& muR2Factors, const Common::DynamicScaleFactors& muF2Factors);
     
 /**
  * @brief sets all kernels
@@ -134,13 +134,6 @@ public:
  * @param alphaS running strong coupling
  */
     void setAlphaS(LHAPDF::AlphaS* alphaS);
-    
-/**
- * @brief sets factors for \f$\mu_R^2\f$ and \f$\mu_F^2\f$
- * @param muR2Factors factors for \f$\mu_R^2\f$
- * @param muF2Factors factors for \f$\mu_F^2\f$
- */
-    void setMuRF2Factors(const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors);
 
 /**
  * @brief sets pdf 

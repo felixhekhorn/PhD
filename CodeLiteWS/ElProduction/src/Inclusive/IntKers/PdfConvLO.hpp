@@ -2,7 +2,7 @@
 #define Inclusive_PdfConvLO_H_
 
 #include "PdfConvBase.hpp"
-#include "../../Color.h"
+#include "../../Common/Color.h"
 
 using namespace Color;
 
@@ -40,7 +40,7 @@ public:
  */
     inline virtual cdbl operator() (cdbl az) {
         this->setZ(az);
-        cdbl me = cg0(m2,q2,sp);
+        cdbl me = cg0(m2,q2,sp)/m2;
         cdbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/z,this->muF2) * me;
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
@@ -74,8 +74,8 @@ protected:
     inline cdbl PdfMe(cdbl ey, cdbl mt) {
         cdbl Sh = this->getHadronicS();
         cdbl Shp = Sh - this->q2;
-        cdbl T1 = - Shp/Sqrt(Sh) * mt / ey;
-        cdbl U1 = this->q2 - mt*(Sh*ey + this->q2/ey)/sqrt(Sh);
+        cdbl T1 = - Shp/Sqrt(Sh) * mt * ey;
+        cdbl U1 = this->q2 - mt*(Sh/ey + this->q2*ey)/sqrt(Sh);
         cdbl xi = - U1/(Shp + T1);
         
         cdbl me = 4.*M_PI * Kggg*NC*CF * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);

@@ -34,10 +34,10 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setPartonicS", &InclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
         .def("setPdf", &InclusiveElProduction::setPdf, "sets pdf")
-        .def("setMuR2", &InclusiveElProduction::setMuR2, "sets renormalisation scale")
-        .def("setMuF2", &InclusiveElProduction::setMuF2, "sets factorisation scale")
+        .def("setMuR2", &InclusiveElProduction::setMuR2, "sets factors for renormalisation scale")
+        .def("setMuF2", &InclusiveElProduction::setMuF2, "sets factors for factorisation scale")
         .def("setMu2", &InclusiveElProduction::setMu2, "sets common scale")
-        .def("setAlphaS", &InclusiveElProduction::setAlphaS, "sets running strong coupling")
+        .def("setLambdaQCD", &InclusiveElProduction::setLambdaQCD, "sets lambda_{QCD,f}")
         .def("setBjorkenX", &InclusiveElProduction::setBjorkenX, "sets Bjorken x")
         .def("setHadronicS", &InclusiveElProduction::setHadronicS, "sets hadronic center of mass energy")
         // partonic coefficient functions
@@ -53,6 +53,8 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("Fg0", &InclusiveElProduction::Fg0)
         .def("Fg1", &InclusiveElProduction::Fg1)
         .def("Fq1", &InclusiveElProduction::Fq1)
+        .def("dFg0_dHAQTransverseMomentum", &InclusiveElProduction::dFg0_dHAQTransverseMomentum)
+        .def("dFg0_dHAQRapidity", &InclusiveElProduction::dFg0_dHAQRapidity)
     ;
     
     class_<ExclusiveElProduction>("ExclusiveElProduction", "application class for exclusive electro production", init<double,double,projT,uint,double,double,double,double>())
@@ -65,9 +67,9 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("setPartonicS", &ExclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
         .def("setPdf", &ExclusiveElProduction::setPdf, "sets pdf")
-        .def("setMuR2Factors", &ExclusiveElProduction::setMuR2Factors, "sets factors for renormalisation scale")
-        .def("setMuF2Factors", &ExclusiveElProduction::setMuF2Factors, "sets factors for factorisation scale")
-        .def("setMu2Factors", &ExclusiveElProduction::setMu2Factors, "sets factors for common scale")
+        .def("setMuR2", &ExclusiveElProduction::setMuR2, "sets factors for renormalisation scale")
+        .def("setMuF2", &ExclusiveElProduction::setMuF2, "sets factors for factorisation scale")
+        .def("setMu2", &ExclusiveElProduction::setMu2, "sets factors for common scale")
         .def("setLambdaQCD", &ExclusiveElProduction::setLambdaQCD, "sets lambda_{QCD,f}")
         .def("setBjorkenX", &ExclusiveElProduction::setBjorkenX, "sets Bjorken x")
         .def("setHadronicS", &InclusiveElProduction::setHadronicS, "sets hadronic center of mass energy")
@@ -119,11 +121,11 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2, "iterate until |chi2-1| < 0.5?")
     ;
     
-    class_<Exclusive::DynamicScaleFactors>("ExclusiveDynamicScaleFactors", "computes dynamic scales", init<optional<double,double,double,double>>())
-        .def_readwrite("cM2", &Exclusive::DynamicScaleFactors::cM2, "factor to m2")
-        .def_readwrite("cQ2", &Exclusive::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
-        .def_readwrite("cSqrPtSumHQPair", &Exclusive::DynamicScaleFactors::cSqrPtSumHQPair, "factor to (p_{Q,T}+p_{Qbar,T})^2")
-        .def_readwrite("cSqrPtHAQ", &Exclusive::DynamicScaleFactors::cSqrPtHAQ, "factor to p_{Qbar,T)^2")
+    class_<Common::DynamicScaleFactors>("DynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
+        .def_readwrite("cM2", &Common::DynamicScaleFactors::cM2, "factor to m2")
+        .def_readwrite("cQ2", &Common::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
+        .def_readwrite("cHQPairTransverseMomentum", &Common::DynamicScaleFactors::cHQPairTransverseMomentum, "factor to (p_{Q,T}+p_{Qbar,T})^2")
+        .def_readwrite("cHAQTransverseMomentum", &Common::DynamicScaleFactors::cHAQTransverseMomentum, "factor to p_{Qbar,T)^2")
     ;
     
     /*

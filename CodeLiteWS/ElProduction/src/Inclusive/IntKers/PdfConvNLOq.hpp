@@ -56,18 +56,18 @@ public:
     
 /**
  * @brief called function
- * @param a1 integration variable
- * @param a2 integration variable
- * @param a3 integration variable
+ * @param aZ integration variable mapped on z
+ * @param at1 integration variable mapped on t1
+ * @param as4 integration variable mapped on s4
  * @return \f$1/z \sum\limits_q \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) \left(e_H^2 c_{q}^{(1)}(\eta,\xi) + e_q^2 d_{q}^{(1)}(\eta,\xi)\right)\f$
  */
-    cdbl operator() (cdbl a1, cdbl a2, cdbl a3) {
-        this->setZ(a1);
-        this->setT1(a2);
-        this->setS4(a3,0.);
+    cdbl operator() (cdbl aZ, cdbl at1, cdbl as4) {
+        this->setZ(aZ);
+        this->setT1(at1);
+        this->setS4(as4,0.);
+        cdbl xi = this->bjorkenX/z;
         cdbl meCq1 = cq1(m2,q2,sp,s4,t1) + this->lnF * cqBarF1(m2,q2,sp,s4,t1);
         cdbl meDq1 = dq1(m2,q2,sp,s4,t1);
-        cdbl xi = this->bjorkenX/z;
         dbl fqs = 0.;
         cdbl eH = getElectricCharge(this->nlf + 1);
         for (uint q = 1; q < this->nlf + 1; ++q) {

@@ -1,6 +1,6 @@
 #include "NLOq.h"
 
-#include "../../Color.h"
+#include "../../Common/Color.h"
 
 #include "IntA.h"
 

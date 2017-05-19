@@ -1,6 +1,6 @@
 #include "Born.h"
 
-#include "../../Color.h"
+#include "../../Common/Color.h"
 
 using namespace Color;
 

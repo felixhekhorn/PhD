@@ -15,6 +15,36 @@ class InclusiveElProduction : public AbstractElProduction {
     dbl Delta;
     
 /**
+ * @brief compute a scale 
+ * @param factors scale factors
+ * @param HAQTransverseMomentum \f$p_{2,T}\f$
+ * @return mu^2
+ */
+    cdbl getScale(const Common::DynamicScaleFactors& factors, cdbl HAQTransverseMomentum) const;
+    
+/**
+ * @brief get factorisation scale 
+ * @param HAQTransverseMomentum \f$p_{2,T}\f$
+ * @return mu_F^2
+ */
+    inline cdbl getMuF2(cdbl HAQTransverseMomentum) { return this->getScale(this->muF2,HAQTransverseMomentum); }
+    
+/**
+ * @brief get renormalisation scale
+ * @param HAQTransverseMomentum \f$p_{2,T}\f$
+ * @return mu_R^2
+ */
+    inline cdbl getMuR2(cdbl HAQTransverseMomentum) { return this->getScale(this->muR2,HAQTransverseMomentum); }
+    
+/**
+ * @brief compute running coupling
+ * @param order 0=LO, 1=NLO
+ * @param HAQTransverseMomentum \f$p_{2,T}\f$
+ * @return \f$\alpha_s(\mu_R^2)\f$
+ */
+    cdbl getAlphaS(uint order, cdbl HAQTransverseMomentum);
+    
+/**
  * @brief returns the corresponding kernel of \f$c^{(0)}_{g}\f$
  * @return kernel of \f$c^{(0)}_{g}\f$
  */
@@ -182,33 +212,33 @@ public:
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    cdbl Fg0() const;
+    cdbl Fg0();
     
 /**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    cdbl Fg1() const;
+    cdbl Fg1();
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
-    cdbl Fq1() const;
+    cdbl Fq1();
     
 /**
  * @brief derivative of LO structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @return dFg0_dpt(pt)
  */
-    cdbl dFg0_dHAQTransverseMomentum(cdbl pt) const;
+    cdbl dFg0_dHAQTransverseMomentum(cdbl pt);
     
 /**
  * @brief derivative of LO structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @return dFg0_dy(y)
  */
-    cdbl dFg0_dHAQRapidity(cdbl y) const;
+    cdbl dFg0_dHAQRapidity(cdbl y);
     
 ///@}
 

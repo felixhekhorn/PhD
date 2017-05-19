@@ -5,7 +5,7 @@ from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 import sys
 import os
 
-from ElProduction import projT, ExclusiveElProduction, ExclusiveHistT, ExclusiveDynamicScaleFactors
+from ElProduction import ExclusiveElProduction, DynamicScaleFactors
 import Util
 
 # compute all data points
@@ -42,7 +42,7 @@ class ExclusiveRunner:
 			print
 			Util.pWarn("aborting at %d/%d"%((lenParams-self.__qIn.qsize()),lenParams))
 			self.__qIn.close()
-		sys.stdout.write("\n")
+		self.__qIn.close()
 
 # thread worker
 def _threadWorker(qIn):
@@ -52,13 +52,13 @@ def _threadWorker(qIn):
 		if None == p: # EOF?
 			qIn.task_done()
 			break
-		# compute
+		# setup
 		o = ExclusiveElProduction(*p["objArgs"])
 		o.setPdf(*p["pdf"])
-		if p.has_key("mu2"):  o.setMu2Factors (ExclusiveDynamicScaleFactors(*p["mu2"]))
-		if p.has_key("muR2"): o.setMuR2Factors(ExclusiveDynamicScaleFactors(*p["muR2"]))
-		if p.has_key("muF2"): o.setMuF2Factors(ExclusiveDynamicScaleFactors(*p["muF2"]))
 		o.setLambdaQCD(p["lambdaQCD"])
+		if p.has_key("mu2"):  o.setMu2 (DynamicScaleFactors(*p["mu2"]))
+		if p.has_key("muR2"): o.setMuR2(DynamicScaleFactors(*p["muR2"]))
+		if p.has_key("muF2"): o.setMuF2(DynamicScaleFactors(*p["muF2"]))
 		if p.has_key("bjorkenX"):  o.setBjorkenX(p["bjorkenX"])
 		if p.has_key("hadronicS"): o.setHadronicS(p["hadronicS"])
 		for e in p["activatedHistograms"]:
@@ -71,4 +71,4 @@ def _threadWorker(qIn):
 		# run
 		o.F(p["n"])
 		qIn.task_done()
-		Util.pSucc(p["msg"])
+		if p.has_key("msg"): Util.pSucc(p["msg"])

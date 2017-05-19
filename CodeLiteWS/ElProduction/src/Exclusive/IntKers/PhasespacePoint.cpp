@@ -7,7 +7,7 @@
 
 using namespace Exclusive;
 
-PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const DynamicScaleFactors& muR2Factors, const DynamicScaleFactors& muF2Factors) :
+PhasespacePoint::PhasespacePoint(cdbl m2, cdbl q2, cdbl bjorkenX, const Common::DynamicScaleFactors& muR2Factors, const Common::DynamicScaleFactors& muF2Factors) :
     m2(m2), q2(q2), bjorkenX(bjorkenX), muR2Factors(muR2Factors), muF2Factors(muF2Factors){
 }
 
@@ -103,15 +103,15 @@ void PhasespacePoint::applyLTsToFinalFrame() {
     }
 }
 
-cdbl PhasespacePoint::getDynamicScale(const DynamicScaleFactors& factors) const {
-    cdbl ptSumHQPair = (this->p1 + this->p2).pt();
-    cdbl ptHAQ = this->p2.pt();
+cdbl PhasespacePoint::getDynamicScale(const Common::DynamicScaleFactors& factors) const {
+    cdbl HQPairTransverseMomentum = (this->p1 + this->p2).pt();
+    cdbl HAQTransverseMomentum = this->p2.pt();
     cdbl mu2 = factors.cM2 * this->m2 +
                 factors.cQ2 * this->q2 + 
-                factors.cSqrPtSumHQPair * ptSumHQPair*ptSumHQPair +
-                factors.cSqrPtHAQ * ptHAQ*ptHAQ;
+                factors.cHQPairTransverseMomentum * HQPairTransverseMomentum*HQPairTransverseMomentum +
+                factors.cHAQTransverseMomentum * HAQTransverseMomentum*HAQTransverseMomentum;
     if (!isfinite(mu2) || mu2 < 0.)
-        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2 + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cSqrPtSumHQPair%ptSumHQPair%factors.cSqrPtHAQ%ptHAQ).str());
+        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2 + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cHQPairTransverseMomentum%HQPairTransverseMomentum%factors.cHAQTransverseMomentum%HAQTransverseMomentum).str());
     return mu2;
 }
 

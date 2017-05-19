@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 from multiprocessing import Process, Queue, JoinableQueue, cpu_count
 from Queue import Empty as QEmpty
 import sys
@@ -7,11 +8,11 @@ import os
 import numpy as np
 import time
 
-import ElProduction
+from ElProduction import InclusiveElProduction, DynamicScaleFactors
 import Util
 
 class HadronicRunner2:
-    def __init__(self, m2, q2, Delta, nlf, pdfs, pdfMem, mu02, aS, fs, fp, nProcesses = cpu_count()):
+    def __init__(self, m2, q2, Delta, nlf, pdfs, pdfMem, mu02, lambdaQCD, fs, fp, nProcesses = cpu_count()):
         # parameters
         self.m2 = m2
         self.q2 = q2
@@ -20,7 +21,7 @@ class HadronicRunner2:
         self.pdfs = pdfs
         self.pdfMem = pdfMem
         self.mu02 = mu02
-        self.aS = aS
+        self.lambdaQCD = lambdaQCD
         self.fs = fs
         self.fp = fp
         self.nProcesses = nProcesses
@@ -47,7 +48,7 @@ class HadronicRunner2:
                     g.append({"proj": proj, "j": j, "x": self.__params[j], "k": k, "f": self.fs[k], "res": np.nan})
         return g
     # setup mu2 grid
-    def _getGridMu2(self,x,r,Nmu2,getAlphaS):
+    def _getGridMu2(self,x,r,Nmu2):
         if (Nmu2 < 2): raise "invalid argument! Nmu2 >= 2!"
 	self.__js = range(Nmu2)
         self.__ks = range(len(self.fs))
@@ -56,12 +57,11 @@ class HadronicRunner2:
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 mu2 = self.mu02*self.__params[j]
-                aS = getAlphaS(mu2)
                 for k in self.__ks:
-                    g.append({"proj": proj, "x": x, "j": j, "mu2": mu2, "alphaS": aS,"k": k, "f": self.fs[k], "res": np.nan})
+                    g.append({"proj": proj, "x": x, "j": j, "mu2": mu2, "k": k, "f": self.fs[k], "res": np.nan})
         return g
     # setup m2 grid
-    def _getGridM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
+    def _getGridM2(self,x,m2min,m2max,Nm2):
         if (Nm2 < 2): raise "invalid argument! Nm2 >= 2!"
 	self.__js = range(Nm2)
         self.__ks = range(len(self.fs))
@@ -70,13 +70,11 @@ class HadronicRunner2:
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 m2 = self.__params[j]
-                mu2 = getMu2(m2)
-                aS = getAlphaS(mu2)
                 for k in self.__ks:
-                    g.append({"proj": proj, "x": x, "j": j, "m2": m2, "mu2": mu2, "alphaS": aS, "k": k, "f": self.fs[k], "res": np.nan})
+                    g.append({"proj": proj, "x": x, "j": j, "m2": m2, "k": k, "f": self.fs[k], "res": np.nan})
         return g
     # setup muR2-muF2 grid
-    def _getGridMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2,getAlphaS):
+    def _getGridMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2):
         if (NmuF2 < 2 or NmuR2 < 2): raise "invalid argument! NmuF2 >= 2, NmuR2 >= 2!"
 	self.__js = range(NmuR2)
 	self.__jps = range(NmuF2)
@@ -87,11 +85,10 @@ class HadronicRunner2:
         for proj in ["G", "L", "P"]:
             for j in self.__js:
                 muR2 = self.mu02*self.__params[j]
-                aS = getAlphaS(muR2)
                 for jp in self.__jps:
                     muF2 = self.mu02*self.__paramps[jp]
                     for k in self.__ks:
-                        g.append({"proj": proj, "x": x, "j": j, "muR2": muR2, "alphaS": aS, "jp": jp, "muF2": muF2,"k": k, "f": self.fs[k], "res": np.nan})
+                        g.append({"proj": proj, "x": x, "j": j, "muR2": muR2, "jp": jp, "muF2": muF2,"k": k, "f": self.fs[k], "res": np.nan})
         return g
     # setup pdf grid
     def _getGridPdf(self,Nx,proj, pdf, Npdfmem):
@@ -130,7 +127,7 @@ class HadronicRunner2:
         lenParams = len(g)
         processes = []
         threadArgs = (self.__qIn, self.__qOut,
-                      oArgs, self.pdfs, self.pdfMem, self.mu02, self.aS, lenParams,)
+                      oArgs, self.pdfs, self.pdfMem, self.mu02, self.lambdaQCD, lenParams,)
         for j in xrange(self.nProcesses):
             processes.append(Process(target=_threadWorker, args=threadArgs))
         [p.start() for p in processes]
@@ -236,14 +233,14 @@ class HadronicRunner2:
     def runX(self,Nx):
         self._run1(self._getGridX(Nx))
     # iterate mu2
-    def runMu2(self,x,r,Nmu2,getAlphaS):
-        self._run1(self._getGridMu2(x,r,Nmu2,getAlphaS))
+    def runMu2(self,x,r,Nmu2):
+        self._run1(self._getGridMu2(x,r,Nmu2))
     # iterate m2
-    def runM2(self,x,m2min,m2max,Nm2,getMu2,getAlphaS):
-        self._run1(self._getGridM2(x,m2min,m2max,Nm2,getMu2,getAlphaS))
+    def runM2(self,x,m2min,m2max,Nm2):
+        self._run1(self._getGridM2(x,m2min,m2max,Nm2))
     # iterate muR2 and muF2
-    def runMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2,getAlphaS):
-        self._run2(self._getGridMuR2MuF2(x,rR,NmuR2,rF,NmuF2,getAlphaS))
+    def runMuR2MuF2(self,x,rR,NmuR2,rF,NmuF2):
+        self._run2(self._getGridMuR2MuF2(x,rR,NmuR2,rF,NmuF2))
     def runPdf(self,Nx,proj, pdf, Npdfmem):
         g = self._getGridPdf(Nx,proj, pdf, Npdfmem)
         if len(g) == 0:
@@ -254,18 +251,18 @@ class HadronicRunner2:
         self._writePdf(proj)
 
 # define worker
-def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
+def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, lambdaQCD, lenParams):
   # create objects
   objs = {}
-  objs["G"] = ElProduction.InclusiveElProduction(*oArgs["G"])
-  objs["L"] = ElProduction.InclusiveElProduction(*oArgs["L"])
-  objs["P"] = ElProduction.InclusiveElProduction(*oArgs["P"])
+  objs["G"] = InclusiveElProduction(*oArgs["G"])
+  objs["L"] = InclusiveElProduction(*oArgs["L"])
+  objs["P"] = InclusiveElProduction(*oArgs["P"])
   sys.stdout.flush()
   # prepare objects
   for proj in objs:
     o = objs[proj]
     o.setMu2(mu02)
-    o.setAlphaS(aS)
+    o.setLambdaQCD(lambdaQCD)
     o.setPdf(pdfs[proj], pdfMem)
   # run
   guard = 0
@@ -281,10 +278,9 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
        # compute
        o = objs[p["proj"]]
        if p.has_key("m2"): o.setM2(p["m2"])
-       if p.has_key("mu2"): o.setMu2(p["mu2"])
-       if p.has_key("muR2"): o.setMuR2(p["muR2"])
-       if p.has_key("muF2"): o.setMuF2(p["muF2"])
-       if p.has_key("alphaS"): o.setAlphaS(p["alphaS"])
+       if p.has_key("mu2"):  o.setMu2 (DynamicScaleFactors(*p["mu2"]))
+       if p.has_key("muR2"): o.setMuR2(DynamicScaleFactors(*p["muR2"]))
+       if p.has_key("muF2"): o.setMuF2(DynamicScaleFactors(*p["muF2"]))
        if p.has_key("pdf") and p.has_key("pdfMem"): o.setPdf(p["pdf"],p["pdfMem"])
        o.setBjorkenX(p["x"])
        f = p["f"]
@@ -292,7 +288,7 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, aS, lenParams):
        elif "Fg0" == f: p["res"] = o.Fg0()
        elif "Fg1" == f: p["res"] = o.Fg1()
        elif "Fq1" == f: p["res"] = o.Fq1()
-       if np.isnan(p["res"]): Util.pWarn("NaN result: %e"%p)
+       if np.isnan(p["res"]): Util.pWarn("NaN result: "+p)
        qo.put(p)
        qi.task_done()
 

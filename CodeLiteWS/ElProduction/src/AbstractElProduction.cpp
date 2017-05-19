@@ -2,8 +2,8 @@
 
 AbstractElProduction::AbstractElProduction(cdbl m2, cdbl q2,  projT proj, uint nlf) : 
     m2(0.), q2(0.), sp(0.), hasPartonicS(false), proj(proj), nlf(nlf),
-    pdf(0), muR2(0.), hasMuR2(false), muF2(0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
-    alphaS(0.), hasAlphaS(false), zMax(0.) {
+    pdf(0), muR2(0.,0.,0.,0.), hasMuR2(false), muF2(0.,0.,0.,0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
+    aS(), hasAlphaS(false), zMax(0.) {
     // ordering is important!
     this->setM2(m2);
     this->setQ2(q2);
@@ -61,29 +61,25 @@ void AbstractElProduction::setPdf(str name, int member) {
     LHAPDF::setVerbosity(v);
 }*/
     
-void AbstractElProduction::setMuR2(cdbl muR2) {
-    if (muR2 <= 0.)
-        throw domain_error("renormalisation scale has to be positive!");
+void AbstractElProduction::setMuR2(const Common::DynamicScaleFactors& muR2) {
     this->muR2 = muR2;
     this->hasMuR2 = true;
 }
     
-void AbstractElProduction::setMuF2(cdbl muF2) {
-    if (muF2 <= 0.)
-        throw domain_error("factorisation scale has to be positive!");
+void AbstractElProduction::setMuF2(const Common::DynamicScaleFactors& muF2) {
     this->muF2 = muF2;
     this->hasMuF2 = true;
 }
 
-void AbstractElProduction::setMu2(cdbl mu2) {
+void AbstractElProduction::setMu2(const Common::DynamicScaleFactors& mu2) {
     this->setMuF2(mu2);
     this->setMuR2(mu2);
 }
 
-void AbstractElProduction::setAlphaS(cdbl alphaS) {
-    if (alphaS <= 0.)
-        throw domain_error("strong coupling has to be positive!");
-    this->alphaS = alphaS;
+void AbstractElProduction::setLambdaQCD(cdbl lambdaQCD) {
+    if (lambdaQCD <= 0.)
+        throw domain_error("lambda_QCD has to be positive!");
+    this->aS.setLambda(this->nlf + 1, lambdaQCD);
     this->hasAlphaS = true;
 }
     

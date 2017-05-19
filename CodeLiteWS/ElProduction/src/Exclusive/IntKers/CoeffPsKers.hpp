@@ -2,7 +2,7 @@
 #define CoeffPsKers_HPP_
 
 #include "../../config.h"
-#include "../../Color.h"
+#include "../../Common/Color.h"
 #include "KinematicVars.hpp"
 #include "PdfConvNLOq.h"
 
