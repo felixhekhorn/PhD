@@ -118,6 +118,8 @@ public:
  * @param omega collinear regulation parameter \f$\omega\f$
  * @param deltax offset to upper integration bound in x
  * @param deltay offset to lower integration bound in y
+ * @param muR2Factors actors for renormalisation scale \f$\mu_R^2\f$
+ * @param muF2Factors actors for factorisation scale \f$\mu_F^2\f$
  */
     FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, cdbl omega, cdbl deltax, cdbl deltay, const Common::DynamicScaleFactors& muR2Factors, const Common::DynamicScaleFactors& muF2Factors);
     

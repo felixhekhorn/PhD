@@ -54,7 +54,9 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("Fg1", &InclusiveElProduction::Fg1)
         .def("Fq1", &InclusiveElProduction::Fq1)
         .def("dFg0_dHAQTransverseMomentum", &InclusiveElProduction::dFg0_dHAQTransverseMomentum)
+        .def("dFq1_dHAQTransverseMomentum", &InclusiveElProduction::dFq1_dHAQTransverseMomentum)
         .def("dFg0_dHAQRapidity", &InclusiveElProduction::dFg0_dHAQRapidity)
+        .def("dFq1_dHAQRapidity", &InclusiveElProduction::dFq1_dHAQRapidity)
     ;
     
     class_<ExclusiveElProduction>("ExclusiveElProduction", "application class for exclusive electro production", init<double,double,projT,uint,double,double,double,double>())

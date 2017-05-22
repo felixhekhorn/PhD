@@ -58,11 +58,34 @@ protected:
     }
     
 /**
- * @brief get hadronic hadronic S
+ * @brief get hadronic S
  * @return hadronic S
  */
-    inline cdbl getHadronicS() {
+    inline cdbl getHadronicS() const {
         return -this->q2*(1./this->bjorkenX - 1.);
+    }
+    
+/**
+ * @brief get hadronic T1
+ * @param ey exp(y)
+ * @param mt sqrt(mt2)
+ * @return T1(exp(y),mt)
+ */
+    inline cdbl getHadronicT1(cdbl ey, cdbl mt) const {
+        cdbl Sh = this->getHadronicS();
+        cdbl Shp = Sh - this->q2;
+        return - Shp/Sqrt(Sh) * mt / ey;
+    }
+    
+/**
+ * @brief get hadronic U1
+ * @param ey exp(y)
+ * @param mt sqrt(mt2)
+ * @return U1(exp(y),mt)
+ */
+    inline cdbl getHadronicU1(cdbl ey, cdbl mt) const {
+        cdbl Sh = this->getHadronicS();
+        return this->q2 - mt*(Sh*ey + this->q2/ey)/sqrt(Sh);
     }
 
 /**
@@ -73,6 +96,72 @@ protected:
         this->z = this->bjorkenX + this->Vz*az;
         this->setSpRaw(-q2/z);
         this->jac *= this->Vz;
+    }
+};
+
+/**
+ * @brief Abstract base class for convolution with PDFs differential towards HAQRapididy
+ */
+class PdfConvBase_dy {
+protected:
+    
+/**
+ * @brief rapidity of HAQ
+ */
+    dbl y;
+    
+/**
+ * @brief exponential of rapidity of HAQ
+ */
+    dbl ey;
+    
+/**
+ * @brief maximum of transverse mass of HAQ
+ */
+    dbl Vmt2;
+    
+/**
+ * @brief constructor
+ * @param m2
+ * @param Sh hadronic S
+ * @param y current HAQRapididy
+ */
+    inline PdfConvBase_dy(cdbl m2, cdbl Sh, cdbl y): y(y), ey(exp(y)) {
+        cdbl coshy = cosh(y);
+        cdbl mt2Max = Sh/(4.*coshy*coshy);
+        this->Vmt2 = mt2Max - m2;
+    }
+};
+
+/**
+ * @brief Abstract base class for convolution with PDFs differential towards HAQTransverseMass
+ */
+class PdfConvBase_dmt2 {
+protected:
+
+/**
+ * @brief transverse momentum of HAQ
+ */
+    dbl pt;
+    
+/**
+ * @brief transverse mass of HAQ
+ */
+    dbl mt;
+    
+/**
+ * @brief maximum of rapidity of HAQ
+ */
+    dbl y0;
+    
+/**
+ * @brief constructor
+ * @param m2
+ * @param Sh hadronic S
+ * @param pt current HAQTransverseMomentum
+ */
+    inline PdfConvBase_dmt2(cdbl m2, cdbl Sh, cdbl pt): pt(pt), mt(sqrt(m2 + pt*pt)) {
+        this->y0 = acosh(sqrt(Sh)/(2.*this->mt));
     }
 };
 

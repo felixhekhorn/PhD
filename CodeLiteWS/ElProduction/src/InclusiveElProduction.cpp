@@ -216,7 +216,7 @@ cdbl InclusiveElProduction::Fq1() {
     cdbl Fq1 = Common::int3D(&f);
     // multiply norm
     cdbl alphaS = this->getAlphaS(1,0.);
-    cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
+    cdbl n = alphaS*alphaS * (-q2)/(M_PI);
     return n*Fq1;
 }
 
@@ -242,11 +242,6 @@ cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
         throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
     cdbl y0 = this->getHAQyMax();
-    /*if (this->bjorkenX > this->zMax)
-        throw invalid_argument((boost::format("invalid x_bj range! 0 < x_bj=%e < z_max=%e")%this->bjorkenX%this->zMax).str());
-    if (y < -y0 || y > y0)
-        throw invalid_argument((boost::format("invalid y range! |y=%e| < y_0=%e")%y%y0).str());
-    */
     if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
         return 0.;
     PdfConvLO_dy k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), y);
@@ -257,4 +252,36 @@ cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
     cdbl alphaS = this->getAlphaS(0,0.);
     cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
     return n * eH*eH * Common::int1D(&f);
+}
+
+cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentum(cdbl pt) {
+    this->checkHadronic();
+    // threshold cut off
+    if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
+        return 0.;
+    PdfConvNLOq_dpt k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<PdfConvNLOq_dpt>;
+    f.params = &k;
+    cdbl alphaS = this->getAlphaS(1,pt);
+    cdbl n = alphaS*alphaS * (-q2)/(M_PI);
+    return n * Common::int2D(&f);
+}
+
+cdbl InclusiveElProduction::dFq1_dHAQRapidity(cdbl y) {
+    this->checkHadronic();
+    /*** @todo relax condition? */
+    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
+        throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");
+    // threshold cut off
+    cdbl y0 = this->getHAQyMax();
+    if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
+        return 0.;
+    PdfConvNLOq_dy k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), y);
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<PdfConvNLOq_dy>;
+    f.params = &k;
+    cdbl alphaS = this->getAlphaS(1,0.);
+    cdbl n = alphaS*alphaS * (-q2)/(M_PI);
+    return n * Common::int2D(&f);
 }

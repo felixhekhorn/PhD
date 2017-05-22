@@ -27,14 +27,14 @@ class InclusiveElProduction : public AbstractElProduction {
  * @param HAQTransverseMomentum \f$p_{2,T}\f$
  * @return mu_F^2
  */
-    inline cdbl getMuF2(cdbl HAQTransverseMomentum) { return this->getScale(this->muF2,HAQTransverseMomentum); }
+    inline cdbl getMuF2(cdbl HAQTransverseMomentum) const { return this->getScale(this->muF2,HAQTransverseMomentum); }
     
 /**
  * @brief get renormalisation scale
  * @param HAQTransverseMomentum \f$p_{2,T}\f$
  * @return mu_R^2
  */
-    inline cdbl getMuR2(cdbl HAQTransverseMomentum) { return this->getScale(this->muR2,HAQTransverseMomentum); }
+    inline cdbl getMuR2(cdbl HAQTransverseMomentum) const { return this->getScale(this->muR2,HAQTransverseMomentum); }
     
 /**
  * @brief compute running coupling
@@ -239,6 +239,20 @@ public:
  * @return dFg0_dy(y)
  */
     cdbl dFg0_dHAQRapidity(cdbl y);
+    
+/**
+ * @brief derivative of NLO quark structure function to pt of heavy anti quark
+ * @param pt pt of heavy anti quark
+ * @return dFq1_dpt(pt)
+ */
+    cdbl dFq1_dHAQTransverseMomentum(cdbl pt);
+    
+/**
+ * @brief derivative of NLO quark structure function to rapidity of heavy anti quark
+ * @param y rapidity of heavy anti quark
+ * @return dFq1_dy(y)
+ */
+    cdbl dFq1_dHAQRapidity(cdbl y);
     
 ///@}
 

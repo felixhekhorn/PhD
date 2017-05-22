@@ -34,8 +34,8 @@ int test() {
  */
 int main(int argc, char **argv) {
     //return test();
-	return runInclusive();
-	//return runInclusive2();
+	//return runInclusive();
+	return runInclusive2();
     cdbl q2 = -10.;
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
@@ -62,7 +62,6 @@ int main(int argc, char **argv) {
     const str pdf = "MSTW2008nlo90cl";
     //const str pdf = "DSSV2014";
     //const str pdf = "GRSV96STDLO";
-    const uint n = 0;
     
     const projT proj = L;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
@@ -95,14 +94,14 @@ int main(int argc, char **argv) {
     }*/
 
     /*{
-        const uint N = 101;
+        const uint N = 21;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-4.+8.*j/(N-1));
             iO.setEta(a);
             eO.setEta(a);
-            cdbl i = iO.cg0();
-            {cdbl e = eO.cg0();
+            cdbl i = iO.dq1();
+            {cdbl e = eO.dq1();
             printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         }
     }*/
@@ -142,9 +141,6 @@ int runInclusive2(){
     //cdbl m2 = 4.75*4.75;
     //const uint nlf = 4;
     cdbl q2 = -10.;
-    LHAPDF::AlphaS_Analytic alphaS;
-    alphaS.setOrderQCD(1);
-    alphaS.setLambda(nlf + 1,lambdaQCD);
     const str pdf = "MorfinTungB";
     projT proj = L;
     
@@ -158,28 +154,37 @@ int runInclusive2(){
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     
     eO.MCparams.calls = 500000;
-    eO.MCparams.iterations = 5;
+    eO.MCparams.iterations = 7;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 2;
     
     iO.setPdf(pdf,0);eO.setPdf(pdf,0);
     
-    /*{
-        cdbl bjorkenX = 1e-4;
-        const Common::DynamicScaleFactors mu2(4.,-1.,0.,4.);
+    {
+        cdbl bjorkenX = 1e-2;
+        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
         iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
         iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
         iO.setMu2(mu2);eO.setMu2(mu2);
-        const uint N = 99;
+        const uint N = 40;
+        //cdbl ptmax = 20.;
+        cdbl y0 = 4.;
         for (uint j = 0; j < N; ++j) {
-            cdbl pt = 20.*(j+.5)/(N+1);
-            cdbl l = iO.dFg0_dHAQTransverseMomentum(pt);
-            printf("%e\t%e\n",pt,l);
+            /*cdbl pt = ptmax * (j+.5)/(N);
+            cdbl l = iO.dFq1_dHAQTransverseMomentum(pt);
+            printf("%e\t%e\n",pt,l);*/
+            cdbl y = y0 * (-1. + 2./N*(j+.5));
+            cdbl g = iO.dFg0_dHAQRapidity(y);
+            printf("%e\t%e\n",y,g);
+            
         }
         cout << endl << endl;
+        const str path = "/home/Felix/Physik/PhD/data/hist/";
+        //eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
+        eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
         printf("int_ex = %e <-> int_inc = %e\n",eO.F(0),iO.Fg0());
-    }*/
+    }
     
     /*{
         cdbl bjorkenX = .01;
