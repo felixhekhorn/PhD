@@ -134,9 +134,9 @@ protected:
 };
 
 /**
- * @brief Abstract base class for convolution with PDFs differential towards HAQTransverseMass
+ * @brief Abstract base class for convolution with PDFs differential towards HAQTransverseMomentum
  */
-class PdfConvBase_dmt2 {
+class PdfConvBase_dpt {
 protected:
 
 /**
@@ -160,7 +160,7 @@ protected:
  * @param Sh hadronic S
  * @param pt current HAQTransverseMomentum
  */
-    inline PdfConvBase_dmt2(cdbl m2, cdbl Sh, cdbl pt): pt(pt), mt(sqrt(m2 + pt*pt)) {
+    inline PdfConvBase_dpt(cdbl m2, cdbl Sh, cdbl pt): pt(pt), mt(sqrt(m2 + pt*pt)) {
         this->y0 = acosh(sqrt(Sh)/(2.*this->mt));
     }
 };

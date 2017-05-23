@@ -234,11 +234,11 @@ public:
     cdbl dFg0_dHAQTransverseMomentum(cdbl pt);
     
 /**
- * @brief derivative of LO structure function to rapidity of heavy anti quark
- * @param y rapidity of heavy anti quark
- * @return dFg0_dy(y)
+ * @brief derivative of NLO gluon structure function to pt of heavy anti quark
+ * @param pt pt of heavy anti quark
+ * @return dFq1_dpt(pt)
  */
-    cdbl dFg0_dHAQRapidity(cdbl y);
+    cdbl dFg1_dHAQTransverseMomentum(cdbl pt);
     
 /**
  * @brief derivative of NLO quark structure function to pt of heavy anti quark
@@ -246,6 +246,20 @@ public:
  * @return dFq1_dpt(pt)
  */
     cdbl dFq1_dHAQTransverseMomentum(cdbl pt);
+    
+/**
+ * @brief derivative of LO structure function to rapidity of heavy anti quark
+ * @param y rapidity of heavy anti quark
+ * @return dFg0_dy(y)
+ */
+    cdbl dFg0_dHAQRapidity(cdbl y);
+    
+/**
+ * @brief derivative of NLO gluon structure function to rapidity of heavy anti quark
+ * @param y rapidity of heavy anti quark
+ * @return dFg1_dy(y)
+ */
+    cdbl dFg1_dHAQRapidity(cdbl y);
     
 /**
  * @brief derivative of NLO quark structure function to rapidity of heavy anti quark

@@ -122,7 +122,7 @@ public:
 /**
  * @brief LO gluon convolution differentiated to pt
  */
-class PdfConvLO_dpt : public PdfConvLO_dmt2dy, protected PdfConvBase_dmt2 {    
+class PdfConvLO_dpt : public PdfConvLO_dmt2dy, protected PdfConvBase_dpt {    
 public:
     
 /**
@@ -137,7 +137,7 @@ public:
  */
     inline PdfConvLO_dpt(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl pt) :
         PdfConvLO_dmt2dy(m2, q2, bjorkenX, pdf, muF2, BpQED),
-        PdfConvBase_dmt2(m2, this->getHadronicS(),pt) {}
+        PdfConvBase_dpt(m2, this->getHadronicS(),pt) {}
     
 /**
  * @brief called function
