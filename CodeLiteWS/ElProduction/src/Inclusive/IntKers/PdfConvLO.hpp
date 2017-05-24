@@ -105,7 +105,7 @@ public:
  * @param amt2 integration variable mapped on transverse mass mt2
  * @return kernel
  */
-    inline cdbl operator() (cdbl ay, cdbl amt2) {
+    inline cdbl operator() (cdbl ay, cdbl amt2) const {
         cdbl y = this->y0_*(-1. + 2.*ay);
         cdbl ey = exp(y);
         cdbl coshy = cosh(y);
@@ -144,7 +144,7 @@ public:
  * @param ay integration variable mapped on rapidity y
  * @return kernel
  */
-    inline cdbl operator() (cdbl ay) {
+    inline cdbl operator() (cdbl ay) const {
         cdbl y = this->y0*(-1. + 2.*ay);
         cdbl ey = exp(y);
         
@@ -181,7 +181,7 @@ public:
  * @param amt2 integration variable mapped on transverse mass mt2
  * @return kernel
  */
-    inline cdbl operator() (cdbl amt2) {
+    inline cdbl operator() (cdbl amt2) const {
         cdbl mt2 = this->m2 + this->Vmt2*amt2;
         cdbl mt = sqrt(mt2);
         

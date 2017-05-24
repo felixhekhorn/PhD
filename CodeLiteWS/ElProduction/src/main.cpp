@@ -154,7 +154,7 @@ int runInclusive2(){
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     
     eO.MCparams.calls = 500000;
-    eO.MCparams.iterations = 7;
+    eO.MCparams.iterations = 10;
     eO.MCparams.adaptChi2 = false;
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 2;
@@ -163,13 +163,13 @@ int runInclusive2(){
     
     {
         cdbl bjorkenX = 1e-2;
-        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
+        const Common::DynamicScaleFactors mu2(1.,0.,0.,0.);
         iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
         iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
         iO.setMu2(mu2);eO.setMu2(mu2);
-        const uint N = 20;
-        cdbl ptmax = 20.;
-        cdbl y0 = 4.;
+        const uint N = 30;
+        cdbl ptmax = 5.;
+        cdbl y0 = 3.5;
         for (uint j = 0; j < N; ++j) {
             /*cdbl pt = ptmax * (j+.5)/(N);
             cdbl l = iO.dFq1_dHAQTransverseMomentum(pt);
@@ -183,7 +183,8 @@ int runInclusive2(){
         const str path = "/home/Felix/Physik/PhD/data/hist/";
         eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
         eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
-        printf("int_ex = %e <-> int_inc = %e\n",eO.F(1),iO.Fg1());
+        printf("int_inc = %e\n",iO.Fg1());
+        //printf("int_ex = %e\n",eO.F(1));
     }
     
     /*{

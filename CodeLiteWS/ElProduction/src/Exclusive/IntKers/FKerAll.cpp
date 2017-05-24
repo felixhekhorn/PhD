@@ -63,9 +63,9 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
         { // gluon channel
             // compute kernels
             this->NLOg->setVars(az,ax,ay,aTheta1,aTheta2);
-            PhasespaceValues cg1 = this->NLOg->cg1();
-            PhasespaceValues cgBarR1 = this->NLOg->cgBarR1();
-            PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
+            const PhasespaceValues cg1 = this->NLOg->cg1();
+            const PhasespaceValues cgBarR1 = this->NLOg->cgBarR1();
+            const PhasespaceValues cgBarF1 = this->NLOg->cgBarF1();
             // combine all 4 points: Event & soft & collinear & soft+collinear
 #ifdef CounterByHeavyside
             r += this->combineNLOg(this->xE, this->yE, cg1.xEyE, cgBarR1.xEyE, cgBarF1.xEyE);
@@ -86,10 +86,10 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
         /*{ // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
-            PhasespaceValues cq1 = this->NLOq->cq1();
-            PhasespaceValues cqBarF1 = this->NLOq->cqBarF1();
-            PhasespaceValues dq1 = this->NLOq->dq1();
-            PhasespaceValues oq1 = this->NLOq->oq1();
+            const PhasespaceValues cq1 = this->NLOq->cq1();
+            const PhasespaceValues cqBarF1 = this->NLOq->cqBarF1();
+            const PhasespaceValues dq1 = this->NLOq->dq1();
+            const PhasespaceValues oq1 = this->NLOq->oq1();
             // combine 2 points: Event & collinear
 #ifdef CounterByHeavyside
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);

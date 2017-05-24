@@ -23,7 +23,7 @@ protected:
  * @param q2 virtuality of photon \f$q^2< 0\f$
  * @param sp center of mass energy \f$s' = s - q^2\f$
  */
-    PsKerBase(cdbl m2, cdbl q2, cdbl sp) : IntKerBase(m2, q2){
+    inline PsKerBase(cdbl m2, cdbl q2, cdbl sp) : IntKerBase(m2, q2){
         this->setSpRaw(sp);
     }
 
@@ -49,14 +49,14 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param cg1SV pointer to matrix element
  */
-    PsKerNLOgSV(cdbl m2, cdbl q2, cdbl sp, fPtr4dbl cg1SV) : PsKerBase(m2,q2,sp), cg1SV(cg1SV) {}
+    inline PsKerNLOgSV(cdbl m2, cdbl q2, cdbl sp, fPtr4dbl cg1SV) : PsKerBase(m2,q2,sp), cg1SV(cg1SV) {}
 
 /**
  * @brief called function
  * @param a
  * @return kernel
  */
-    cdbl operator()(cdbl a) {
+    inline cdbl operator()(cdbl a) {
         this->setT1(a);
         cdbl me = cg1SV(m2,q2,sp,t1);
         return this->jac*me;
@@ -106,7 +106,7 @@ public:
  * @param hg1SVDelta2 pointer to double Delta-logs of S+V matrix element
  * @param hg1H pointer to hard matrix element
  */
-    PsKerNLOg(cdbl m2, cdbl q2, cdbl sp, cdbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) : PsKerBase(m2,q2,sp),
+    inline PsKerNLOg(cdbl m2, cdbl q2, cdbl sp, cdbl Delta, fPtr4dbl hg1SV, fPtr4dbl hg1SVDelta1, fPtr4dbl hg1SVDelta2, fPtr5dbl hg1H) : PsKerBase(m2,q2,sp),
         Delta(Delta), hg1SV(hg1SV), hg1SVDelta1(hg1SVDelta1), hg1SVDelta2(hg1SVDelta2), hg1H(hg1H) {}
 
 /**
@@ -115,7 +115,7 @@ public:
  * @param a2
  * @return hard part
  */
-    cdbl operator()(cdbl a1, cdbl a2) {
+    inline cdbl operator()(cdbl a1, cdbl a2) {
         this->setT1(a1);
         this->setS4(a2,Delta);
         //Timer::start("hg1SV");
@@ -166,7 +166,7 @@ public:
  * @param sp center of mass energy \f$s' = s - q^2\f$
  * @param gq1 pointer to matrix element
  */
-    PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) :
+    inline PsKerNLOq(dbl m2, dbl q2, dbl sp, fPtr5dbl gq1) :
         PsKerBase(m2,q2,sp), HepSource::Integrand(2,1), gq1(gq1)
         {}
 
@@ -176,7 +176,7 @@ public:
  * @param a2
  * @return quark part
  */
-    cdbl operator()(cdbl a1, cdbl a2) {
+    inline cdbl operator()(cdbl a1, cdbl a2) {
         this->jac = 1.;
         this->setT1(a1);
         this->setS4(a2,0.);
@@ -192,7 +192,7 @@ public:
  * @param aux unadapted coords
  * @param f result
  */
-    void operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
+    inline void operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
         f[0] = this->operator()(x[0],x[1]);
     }
 };

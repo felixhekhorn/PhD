@@ -149,7 +149,7 @@ cdbl InclusiveElProduction::getScale(const Common::DynamicScaleFactors& factors,
     if (0. != factors.cHQPairTransverseMomentum)
         throw domain_error("scale for inclusive computation may not depend on exclusive variable HQPairTransverseMomentum!");
     cdbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->q2 + factors.cHAQTransverseMomentum * HAQTransverseMomentum*HAQTransverseMomentum;
-    if (!isfinite(mu2) || mu2 < 0.)
+    if (!isfinite(mu2) || mu2 <= 0.)
         throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%q2%factors.cHAQTransverseMomentum%HAQTransverseMomentum).str());
     return mu2;
 }

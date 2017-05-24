@@ -64,13 +64,13 @@ protected:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  */
-    IntKerBase(cdbl m2, cdbl q2) : m2(m2), q2(q2){}
+    inline IntKerBase(cdbl m2, cdbl q2) : m2(m2), q2(q2){}
 
 /**
  * @brief sets real s'
  * @param sp
  */
-    void setSpRaw(cdbl sp) {
+    inline void setSpRaw(cdbl sp) {
         this->sp = sp;
         cdbl s = sp+q2;
         cdbl beta = Sqrt(1. - (4.*m2)/s);
@@ -84,7 +84,7 @@ protected:
  * @brief sets t1 by integration
  * @param a integration variable
  */
-    void setT1(cdbl a) {
+    inline void setT1(cdbl a) {
         this->t1 = t1min + (t1max-t1min)*a;
         cdbl s = sp+q2;
         cdbl beta = Sqrt(1. - (4.*m2)/s);
@@ -97,7 +97,7 @@ protected:
  * @param a integration variable
  * @param s4min minimum value for s4
  */
-    void setS4(cdbl a, cdbl s4min) {
+    inline void setS4(cdbl a, cdbl s4min) {
         this->s4 = s4min + (s4max - s4min)*a;
         this->jac *= (s4max - s4min);
     }
