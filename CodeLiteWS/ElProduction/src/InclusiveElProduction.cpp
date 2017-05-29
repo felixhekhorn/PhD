@@ -144,7 +144,6 @@ cdbl InclusiveElProduction::dq1() const {
     return Common::int2D(&f);
 }
 
-
 cdbl InclusiveElProduction::getScale(const Common::DynamicScaleFactors& factors, cdbl HAQTransverseMomentum) const {
     if (0. != factors.cHQPairTransverseMomentum)
         throw domain_error("scale for inclusive computation may not depend on exclusive variable HQPairTransverseMomentum!");
@@ -225,9 +224,9 @@ cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) {
     // threshold cut off
     if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
         return 0.;
-    PdfConvLO_dpt k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getBpQED(), pt);
+    PdfConvLO_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getBpQED(), pt);
     gsl_function f;
-    f.function = gslpp::callFunctor<PdfConvLO_dpt>;
+    f.function = gslpp::callFunctor<PdfConvLO_dHAQTransverseMomentum>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(0,pt);
@@ -240,13 +239,13 @@ cdbl InclusiveElProduction::dFg1_dHAQTransverseMomentum(cdbl pt) {
     // threshold cut off
     if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
         return 0.;
-    PdfConvNLOg_dpt k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, pt);
+    PdfConvNLOg_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, pt);
     k.setCg0(this->getCg0());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOg_dpt>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQTransverseMomentum>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(1,pt);
@@ -259,9 +258,9 @@ cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentum(cdbl pt) {
     // threshold cut off
     if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
         return 0.;
-    PdfConvNLOq_dpt k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
+    PdfConvNLOq_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOq_dpt>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQTransverseMomentum>;
     f.params = &k;
     cdbl alphaS = this->getAlphaS(1,pt);
     cdbl n = alphaS*alphaS * (-q2)/(M_PI);
@@ -277,9 +276,9 @@ cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
     cdbl y0 = this->getHAQyMax();
     if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
         return 0.;
-    PdfConvLO_dy k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), y);
+    PdfConvLO_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), y);
     gsl_function f;
-    f.function = gslpp::callFunctor<PdfConvLO_dy>;
+    f.function = gslpp::callFunctor<PdfConvLO_dHAQRapidity>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(0,0.);
@@ -296,13 +295,13 @@ cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
     cdbl y0 = this->getHAQyMax();
     if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
         return 0.;
-    PdfConvNLOg_dy k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, y);
+    PdfConvNLOg_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, y);
     k.setCg0(this->getCg0());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOg_dy>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQRapidity>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(1,0.);
@@ -319,9 +318,9 @@ cdbl InclusiveElProduction::dFq1_dHAQRapidity(cdbl y) {
     cdbl y0 = this->getHAQyMax();
     if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
         return 0.;
-    PdfConvNLOq_dy k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), y);
+    PdfConvNLOq_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), y);
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOq_dy>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQRapidity>;
     f.params = &k;
     cdbl alphaS = this->getAlphaS(1,0.);
     cdbl n = alphaS*alphaS * (-q2)/(M_PI);

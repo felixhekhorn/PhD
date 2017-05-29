@@ -11,7 +11,9 @@ namespace Inclusive {
 /**
  * @brief LO gluon convolution
  */
-class PdfConvLO : public PdfConvBase {
+class PdfConvLO : public PdfConvFullBase {
+    PdfWrapper* pdf;
+    cdbl muF2;
     
 /**
  * @brief pointer to full integrated matrix element
@@ -30,7 +32,7 @@ public:
  * @param cg0 pointer to full integrated matrix element
  */
     inline PdfConvLO(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr3dbl cg0) :
-        PdfConvBase(m2, q2, bjorkenX, pdf, muF2), cg0(cg0) {
+        PdfConvFullBase(m2, q2, bjorkenX), pdf(pdf), muF2(muF2), cg0(cg0) {
     }
     
 /**
@@ -120,9 +122,9 @@ public:
 };
 
 /**
- * @brief LO gluon convolution differentiated to pt
+ * @brief LO gluon convolution differentiated to HAQTransverseMomentum
  */
-class PdfConvLO_dpt : public PdfConvLO_dmt2dy, protected PdfConvBase_dpt {    
+class PdfConvLO_dHAQTransverseMomentum : public PdfConvLO_dmt2dy, protected PdfConvBase_dHAQTransverseMomentum {    
 public:
     
 /**
@@ -135,9 +137,9 @@ public:
  * @param BpQED pointer to Born matrix element
  * @param pt current pt of HAQ
  */
-    inline PdfConvLO_dpt(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl pt) :
+    inline PdfConvLO_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl pt) :
         PdfConvLO_dmt2dy(m2, q2, bjorkenX, pdf, muF2, BpQED),
-        PdfConvBase_dpt(m2, this->getHadronicS(),pt) {}
+        PdfConvBase_dHAQTransverseMomentum(m2, this->getHadronicS(),pt) {}
     
 /**
  * @brief called function
@@ -157,9 +159,9 @@ public:
 };
 
 /**
- * @brief LO gluon convolution differentiated to y
+ * @brief LO gluon convolution differentiated to HAQRapidity
  */
-class PdfConvLO_dy : public PdfConvLO_dmt2dy, protected PdfConvBase_dy {
+class PdfConvLO_dHAQRapidity : public PdfConvLO_dmt2dy, protected PdfConvBase_dHAQRapidity {
     
 public:
     
@@ -173,8 +175,8 @@ public:
  * @param BpQED pointer to Born matrix element
  * @param y current y of HAQ
  */
-    inline PdfConvLO_dy(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl y) :
-        PdfConvLO_dmt2dy(m2, q2, bjorkenX, pdf, muF2, BpQED), PdfConvBase_dy(m2, this->getHadronicS(),y) {}
+    inline PdfConvLO_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl y) :
+        PdfConvLO_dmt2dy(m2, q2, bjorkenX, pdf, muF2, BpQED), PdfConvBase_dHAQRapidity(m2, this->getHadronicS(),y) {}
     
 /**
  * @brief called function

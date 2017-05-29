@@ -141,7 +141,8 @@ int runInclusive2(){
     //cdbl m2 = 4.75*4.75;
     //const uint nlf = 4;
     cdbl q2 = -10.;
-    const str pdf = "MorfinTungB";
+    //const str pdf = "MorfinTungB";
+    const str pdf = "MSTW2008nlo90cl";
     projT proj = L;
     
     cdbl Delta = 1e-6;

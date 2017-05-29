@@ -6,9 +6,9 @@
 namespace Inclusive {
 
 /**
- * @brief NLO gluon convolution
+ * @brief Abstract base class for NLO gluon convolution
  */
-class PdfConvNLOg : public PdfConvBase {
+class PdfConvNLOgBase : public PdfConvBase {
     
 /**
  * @brief renormalisation scale \f$\mu_R^2\f$
@@ -28,6 +28,16 @@ protected:
     dbl Delta;
     
 private:
+
+/**
+ * @brief \f$\ln(\mu_F^2/m^2)\f$
+ */
+    dbl lnF;
+    
+/**
+ * @brief \f$\ln(\mu_R^2/m^2)\f$
+ */
+    dbl lnR;
     
 /**
  * @brief pointer to S+V matrix element
@@ -73,16 +83,6 @@ private:
  * @brief pointer to LO matrix element
  */
     fPtr3dbl cg0 = 0;
-
-/**
- * @brief \f$\ln(\mu_F^2/m^2)\f$
- */
-    dbl lnF;
-    
-/**
- * @brief \f$\ln(\mu_R^2/m^2)\f$
- */
-    dbl lnR;
     
 protected:
 
@@ -105,16 +105,16 @@ protected:
         cdbl Shp = Sh - this->q2;
         cdbl sp = xi * Shp;
         
-        cdbl A0 = 1./(s4max - Delta);
+        cdbl A0 = 1./(s4max - this->Delta);
         dbl fakeCg1SV = cg1SVDelta0(m2,q2,sp,t1) * A0;
         dbl fakeCgBarF1SV = cgBarF1SVDelta0(m2,q2,sp,t1) * A0;
         dbl fakeCgBarR1SV = cgBarR1SVDelta0(m2,q2,sp,t1) * A0;
         
-        cdbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
+        cdbl A1 = log(s4max/m2)/(s4max - this->Delta) - 1./s4;
         fakeCg1SV += cg1SVDelta1(m2,q2,sp,t1) * A1;
         fakeCgBarF1SV += cgBarF1SVDelta1(m2,q2,sp,t1) * A1;
         
-        cdbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
+        cdbl A2 = pow(log(s4max/m2),2)/(s4max - this->Delta) - 2.*log(s4/m2)/s4;
         fakeCg1SV += cg1SVDelta2(m2,q2,sp,t1) * A2;
         
         cdbl meCg1H = cg1H(m2,q2,sp,s4,t1);
@@ -136,8 +136,6 @@ protected:
         cdbl r = 1./xi * this->pdf->xfxQ2(21,xi,this->muF2) * me / m2;
         return r;
     }
-    
-public:
 
 /**
  * @brief constructor
@@ -150,11 +148,13 @@ public:
  * @param nlf number of light flavours
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
-    PdfConvNLOg(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
+    PdfConvNLOgBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), muR2(muR2), nlf(nlf), Delta(Delta){
         this->lnF = log(this->muF2/this->m2);
         this->lnR = log(this->muR2/this->m2);
     }
+    
+public:
 
 /**
  * @brief sets the functions for \f$c_{g}^{(1)}\f$
@@ -197,6 +197,29 @@ public:
     void setCg0(fPtr3dbl cg0) {
         this->cg0 = cg0;
     }
+};
+
+/**
+ * @brief NLO gluon convolution
+ */
+class PdfConvNLOg : public PdfConvNLOgBase, public PdfConvFullBase {
+    using PdfConvBase::bjorkenX;
+public:
+    
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param muR2 renormalisation scale \f$\mu_R^2\f$
+ * @param nlf number of light flavours
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
+ */
+    inline PdfConvNLOg(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
+        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
+        PdfConvFullBase(m2, q2, bjorkenX){}
     
 /**
  * @brief called function
@@ -205,7 +228,7 @@ public:
  * @param as4 integration variable mapped on s4
  * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
  */
-    cdbl operator() (cdbl az, cdbl at1, cdbl as4) {
+    inline cdbl operator() (cdbl az, cdbl at1, cdbl as4) {
         this->setZ(az);
         this->setT1(at1);
         this->setS4(as4,Delta);
@@ -243,7 +266,9 @@ public:
 /**
  * @brief NLO gluon convolution differentiated towards HAQRapidity
  */
-class PdfConvNLOg_dy : public PdfConvNLOg, protected PdfConvBase_dy {
+class PdfConvNLOg_dHAQRapidity : public PdfConvNLOg, protected PdfConvBase_dHAQRapidity {
+    using IntKerBase::m2;
+    using IntKerBase::q2;
 public:
 
 /**
@@ -258,9 +283,9 @@ public:
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param y current HAQRapididy
  */
-    inline PdfConvNLOg_dy(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl y) :
+    inline PdfConvNLOg_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl y) :
         PdfConvNLOg(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
-        PdfConvBase_dy(m2,this->getHadronicS(),y){}
+        PdfConvBase_dHAQRapidity(m2,this->getHadronicS(),y){}
         
 /**
  * @brief called function
@@ -290,7 +315,8 @@ public:
 /**
  * @brief NLO gluon convolution differentiated towards HAQTransverseMomentum
  */
-class PdfConvNLOg_dpt : public PdfConvNLOg, protected PdfConvBase_dpt {
+class PdfConvNLOg_dHAQTransverseMomentum : public PdfConvNLOg, protected PdfConvBase_dHAQTransverseMomentum {
+    using IntKerBase::q2;
 public:
 
 /**
@@ -305,9 +331,9 @@ public:
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  * @param pt current HAQTransverseMomentum
  */
-    inline PdfConvNLOg_dpt(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl pt) :
+    inline PdfConvNLOg_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl pt) :
         PdfConvNLOg(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
-        PdfConvBase_dpt(m2,this->getHadronicS(),pt){}
+        PdfConvBase_dHAQTransverseMomentum(m2,this->getHadronicS(),pt){}
         
 /**
  * @brief called function

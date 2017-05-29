@@ -6,9 +6,9 @@
 namespace Inclusive {
 
 /**
- * @brief NLO quark convolution
+ * @brief Abstract base class for NLO quark convolution
  */
-class PdfConvNLOq : public PdfConvBase {
+class PdfConvNLOqBase : public PdfConvBase {
 
 /**
  * @brief number of light flavours
@@ -59,7 +59,30 @@ protected:
         cdbl r = 1./xi * fqs / m2;
         return r;
     }
-    
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param nlf number of light flavours
+ * @param cq1 pointer to eH2 matrix element
+ * @param cqBarF1 pointer to factorisation logs of eH2 matrix element
+ * @param dq1 pointer to eL2 matrix element
+ */
+    inline PdfConvNLOqBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1) :
+        PdfConvBase(m2, q2, bjorkenX, pdf, muF2), nlf(nlf), cq1(cq1), cqBarF1(cqBarF1), dq1(dq1) {
+        this->lnF = log(this->muF2/this->m2);
+    }
+};
+
+/**
+ * @brief NLO quark convolution
+ */
+class PdfConvNLOq : public PdfConvNLOqBase, public PdfConvFullBase {
+    using PdfConvBase::bjorkenX;
 public:
 
 /**
@@ -75,9 +98,8 @@ public:
  * @param dq1 pointer to eL2 matrix element
  */
     inline PdfConvNLOq(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1) :
-        PdfConvBase(m2, q2, bjorkenX, pdf, muF2), nlf(nlf), cq1(cq1), cqBarF1(cqBarF1), dq1(dq1) {
-        this->lnF = log(this->muF2/this->m2);
-    }
+        PdfConvNLOqBase(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
+        PdfConvFullBase(m2, q2, bjorkenX){}
     
 /**
  * @brief called function
@@ -110,7 +132,9 @@ public:
 /**
  * @brief NLO quark convolution differentiated towards HAQRapidity
  */
-class PdfConvNLOq_dy : public PdfConvNLOq, protected PdfConvBase_dy {
+class PdfConvNLOq_dHAQRapidity : public PdfConvNLOq, protected PdfConvBase_dHAQRapidity {
+    using IntKerBase::m2;
+    using IntKerBase::q2;
 public:
 /**
  * @brief constructor
@@ -125,9 +149,9 @@ public:
  * @param dq1 pointer to eL2 matrix element
  * @param y current HAQRapididy
  */
-    inline PdfConvNLOq_dy(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl y) :
+    inline PdfConvNLOq_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl y) :
         PdfConvNLOq(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
-        PdfConvBase_dy(m2,this->getHadronicS(),y){}
+        PdfConvBase_dHAQRapidity(m2,this->getHadronicS(),y){}
     
 /**
  * @brief called function
@@ -158,8 +182,10 @@ public:
 /**
  * @brief NLO quark convolution differentiated towards HAQTransverseMomentum
  */
-class PdfConvNLOq_dpt : public PdfConvNLOq, protected PdfConvBase_dpt {
+class PdfConvNLOq_dHAQTransverseMomentum : public PdfConvNLOq, protected PdfConvBase_dHAQTransverseMomentum {
+    using IntKerBase::q2;
 public:
+
 /**
  * @brief constructor
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
@@ -173,9 +199,9 @@ public:
  * @param dq1 pointer to eL2 matrix element
  * @param pt current HAQTransverseMomentum
  */
-    inline PdfConvNLOq_dpt(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl pt) :
+    inline PdfConvNLOq_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl pt) :
         PdfConvNLOq(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
-        PdfConvBase_dpt(m2,this->getHadronicS(),pt){}
+        PdfConvBase_dHAQTransverseMomentum(m2,this->getHadronicS(),pt){}
     
 /**
  * @brief called function

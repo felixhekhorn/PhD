@@ -6,12 +6,22 @@
 #include "../../Pdf/PdfWrapper.h"
 
 namespace Inclusive {
-
+    
 /**
  * @brief Abstract base class for convolution with PDFs
  */
-class PdfConvBase : public IntKerBase {
+class PdfConvBase {
 protected:
+    
+/**
+ * @brief heavy quark mass squared \f$m^2 > 0\f$
+ */
+    dbl m2;
+    
+/**
+ * @brief virtuality of the photon \f$q^2< 0\f$
+ */
+    dbl q2;
     
 /**
  * @brief Bjorken scaling variable
@@ -27,21 +37,6 @@ protected:
  * @brief factorisation scale \f$\mu_F^2\f$
  */
     dbl muF2;
-    
-/**
- * @brief upper z-integration limit
- */
-    dbl zMax;
-    
-/**
- * @brief volume for z-integration
- */
-    dbl Vz;
-    
-/**
- * @brief current momentum fraction
- */
-    dbl z = -0.;
 
 /**
  * @brief constructor
@@ -52,9 +47,7 @@ protected:
  * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
     inline PdfConvBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2) :
-        IntKerBase(m2, q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2){
-        this->zMax = -q2/(4.*m2 - q2);
-        this->Vz = this->zMax - this->bjorkenX;
+        m2(m2), q2(q2), bjorkenX(bjorkenX), pdf(pdf), muF2(muF2){
     }
     
 /**
@@ -87,6 +80,45 @@ protected:
         cdbl Sh = this->getHadronicS();
         return this->q2 - mt*(Sh*ey + this->q2/ey)/sqrt(Sh);
     }
+};
+
+/**
+ * @brief Abstract base class for convolution with PDFs to full cross sections
+ */
+class PdfConvFullBase : public IntKerBase {
+    
+protected:
+
+    dbl bjorkenX;
+    
+/**
+ * @brief upper z-integration limit
+ */
+    dbl zMax;
+    
+/**
+ * @brief volume for z-integration
+ */
+    dbl Vz;
+    
+/**
+ * @brief current momentum fraction
+ */
+    dbl z = -0.;
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ */
+    inline PdfConvFullBase(cdbl m2, cdbl q2, cdbl bjorkenX) :
+        IntKerBase(m2, q2), bjorkenX(bjorkenX){
+        this->zMax = -q2/(4.*m2 - q2);
+        this->Vz = this->zMax - this->bjorkenX;
+    }
 
 /**
  * @brief sets z (and there by s') by integration
@@ -102,7 +134,7 @@ protected:
 /**
  * @brief Abstract base class for convolution with PDFs differential towards HAQRapididy
  */
-class PdfConvBase_dy {
+class PdfConvBase_dHAQRapidity {
 protected:
     
 /**
@@ -126,7 +158,7 @@ protected:
  * @param Sh hadronic S
  * @param y current HAQRapididy
  */
-    inline PdfConvBase_dy(cdbl m2, cdbl Sh, cdbl y): y(y), ey(exp(y)) {
+    inline PdfConvBase_dHAQRapidity(cdbl m2, cdbl Sh, cdbl y): y(y), ey(exp(y)) {
         cdbl coshy = cosh(y);
         cdbl mt2Max = Sh/(4.*coshy*coshy);
         this->Vmt2 = mt2Max - m2;
@@ -136,7 +168,7 @@ protected:
 /**
  * @brief Abstract base class for convolution with PDFs differential towards HAQTransverseMomentum
  */
-class PdfConvBase_dpt {
+class PdfConvBase_dHAQTransverseMomentum {
 protected:
 
 /**
@@ -160,7 +192,7 @@ protected:
  * @param Sh hadronic S
  * @param pt current HAQTransverseMomentum
  */
-    inline PdfConvBase_dpt(cdbl m2, cdbl Sh, cdbl pt): pt(pt), mt(sqrt(m2 + pt*pt)) {
+    inline PdfConvBase_dHAQTransverseMomentum(cdbl m2, cdbl Sh, cdbl pt): pt(pt), mt(sqrt(m2 + pt*pt)) {
         this->y0 = acosh(sqrt(Sh)/(2.*this->mt));
     }
 };
