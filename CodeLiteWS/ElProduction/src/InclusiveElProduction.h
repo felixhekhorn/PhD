@@ -221,6 +221,12 @@ public:
     cdbl Fg1();
     
 /**
+ * @brief NLO gluon structure function
+ * @return \f$F^{(1)}_g\f$
+ */
+    cdbl Fg1_();
+    
+/**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */

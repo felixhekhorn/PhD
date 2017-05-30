@@ -53,7 +53,7 @@ public:
 /**
  * @brief differential LO gluon convolution (in mt2 and y)
  */
-class PdfConvLO_dmt2dy : public PdfConvBase {
+class PdfConvLO_dmt2dy : protected PdfConvBase {
     
 /**
  * @brief pointer to Born matrix element

@@ -8,7 +8,7 @@ namespace Inclusive {
 /**
  * @brief Abstract base class for NLO gluon convolution
  */
-class PdfConvNLOgBase : public PdfConvBase {
+class PdfConvNLOgBase : protected PdfConvBase {
     
 /**
  * @brief renormalisation scale \f$\mu_R^2\f$
@@ -101,9 +101,14 @@ protected:
             || 0 == this->cgBarR1SVDelta0 || 0 == this->cg0)
                 throw invalid_argument("need to set all arguments!");
                 
-        cdbl Sh = this->getHadronicS();
-        cdbl Shp = Sh - this->q2;
+        cdbl Shp = this->getHadronicSp();
         cdbl sp = xi * Shp;
+        
+        if (s4 < this->Delta || s4 > s4max || s4max < this->Delta) {
+            printf("%e < s4=%e < %e\n",Delta,s4,s4max);
+        }
+        
+        return s4max;
         
         cdbl A0 = 1./(s4max - this->Delta);
         dbl fakeCg1SV = cg1SVDelta0(m2,q2,sp,t1) * A0;
@@ -148,7 +153,7 @@ protected:
  * @param nlf number of light flavours
  * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
  */
-    PdfConvNLOgBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
+    inline PdfConvNLOgBase(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
         PdfConvBase(m2, q2, bjorkenX, pdf, muF2), muR2(muR2), nlf(nlf), Delta(Delta){
         this->lnF = log(this->muF2/this->m2);
         this->lnR = log(this->muR2/this->m2);
@@ -163,7 +168,7 @@ public:
  * @param cg1SVDelta2 pointer to double Delta-logs of S+V matrix element
  * @param cg1H pointer to hard matrix element
  */
-    void setCg1(fPtr4dbl cg1SVDelta0, fPtr4dbl cg1SVDelta1, fPtr4dbl cg1SVDelta2, fPtr5dbl cg1H) {
+    inline void setCg1(fPtr4dbl cg1SVDelta0, fPtr4dbl cg1SVDelta1, fPtr4dbl cg1SVDelta2, fPtr5dbl cg1H) {
         this->cg1SVDelta0 = cg1SVDelta0;
         this->cg1SVDelta1 = cg1SVDelta1;
         this->cg1SVDelta2 = cg1SVDelta2;
@@ -176,7 +181,7 @@ public:
  * @param cgBarF1SVDelta1 pointer to factorisation part of Delta-logs of S+V matrix element
  * @param cgBarF1H pointer to factorisation part of hard matrix element
  */
-    void setCgBarF1(fPtr4dbl cgBarF1SVDelta0, fPtr4dbl cgBarF1SVDelta1, fPtr5dbl cgBarF1H) {
+    inline void setCgBarF1(fPtr4dbl cgBarF1SVDelta0, fPtr4dbl cgBarF1SVDelta1, fPtr5dbl cgBarF1H) {
         this->cgBarF1SVDelta0 = cgBarF1SVDelta0;
         this->cgBarF1SVDelta1 = cgBarF1SVDelta1;
         this->cgBarF1H = cgBarF1H;
@@ -186,7 +191,7 @@ public:
  * @brief sets the functions for \f$\bar c_{g}^{R,(1)}\f$
  * @param cgBarR1SVDelta0 pointer to renormalisation part of S+V matrix element
  */
-    void setCgBarR1(fPtr4dbl cgBarR1SVDelta0) {
+    inline void setCgBarR1(fPtr4dbl cgBarR1SVDelta0) {
         this->cgBarR1SVDelta0 = cgBarR1SVDelta0;
     }
     
@@ -194,7 +199,7 @@ public:
  * @brief sets the functions for \f$c_{g}^{(0)}\f$
  * @param cg0 pointer to LO matrix element
  */
-    void setCg0(fPtr3dbl cg0) {
+    inline void setCg0(fPtr3dbl cg0) {
         this->cg0 = cg0;
     }
 };
@@ -226,7 +231,7 @@ public:
  * @param az integration variable mapped on z
  * @param at1 integration variable mapped on t1
  * @param as4 integration variable mapped on s4
- * @return \f$1/z f_{g}(x/z,\mu_F^2) c_{g}^{(1)}(\eta,\xi)\f$
+ * @return
  */
     inline cdbl operator() (cdbl az, cdbl at1, cdbl as4) {
         this->setZ(az);
@@ -263,12 +268,46 @@ public:
     }
 };
 
+
+
+class PdfConvNLOg_ : public PdfConvNLOgBase {
+    dbl y0_;
+public:
+    inline PdfConvNLOg_(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
+        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta){
+            this->y0_ = atanh(sqrt(1. - 4.*this->m2/this->getHadronicS()));
+        }
+    inline cdbl operator() (cdbl ay, cdbl amt2, cdbl as4) {
+        cdbl y = this->y0_*(-1. + 2.*ay);
+        cdbl ey = exp(y);
+        cdbl coshy = cosh(y);
+        
+        cdbl mt2Max = this->getHadronicS()/(4.*coshy*coshy);
+        cdbl mt2 = this->m2 + (mt2Max - this->m2)*amt2;
+        cdbl mt = sqrt(mt2);
+        
+        cdbl Shp = this->getHadronicSp();
+        cdbl T1 = this->getHadronicT1(ey,mt);
+        cdbl U1 = this->getHadronicU1(ey,mt);
+        cdbl s4max = Shp + T1 + U1;
+        if (s4max < this->Delta) {
+            printf("[WARN] Delta=%e <!< s4max=%e\n",Delta,s4max);
+            return 0.;
+        }
+        cdbl s4 = Delta + (s4max-this->Delta)*as4;
+        cdbl xi = (s4 - U1)/(Shp + T1);
+        
+        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
+        // Protect from ps corner cases
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
+};
+
 /**
  * @brief NLO gluon convolution differentiated towards HAQRapidity
  */
-class PdfConvNLOg_dHAQRapidity : public PdfConvNLOg, protected PdfConvBase_dHAQRapidity {
-    using IntKerBase::m2;
-    using IntKerBase::q2;
+class PdfConvNLOg_dHAQRapidity : public PdfConvNLOgBase, protected PdfConvBase_dHAQRapidity {
 public:
 
 /**
@@ -284,20 +323,19 @@ public:
  * @param y current HAQRapididy
  */
     inline PdfConvNLOg_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl y) :
-        PdfConvNLOg(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
+        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
         PdfConvBase_dHAQRapidity(m2,this->getHadronicS(),y){}
         
 /**
  * @brief called function
  * @param amt2 integration variable mapped on mt2
  * @param as4 integration variable mapped on s4
- * @return 
+ * @return kernel
  */
     inline cdbl operator() (cdbl amt2, cdbl as4) const {
         cdbl mt2 = this->m2 + this->Vmt2*amt2;
         cdbl mt = sqrt(mt2);
-        cdbl Sh = this->getHadronicS();
-        cdbl Shp = Sh - this->q2;
+        cdbl Shp = this->getHadronicSp();
         cdbl T1 = this->getHadronicT1(this->ey,mt);
         cdbl U1 = this->getHadronicU1(this->ey,mt);
         cdbl s4max = Shp + T1 + U1;
@@ -315,8 +353,7 @@ public:
 /**
  * @brief NLO gluon convolution differentiated towards HAQTransverseMomentum
  */
-class PdfConvNLOg_dHAQTransverseMomentum : public PdfConvNLOg, protected PdfConvBase_dHAQTransverseMomentum {
-    using IntKerBase::q2;
+class PdfConvNLOg_dHAQTransverseMomentum : public PdfConvNLOgBase, protected PdfConvBase_dHAQTransverseMomentum {
 public:
 
 /**
@@ -332,7 +369,7 @@ public:
  * @param pt current HAQTransverseMomentum
  */
     inline PdfConvNLOg_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl pt) :
-        PdfConvNLOg(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
+        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
         PdfConvBase_dHAQTransverseMomentum(m2,this->getHadronicS(),pt){}
         
 /**
@@ -344,8 +381,7 @@ public:
     inline cdbl operator() (cdbl ay, cdbl as4) const {
         cdbl y = this->y0*(-1. + 2.*ay);
         cdbl ey = exp(y);
-        cdbl Sh = this->getHadronicS();
-        cdbl Shp = Sh - this->q2;
+        cdbl Shp = this->getHadronicSp();
         cdbl T1 = this->getHadronicT1(ey,this->mt);
         cdbl U1 = this->getHadronicU1(ey,this->mt);
         cdbl s4max = Shp + T1 + U1;

@@ -51,11 +51,19 @@ protected:
     }
     
 /**
+ * @brief get hadronic S'
+ * @return hadronic S'
+ */
+    inline cdbl getHadronicSp() const {
+        return -this->q2/this->bjorkenX;
+    }
+    
+/**
  * @brief get hadronic S
  * @return hadronic S
  */
     inline cdbl getHadronicS() const {
-        return -this->q2*(1./this->bjorkenX - 1.);
+        return this->getHadronicSp() + this->q2;
     }
     
 /**
@@ -86,7 +94,6 @@ protected:
  * @brief Abstract base class for convolution with PDFs to full cross sections
  */
 class PdfConvFullBase : public IntKerBase {
-    
 protected:
 
     dbl bjorkenX;

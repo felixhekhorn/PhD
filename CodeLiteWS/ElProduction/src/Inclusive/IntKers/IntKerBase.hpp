@@ -100,6 +100,8 @@ protected:
     inline void setS4(cdbl a, cdbl s4min) {
         this->s4 = s4min + (s4max - s4min)*a;
         this->jac *= (s4max - s4min);
+        if (s4max < s4min)
+            this->jac *= 0.;
     }
 };
 

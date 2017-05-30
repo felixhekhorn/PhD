@@ -8,7 +8,7 @@ namespace Inclusive {
 /**
  * @brief Abstract base class for NLO quark convolution
  */
-class PdfConvNLOqBase : public PdfConvBase {
+class PdfConvNLOqBase : protected PdfConvBase {
 
 /**
  * @brief number of light flavours
@@ -106,7 +106,7 @@ public:
  * @param aZ integration variable mapped on z
  * @param at1 integration variable mapped on t1
  * @param as4 integration variable mapped on s4
- * @return \f$1/z \sum\limits_q \left(f_{q}(x/z,\mu_F^2) + f_{\bar{q}}(x/z,\mu_F^2)\right) \left(e_H^2 c_{q}^{(1)}(\eta,\xi) + e_q^2 d_{q}^{(1)}(\eta,\xi)\right)\f$
+ * @return
  */
     inline cdbl operator() (cdbl aZ, cdbl at1, cdbl as4) {
         this->setZ(aZ);
@@ -132,9 +132,7 @@ public:
 /**
  * @brief NLO quark convolution differentiated towards HAQRapidity
  */
-class PdfConvNLOq_dHAQRapidity : public PdfConvNLOq, protected PdfConvBase_dHAQRapidity {
-    using IntKerBase::m2;
-    using IntKerBase::q2;
+class PdfConvNLOq_dHAQRapidity : public PdfConvNLOqBase, protected PdfConvBase_dHAQRapidity {
 public:
 /**
  * @brief constructor
@@ -150,7 +148,7 @@ public:
  * @param y current HAQRapididy
  */
     inline PdfConvNLOq_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl y) :
-        PdfConvNLOq(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
+        PdfConvNLOqBase(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
         PdfConvBase_dHAQRapidity(m2,this->getHadronicS(),y){}
     
 /**
@@ -162,8 +160,7 @@ public:
     inline cdbl operator() (cdbl amt2, cdbl as4) const {
         cdbl mt2 = this->m2 + this->Vmt2*amt2;
         cdbl mt = sqrt(mt2);
-        cdbl Sh = this->getHadronicS();
-        cdbl Shp = Sh - this->q2;
+        cdbl Shp = this->getHadronicSp();
         cdbl T1 = this->getHadronicT1(this->ey,mt);
         cdbl U1 = this->getHadronicU1(this->ey,mt);
         cdbl s4max = Shp + T1 + U1;
@@ -182,8 +179,7 @@ public:
 /**
  * @brief NLO quark convolution differentiated towards HAQTransverseMomentum
  */
-class PdfConvNLOq_dHAQTransverseMomentum : public PdfConvNLOq, protected PdfConvBase_dHAQTransverseMomentum {
-    using IntKerBase::q2;
+class PdfConvNLOq_dHAQTransverseMomentum : public PdfConvNLOqBase, protected PdfConvBase_dHAQTransverseMomentum {
 public:
 
 /**
@@ -200,7 +196,7 @@ public:
  * @param pt current HAQTransverseMomentum
  */
     inline PdfConvNLOq_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl pt) :
-        PdfConvNLOq(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
+        PdfConvNLOqBase(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
         PdfConvBase_dHAQTransverseMomentum(m2,this->getHadronicS(),pt){}
     
 /**

@@ -145,7 +145,7 @@ int runInclusive2(){
     const str pdf = "MSTW2008nlo90cl";
     projT proj = L;
     
-    cdbl Delta = 1e-6;
+    cdbl Delta = 1e-7;
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
@@ -161,23 +161,23 @@ int runInclusive2(){
     eO.MCparams.verbosity = 2;
     
     iO.setPdf(pdf,0);eO.setPdf(pdf,0);
+    iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
     
-    {
+    /*{
         cdbl bjorkenX = 1e-2;
-        const Common::DynamicScaleFactors mu2(1.,0.,0.,0.);
+        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
         iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
-        iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
         iO.setMu2(mu2);eO.setMu2(mu2);
         const uint N = 30;
-        cdbl ptmax = 5.;
-        cdbl y0 = 3.5;
+        cdbl ptmax = 8.;
+        cdbl y0 = 3.15;
         for (uint j = 0; j < N; ++j) {
-            /*cdbl pt = ptmax * (j+.5)/(N);
-            cdbl l = iO.dFq1_dHAQTransverseMomentum(pt);
-            printf("%e\t%e\n",pt,l);*/
-            cdbl y = y0 * (-1. + 2./N*(j+.5));
+            cdbl pt = ptmax * (j+.5)/(N);
+            cdbl l = iO.dFg1_dHAQTransverseMomentum(pt);
+            printf("%e\t%e\n",pt,l);
+            / *cdbl y = y0 * (-1. + 2./N*(j+.5));
             cdbl g = iO.dFg1_dHAQRapidity(y);
-            printf("%e\t%e\n",y,g);
+            printf("%e\t%e\n",y,g);* /
             
         }
         cout << endl << endl;
@@ -185,26 +185,23 @@ int runInclusive2(){
         eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
         eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
         printf("int_inc = %e\n",iO.Fg1());
-        //printf("int_ex = %e\n",eO.F(1));
-    }
-    
-    /*{
-        cdbl bjorkenX = .01;
-        cdbl Sh = -q2*(1/bjorkenX - 1.);
-        oL.setHadronicS(Sh);
-        const uint N = 99;
-        cdbl mu2 = 4.*m2 - q2;
-        cdbl y0 = atanh(sqrt(1. - 4.*m2/Sh));
-        printf("Sh = %e\ty0 = %e\n\n",Sh,y0);
-        oL.setMu2(mu2);
-        oL.setAlphaS(alphaS.alphasQ2(mu2));
-        for (uint j = 0; j < N; ++j) {
-            cdbl y = 3.5*(-1. + 2./(N+1)*(.5+j));
-            cdbl l = oL.dFg0_dHAQRapidity(y);
-            printf("%e\t%e\n",y,l);
-        }
-        printf("\n\nint = %e =?= %e\n",oL.Fg0_(),oL.Fg0());
+        printf("int_ex = %e\n",eO.F(1));
     }*/
+    
+    {
+        const Common::DynamicScaleFactors mu2(1.,0.,0.,0.);
+        iO.setMu2(mu2);eO.setMu2(mu2);
+        uint N = 10;
+        printf("x\t\tFg1\t\tFg1_\t\tabs\t\trel\n");
+        cdbl zMax = -q2/(4.*m2 - q2);
+        for (uint j = 0; j < N; ++j) {
+            cdbl bjorkenX = exp(log(zMax)*(1.+1./(N-1)*j));
+            iO.setBjorkenX(bjorkenX);
+            cdbl a = iO.Fg1();
+            cdbl b = iO.Fg1_();
+            printf("%e\t%e\t%e\t%e\t%e\n",bjorkenX,a,b,a-b,(a-b)/a);
+        }
+    }
     
     /*Timer::logAll(cout);
     Timer::deleteAll();*/
