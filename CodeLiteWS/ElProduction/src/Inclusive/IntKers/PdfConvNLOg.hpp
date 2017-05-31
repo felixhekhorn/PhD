@@ -94,7 +94,7 @@ protected:
  * @param s4max max partonic s4
  * @return pdf*me
  */
-    inline cdbl PdfMe(cdbl xi, cdbl t1, cdbl s4, cdbl s4max) const {
+    inline cdbl PdfMe(cdbl xi, cdbl t1, cdbl s4, dbl s4max) const {
         // protect from null pointer
         if (0 == this->cg1SVDelta0 || 0 == this->cg1SVDelta1 || 0 == this->cg1SVDelta2 || 0 == this->cg1H
             || 0 == this->cgBarF1SVDelta0 || 0 == this->cgBarF1SVDelta1 || 0 == this->cgBarF1H 
@@ -104,11 +104,16 @@ protected:
         cdbl Shp = this->getHadronicSp();
         cdbl sp = xi * Shp;
         
-        if (s4 < this->Delta || s4 > s4max || s4max < this->Delta) {
-            printf("%e < s4=%e < %e\n",Delta,s4,s4max);
-        }
+        /*{
+            cdbl s = sp+q2;
+            cdbl beta = Sqrt(1. - (4.*m2)/s);
+            s4max = (s*( (sp*(1. - beta))/2. + t1 )*( (sp*(1. + beta))/2. + t1) )/(sp*t1);
+        }*/
         
-        return s4max;
+        if (s4 < this->Delta || s4 > s4max || s4max < this->Delta) {
+            //printf("%e < s4=%e < %e\n",Delta,s4,s4max);
+            return 0.;
+        }
         
         cdbl A0 = 1./(s4max - this->Delta);
         dbl fakeCg1SV = cg1SVDelta0(m2,q2,sp,t1) * A0;
@@ -286,18 +291,26 @@ public:
         cdbl mt2 = this->m2 + (mt2Max - this->m2)*amt2;
         cdbl mt = sqrt(mt2);
         
+        /*cdbl Sh = this->getHadronicS();
+        cdbl mt2 = m2 + (Sh/4 - m2)*amt2;
+        cdbl mt = sqrt(mt2);
+        cdbl y0 = acosh(sqrt(Sh)/2./mt);
+        cdbl y = y0*(-1. + 2.*ay);
+        cdbl ey = exp(y);*/
+        
         cdbl Shp = this->getHadronicSp();
         cdbl T1 = this->getHadronicT1(ey,mt);
         cdbl U1 = this->getHadronicU1(ey,mt);
         cdbl s4max = Shp + T1 + U1;
         if (s4max < this->Delta) {
-            printf("[WARN] Delta=%e <!< s4max=%e\n",Delta,s4max);
+            //printf("[WARN] Delta=%e <!< s4max=%e\n",Delta,s4max);
             return 0.;
         }
         cdbl s4 = Delta + (s4max-this->Delta)*as4;
         cdbl xi = (s4 - U1)/(Shp + T1);
         
-        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
+        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi*xi*Shp * this->PdfMe(xi,xi*T1,s4,s4max);
+        //cdbl r = (2.*y0)*(Sh/4 - m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;
@@ -387,6 +400,16 @@ public:
         cdbl s4max = Shp + T1 + U1;
         cdbl s4 = Delta + (s4max-Delta)*as4;
         cdbl xi = (s4 - U1)/(Shp + T1);
+        
+        /*{
+            cdbl sp = xi*Shp;
+            cdbl t1 = xi*T1;
+            cdbl s = sp+q2;
+            cdbl beta = Sqrt(1. - (4.*m2)/s);
+            cdbl s4max_ = (s*( (sp*(1. - beta))/2. + t1 )*( (sp*(1. + beta))/2. + t1) )/(sp*t1);
+            printf("%e\t%e\t%e\t%e\t",s4max,s4max_,s4max-s4max_,s4max/s4max_);
+            cout << " " << sp << " " << t1 << " " << U1 << " " << s4 << " " << xi <<endl;
+        }*/
         
         cdbl r = 2.*this->y0*2.*pt*(s4max-Delta)/(Shp+T1)*Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
         

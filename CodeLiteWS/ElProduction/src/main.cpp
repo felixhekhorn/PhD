@@ -184,8 +184,8 @@ int runInclusive2(){
         const str path = "/home/Felix/Physik/PhD/data/hist/";
         eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
         eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
-        printf("int_inc = %e\n",iO.Fg1());
-        printf("int_ex = %e\n",eO.F(1));
+        //printf("int_inc = %e\n",iO.Fg1());
+        //printf("int_ex = %e\n",eO.F(1));
     }*/
     
     {
@@ -195,7 +195,7 @@ int runInclusive2(){
         printf("x\t\tFg1\t\tFg1_\t\tabs\t\trel\n");
         cdbl zMax = -q2/(4.*m2 - q2);
         for (uint j = 0; j < N; ++j) {
-            cdbl bjorkenX = exp(log(zMax)*(1.+1./(N-1)*j));
+            cdbl bjorkenX = exp(log(zMax)*(1.+2./(N-1)*j));
             iO.setBjorkenX(bjorkenX);
             cdbl a = iO.Fg1();
             cdbl b = iO.Fg1_();
