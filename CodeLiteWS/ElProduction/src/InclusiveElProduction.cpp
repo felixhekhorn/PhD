@@ -15,6 +15,7 @@
 #include "Inclusive/IntKers/PdfConvLO.hpp"
 #include "Inclusive/IntKers/PdfConvNLOg.hpp"
 #include "Inclusive/IntKers/PdfConvNLOq.hpp"
+#include "Inclusive/IntKers/FKerAll.hpp"
 
 using namespace Inclusive;
 
@@ -184,7 +185,7 @@ cdbl InclusiveElProduction::Fg1() {
     if (this->bjorkenX >= this->zMax)
         return 0.;
     PdfConvNLOg k(m2,q2,bjorkenX,pdf,this->getMuF2(0.),this->getMuR2(0.),nlf,Delta);
-    k.setCg0(this->getCg0());
+    k.setBpQED(this->getBpQED());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
@@ -198,16 +199,17 @@ cdbl InclusiveElProduction::Fg1() {
     cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
     return n*Fg1;
 }
-cdbl InclusiveElProduction::Fg1_() {
+/* @todo remove
+ * cdbl InclusiveElProduction::Fg1_() {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    / ** @todo relax condition? * /
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for full inclusive computation may not depend on HAQTransverseMomentum!");
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
         return 0.;
     PdfConvNLOg_ k(m2,q2,bjorkenX,pdf,this->getMuF2(0.),this->getMuR2(0.),nlf,Delta);
-    k.setCg0(this->getCg0());
+    k.setBpQED(this->getBpQED());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
@@ -220,7 +222,7 @@ cdbl InclusiveElProduction::Fg1_() {
     cdbl alphaS = this->getAlphaS(1,0.);
     cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
     return n*Fg1;
-}
+}*/
 
 cdbl InclusiveElProduction::Fq1() {
     this->checkHadronic();
@@ -240,6 +242,28 @@ cdbl InclusiveElProduction::Fq1() {
     cdbl alphaS = this->getAlphaS(1,0.);
     cdbl n = alphaS*alphaS * (-q2)/(M_PI);
     return n*Fq1;
+}
+
+cdbl InclusiveElProduction::dF_dHAQTransverseMomentum(cdbl pt, uint order) {
+    this->checkHadronic();
+    // threshold cut off
+    if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
+        return 0.;
+    PdfConvLO_dHAQTransverseMomentum LO(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), pt);
+    PdfConvNLOg_dHAQTransverseMomentum NLOg(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, pt);
+    NLOg.setBpQED(this->getBpQED());
+    NLOg.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
+    NLOg.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
+    NLOg.setCgBarR1(this->getCgBarR1SV());
+    PdfConvNLOq_dHAQTransverseMomentum NLOq(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
+    
+    FKerAll_dHAQTransverseMomentum k(m2, q2, bjorkenX, nlf, this->getAlphaS(order,0.), pt);
+    k.setKers(&LO,&NLOg,&NLOq);
+    k.setOrder(order);
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<FKerAll_dHAQTransverseMomentum>;
+    f.params = &k;
+    return Common::int2D(&f);
 }
 
 cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) {
@@ -263,7 +287,7 @@ cdbl InclusiveElProduction::dFg1_dHAQTransverseMomentum(cdbl pt) {
     if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
         return 0.;
     PdfConvNLOg_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, pt);
-    k.setCg0(this->getCg0());
+    k.setBpQED(this->getBpQED());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
@@ -290,9 +314,36 @@ cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentum(cdbl pt) {
     return n * Common::int2D(&f);
 }
 
+cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, uint order) {
+    this->checkHadronic();
+    /** @todo relax condition? */
+    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
+        throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
+    // threshold cut off
+    cdbl y0 = this->getHAQyMax();
+    if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
+        return 0.;
+    
+    PdfConvLO_dHAQRapidity LO(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), y);
+    PdfConvNLOg_dHAQRapidity NLOg(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, y);
+    NLOg.setBpQED(this->getBpQED());
+    NLOg.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
+    NLOg.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
+    NLOg.setCgBarR1(this->getCgBarR1SV());
+    PdfConvNLOq_dHAQRapidity NLOq(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), y);
+    
+    FKerAll_dHAQRapidity k(m2, q2, bjorkenX, nlf, this->getAlphaS(order,0.), y);
+    k.setKers(&LO,&NLOg,&NLOq);
+    k.setOrder(order);
+    gsl_monte_function f;
+    f.f = gslpp::callFunctor2D<FKerAll_dHAQRapidity>;
+    f.params = &k;
+    return Common::int2D(&f);
+}
+
 cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /** @todo relax condition? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -311,7 +362,7 @@ cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
 
 cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /** @todo relax condition? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -319,7 +370,7 @@ cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
     if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
         return 0.;
     PdfConvNLOg_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, y);
-    k.setCg0(this->getCg0());
+    k.setBpQED(this->getBpQED());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
@@ -334,7 +385,7 @@ cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
 
 cdbl InclusiveElProduction::dFq1_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /** @todo relax condition? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFq1_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off

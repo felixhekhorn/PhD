@@ -220,17 +220,26 @@ public:
  */
     cdbl Fg1();
     
-/**
+/*
+ * @todo remove
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    cdbl Fg1_();
+    //cdbl Fg1_();
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
     cdbl Fq1();
+    
+/**
+ * @brief derivative of full structure function to pt of heavy anti quark
+ * @param pt pt of heavy anti quark
+ * @param order computed order
+ * @return dF^(order)_dHAQTransverseMomentum(pt)
+ */
+    cdbl dF_dHAQTransverseMomentum(cdbl pt, uint order);
     
 /**
  * @brief derivative of LO structure function to pt of heavy anti quark
@@ -252,6 +261,14 @@ public:
  * @return dFq1_dHAQTransverseMomentum(pt)
  */
     cdbl dFq1_dHAQTransverseMomentum(cdbl pt);
+    
+/**
+ * @brief derivative of full structure function to rapidity of heavy anti quark
+ * @param y rapidity of heavy anti quark
+ * @param order computed order
+ * @return dF^(order)_dHAQRapidity(y)
+ */
+    cdbl dF_dHAQRapidity(cdbl y, uint order);
     
 /**
  * @brief derivative of LO structure function to rapidity of heavy anti quark

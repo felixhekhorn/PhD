@@ -71,8 +71,15 @@ def _threadWorker(qIn, qOut):
 		# run
 		if tuple == type(p["f"]) or list == type(p["f"]):
 			f = p["f"]
+			if "dF_dHAQTransverseMomentum"   == f[0]: p["res"] = o.dF_dHAQTransverseMomentum(f[1],f[2])
 			if "dFg0_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFg0_dHAQTransverseMomentum(f[1])
+			if "dFg1_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFg1_dHAQTransverseMomentum(f[1])
+			if "dFq1_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFq1_dHAQTransverseMomentum(f[1])
+
+			if "dF_dHAQRapidity"   == f[0]:           p["res"] = o.dF_dHAQRapidity(f[1],f[2])
 			if "dFg0_dHAQRapidity" == f[0]:           p["res"] = o.dFg0_dHAQRapidity(f[1])
+			if "dFg1_dHAQRapidity" == f[0]:           p["res"] = o.dFg1_dHAQRapidity(f[1])
+			if "dFq1_dHAQRapidity" == f[0]:           p["res"] = o.dFq1_dHAQRapidity(f[1])
 		qOut.put(p)
 		qIn.task_done()
 		if p.has_key("msg"): Util.pSucc(p["msg"])

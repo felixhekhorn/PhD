@@ -17,8 +17,8 @@ r = InclusiveRunner();
 
 Delta = 1e-6
 q2 = -10
-fpPtTemplate = "dF%s%s_dpt_inc_x-%g_%s.dat"
-fpRapTemplate = "dF%s%s_dy_inc_x-%g_%s.dat"
+fpPtTemplate = "dF%s%s_dpt_inc_x-%g_%d.dat"
+fpRapTemplate = "dF%s%s_dy_inc_x-%g_%d.dat"
 lsTo2 = []
 
 # add data point
@@ -34,8 +34,8 @@ def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n):
 		r.add({
 			"objArgs":(m2,q2,Delta,proj,nlf,),
 			"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX,
-			"f": ("dFg0_dHAQTransverseMomentum", pt),
-			"msg": fpPt+" (pt = %e)"%pt,
+			"f": ("dF_dHAQTransverseMomentum", pt, n),
+			"msg": fpPt+" (pt = %e)"%(pt),
 			"fp": fpPt,
 			"var": pt
 		})
@@ -47,12 +47,12 @@ def addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,n):
 	fpRap = fpRap%proj
 	N = 100
 	for j in xrange(N-1):
-		y = y0*(-1. + 2./N*(.5+j))
+		y = y0*(-1. + 2./N*(.5 + j))
 		r.add({
 			"objArgs":(m2,q2,Delta,proj,nlf,),
 			"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX,
-			"f": ("dFg0_dHAQRapidity", y),
-			"msg": fpRap+" (y = %e)"%y,
+			"f": ("dF_dHAQRapidity", y, n),
+			"msg": fpRap+" (y = %e)"%(y),
 			"fp": fpRap,
 			"var": y
 		})
@@ -62,13 +62,15 @@ def addPtCharm(proj,bjorkenX,ptmax):
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,4.,)
-	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,"g0")
+	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,0)
+	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
 def addRapCharm(proj,bjorkenX,y0):
 	m2 = 1.5**2
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,0.,)
-	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,"g0")
+	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,0)
+	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
 # add plots
 def addPtCharmG():
 	addPtCharm(projT.G, .1,     5.)

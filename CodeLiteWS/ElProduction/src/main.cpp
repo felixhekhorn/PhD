@@ -163,45 +163,48 @@ int runInclusive2(){
     iO.setPdf(pdf,0);eO.setPdf(pdf,0);
     iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
     
-    /*{
+    {
         cdbl bjorkenX = 1e-2;
-        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
         iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
+        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
         iO.setMu2(mu2);eO.setMu2(mu2);
-        const uint N = 30;
+        const uint N = 100;
         cdbl ptmax = 8.;
         cdbl y0 = 3.15;
         for (uint j = 0; j < N; ++j) {
             cdbl pt = ptmax * (j+.5)/(N);
-            cdbl l = iO.dFg1_dHAQTransverseMomentum(pt);
+            cdbl l = iO.dFg0_dHAQTransverseMomentum(pt);
             printf("%e\t%e\n",pt,l);
-            / *cdbl y = y0 * (-1. + 2./N*(j+.5));
+            /*cdbl y = y0 * (-1. + 2./N*(j+.5));
             cdbl g = iO.dFg1_dHAQRapidity(y);
-            printf("%e\t%e\n",y,g);* /
-            
+            printf("%e\t%e\n",y,g);*/
         }
         cout << endl << endl;
         const str path = "/home/Felix/Physik/PhD/data/hist/";
         eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
         eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
-        //printf("int_inc = %e\n",iO.Fg1());
-        //printf("int_ex = %e\n",eO.F(1));
-    }*/
+        printf("int_inc = %e\n",iO.Fg0());
+        //printf("int_inc' = %e\n",iO.Fg1_());
+        printf("int_ex = %e\n",eO.F(0));
+    }
     
-    {
+    /*{
         const Common::DynamicScaleFactors mu2(1.,0.,0.,0.);
         iO.setMu2(mu2);eO.setMu2(mu2);
+        const Common::DynamicScaleFactors muF2(10.,0.,0.,0.);
+        iO.setMuF2(muF2);eO.setMuF2(muF2);
         uint N = 10;
         printf("x\t\tFg1\t\tFg1_\t\tabs\t\trel\n");
         cdbl zMax = -q2/(4.*m2 - q2);
         for (uint j = 0; j < N; ++j) {
             cdbl bjorkenX = exp(log(zMax)*(1.+2./(N-1)*j));
-            iO.setBjorkenX(bjorkenX);
+            iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
             cdbl a = iO.Fg1();
-            cdbl b = iO.Fg1_();
-            printf("%e\t%e\t%e\t%e\t%e\n",bjorkenX,a,b,a-b,(a-b)/a);
+            //cdbl b = iO.Fg1_();
+            cdbl c = eO.F(1);
+            printf("%e\t%e\t%e\t%e\t%e\n",bjorkenX,a,c,a-c,(a-c)/a);
         }
-    }
+    }*/
     
     /*Timer::logAll(cout);
     Timer::deleteAll();*/

@@ -12,6 +12,10 @@ Release/src_InclusiveElProduction.cpp.o: src/InclusiveElProduction.cpp \
  src/Inclusive/IntKers/PdfConvBase.hpp \
  src/Inclusive/IntKers/../../Pdf/PdfWrapper.h \
  src/Inclusive/IntKers/PdfConvNLOg.hpp \
+ src/Inclusive/IntKers/../../Common/ME/BpQED.h \
+ src/Inclusive/IntKers/PdfConvNLOq.hpp src/Inclusive/IntKers/FKerAll.hpp \
+ src/Inclusive/IntKers/PdfConvLO.hpp \
+ src/Inclusive/IntKers/PdfConvNLOg.hpp \
  src/Inclusive/IntKers/PdfConvNLOq.hpp
 
 src/InclusiveElProduction.h:
@@ -57,6 +61,16 @@ src/Inclusive/IntKers/PdfConvLO.hpp:
 src/Inclusive/IntKers/PdfConvBase.hpp:
 
 src/Inclusive/IntKers/../../Pdf/PdfWrapper.h:
+
+src/Inclusive/IntKers/PdfConvNLOg.hpp:
+
+src/Inclusive/IntKers/../../Common/ME/BpQED.h:
+
+src/Inclusive/IntKers/PdfConvNLOq.hpp:
+
+src/Inclusive/IntKers/FKerAll.hpp:
+
+src/Inclusive/IntKers/PdfConvLO.hpp:
 
 src/Inclusive/IntKers/PdfConvNLOg.hpp:
 

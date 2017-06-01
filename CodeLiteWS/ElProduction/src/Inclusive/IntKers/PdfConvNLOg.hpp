@@ -2,6 +2,7 @@
 #define Inclusive_PdfConvNLOg_H_
 
 #include "PdfConvBase.hpp"
+#include "../../Common/ME/BpQED.h"
 
 namespace Inclusive {
 
@@ -82,33 +83,51 @@ private:
 /**
  * @brief pointer to LO matrix element
  */
-    fPtr3dbl cg0 = 0;
+    fPtr4dbl BpQED = 0;
     
-protected:
-
+protected:    
+    
 /**
- * @brief computes pdf * me without any jacobians
+ * @brief computes pdf * me_H without any jacobians
  * @param xi momentum fraction
  * @param t1 partonic t1
  * @param s4 partonic s4
- * @param s4max max partonic s4
- * @return pdf*me
+ * @return pdf*me_H
  */
-    inline cdbl PdfMe(cdbl xi, cdbl t1, cdbl s4, dbl s4max) const {
+    inline cdbl PdfMeH(cdbl xi, cdbl t1, cdbl s4) const {
         // protect from null pointer
-        if (0 == this->cg1SVDelta0 || 0 == this->cg1SVDelta1 || 0 == this->cg1SVDelta2 || 0 == this->cg1H
-            || 0 == this->cgBarF1SVDelta0 || 0 == this->cgBarF1SVDelta1 || 0 == this->cgBarF1H 
-            || 0 == this->cgBarR1SVDelta0 || 0 == this->cg0)
+        if (0 == this->cg1H || 0 == this->cgBarF1H)
                 throw invalid_argument("need to set all arguments!");
                 
         cdbl Shp = this->getHadronicSp();
         cdbl sp = xi * Shp;
         
-        /*{
-            cdbl s = sp+q2;
-            cdbl beta = Sqrt(1. - (4.*m2)/s);
-            s4max = (s*( (sp*(1. - beta))/2. + t1 )*( (sp*(1. + beta))/2. + t1) )/(sp*t1);
-        }*/
+        cdbl meCg1H = cg1H(m2,q2,sp,s4,t1);
+        cdbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
+        
+        cdbl me = (meCg1H) + lnF * (meCgBarF1H);
+        cdbl r = 1./xi * this->pdf->xfxQ2(21,xi,this->muF2) * me / m2;
+        return r;
+    }
+    
+    
+/**
+ * @brief computes pdf * (shifted me_SV) without any jacobians
+ * @param xi momentum fraction
+ * @param t1 partonic t1
+ * @param s4 partonic s4
+ * @param s4max max partonic s4
+ * @return pdf*(shifted me_SV)
+ */
+    inline cdbl PdfShiftedMeSV(cdbl xi, cdbl t1, cdbl s4, cdbl s4max) const {
+        // protect from null pointer
+        if (0 == this->cg1SVDelta0 || 0 == this->cg1SVDelta1 || 0 == this->cg1SVDelta2
+            || 0 == this->cgBarF1SVDelta0 || 0 == this->cgBarF1SVDelta1
+            || 0 == this->cgBarR1SVDelta0 || 0 == this->BpQED)
+                throw invalid_argument("need to set all arguments!");
+                
+        cdbl Shp = this->getHadronicSp();
+        cdbl sp = xi * Shp;
         
         if (s4 < this->Delta || s4 > s4max || s4max < this->Delta) {
             //printf("%e < s4=%e < %e\n",Delta,s4,s4max);
@@ -127,22 +146,14 @@ protected:
         cdbl A2 = pow(log(s4max/m2),2)/(s4max - this->Delta) - 2.*log(s4/m2)/s4;
         fakeCg1SV += cg1SVDelta2(m2,q2,sp,t1) * A2;
         
-        cdbl meCg1H = cg1H(m2,q2,sp,s4,t1);
-        cdbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
-        
         // take fermion loop into account
         if (lnF != lnR) {
-            cdbl s = sp+q2;
-            cdbl beta = Sqrt(1. - (4.*m2)/s);
-            cdbl t1max = -(sp*(1. - beta))/2.;
-            cdbl t1min = -(sp*(1. + beta))/2.;
-            cdbl B0 = A0/(t1max-t1min);
-            cdbl meCg0 = cg0(m2,q2,sp);
-            fakeCgBarF1SV += nlf * fermionLoopFactor * meCg0 * B0;
-            fakeCgBarR1SV -= nlf * fermionLoopFactor * meCg0 * B0;
+            cdbl me = 4.*M_PI * Kggg*NC*CF * BpQED(m2,q2,sp,t1) /sp/sp * m2;
+            fakeCgBarF1SV += nlf * fermionLoopFactor * me * A0;
+            fakeCgBarR1SV -= nlf * fermionLoopFactor * me * A0;
         }
         
-        cdbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
+        cdbl me = (fakeCg1SV) + lnF * (fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
         cdbl r = 1./xi * this->pdf->xfxQ2(21,xi,this->muF2) * me / m2;
         return r;
     }
@@ -201,11 +212,11 @@ public:
     }
     
 /**
- * @brief sets the functions for \f$c_{g}^{(0)}\f$
- * @param cg0 pointer to LO matrix element
+ * @brief sets the functions for \f$B'_{QED}\f$
+ * @param BpQED pointer to LO matrix element
  */
-    inline void setCg0(fPtr3dbl cg0) {
-        this->cg0 = cg0;
+    inline void setBpQED(fPtr4dbl BpQED) {
+        this->BpQED = BpQED;
     }
 };
 
@@ -243,30 +254,7 @@ public:
         this->setT1(at1);
         this->setS4(as4,Delta);
         cdbl xi = this->bjorkenX/this->z;
-        /*cdbl A0 = 1./(s4max - Delta);
-        dbl fakeCg1SV = cg1SVDelta0(m2,q2,sp,t1) * A0;
-        dbl fakeCgBarF1SV = cgBarF1SVDelta0(m2,q2,sp,t1) * A0;
-        dbl fakeCgBarR1SV = cgBarR1SVDelta0(m2,q2,sp,t1) * A0;
-        
-        cdbl A1 = log(s4max/m2)/(s4max - Delta) - 1./s4;
-        fakeCg1SV += cg1SVDelta1(m2,q2,sp,t1) * A1;
-        fakeCgBarF1SV += cgBarF1SVDelta1(m2,q2,sp,t1) * A1;
-        
-        cdbl A2 = pow(log(s4max/m2),2)/(s4max - Delta) - 2.*log(s4/m2)/s4;
-        fakeCg1SV += cg1SVDelta2(m2,q2,sp,t1) * A2;
-        
-        cdbl meCg1H = cg1H(m2,q2,sp,s4,t1);
-        cdbl meCgBarF1H = cgBarF1H(m2,q2,sp,s4,t1);
-        
-        // take fermion loop into account
-        cdbl B0 = A0/(this->t1max-this->t1min);
-        cdbl meCg0 = cg0(m2,q2,sp);
-        fakeCgBarF1SV += nlf * fermionLoopFactor * meCg0 * B0;
-        fakeCgBarR1SV -= nlf * fermionLoopFactor * meCg0 * B0;
-        
-        cdbl me = (meCg1H + fakeCg1SV) + lnF * (meCgBarF1H + fakeCgBarF1SV) + lnR * (fakeCgBarR1SV);
-        cdbl r = jac * 1./this->z * this->pdf->xfxQ2(21,this->bjorkenX/this->z,this->muF2) * me;*/
-        cdbl r = (jac*xi/this->z) * this->PdfMe(xi, this->t1, this->s4, this->s4max);
+        cdbl r = (jac*xi/this->z) * (this->PdfMeH(xi, this->t1, this->s4) + this->PdfShiftedMeSV(xi, this->t1, this->s4, this->s4max));
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;
@@ -274,7 +262,7 @@ public:
 };
 
 
-
+/* @todo remove
 class PdfConvNLOg_ : public PdfConvNLOgBase {
     dbl y0_;
 public:
@@ -291,12 +279,12 @@ public:
         cdbl mt2 = this->m2 + (mt2Max - this->m2)*amt2;
         cdbl mt = sqrt(mt2);
         
-        /*cdbl Sh = this->getHadronicS();
+        / *cdbl Sh = this->getHadronicS();
         cdbl mt2 = m2 + (Sh/4 - m2)*amt2;
         cdbl mt = sqrt(mt2);
         cdbl y0 = acosh(sqrt(Sh)/2./mt);
         cdbl y = y0*(-1. + 2.*ay);
-        cdbl ey = exp(y);*/
+        cdbl ey = exp(y);* /
         
         cdbl Shp = this->getHadronicSp();
         cdbl T1 = this->getHadronicT1(ey,mt);
@@ -308,14 +296,15 @@ public:
         }
         cdbl s4 = Delta + (s4max-this->Delta)*as4;
         cdbl xi = (s4 - U1)/(Shp + T1);
+        cdbl xiSV = (0. - U1)/(Shp + T1);
         
-        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi*xi*Shp * this->PdfMe(xi,xi*T1,s4,s4max);
+        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*(xi*this->PdfMeH(xi,xi*T1,s4) + xiSV*this->PdfShiftedMeSV(xiSV,xiSV*T1,s4,s4max));
         //cdbl r = (2.*y0)*(Sh/4 - m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
         return r;
     }
-};
+};*/
 
 /**
  * @brief NLO gluon convolution differentiated towards HAQRapidity
@@ -354,8 +343,9 @@ public:
         cdbl s4max = Shp + T1 + U1;
         cdbl s4 = Delta + (s4max-Delta)*as4;
         cdbl xi = (s4 - U1)/(Shp + T1);
+        cdbl xiSV = (0. - U1)/(Shp + T1);
         
-        cdbl r = this->Vmt2*(s4max-Delta)/(Shp+T1)*Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
+        cdbl r = this->Vmt2*(s4max-Delta)/(Shp+T1)*Shp*(xi*this->PdfMeH(xi,xi*T1,s4) + xiSV*this->PdfShiftedMeSV(xiSV,xiSV*T1,s4,s4max));
         
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
@@ -400,18 +390,9 @@ public:
         cdbl s4max = Shp + T1 + U1;
         cdbl s4 = Delta + (s4max-Delta)*as4;
         cdbl xi = (s4 - U1)/(Shp + T1);
+        cdbl xiSV = (0. - U1)/(Shp + T1);
         
-        /*{
-            cdbl sp = xi*Shp;
-            cdbl t1 = xi*T1;
-            cdbl s = sp+q2;
-            cdbl beta = Sqrt(1. - (4.*m2)/s);
-            cdbl s4max_ = (s*( (sp*(1. - beta))/2. + t1 )*( (sp*(1. + beta))/2. + t1) )/(sp*t1);
-            printf("%e\t%e\t%e\t%e\t",s4max,s4max_,s4max-s4max_,s4max/s4max_);
-            cout << " " << sp << " " << t1 << " " << U1 << " " << s4 << " " << xi <<endl;
-        }*/
-        
-        cdbl r = 2.*this->y0*2.*pt*(s4max-Delta)/(Shp+T1)*Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
+        cdbl r = 2.*this->y0*2.*pt*(s4max-Delta)/(Shp+T1)*Shp*(xi*this->PdfMeH(xi,xi*T1,s4) + xiSV*this->PdfShiftedMeSV(xiSV,xiSV*T1,s4,s4max));
         
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;

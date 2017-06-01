@@ -358,7 +358,7 @@ void ExclusiveElProduction::setupHistograms() const {
             case histT::Theta1:
             case histT::Theta2:                 it->second->setRangesUniform(0.,M_PI);                      break;
             
-            case histT::HQPairInvMass:          it->second->setRangesUniform(2.*sqrt(this->m2),sqrt(Sh));    break;
+            case histT::HQPairInvMass:          it->second->setRangesUniform(2.*sqrt(this->m2),sqrt(Sh));   break;
             case histT::HQPairDeltaPhi:         it->second->setRangesUniform(-M_PI,M_PI);                   break;
             case histT::HQPairTransverseMomentum:
                 /** @todo defalt upper limit of HQPairTransverseMomentum is actually smaller, than 2p_{2,t,max} */

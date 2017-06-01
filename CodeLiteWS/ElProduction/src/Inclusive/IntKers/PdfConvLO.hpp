@@ -80,7 +80,7 @@ protected:
         cdbl U1 = this->getHadronicU1(ey,mt);
         cdbl xi = - U1/(Shp + T1);
         
-        cdbl me = 4.*M_PI * Kggg*NC*CF * (*this->BpQED)(this->m2,this->q2,Shp*xi,T1*xi);
+        cdbl me = 4.*M_PI * Kggg*NC*CF * BpQED(m2,q2,Shp*xi,T1*xi);
         
         return 1./Shp/(Shp+T1) * 1./xi/xi*this->pdf->xfxQ2(21,xi,this->muF2) * me;
     }

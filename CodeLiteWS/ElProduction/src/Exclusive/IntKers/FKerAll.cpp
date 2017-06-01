@@ -35,12 +35,12 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     this->setY(ay);
     this->setTheta1(aTheta1);
     this->setTheta2(aTheta2);
-//return aTheta1;
+
     dbl r = 0.;
    
     this->alphaS->setOrderQCD(1 + this->order);
     
-    /*{ // LO
+    { // LO
         PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
         p.setupLO(this->z, this->Theta1);
         cdbl muR2 = p.getMuR2();
@@ -56,7 +56,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
         //cdbl fLO = nLO * eH*eH*(*this->LOg)(az,aTheta1);
         this->fillAllOrderHistograms(p, fLOg);
         r += fLOg;
-    }*/
+    }
     
     // NLO
     if (this->order > 0) {
@@ -83,7 +83,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
             r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
 #endif // CounterByHeavyside
         }
-        /*{ // quark channel
+        { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
             const PhasespaceValues cq1 = this->NLOq->cq1();
@@ -99,7 +99,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
             r += this->combineNLOq(this->xE, this->yE, cq1.xEyE, cqBarF1.xEyE, dq1.xEyE, oq1.xEyE);
             r += this->combineNLOq(this->xE, -1.,      cq1.xEyC, cqBarF1.xEyC, dq1.xEyC, oq1.xEyC);
 #endif // CounterByHeavyside
-        }*/
+        }
     }
     return isfinite(r) ? r : 0.;
 }

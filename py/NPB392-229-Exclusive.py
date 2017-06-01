@@ -52,14 +52,14 @@ def addPtCharm(proj,bjorkenX,ptmax):
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,4.,)
 	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,0)
-	#addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
+	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
 def addRapCharm(proj,bjorkenX,y0):
 	m2 = 1.5**2
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,0.,)
 	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,0)
-	#addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
+	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
 # add plots
 def addPtCharmG():
 	addPtCharm(projT.G, .1,     5.)
