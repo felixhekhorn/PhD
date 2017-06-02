@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <fstream>
+#include <boost/format.hpp>
 
 #include "InclusiveElProduction.h"
 #include "ExclusiveElProduction.h"
@@ -164,28 +165,32 @@ int runInclusive2(){
     iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
     
     {
-        cdbl bjorkenX = 1e-2;
+        cdbl bjorkenX = 0.01;
         iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
-        const Common::DynamicScaleFactors mu2(4.,-1.,0.,0.);
+        const Common::DynamicScaleFactors mu2(4.,-1.,0.,4.);
         iO.setMu2(mu2);eO.setMu2(mu2);
         const uint N = 100;
         cdbl ptmax = 8.;
         cdbl y0 = 3.15;
+        const str path = "/home/Felix/Physik/PhD/data/hist/";
+        std::ofstream of(path + "pt-inc.dat");
         for (uint j = 0; j < N; ++j) {
             cdbl pt = ptmax * (j+.5)/(N);
-            cdbl l = iO.dFg0_dHAQTransverseMomentum(pt);
-            printf("%e\t%e\n",pt,l);
+            cdbl a = iO.dF_dHAQTransverseMomentum(pt,0);
+            cdbl b = iO.dFg0_dHAQTransverseMomentum(pt);
+            printf("%e\t%e\t%e\t%e\t%e\n",pt,a,b,b-a,(b-a)/b);
+            of << boost::format("%e\t%e\t%e")%pt%a%b << endl;
             /*cdbl y = y0 * (-1. + 2./N*(j+.5));
             cdbl g = iO.dFg1_dHAQRapidity(y);
             printf("%e\t%e\n",y,g);*/
         }
+        of.close();
         cout << endl << endl;
-        const str path = "/home/Felix/Physik/PhD/data/hist/";
         eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
         eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
-        printf("int_inc = %e\n",iO.Fg0());
+        //printf("int_inc = %e\n",iO.Fg0());
         //printf("int_inc' = %e\n",iO.Fg1_());
-        printf("int_ex = %e\n",eO.F(0));
+        //printf("int_ex = %e\n",eO.F(0));
     }
     
     /*{

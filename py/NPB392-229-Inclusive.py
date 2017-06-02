@@ -15,7 +15,7 @@ Util.pInfo("Computing files for NPB392-229 with "+pdf+" ...")
 
 r = InclusiveRunner();
 
-Delta = 1e-6
+Delta = 1e-7
 q2 = -10
 fpPtTemplate = "dF%s%s_dpt_inc_x-%g_%d.dat"
 fpRapTemplate = "dF%s%s_dy_inc_x-%g_%d.dat"
@@ -63,14 +63,14 @@ def addPtCharm(proj,bjorkenX,ptmax):
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,4.,)
 	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,0)
-	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
+	#addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
 def addRapCharm(proj,bjorkenX,y0):
 	m2 = 1.5**2
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,0.,)
 	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,0)
-	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
+	#addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
 # add plots
 def addPtCharmG():
 	addPtCharm(projT.G, .1,     5.)

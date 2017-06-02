@@ -249,15 +249,15 @@ cdbl InclusiveElProduction::dF_dHAQTransverseMomentum(cdbl pt, uint order) {
     // threshold cut off
     if (this->bjorkenX >= this->zMax || pt >= this->getHAQptMax())
         return 0.;
-    PdfConvLO_dHAQTransverseMomentum LO(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), pt);
-    PdfConvNLOg_dHAQTransverseMomentum NLOg(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, pt);
+    PdfConvLO_dHAQTransverseMomentum LO(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getBpQED(), pt);
+    PdfConvNLOg_dHAQTransverseMomentum NLOg(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, pt);
     NLOg.setBpQED(this->getBpQED());
     NLOg.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     NLOg.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     NLOg.setCgBarR1(this->getCgBarR1SV());
-    PdfConvNLOq_dHAQTransverseMomentum NLOq(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
+    PdfConvNLOq_dHAQTransverseMomentum NLOq(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
     
-    FKerAll_dHAQTransverseMomentum k(m2, q2, bjorkenX, nlf, this->getAlphaS(order,0.), pt);
+    FKerAll_dHAQTransverseMomentum k(m2, q2, bjorkenX, nlf, this->getAlphaS(order,pt), pt);
     k.setKers(&LO,&NLOg,&NLOq);
     k.setOrder(order);
     gsl_monte_function f;

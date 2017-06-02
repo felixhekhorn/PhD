@@ -19,9 +19,10 @@ xTilde = .8
 omega = 1.
 deltax = 1e-6
 deltay = 7e-6
+q2 = -10.
+
 # add data point
 def add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,activatedHistograms,n,msg):
-	q2 = -10.	
 	its = 5 if 0 == n else 1
 	calls = 500000 if 0 == n else 500000
 	r.add({
