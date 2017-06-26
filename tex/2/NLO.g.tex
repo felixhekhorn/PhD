@@ -1,0 +1,56 @@
+\label{sec:NLO.g}
+In next-to-leading order we have to consider the following process:
+\begin{equation}
+\Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
+\end{equation}
+All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
+\begin{equation}
+M_k^{(1),\Pg} = \hat {\mathcal P}_{k}^{\Pgg,\mu\mu'}\hat {\mathcal P}_{k}^{\Pg}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
+\end{equation}
+
+For the gluonic part we shift the occuring soft ($x\rightarrow 1$) and collinear ($y\rightarrow -1$) poles from the matrix elements to the phase space by dividing by $t'\propto(1+y)(1-x)$ and $u'-q^2s_5/s\propto(1-x)$:
+\begin{align}
+dPS_{3,g}' &= \frac{dPS_3}{t'(u'-q^2s_5/s)} = dPS_3 \cdot \left(\frac {2s}{{s'}^2}\right)^2\frac{(1-x)^2}{(1-y)(1+y)}\\
+ &= \frac {2T_\epsilon}{\pi} \left(\frac {{s'}^2} s\right)^{-1+\epsilon/2} (1-x)^{-1+\epsilon}(1-y^2)^{-1+\epsilon/2}dPS_2^{(5)}dy \sin^\epsilon(\theta_2)d\theta_2
+\end{align}
+The soft and collinear factors $(1-x)^{-1+\epsilon}$ and $(1-y^2)^{-1+\epsilon/2}$ can be replaced by generalized plus distributions\cite{Harris:1995tu}
+\begin{align}
+(1-x)^{-1+\epsilon} &\sim \left(\frac 1 {1-x}\right)_{\tilde\rho} + \epsilon \left(\frac{\ln(1-x)}{1-x}\right)_{\tilde \rho} + \delta(1-x)\left(\frac 1 \epsilon + 2\ln\tilde\beta + 2\epsilon\ln^2(\tilde\beta)\right) + O(\epsilon^2)\\
+(1-y^2)^{-1+\epsilon} &\sim \frac 1 2\left(\left(\frac 1 {1+y}\right)_\omega + \left(\frac 1 {1-y}\right)_\omega\right) \nonumber\\
+ &\hspace{20pt} + \left(\delta(1+y)+\delta(1-y)\right)\left(\frac 1 {2\epsilon} + \frac 1 2\ln(2\omega)\right) + O(\epsilon)\\
+(1+y)^{-1+\epsilon} &\sim \left(\frac 1 {1+y}\right)_\omega + \delta(1+y)\left(\frac 1 \epsilon + \ln\omega\right) + O(\epsilon)
+\end{align}
+inside integration over smooth functions with $\tilde \beta = \sqrt{1-\tilde\rho}$. The distributions are defined by
+\begin{align}
+\int\limits_{\tilde\rho}^1\!\!dx\,f(x)\left(\frac 1 {1-x}\right)_{\tilde\rho} &= \int\limits_{\tilde\rho}^1\!\!dx\,\frac {f(x) - f(1)} {1-x}\\
+\int\limits_{\tilde\rho}^1\!\!dx\,f(x)\left(\frac {\ln(1-x)} {1-x}\right)_{\tilde\rho} &= \int\limits_{\tilde\rho}^1\!\!dx\,\frac {f(x) - f(1)} {1-x}\ln(1-x)\\
+\int\limits_{-1}^{-1+\omega}\!\!\!dy\,f(y)\left(\frac 1 {1+y}\right)_{\omega} &= \int\limits_{-1}^{-1+\omega}\!\!\!dy\,\frac {f(y)-f(-1)} {1+y}\\
+\int\limits_{1-\omega}^{1}\!\!dy\,f(y)\left(\frac 1 {1-y}\right)_{\omega} &= \int\limits_{1-\omega}^{1}\!\!dy\,\frac {f(y)-f(1)} {1-y}
+\end{align}
+with $\rho^*\leq\tilde\rho < 1$ and $0<\omega\leq 2$. If the integration does not include a singularity the distribution sign can be dropped. From an analytical point of view the results may not depend on the specific choice of the regularisation parameters $\tilde\rho$ and $\omega$ but for any numerical purpose they may influence the rate of convergence or stability. For numerical computations we must also cut the poles out of the integrations
+\begin{align}
+\int\limits_{\rho^*}^1\!dx &\rightarrow \int\limits_{\rho^*}^{1-\delta_x}\!\!\!dx &\int\limits_{-1}^1\!dy &\rightarrow \int\limits_{-1+\delta_y}^{1}\!\!dy
+\end{align}
+If not stated otherwise we use as a default setup:
+\begin{align}
+\tilde\rho &= \rho^* + \tilde x(1-\rho^*)\,\text{with}\, \tilde x=0.8 &\omega &= 1.0\\
+\delta_x &= \num{1e-6} &\delta_y &=\num{7e-6}
+\end{align}
+\fxerror{shift (parts) to appendix?}
+
+From the above expression we can obtain the soft limit $k_2\rightarrow 0$ and seperate their calculations:
+\begin{equation}
+\lim_{k_2\rightarrow 0}\left(C_A R_{k,OK} + 2C_F R_{k,QED}\right) = \left(C_A S_{k,OK} + 2C_F S_{k,QED}\right) + O(1/s_4,1/s_3,1/t')
+\end{equation}
+\begin{align}
+S_{k,OK}  &= 2\left(\frac{t_1}{t's_3} + \frac{u_1}{t's_4}-\frac{s-2m^2}{s_3s_4}\right)B_{k,QED}\\
+S_{k,QED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{k,QED}
+\end{align}
+Note that the einkonal factors multiplying the Born functions $B_{k,QED}$ neither depend on $q^2$ nor on the projection $k$. But the integrated expressions do depend on the regularization scheme, i.e. will here depend on $\tilde\rho$ rather then on a phasespace slicing parameter $\Delta$ as for inclusive calculations\cite{Laenen1993162}\fxerror{add my cite}. We find for the integrated expressions
+\begin{align}
+d\sigma_{k,\Pg}^{(1),S} &= \frac 1 {2s'}\frac 1 2 E_k(\epsilon) b_k(\epsilon) M_k^{(1),S} dPS_2\\
+M_k^{(1),S} &= 8g^4\mu_D^{-\epsilon}e^2e_H^2 N_C C_F C_\epsilon\left( C_A \tilde S_{k,OK} + 2C_F \tilde S_{k,QED}\right)
+\end{align}
+where the expressions for $\tilde S_k$ can be found in \cite{Harris:1995tu}.
+
+The results agree in the photo-production limit ($q^2\rightarrow 0$) with \cite{Bojak:1998zm}.
