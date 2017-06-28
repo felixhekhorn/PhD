@@ -161,7 +161,7 @@ cdbl InclusiveElProduction::getAlphaS(uint order, cdbl HAQTransverseMomentum) {
 
 cdbl InclusiveElProduction::Fg0() {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /*** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for full inclusive computation may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -178,7 +178,7 @@ cdbl InclusiveElProduction::Fg0() {
 
 cdbl InclusiveElProduction::Fg1() {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /*** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for full inclusive computation may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -199,34 +199,10 @@ cdbl InclusiveElProduction::Fg1() {
     cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
     return n*Fg1;
 }
-/* @todo remove
- * cdbl InclusiveElProduction::Fg1_() {
-    this->checkHadronic();
-    / ** @todo relax condition? * /
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for full inclusive computation may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvNLOg_ k(m2,q2,bjorkenX,pdf,this->getMuF2(0.),this->getMuR2(0.),nlf,Delta);
-    k.setBpQED(this->getBpQED());
-    k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
-    k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
-    k.setCgBarR1(this->getCgBarR1SV());
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor3D<PdfConvNLOg_>;
-    f.params = &k;
-    cdbl Fg1 = Common::int3D(&f);
-    // multiply norm
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl alphaS = this->getAlphaS(1,0.);
-    cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
-    return n*Fg1;
-}*/
 
 cdbl InclusiveElProduction::Fq1() {
     this->checkHadronic();
-    /*** @todo relax condition? */
+    /*** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for full inclusive computation may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -316,7 +292,7 @@ cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentum(cdbl pt) {
 
 cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, uint order) {
     this->checkHadronic();
-    /** @todo relax condition? */
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -343,7 +319,7 @@ cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, uint order) {
 
 cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /** @todo relax condition? */
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -362,7 +338,7 @@ cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) {
 
 cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /** @todo relax condition? */
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off
@@ -385,7 +361,7 @@ cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) {
 
 cdbl InclusiveElProduction::dFq1_dHAQRapidity(cdbl y) {
     this->checkHadronic();
-    /** @todo relax condition? */
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dFq1_dHAQRapidity may not depend on HAQTransverseMomentum!");
     // threshold cut off

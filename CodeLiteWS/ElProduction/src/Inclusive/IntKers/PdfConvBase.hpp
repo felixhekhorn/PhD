@@ -96,6 +96,9 @@ protected:
 class PdfConvFullBase : public IntKerBase {
 protected:
 
+/**
+ * @brief Bjorken scaling variable
+ */
     dbl bjorkenX;
     
 /**
@@ -118,8 +121,6 @@ protected:
  * @param m2 heavy quark mass squared \f$m^2 > 0\f$
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
- * @param pdf parton distribution functions
- * @param muF2 factorisation scale \f$\mu_F^2\f$
  */
     inline PdfConvFullBase(cdbl m2, cdbl q2, cdbl bjorkenX) :
         IntKerBase(m2, q2), bjorkenX(bjorkenX){

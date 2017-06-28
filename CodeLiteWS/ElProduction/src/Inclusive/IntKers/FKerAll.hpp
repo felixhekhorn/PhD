@@ -38,6 +38,7 @@ public:
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
  * @param nlf number of light flavours
+ * @param alphaS running strong coupling
  */
     inline FKerAllBase(cdbl m2, cdbl q2, cdbl bjorkenX, uint nlf, cdbl alphaS) :
         PdfConvBase(m2,q2,bjorkenX,0,0.),
@@ -80,6 +81,7 @@ public:
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
  * @param nlf number of light flavours
+ * @param alphaS running strong coupling
  * @param y current HAQRapidity
  */
     inline FKerAll_dHAQRapidity(cdbl m2, cdbl q2, cdbl bjorkenX, uint nlf, cdbl alphaS, cdbl y) :
@@ -150,6 +152,7 @@ public:
  * @param q2 virtuality of the photon \f$q^2 < 0\f$
  * @param bjorkenX Bjorken scaling variable
  * @param nlf number of light flavours
+ * @param alphaS running strong coupling
  * @param pt current HAQTransverseMomentum
  */
     inline FKerAll_dHAQTransverseMomentum(cdbl m2, cdbl q2, cdbl bjorkenX, uint nlf, cdbl alphaS, cdbl pt) :
@@ -170,7 +173,7 @@ public:
     
 /**
  * @brief called function
- * @param amt2 integration variable mapped on y
+ * @param ay integration variable mapped on y
  * @param as4 integration variable mapped on s4
  * @return kernel
  */

@@ -4,12 +4,17 @@
 @subsection extDep External Dependencies
 - compiler supporting C++11 standard such as GNU Complier g++ >= 6.3.0-2
 - GSL\cite GSL http://www.gnu.org/software/gsl/ >= 2.3-1 used for integration and dilog implementation
-- LHAPDF\cite LHAPDF6 https://lhapdf.hepforge.org/ >=  6.1.6 used for PDFs
-- DSSV\cite PhysRevLett.113.012001 used for polarized PDFs
-- Boost http://www.boost.org/ >= 1.62.0.1 i.e. Boost.Python\cite BoostPython for providing a very handy Python port and Boost.Format\cite BoostFormat by Samuel Krempp
+- Boost http://www.boost.org/ >= 1.62.0.1
 - Dvegas https://dvegas.hepforge.org/ >= 2.0.3 by Nikolas Kauer and Martin Wiebusch \cite Kauer:2001sp \cite Kauer:2002sn used for integration
 - Relativistic Kinematics (RK) http://rk.hepforge.org/ >= 1.7 by Igor Volobouev \cite RK
 - Python http://www.python.org >= 2.7.13-2 used for scripting
+
+The program uses as default interface to PDFs LHAPDF\cite LHAPDF6 https://lhapdf.hepforge.org/ >=  6.1.6, but it also includes ports to some other pdfs:
+- CTEQ3\cite Lai:1994bb http://www.physics.smu.edu/scalise/cteq/ implemented as *CTEQ3M*
+- GRV94\cite Gluck:1994uf implemented as *GRV94LO* and *GRV94NLO*
+- GRSV96\cite Gluck:1995yr for polarized PDFs implemented as *GRSV96STDLO* and *GRSV96STDNLO*
+- DSSV2014\cite PhysRevLett.113.012001 for polarized PDFs implemented as *DSSV2014* with support for all members
+@todo MorfinTungB\cite Morfin:1990ck implemented as *MorfinTungB*
 
 Lower version numbers might also work, but they are not tested.
 
@@ -63,19 +68,22 @@ All poles are treated here by transforming them into generalized plus distributi
 - add NNLO [0.9]
 
 @section cloc Code statistics
-generated on Mi 2017-04-19 17:31:02 CEST
+generated on Mi 2017-06-28 17:43:19 CEST
 
-cloc|github.com/AlDanial/cloc v 1.70  T=0.13 s (552.2 files/s, 75553.0 lines/s)
+cloc|github.com/AlDanial/cloc v 1.70  T=0.13 s (582.7 files/s, 91863.4 lines/s)
 
 Language|files|blank|comment|code
 :-------|-------:|-------:|-------:|-------:
-C++|27|466|404|3113
-C/C++ Header|42|885|3284|1277
-Fortran 77|1|15|102|165
+C++|27|483|441|3330
+C/C++ Header|44|992|3699|1608
+Fortran 77|4|91|400|780
 --------|--------|--------|--------|--------
-SUM:|70|1366|3790|4555
+SUM:|75|1566|4540|5718
 
+
+@verbatim
 timedatectl status
 cloc CodeLiteWS/ElProduction/src/ --md
+@endverbatim
 
  */

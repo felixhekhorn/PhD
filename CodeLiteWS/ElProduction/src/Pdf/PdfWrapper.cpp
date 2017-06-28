@@ -66,7 +66,7 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
     this->isGRV94 = ("GRV94LO" == setname) || ("GRV94NLO" == setname);
     if ((this->isCTEQ3 || this->isGRSV96 || this->isGRV94) && 0 != member)
         throw LHAPDF::UserError("pdf "+setname+" has only a central member!");
-    /** @todo verbosity flag? */
+    /** @todo add verbosity flag as member? */
     if (this->isDSSV2014) {
         // setup path
         int m = member;

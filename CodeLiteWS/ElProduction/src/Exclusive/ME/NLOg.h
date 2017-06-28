@@ -53,6 +53,7 @@ cdbl SVpP(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
  * @param tp \f$t'\f$
  * @param up \f$u'\f$
  * @return \f$R'_{G}\f$
+ * @todo x/y cut off justified? effective? might it possible to use a differential instead?
  */
 cdbl RpG(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
 

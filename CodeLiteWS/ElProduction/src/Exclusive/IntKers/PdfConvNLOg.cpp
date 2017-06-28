@@ -87,7 +87,7 @@ const PhasespaceValues PdfConvNLOg::cg1() const {
             cdbl h = Kggg*NC*CF * 1./(4.*sp);
             cdbl betaTilde = sqrt(1. - this->rhoTilde);
             r.xCyE += ncg1 * jacTheta1*jacxE/VxC * h * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-            /// @todo hats?
+            /// @todo hat contributions?
             // // hat contributions
             // if (0. != PggS1()) {
             //     cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
@@ -117,8 +117,9 @@ const PhasespaceValues PdfConvNLOg::cg1() const {
         cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = Kggg*NC*CF * 1./(4.*sp);
         cdbl betaTilde = sqrt(1. - this->rhoTilde);
+        /// @todo speed up SVp? grid or parametrization? "complicated" part only depends on s,Q2,cos(theta1)
         r.xCyE += ncg1 * jacTheta1 * f * SVp(m2,q2,sp,t1,betaTilde) * beta*sin(Theta1)/(16.*M_PI);
-        /// @todo hats?
+        /// @todo hat contribution?
         // // hat contributions
         // if (0. != PggS1()) {
         //    cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);

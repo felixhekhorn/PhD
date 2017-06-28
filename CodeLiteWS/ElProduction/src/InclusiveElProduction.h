@@ -211,6 +211,7 @@ public:
 /**
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
+ * @todo add F()
  */
     cdbl Fg0();
     
@@ -219,13 +220,6 @@ public:
  * @return \f$F^{(1)}_g\f$
  */
     cdbl Fg1();
-    
-/*
- * @todo remove
- * @brief NLO gluon structure function
- * @return \f$F^{(1)}_g\f$
- */
-    //cdbl Fg1_();
     
 /**
  * @brief NLO quark structure function
@@ -238,6 +232,7 @@ public:
  * @param pt pt of heavy anti quark
  * @param order computed order
  * @return dF^(order)_dHAQTransverseMomentum(pt)
+ * @todo add channel switch
  */
     cdbl dF_dHAQTransverseMomentum(cdbl pt, uint order);
     
@@ -267,6 +262,7 @@ public:
  * @param y rapidity of heavy anti quark
  * @param order computed order
  * @return dF^(order)_dHAQRapidity(y)
+ * @todo add channel switch
  */
     cdbl dF_dHAQRapidity(cdbl y, uint order);
     

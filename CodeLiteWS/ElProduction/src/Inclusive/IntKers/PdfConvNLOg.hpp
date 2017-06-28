@@ -261,51 +261,6 @@ public:
     }
 };
 
-
-/* @todo remove
-class PdfConvNLOg_ : public PdfConvNLOgBase {
-    dbl y0_;
-public:
-    inline PdfConvNLOg_(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta) :
-        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta){
-            this->y0_ = atanh(sqrt(1. - 4.*this->m2/this->getHadronicS()));
-        }
-    inline cdbl operator() (cdbl ay, cdbl amt2, cdbl as4) {
-        cdbl y = this->y0_*(-1. + 2.*ay);
-        cdbl ey = exp(y);
-        cdbl coshy = cosh(y);
-        
-        cdbl mt2Max = this->getHadronicS()/(4.*coshy*coshy);
-        cdbl mt2 = this->m2 + (mt2Max - this->m2)*amt2;
-        cdbl mt = sqrt(mt2);
-        
-        / *cdbl Sh = this->getHadronicS();
-        cdbl mt2 = m2 + (Sh/4 - m2)*amt2;
-        cdbl mt = sqrt(mt2);
-        cdbl y0 = acosh(sqrt(Sh)/2./mt);
-        cdbl y = y0*(-1. + 2.*ay);
-        cdbl ey = exp(y);* /
-        
-        cdbl Shp = this->getHadronicSp();
-        cdbl T1 = this->getHadronicT1(ey,mt);
-        cdbl U1 = this->getHadronicU1(ey,mt);
-        cdbl s4max = Shp + T1 + U1;
-        if (s4max < this->Delta) {
-            //printf("[WARN] Delta=%e <!< s4max=%e\n",Delta,s4max);
-            return 0.;
-        }
-        cdbl s4 = Delta + (s4max-this->Delta)*as4;
-        cdbl xi = (s4 - U1)/(Shp + T1);
-        cdbl xiSV = (0. - U1)/(Shp + T1);
-        
-        cdbl r = (2.*this->y0_)*(mt2Max - this->m2)*(s4max-this->Delta)/(Shp+T1) *Shp*(xi*this->PdfMeH(xi,xi*T1,s4) + xiSV*this->PdfShiftedMeSV(xiSV,xiSV*T1,s4,s4max));
-        //cdbl r = (2.*y0)*(Sh/4 - m2)*(s4max-this->Delta)/(Shp+T1) *Shp*xi * this->PdfMe(xi,xi*T1,s4,s4max);
-        // Protect from ps corner cases
-        if (!isfinite(r)) return 0.;
-        return r;
-    }
-};*/
-
 /**
  * @brief NLO gluon convolution differentiated towards HAQRapidity
  */
@@ -377,7 +332,7 @@ public:
         
 /**
  * @brief called function
- * @param amt2 integration variable mapped on mt2
+ * @param ay integration variable mapped on y
  * @param as4 integration variable mapped on s4
  * @return 
  */

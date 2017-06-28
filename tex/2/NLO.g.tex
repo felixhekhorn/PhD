@@ -3,7 +3,29 @@ In next-to-leading order we have to consider the following process:
 \begin{equation}
 \Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
 \end{equation}
-All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
+where all contributing diagrams are depicted in figure \ref{fig:FeynNLOg}.
+\begin{figure}[ht!]
+\centering
+\begin{subfigure}[t]{.23\textwidth}
+	\includegraphics[width=\textwidth]{pyfeyn/nlo-g-1}
+	\caption{}
+\end{subfigure}\hspace{.02\textwidth}%
+\begin{subfigure}[t]{.23\textwidth}
+	\includegraphics[width=\textwidth]{pyfeyn/nlo-g-2}
+	\caption{}
+\end{subfigure}\hspace{.02\textwidth}%
+\begin{subfigure}[t]{.23\textwidth}
+	\includegraphics[width=\textwidth]{pyfeyn/nlo-g-3}
+	\caption{}
+\end{subfigure}\hspace{.02\textwidth}%
+\begin{subfigure}[t]{.23\textwidth}
+	\includegraphics[width=\textwidth]{pyfeyn/nlo-g-4}
+	\caption{\label{fig:FeynNLOg3g}}
+\end{subfigure}
+\caption{next-to-leading order Feynman diagrams for the single gluon radiation $i\varepsilon_{\Pgg}^\mu(q) \varepsilon_{\Pg}^\nu(k_1)\Md^{(1),g}_{j,\mu\nu}$. Four additional graphs are obtained by crossing the final heavy quark pair. With our choice of $\hat {\mathcal P}_{G/L}^{\Pg,\nu\nu'}$ the diagram \ref{fig:FeynNLOg3g} has to be regularized with the ghost contributions. }\label{fig:FeynNLOg}\fxerror{shift to appendix?}
+\end{figure}
+
+The result can than be written as
 \begin{align}
 M_k^{(1),\Pg} &= \hat {\mathcal P}_{k}^{\Pgg,\mu\mu'}\hat {\mathcal P}_{k}^{\Pg,\nu\nu'}\sum_{j,j'}{\Md^{(1),g}_{j,\mu\nu}\Md^{(1),g}_{j',\mu'\nu'}}^*\\
  &= 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{k,OK} + 2C_F R_{k,QED}\right)
@@ -18,7 +40,7 @@ For the gluonic part we shift the occuring soft ($x\rightarrow 1$) and collinear
 dPS_{3,\Pg}' &= \frac{dPS_3}{t'(u'-q^2s_5/s)} = dPS_3 \cdot \left(\frac {2s}{{s'}^2}\right)^2\frac 1 {(1-x)^2(1-y)(1+y)}\\
  &= \frac {2T_\epsilon}{\pi} \left(\frac {{s'}^2} s\right)^{-1+\epsilon/2} (1-x)^{-1+\epsilon}(1-y^2)^{-1+\epsilon/2}dPS_2^{(5)}dy \sin^\epsilon(\theta_2)d\theta_2\\
 {M_k^{(1),\Pg}}' &= t'(u'-q^2s_5/s)M_k^{(1),\Pg}\\
-\Rightarrow d\sigma_{k,\Pg}^{(1)} &= \frac{1}{2s'}\frac {K_{\Pgg\Pg}E_k(\epsilon)} 2 b_k(\epsilon) {M_k^{(1),\Pg}}' dPS_{3,\Pg}'
+\Rightarrow d\sigma_{k,\Pg}^{(1)} &= \frac{1}{2s'}\frac {K_{\Pg\Pgg}E_k(\epsilon)} 2 b_k(\epsilon) {M_k^{(1),\Pg}}' dPS_{3,\Pg}'
 \end{align}
 
 The soft and collinear factors $(1-x)^{-1+\epsilon}$ and $(1-y^2)^{-1+\epsilon/2}$ can be replaced by generalized plus distributions\cite{Harris:1995tu}
@@ -39,7 +61,7 @@ with $\rho^*\leq\tilde\rho < 1$ and $0<\omega\leq 2$. If the integration does no
 \begin{align}
 \int\limits_{\rho^*}^1\!dx &\rightarrow \int\limits_{\rho^*}^{1-\delta_x}\!\!\!dx &\int\limits_{-1}^1\!dy &\rightarrow \int\limits_{-1+\delta_y}^{1}\!\!dy
 \end{align}
-If not stated otherwise we use as a default setup:
+If not stated otherwise we use as a default setup\fxerror{justify numbers?}:
 \begin{align}
 \tilde\rho &= \rho^* + \tilde x(1-\rho^*)\,\text{with}\, \tilde x=0.8 &\omega &= 1.0\\
 \delta_x &= \num{1e-6} &\delta_y &=\num{7e-6}
@@ -63,10 +85,10 @@ S_{k,QED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2
 \end{align}
 Note that the einkonal factors multiplying the Born functions $B_{k,QED}$ neither depend on $q^2$ nor on the projection $k$. But the integrated expressions do depend on the regularization scheme, i.e. will here depend on $\tilde\rho$ rather then on a phasespace slicing parameter $\Delta$ as for inclusive calculations\cite{Laenen1993162}\fxerror{add my cite}. We find for the integrated expressions
 \begin{align}
-d\sigma_{k,\Pg}^{(1),s} &= \frac 1 {2s'}\frac 1 2 E_k(\epsilon) b_k(\epsilon) M_k^{(1),S} dPS_2\\
+d\sigma_{k,\Pg}^{(1),s} &= \frac 1 {2s'}\frac {K_{\Pg\Pgg}E_k(\epsilon)} 2  b_k(\epsilon) M_k^{(1),S} dPS_2\\
 M_k^{(1),S} &= 8g^4\mu_D^{-\epsilon}e^2e_H^2 N_C C_F C_\epsilon\left( C_A \tilde S_{OK} + 2C_F \tilde S_{QED}\right) B_{k,QED}
 \end{align}
-where the full expressions for $\tilde S_k$ can be found in \cite{Harris:1995tu} and the poles are given by
+where the full expressions for $\tilde S$ can be found in \cite{Harris:1995tu} and the poles are given by
 \begin{align}
 \tilde S_{OK} &= 2\left(\frac 4 {\epsilon^2} + \left(\ln(-t_1/m^2) + \ln(-u_1/m^2) - \frac{2m^2-s}{s\beta}\ln(\chi) + 4\ln(\tilde\beta)\right)\frac 2 {\epsilon}\right) + O(\epsilon^0)\\
 \tilde S_{QED} &=-2\cdot \left(1 - \frac{2m^2-s}{s\beta}\ln(\chi)\right)\frac 2 \epsilon + O(\epsilon^0)
