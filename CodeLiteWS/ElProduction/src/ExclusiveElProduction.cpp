@@ -362,7 +362,7 @@ void ExclusiveElProduction::setupHistograms() const {
             case histT::HQPairDeltaPhi:         it->second->setRangesUniform(-M_PI,M_PI);                   break;
             case histT::HQPairTransverseMomentum:
                 /** @todo defalt upper limit of HQPairTransverseMomentum is actually smaller, than 2p_{2,t,max} */
-                it->second->setRangesUniform(0.,2.*this->getHAQptMax());
+                it->second->setRangesUniform(0.,2.*this->getHAQTransverseMomentumMax());
                 break;
             case histT::HQPairConeSizeVariable:
                 /** @todo determine default upper limit of HQPairConeSizeVariable */
@@ -370,10 +370,10 @@ void ExclusiveElProduction::setupHistograms() const {
                 break;
             
             case histT::HAQRapidity:
-                {cdbl y0 = this->getHAQyMax();
+                {cdbl y0 = this->getHAQRapidityMax();
                 it->second->setRangesUniform(-y0,y0);}
                 break;
-            case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,this->getHAQptMax());        break;
+            case histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,this->getHAQTransverseMomentumMax());        break;
             case histT::HAQTransverseMomentumScaling:  it->second->setRangesLog10(1.e-3,1.);                        break;
             case histT::HAQFeynmanX:                   it->second->setRangesUniform(-1.,1.);                        break;
             

@@ -36,9 +36,9 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-	return runInclusive2();
-    cdbl q2 = -10.;
-    cdbl m2 = 1.5*1.5;
+	//return runInclusive2();
+    cdbl q2 = -1.e0;
+    cdbl m2 = 4.75*4.75;
     const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
     cdbl lambdaQCD = .194; // nlf=3
@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
     //const str pdf = "DSSV2014";
     //const str pdf = "GRSV96STDLO";
     
-    const projT proj = L;
+    const projT proj = P;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
     InclusiveElProduction iL(m2,q2,Delta,L,nlf);
@@ -94,18 +94,18 @@ int main(int argc, char **argv) {
         }
     }*/
 
-    /*{
-        const uint N = 21;
+    {
+        const uint N = 101;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
-            cdbl a = pow(10,-4.+8.*j/(N-1));
+            cdbl a = pow(10,-3.+6.*j/(N-1));
             iO.setEta(a);
             eO.setEta(a);
             cdbl i = iO.dq1();
             {cdbl e = eO.dq1();
             printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         }
-    }*/
+    }
 
 //Timer::make("pdf@combineNLOg");
 /*

@@ -266,8 +266,8 @@ public:
 /**
  * @brief full structure function
  * @param order calculated order
- * @return \f$F^{(order)}\f$
  * @todo add channel switch
+ * @return \f$F^{(order)}\f$
  */
     cdbl F(const uint order);
     

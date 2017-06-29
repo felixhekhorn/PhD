@@ -50,6 +50,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cqBarF1", &InclusiveElProduction::cqBarF1)
         .def("dq1", &InclusiveElProduction::dq1)
         // hadronic structure functions
+        .def("F", &InclusiveElProduction::F)
         .def("Fg0", &InclusiveElProduction::Fg0)
         .def("Fg1", &InclusiveElProduction::Fg1)
         .def("Fq1", &InclusiveElProduction::Fq1)

@@ -94,9 +94,6 @@ const PhasespaceValues PdfConvNLOq::cqBarF1() const {
     if(0 == this->BpQED || 0 == this->Pgq0)
         throw invalid_argument("need to set all arguments!");
     PhasespaceValues r;
-    
-    /** @todo for eta=1e-4 there is a systematic relative error towards inclusive of -3.598609e-05 and that remains up until eta~1e0, 
-     * seems to be independent of q2,m2??? */
 
 #ifdef CounterByHeavyside
 
@@ -139,8 +136,6 @@ void PdfConvNLOq::setAp2(fPtr7dbl Ap2) {
 const PhasespaceValues PdfConvNLOq::dq1() const {
     if(0 == this->Ap2)
         throw invalid_argument("need to set all arguments!");
-    /** @todo there is a systematic relative error towards inclusive of ~3e-4
-     * seems to be vanish for eta->oo, but independent of q2,m2??? */
     PhasespaceValues r;
     cdbl jac = jacxE*jacyE*jacTheta1*jacTheta2;
     const KinematicVars vs(m2,q2,sp,xE,yE,Theta1,Theta2);

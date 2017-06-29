@@ -209,9 +209,16 @@ public:
 ///@{
     
 /**
+ * @brief full structure function
+ * @param order computed order
+ * @todo add channel switch
+ * @return \f$F^{(order)}\f$
+ */
+    cdbl F(const uint order);
+    
+/**
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
- * @todo add F()
  */
     cdbl Fg0();
     
@@ -231,8 +238,8 @@ public:
  * @brief derivative of full structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @param order computed order
- * @return dF^(order)_dHAQTransverseMomentum(pt)
  * @todo add channel switch
+ * @return dF^(order)_dHAQTransverseMomentum(pt)
  */
     cdbl dF_dHAQTransverseMomentum(cdbl pt, uint order);
     
@@ -261,8 +268,8 @@ public:
  * @brief derivative of full structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @param order computed order
- * @return dF^(order)_dHAQRapidity(y)
  * @todo add channel switch
+ * @return dF^(order)_dHAQRapidity(y)
  */
     cdbl dF_dHAQRapidity(cdbl y, uint order);
     
