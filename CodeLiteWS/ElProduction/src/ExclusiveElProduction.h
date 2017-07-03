@@ -249,27 +249,33 @@ public:
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    cdbl Fg0() const;
+    inline cdbl Fg0() const {
+        return this->F(OrderFlag_LO, ChannelFlag_Gluon);
+    }
     
 /**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    cdbl Fg1() const;
+    inline cdbl Fg1() const {
+        return this->F(OrderFlag_NLOonly, ChannelFlag_Gluon);
+    }
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
-    cdbl Fq1() const;
+    inline cdbl Fq1() const {
+        return this->F(OrderFlag_NLOonly, ChannelFlag_Quark);
+    }
     
 /**
  * @brief full structure function
- * @param order calculated order
- * @todo add channel switch
- * @return \f$F^{(order)}\f$
+ * @param orderFlag calculated order
+ * @param channelFlag calculated channel
+ * @return \f$F^{(order)}_{(channel)}\f$
  */
-    cdbl F(const uint order);
+    cdbl F(const uint orderFlag, const uint channelFlag) const;
     
 /**
  * @brief Monte Carlo parameter to F (and only F)

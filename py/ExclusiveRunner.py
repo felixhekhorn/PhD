@@ -69,6 +69,6 @@ def _threadWorker(qIn):
 		if p.has_key("adaptChi2"): 	o.MCparams.adaptChi2 = p["adaptChi2"]
 		if p.has_key("verbosity"): 	o.MCparams.verbosity = p["verbosity"]
 		# run
-		o.F(p["n"])
+		o.F(p["orderFlag"],p["channelFlag"])
 		qIn.task_done()
 		if p.has_key("msg"): Util.pSucc(p["msg"])

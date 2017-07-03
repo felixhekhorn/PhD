@@ -5,7 +5,7 @@ import Util
 
 import numpy as np
 
-from ElProduction import projT
+from ElProduction import projT, OrderFlag_LO, OrderFlag_NLO, ChannelFlag_Full
 from InclusiveRunner import InclusiveRunner
 
 #pdf = "MSTW2008nlo90cl"
@@ -34,7 +34,7 @@ def addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,n):
 		r.add({
 			"objArgs":(m2,q2,Delta,proj,nlf,),
 			"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX,
-			"f": ("dF_dHAQTransverseMomentum", pt, n),
+			"f": ("dF_dHAQTransverseMomentum", pt, (OrderFlag_LO if 0 == n else OrderFlag_NLO), ChannelFlag_Full),
 			"msg": fpPt+" (pt = %e)"%(pt),
 			"fp": fpPt,
 			"var": pt
@@ -51,7 +51,7 @@ def addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,n):
 		r.add({
 			"objArgs":(m2,q2,Delta,proj,nlf,),
 			"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX,
-			"f": ("dF_dHAQRapidity", y, n),
+			"f": ("dF_dHAQRapidity", y, (OrderFlag_LO if 0 == n else OrderFlag_NLO), ChannelFlag_Full),
 			"msg": fpRap+" (y = %e)"%(y),
 			"fp": fpRap,
 			"var": y

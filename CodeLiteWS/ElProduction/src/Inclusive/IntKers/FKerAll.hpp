@@ -28,7 +28,12 @@ protected:
 /**
  * @brief computed order
  */
-    uint order = 1;
+    uint orderFlag;
+    
+/**
+ * @brief computed channel
+ */
+    uint channelFlag;
     
 public:
 
@@ -45,11 +50,13 @@ public:
         nlf(nlf), alphaS(alphaS){};
     
 /**
- * @brief set order
- * @param order 0|1
+ * @brief sets computed order and channel
+ * @param orderFlag computed order
+ * @param channelFlag computed channel
  */
-    inline void setOrder(uint order) {
-        this->order = order;
+    inline void setFlags(const uint orderFlag, const uint channelFlag) {
+        this->orderFlag = orderFlag;
+        this->channelFlag = channelFlag;
     }
 };
 
@@ -112,10 +119,14 @@ public:
             throw invalid_argument("need to set all arguments!");
         cdbl eH = getElectricCharge(this->nlf + 1);
         cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
-        dbl r = n * eH*eH * (*this->LO)(amt2);
-        if (this->order > 0) {
-            r += n * alphaS*4.*M_PI* eH*eH * (*this->NLOg)(amt2,as4);
-            r += n * alphaS*4.*M_PI*         (*this->NLOq)(amt2,as4);
+        dbl r = 0.;
+        if ((OrderFlag_LO == (orderFlag & OrderFlag_LO)) && (ChannelFlag_Gluon == (channelFlag & ChannelFlag_Gluon))) // LOg
+            r += n * eH*eH * (*this->LO)(amt2);
+        if (OrderFlag_NLOonly == (orderFlag & OrderFlag_NLOonly)){ // NLO
+            if (ChannelFlag_Gluon == (channelFlag & ChannelFlag_Gluon))
+                r += n * alphaS*4.*M_PI* eH*eH * (*this->NLOg)(amt2,as4);
+            if (ChannelFlag_Quark == (channelFlag & ChannelFlag_Quark))
+                r += n * alphaS*4.*M_PI*         (*this->NLOq)(amt2,as4);
         }
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
@@ -183,10 +194,14 @@ public:
             throw invalid_argument("need to set all arguments!");
         cdbl eH = getElectricCharge(this->nlf + 1);
         cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
-        dbl r = n * eH*eH * (*this->LO)(ay);
-        if (this->order > 0) {
-            r += n * alphaS*4.*M_PI* eH*eH * (*this->NLOg)(ay,as4);
-            r += n * alphaS*4.*M_PI*         (*this->NLOq)(ay,as4);
+        dbl r = 0.;
+        if ((OrderFlag_LO == (orderFlag & OrderFlag_LO)) && (ChannelFlag_Gluon == (channelFlag & ChannelFlag_Gluon))) // LOg
+            r += n * eH*eH * (*this->LO)(ay);
+        if (OrderFlag_NLOonly == (orderFlag & OrderFlag_NLOonly)){ // NLO
+            if (ChannelFlag_Gluon == (channelFlag & ChannelFlag_Gluon))
+                r += n * alphaS*4.*M_PI* eH*eH * (*this->NLOg)(ay,as4);
+            if (ChannelFlag_Quark == (channelFlag & ChannelFlag_Quark))
+                r += n * alphaS*4.*M_PI*         (*this->NLOq)(ay,as4);
         }
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;

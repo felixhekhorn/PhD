@@ -71,12 +71,17 @@ def _threadWorker(qIn, qOut):
 		# run
 		if tuple == type(p["f"]) or list == type(p["f"]):
 			f = p["f"]
-			if "dF_dHAQTransverseMomentum"   == f[0]: p["res"] = o.dF_dHAQTransverseMomentum(f[1],f[2])
+			if "F"   == f[0]:                         p["res"] = o.F(f[1],f[2])
+			if "Fg0" == f[0]:                         p["res"] = o.Fg0()
+			if "Fg1" == f[0]:                         p["res"] = o.Fg1()
+			if "Fq1" == f[0]:                         p["res"] = o.Fq1()
+
+			if "dF_dHAQTransverseMomentum"   == f[0]: p["res"] = o.dF_dHAQTransverseMomentum(f[1],f[2],f[3])
 			if "dFg0_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFg0_dHAQTransverseMomentum(f[1])
 			if "dFg1_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFg1_dHAQTransverseMomentum(f[1])
 			if "dFq1_dHAQTransverseMomentum" == f[0]: p["res"] = o.dFq1_dHAQTransverseMomentum(f[1])
 
-			if "dF_dHAQRapidity"   == f[0]:           p["res"] = o.dF_dHAQRapidity(f[1],f[2])
+			if "dF_dHAQRapidity"   == f[0]:           p["res"] = o.dF_dHAQRapidity(f[1],f[2],f[3])
 			if "dFg0_dHAQRapidity" == f[0]:           p["res"] = o.dFg0_dHAQRapidity(f[1])
 			if "dFg1_dHAQRapidity" == f[0]:           p["res"] = o.dFg1_dHAQRapidity(f[1])
 			if "dFq1_dHAQRapidity" == f[0]:           p["res"] = o.dFq1_dHAQRapidity(f[1])

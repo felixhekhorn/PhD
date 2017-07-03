@@ -7,6 +7,9 @@
 #include <string>
 #include <boost/timer/timer.hpp>
 
+/**
+ * @brief common Utilities
+ */
 namespace Util {
 
 /**

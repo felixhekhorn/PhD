@@ -5,7 +5,7 @@ import Util
 
 import numpy as np
 
-from ElProduction import projT, ExclusiveHistT
+from ElProduction import projT, ExclusiveHistT, OrderFlag_LO, OrderFlag_NLO, ChannelFlag_Full
 from ExclusiveRunner import ExclusiveRunner
 
 #pdf = "MSTW2008nlo90cl"
@@ -28,7 +28,7 @@ def add(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,activatedHistograms,n,msg):
 	r.add({
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,), "lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, 
-		"activatedHistograms": activatedHistograms, "n":n,
+		"activatedHistograms": activatedHistograms, "orderFlag": (OrderFlag_LO if 0 == n else OrderFlag_NLO), "channelFlag": ChannelFlag_Full,
 		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": 0 == n,
 		"msg": msg
 	})
@@ -53,14 +53,14 @@ def addPtCharm(proj,bjorkenX,ptmax):
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,4.,)
 	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,0)
-	addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
+	#addPt(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,ptmax,1)
 def addRapCharm(proj,bjorkenX,y0):
 	m2 = 1.5**2
 	nlf = 3
 	lambdaQCD = 0.194
 	mu2 = (4.,-1.,0.,0.,)
 	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,0)
-	addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
+	#addRap(m2,proj,nlf,lambdaQCD,mu2,bjorkenX,y0,1)
 # add plots
 def addPtCharmG():
 	addPtCharm(projT.G, .1,     5.)

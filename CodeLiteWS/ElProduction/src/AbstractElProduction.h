@@ -79,9 +79,8 @@ protected:
     
 /**
  * @brief running strong coupling as provided by LHAPDF
- * @todo change to pointer -> constify methods
  */
-    LHAPDF::AlphaS_Analytic aS;
+    LHAPDF::AlphaS_Analytic* aS;
     
 /**
  * @brief has running strong coupling been set
@@ -102,6 +101,13 @@ protected:
  * @brief checks wether all hadronic parameters are given
  */
     void checkHadronic() const;
+    
+/**
+ * @brief checks wether flags are meaningful
+ * @param orderFlag computed orders
+ * @param channelFlag computed channels
+ */
+    void checkFlags(const uint orderFlag, const uint channelFlag) const;
     
 /**
  * @brief get hadronic hadronic S

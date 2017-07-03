@@ -35,7 +35,8 @@ def addXtOfGRSV96STD(sqrtSh,n,cMuF2,cMuR2):
 		"lambdaQCD": lambdaQCD,
 		"muF2": (1.*cMuF2,0.,0.,1.*cMuF2),
 		"muR2": (1.*cMuR2,0.,0.,1.*cMuR2),
-		"hadronicS":sqrtSh*sqrtSh, "n":n,
+		"hadronicS":sqrtSh*sqrtSh, 
+		"orderFlag": (OrderFlag_LO if 0 == n else OrderFlag_NLO), "channelFlag": ChannelFlag_Full,
 		"activatedHistograms": activatedHistograms,
 		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": 0 == n,
 		"msg": "dxt %s sqrtSh=%g, cMuF2=%g, cMuR2=%g, n=%g"%(pdf,sqrtSh,cMuF2,cMuR2,n)
@@ -64,7 +65,7 @@ def addFig11Helper(proj,pdf,n):
 		"lambdaQCD": lambdaQCD,
 		"mu2": (2.,0.,0.,0.),
 		"hadronicS":sqrtSh*sqrtSh,
-		"n":n,
+		"orderFlag": (OrderFlag_LO if 0 == n else OrderFlag_NLO), "channelFlag": ChannelFlag_Full,
 		"activatedHistograms": activatedHistograms,
 		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": 0 == n,
 		"msg": "dydxf %s sqrtSh=%g, n=%g"%(pdf,sqrtSh,n)

@@ -91,6 +91,46 @@ enum projT {
     P /**< polarized projection */
 };
 
+/** @name order flags */
+///@{
+
+/**
+ * @brief leading order (LO) ~ aS^1
+ */    
+const uint OrderFlag_LO = 1 << 0;
+
+/**
+ * @brief only next-to-leading order (NLO) ~ aS^2 (NLO only!)
+ */    
+const uint OrderFlag_NLOonly = 1 << 1;
+
+/**
+ * @brief up to next-to-leading order (NLO) ~ aS c0 + aS^2 c1
+ */    
+const uint OrderFlag_NLO = OrderFlag_LO | OrderFlag_NLOonly;
+
+///@}
+
+/** @name channel flags */
+///@{
+
+/**
+ * @brief gluon initiated
+ */    
+const uint ChannelFlag_Gluon = 1 << 0;
+
+/**
+ * @brief light quark initiated
+ */    
+const uint ChannelFlag_Quark = 1 << 1;
+
+/**
+ * @brief all channels = gluon + light quark
+ */    
+const uint ChannelFlag_Full = -1;
+
+///@}
+
 /**
  * @brief stringify projection type
  * @param proj

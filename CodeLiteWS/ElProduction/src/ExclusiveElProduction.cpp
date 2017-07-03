@@ -1,6 +1,5 @@
 #include "ExclusiveElProduction.h"
 
-#include <errno.h>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 
@@ -230,73 +229,8 @@ cdbl ExclusiveElProduction::dq1() const {
     return int4D(&f);
 }
 
-cdbl ExclusiveElProduction::Fg0() const {
-/** @todo reimplement! delegate? */
-throw logic_error("TODO: reimplement! delegate?");
-/*    this->checkHadronic();
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvLOg k(m2,q2,bjorkenX,this->getBpQED());
-    k.setPdf(this->pdf);
-    k.setMuF2(this->muF2);
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvLOg>;
-    f.params = &k;
-    // multiply norm
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl n = alphaS/m2 * (-q2)/(4.*M_PI*M_PI) * eH*eH;
-    return n*int2D(&f);*/
-}
-
-cdbl ExclusiveElProduction::Fg1() const {
-/** @todo reimplement! delegate? */
-throw logic_error("TODO: reimplement! delegate?");
-/*    this->checkHadronic();
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvNLOg k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay);
-    k.setBorn(this->getBpQED(),this->getSVp());
-    k.setRp(this->getRp(),this->getRpxC(),this->getROKpyC(),this->getROKpyxC());
-    k.setPgg(this->getPggH0(),this->getPggH1(),this->getPggS1());
-    k.setPdf(this->pdf);
-    k.setMuF2(this->muF2);
-    k.setMuR2(this->muR2);
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor5D<PdfConvNLOg>;
-    f.params = &k;
-    // multiply norm
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI)* eH*eH;
-    return n*int5D(&f);*/
-}
-
-cdbl ExclusiveElProduction::Fq1() const {
-/** @todo reimplement! delegate? */
-throw logic_error("TODO: reimplement! delegate?");
-/*    this->checkHadronic();
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvNLOq k(m2,q2,bjorkenX,nlf,omega,deltay);
-    k.setAp1(this->getAp1(), this->getAp1Counter());
-    k.setSplitting(this->getBpQED(), this->getPgq0(), this->getPgq1());
-    k.setAp2(this->getAp2());
-    k.setAp3(this->getAp3());
-    k.setPdf(this->pdf);
-    k.setMuF2(this->muF2);
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor5D<PdfConvNLOq>;
-    f.params = &k;
-    // multiply norm
-    cdbl n = alphaS*alphaS/m2 * (-q2)/(M_PI);
-    return n*int5D(&f);*/
-}
-
-cdbl ExclusiveElProduction::F(const uint order) {
-    if (order > 1)
-        throw domain_error((boost::format("order has to be either 0 or 1")%order).str());
+cdbl ExclusiveElProduction::F(const uint orderFlag, const uint channelFlag) const {
+    this->checkFlags(orderFlag, channelFlag);
     this->checkHadronic();
     // threshold cut off
     if (this->bjorkenX >= this->zMax)
@@ -316,8 +250,8 @@ cdbl ExclusiveElProduction::F(const uint order) {
     NLOq.setAp3(this->getAp3());
     // Full kernel
     FKerAll k(m2,q2,bjorkenX,nlf,xTilde, omega, deltax,deltay,this->muR2,this->muF2);
-    k.setAlphaS(&(this->aS));
-    k.setOrder(order);
+    k.setAlphaS(this->aS);
+    k.setFlags(orderFlag, channelFlag);
     k.setKers(&LOg,&NLOg,&NLOq);
     k.setPdf(this->pdf);
     // setup histograms

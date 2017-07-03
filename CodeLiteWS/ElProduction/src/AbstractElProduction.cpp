@@ -1,9 +1,11 @@
 #include "AbstractElProduction.h"
 
+#include <boost/format.hpp>
+
 AbstractElProduction::AbstractElProduction(cdbl m2, cdbl q2,  projT proj, uint nlf) : 
     m2(0.), q2(0.), sp(0.), hasPartonicS(false), proj(proj), nlf(nlf),
     pdf(0), muR2(0.,0.,0.,0.), hasMuR2(false), muF2(0.,0.,0.,0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
-    aS(), hasAlphaS(false), zMax(0.) {
+    aS(new LHAPDF::AlphaS_Analytic()), hasAlphaS(false), zMax(0.) {
     // ordering is important!
     this->setM2(m2);
     this->setQ2(q2);
@@ -14,6 +16,8 @@ AbstractElProduction::AbstractElProduction(cdbl m2, cdbl q2,  projT proj, uint n
 AbstractElProduction::~AbstractElProduction() {
     if (0 != this->pdf)
         delete (this->pdf);
+    if (0 != this->aS)
+        delete (this->aS);
 }
 
 void AbstractElProduction::setM2(cdbl m2) {
@@ -79,7 +83,7 @@ void AbstractElProduction::setMu2(const Common::DynamicScaleFactors& mu2) {
 void AbstractElProduction::setLambdaQCD(cdbl lambdaQCD) {
     if (lambdaQCD <= 0.)
         throw domain_error("lambda_QCD has to be positive!");
-    this->aS.setLambda(this->nlf + 1, lambdaQCD);
+    this->aS->setLambda(this->nlf + 1, lambdaQCD);
     this->hasAlphaS = true;
 }
     
@@ -107,4 +111,18 @@ void AbstractElProduction::checkHadronic() const {
         throw invalid_argument("no Bjorken x or hadronic S given!");
     if (!this->hasAlphaS)
         throw invalid_argument("no strong coupling given!");
+}
+
+void AbstractElProduction::checkFlags(const uint orderFlag, const uint channelFlag) const {
+    if (0 == orderFlag)
+        throw domain_error((boost::format("no active order selected (LO, NLO)! (orderFlag = %x)")%orderFlag).str());
+    if (orderFlag > OrderFlag_NLO)
+        throw domain_error((boost::format("only up to NLO currently available! (orderFlag = %x)")%orderFlag).str());
+    if (0 == channelFlag)
+        throw domain_error((boost::format("no active channel selected (gluon, quark)! (channelFlag = %x)")%channelFlag).str());
+    if (((channelFlag & ChannelFlag_Gluon) != ChannelFlag_Gluon) &&
+        ((channelFlag & ChannelFlag_Quark) != ChannelFlag_Quark))
+        throw domain_error((boost::format("only up to NLO currently available, i.e. only gluon and (light) quark channels can contribute! (channelFlag = %x)")%channelFlag).str());
+    if (OrderFlag_LO == orderFlag && ChannelFlag_Quark == channelFlag)
+        throw domain_error((boost::format("(light) quark channels does NOT contribute in LO! (orderFlag = %x, channelFlag = %x)")%orderFlag%channelFlag).str());
 }

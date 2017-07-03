@@ -54,7 +54,7 @@ cdbl int3D(gsl_monte_function* F) {
     gsl_rng *r;
     F->dim = dim;
         
-    size_t calls = 40000;
+    size_t calls = 30000;
     gsl_rng_env_setup ();
     T = gsl_rng_default;
     r = gsl_rng_alloc (T);
@@ -62,7 +62,7 @@ cdbl int3D(gsl_monte_function* F) {
     dbl res,err;
     
     gsl_monte_vegas_state *s = gsl_monte_vegas_alloc (dim);
-    gsl_monte_vegas_integrate (F, xl, xu, dim, 4000, r, s, &res, &err);
+    gsl_monte_vegas_integrate (F, xl, xu, dim, 3000, r, s, &res, &err);
     //printf("int3D: res: %e, err: %e\n",res,err);
     uint guard=0;
     do {

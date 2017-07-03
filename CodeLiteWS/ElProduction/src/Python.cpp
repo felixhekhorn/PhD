@@ -18,7 +18,15 @@ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(ExclusiveElProduction_activateHistogram_o
 
 BOOST_PYTHON_MODULE(ElProduction)
 {
-    enum_<projT>("projT")
+    scope().attr("OrderFlag_LO")      = OrderFlag_LO;
+    scope().attr("OrderFlag_NLOonly") = OrderFlag_NLOonly;
+    scope().attr("OrderFlag_NLO")     = OrderFlag_NLO;
+    
+    scope().attr("ChannelFlag_Gluon") = ChannelFlag_Gluon;
+    scope().attr("ChannelFlag_Quark") = ChannelFlag_Quark;
+    scope().attr("ChannelFlag_Full")  = ChannelFlag_Full;
+    
+    enum_<projT>("projT", "projection type")
         .value("G", G)
         .value("L", L)
         .value("P", P)
@@ -89,16 +97,16 @@ BOOST_PYTHON_MODULE(ElProduction)
         .def("cqBarF1", &InclusiveElProduction::cqBarF1)
         .def("dq1", &ExclusiveElProduction::dq1)
         // hadronic structure functions
-        //.def("Fg0", &ExclusiveElProduction::Fg0)
-        //.def("Fg1", &ExclusiveElProduction::Fg1)
-        //.def("Fq1", &ExclusiveElProduction::Fq1)
         .def("F", &ExclusiveElProduction::F)
+        .def("Fg0", &ExclusiveElProduction::Fg0)
+        .def("Fg1", &ExclusiveElProduction::Fg1)
+        .def("Fq1", &ExclusiveElProduction::Fq1)
         .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
         // histograms
         .def("activateHistogram", &ExclusiveElProduction::activateHistogram, ExclusiveElProduction_activateHistogram_overloads())
     ;
     
-    enum_<Exclusive::histT>("ExclusiveHistT")
+    enum_<Exclusive::histT>("ExclusiveHistT", "historgram type")
         .value("log10z", Exclusive::histT::log10z)
         .value("log10xi", Exclusive::histT::log10xi)
         .value("Theta1", Exclusive::histT::Theta1)

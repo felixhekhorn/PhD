@@ -54,9 +54,14 @@ class FKerAll : public PdfConvBase, public HepSource::Integrand {
     LHAPDF::AlphaS* alphaS = 0;
     
 /**
- * @brief computed order
+ * @brief computed orders
  */
-    uint order = 1;
+    uint orderFlag = OrderFlag_NLO;
+    
+/**
+ * @brief computed channels
+ */
+    uint channelFlag = ChannelFlag_Full;
     
 /**
  * @brief pointer to map of histograms
@@ -129,25 +134,37 @@ public:
  * @param NLOg pointer to NLO gluon kernel
  * @param NLOq pointer to NLO quark kernel
  */
-    void setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq);
+    inline void setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
+        this->LOg = LOg;
+        this->NLOg = NLOg;
+        this->NLOq = NLOq;
+    }
 
 /**
  * @brief sets running strong coupling
  * @param alphaS running strong coupling
  */
-    void setAlphaS(LHAPDF::AlphaS* alphaS);
+    inline void setAlphaS(LHAPDF::AlphaS* alphaS)  {
+        this->alphaS = alphaS;
+    }
 
 /**
  * @brief sets pdf 
  * @param pdf parton distribution function
  */
-    void setPdf(PdfWrapper* pdf);
+    inline void setPdf(PdfWrapper* pdf) {
+        this->pdf = pdf;
+    }
     
 /**
- * @brief sets computed order
- * @param order computed order
+ * @brief sets computed order and channels
+ * @param orderFlag computed orders
+ * @param channelFlag computed channels
  */
-    void setOrder(const uint order);
+    inline void setFlags(const uint orderFlag, const uint channelFlag)  {
+        this->orderFlag = orderFlag;
+        this->channelFlag = channelFlag;
+    }
     
 /**
  * @brief sets avtive histograms

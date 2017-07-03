@@ -38,7 +38,7 @@ def add(m2,q2,proj,nlf,lambdaQCD,mu2,bjorkenX,n):
 	r.add({
 		"objArgs":(m2,q2,proj,nlf,xTilde,omega,deltax,deltay,),
 		"pdf": (pdf,0,),
-		"lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, "n":n,
+		"lambdaQCD": lambdaQCD, "mu2": mu2, "bjorkenX":bjorkenX, "orderFlag": (OrderFlag_LO if 0 == n else OrderFlag_NLO), "channelFlag": ChannelFlag_Full,
 		"activatedHistograms": activatedHistograms,
 		"calls": calls, "iterations": its, "verbosity": 2, "adaptChi2": 0 == n,
 		"msg": "F%s%s%d(q2=%g,bjorkenX=%g)"%(proj,qL,n,q2,bjorkenX)

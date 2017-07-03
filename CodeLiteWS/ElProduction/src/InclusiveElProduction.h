@@ -38,11 +38,11 @@ class InclusiveElProduction : public AbstractElProduction {
     
 /**
  * @brief compute running coupling
- * @param order 0=LO, 1=NLO
+ * @param orderFlag computed order
  * @param HAQTransverseMomentum \f$p_{2,T}\f$
  * @return \f$\alpha_s(\mu_R^2)\f$
  */
-    cdbl getAlphaS(uint order, cdbl HAQTransverseMomentum);
+    cdbl getAlphaS(const uint orderFlag, cdbl HAQTransverseMomentum) const;
     
 /**
  * @brief returns the corresponding kernel of \f$c^{(0)}_{g}\f$
@@ -210,89 +210,89 @@ public:
     
 /**
  * @brief full structure function
- * @param order computed order
- * @todo add channel switch
+ * @param orderFlag computed order
+ * @param channelFlag computed channel
  * @return \f$F^{(order)}\f$
  */
-    cdbl F(const uint order);
+    cdbl F(const uint orderFlag, const uint channelFlag);
     
 /**
  * @brief LO structure function
  * @return \f$F^{(0)}_g\f$
  */
-    cdbl Fg0();
+    cdbl Fg0() const;
     
 /**
  * @brief NLO gluon structure function
  * @return \f$F^{(1)}_g\f$
  */
-    cdbl Fg1();
+    cdbl Fg1() const;
     
 /**
  * @brief NLO quark structure function
  * @return \f$F^{(1)}_q\f$
  */
-    cdbl Fq1();
+    cdbl Fq1() const;
     
 /**
  * @brief derivative of full structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
- * @param order computed order
- * @todo add channel switch
- * @return dF^(order)_dHAQTransverseMomentum(pt)
+ * @param orderFlag computed order
+ * @param channelFlag calculated channel
+ * @return d(F^{(order)}_{(channel)})_dHAQTransverseMomentum(pt)
  */
-    cdbl dF_dHAQTransverseMomentum(cdbl pt, uint order);
+    cdbl dF_dHAQTransverseMomentum(cdbl pt, const uint orderFlag, const uint channelFlag) const;
     
 /**
  * @brief derivative of LO structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @return dFg0_dHAQTransverseMomentum(pt)
  */
-    cdbl dFg0_dHAQTransverseMomentum(cdbl pt);
+    cdbl dFg0_dHAQTransverseMomentum(cdbl pt) const;
     
 /**
  * @brief derivative of NLO gluon structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @return dFg1_dHAQTransverseMomentum(pt)
  */
-    cdbl dFg1_dHAQTransverseMomentum(cdbl pt);
+    cdbl dFg1_dHAQTransverseMomentum(cdbl pt) const;
     
 /**
  * @brief derivative of NLO quark structure function to pt of heavy anti quark
  * @param pt pt of heavy anti quark
  * @return dFq1_dHAQTransverseMomentum(pt)
  */
-    cdbl dFq1_dHAQTransverseMomentum(cdbl pt);
+    cdbl dFq1_dHAQTransverseMomentum(cdbl pt) const;
     
 /**
  * @brief derivative of full structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
- * @param order computed order
- * @todo add channel switch
- * @return dF^(order)_dHAQRapidity(y)
+ * @param orderFlag computed order
+ * @param channelFlag calculated channel
+ * @return d(F^{(order)}_{(channel)})_dHAQRapidity(y)
  */
-    cdbl dF_dHAQRapidity(cdbl y, uint order);
+    cdbl dF_dHAQRapidity(cdbl y, const uint orderFlag, const uint channelFlag) const;
     
 /**
  * @brief derivative of LO structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @return dFg0_dHAQRapidity(y)
  */
-    cdbl dFg0_dHAQRapidity(cdbl y);
+    cdbl dFg0_dHAQRapidity(cdbl y) const;
     
 /**
  * @brief derivative of NLO gluon structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @return dFg1_dHAQRapidity(y)
  */
-    cdbl dFg1_dHAQRapidity(cdbl y);
+    cdbl dFg1_dHAQRapidity(cdbl y) const;
     
 /**
  * @brief derivative of NLO quark structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @return dFq1_dHAQRapidity(y)
  */
-    cdbl dFq1_dHAQRapidity(cdbl y);
+    cdbl dFq1_dHAQRapidity(cdbl y) const;
     
 ///@}
 

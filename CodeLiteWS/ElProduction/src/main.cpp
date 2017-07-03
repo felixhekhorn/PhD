@@ -12,7 +12,9 @@
 int runInclusive();
 int runInclusive2();
 int test() {
-    PdfWrapper a("GRV94NLO",0);
+    if ((ChannelFlag_Full & ChannelFlag_Gluon) == ChannelFlag_Gluon)
+        printf("test");
+    /*PdfWrapper a("GRV94NLO",0);
     PdfWrapper b("CTEQ3M",0);
     const int pid = 3;
     cout << "pid = " << pid << endl;
@@ -23,7 +25,7 @@ int test() {
             printf("%e\t%e\t%e\t%e\n",Q2,x,a.xfxQ2(pid,x,Q2),b.xfxQ2(pid,x,Q2));
         }
         cout << endl;
-    }
+    }*/
     return EXIT_SUCCESS;
 }
 
@@ -36,7 +38,7 @@ int test() {
 int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
-	//return runInclusive2();
+	return runInclusive2();
     cdbl q2 = -1.e0;
     cdbl m2 = 4.75*4.75;
     const uint nlf = 3;
@@ -176,7 +178,7 @@ int runInclusive2(){
         std::ofstream of(path + "pt-inc.dat");
         for (uint j = 0; j < N; ++j) {
             cdbl pt = ptmax * (j+.5)/(N);
-            cdbl a = iO.dF_dHAQTransverseMomentum(pt,0);
+            cdbl a = iO.dFg0_dHAQTransverseMomentum(pt);
             cdbl b = iO.dFg0_dHAQTransverseMomentum(pt);
             printf("%e\t%e\t%e\t%e\t%e\n",pt,a,b,b-a,(b-a)/b);
             of << boost::format("%e\t%e\t%e")%pt%a%b << endl;

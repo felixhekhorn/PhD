@@ -7,24 +7,6 @@ FKerAll::FKerAll(cdbl m2, cdbl q2, cdbl bjorkenX, const uint nlf, cdbl xTilde, c
     HepSource::Integrand(5,1), muR2Factors(muR2Factors), muF2Factors(muF2Factors), histMap(0){
 }
     
-void FKerAll::setKers(PdfConvLOg* LOg, PdfConvNLOg* NLOg, PdfConvNLOq* NLOq) {
-    this->LOg = LOg;
-    this->NLOg = NLOg;
-    this->NLOq = NLOq;
-}
-
-void FKerAll::setPdf(PdfWrapper* pdf) {
-    this->pdf = pdf;
-}
-
-void FKerAll::setAlphaS(LHAPDF::AlphaS* alphaS) {
-    this->alphaS = alphaS;
-}
-
-void FKerAll::setOrder(const uint order) {
-    this->order = order;
-}
-    
 cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2) {
     // protect from null pointer
     if (0 == this->LOg || 0 == this->NLOg || 0 == this->NLOq)
@@ -38,9 +20,9 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
 
     dbl r = 0.;
    
-    this->alphaS->setOrderQCD(1 + this->order);
+    this->alphaS->setOrderQCD(1 + (this->orderFlag == OrderFlag_LO ? 0 : 1 ));
     
-    { // LO
+    if ((OrderFlag_LO == (this->orderFlag & OrderFlag_LO)) && (ChannelFlag_Gluon == (this->channelFlag & ChannelFlag_Gluon))){ // LOg
         PhasespacePoint p(this->m2, this->q2, this->bjorkenX, this->muR2Factors, this->muF2Factors);
         p.setupLO(this->z, this->Theta1);
         cdbl muR2 = p.getMuR2();
@@ -59,8 +41,8 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
     }
     
     // NLO
-    if (this->order > 0) {
-        { // gluon channel
+    if (OrderFlag_NLOonly == (this->orderFlag & OrderFlag_NLOonly)) {
+        if (ChannelFlag_Gluon == (this->channelFlag & ChannelFlag_Gluon)){ // gluon channel
             // compute kernels
             this->NLOg->setVars(az,ax,ay,aTheta1,aTheta2);
             const PhasespaceValues cg1 = this->NLOg->cg1();
@@ -83,7 +65,7 @@ cdbl FKerAll::operator() (cdbl az, cdbl ax, cdbl ay, cdbl aTheta1, cdbl aTheta2)
             r += this->combineNLOg(1.,       -1.,      cg1.xCyC, cgBarR1.xCyC, cgBarF1.xCyC);
 #endif // CounterByHeavyside
         }
-        { // quark channel
+        if (ChannelFlag_Quark == (this->channelFlag & ChannelFlag_Quark)) { // quark channel
             // compute kernels
             this->NLOq->setVars(az,ax,ay,aTheta1,aTheta2);
             const PhasespaceValues cq1 = this->NLOq->cq1();
