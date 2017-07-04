@@ -43,7 +43,8 @@ def NPB392_229(pdf):
           tmpl = pathOut+"dF%%s%s_d%s_x-%g_%d.dat"%(qL,var,-np.log10(bjorkenX),n)
           Histogram.compute2ByTemplate(tmpl)
 
-def NPB543_345():
+# join exclusive files
+def NPB540_345_Exclusive():
   path = dataPath + "NPB540-345/"
   tmplIn = "dFP_dxt-%s-sqrtSh_%g-cMuF2_%g-cMuR2_%g-%d.dat"
   tmplOut = "dFP_dxt-%s-sqrtSh_%g-%d.dat"
@@ -78,6 +79,52 @@ def NPB543_345():
     with open(pOut, "w") as o:
       for e in dataOut:
         o.write("% e % e % e % e % e\n"%(e[0],e[1],e[2],e[3],e[4]))
+# join inclusive files
+def NPB540_345_Inclusive():
+  path = dataPath + "NPB540-345/"
+  tmplIn = "dFP_dxt-inc-%s-sqrtSh_%g-cMuF2_%g-cMuR2_%g-%d.dat"
+  tmplOut = "dFP_dxt-inc-%s-sqrtSh_%g-%d.dat"
+  sqrtSh = 10.
+  def r(p):
+    d = []
+    with open(p) as o:
+      for l in o:
+        d.append([float(e) for e in l.strip().split("\t")])
+    return d
+  for n,pdf in [(0,"GRSV96STDLO")]:#,(1,"GRSV96STDNLO")]:
+    data = {}
+    for cMuF2 in [.25,.5,1.,2.,4.]:
+      for cMuR2 in [.25,.5,1.,2.,4.]:
+        p = tmplIn%(pdf,sqrtSh,cMuF2*100.,cMuR2*100.,n)
+        data[p] = r(path+p)
+    central = r(path+tmplIn%(pdf,sqrtSh,100,100,n))
+    dataOut = []
+    for k in range(len(central)):
+      cLine = central[k]
+      val = cLine[0]
+      cent = cLine[1]
+      mi = cent
+      ma = cent
+      for f in data:
+        fData = data[f]
+        fLine = fData[k]
+        if fLine[0] != cLine[0]:
+          print "files do not match!"
+          print "file %s line %d"%(f,k)
+          return
+        fVal = fLine[1]
+        if fVal < mi: mi = fVal
+        if fVal > ma: ma = fVal
+      dataOut.append([val,cent,mi,ma])
+    pOut = path + tmplOut%(pdf,sqrtSh,n)
+    with open(pOut, "w") as o:
+      for e in dataOut:
+        o.write("% e % e % e % e\n"%(e[0],e[1],e[2],e[3]))
+
+
+def NPB540_345():
+  #NPB540_345_Exclusive()
+  NPB540_345_Inclusive()
   
 
 def printUsage():
@@ -97,7 +144,7 @@ if "NPB540-345" == paper:
   if 2 != len(sys.argv):
     printUsage()
     exit()
-  NPB543_345()
+  NPB540_345()
 else:
   if 3 != len(sys.argv):
     printUsage()

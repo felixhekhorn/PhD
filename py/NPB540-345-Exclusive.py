@@ -14,6 +14,7 @@ r = ExclusiveRunner();
 
 m2 = 1.5*1.5
 q2 = -1e-2
+lambdaQCD = 0.2
 
 xTilde = .8
 omega = 1.
@@ -21,9 +22,8 @@ deltax = 1e-6
 deltay = 7e-6
 # add data point
 def addXtOfGRSV96STD(sqrtSh,n,cMuF2,cMuR2):
-	lambdaQCD = 0.2
 	pdf = "GRSV96STD"+("" if 0 == n else "N")+"LO";
-	a = (sqrtSh,pdf,cMuF2*100.,cMuR2*100.,n)
+	a = (pdf,sqrtSh,cMuF2*100.,cMuR2*100.,n)
 	activatedHistograms = [
 		(ExclusiveHistT.HAQTransverseMomentumScaling,100,path+"dFP_dxt-%s-sqrtSh_%g-cMuF2_%g-cMuR2_%g-%d.dat"%a),
 	]
@@ -46,8 +46,8 @@ def addFig10():
 		for cMuF2 in [.25,.5,1.,2.,4.]:
 			for cMuR2 in [.25,.5,1.,2.,4.]:
 				addXtOfGRSV96STD(10.,n,cMuF2,cMuR2)
-	addXtOfGRSV96STDNLO(200,0,1.,1.)
-	addXtOfGRSV96STDNLO(200,1,1.,1.)
+	addXtOfGRSV96STD(200,0,1.,1.)
+	addXtOfGRSV96STD(200,1,1.,1.)
 
 # add data point
 def addFig11Helper(proj,pdf,n):

@@ -12,7 +12,15 @@ namespace Inclusive {
  * @brief LO gluon convolution
  */
 class PdfConvLO : public PdfConvFullBase {
+    
+/**
+ * @brief parton distribution function
+ */
     PdfWrapper* pdf;
+    
+/**
+ * @brief factorization scale
+ */
     cdbl muF2;
     
 /**
@@ -162,7 +170,6 @@ public:
  * @brief LO gluon convolution differentiated to HAQRapidity
  */
 class PdfConvLO_dHAQRapidity : public PdfConvLO_dmt2dy, protected PdfConvBase_dHAQRapidity {
-    
 public:
     
 /**
@@ -192,7 +199,43 @@ public:
         if (!isfinite(r)) return 0.;
         return r;
     }
+};
+
+/**
+ * @brief LO gluon convolution differentiated to HAQRapidity
+ */
+class PdfConvLO_dHAQFeynmanX : public PdfConvLO_dmt2dy, protected PdfConvBase_dHAQFeynmanX {
+public:
     
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param BpQED pointer to Born matrix element
+ * @param xF current xF of HAQ
+ */
+    inline PdfConvLO_dHAQFeynmanX(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, fPtr4dbl BpQED, cdbl xF) :
+        PdfConvLO_dmt2dy(m2, q2, bjorkenX, pdf, muF2, BpQED), PdfConvBase_dHAQFeynmanX(m2, this->getHadronicS(),xF) {}
+    
+/**
+ * @brief called function
+ * @param amt2 integration variable mapped on transverse mass mt2
+ * @return kernel
+ */
+    inline cdbl operator() (cdbl amt2) const {
+        cdbl mt2 = this->m2 + this->Vmt2*amt2;
+        cdbl mt = sqrt(mt2);
+        cdbl chi = this->getChi(mt);
+        cdbl ey = this->pLmax/mt*(this->xF + chi);
+        
+        cdbl r = this->Vmt2 / chi * this->PdfMe(ey,mt);
+        // Protect from ps corner cases
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
 };
 
 } // namespace Inclusive

@@ -37,7 +37,7 @@ enum histT {
     HAQFeynmanX, /**< -1 < HAQTransverseMomentumScaling < 1 */
     
 // NLO:
-    x, /**< x_bj/z_max < x < 1 */
+    x, /**< bjorkenX/z_max < x < 1 */
     y, /**< -1 < y < 1 */
     Theta2 /**< 0 < Theta2 < pi */
 };

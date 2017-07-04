@@ -106,22 +106,13 @@ public:
  * @param aZ integration variable mapped on z
  * @param at1 integration variable mapped on t1
  * @param as4 integration variable mapped on s4
- * @return
+ * @return kernel
  */
     inline cdbl operator() (cdbl aZ, cdbl at1, cdbl as4) {
         this->setZ(aZ);
         this->setT1(at1);
         this->setS4(as4,0.);
         cdbl xi = this->bjorkenX/this->z;
-        /*cdbl meCq1 = cq1(m2,q2,sp,s4,t1) + this->lnF * cqBarF1(m2,q2,sp,s4,t1);
-        cdbl meDq1 = dq1(m2,q2,sp,s4,t1);
-        dbl fqs = 0.;
-        cdbl eH = getElectricCharge(this->nlf + 1);
-        for (uint q = 1; q < this->nlf + 1; ++q) {
-            cdbl eL = getElectricCharge(q);
-            fqs += (this->pdf->xfxQ2((int)q,xi,this->muF2) + this->pdf->xfxQ2(-((int)q),xi,this->muF2))*(eH*eH*meCq1 + eL*eL*meDq1);
-        }
-        cdbl r = jac * 1./this->z * fqs / m2;*/
         cdbl r = (jac*xi/this->z) * this->PdfMe(xi,this->t1,this->s4);
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
@@ -155,7 +146,7 @@ public:
  * @brief called function
  * @param amt2 integration variable mapped on mt2
  * @param as4 integration variable mapped on s4
- * @return 
+ * @return kernel
  */
     inline cdbl operator() (cdbl amt2, cdbl as4) const {
         cdbl mt2 = this->m2 + this->Vmt2*amt2;
@@ -173,7 +164,6 @@ public:
         if (!isfinite(r)) return 0.;
         return r;
     }
-    
 };
 
 /**
@@ -203,7 +193,7 @@ public:
  * @brief called function
  * @param ay integration variable mapped on y
  * @param as4 integration variable mapped on s4
- * @return 
+ * @return kernel
  */
     inline cdbl operator() (cdbl ay, cdbl as4) const {
         cdbl y = this->y0*(-1. + 2.*ay);
@@ -223,6 +213,55 @@ public:
         return r;
     }
     
+};
+
+/**
+ * @brief NLO quark convolution differentiated towards HAQFeynmanX
+ */
+class PdfConvNLOq_dHAQFeynmanX : public PdfConvNLOqBase, protected PdfConvBase_dHAQFeynmanX {
+public:
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param nlf number of light flavours
+ * @param cq1 pointer to eH2 matrix element
+ * @param cqBarF1 pointer to factorisation logs of eH2 matrix element
+ * @param dq1 pointer to eL2 matrix element
+ * @param xF current HAQFeynmanX
+ */
+    inline PdfConvNLOq_dHAQFeynmanX(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, uint nlf, fPtr5dbl cq1, fPtr5dbl cqBarF1, fPtr5dbl dq1, cdbl xF) :
+        PdfConvNLOqBase(m2, q2, bjorkenX, pdf, muF2, nlf, cq1, cqBarF1, dq1),
+        PdfConvBase_dHAQFeynmanX(m2,this->getHadronicS(),xF){}
+    
+/**
+ * @brief called function
+ * @param amt2 integration variable mapped on mt2
+ * @param as4 integration variable mapped on s4
+ * @return kernel
+ */
+    inline cdbl operator() (cdbl amt2, cdbl as4) const {
+        cdbl mt2 = this->m2 + this->Vmt2*amt2;
+        cdbl mt = sqrt(mt2);
+        cdbl chi = this->getChi(mt);
+        cdbl ey = this->pLmax/mt*(this->xF + chi);
+        
+        cdbl Shp = this->getHadronicSp();
+        cdbl T1 = this->getHadronicT1(ey,mt);
+        cdbl U1 = this->getHadronicU1(ey,mt);
+        cdbl s4max = Shp + T1 + U1;
+        cdbl s4 = s4max*as4;
+        cdbl xi = (s4 - U1)/(Shp + T1);
+        
+        cdbl r = this->Vmt2/chi*s4max/(Shp+T1)*Shp*xi * this->PdfMe(xi,xi*T1,s4);
+        
+        // Protect from ps corner cases
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
 };
 
 } // namespace Inclusive

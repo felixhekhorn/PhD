@@ -205,6 +205,51 @@ protected:
     }
 };
 
+/**
+ * @brief Abstract base class for convolution with PDFs differential towards HAQFeynmanX
+ */
+class PdfConvBase_dHAQFeynmanX {
+protected:
+    
+/**
+ * @brief Feynman x of HAQ
+ */
+    dbl xF;
+    
+/**
+ * @brief maximum of longitudinal momentum of HAQ
+ */
+    dbl pLmax;
+    
+/**
+ * @brief maximum of transverse mass of HAQ
+ */
+    dbl Vmt2;
+    
+/**
+ * @brief constructor
+ * @param m2
+ * @param Sh hadronic S
+ * @param xF current HAQFeynmanX
+ */
+    inline PdfConvBase_dHAQFeynmanX(cdbl m2, cdbl Sh, cdbl xF): xF(xF) {
+        cdbl betah = sqrt(1. - 4.*m2/Sh);
+        this->pLmax = sqrt(Sh)/2. * betah;
+        cdbl mt2Max = Sh/4*(1. - betah*betah*xF*xF);
+        this->Vmt2 = mt2Max - m2;
+    }
+    
+/**
+ * @brief compute current chi
+ * @param mt current transverse mass of HAQ
+ * @return sqrt(x_F^2 + (mt/pLmax)^2)
+ */
+    inline cdbl getChi(cdbl mt) const {
+        cdbl a = mt/this->pLmax;
+        return sqrt(xF*xF + a*a);
+    }
+};
+
 } // namespace Inclusive
 
 #endif // PdfConvBase_H_

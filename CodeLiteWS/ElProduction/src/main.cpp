@@ -140,13 +140,14 @@ int runInclusive2(){
     
     cdbl m2 = 1.5*1.5;
     const uint nlf = 3;
-    cdbl lambdaQCD = .194; // nlf=3
+    cdbl lambdaQCD = .2; // nlf=3
+    //cdbl lambdaQCD = .194; // nlf=3
     //cdbl m2 = 4.75*4.75;
     //const uint nlf = 4;
     cdbl q2 = -10.;
     //const str pdf = "MorfinTungB";
-    const str pdf = "MSTW2008nlo90cl";
-    projT proj = L;
+    const str pdf = "GRSV96STDLO";
+    projT proj = P;
     
     cdbl Delta = 1e-7;
     cdbl xTilde = .8;
@@ -167,32 +168,27 @@ int runInclusive2(){
     iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
     
     {
-        cdbl bjorkenX = 0.01;
-        iO.setBjorkenX(bjorkenX);eO.setBjorkenX(bjorkenX);
-        const Common::DynamicScaleFactors mu2(4.,-1.,0.,4.);
+        cdbl sqrtSh = 100.;
+        iO.setHadronicS(sqrtSh);eO.setHadronicS(sqrtSh);
+        const Common::DynamicScaleFactors mu2(2.,0.,0.,0.);
         iO.setMu2(mu2);eO.setMu2(mu2);
-        const uint N = 100;
-        cdbl ptmax = 8.;
-        cdbl y0 = 3.15;
+        const uint N = 30;
         const str path = "/home/Felix/Physik/PhD/data/hist/";
-        std::ofstream of(path + "pt-inc.dat");
+        std::ofstream of(path + "xF-inc.dat");
         for (uint j = 0; j < N; ++j) {
-            cdbl pt = ptmax * (j+.5)/(N);
-            cdbl a = iO.dFg0_dHAQTransverseMomentum(pt);
-            cdbl b = iO.dFg0_dHAQTransverseMomentum(pt);
-            printf("%e\t%e\t%e\t%e\t%e\n",pt,a,b,b-a,(b-a)/b);
-            of << boost::format("%e\t%e\t%e")%pt%a%b << endl;
-            /*cdbl y = y0 * (-1. + 2./N*(j+.5));
-            cdbl g = iO.dFg1_dHAQRapidity(y);
-            printf("%e\t%e\n",y,g);*/
+            cdbl xF = -1. + 2. * (j+.5)/(N);
+            cdbl a = iO.dF_dHAQFeynmanX(xF,OrderFlag_NLO,ChannelFlag_Full);
+            printf("%e\t%e\n",xF,a);
+            of << boost::format("%e\t%e")%xF%a << endl;
         }
         of.close();
         cout << endl << endl;
-        eO.activateHistogram(Exclusive::histT::HAQTransverseMomentum,N,path+"pt.dat",0,ptmax);
-        eO.activateHistogram(Exclusive::histT::HAQRapidity,N,path+"y.dat",-y0,y0);
-        //printf("int_inc = %e\n",iO.Fg0());
-        //printf("int_inc' = %e\n",iO.Fg1_());
-        //printf("int_ex = %e\n",eO.F(0));
+        eO.activateHistogram(Exclusive::histT::HAQFeynmanX,N,path+"xF.dat");
+        cdbl int_inc = iO.F(OrderFlag_NLO,ChannelFlag_Full);
+        printf("int_inc = %e\n",int_inc);
+        cdbl int_exc = eO.F(OrderFlag_NLO,ChannelFlag_Full);
+        printf("int_exc = %e\n",int_exc);
+        printf("int_exc/int_inc = %e\n",int_exc/int_inc);
     }
     
     /*{

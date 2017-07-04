@@ -116,6 +116,20 @@ class InclusiveElProduction : public AbstractElProduction {
  */
     fPtr5dbl getDq1() const;
     
+/**
+ * @brief derivative of full structure function to a variable of heavy anti quark
+ * @tparam PdfConvLO_dHAQX LO matrix element
+ * @tparam PdfConvNLOg_dHAQX NLO gluon matrix element
+ * @tparam PdfConvNLOq_dHAQX NLO quark matrix element
+ * @tparam FKerAll_dHAQX all order kernel
+ * @param v value
+ * @param orderFlag computed order
+ * @param channelFlag calculated channel
+ * @return d(F^{(order)}_{(channel)})_dHAQX(v)
+ */
+    template <class PdfConvLO_dHAQX, class PdfConvNLOg_dHAQX, class PdfConvNLOq_dHAQX, class FKerAll_dHAQX>
+    cdbl dF_dHAQX(cdbl v, const uint orderFlag, const uint channelFlag, cdbl pt) const;
+    
 public:
 
 /** @name Contrstuctor & Destructor */
@@ -265,6 +279,36 @@ public:
     cdbl dFq1_dHAQTransverseMomentum(cdbl pt) const;
     
 /**
+ * @brief derivative of full structure function to xt of heavy anti quark
+ * @param xt pt/pt_max of heavy anti quark
+ * @param orderFlag computed order
+ * @param channelFlag calculated channel
+ * @return d(F^{(order)}_{(channel)})_dHAQTransverseMomentumScaling(xt)
+ */
+    cdbl dF_dHAQTransverseMomentumScaling(cdbl xt, const uint orderFlag, const uint channelFlag) const;
+    
+/**
+ * @brief derivative of LO structure function to xt of heavy anti quark
+ * @param xt pt/pt_max of heavy anti quark
+ * @return dFg0_dHAQTransverseMomentumScaling(xt)
+ */
+    cdbl dFg0_dHAQTransverseMomentumScaling(cdbl xt) const;
+    
+/**
+ * @brief derivative of NLO gluon structure function to xt of heavy anti quark
+ * @paramxt pt/pt_max of heavy anti quark
+ * @return dFg1_dHAQTransverseMomentumScaling(xt)
+ */
+    cdbl dFg1_dHAQTransverseMomentumScaling(cdbl xt) const;
+    
+/**
+ * @brief derivative of NLO quark structure function to xt of heavy anti quark
+ * @param xt pt/pt_max of heavy anti quark
+ * @return dFq1_dHAQTransverseMomentumScaling(xt)
+ */
+    cdbl dFq1_dHAQTransverseMomentumScaling(cdbl xt) const;
+    
+/**
  * @brief derivative of full structure function to rapidity of heavy anti quark
  * @param y rapidity of heavy anti quark
  * @param orderFlag computed order
@@ -293,6 +337,36 @@ public:
  * @return dFq1_dHAQRapidity(y)
  */
     cdbl dFq1_dHAQRapidity(cdbl y) const;
+    
+/**
+ * @brief derivative of full structure function to Feynman-x of heavy anti quark
+ * @param xF Feynman-x of heavy anti quark
+ * @param orderFlag computed order
+ * @param channelFlag calculated channel
+ * @return d(F^{(order)}_{(channel)})_dHAQFeynmanX(xF)
+ */
+    cdbl dF_dHAQFeynmanX(cdbl xF, const uint orderFlag, const uint channelFlag) const;
+    
+/**
+ * @brief derivative of LO structure function to Feynman-x of heavy anti quark
+ * @param xF Feynman-x of heavy anti quark
+ * @return dFg0_dHAQFeynmanX(xF)
+ */
+    cdbl dFg0_dHAQFeynmanX(cdbl xF) const;
+    
+/**
+ * @brief derivative of NLO gluon structure function to Feynman-x of heavy anti quark
+ * @param xF Feynman-x of heavy anti quark
+ * @return dFg1_dHAQFeynmanX(xF)
+ */
+    cdbl dFg1_dHAQFeynmanX(cdbl xF) const;
+    
+/**
+ * @brief derivative of NLO quark structure function to Feynman-x of heavy anti quark
+ * @param xF Feynman-x of heavy anti quark
+ * @return dFq1_dHAQFeynmanX(xF)
+ */
+    cdbl dFq1_dHAQFeynmanX(cdbl xF) const;
     
 ///@}
 

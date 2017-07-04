@@ -355,6 +355,56 @@ public:
     }
 };
 
+/**
+ * @brief NLO gluon convolution differentiated towards HAQFeynmanX
+ */
+class PdfConvNLOg_dHAQFeynmanX : public PdfConvNLOgBase, protected PdfConvBase_dHAQFeynmanX {
+public:
+
+/**
+ * @brief constructor
+ * @param m2 heavy quark mass squared \f$m^2 > 0\f$
+ * @param q2 virtuality of the photon \f$q^2 < 0\f$
+ * @param bjorkenX Bjorken scaling variable
+ * @param pdf parton distribution functions
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ * @param muR2 renormalisation scale \f$\mu_R^2\f$
+ * @param nlf number of light flavours
+ * @param Delta energy scale that seperates hard(\f$s_4>\Delta\f$) and soft(\f$s_4<\Delta\f$) contributions: \f$\Delta > 0\f$
+ * @param xF current HAQFeynmanX
+ */
+    inline PdfConvNLOg_dHAQFeynmanX(cdbl m2, cdbl q2, cdbl bjorkenX, PdfWrapper* pdf, cdbl muF2, cdbl muR2, uint nlf, cdbl Delta, cdbl xF) :
+        PdfConvNLOgBase(m2, q2, bjorkenX, pdf, muF2, muR2, nlf, Delta),
+        PdfConvBase_dHAQFeynmanX(m2,this->getHadronicS(),xF){}
+        
+/**
+ * @brief called function
+ * @param amt2 integration variable mapped on mt2
+ * @param as4 integration variable mapped on s4
+ * @return kernel
+ */
+    inline cdbl operator() (cdbl amt2, cdbl as4) const {
+        cdbl mt2 = this->m2 + this->Vmt2*amt2;
+        cdbl mt = sqrt(mt2);
+        cdbl chi = this->getChi(mt);
+        cdbl ey = this->pLmax/mt*(this->xF + chi);
+        
+        cdbl Shp = this->getHadronicSp();
+        cdbl T1 = this->getHadronicT1(ey,mt);
+        cdbl U1 = this->getHadronicU1(ey,mt);
+        cdbl s4max = Shp + T1 + U1;
+        cdbl s4 = Delta + (s4max-Delta)*as4;
+        cdbl xi = (s4 - U1)/(Shp + T1);
+        cdbl xiSV = (0. - U1)/(Shp + T1);
+        
+        cdbl r = this->Vmt2/chi*(s4max-Delta)/(Shp+T1)*Shp*(xi*this->PdfMeH(xi,xi*T1,s4) + xiSV*this->PdfShiftedMeSV(xiSV,xiSV*T1,s4,s4max));
+        
+        // Protect from ps corner cases
+        if (!isfinite(r)) return 0.;
+        return r;
+    }
+};
+
 } // namespace Inclusive
 
 #endif // Inclusive_PdfConvNLOg_H_
