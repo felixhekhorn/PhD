@@ -14,4 +14,6 @@ nohup nice -n 15 ~/usr/local/bin/python ./NPB392-229-Inclusive-MorfinTungB.py > 
 
 nohup nice -n 15 ~/usr/local/bin/python ./NPB392-229-Inclusive-MSTW2008nlo90cl.py > NPB392-229-Inclusive-MSTW2008nlo90cl.log &
 
-nohup nice -n 15 ~/usr/local/bin/python ./NPB540-345.py > NPB540-345.log &
+nohup nice -n 15 ~/usr/local/bin/python ./NPB540-345-Exclusive.py > NPB540-345-Exclusive.log &
+
+nohup nice -n 15 ~/usr/local/bin/python ./NPB540-345-Inclusive.py > NPB540-345-Inclusive.log &

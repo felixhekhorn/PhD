@@ -38,9 +38,11 @@ nbTimesGeV2 = 3894./10000.*1e6
 
 set out pout . "fig12.png"
 set title sprintf("dΔσ(Q²=%gGeV^2,√S=10GeV,m_c^2,x_F)/dx_F with GRSV96STD",-q2)
-plot f_0  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)    t "LO excl.",\
-     fi_0 u 1:($2/n*nbTimesGeV2)                        t "LO incl.",\
-     f_1  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)    t "NLO",\
-     g_1  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2/11.)    t "unpol/11"
+plot fi_0 u 1:($2/n*nbTimesGeV2)                         w l t "LO incl.",\
+     f_0  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)         t "LO excl.",\
+     fi_1 u 1:($2/n*nbTimesGeV2)                         w l t "NLO incl.",\
+     f_1  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2)         t "NLO excl.",\
+     gi_1 u 1:($2/n*nbTimesGeV2/11.)                     w l t "unpol/11 incl.",\
+     g_1  u (.5*$1+.5*$2):($3/($2-$1)/n*nbTimesGeV2/11.)     t "unpol/11 excl."
 
 set out

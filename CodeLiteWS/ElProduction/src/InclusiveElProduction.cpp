@@ -256,27 +256,14 @@ cdbl InclusiveElProduction::dF_dHAQX(cdbl v, const uint orderFlag, const uint ch
     return Common::int2D(&f);
 }
 
-cdbl InclusiveElProduction::dF_dHAQTransverseMomentum(cdbl pt, const uint orderFlag, const uint channelFlag) const {
-    this->checkFlags(orderFlag, channelFlag);
-    this->checkHadronic();
-    if (pt < 0.)
-        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());
-    if (pt >= this->getHAQTransverseMomentumMax())
-        return 0.;
-    return this->dF_dHAQX<PdfConvLO_dHAQTransverseMomentum, PdfConvNLOg_dHAQTransverseMomentum,
-                        PdfConvNLOq_dHAQTransverseMomentum, FKerAll_dHAQTransverseMomentum>(pt,orderFlag,channelFlag,pt);
-}
-
-cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) const {
-    this->checkHadronic();
-    if (pt < 0.)
-        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());
+template <class PdfConvLO_dHAQX>
+cdbl InclusiveElProduction::dFg0_dHAQX(cdbl v, cdbl pt) const {
     // threshold cut off
-    if (this->bjorkenX >= this->zMax || pt >= this->getHAQTransverseMomentumMax())
+    if (this->bjorkenX >= this->zMax)
         return 0.;
-    PdfConvLO_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getBpQED(), pt);
+    PdfConvLO_dHAQX k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getBpQED(), v);
     gsl_function f;
-    f.function = gslpp::callFunctor<PdfConvLO_dHAQTransverseMomentum>;
+    f.function = gslpp::callFunctor<PdfConvLO_dHAQX>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(OrderFlag_LO,pt);
@@ -284,20 +271,18 @@ cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentum(cdbl pt) const {
     return n * eH*eH * Common::int1D(&f);
 }
 
-cdbl InclusiveElProduction::dFg1_dHAQTransverseMomentum(cdbl pt) const {
-    this->checkHadronic();
-    if (pt < 0.)
-        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());
+template <class PdfConvNLOg_dHAQX>
+cdbl InclusiveElProduction::dFg1_dHAQX(cdbl v, cdbl pt) const {
     // threshold cut off
-    if (this->bjorkenX >= this->zMax || pt >= this->getHAQTransverseMomentumMax())
+    if (this->bjorkenX >= this->zMax)
         return 0.;
-    PdfConvNLOg_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, pt);
+    PdfConvNLOg_dHAQX k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), this->getMuR2(pt), nlf, this->Delta, v);
     k.setBpQED(this->getBpQED());
     k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
     k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
     k.setCgBarR1(this->getCgBarR1SV());
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQTransverseMomentum>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQX>;
     f.params = &k;
     cdbl eH = getElectricCharge(this->nlf + 1);
     cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,pt);
@@ -305,21 +290,45 @@ cdbl InclusiveElProduction::dFg1_dHAQTransverseMomentum(cdbl pt) const {
     return n * Common::int2D(&f);
 }
 
-cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentum(cdbl pt) const {
-    this->checkHadronic();
-    if (pt < 0.)
-        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());
+template <class PdfConvNLOq_dHAQX>
+cdbl InclusiveElProduction::dFq1_dHAQX(cdbl v, cdbl pt) const {
     // threshold cut off
-    if (this->bjorkenX >= this->zMax || pt >= this->getHAQTransverseMomentumMax())
+    if (this->bjorkenX >= this->zMax)
         return 0.;
-    PdfConvNLOq_dHAQTransverseMomentum k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), pt);
+    PdfConvNLOq_dHAQX k(m2, q2, bjorkenX, pdf, this->getMuF2(pt), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), v);
     gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQTransverseMomentum>;
+    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQX>;
     f.params = &k;
     cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,pt);
     cdbl n = alphaS*alphaS * (-q2)/(M_PI);
     return n * Common::int2D(&f);
 }
+
+cdbl InclusiveElProduction::dF_dHAQTransverseMomentum(cdbl pt, const uint orderFlag, const uint channelFlag) const {
+    this->checkFlags(orderFlag, channelFlag);
+    this->checkHadronic();
+    if (pt < 0.)
+        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());
+    // cut off
+    if (pt >= this->getHAQTransverseMomentumMax())
+        return 0.;
+    return this->dF_dHAQX<PdfConvLO_dHAQTransverseMomentum, PdfConvNLOg_dHAQTransverseMomentum,
+                        PdfConvNLOq_dHAQTransverseMomentum, FKerAll_dHAQTransverseMomentum>(pt,orderFlag,channelFlag,pt);
+}
+
+#define dFcn_dHAQTransverseMomentum(cn,On) cdbl InclusiveElProduction::dF##cn##_dHAQTransverseMomentum(cdbl pt) const {\
+    this->checkHadronic();\
+    if (pt < 0.)\
+        throw invalid_argument((boost::format("pt has to be positive! (pt = %e)")%pt).str());\
+    /* cut off */\
+    if (pt >= this->getHAQTransverseMomentumMax())\
+        return 0.;\
+    return this->dF##cn##_dHAQX<PdfConv##On##_dHAQTransverseMomentum>(pt,pt);\
+}
+
+dFcn_dHAQTransverseMomentum(g0,LO)
+dFcn_dHAQTransverseMomentum(g1,NLOg)
+dFcn_dHAQTransverseMomentum(q1,NLOq)
 
 cdbl InclusiveElProduction::dF_dHAQTransverseMomentumScaling(cdbl xt, const uint orderFlag, const uint channelFlag) const {
     if (xt < 0. || xt > 1)
@@ -328,26 +337,16 @@ cdbl InclusiveElProduction::dF_dHAQTransverseMomentumScaling(cdbl xt, const uint
     return pt_max*this->dF_dHAQTransverseMomentum(xt*pt_max, orderFlag, channelFlag);
 }
 
-cdbl InclusiveElProduction::dFg0_dHAQTransverseMomentumScaling(cdbl xt) const {
-    if (xt < 0. || xt > 1)
-        throw invalid_argument((boost::format("xt has to be within [0,1]! (xt = %e)")%xt).str());
-    cdbl pt_max = this->getHAQTransverseMomentumMax();
-    return pt_max*this->dFg0_dHAQTransverseMomentum(xt*pt_max);
+#define dFcn_dHAQTransverseMomentumScaling(cn) cdbl InclusiveElProduction::dF##cn##_dHAQTransverseMomentumScaling(cdbl xt) const {\
+    if (xt < 0. || xt > 1)\
+        throw invalid_argument((boost::format("xt has to be within [0,1]! (xt = %e)")%xt).str());\
+    cdbl pt_max = this->getHAQTransverseMomentumMax();\
+    return pt_max*this->dF##cn##_dHAQTransverseMomentum(xt*pt_max);\
 }
 
-cdbl InclusiveElProduction::dFg1_dHAQTransverseMomentumScaling(cdbl xt) const {
-    if (xt < 0. || xt > 1)
-        throw invalid_argument((boost::format("xt has to be within [0,1]! (xt = %e)")%xt).str());
-    cdbl pt_max = this->getHAQTransverseMomentumMax();
-    return pt_max*this->dFg1_dHAQTransverseMomentum(xt*pt_max);
-}
-
-cdbl InclusiveElProduction::dFq1_dHAQTransverseMomentumScaling(cdbl xt) const {
-    if (xt < 0. || xt > 1)
-        throw invalid_argument((boost::format("xt has to be within [0,1]! (xt = %e)")%xt).str());
-    cdbl pt_max = this->getHAQTransverseMomentumMax();
-    return pt_max*this->dFq1_dHAQTransverseMomentum(xt*pt_max);
-}
+dFcn_dHAQTransverseMomentumScaling(g0)
+dFcn_dHAQTransverseMomentumScaling(g1)
+dFcn_dHAQTransverseMomentumScaling(q1)
 
 cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, const uint orderFlag, const uint channelFlag) const {
     this->checkFlags(orderFlag, channelFlag);
@@ -355,6 +354,7 @@ cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, const uint orderFlag, const 
     /** @todo relax condition? i.e. shift evaluation of alphaS down? */
     if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
         throw domain_error("scale for dF_dHAQRapidity may not depend on HAQTransverseMomentum!");
+    // cut off
     cdbl y0 = this->getHAQRapidityMax();
     if (y >= y0 || y <= -y0)
         return 0.;
@@ -362,65 +362,21 @@ cdbl InclusiveElProduction::dF_dHAQRapidity(cdbl y, const uint orderFlag, const 
                         PdfConvNLOq_dHAQRapidity, FKerAll_dHAQRapidity>(y,orderFlag,channelFlag,0.);
 }
 
-cdbl InclusiveElProduction::dFg0_dHAQRapidity(cdbl y) const {
-    this->checkHadronic();
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    cdbl y0 = this->getHAQRapidityMax();
-    if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
-        return 0.;
-    PdfConvLO_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), y);
-    gsl_function f;
-    f.function = gslpp::callFunctor<PdfConvLO_dHAQRapidity>;
-    f.params = &k;
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl alphaS = this->getAlphaS(OrderFlag_LO,0.);
-    cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
-    return n * eH*eH * Common::int1D(&f);
+#define dFcn_dHAQRapidity(cn,On) cdbl InclusiveElProduction::dF##cn##_dHAQRapidity(cdbl y) const {\
+    this->checkHadronic();\
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */\
+    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)\
+        throw domain_error("scale for dFg0_dHAQRapidity may not depend on HAQTransverseMomentum!");\
+    /* cut off */\
+    cdbl y0 = this->getHAQRapidityMax();\
+    if (y >= y0 || y <= -y0)\
+        return 0.;\
+    return this->dF##cn##_dHAQX<PdfConv##On##_dHAQRapidity>(y,0.);\
 }
 
-cdbl InclusiveElProduction::dFg1_dHAQRapidity(cdbl y) const {
-    this->checkHadronic();
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    cdbl y0 = this->getHAQRapidityMax();
-    if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
-        return 0.;
-    PdfConvNLOg_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, y);
-    k.setBpQED(this->getBpQED());
-    k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
-    k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
-    k.setCgBarR1(this->getCgBarR1SV());
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQRapidity>;
-    f.params = &k;
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,0.);
-    cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
-    return n * Common::int2D(&f);
-}
-
-cdbl InclusiveElProduction::dFq1_dHAQRapidity(cdbl y) const {
-    this->checkHadronic();
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFq1_dHAQRapidity may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    cdbl y0 = this->getHAQRapidityMax();
-    if (this->bjorkenX >= this->zMax || y >= y0 || y <= -y0)
-        return 0.;
-    PdfConvNLOq_dHAQRapidity k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), y);
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQRapidity>;
-    f.params = &k;
-    cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,0.);
-    cdbl n = alphaS*alphaS * (-q2)/(M_PI);
-    return n * Common::int2D(&f);
-}
+dFcn_dHAQRapidity(g0,LO)
+dFcn_dHAQRapidity(g1,NLOg)
+dFcn_dHAQRapidity(q1,NLOq)
 
 cdbl InclusiveElProduction::dF_dHAQFeynmanX(cdbl xF, const uint orderFlag, const uint channelFlag) const {
     this->checkFlags(orderFlag, channelFlag);
@@ -434,65 +390,16 @@ cdbl InclusiveElProduction::dF_dHAQFeynmanX(cdbl xF, const uint orderFlag, const
                         PdfConvNLOq_dHAQFeynmanX, FKerAll_dHAQFeynmanX>(xF,orderFlag,channelFlag,0.);
 }
 
-cdbl InclusiveElProduction::dFg0_dHAQFeynmanX(cdbl xF) const {
-    this->checkHadronic();
-    if (xF < -1. || xF > 1)
-        throw invalid_argument((boost::format("x_F has to be within [-1,1]! (x_F = %e)")%xF).str());
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFg0_dHAQFeynmanX may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvLO_dHAQFeynmanX k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getBpQED(), xF);
-    gsl_function f;
-    f.function = gslpp::callFunctor<PdfConvLO_dHAQFeynmanX>;
-    f.params = &k;
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl alphaS = this->getAlphaS(OrderFlag_LO,0.);
-    cdbl n = alphaS * (-q2)/(4.*M_PI*M_PI);
-    return n * eH*eH * Common::int1D(&f);
+#define dFcn_dHAQFeynmanX(cn,On) cdbl InclusiveElProduction::dF##cn##_dHAQFeynmanX(cdbl xF) const {\
+    this->checkHadronic();\
+    if (xF < -1. || xF > 1)\
+        throw invalid_argument((boost::format("x_F has to be within [-1,1]! (x_F = %e)")%xF).str());\
+    /** @todo relax condition? i.e. shift evaluation of alphaS down? */\
+    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)\
+        throw domain_error("scale for dFg0_dHAQFeynmanX may not depend on HAQTransverseMomentum!");\
+    return this->dF##cn##_dHAQX<PdfConv##On##_dHAQFeynmanX>(xF,0.);\
 }
 
-cdbl InclusiveElProduction::dFg1_dHAQFeynmanX(cdbl xF) const {
-    this->checkHadronic();
-    if (xF < -1. || xF > 1)
-        throw invalid_argument((boost::format("x_F has to be within [-1,1]! (x_F = %e)")%xF).str());
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFg1_dHAQRapidity may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvNLOg_dHAQFeynmanX k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), this->getMuR2(0.), nlf, this->Delta, xF);
-    k.setBpQED(this->getBpQED());
-    k.setCg1(this->getCg1SV(),this->getCg1SVDelta1(),this->getCg1SVDelta2(),this->getCg1H());
-    k.setCgBarF1(this->getCgBarF1SV(),this->getCgBarF1SVDelta1(),this->getCgBarF1H());
-    k.setCgBarR1(this->getCgBarR1SV());
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOg_dHAQFeynmanX>;
-    f.params = &k;
-    cdbl eH = getElectricCharge(this->nlf + 1);
-    cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,0.);
-    cdbl n = alphaS*alphaS * (-q2)/(M_PI) * eH*eH;
-    return n * Common::int2D(&f);
-}
-
-cdbl InclusiveElProduction::dFq1_dHAQFeynmanX(cdbl xF) const {
-    this->checkHadronic();
-    if (xF < -1. || xF > 1)
-        throw invalid_argument((boost::format("x_F has to be within [-1,1]! (x_F = %e)")%xF).str());
-    /** @todo relax condition? i.e. shift evaluation of alphaS down? */
-    if (0. != this->muF2.cHAQTransverseMomentum && 0. != this->muR2.cHAQTransverseMomentum)
-        throw domain_error("scale for dFq1_dHAQRapidity may not depend on HAQTransverseMomentum!");
-    // threshold cut off
-    if (this->bjorkenX >= this->zMax)
-        return 0.;
-    PdfConvNLOq_dHAQFeynmanX k(m2, q2, bjorkenX, pdf, this->getMuF2(0.), nlf, this->getCq1(), this->getCqBarF1(), this->getDq1(), xF);
-    gsl_monte_function f;
-    f.f = gslpp::callFunctor2D<PdfConvNLOq_dHAQFeynmanX>;
-    f.params = &k;
-    cdbl alphaS = this->getAlphaS(OrderFlag_NLOonly,0.);
-    cdbl n = alphaS*alphaS * (-q2)/(M_PI);
-    return n * Common::int2D(&f);
-}
+dFcn_dHAQFeynmanX(g0,LO)
+dFcn_dHAQFeynmanX(g1,NLOg)
+dFcn_dHAQFeynmanX(q1,NLOq)

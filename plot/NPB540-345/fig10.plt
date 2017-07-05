@@ -1,7 +1,7 @@
 #!/usr/bin/gnuplot
 reset
 
-set term png size 640,640
+set term png truecolor size 1000,1000
 set size square
 
 pin = "data/NPB540-345/"
@@ -46,11 +46,15 @@ yi(v) = v/n*nbTimesGeV2
 
 set out pout . "fig10.png"
 set title sprintf("dΔσ(Q²=%gGeV^2,m_c^2,x_t)/dx_T with GRSV96STD",-q2)
-plot f_10_0   u (.5*$1+.5*$2):(y($1,$2,$3)):(y($1,$2,$4)):(y($1,$2,$5)) w yerrorbars    t "√S=10GeV, LO excl.",\
-     fi_10_0  u 1:(yi($2)):(yi($3)):(yi($4)) w yerrorbars                               t "√S=10GeV, LO incl.",\
-     f_10_1   u (.5*$1+.5*$2):(y($1,$2,$3)):(y($1,$2,$4)):(y($1,$2,$5)) w yerrorbars    t "√S=10GeV, NLO",\
-     f_200_0  u (.5*$1+.5*$2):(y($1,$2,$3)/8.) t "√S=200GeV, LO excl.",\
-     fi_200_0 u 1:(yi($2)/8.)                  t "√S=200GeV, LO incl.",\
-     f_200_1  u (.5*$1+.5*$2):(y($1,$2,$3)/8.) t "√S=200GeV, NLO"
+plot fi_10_0  u 1:(yi($3)):(yi($4))            w filledcu  fs transparent solid 0.25  lt 1   t "√S=10GeV, LO incl.",\
+     fi_10_0  u 1:(yi($2))                                               w l          lt 1   notitle,\
+     f_10_0   u (.5*$1+.5*$2):(y($1,$2,$3)):(y($1,$2,$4)):(y($1,$2,$5))  w yerrorbars lt 2   t "√S=10GeV, LO excl.",\
+     fi_10_1  u 1:(yi($3)):(yi($4))            w filledcu  fs transparent solid 0.25  lt 3   t "√S=10GeV, NLO incl.",\
+     fi_10_1  u 1:(yi($2))                                               w l          lt 3   notitle,\
+     f_10_1   u (.5*$1+.5*$2):(y($1,$2,$3)):(y($1,$2,$4)):(y($1,$2,$5))  w yerrorbars lt 4   t "√S=10GeV, NLO excl.",\
+     fi_200_0 u 1:(yi($2)/8.)              w l lt 5 t "√S=200GeV, LO incl.",\
+     f_200_0  u (.5*$1+.5*$2):(y($1,$2,$3)/8.) lt 6 t "√S=200GeV, LO excl.",\
+     fi_200_1 u 1:(yi($2)/8.)              w l lt 7 t "√S=200GeV, NLO inc.",\
+     f_200_1  u (.5*$1+.5*$2):(y($1,$2,$3)/8.) lt 8 t "√S=200GeV, NLO excl."
 
 set out

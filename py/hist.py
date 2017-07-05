@@ -91,7 +91,7 @@ def NPB540_345_Inclusive():
       for l in o:
         d.append([float(e) for e in l.strip().split("\t")])
     return d
-  for n,pdf in [(0,"GRSV96STDLO")]:#,(1,"GRSV96STDNLO")]:
+  for n,pdf in [(0,"GRSV96STDLO"),(1,"GRSV96STDNLO")]:
     data = {}
     for cMuF2 in [.25,.5,1.,2.,4.]:
       for cMuR2 in [.25,.5,1.,2.,4.]:
@@ -123,7 +123,7 @@ def NPB540_345_Inclusive():
 
 
 def NPB540_345():
-  #NPB540_345_Exclusive()
+  NPB540_345_Exclusive()
   NPB540_345_Inclusive()
   
 

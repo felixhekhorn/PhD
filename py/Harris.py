@@ -12,7 +12,7 @@ from ExclusiveRunner import ExclusiveRunner
 pdf = "CTEQ3M"
 #pdf = "cteq66"
 #pdf = "MSTW2008nlo90cl"
-pathData = "/home/Felix/Physik/PhD/data/"
+pathData = Util.getAbsProjectPath()+"data/"
 pathM = "PLB353-535-%s/"%pdf
 pathR = "PLB452-109-%s/"%pdf
 Util.pInfo("Computing files for Harris (PLB353-535 and PLB452-109) with "+pdf+" ...")

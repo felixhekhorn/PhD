@@ -28,7 +28,7 @@ def addXtOfGRSV96STD(sqrtSh,n,cMuF2,cMuR2):
 	
 	N = 100
 	for j in xrange(N-1):
-		xt = 1./N*(.5 + j)
+		xt = 10**(-3. + 3./N*(.5 + j))
 		r.add({
 			"objArgs":(m2,q2,Delta, projT.P,3,),
 			"pdf": (pdf,0,),
@@ -84,8 +84,8 @@ def addFig11():
 	#addFig11Helper(projT.G,"GRV94NLO",1)
 
 # run
-#addFig10()
-addFig11()
+addFig10()
+#addFig11()
 l = r.run()
 
 # reorder

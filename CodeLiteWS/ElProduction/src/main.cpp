@@ -12,20 +12,18 @@
 int runInclusive();
 int runInclusive2();
 int test() {
-    if ((ChannelFlag_Full & ChannelFlag_Gluon) == ChannelFlag_Gluon)
-        printf("test");
-    /*PdfWrapper a("GRV94NLO",0);
-    PdfWrapper b("CTEQ3M",0);
-    const int pid = 3;
+    PdfWrapper a("MorfinTungB",0);
+    PdfWrapper b("MorfinTungB_old",0);
+    const int pid = -1;
     cout << "pid = " << pid << endl;
     for (uint j = 0; j < 10; ++j) {
-        cdbl Q2 = 5.+j*3;
+        cdbl Q2 = 5.+j*3.;
         for (uint k = 0; k < 10; ++k) {
             cdbl x = pow(10.,-.05 - k*4./10.);
             printf("%e\t%e\t%e\t%e\n",Q2,x,a.xfxQ2(pid,x,Q2),b.xfxQ2(pid,x,Q2));
         }
         cout << endl;
-    }*/
+    }
     return EXIT_SUCCESS;
 }
 
@@ -36,9 +34,9 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
+    return test();
 	//return runInclusive();
-	return runInclusive2();
+	//return runInclusive2();
     cdbl q2 = -1.e0;
     cdbl m2 = 4.75*4.75;
     const uint nlf = 3;

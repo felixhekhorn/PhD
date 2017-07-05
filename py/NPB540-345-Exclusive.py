@@ -3,7 +3,7 @@
 
 import numpy as np
 
-from ElProduction import projT, ExclusiveHistT
+from ElProduction import projT, ExclusiveHistT, OrderFlag_LO, OrderFlag_NLO, ChannelFlag_Full
 from ExclusiveRunner import ExclusiveRunner
 import Util
 

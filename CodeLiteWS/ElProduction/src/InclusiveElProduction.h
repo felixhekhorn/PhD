@@ -125,10 +125,41 @@ class InclusiveElProduction : public AbstractElProduction {
  * @param v value
  * @param orderFlag computed order
  * @param channelFlag calculated channel
+ * @param pt HAQTransverseMomentum for scales
  * @return d(F^{(order)}_{(channel)})_dHAQX(v)
  */
     template <class PdfConvLO_dHAQX, class PdfConvNLOg_dHAQX, class PdfConvNLOq_dHAQX, class FKerAll_dHAQX>
     cdbl dF_dHAQX(cdbl v, const uint orderFlag, const uint channelFlag, cdbl pt) const;
+    
+/**
+ * @brief derivative of LO structure function to a variable of heavy anti quark
+ * @tparam PdfConvLO_dHAQX LO matrix element
+ * @param v value
+ * @param pt HAQTransverseMomentum for scales
+ * @return dFg0_dHAQX(v)
+ */
+    template <class PdfConvLO_dHAQX>
+    cdbl dFg0_dHAQX(cdbl v, cdbl pt) const;
+    
+/**
+ * @brief derivative of NLO gluon structure function to a variable of heavy anti quark
+ * @tparam PdfConvNLOg_dHAQX NLO gluon matrix element
+ * @param v value
+ * @param pt HAQTransverseMomentum for scales
+ * @return dFg1_dHAQX(v)
+ */
+    template <class PdfConvNLOg_dHAQX>
+    cdbl dFg1_dHAQX(cdbl v, cdbl pt) const;
+    
+/**
+ * @brief derivative of NLO quark structure function to a variable of heavy anti quark
+ * @tparam PdfConvNLOg_dHAQX NLO gluon matrix element
+ * @param v value
+ * @param pt HAQTransverseMomentum for scales
+ * @return dFq1_dHAQX(v)
+ */
+    template <class PdfConvNLOq_dHAQX>
+    cdbl dFq1_dHAQX(cdbl v, cdbl pt) const;
     
 public:
 
@@ -296,7 +327,7 @@ public:
     
 /**
  * @brief derivative of NLO gluon structure function to xt of heavy anti quark
- * @paramxt pt/pt_max of heavy anti quark
+ * @param xt pt/pt_max of heavy anti quark
  * @return dFg1_dHAQTransverseMomentumScaling(xt)
  */
     cdbl dFg1_dHAQTransverseMomentumScaling(cdbl xt) const;

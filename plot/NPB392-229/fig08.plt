@@ -37,9 +37,9 @@ g1 = pin . "dFLc_dpt_inc_x-3_1.dat"
 
 set out pout . "fig08.png"
 set title sprintf("dF_{L}(x=0.001,Q²=10GeV^2,m_c^2,p_t)/dp_t with %s",pdf)
-plot f0 u (.5*$1+.5*$2):($3/($2-$1)) t "LO excl.",\
-     g0 u 1:2 t "LO incl.",\
-     f1 u (.5*$1+.5*$2):($3/($2-$1)) t "NLO excl.",\
-     g1 u 1:2 t "NLO incl."
+plot g0 u 1:2 w l t "LO incl.",\
+     f0 u (.5*$1+.5*$2):($3/($2-$1)) t "LO excl.",\
+     g1 u 1:2 w l t "NLO incl.",\
+     f1 u (.5*$1+.5*$2):($3/($2-$1)) t "NLO excl."
 
 set out

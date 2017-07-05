@@ -36,6 +36,8 @@ double parpol_(char path[GRSV96_fp_len], double* X, double* Q2, double* UV, doub
 // GRV94
 double grv94lo_(double* X, double* Q2, double* UV, double* DV, double* DEL, double* UDB, double* SB, double* GL);
 double grv94ho_(double* X, double* Q2, double* UV, double* DV, double* DEL, double* UDB, double* SB, double* GL);
+// MorfinTungB
+double tungb_(double* X, double* Q2, double* UV, double* DV, double* GL, double* UBAR, double* CSEA, double* BSEA, double* TSEA, int* IFLAG);
 }
 
 /**
@@ -64,7 +66,8 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
     this->isCTEQ3 = ("CTEQ3M" == setname);
     this->isGRSV96 = ("GRSV96STDLO" == setname) || ("GRSV96STDNLO" == setname);
     this->isGRV94 = ("GRV94LO" == setname) || ("GRV94NLO" == setname);
-    if ((this->isCTEQ3 || this->isGRSV96 || this->isGRV94) && 0 != member)
+    this->isMorfinTungB = ("MorfinTungB" == setname);
+    if ((this->isCTEQ3 || this->isGRSV96 || this->isGRV94 || this->isMorfinTungB) && 0 != member)
         throw LHAPDF::UserError("pdf "+setname+" has only a central member!");
     /** @todo add verbosity flag as member? */
     if (this->isDSSV2014) {
@@ -76,7 +79,7 @@ PdfWrapper::PdfWrapper(const std::string &setname, const int member) : setname(s
         std::cout << "[INFO] PdfWrapper loading "<<setname<<" member #"<<member<<" from "<<path<<std::endl;
         // init
         dssvini_(rpath,&m);
-    } else if(this->isCTEQ3 || this->isGRV94) {
+    } else if(this->isCTEQ3 || this->isGRV94 || this->isMorfinTungB) {
         std::cout << "[INFO] PdfWrapper loading "<<setname<<std::endl;
         // no init needed - it's analytic (and caching deactivated)
     } else if(this->isGRSV96) {
@@ -117,7 +120,9 @@ const bool PdfWrapper::inRangeQ2(const double Q2) const {
         return (Q2 >= .4)      && (Q2 <= 1e4);
     } else if (this->isGRV94) {
         return true; // no limits of fit given
-    }
+    } else if (this->isMorfinTungB) {
+        return (Q2 >= 3.*3.) && (Q2 <= 1e4*1e4);
+    } 
     return this->lha->inRangeQ2(Q2);
 }
 
@@ -167,6 +172,20 @@ const double PdfWrapper::xfxQ2(const int pid, const double x, const double Q2) c
         if ( 2 == pid) return dv + db;
         if (-2 == pid) return db;
         if (-3 == pid || 3 == pid) return sb;
+        return 0.;
+    } else if (this->isMorfinTungB) {
+        int flag = 2;
+        double x_ = x, Q2_ = Q2, uv, dv, gl, ubar, csea, bsea, tsea;
+        tungb_(&x_, &Q2_, &uv, &dv, &gl, &ubar, &csea, &bsea, &tsea, &flag);
+        if (21 == pid) return gl;
+        if ( 1 == pid) return uv + ubar;
+        if (-1 == pid) return ubar;
+        if ( 2 == pid) return dv + ubar;
+        if (-2 == pid) return ubar;
+        if (-3 == pid || 3 == pid) return ubar;
+        if (-4 == pid || 4 == pid) return csea;
+        if (-5 == pid || 5 == pid) return bsea;
+        if (-6 == pid || 6 == pid) return tsea;
         return 0.;
     }
     return this->lha->xfxQ2(pid,x,Q2);
