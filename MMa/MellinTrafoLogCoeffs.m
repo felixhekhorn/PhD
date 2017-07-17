@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-(* define trafo-coefficients; dokumentation so far see pdf *)
+(* define trafo-coefficients; documentation so far see pdf *)
 barBprime[n_Integer,v_] := Sum[
 	BellY[n,k,Table[PolyGamma[m,v/2+1],{m,0,n-1}]
 	],{k,1,n}
