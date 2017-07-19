@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    129107,       3337]
-NotebookOptionsPosition[    125693,       3219]
-NotebookOutlinePosition[    126031,       3234]
-CellTagsIndexPosition[    125988,       3231]
+NotebookDataLength[    190764,       4692]
+NotebookOptionsPosition[    186457,       4551]
+NotebookOutlinePosition[    186795,       4566]
+CellTagsIndexPosition[    186752,       4563]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -37,14 +37,14 @@ Cell[BoxData[
     ";"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"DistributeDefinitions", "[", "\"\<HEPMath`Tensors`\>\"", "]"}], 
-    ";"}], "\[IndentingNewLine]", "\[IndentingNewLine]", 
+    ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{"(*", " ", 
     RowBox[{"Declare", " ", "external", " ", 
-     RowBox[{"momenta", "."}]}], " ", "*)"}], "\n", 
+     RowBox[{"momenta", "."}]}], " ", "*)"}], "\[IndentingNewLine]", 
    RowBox[{
     RowBox[{"DeclareLorentzVectors", "[", 
      RowBox[{"q", ",", "k1", ",", "p1", ",", "p2", ",", "k2", ",", "l"}], 
-     "]"}], ";"}], "\n", "\[IndentingNewLine]", 
+     "]"}], ";"}], "\[IndentingNewLine]", "\n", 
    RowBox[{"(*", " ", 
     RowBox[{
      RowBox[{"Declare", " ", "real", " ", "parameters"}], " ", "+", " ", 
@@ -226,7 +226,9 @@ HEPMath`Tensors`Private`i_\\)\\)\\)\\), \
 \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
 ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/RuleDelayed/rhs\\\", \
 ButtonNote -> \\\"RuleDelayed::rhs\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875862911*^9}],
+ CellChangeTimes->{
+  3.7092928098863897`*^9, 3.709292875862911*^9, {3.709464017530938*^9, 
+   3.709464027633403*^9}}],
 
 Cell[BoxData[
  RowBox[{
@@ -245,47 +247,9 @@ HEPMath`Tensors`Private`i_\\)\\)\\)\\), \
 \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
 ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/RuleDelayed/rhs\\\", \
 ButtonNote -> \\\"RuleDelayed::rhs\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875917745*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"DeclareHEPTensor", "::", "redecl"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"HEPTensor \[NoBreak]\\!\\(q\\)\[NoBreak] already declared.\
-\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875921172*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"DeclareHEPTensor", "::", "redecl"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"HEPTensor \[NoBreak]\\!\\(k1\\)\[NoBreak] already \
-declared.\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875921637*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"DeclareHEPTensor", "::", "redecl"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"HEPTensor \[NoBreak]\\!\\(p1\\)\[NoBreak] already \
-declared.\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875922079*^9}],
-
-Cell[BoxData[
- RowBox[{
-  StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \
-\[NoBreak]\\!\\(\\*StyleBox[\\(DeclareHEPTensor :: redecl\\), \\\"MessageName\
-\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
-\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
-ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
- CellChangeTimes->{3.7092928098863897`*^9, 3.709292875922715*^9}]
+ CellChangeTimes->{
+  3.7092928098863897`*^9, 3.709292875862911*^9, {3.709464017530938*^9, 
+   3.7094640277006817`*^9}}]
 }, Open  ]],
 
 Cell[BoxData[{
@@ -1926,6 +1890,1374 @@ Cell[BoxData[{
 
 Cell[CellGroupData[{
 
+Cell[BoxData[
+ RowBox[{"Module", "[", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"a", ",", "b", ",", "u", ",", "v"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{
+    RowBox[{"a", "=", 
+     RowBox[{
+      RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"vQ", " ", "GI"}], " ", "+", " ", 
+        RowBox[{"aQ", " ", "G5"}]}], ")"}]}]}], ";", "\[IndentingNewLine]", 
+    RowBox[{"b", "=", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"1", "/", "2"}], 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"vQ", " ", "GI"}], " ", "-", 
+          RowBox[{"aQ", " ", "G5"}]}], ")"}], ".", 
+        RowBox[{"Ga", "[", "\[Mu]", "]"}]}]}], "+", 
+      RowBox[{
+       RowBox[{"1", "/", "2"}], 
+       RowBox[{
+        RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"vQ", " ", "GI"}], " ", "+", " ", 
+          RowBox[{"aQ", " ", "G5"}]}], ")"}]}]}]}]}], ";", 
+    "\[IndentingNewLine]", 
+    RowBox[{"Do", "[", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"u", "=", 
+        RowBox[{"Simplify", "@", 
+         RowBox[{"CalcDiracTraces", "@", 
+          RowBox[{"DiracTr", "[", 
+           RowBox[{"a", ".", "G"}], "]"}]}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"v", "=", 
+        RowBox[{"Simplify", "@", 
+         RowBox[{"CalcDiracTraces", "@", 
+          RowBox[{"DiracTr", "[", 
+           RowBox[{"b", ".", "G"}], "]"}]}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{"Print", "[", 
+        RowBox[{
+        "\"\<\[CapitalGamma] = \>\"", ",", "G", ",", "\"\<: u-v = \>\"", ",", 
+         
+         RowBox[{"FullSimplify", "[", 
+          RowBox[{"u", "-", "v"}], "]"}], ",", 
+         RowBox[{"If", "[", 
+          RowBox[{
+           RowBox[{"0", "===", "u"}], ",", "\"\< = u\>\"", ",", "\"\<\>\""}], 
+          "]"}]}], "]"}], ";", "\[IndentingNewLine]", 
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{"Not", "[", 
+          RowBox[{"0", " ", "===", " ", 
+           RowBox[{"FullSimplify", "[", 
+            RowBox[{"u", "-", "v"}], "]"}]}], "]"}], ",", 
+         RowBox[{
+          RowBox[{"Print", "[", 
+           RowBox[{"\"\<\\ta = \>\"", ",", "u"}], "]"}], ";", 
+          RowBox[{"Print", "[", 
+           RowBox[{"\"\<\\tb = \>\"", ",", "v"}], "]"}]}]}], "]"}]}], 
+      "\[IndentingNewLine]", ",", 
+      RowBox[{"{", 
+       RowBox[{"G", ",", 
+        RowBox[{"{", 
+         RowBox[{"GI", ",", 
+          RowBox[{"Ga", "@", "\[Nu]"}], ",", "G5", ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}]}], ",", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", "G5"}], ",", "a", ",", "b",
+           ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Sigma]", "]"}]}], ",", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", "G5"}], ",", 
+          RowBox[{"G5", ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", "G5"}], ",", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", "G5", ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{"a", ".", "a"}], ",", 
+          RowBox[{"a", ".", "b"}], ",", 
+          RowBox[{"b", ".", "b"}], ",", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Sigma]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Tau]", "]"}]}], ",", "\[IndentingNewLine]", 
+          RowBox[{
+           RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Sigma]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Tau]", "]"}], ".", 
+           RowBox[{"Ga", "[", "\[Omega]", "]"}]}]}], "\[IndentingNewLine]", 
+         "}"}]}], "}"}]}], "]"}]}]}], "\[IndentingNewLine]", "]"}]], "Input",
+ CellChangeTimes->{{3.70946416014263*^9, 3.709464411293786*^9}, {
+  3.709464449535387*^9, 3.709464505014545*^9}, {3.709464553341954*^9, 
+  3.7094645632370977`*^9}, {3.709464629351199*^9, 3.709464631529788*^9}, {
+  3.709464673253458*^9, 3.709464754947255*^9}, {3.709464815813973*^9, 
+  3.7094649686526823`*^9}, {3.709465002042865*^9, 3.7094653082934504`*^9}, {
+  3.7094653571376123`*^9, 3.7094653876266003`*^9}, {3.709465553204875*^9, 
+  3.709465553850423*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", "GI", 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm[
+  "\[CapitalGamma] = ", HEPMath`Lorentz`GI, ": u-v = ", 0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555332062*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"Ga", "[", "\[Nu]", "]"}], "\[InvisibleSpace]", "\<\": u-v = \"\>",
+    "\[InvisibleSpace]", "0", "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   HEPMath`Lorentz`Ga[$CellContext`\[Nu]], ": u-v = ", 0, ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.7094655553329563`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", "G5", 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm[
+  "\[CapitalGamma] = ", HEPMath`Lorentz`G5, ": u-v = ", 0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555333399*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]]], ": u-v = ", 0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555333782*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", "G5"}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", "aQ", " ", 
+    RowBox[{"EtaHat", "[", 
+     RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}], 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], HEPMath`Lorentz`G5], ": u-v = ", 
+   4 $CellContext`aQ 
+   HEPMath`Lorentz`EtaHat[$CellContext`\[Mu], $CellContext`\[Nu]], ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.70946555539968*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\ta = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "4"}], " ", "aQ", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"Eta", "[", 
+       RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], "-", 
+      RowBox[{"2", " ", 
+       RowBox[{"EtaHat", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}]}], ")"}]}]}],
+  SequenceForm[
+  "\ta = ", (-4) $CellContext`aQ (
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] - 2 
+    HEPMath`Lorentz`EtaHat[$CellContext`\[Mu], $CellContext`\[Nu]])],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555403345*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\tb = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", "aQ", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}], "+", 
+      RowBox[{"EtaHat", "[", 
+       RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}], ")"}]}]}],
+  SequenceForm[
+  "\tb = ", 
+   4 $CellContext`aQ (-
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] + 
+    HEPMath`Lorentz`EtaHat[$CellContext`\[Mu], $CellContext`\[Nu]])],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555403913*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"aQ", " ", "G5"}], "+", 
+      RowBox[{"GI", " ", "vQ"}]}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", 
+    SuperscriptBox["aQ", "2"], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"-", "4"}], "+", "Dim"}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+     HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ], ": u-v = ", 
+   4 $CellContext`aQ^2 (-4 + HEPMath`Lorentz`Dim), ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555404512*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\ta = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       SuperscriptBox["aQ", "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", "8"}], "+", "Dim"}], ")"}]}], "+", 
+      RowBox[{"Dim", " ", 
+       SuperscriptBox["vQ", "2"]}]}], ")"}]}]}],
+  SequenceForm[
+  "\ta = ", 
+   4 ($CellContext`aQ^2 (-8 + HEPMath`Lorentz`Dim) + 
+    HEPMath`Lorentz`Dim $CellContext`vQ^2)],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.7094655554051*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\tb = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"-", "16"}], " ", 
+     SuperscriptBox["aQ", "2"]}], "+", 
+    RowBox[{"4", " ", "Dim", " ", 
+     SuperscriptBox["vQ", "2"]}]}]}],
+  SequenceForm[
+  "\tb = ", (-16) $CellContext`aQ^2 + 4 HEPMath`Lorentz`Dim $CellContext`vQ^2],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.7094655554056253`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"-", "aQ"}], " ", "G5"}], "+", 
+        RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+      RowBox[{"Ga", "[", "\[Mu]", "]"}]}]}], "+", 
+    RowBox[{
+     FractionBox["1", "2"], " ", 
+     RowBox[{
+      RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"aQ", " ", "G5"}], "+", 
+        RowBox[{"GI", " ", "vQ"}]}], ")"}]}]}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm[
+  "\[CapitalGamma] = ", 
+   Rational[1, 2] 
+    Dot[-$CellContext`aQ HEPMath`Lorentz`G5 + 
+      HEPMath`Lorentz`GI $CellContext`vQ, 
+      HEPMath`Lorentz`Ga[$CellContext`\[Mu]]] + Rational[1, 2] Dot[
+      HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+       HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ], ": u-v = ", 
+   0, ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555406272*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Sigma]", "]"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Sigma]]], ": u-v = ", 0, ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555406826*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", "G5"}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]], HEPMath`Lorentz`G5], ": u-v = ", 
+   0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.7094655554074078`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"G5", ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", "G5"}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[HEPMath`Lorentz`G5, 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]], HEPMath`Lorentz`G5], ": u-v = ", 
+   0, ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555407958*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", "G5", ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], HEPMath`Lorentz`G5, 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]]], ": u-v = ", 0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555408573*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"aQ", " ", "G5"}], "+", 
+      RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+    RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"aQ", " ", "G5"}], "+", 
+      RowBox[{"GI", " ", "vQ"}]}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+     HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ, 
+    HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+     HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ], ": u-v = ", 0, 
+   " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555482437*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"aQ", " ", "G5"}], "+", 
+      RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "aQ"}], " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+        RowBox[{"Ga", "[", "\[Mu]", "]"}]}]}], "+", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"aQ", " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}]}]}]}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+     HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ, 
+    Rational[1, 2] 
+     Dot[-$CellContext`aQ HEPMath`Lorentz`G5 + 
+       HEPMath`Lorentz`GI $CellContext`vQ, 
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]]] + Rational[1, 2] Dot[
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+        HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ]], ": u-v = ",
+    0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.7094655554834423`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "aQ"}], " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+        RowBox[{"Ga", "[", "\[Mu]", "]"}]}]}], "+", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"aQ", " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}]}]}]}], ")"}], ".", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"-", "aQ"}], " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}], ".", 
+        RowBox[{"Ga", "[", "\[Mu]", "]"}]}]}], "+", 
+      RowBox[{
+       FractionBox["1", "2"], " ", 
+       RowBox[{
+        RowBox[{"Ga", "[", "\[Mu]", "]"}], ".", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"aQ", " ", "G5"}], "+", 
+          RowBox[{"GI", " ", "vQ"}]}], ")"}]}]}]}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[Rational[1, 2] 
+     Dot[-$CellContext`aQ HEPMath`Lorentz`G5 + 
+       HEPMath`Lorentz`GI $CellContext`vQ, 
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]]] + Rational[1, 2] Dot[
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+        HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ], 
+    Rational[1, 2] 
+     Dot[-$CellContext`aQ HEPMath`Lorentz`G5 + 
+       HEPMath`Lorentz`GI $CellContext`vQ, 
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]]] + Rational[1, 2] Dot[
+       HEPMath`Lorentz`Ga[$CellContext`\[Mu]], $CellContext`aQ 
+        HEPMath`Lorentz`G5 + HEPMath`Lorentz`GI $CellContext`vQ]], ": u-v = ",
+    0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555560041*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Sigma]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Tau]", "]"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", "0", 
+   "\[InvisibleSpace]", "\<\" = u\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Sigma]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Tau]]], ": u-v = ", 0, " = u"],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555638048*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\[CapitalGamma] = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"Ga", "[", "\[Nu]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Rho]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Sigma]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Tau]", "]"}], ".", 
+    RowBox[{"Ga", "[", "\[Omega]", "]"}]}], 
+   "\[InvisibleSpace]", "\<\": u-v = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", "\[ImaginaryI]", " ", "aQ", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}], "-", 
+      RowBox[{
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}]}], "-", 
+      RowBox[{
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}]}]}], ")"}]}], 
+   "\[InvisibleSpace]", "\<\"\"\>"}],
+  SequenceForm["\[CapitalGamma] = ", 
+   Dot[
+    HEPMath`Lorentz`Ga[$CellContext`\[Nu]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Rho]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Sigma]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Tau]], 
+    HEPMath`Lorentz`Ga[$CellContext`\[Omega]]], ": u-v = ", 
+   Complex[0, 4] $CellContext`aQ (
+    HEPMath`Lorentz`Eps[$CellContext`\[Rho], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] - 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] + 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] - 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] + 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]]), ""],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555641333*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\ta = \"\>", "\[InvisibleSpace]", 
+   RowBox[{
+    RowBox[{"-", "4"}], " ", "\[ImaginaryI]", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "aQ"}], " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Tau]"}], "]"}], 
+       " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Sigma]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}]}], ")"}]}]}],
+  SequenceForm[
+  "\ta = ", 
+   Complex[0, -4] (-$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Rho], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Nu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], $CellContext`\
+\[Sigma], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Rho], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] - \
+$CellContext`aQ 
+    HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], $CellContext`\
+\[Rho], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + \
+$CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Rho], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] + 
+    Complex[0, 1] $CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]])],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.70946555564386*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{"\<\"\\tb = \"\>", "\[InvisibleSpace]", 
+   RowBox[{"4", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"-", "\[ImaginaryI]"}], " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Tau]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Sigma]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Sigma]", ",", "\[Tau]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Omega]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Omega]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Tau]"}], "]"}]}], "+", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Tau]"}], "]"}], 
+       " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Tau]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Sigma]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"\[ImaginaryI]", " ", "aQ", " ", 
+       RowBox[{"Eps", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]", ",", "\[Rho]", ",", "\[Sigma]"}], 
+        "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "-", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Rho]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Nu]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}], "+", 
+      RowBox[{"vQ", " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Mu]", ",", "\[Nu]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Rho]", ",", "\[Sigma]"}], "]"}], " ", 
+       RowBox[{"Eta", "[", 
+        RowBox[{"\[Tau]", ",", "\[Omega]"}], "]"}]}]}], ")"}]}]}],
+  SequenceForm[
+  "\tb = ", 
+   4 (Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Sigma], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] + 
+    Complex[0, 1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] + 
+    Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] + 
+    Complex[0, 1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Rho], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Tau], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] + \
+$CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] - \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] + 
+    Complex[0, 1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Sigma], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] - \
+$CellContext`vQ 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] + \
+$CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] + 
+    Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Sigma], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] + \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] - \
+$CellContext`vQ 
+    HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Rho], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + \
+$CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] - \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Omega]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Omega]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Tau]] + 
+    Complex[0, 1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Rho], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] - \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Tau]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] - \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Tau]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Sigma], $CellContext`\[Omega]] + 
+    Complex[0, -1] $CellContext`aQ 
+     HEPMath`Lorentz`Eps[$CellContext`\[Mu], $CellContext`\[Nu], \
+$CellContext`\[Rho], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] + \
+$CellContext`vQ 
+     HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Rho]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] - \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Rho]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Nu], $CellContext`\[Sigma]] 
+    HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]] + \
+$CellContext`vQ HEPMath`Lorentz`Eta[$CellContext`\[Mu], $CellContext`\[Nu]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Rho], $CellContext`\[Sigma]] 
+     HEPMath`Lorentz`Eta[$CellContext`\[Tau], $CellContext`\[Omega]])],
+  Editable->False]], "Print",
+ CellChangeTimes->{{3.709464249724049*^9, 3.7094642966021357`*^9}, 
+   3.7094643316272078`*^9, {3.709464362261005*^9, 3.7094644122383537`*^9}, {
+   3.70946445654522*^9, 3.7094645054747972`*^9}, {3.709464554800489*^9, 
+   3.709464563843755*^9}, 3.709464631935698*^9, 3.709464677281501*^9, {
+   3.709464712855748*^9, 3.709464755614579*^9}, {3.709464886222595*^9, 
+   3.709464938356415*^9}, 3.709464969568653*^9, {3.709465002620133*^9, 
+   3.709465032142885*^9}, 3.7094650833114443`*^9, {3.709465133827669*^9, 
+   3.709465309020815*^9}, {3.709465368211273*^9, 3.709465388709976*^9}, 
+   3.709465555645986*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["V(q) = \[Gamma]*(q)", "Subsection",
  CellChangeTimes->{{3.708668881176713*^9, 3.708668886896414*^9}}],
 
@@ -3217,8 +4549,8 @@ Cell[BoxData[
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{1187, 867},
-WindowMargins->{{Automatic, 195}, {51, Automatic}},
+WindowSize->{1920, 1016},
+WindowMargins->{{-1, Automatic}, {Automatic, -1}},
 FrontEndVersion->"8.0 for Linux x86 (64-bit) (October 10, 2011)",
 StyleDefinitions->"Default.nb"
 ]
@@ -3237,105 +4569,128 @@ Cell[CellGroupData[{
 Cell[579, 22, 102, 1, 74, "Section"],
 Cell[CellGroupData[{
 Cell[706, 27, 7847, 182, 449, "Input"],
-Cell[8556, 211, 890, 17, 99, "Message"],
-Cell[9449, 230, 890, 17, 99, "Message"],
-Cell[10342, 249, 285, 7, 24, "Message"],
-Cell[10630, 258, 286, 7, 24, "Message"],
-Cell[10919, 267, 286, 7, 24, "Message"],
-Cell[11208, 276, 565, 11, 24, "Message"]
+Cell[8556, 211, 943, 19, 99, "Message"],
+Cell[9502, 232, 945, 19, 99, "Message"]
 }, Open  ]],
-Cell[11788, 290, 7045, 179, 297, "Input"],
-Cell[18836, 471, 37056, 871, 1855, "Input"],
+Cell[10462, 254, 7045, 179, 297, "Input"],
+Cell[17510, 435, 37056, 871, 1646, "Input"],
 Cell[CellGroupData[{
-Cell[55917, 1346, 5079, 126, 320, "Input"],
+Cell[54591, 1310, 5079, 126, 320, "Input"],
 Cell[CellGroupData[{
-Cell[61021, 1476, 766, 11, 23, "Print"],
-Cell[61790, 1489, 766, 11, 23, "Print"],
-Cell[62559, 1502, 768, 11, 23, "Print"],
-Cell[63330, 1515, 768, 11, 23, "Print"]
+Cell[59695, 1440, 766, 11, 23, "Print"],
+Cell[60464, 1453, 766, 11, 23, "Print"],
+Cell[61233, 1466, 768, 11, 23, "Print"],
+Cell[62004, 1479, 768, 11, 23, "Print"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[64147, 1532, 4120, 111, 183, "Input"],
+Cell[62821, 1496, 4120, 111, 164, "Input"],
 Cell[CellGroupData[{
-Cell[68292, 1647, 754, 19, 42, "Print"],
-Cell[69049, 1668, 659, 15, 42, "Print"]
+Cell[66966, 1611, 754, 19, 42, "Print"],
+Cell[67723, 1632, 659, 15, 42, "Print"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[69769, 1690, 147, 2, 74, "Section"],
-Cell[69919, 1694, 8679, 230, 696, "Input"],
+Cell[68443, 1654, 147, 2, 74, "Section"],
+Cell[68593, 1658, 8679, 230, 658, "Input"],
 Cell[CellGroupData[{
-Cell[78623, 1928, 107, 1, 39, "Subsection"],
-Cell[78733, 1931, 1598, 39, 145, "Input"],
+Cell[77297, 1892, 4625, 112, 308, "Input"],
 Cell[CellGroupData[{
-Cell[80356, 1974, 693, 20, 69, "Input"],
-Cell[81052, 1996, 2403, 70, 96, "Output"],
-Cell[83458, 2068, 800, 18, 49, "Output"],
-Cell[84261, 2088, 1172, 31, 54, "Output"]
+Cell[81947, 2008, 935, 16, 23, "Print"],
+Cell[82885, 2026, 979, 16, 23, "Print"],
+Cell[83867, 2044, 935, 16, 23, "Print"],
+Cell[84805, 2062, 1106, 21, 23, "Print"],
+Cell[85914, 2085, 1227, 24, 23, "Print"],
+Cell[87144, 2111, 1195, 25, 23, "Print"],
+Cell[88342, 2138, 1171, 25, 23, "Print"],
+Cell[89516, 2165, 1389, 30, 23, "Print"],
+Cell[90908, 2197, 1128, 26, 26, "Print"],
+Cell[92039, 2225, 989, 20, 23, "Print"],
+Cell[93031, 2247, 1723, 41, 40, "Print"],
+Cell[94757, 2290, 1194, 23, 23, "Print"],
+Cell[95954, 2315, 1143, 22, 23, "Print"],
+Cell[97100, 2339, 1074, 20, 23, "Print"],
+Cell[98177, 2361, 1137, 21, 23, "Print"],
+Cell[99317, 2384, 1504, 32, 23, "Print"],
+Cell[100824, 2418, 2108, 50, 40, "Print"],
+Cell[102935, 2470, 2703, 67, 40, "Print"],
+Cell[105641, 2539, 1294, 25, 23, "Print"],
+Cell[106938, 2566, 3545, 76, 23, "Print"],
+Cell[110486, 2644, 15678, 334, 100, "Print"],
+Cell[126167, 2980, 13171, 274, 100, "Print"]
+}, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[85470, 2124, 897, 28, 30, "Input"],
-Cell[86370, 2154, 163, 2, 30, "Output"]
+Cell[139387, 3260, 107, 1, 39, "Subsection"],
+Cell[139497, 3263, 1598, 39, 145, "Input"],
+Cell[CellGroupData[{
+Cell[141120, 3306, 693, 20, 69, "Input"],
+Cell[141816, 3328, 2403, 70, 52, "Output"],
+Cell[144222, 3400, 800, 18, 49, "Output"],
+Cell[145025, 3420, 1172, 31, 54, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[86570, 2161, 193, 2, 28, "Subsubsection"],
-Cell[CellGroupData[{
-Cell[86788, 2167, 5955, 129, 111, "Input"],
-Cell[92746, 2298, 1950, 28, 30, "Output"]
+Cell[146234, 3456, 897, 28, 30, "Input"],
+Cell[147134, 3486, 163, 2, 30, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[94733, 2331, 2008, 52, 88, "Input"],
-Cell[96744, 2385, 788, 11, 30, "Output"]
+Cell[147334, 3493, 193, 2, 28, "Subsubsection"],
+Cell[CellGroupData[{
+Cell[147552, 3499, 5955, 129, 111, "Input"],
+Cell[153510, 3630, 1950, 28, 30, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[155497, 3663, 2008, 52, 88, "Input"],
+Cell[157508, 3717, 788, 11, 30, "Output"]
 }, Open  ]]
 }, Closed]],
 Cell[CellGroupData[{
-Cell[97581, 2402, 107, 1, 22, "Subsubsection"],
+Cell[158345, 3734, 107, 1, 22, "Subsubsection"],
 Cell[CellGroupData[{
-Cell[97713, 2407, 1593, 42, 92, "Input"],
-Cell[99309, 2451, 998, 14, 30, "Output"]
+Cell[158477, 3739, 1593, 42, 92, "Input"],
+Cell[160073, 3783, 998, 14, 30, "Output"]
 }, Open  ]]
 }, Closed]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[100368, 2472, 99, 1, 39, "Subsection"],
-Cell[100470, 2475, 2582, 61, 164, "Input"],
+Cell[161132, 3804, 99, 1, 39, "Subsection"],
+Cell[161234, 3807, 2582, 61, 164, "Input"],
 Cell[CellGroupData[{
-Cell[103077, 2540, 1173, 24, 30, "Input"],
-Cell[104253, 2566, 5323, 153, 184, "Output"]
+Cell[163841, 3872, 1173, 24, 30, "Input"],
+Cell[165017, 3898, 5323, 153, 140, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[109613, 2724, 528, 16, 30, "Input"],
-Cell[110144, 2742, 818, 27, 49, "Output"]
+Cell[170377, 4056, 528, 16, 30, "Input"],
+Cell[170908, 4074, 818, 27, 49, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[110999, 2774, 526, 16, 30, "Input"],
-Cell[111528, 2792, 1552, 50, 54, "Output"]
+Cell[171763, 4106, 526, 16, 30, "Input"],
+Cell[172292, 4124, 1552, 50, 54, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[113117, 2847, 1374, 37, 107, "Input"],
-Cell[114494, 2886, 340, 10, 33, "Output"]
+Cell[173881, 4179, 1374, 37, 107, "Input"],
+Cell[175258, 4218, 340, 10, 33, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[114883, 2902, 203, 3, 39, "Subsection"],
-Cell[115089, 2907, 3249, 82, 164, "Input"],
+Cell[175647, 4234, 203, 3, 39, "Subsection"],
+Cell[175853, 4239, 3249, 82, 164, "Input"],
 Cell[CellGroupData[{
-Cell[118363, 2993, 1067, 22, 30, "Input"],
-Cell[119433, 3017, 2652, 73, 96, "Output"]
+Cell[179127, 4325, 1067, 22, 30, "Input"],
+Cell[180197, 4349, 2652, 73, 96, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[122122, 3095, 425, 13, 30, "Input"],
-Cell[122550, 3110, 464, 15, 49, "Output"]
+Cell[182886, 4427, 425, 13, 30, "Input"],
+Cell[183314, 4442, 464, 15, 49, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[123051, 3130, 427, 13, 30, "Input"],
-Cell[123481, 3145, 877, 28, 54, "Output"]
+Cell[183815, 4462, 427, 13, 30, "Input"],
+Cell[184245, 4477, 877, 28, 54, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[124395, 3178, 843, 23, 30, "Input"],
-Cell[125241, 3203, 412, 11, 30, "Output"]
+Cell[185159, 4510, 843, 23, 30, "Input"],
+Cell[186005, 4535, 412, 11, 30, "Output"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]]
