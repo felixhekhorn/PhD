@@ -9,6 +9,10 @@
 #include "Common/DynamicScaleFactors.hpp"
 #include "Exclusive/IntKers/KinematicVars.hpp"
 
+#include <gsl/gsl_integration.h>
+#include "gslpp/gslpp.Functor.hpp"
+#include "Common/Integration.h"
+
 int runInclusive();
 int runInclusive2();
 int test() {
@@ -34,7 +38,7 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
 	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e0;
@@ -81,6 +85,28 @@ int main(int argc, char **argv) {
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 0;
     
+    {
+        class ker{
+            cdbl m2;
+            cdbl q2;
+            InclusiveElProduction *iO;
+        public:
+            ker(cdbl m2, cdbl q2, InclusiveElProduction *iO) : m2(m2), q2(q2), iO(iO) {}
+            const dbl operator()(cdbl a) {
+                cdbl zmax = -q2/(4.*m2 - q2);
+                cdbl z = a*zmax;
+                cdbl sp = -q2/z;
+                iO->setPartonicS(sp+q2);
+                return iO->cg1()/z;
+            }
+        };
+        ker k(m2,q2,&iO);
+        gsl_function f;
+        f.function = gslpp::callFunctor<ker>;
+        f.params = &k;
+        printf("%e\n",Common::int1D(&f));
+    }
+    
     /*{
         uint N = 11;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
@@ -94,7 +120,7 @@ int main(int argc, char **argv) {
         }
     }*/
 
-    {
+    /*{
         const uint N = 101;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
@@ -105,7 +131,7 @@ int main(int argc, char **argv) {
             {cdbl e = eO.dq1();
             printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         }
-    }
+    }*/
 
 //Timer::make("pdf@combineNLOg");
 /*
