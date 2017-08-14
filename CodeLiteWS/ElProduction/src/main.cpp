@@ -85,7 +85,7 @@ int main(int argc, char **argv) {
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 0;
     
-    {
+    /*{
         class ker{
             cdbl m2;
             cdbl q2;
@@ -105,20 +105,20 @@ int main(int argc, char **argv) {
         f.function = gslpp::callFunctor<ker>;
         f.params = &k;
         printf("%e\n",Common::int1D(&f));
-    }
+    }*/
     
-    /*{
+    {
         uint N = 11;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-1.-3./(N-1)*j);
             iO.setBjorkenX(a);
             eO.setBjorkenX(a);
-            cdbl i = iO.Fg0() + (0 == n ? 0. : iO.Fg1() + iO.Fq1());
-            {cdbl e = eO.F(n);
-            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
+            cdbl i = iO.Fg0();
+            cdbl e = eO.Fg0();
+            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);
         }
-    }*/
+    }
 
     /*{
         const uint N = 101;
