@@ -220,6 +220,14 @@ public:
  * @return \f$\bar{c}^{F,(1)}_g\f$
  */
     cdbl cgBarF1() const;
+
+/**
+ * @brief log scaling of NLO gluon scaling function \f$\bar{c}^{(1)}_g\f$
+ * @return \f$\bar{c}^{(1)}_g\f$
+ */
+    inline cdbl cgBar1() const {
+        return this->cgBarF1() + this->cgBarR1();
+    }
     
 /**
  * @brief NLO quark scaling function \f$c^{(1)}_q\f$

@@ -41,9 +41,9 @@ int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
 	//return runInclusive2();
-    cdbl q2 = -1.e0;
+    cdbl q2 = -1.e3;
     cdbl m2 = 4.75*4.75;
-    const uint nlf = 3;
+    const uint nlf = 4;
     //cdbl lambdaQCD = .239; // nlf=3
     cdbl lambdaQCD = .194; // nlf=3
     //cdbl lambdaQCD = .2; // nlf=3
@@ -111,11 +111,11 @@ int main(int argc, char **argv) {
         uint N = 11;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
-            cdbl a = pow(10,-1.-3./(N-1)*j);
-            iO.setBjorkenX(a);
-            eO.setBjorkenX(a);
-            cdbl i = iO.Fg0();
-            cdbl e = eO.Fg0();
+            cdbl a = pow(10,-3.+1./(N-1)*j);
+            iO.setEta(a);
+            eO.setEta(a);
+            cdbl i = iO.cgBar1();
+            cdbl e = eO.cgBar1();
             printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);
         }
     }
