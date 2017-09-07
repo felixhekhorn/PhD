@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
     //return test();
 	//return runInclusive();
 	//return runInclusive2();
-    cdbl q2 = -1.e3;
+    cdbl q2 = -1.e5;
     cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
     //cdbl lambdaQCD = .239; // nlf=3
@@ -57,10 +57,10 @@ int main(int argc, char **argv) {
     const Common::DynamicScaleFactors mu02F(1.,-1.,0.*.25);
     */
     cdbl Delta = 1e-6;
-    cdbl xTilde = .8;
+    cdbl xTilde = .5;//.8;
     cdbl omega = 1.;
-    cdbl deltax = 1e-6;
-    cdbl deltay = 7e-6;
+    cdbl deltax = 1e-8;//1e-6;
+    cdbl deltay = 7e-8;//7e-6;
     //const str pdf = "MorfinTungB";
     //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
@@ -73,6 +73,9 @@ int main(int argc, char **argv) {
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
     InclusiveElProduction iL(m2,q2,Delta,L,nlf);
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
     printf("[INFO] m2 = %g, q2 = %g, proj = %s\n",m2,q2,projToStr(proj).c_str());
     
     iO.setPdf(pdf,0);eO.setPdf(pdf,0);
@@ -85,51 +88,28 @@ int main(int argc, char **argv) {
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 0;
     
-    /*{
-        class ker{
-            cdbl m2;
-            cdbl q2;
-            InclusiveElProduction *iO;
-        public:
-            ker(cdbl m2, cdbl q2, InclusiveElProduction *iO) : m2(m2), q2(q2), iO(iO) {}
-            const dbl operator()(cdbl a) {
-                cdbl zmax = -q2/(4.*m2 - q2);
-                cdbl z = a*zmax;
-                cdbl sp = -q2/z;
-                iO->setPartonicS(sp+q2);
-                return iO->cg1()/z;
-            }
-        };
-        ker k(m2,q2,&iO);
-        gsl_function f;
-        f.function = gslpp::callFunctor<ker>;
-        f.params = &k;
-        printf("%e\n",Common::int1D(&f));
-    }*/
-    
     {
+        uint N = 101;
+        for (uint j = 0; j < N; ++j) {
+            cdbl a = pow(10,-3.+6./(N-1)*j);
+            eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            cdbl g = eG.cg1();
+            cdbl l = eL.cg1();
+            cdbl p = eP.cg1();
+            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
+        }
+    }
+    
+    /*{
         uint N = 11;
         printf("a\t\ti\t\te\t\tabs\t\trel\n");
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-3.+1./(N-1)*j);
             iO.setEta(a);
             eO.setEta(a);
-            cdbl i = iO.cgBar1();
-            cdbl e = eO.cgBar1();
+            cdbl i = iO.cg1();
+            cdbl e = eO.cg1();
             printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);
-        }
-    }
-
-    /*{
-        const uint N = 101;
-        printf("a\t\ti\t\te\t\tabs\t\trel\n");
-        for (uint j = 0; j < N; ++j) {
-            cdbl a = pow(10,-3.+6.*j/(N-1));
-            iO.setEta(a);
-            eO.setEta(a);
-            cdbl i = iO.dq1();
-            {cdbl e = eO.dq1();
-            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);}
         }
     }*/
 
