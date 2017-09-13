@@ -1,0 +1,61 @@
+Due to the factorization theorem \cite{Collins:1985gm} all remaining poles in the gluonic subprocess can be removed by mass factorization in the following way:
+\begin{align}
+d\sigma_{k,\Pg}^{(1),fin}(\mu_F) &= \lim_{\epsilon\rightarrow 0}\left[d\sigma_{k,\Pg}^{(1)}(\mu_D,\epsilon) -\int\limits_0^1\!\!dx\,\Gamma_{k,\Pg\Pg}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) d\sigma_{k,\Pg}^{(0)}(xk_1,\epsilon) \right]\\
+\Gamma_{k,ij}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_S}{2\pi}\left(P_{k,ij}(x)\frac{2}{\epsilon} + f_{k,ij}(x,\mu_F^2,\mu_D^2)\right)
+\end{align}
+where $\Gamma_{k,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{k,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $k$. In the $\MSbar$-scheme the $f_{k,ij}$ take their usual form and we find
+\begin{align}
+\Gamma_{k,ij}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{k,ij}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
+ &= 8\pi\alpha_s P_{k,ij}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right) \label{eq:Gkij}
+\end{align}
+The $P_{k,ij}(x)$ are the Altarelli-Parisi splitting functions for which we find\cite{Altarelli:1977zs,Vogelsang:1995vh,epub29831}
+\begin{align}
+P_{k,\Pg\Pg}(x) &= \left(P_{k,\Pg\Pg}^{H,(0)}(x) + \epsilon P_{k,\Pg\Pg}^{H,(1)}(x)\right) + \delta(1-x)\left(P_{k,\Pg\Pg}^{S,(0)} + \epsilon P_{k,\Pg\Pg}^{S,(1)}\right) + O(\epsilon^2)\\
+P_{G,\Pg\Pg}(x) &= P_{L,\Pg\Pg}(x)\\
+ &= 2C_A\left(\frac{x}{(1-x)_{\tilde\rho}} + \frac{1-x}{x} + x(1-x)\right) + \delta(1-x) \left(\frac{b_0^{lf}}{2} + 4C_A\ln(\tilde\beta)\right)\\
+P_{P,\Pg\Pg}(x) &= 2C_A\left(\frac{1}{(1-x)_{\tilde\rho}} - 2x + 1 - \epsilon(1-x)\right) + \delta(1-x) \left(\frac{b_0^{lf}}{2} + 4C_A\ln(\tilde\beta) - \epsilon\frac{N_C}{6}\right)
+\end{align}
+with $b_0^{lf} = \frac {11} 6 C_A - \frac 2 3 T_F n_{lf}$ the first coefficient of the QCD beta function and $T_F = 1/2$ the normalization of the generators in color space.
+
+The poles introduced by eq. (\ref{eq:Gkij}) multiplied together with the hard part $P_{k,\Pg\Pg}^{H}(x)$ remove all remaining collinear poles. The non vanishing $P_{P,\Pg\Pg}^{H,(1)}$ represents the hat contributions that arise when the n-dimensional spacetime is treated by the HVBM scheme\cite{breitenlohner1977}. This prescription is avoided in our approach by the introduction of the generalised plus distribution. The poles multiplied with the soft part $P_{k,\Pg\Pg}^{S}$ remove all remaining soft poles. We have
+\begin{equation}
+\lim_{x\rightarrow 1}(1-x)P_{k,\Pg\Pg}^{H,(0)} = 2C_A
+\end{equation}
+
+The light quark process can be regularized in a complete analogous way:
+\begin{align}
+d\sigma_{k,\Pq}^{(1),fin}(\mu_F) &= \lim_{\epsilon\rightarrow 0}\left[d\sigma_{k,\Pq}^{(1)}(\mu_D,\epsilon)-\int\limits_0^1\!dx\,\Gamma_{k,\Pg\Pq}^{(1)}(x,\mu_F^2,\mu_D,\epsilon)d\sigma_{k,\Pg}^{(0)}(xk_1,\epsilon)\right] \label{eq:qMassFact}
+\end{align}
+For the Altarelli-Parisi splitting functions $P_{k,\Pg\Pq}$ we find\cite{Altarelli:1977zs,Vogelsang:1995vh,epub29831}:
+\begin{align}
+P_{k,\Pg\Pq}(x) &= P_{k,\Pg\Pq}^{(0)}(x) + \epsilon P_{k,\Pg\Pq}^{(1)}(x) + O(\epsilon^2)\\
+P_{G,\Pg\Pq}(x) = P_{L,\Pg\Pq}(x) &= 2C_F\frac{1+(1-x)^2}{x} + \epsilon \frac {C_F} 2 x\\
+P_{P,\Pg\Pq}(x) &= C_F(2-x) - \epsilon C_F(1-z)
+\end{align}
+The poles introduced by eq. (\ref{eq:Gkij}) multiplied together with $P_{k,\Pg\Pq}(x)$ remove all remaining collinear poles. Note that $K_{\Pq\Pgg} = 1/(N_C) = 2C_FK_{\Pg\Pgg}$. 
+
+The final finite cross sections are then for the gluonic part
+\begin{align}
+d\sigma_{k,\Pg}^{(1),s+v} &= \alpha_S^2\alpha_{em} \frac 1 {2s'} \frac {K_{\Pg\Pgg}E_k(0)} 2 b_k(0) N_C C_F B_{k,QED} \cdot 2^7 \left[ 4C_A\ln^2(\tilde\beta) \right.\nonumber\\
+ &\hspace{40pt} +\ln(\tilde\beta)\left( 	2\left(\ln(-t_1/m^2)+\ln(-u_1/m^2)-\ln(\mu_F^2/m^2)\right)C_A \right. \nonumber\\
+ &\hspace{80pt}\left. - 2C_F + \frac{s-2m^2}{s\beta}\ln(\chi)(C_A-2C_F) \right) \nonumber\\
+ &\hspace{40pt}\left. + \frac {\beta_0^{lf}}{4}\left(\ln(\mu_R^2/m^2)- \ln(\mu_F^2/m^2)\right) + f_k(s,q^2,\theta_1) \right] dPS_2\\
+d\sigma_{k,\Pg}^{(1),c-} &= 16\cdot \frac 1 {2xs'} \frac {K_{\Pg\Pgg}E_k(0)} 2 b_k(0) \cdot \alpha_S^2e^2e_H^2N_C C_F B_{k,QED}(xk_1) dPS_{2}^{(5)} \nonumber\\
+ &\hspace{20pt}\cdot \left[ (1-x)P_{k,\Pg\Pg}^{H,(0)}(x)\left(\frac{1}{(1-x)_{\tilde\rho}}\left(\ln(s'/\mu_F^2) + \ln(s'/s) + \ln(\omega/2)\right) \right.\right.\nonumber\\
+ &\hspace{120pt} \left.\left. + 2\left(\frac{\ln(1-x)}{1-x}\right)_{\tilde\rho} \right) + 2P_{k,\Pg\Pg}^{H,(1)}(x)\right]\\
+d\sigma_{k,\Pg}^{(1),f} &= 2 \left(\frac 1 {4\pi}\right)^4 \frac 1 {2s'} \frac {K_{\Pg\Pgg}E_k(0)} 2 b_k(0) \frac{s\beta_5}{(s')^2} \left(\frac 1 {1-x}\right)_{\tilde\rho} \left(\frac 1 {1+y}\right)_\omega \frac 1 {1-y} \nonumber\\
+ &\hspace{40pt} \cdot {M_k^{(1),\Pg}}' dxdy\sin(\theta_1)d\theta_1d\theta_2\\
+ &= \alpha_S^2\alpha_{em}e_H^2 \cdot K_{\Pg\Pgg} N_C C_F \frac{s\sin(\theta_1)}{\pi(s')^3} \frac{\beta_5}{1-y} \left(\frac 1 {1-x}\right)_{\tilde\rho} \left(\frac 1 {1+y}\right)_\omega \nonumber\\
+ &\hspace{40pt} \cdot b_k(0)t'(u'-q^2s_5/s) \left(C_A R_{k,OK} + 2C_F R_{k,QED}\right) dxdyd\theta_1d\theta_2
+\end{align}
+where $d\sigma_{k,\Pg}^{(1),s+v}$ collects all 2-to-2-phasespace contributions, that is soft contributions $d\sigma_{k,\Pg}^{(1),S}$, virtual contributions $d\sigma_{k,\Pg}^{(1),V}$, quark self-energies and factorization contributions and $f_k$ contains lots of logarithms and dilogarithms, but does not depend on $\tilde\rho,\mu_F^2,\mu_R^2$ nor $n_f$ nor $\beta_0^{lf} = (11C_A - 2n_{lf})/3$.
+
+For the light quark process we find:
+\begin{align}
+d\sigma_{k,\Pq}^{(1),c-} &= 8\cdot \frac 1 {2xs'} \frac {K_{\Pq\Pgg}} 2 b_k(0) \cdot \alpha_S^2e^2e_H^2 N_C B_{k,QED}(xk_1) dPS_{2}^{(5)} \nonumber\\
+ &\hspace{20pt}\cdot \left(P_{k,\Pg\Pq}^{(0)}(x)\left(\ln(s'/\mu_F^2) + \ln(s'/s) + \ln(\omega/2) + 2\ln(1-x)\right) + 2P_{k,\Pg\Pq}^{(1)}(x)\right)\\
+d\sigma_{k,\Pq}^{(1),f} &= - \left(\frac 1 {4\pi}\right)^4 \frac 1 {2s'} \frac {K_{\Pq\Pgg}} 2 b_k(0) \beta_5 \left(\frac 1 {1+y}\right)_\omega {M_k^{(1),\Pq}}' dxdy\sin(\theta_1)d\theta_1d\theta_2\\
+ &= \alpha_S^2\alpha_{em} \cdot K_{\Pq\Pgg} N_C C_F \left(-\frac{1}{2\pi}\right) \frac{\beta_5\sin(\theta_1)}{s'}  \left(\frac 1 {1+y}\right)_\omega \nonumber\\
+ &\hspace{40pt} \cdot b_k(0)t'\left(e_H^2A_{k,1} + e_L^2 A_{k,2} + e_He_L A_{k,3}\right) dxdyd\theta_1d\theta_2
+\end{align}
+

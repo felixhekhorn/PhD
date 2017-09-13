@@ -1,0 +1,111 @@
+% @author: Felix Hekhorn
+\documentclass[
+  english,		% Sprache
+  a4paper,		% Papierformat
+  11pt,			% Schriftgröße (default 10pt)
+  %DIV=12,		% Seiteneinteilung
+  DIV=12,
+  titlepage,
+  toc=bibnumbered,
+  parskip=full,  	% Absätze (full,half,false -+*)
+  headings=normal,
+  BCOR=12mm,
+  numbers=noenddot
+]{scrartcl}
+%\documentclass[a4paper,10pt]{article}
+\usepackage{scrtime,scrlfile,scrpage2}
+
+\usepackage[status=draft,inline,nomargin,marginclue]{fixme}
+%\usepackage[status=final]{fixme}
+
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel} % Sprache 
+\usepackage[ngerman,english,main=english]{babel} % Sprache 
+\selectlanguage{english}
+\usepackage{amsmath, amssymb}
+
+%\usepackage{graphicx} % Grafiken einbinden
+% The following is needed in order to make the code compatible
+% with both latex/dvips and pdflatex.
+\ifx\pdftexversion\undefined
+\usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+%\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
+\usepackage{color}
+\usepackage{bbm}
+
+\usepackage{pdflscape}
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{csquotes}
+
+\usepackage{siunitx} % SI Einheiten
+\usepackage[version=3]{mhchem}
+%\sisetup{
+%	exponent-product = \!\cdot\!,
+%	output-product = \cdot,
+%	list-final-separator =  { und } ,
+%	list-pair-separator = { und } ,
+%	range-phrase = { bis },
+%	output-decimal-marker = {,},
+%	separate-uncertainty = true,
+%	group-digits = false
+%}
+
+%\usepackage{simplewick}
+%\usepackage{feynmf}
+\usepackage{slashed}
+\usepackage{hepnames}
+
+%\usepackage{biblatex}
+\usepackage[numbers]{natbib}
+%\bibliographystyle{natdin}
+%\bibliographystyle{kp}
+\bibliographystyle{utphys}
+
+\usepackage{hyperref}
+%\hypersetup{colorlinks=false}
+\usepackage{tabularx}
+
+\include{lib}
+
+\begin{document}
+
+\section{Introduction}
+\input{Introduction}
+
+\section{Leading Order Calculations}
+\input{LO}
+
+\section{Next-To-Leading Order Calculations}
+\input{NLO}
+
+\section{Mass Factorization}
+\input{Fact}
+
+\section{Partonic Results}
+\input{Partonic}
+
+\section{Hadronic Results}
+\input{Hadronic}
+
+\section{Summary}
+\input{Summary}
+
+\newpage
+\appendix
+
+\bibliography{ref.bib}
+\listoffixmes
+
+\end{document}
