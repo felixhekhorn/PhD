@@ -19,12 +19,8 @@ proj[V][xF3][mu_, mup_] := proj[V][x2g1][mu, mup]
 proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup]
 proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup]
 
-proj[g][FG][nu_, nup_]   := -({nu}.{nup});
-proj[g][FL][nu_, nup_]   := proj[g][FG][nu, nup]
-proj[g][xF3][nu_, nup_]  := proj[g][FG][nu, nup]
-proj[g][x2g1][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
-proj[g][gG][nu_, nup_]   := proj[g][x2g1][nu, nup]
-proj[g][gL][nu_, nup_]   := proj[g][x2g1][nu, nup]
+proj[g][F][nu_, nup_]   := -({nu}.{nup});
+proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
 Gint[A][mu_] := {(U+G5),{mu},(U-G5)};
@@ -36,10 +32,9 @@ meLO[u1][Gint_][mu_, nu_] :=  {{nu},(p1-k1 + Sqrt@m2 U)} ~Join~ Gint[mu];
 (* calculate *)
 applyProj[tr_,k_] := Module[{f},
 f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
-f = ContractEpsGamma[proj[g][k][nu,nup]*f];
-(*f = f/.{H[a_,b_]:>h[a,b]}/.{h[a_+b_,c_]:>h[a,c]+h[b,c],h[a_,c_+d_]:>h[a,c]+h[a,d]}/.{h[a_,b_]:>H[a,b]}
+(*f = f//.{H[a_+b_,c_]:>H[a,c]+H[b,c],H[a_,c_+d_]:>H[a,c]+H[a,d],H[-a_,b_]:>-H[a,b],H[a_,-b_]:>-H[a,b]};
 f = RemoveHatMomenta[f,k1,q,p1,p2];*)
-f = f/.{H[a_,b_]->0}/.{Tracer`Private`eps[__]->epsi};
+f = f/.{H[a_,b_]->0}/.{Tracer`Private`eps[{a_, b_, c_, d_}]:>epsi[a,b,c,d]};
 Return[f];
 ];
 
@@ -51,12 +46,16 @@ Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
 line = {(p1 + Sqrt@m2 U)} ~Join~ meLO[ch1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[ch2][Gint[cur2]][mup, nup]];
 PrependTo[line,l@@e];
 tr = GammaTrace@@line;
-(BB@@e)@FG   = applyProj[tr,FG];
-(BB@@e)@FL   = applyProj[tr,FL];
-(BB@@e)@xF3  = applyProj[tr,xF3];
-(BB@@e)@x2g1 = applyProj[tr,x2g1];
-(BB@@e)@gG   = applyProj[tr,gG];
-(BB@@e)@gL   = applyProj[tr,gL];
+
+trF = ContractEpsGamma[proj[g][F][nu,nup]*tr];
+(BB@@e)@FG   = applyProj[trF,FG];
+(BB@@e)@FL   = applyProj[trF,FL];
+(BB@@e)@xF3  = applyProj[trF,xF3];
+
+trg = ContractEpsGamma[proj[g][g][nu,nup]*tr];
+(BB@@e)@x2g1 = applyProj[trg,x2g1];
+(BB@@e)@gG   = applyProj[trg,gG];
+(BB@@e)@gL   = applyProj[trg,gL];
 ]
 
 MapIndexed[calcTr, elems];

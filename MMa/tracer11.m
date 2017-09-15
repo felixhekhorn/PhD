@@ -623,7 +623,7 @@ CalcTable = {};             (* default for lookup table of lines to trace *)
  * for a possible modification in ToDiracBasis[]
  *)
 
-Spur[lines___] := ( CalcTable = Union[CalcTable, {lines}]; SpurOut[] );
+Spur[lines___] := ( CalcTable = Union[CalcTable, {lines}]; (*SpurOut[]*) );
 
 NoSpur[lines___] := ( CalcTable = Complement[CalcTable, {lines}];
 			SpurOut[] );

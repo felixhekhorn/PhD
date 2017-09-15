@@ -30,7 +30,7 @@ applyProj[tr_,k_] := Module[{f},
 f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
 f = f//.{H[a_+b_,c_]:>H[a,c]+H[b,c],H[a_,c_+d_]:>H[a,c]+H[a,d],H[-a_,b_]:>-H[a,b],H[a_,-b_]:>-H[a,b]};
 f = RemoveHatMomenta[f,q,k1,p2]/.{H[k2, p1]->k2hat2,H[k2, k2]->-k2hat2,H[p1, p1]->-k2hat2};
-(*f = f/.{Tracer`Private`eps[{k1, k2, p1, q}]->epsi};*)
+f = f/.{Tracer`Private`eps[{a_, b_, c_, d_}]:>epsi[a,b,c,d]};
 Return[f];
 ];
 
@@ -48,7 +48,6 @@ PrependTo[line,l@@e];
 tr = GammaTrace@@line;
 trV = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineV*(-{nugqp}.{nugQp})/tp];
 
-
 (AA1@@e)@FG   = applyProj[trV,FG];
 (AA1@@e)@FL   = applyProj[trV,FL];
 (AA1@@e)@xF3  = applyProj[trV,xF3];
@@ -61,7 +60,7 @@ trA = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineA*(-{nugqp}.{nugQp})/tp];
 
 ];
 
-MapIndexed[calcTr, elems[[9;;12]]]
+MapIndexed[calcTr, elems]
 
 
 (* Save *)
