@@ -19,7 +19,7 @@ proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup]
 proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup]
 
 Gint[V][mu_] := {{mu}};
-Gint[A][mu_] := {(U+G5),{mu},(U-G5)};
+Gint[A][mu_] := {{mu},G5};
 
 (* matrix elements *)
 meNLOq[up][Gint_][mu_, nu_] :=  Gint[mu] ~Join~ {(k2-q),{nu}};

@@ -22,14 +22,32 @@ meLO[t1][Gint_][mu_, nu_] :=  Gint[mu] ~Join~ {(k1-p2 + Sqrt@m2 U), {nu}}
 meLO[u1][Gint_][mu_, nu_] :=  {{nu},(p1-k1 + Sqrt@m2 U)} ~Join~ Gint[mu];
 
 Module[{line,linep,l,zwi,r,t},
-line[cur1_,cur2_] := {(p1 + Sqrt@m2 U)} ~Join~ meLO[t1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[u1][Gint[cur2]][mup, nup]];
+
+
+
+line = {p@1,(U+G5),{mu},(U-G5),p@3,{nu},p@4,U-G5,{mup},(U+G5),p@5,{nup}};
+Spur[l[0],l[1],l[2]];
+Print[Join[{l@0},line]];
+r[0] = Expand[GammaTrace@@(Join[{l@0},line])];
+Export["/home/Felix/Physik/PhD/MMa/r0.m",r[0]];
+r[1] = Expand[GammaTrace@@(Join[{l@1},RotateLeft[line,2]])];
+Export["/home/Felix/Physik/PhD/MMa/r1.m",r[1]];
+r[2] = Expand[GammaTrace@@(Join[{l@2},RotateLeft[line,4]])];
+Export["/home/Felix/Physik/PhD/MMa/r2.m",r[2]];
+Print@FullSimplify[r[0]-r[1]];
+Print@FullSimplify[r[0]-r[2]];
+Print@FullSimplify[r[1]-r[2]];
+
+
 
 (*
+line[cur1_,cur2_] := {(p1 + Sqrt@m2 U)} ~Join~ meLO[t1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[u1][Gint[cur2]][mup, nup]];
 Spur[l[0]];
 r[Naive1A,Naive1A] = ContractEpsGamma@GammaTrace@@Join[{l@0},line[Naive1A,Naive1A]];
 Print@Short[r[Naive1A,Naive1A]];
 *)
 
+(*
 linep = line[KörnerA,KörnerA];
 Print@linep;
 r[KörnerA,KörnerA]={};
@@ -40,18 +58,20 @@ Do[
  AppendTo[r[KörnerA,KörnerA],ContractEpsGamma@zwi];
  linep = RotateLeft[linep];
 ,{k,Length@linep}];
+*)
 
-Print["----"];
 (*
+Print["----"];
 Print@Short[r[KörnerA,KörnerA][[1]]];
 Print@Short[r[KörnerA,KörnerA][[2]]];
 Print@Short[r[KörnerA,KörnerA][[3]]];
 Print@Short[r[KörnerA,KörnerA][[5]]];
 Print@Short[r[KörnerA,KörnerA][[9]]];
 Print[Function[f,0 === Expand[e-r[Naive1A,Naive1A]]]/@r[KörnerA,KörnerA]]
+*)
 
-Print["----"];*)
-
+(*
+Print["----"];
 t[e_,f_]:=Module[{r},
  r = Null;
  Do[
@@ -60,5 +80,5 @@ t[e_,f_]:=Module[{r},
  Return@If[Null === r,False,r];
 ];
 Print[Function[e,Function[f,t[e,f]]/@r[KörnerA,KörnerA]]/@r[KörnerA,KörnerA]];
-
+*)
 ];

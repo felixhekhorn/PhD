@@ -23,7 +23,7 @@ proj[g][F][nu_, nup_]   := -({nu}.{nup});
 proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
-Gint[A][mu_] := {(U+G5),{mu},(U-G5)};
+Gint[A][mu_] := {{mu},G5};
 
 (* matrix elements *)
 meLO[t1][Gint_][mu_, nu_] :=  Gint[mu] ~Join~ {(k1-p2 + Sqrt@m2 U), {nu}}
