@@ -2,6 +2,16 @@
 AntiCommute[off];
 VectorDimension[n];
 
+(* setup *)
+elems = Tuples[{{V,A},{V,A},{t1,u1},{t1,u1}}];
+ls = l@@# & /@ elems;
+
+Spur@@ls;
+OnShell[on,{k1,k1,0},{q,q,q2},{p1,p1,m2},{p2,p2,m2},
+           {k1,q,sp/2},{p1,p2,s/2-m2},
+           {k1,p2,-t1/2},{k1,p1,-u1/2},
+           {q,p1,-(t1-q2)/2},{q,p2,-(u1-q2)/2}];
+
 proj[V][FG][mu_, mup_] := -({mu}.{mup});
 proj[V][FL][mu_, mup_] := -4 q2/sp^2 S[k1,{mu}] S[k1,{mup}];
 proj[V][x2g1][mu_, mup_] := I Eps[{mu}, {mup}, q, k1] /sp
@@ -9,76 +19,52 @@ proj[V][xF3][mu_, mup_] := proj[V][x2g1][mu, mup]
 proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup]
 proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup]
 
-proj[g][F][nu_, nup_]   := -({nu}.{nup});
+proj[g][F][nu_, nup_] := -({nu}.{nup});
 proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
-Gint[KörnerA][mu_] := {(U+G5),{mu},(U-G5)};
-Gint[Naive1A][mu_] := {{mu},G5};
-Gint[Naive2A][mu_] := {G5,{mu}};
+Gint[Ap][mu_] := {{mu},G5};
+Gint[pA][mu_] := {G5,{mu}};
 
 (* matrix elements *)
 meLO[t1][Gint_][mu_, nu_] :=  Gint[mu] ~Join~ {(k1-p2 + Sqrt@m2 U), {nu}}
 meLO[u1][Gint_][mu_, nu_] :=  {{nu},(p1-k1 + Sqrt@m2 U)} ~Join~ Gint[mu];
 
-Module[{line,linep,l,zwi,r,t},
-
-
-
-line = {p@1,(U+G5),{mu},(U-G5),p@3,{nu},p@4,U-G5,{mup},(U+G5),p@5,{nup}};
-Spur[l[0],l[1],l[2]];
-Print[Join[{l@0},line]];
-r[0] = Expand[GammaTrace@@(Join[{l@0},line])];
-Export["/home/Felix/Physik/PhD/MMa/r0.m",r[0]];
-r[1] = Expand[GammaTrace@@(Join[{l@1},RotateLeft[line,2]])];
-Export["/home/Felix/Physik/PhD/MMa/r1.m",r[1]];
-r[2] = Expand[GammaTrace@@(Join[{l@2},RotateLeft[line,4]])];
-Export["/home/Felix/Physik/PhD/MMa/r2.m",r[2]];
-Print@FullSimplify[r[0]-r[1]];
-Print@FullSimplify[r[0]-r[2]];
-Print@FullSimplify[r[1]-r[2]];
-
-
-
-(*
-line[cur1_,cur2_] := {(p1 + Sqrt@m2 U)} ~Join~ meLO[t1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[u1][Gint[cur2]][mup, nup]];
-Spur[l[0]];
-r[Naive1A,Naive1A] = ContractEpsGamma@GammaTrace@@Join[{l@0},line[Naive1A,Naive1A]];
-Print@Short[r[Naive1A,Naive1A]];
-*)
-
-(*
-linep = line[KörnerA,KörnerA];
-Print@linep;
-r[KörnerA,KörnerA]={};
-Do[
- Print["k = ",k];
- Spur[l[k]];
- zwi = GammaTrace@@(Join[{l@k},linep]);
- AppendTo[r[KörnerA,KörnerA],ContractEpsGamma@zwi];
- linep = RotateLeft[linep];
-,{k,Length@linep}];
-*)
-
-(*
-Print["----"];
-Print@Short[r[KörnerA,KörnerA][[1]]];
-Print@Short[r[KörnerA,KörnerA][[2]]];
-Print@Short[r[KörnerA,KörnerA][[3]]];
-Print@Short[r[KörnerA,KörnerA][[5]]];
-Print@Short[r[KörnerA,KörnerA][[9]]];
-Print[Function[f,0 === Expand[e-r[Naive1A,Naive1A]]]/@r[KörnerA,KörnerA]]
-*)
-
-(*
-Print["----"];
-t[e_,f_]:=Module[{r},
- r = Null;
- Do[
-  If[0 === Expand[e - v*f],r=v;Return[];];
- ,{v,{1,-1,2,1/2,-1/2,-2}}];
- Return@If[Null === r,False,r];
+(* calculate *)
+applyProj[tr_,k_] := Module[{f},
+f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
+(*f = f//.{H[a_+b_,c_]:>H[a,c]+H[b,c],H[a_,c_+d_]:>H[a,c]+H[a,d],H[-a_,b_]:>-H[a,b],H[a_,-b_]:>-H[a,b]};
+f = RemoveHatMomenta[f,k1,q,p1,p2];*)
+f = f/.{H[a_,b_]->0}/.{Tracer`Private`eps[{a_, b_, c_, d_}]:>epsi[a,b,c,d]};
+Return[f];
 ];
-Print[Function[e,Function[f,t[e,f]]/@r[KörnerA,KörnerA]]/@r[KörnerA,KörnerA]];
-*)
-];
+
+Clear@BB;
+
+calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
+Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
+{cur1,cur2,ch1,ch2} = e;
+line = {(p1 + Sqrt@m2 U)} ~Join~ meLO[ch1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[ch2][Gint[cur2]][mup, nup]];
+PrependTo[line,l@@e];
+tr = GammaTrace@@line;
+
+trF = ContractEpsGamma[proj[g][F][nu,nup]*tr];
+(BB@@e)@FG   = applyProj[trF,FG];
+(BB@@e)@FL   = applyProj[trF,FL];
+(BB@@e)@xF3  = applyProj[trF,xF3];
+
+trg = ContractEpsGamma[proj[g][g][nu,nup]*tr];
+(BB@@e)@x2g1 = applyProj[trg,x2g1];
+(BB@@e)@gG   = applyProj[trg,gG];
+(BB@@e)@gL   = applyProj[trg,gL];
+]
+
+elems = {{V,Ap,t1,t1},{V,pA,t1,t1},{Ap,V,t1,t1},{pA,V,t1,t1},{Ap,Ap,t1,t1},{Ap,pA,t1,t1},{pA,Ap,t1,t1},{pA,pA,t1,t1}};
+Spur@@(l@@# & /@ elems);
+MapIndexed[calcTr,elems];
+
+(* Save *)
+Print["Save ..."];
+Put["/home/Felix/Physik/PhD/MMa/_BB.m"];
+Save["/home/Felix/Physik/PhD/MMa/_BB.m",BB];
+

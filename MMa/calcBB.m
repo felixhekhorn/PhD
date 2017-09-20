@@ -19,7 +19,7 @@ proj[V][xF3][mu_, mup_] := proj[V][x2g1][mu, mup]
 proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup]
 proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup]
 
-proj[g][F][nu_, nup_]   := -({nu}.{nup});
+proj[g][F][nu_, nup_] := -({nu}.{nup});
 proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
