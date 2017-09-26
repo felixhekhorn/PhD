@@ -43,9 +43,10 @@ Clear@BB;
 calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
 Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
 {cur1,cur2,ch1,ch2} = e;
-line = {(p1 + Sqrt@m2 U)} ~Join~ meLO[ch1][Gint[cur1]][mu, nu] ~Join~ {(p2 - Sqrt@m2 U)} ~Join~ Reverse[meLO[ch2][Gint[cur2]][mup, nup]];
+line =Join[{(p1 + Sqrt@m2 U)}, meLO[ch1][Gint[cur1]][mu, nu], {(p2 - Sqrt@m2 U)}, Reverse[meLO[ch2][Gint[cur2]][mup, nup]]];
 PrependTo[line,l@@e];
 tr = GammaTrace@@line;
+If[A === cur2, tr *= (-1)];
 
 trF = ContractEpsGamma[proj[g][F][nu,nup]*tr];
 (BB@@e)@FG   = applyProj[trF,FG];
