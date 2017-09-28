@@ -37,7 +37,7 @@ Return[f];
 Clear@AA1;
 
 qLineV = GammaTrace[lqV,(k2),{nugq},(k1),{nugqp}];
-qLineA = GammaTrace[lqA,(k2),{nugq},(U+G5),(k1),(U-G5),{nugqp}];
+qLineA = GammaTrace[lqA,(k2),{nugq},(k1),(-G5),{nugqp}];
 
 calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
 Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
@@ -46,6 +46,8 @@ Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
 line = {(p1 + Sqrt@m2 U)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugQ] ~Join~ {(p2-Sqrt@m2 U)} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugQp]];
 PrependTo[line,l@@e];
 tr = GammaTrace@@line;
+If[A === cur2, tr *= (-1)];
+
 trV = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineV*(-{nugqp}.{nugQp})/tp];
 
 (AA1@@e)@FG   = applyProj[trV,FG];
@@ -54,9 +56,9 @@ trV = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineV*(-{nugqp}.{nugQp})/tp];
 
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineA*(-{nugqp}.{nugQp})/tp];
 
-(AA1@@e)@x2g1 = applyProj[-trV+trA/2,x2g1];
-(AA1@@e)@gG   = applyProj[-trV+trA/2,gG];
-(AA1@@e)@gL   = applyProj[-trV+trA/2,gL];
+(AA1@@e)@x2g1 = applyProj[trA,x2g1];
+(AA1@@e)@gG   = applyProj[trA,gG];
+(AA1@@e)@gL   = applyProj[trA,gL];
 
 ];
 

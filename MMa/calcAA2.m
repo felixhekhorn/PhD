@@ -45,19 +45,21 @@ lineV = {(k2)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugq] ~Join~ {(k1)} ~Join~ Rev
 PrependTo[lineV,l1@@e];
 trV = GammaTrace@@lineV;
 trV = ContractEpsGamma[(-{nugq}.{nugQ})/s5*trV*HQLine*(-{nugqp}.{nugQp})/s5];
+If[A === cur2, trV *= (-1)];
 
 (AA2@@e)@FG   = applyProj[trV,FG];
 (AA2@@e)@FL   = applyProj[trV,FL];
 (AA2@@e)@xF3  = applyProj[trV,xF3];
 
-lineA = {(k2)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugq] ~Join~ {(U+G5),(k1),(U-G5)} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugqp]];
+lineA = {(k2)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugq] ~Join~ {(k1),-G5} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugqp]];
 PrependTo[lineA,l2@@e];
 trA = GammaTrace@@lineA;
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/s5*(trA)*HQLine*(-{nugqp}.{nugQp})/s5];
+If[A === cur2, trA *= (-1)];
 
-(AA2@@e)@x2g1 = applyProj[-trV+trA/2,x2g1];
-(AA2@@e)@gG   = applyProj[-trV+trA/2,gG];
-(AA2@@e)@gL   = applyProj[-trV+trA/2,gL];
+(AA2@@e)@x2g1 = applyProj[trA,x2g1];
+(AA2@@e)@gG   = applyProj[trA,gG];
+(AA2@@e)@gL   = applyProj[trA,gL];
 ];
 
 MapIndexed[calcTr, elems];
