@@ -62,6 +62,7 @@ trg = ContractEpsGamma[proj[g][g][nu,nup]*tr];
 MapIndexed[calcTr, elems];
 
 (* Save *)
-Print["Save ..."];
-Put["/home/Felix/Physik/PhD/MMa/data/BB.m"];
-Save["/home/Felix/Physik/PhD/MMa/data/BB.m",BB];
+fn = "/home/Felix/Physik/PhD/MMa/data/BB.m";
+Print["Save to "<>fn<>" ..."];
+Put[fn];
+Save[fn,BB];

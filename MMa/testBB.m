@@ -3,7 +3,7 @@ AntiCommute[off];
 VectorDimension[n];
 
 (* setup *)
-elems = Tuples[{{V,A},{V,A},{t1,u1},{t1,u1}}];
+elems = Tuples[{{V,Apre,Apost},{V,Apre,Apost},{t1,u1},{t1,u1}}];
 ls = l@@# & /@ elems;
 
 Spur@@ls;
@@ -24,6 +24,8 @@ proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
 Gint[A][mu_] := {U-G5,{mu},U+G5};
+Gint[Apre][mu_] := {G5,{mu}};
+Gint[Apost][mu_] := {{mu},G5};
 
 (* matrix elements *)
 meLO[t1][Gint_][mu_, nu_] :=  Gint[mu] ~Join~ {(k1-p2 + Sqrt@m2 U), {nu}}
@@ -61,6 +63,7 @@ trg = ContractEpsGamma[proj[g][g][nu,nup]*tr];
 MapIndexed[calcTr, elems];
 
 (* Save *)
-Print["Save ..."];
-Put["/home/Felix/Physik/PhD/MMa/sBB.m"];
-Save["/home/Felix/Physik/PhD/MMa/sBB.m",BB];
+fn = "/home/Felix/Physik/PhD/MMa/symg5.m";
+Print["Save to "<>fn<>" ..."];
+Put[fn];
+Save[fn,BB];
