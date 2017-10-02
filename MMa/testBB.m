@@ -14,10 +14,19 @@ OnShell[on,{k1,k1,0},{q,q,q2},{p1,p1,m2},{p2,p2,m2},
 
 proj[V][FG][mu_, mup_] := -({mu}.{mup});
 proj[V][FL][mu_, mup_] := -4 q2/sp^2 S[k1,{mu}] S[k1,{mup}];
-proj[V][x2g1][mu_, mup_] := I Eps[{mu}, {mup}, q, k1] /sp
-proj[V][xF3][mu_, mup_] := proj[V][x2g1][mu, mup]
-proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup]
-proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup]
+proj[V][x2g1][mu_, mup_] := I Eps[{mu}, {mup}, q, k1] /sp;
+proj[V][xF3][mu_, mup_] := proj[V][x2g1][mu, mup];
+proj[V][gG][mu_, mup_] := -proj[V][FG][mu, mup];
+proj[V][gL][mu_, mup_] := -proj[V][FL][mu, mup];
+
+
+proj[V][Fk1q][mu_, mup_] := S[k1,{mu}] S[q,{mup}];
+proj[V][Fqk1][mu_, mup_] := S[q,{mu}] S[k1,{mup}];
+proj[V][Fqq][mu_, mup_] := S[q,{mu}] S[q,{mup}];
+proj[V][gk1q][mu_, mup_] := S[k1,{mu}] S[q,{mup}];
+proj[V][gqk1][mu_, mup_] := S[q,{mu}] S[k1,{mup}];
+proj[V][gqq][mu_, mup_] := S[q,{mu}] S[q,{mup}];
+
 
 proj[g][F][nu_, nup_] := -({nu}.{nup});
 proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
@@ -50,14 +59,10 @@ PrependTo[line,l@@e];
 tr = GammaTrace@@line;
 
 trF = ContractEpsGamma[proj[g][F][nu,nup]*tr];
-(BB@@e)@FG   = applyProj[trF,FG];
-(BB@@e)@FL   = applyProj[trF,FL];
-(BB@@e)@xF3  = applyProj[trF,xF3];
+Do[(BB@@e)@k = applyProj[trF,k],{k,{FG,FL,xF3,Fk1q,Fqk1,Fqq}}];
 
 trg = ContractEpsGamma[proj[g][g][nu,nup]*tr];
-(BB@@e)@x2g1 = applyProj[trg,x2g1];
-(BB@@e)@gG   = applyProj[trg,gG];
-(BB@@e)@gL   = applyProj[trg,gL];
+Do[(BB@@e)@k = applyProj[trg,k],{k,{x2g1,gG,gL,gk1q,gqk1,gqq}}];
 ]
 
 MapIndexed[calcTr, elems];
