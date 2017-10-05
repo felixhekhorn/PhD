@@ -55,8 +55,8 @@ Print@StringJoin["elems[",ToString@First@ind,"] = ",ToString@e];
 line =Join[{(p1 + Sqrt@m2 U)}, meLO[ch1][Gint[cur1]][mu, nu], {(p2 - Sqrt@m2 U)}, Reverse[meLO[ch2][Gint[cur2]][mup, nup]/.{G5->-G5}]];
 PrependTo[line,l@@e];
 tr = GammaTrace@@line;
-If[A === cur1, tr = ContractEpsGamma[tr * (-I/3!)*Eps[{mu} ,{i[mu][1]} ,{i[mu][2]} ,{i[mu][3]} ]]];
-If[A === cur2, tr = ContractEpsGamma[tr * (I/3!)*Eps[{mup},{i[mup][1]},{i[mup][2]},{i[mup][3]}]]];
+If[A === cur1, tr = ContractEpsGamma[tr * (I/3!)*Eps[{mu} ,{i[mu][1]} ,{i[mu][2]} ,{i[mu][3]} ]]];
+If[A === cur2, tr = ContractEpsGamma[tr * (-I/3!)*Eps[{mup},{i[mup][1]},{i[mup][2]},{i[mup][3]}]]];
 
 trF = ContractEpsGamma[proj[g][F][nu,nup]*tr];
 Do[(BB@@e)@k = applyProj[trF,k],{k,{FG,FL,xF3,Fk1q,Fqk1,Fqq}}];
