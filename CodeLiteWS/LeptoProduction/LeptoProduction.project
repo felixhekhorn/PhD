@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Project Name="LeptoProduction" Version="10.0.0" InternalType="">
+  <Reconciliation>
+    <Regexes/>
+    <Excludepaths>
+      <Path>../CodeLiteWS/LeptoProduction/Debug/</Path>
+      <Path>../CodeLiteWS/LeptoProduction/Release/</Path>
+      <Path>../CodeLiteWS/LeptoProduction/tmpl/</Path>
+    </Excludepaths>
+    <Ignorefiles/>
+    <Extensions>
+      <![CDATA[cpp;c;h;hpp;xrc;wxcp;fbp]]>
+    </Extensions>
+    <Topleveldir>../LeptoProduction</Topleveldir>
+  </Reconciliation>
+  <Description/>
+  <Dependencies/>
+  <VirtualDirectory Name="src">
+    <VirtualDirectory Name="gslpp">
+      <File Name="src/gslpp/gslpp.Functor.hpp"/>
+      <File Name="src/gslpp/gslpp.Histogram.hpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Pdf">
+      <File Name="src/Pdf/PdfWrapper.cpp"/>
+      <File Name="src/Pdf/PdfWrapper.h"/>
+    </VirtualDirectory>
+    <File Name="src/Python.cpp" ExcludeProjConfig="Debug;Release"/>
+    <File Name="src/config.h"/>
+    <File Name="src/main.cpp"/>
+    <VirtualDirectory Name="Common">
+      <File Name="src/Common/AbstractLeptoProduction.h"/>
+      <File Name="src/Common/AbstractLeptoProduction.cpp"/>
+      <File Name="src/Common/AbstractIntKer.h"/>
+      <File Name="src/Common/AbstractIntKer.cpp"/>
+      <File Name="src/Common/Integration.cpp"/>
+      <File Name="src/Common/Integration.h"/>
+      <VirtualDirectory Name="ME">
+        <File Name="src/Common/ME/BQED.cpp"/>
+        <File Name="src/Common/ME/BQED.h"/>
+      </VirtualDirectory>
+      <File Name="src/Common/Color.hpp"/>
+    </VirtualDirectory>
+    <File Name="src/InclusiveLeptoProduction.h"/>
+    <File Name="src/InclusiveLeptoProduction.cpp"/>
+    <VirtualDirectory Name="Inclusive">
+      <File Name="src/Inclusive/IntKer.h"/>
+      <File Name="src/Inclusive/IntKer.cpp"/>
+    </VirtualDirectory>
+    <File Name="src/Flags.hpp"/>
+    <File Name="src/Projection.hpp"/>
+  </VirtualDirectory>
+  <Settings Type="Executable">
+    <GlobalSettings>
+      <Compiler Options="-std=c++11;`lhapdf-config --cflags`" C_Options="" Assembler="">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="`lhapdf-config --ldflags`;$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o;$(IntermediateDirectory)/src_Pdf_cteq3.f.o;$(IntermediateDirectory)/src_Pdf_grsvpol.f.o;$(IntermediateDirectory)/src_Pdf_grv94.f.o;$(IntermediateDirectory)/src_Pdf_mortungb.f.o">
+        <LibraryPath Value="."/>
+        <Library Value="m"/>
+        <Library Value="gsl"/>
+        <Library Value="gslcblas"/>
+        <Library Value="gfortran"/>
+        <Library Value="libboost_timer"/>
+        <Library Value="libboost_system"/>
+        <Library Value="libboost_filesystem"/>
+        <Library Value="dvegas"/>
+        <Library Value="rk"/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="GCC" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-g;-O0;-Wall" C_Options="-g;-O0;-Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+      </Compiler>
+      <Linker Options="" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Debug" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[DSSV2014_GRIDS=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/
+GRSV96_GRIDS=/home/Felix/Physik/PhD/PDF/GRSV96/]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
+					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o\
+					$(IntermediateDirectory)/src_Pdf_mortungb.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
+	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -g -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+
+$(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
+	gfortran -c src/Pdf/grsvpol.f -g -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -g -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
+
+$(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
+	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
+</CustomPreBuild>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="GCC" DebuggerType="GNU gdb debugger" Type="Executable" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O3; -Wall" C_Options="-O3; -Wall" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="-O3" Required="yes"/>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName)" IntermediateDirectory="./Release" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="yes" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[DSSV2014_GRIDS=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/
+GRSV96_GRIDS=/home/Felix/Physik/PhD/PDF/GRSV96/]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
+					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_mortungb.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
+	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+
+$(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
+	gfortran -c src/Pdf/grsvpol.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
+
+$(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
+	gfortran -c src/Pdf/mortungb.f -O3 -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o</CustomPreBuild>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+  </Settings>
+</CodeLite_Project>

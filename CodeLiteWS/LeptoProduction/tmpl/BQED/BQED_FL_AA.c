@@ -1,0 +1,1 @@
+(-4*Power(q2,2))/Power(sp,2) - (4*q2)/sp + Power(sp,2)*((-4*Power(m2,2))/(Power(t1,2)*Power(u1,2)) - (2*m2)/(q2*t1*u1)) + (8*m2*q2)/(t1*u1) + (4*m2*sp)/(t1*u1)

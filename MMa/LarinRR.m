@@ -6,7 +6,7 @@ VectorDimension[n];
 meL = {{s4,t1},{u7,t1},{s4,u1},{u6,u1},{u7,s3},{u6,s3},{u1,tp},{u7,tp}};
 meT = Table[{meL[[k]],meL[[l]]},{k,1,Length@meL},{l,1,k}];
 meT = Flatten[meT,1];
-elems = Tuples[{{V,Apre,Apost},{V,Apre,Apost},meT}];
+elems = Tuples[{{V,A},{V,A},meT}];
 elems = Flatten[#,1]& /@ elems;
 ls = l@@# & /@ elems;
 
@@ -26,8 +26,7 @@ proj[g][F][nu_, nup_] := -({nu}.{nup});
 proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
-Gint[Apost][mu_] := {{mu},G5};
-Gint[Apre][mu_] := {G5,{mu}};
+Gint[A][mu_] := {{i[mu][1]},{i[mu][2]},{i[mu][3]}};
 
 (* matrix elements *)
 meNLOg[s4,t1][Gint_][mu_, ni_, no_] :=  Join[{{no},    (p1+k2 + Sqrt@m2 U)},Gint[mu],{( k1-p2 + Sqrt@m2 U),  {ni}}  ];
@@ -66,6 +65,9 @@ line =Join[{(p1 + Sqrt@m2 U)}, mx1, {(p2 - Sqrt@m2 U)}, Reverse[mx2/.{G5->-G5}]]
 PrependTo[line,l@@e];
 tr = GammaTrace@@line;
 WriteString[$Output,"."];
+If[A === cur1, tr = ContractEpsGamma[tr * (I/3!)*Eps[{mu} ,{i[mu][1]} ,{i[mu][2]} ,{i[mu][3]} ]]];
+If[A === cur2, tr = ContractEpsGamma[tr * (-I/3!)*Eps[{mup},{i[mup][1]},{i[mup][2]},{i[mup][3]}]]];
+WriteString[$Output,"."];
 
 If[tp === Last@ch1, tr = ContractEpsGamma[tr*(-S[{nuQ}, {nug }])*me3g[nui, nuo, nug ]]];
 If[tp === Last@ch2, tr = ContractEpsGamma[tr*(-S[{nuQp},{nugp}])*me3g[nuip,nuop,nugp]]];
@@ -99,14 +101,14 @@ Write[$Output," ",ToString[timing[[-1]] - timing[[-2]]]<>"s"];
 ]
 
 Print@ParallelEvaluate[$KernelID];
-elems = elems[[-4;;-1]];
+elems = elems[[-3;;-1]];
 Print["Length@elems = ",Length@elems];
 MapIndexed[calcTr, elems];
 totT = TimeUsed[] - First@timing;
 Print["tot. time = ",ToString[totT]<>"s, avg. time = ",ToString[totT/Length@elems]<>"s"];
 
 (* Save *)
-fn = "/home/Felix/Physik/PhD/MMa/data/RR.m";
+fn = "/home/Felix/Physik/PhD/MMa/data/LarinRR.m";
 Print["Save to "<>fn<>" ..."];
 Put[fn];
 Save[fn,RR];
