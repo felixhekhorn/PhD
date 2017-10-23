@@ -47,12 +47,20 @@ public:
     /** @name partonic functions */
     ///@{
     
-    /**
-     * @see AbstractLeptoProduction::cg0()
-     */
-    cdbl cg0();
+    /** @see AbstractLeptoProduction::cg0() */
+    cdbl cg0() const;
     
     ///@}
+    
+    /** @name hadronic functions */
+    ///@{
+    
+    /** @see AbstractLeptoProduction::F() */
+    cdbl F() const;
+    
+    ///@}
+    
+    
 };
 
 #endif // INCLUSIVELEPTOPRODUCTION_H

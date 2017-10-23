@@ -14,18 +14,33 @@ class IntKer : public Common::AbstractIntKer {
     dbl t1;
     /** @brief jacobian for t1 trafo */
     dbl jac_t1;
-    
     /**
      * @brief sets t1 (and its jacobian)
      * @param a integration variable
      */
     void setT1(cdbl a);
     
+    /** @brief parton moment variable z = x_bj/xi */
+    dbl z;
+    /** @brief jacobian for z */
+    dbl jac_z;
+    /**
+     * @brief sets z (and its jacobian)
+     * @param a integration variable
+     */
+    void setZ(cdbl a);
+    
     /** 
      * @brief computes cg0
      * @return cg0
      */
-    cdbl cg0();
+    cdbl cg0() const;
+    
+    /** 
+     * @brief computes F
+     * @return F
+     */
+    cdbl F() const;
     
 public:
     
@@ -47,8 +62,9 @@ public:
     /**
      * @brief called function in kernel
      * @param a1
+     * @param a2
      */
-    cdbl operator()(cdbl a1);
+    cdbl operator()(cdbl a1, cdbl a2 = 0.);
 
 };
 

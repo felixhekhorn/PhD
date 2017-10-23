@@ -1,6 +1,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <boost/format.hpp>
 
 #include "InclusiveLeptoProduction.h"
 
@@ -17,10 +18,15 @@ int main(int argc, char **argv) {
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
     o.setQ2(Q2);
-    o.setPartonicEta(1e3);
+    cdbl eta = 1e3;
+    o.setPartonicEta(eta);
+    o.setProjection(F2);
+    cdbl cF2 = o.cg0();
     o.setProjection(FL);
-    o.flags().usePhotonZ = o.flags().useZ = false;
-    cout << "test: " << o.cg0() << endl;
+    cdbl cFL = o.cg0();
+    o.setProjection(x2g1);
+    cdbl cx2g1 = o.cg0();
+    cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     
     return EXIT_SUCCESS;
 }
