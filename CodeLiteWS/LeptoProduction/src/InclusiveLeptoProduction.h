@@ -47,8 +47,12 @@ public:
     /** @name partonic functions */
     ///@{
     
-    /** @see AbstractLeptoProduction::cg0() */
-    cdbl cg0() const;
+    /** @see AbstractLeptoProduction::cg0_VV() */
+    cdbl cg0_VV() const;
+    /** @see AbstractLeptoProduction::cg0_VA() */
+    cdbl cg0_VA() const;
+    /** @see AbstractLeptoProduction::cg0_AA() */
+    cdbl cg0_AA() const;
     
     ///@}
     

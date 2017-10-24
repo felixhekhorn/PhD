@@ -54,6 +54,8 @@ void AbstractElProduction::checkPartonic() const {
 }
 
 void AbstractElProduction::setPdf(str name, int member) {
+    if (0 != this->pdf)
+        delete (this->pdf);
     this->pdf = new PdfWrapper(name,member);
 }
 

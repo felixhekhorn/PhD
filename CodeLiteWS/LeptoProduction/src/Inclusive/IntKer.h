@@ -31,7 +31,13 @@ class IntKer : public Common::AbstractIntKer {
     void setZ(cdbl a);
     
     /** 
-     * @brief computes cg0
+     * @brief computes a single current cg0
+     * @return cg0
+     */
+    cdbl cg0_cur() const;
+    
+    /** 
+     * @brief computes full cg0
      * @return cg0
      */
     cdbl cg0() const;
@@ -52,12 +58,12 @@ public:
     /**
      * @brief constructor
      */
-    inline IntKer() {};
+    IntKer();
     
     /**
      * @brief destructor
      */
-    inline ~IntKer() {};
+    ~IntKer();
     
     /**
      * @brief called function in kernel

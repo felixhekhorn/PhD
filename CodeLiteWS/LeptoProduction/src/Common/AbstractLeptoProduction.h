@@ -25,6 +25,8 @@ protected:
     #define checkQ2(Q2) if (!isfinite(Q2) || Q2 <= 0.) throw domain_error("transfered Q2 has to be set, finite and positive!");
 /** @brief check xBjorken */
     #define checkXBjorken(xBj) if (!isfinite(xBj) || xBj <= 0. || xBj > 1.) throw domain_error("x_Bjorken has to be set, finite and in (0:1]!");
+/** @brief check lambdaQCD */
+    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("lambda_QCD has to be set, finite and positive!");
     
 public:
 
@@ -45,39 +47,26 @@ public:
 /**
  * @brief sets number of light flavours
  * @param nlf number of light flavours
-     */
-    inline void setNumberOfLightFlavours(cuint nlf) {
-        if (nlf < 3 || nlf > 5)
-            throw domain_error("number of light flavours has to be between 3 and 5!");
-        this->ker->nlf = nlf;
-    }
+ */
+    void setNumberOfLightFlavours(cuint nlf);
     
 /**
  * @brief sets mass^2 of heavy flavours
  * @param m2 mass^2 of heavy flavours
  */
-    inline void setM2(cdbl m2) {
-        if (m2 <= 0.)
-            throw domain_error("mass^2 of heavy flavours has to be positive!");
-        this->ker->m2 = m2;
-    }
+    void setM2(cdbl m2);
     
 /**
  * @brief sets transfered Q2 > 0
  * @param Q2 transfered Q2 > 0
  */
-    inline void setQ2(cdbl Q2) {
-        checkQ2(Q2)
-        this->ker->Q2 = Q2;
-    }
+    void setQ2(cdbl Q2);
     
 /**
  * @brief sets used projection
  * @param proj projection
  */
-    inline void setProjection(Projection proj) {
-        this->ker->proj = proj;
-    }
+    void setProjection(Projection proj);
     
 ///@}
 
@@ -88,20 +77,13 @@ public:
  * @brief sets partonic energy s >= 4*m2
  * @param s partonic energy s >= 4*m2
  */
-    inline void setPartonicS(cdbl s) {
-        checkPartonicS(s)
-        this->ker->s = s;
-    }
+    void setPartonicS(cdbl s);
     
 /**
  * @brief sets partonic distance from threshold \f$\\eta = \\frac{s-4 m^2}{(4 m^2}\f >= 0$
  * @param eta partonic distance from threshold
  */
-    inline void setPartonicEta(cdbl eta) {
-        if (eta < 0.)
-            throw domain_error("partonic eta has to be larger than 0!");
-        this->setPartonicS(4.*this->ker->m2*(1.+eta));
-    }
+    void setPartonicEta(cdbl eta);
 ///@}
 
 /** @name hadronic setter */
@@ -111,10 +93,7 @@ public:
  * @brief sets Bjorken scaling variable x
  * @param xBj Bjorken scaling variable
  */
-    inline void setXBjorken(cdbl xBj) {
-        checkXBjorken(xBj)
-        this->ker->xBj = xBj;
-    }
+    void setBjorkenX(cdbl xBj);
     
 /**
  * @brief sets PDF
@@ -162,10 +141,22 @@ public:
 ///@{
 
 /**
- * @brief computes leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
- * @return leading order partonic gluon contribution
+ * @brief computes vector-vector part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @return vector-vector part of leading order partonic gluon contribution
  */
-    virtual cdbl cg0() const = 0;
+    virtual cdbl cg0_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @return vector-axial part of leading order partonic gluon contribution
+ */
+    virtual cdbl cg0_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @return axial-axial part of leading order partonic gluon contribution
+ */
+    virtual cdbl cg0_AA() const = 0;
     
 ///@}
 
@@ -173,8 +164,8 @@ public:
 ///@{
 
 /**
- * @brief computes leading order hadronic gluon contribution \f$F_{\Pg}^{(0)}\f$
- * @return leading order hadronic gluon contribution
+ * @brief computes corresponding structure functions \f$F_{k}\f$
+ * @return corresponding structure function
  */
     virtual cdbl F() const = 0;
     

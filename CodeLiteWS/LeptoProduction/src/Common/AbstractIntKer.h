@@ -7,6 +7,7 @@
 #include "../config.h"
 #include "../Flags.hpp"
 #include "../Projection.hpp"
+#include "../DynamicScaleFactors.hpp"
 #include "../Pdf/PdfWrapper.h"
 
 namespace Common {
@@ -32,66 +33,61 @@ protected:
  * @param PDGId PDG particle id
  * @return electric charge
  */
-    inline cdbl getElectricCharge(const int PDGId) const {
-        switch(PDGId) {
-            case 1: case -1: // u+ubar
-            case 3: case -3: // s+sbar
-            case 5: case -5: // b+bbar
-                return -1./3.;
-            case 2: case -2: // d+dbar
-            case 4: case -4: // c+cbar
-            case 6: case -6: // t+tbar
-                return 2./3.;
-            case 21: // Gluon
-                return 0.;
-            default:
-                throw domain_error((boost::format("unkown particle id: %d")%PDGId).str());
-        }
-    }
+    cdbl getElectricCharge(const int PDGId) const;
     
 /**
  * @brief returns vectorial coupling of particle
  * @param PDGId PDG particle id
  * @return vectorial coupling
  */
-    inline cdbl getVectorialCoupling(const int PDGId) const {
-        switch (PDGId) {
-            case 11: case -11:// e+-
-                return -.5 + 2.*this->sin2ThetaWeak;
-            case 1: case -1: // d+dbar
-            case 3: case -3: // s+sbar
-            case 5: case -5: // b+bbar
-                return -.5 + 2./3.*this->sin2ThetaWeak;
-            case 2: case -2: // u+ubar
-            case 4: case -4: // c+cbar
-            case 6: case -6: // t+tbar
-                return .5 - 4./3.*this->sin2ThetaWeak;
-            default:
-                throw domain_error((boost::format("unkown particle id: %d")%PDGId).str());
-        }
-    }
+    cdbl getVectorialCoupling(const int PDGId) const;
     
 /**
  * @brief returns axial coupling of particle
  * @param PDGId PDG particle id
  * @return axial coupling
  */
-    inline cdbl getAxialCoupling(const int PDGId) const {
-        switch (PDGId) {
-            case 11: case -11:// e+-
-                return -.5;
-            case 1: case -1: // d+dbar
-            case 3: case -3: // s+sbar
-            case 5: case -5: // b+bbar
-                return -.5;
-            case 2: case -2: // u+ubar
-            case 4: case -4: // c+cbar
-            case 6: case -6: // t+tbar
-                return .5;
-            default:
-                throw domain_error((boost::format("unkown particle id: %d")%PDGId).str());
-        }
-    }
+    cdbl getAxialCoupling(const int PDGId) const;
+    
+/**
+ * @brief computes normalisation to photon-Z part
+ * @return normalisation to photon-Z part
+ */
+    cdbl getNormphZ() const;
+    
+/**
+ * @brief computes normalisation to Z part
+ * @return normalisation to Z part
+ */
+    cdbl getNormZ() const;
+    
+/**
+ * @brief computes a scale
+ * @param factors factors
+ * @param HAQTransverseMomentum
+ * @param HQPairTransverseMomentum
+ * @return current mu2
+ */
+    cdbl getScale(const DynamicScaleFactors& factors, cdbl HAQTransverseMomentum, cdbl HQPairTransverseMomentum = 0.) const;
+    
+/**
+ * @brief computes current alphaS
+ * @param HAQTransverseMomentum
+ * @param HQPairTransverseMomentum
+ * @return current alphaS
+ */
+    cdbl getAlphaS(cdbl HAQTransverseMomentum, cdbl HQPairTransverseMomentum = 0.) const;
+    
+/** @brief define shortcut */
+    typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
+    
+/**
+ * @brief sets correct pointers to BQED
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
     
 /**
  * @brief get suitable B_QED
@@ -138,27 +134,40 @@ public:
 /** @brief used pdfs */
     PdfWrapper* pdf = 0;
     
+/** @brief factors for renormalisation scale \f$\mu_R^2\f$ */
+    DynamicScaleFactors muR2;
+    
+/** @brief factors for factorisation scale \f$\mu_F^2\f$ */
+    DynamicScaleFactors muF2;
+    
 /** @brief running strong coupling as provided by LHAPDF */
     LHAPDF::AlphaS_Analytic* aS = 0;
+    
+/** @brief QCD scale */
+    dbl lambdaQCD = nan("");
     
 /** @brief current kernel mode */
     uint mode = 0;
     
 /** @name common kernel modes */
 ///@{
-    static cuint Mode_cg0 = 1;
-    static cuint Mode_F = 10;
+    static cuint Mode_cg0_VV = 1;
+    static cuint Mode_cg0_VA = 2;
+    static cuint Mode_cg0_AA = 3;
+    static cuint Mode_F = 100;
 ///@}
     
 /**
  * @brief constructor
+ * 
+ * sets mu2 = 4m2 + Q2 as default scale
  */
     AbstractIntKer();
     
 /**
  * @brief destructor
  */
-    virtual ~AbstractIntKer();
+    ~AbstractIntKer();
 
 /**
  * @brief returns maximum z

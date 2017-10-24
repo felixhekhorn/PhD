@@ -39,7 +39,7 @@ int test() {
  */
 int main(int argc, char **argv) {
     //return test();
-	//return runInclusive();
+	return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;
     cdbl m2 = 4.75*4.75;
@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     //const str pdf = "DSSV2014";
     //const str pdf = "GRSV96STDLO";
     
-    const projT proj = P;
+    const projT proj = L;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
     InclusiveElProduction iL(m2,q2,Delta,L,nlf);
@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
     eO.MCparams.warmupCalls = 5000;
     eO.MCparams.verbosity = 0;
     
-    {
+    /*{
         uint N = 101;
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-3.+6./(N-1)*j);
@@ -98,7 +98,7 @@ int main(int argc, char **argv) {
             cdbl p = eP.cg1();
             printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
         }
-    }
+    }*/
     
     /*{
         uint N = 11;
@@ -254,7 +254,7 @@ int runInclusive(){
     oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
     uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        cdbl x = pow(10,-4./(100.)*(100.+(dbl)j));
+        cdbl x = pow(10,-3. + 3./10.*(dbl)j);
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
         cdbl g = oG.Fg0();
         cdbl l = oL.Fg0();
