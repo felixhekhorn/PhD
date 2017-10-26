@@ -173,8 +173,29 @@ public:
  * @brief returns maximum z
  * @return beta
  */
-    inline cdbl zMax() const { return this->Q2/(4.*this->m2 + this->Q2); }
-
+    inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
+    
+/**
+ * @brief return hadronic S
+ * @return S_h
+ */
+    inline cdbl getHadronicS() const { return this->Q2/this->xBj - this->Q2; };
+    
+/**
+ * @brief get maximum value of pt of heavy anti quark
+ * @return pt_Qbar^max
+ */
+    inline cdbl getHAQTransverseMomentumMax() const {
+        return sqrt(this->getHadronicS()/4. - this->m2);
+    }
+    
+/**
+ * @brief get maximum value of rapidity of heavy anti quark
+ * @return y_Qbar^max
+ */
+    inline cdbl getHAQRapidityMax() const {
+        return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS()));
+    }
 };
 
 }

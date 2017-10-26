@@ -114,7 +114,7 @@
     </VirtualDirectory>
     <File Name="src/ExclusiveElProduction.cpp"/>
   </VirtualDirectory>
-  <Settings Type="Executable">
+  <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="-std=c++11;`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
@@ -185,8 +185,7 @@ $(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/
 	gfortran -c src/Pdf/grv94.f -g -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
 
 $(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
-	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
-</CustomPreBuild>
+	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>
@@ -201,7 +200,7 @@ $(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/P
         <IncludePath Value="/usr/include/python2.7"/>
         <Preprocessor Value="NDEBUG"/>
       </Compiler>
-      <Linker Options="-Wl,--export-dynamic" Required="yes">
+      <Linker Options="-Wl,--export-dynamic, -O3" Required="yes">
         <Library Value="python2.7"/>
         <Library Value="boost_python"/>
       </Linker>
@@ -251,7 +250,8 @@ $(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/
 	gfortran -c src/Pdf/grv94.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
 
 $(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
-	gfortran -c src/Pdf/mortungb.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o</CustomPreBuild>
+	gfortran -c src/Pdf/mortungb.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
+</CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
         <ClangCmpFlagsC/>

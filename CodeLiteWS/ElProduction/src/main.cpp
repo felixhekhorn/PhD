@@ -256,9 +256,9 @@ int runInclusive(){
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl g = oG.Fg0();
-        cdbl l = oL.Fg0();
-        cdbl p = oP.Fg0();
+        cdbl g = oG.dFg0_dHAQFeynmanX(0.);
+        cdbl l = oL.dFg0_dHAQFeynmanX(0.);
+        cdbl p = oP.dFg0_dHAQFeynmanX(0.);
         printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
     }
     /*uint N = 11;

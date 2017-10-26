@@ -1,200 +1,66 @@
-/*#include <boost/python.hpp>
+#include <boost/python.hpp>
 
-
-#include "InclusiveElProduction.h"
-#include "ExclusiveElProduction.h"
-
-#include "Exclusive/IntKers/KinematicVars.hpp"
-#include "Exclusive/IntKers/PhasespacePoint.h"
+#include "InclusiveLeptoProduction.h"
+#include "Projection.hpp"
+#include "Flags.hpp"
 
 using namespace boost::python;
 
-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(ExclusiveElProduction_activateHistogram_overloads, activateHistogram, 3, 5)
-
-BOOST_PYTHON_MODULE(ElProduction)
+BOOST_PYTHON_MODULE(LeptoProduction)
 {
-    scope().attr("OrderFlag_LO")      = OrderFlag_LO;
-    scope().attr("OrderFlag_NLOonly") = OrderFlag_NLOonly;
-    scope().attr("OrderFlag_NLO")     = OrderFlag_NLO;
-    
-    scope().attr("ChannelFlag_Gluon") = ChannelFlag_Gluon;
-    scope().attr("ChannelFlag_Quark") = ChannelFlag_Quark;
-    scope().attr("ChannelFlag_Full")  = ChannelFlag_Full;
-    
-    enum_<projT>("projT", "projection type")
-        .value("G", G)
-        .value("L", L)
-        .value("P", P)
+    enum_<Projection>("Projection", "projection type")
+        .value("F2", F2)
+        .value("FL", FL)
+        .value("x2g1", x2g1)
+        .value("xF3", xF3)
+        .value("g4", g4)
+        .value("gL", gL)
     ;
+    def("isParityConservingProj", &isParityConservingProj, "does projection conserve parity?");
     
-    class_<InclusiveElProduction>("InclusiveElProduction", "application class for full inclusive electro production", init<double,double,double,projT,uint>())
+    class_<InclusiveLeptoProduction>("InclusiveLeptoProduction", "application class for full inclusive lepto production", init<uint,double,double>())
         // global setter
-        .def("setQ2", &InclusiveElProduction::setQ2, "sets virtuality of photon q^2 < 0")
-        .def("setM2", &InclusiveElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
-        .def("setDelta", &InclusiveElProduction::setDelta, "sets phase space slice")
+        .def("setProjection", &InclusiveLeptoProduction::setProjection, "sets projection")
+        .def("setNumberOfLightFlavours", &InclusiveLeptoProduction::setNumberOfLightFlavours, "sets number of light flavours")
+        .def("setQ2", &InclusiveLeptoProduction::setQ2, "sets transferred momentum Q2 > 0")
+        .def("setM2", &InclusiveLeptoProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
+        .def("setDelta", &InclusiveLeptoProduction::setDelta, "sets phase space slice")
         // partonic setter
-        .def("setEta", &InclusiveElProduction::setEta, "sets partonic eta")
-        .def("setPartonicS", &InclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
+        .def("setPartonicEta", &InclusiveLeptoProduction::setPartonicEta, "sets partonic eta")
+        .def("setPartonicS", &InclusiveLeptoProduction::setPartonicS, "sets partonic center of mass energy")
         // hadronic setter
-        .def("setPdf", &InclusiveElProduction::setPdf, "sets pdf")
-        .def("setMuR2", &InclusiveElProduction::setMuR2, "sets factors for renormalisation scale")
-        .def("setMuF2", &InclusiveElProduction::setMuF2, "sets factors for factorisation scale")
-        .def("setMu2", &InclusiveElProduction::setMu2, "sets common scale")
-        .def("setLambdaQCD", &InclusiveElProduction::setLambdaQCD, "sets lambda_{QCD,f}")
-        .def("setBjorkenX", &InclusiveElProduction::setBjorkenX, "sets Bjorken x")
-        .def("setHadronicS", &InclusiveElProduction::setHadronicS, "sets hadronic center of mass energy")
+        .def("setPdf", &InclusiveLeptoProduction::setPdf, "sets pdf")
+        .def("setMuR2", &InclusiveLeptoProduction::setMuR2, "sets factors for renormalisation scale")
+        .def("setMuF2", &InclusiveLeptoProduction::setMuF2, "sets factors for factorisation scale")
+        .def("setMu2", &InclusiveLeptoProduction::setMu2, "sets common scale")
+        .def("setLambdaQCD", &InclusiveLeptoProduction::setLambdaQCD, "sets lambda_{QCD,f}")
+        .def("setBjorkenX", &InclusiveLeptoProduction::setBjorkenX, "sets Bjorken x")
         // partonic coefficient functions
-        .def("cg0", &InclusiveElProduction::cg0)
-        .def("cg1", &InclusiveElProduction::cg1)
-        .def("cgBarF1", &InclusiveElProduction::cgBarF1)
-        .def("cgBarR1", &InclusiveElProduction::cgBarR1)
-        .def("cgBar1", &InclusiveElProduction::cgBar1)
-        .def("cq1", &InclusiveElProduction::cq1)
-        .def("cqBarF1", &InclusiveElProduction::cqBarF1)
-        .def("dq1", &InclusiveElProduction::dq1)
+        .def("cg0_VV", &InclusiveLeptoProduction::cg0_VV)
+        .def("cg0_VA", &InclusiveLeptoProduction::cg0_VA)
+        .def("cg0_AA", &InclusiveLeptoProduction::cg0_AA)
         // hadronic structure functions
-        .def("F",   &InclusiveElProduction::F)
-        .def("Fg0", &InclusiveElProduction::Fg0)
-        .def("Fg1", &InclusiveElProduction::Fg1)
-        .def("Fq1", &InclusiveElProduction::Fq1)
-        .def("dF_dHAQTransverseMomentum",     &InclusiveElProduction::dF_dHAQTransverseMomentum)
-        .def("dFg0_dHAQTransverseMomentum", &InclusiveElProduction::dFg0_dHAQTransverseMomentum)
-        .def("dFg1_dHAQTransverseMomentum", &InclusiveElProduction::dFg1_dHAQTransverseMomentum)
-        .def("dFq1_dHAQTransverseMomentum", &InclusiveElProduction::dFq1_dHAQTransverseMomentum)
-        .def("dF_dHAQTransverseMomentumScaling",     &InclusiveElProduction::dF_dHAQTransverseMomentumScaling)
-        .def("dFg0_dHAQTransverseMomentumScaling", &InclusiveElProduction::dFg0_dHAQTransverseMomentumScaling)
-        .def("dFg1_dHAQTransverseMomentumScaling", &InclusiveElProduction::dFg1_dHAQTransverseMomentumScaling)
-        .def("dFq1_dHAQTransverseMomentumScaling", &InclusiveElProduction::dFq1_dHAQTransverseMomentumScaling)
-        .def("dF_dHAQRapidity",     &InclusiveElProduction::dF_dHAQRapidity)
-        .def("dFg0_dHAQRapidity", &InclusiveElProduction::dFg0_dHAQRapidity)
-        .def("dFg1_dHAQRapidity", &InclusiveElProduction::dFg1_dHAQRapidity)
-        .def("dFq1_dHAQRapidity", &InclusiveElProduction::dFq1_dHAQRapidity)
-        .def("dF_dHAQFeynmanX",     &InclusiveElProduction::dF_dHAQFeynmanX)
-        .def("dFg0_dHAQFeynmanX", &InclusiveElProduction::dFg0_dHAQFeynmanX)
-        .def("dFg1_dHAQFeynmanX", &InclusiveElProduction::dFg1_dHAQFeynmanX)
-        .def("dFq1_dHAQFeynmanX", &InclusiveElProduction::dFq1_dHAQFeynmanX)
+        .def("F",   &InclusiveLeptoProduction::F)
+        .def("dF_dHAQTransverseMomentum",     &InclusiveLeptoProduction::dF_dHAQTransverseMomentum)
+        .def("dF_dHAQTransverseMomentumScaling",     &InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling)
+        .def("dF_dHAQRapidity",     &InclusiveLeptoProduction::dF_dHAQRapidity)
+        .def("dF_dHAQFeynmanX",     &InclusiveLeptoProduction::dF_dHAQFeynmanX)
     ;
     
-    class_<ExclusiveElProduction>("ExclusiveElProduction", "application class for exclusive electro production", init<double,double,projT,uint,double,double,double,double>())
-        // global setter
-        .def("setQ2", &ExclusiveElProduction::setQ2, "sets virtuality of photon q^2 < 0")
-        .def("setM2", &ExclusiveElProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
-        .def("setOmega", &ExclusiveElProduction::setOmega, "sets collinear factorisation parameter")
-        // partonic setter
-        .def("setEta", &ExclusiveElProduction::setEta, "sets partonic eta")
-        .def("setPartonicS", &ExclusiveElProduction::setPartonicS, "sets partonic center of mass energy")
-        // hadronic setter
-        .def("setPdf", &ExclusiveElProduction::setPdf, "sets pdf")
-        .def("setMuR2", &ExclusiveElProduction::setMuR2, "sets factors for renormalisation scale")
-        .def("setMuF2", &ExclusiveElProduction::setMuF2, "sets factors for factorisation scale")
-        .def("setMu2", &ExclusiveElProduction::setMu2, "sets factors for common scale")
-        .def("setLambdaQCD", &ExclusiveElProduction::setLambdaQCD, "sets lambda_{QCD,f}")
-        .def("setBjorkenX", &ExclusiveElProduction::setBjorkenX, "sets Bjorken x")
-        .def("setHadronicS", &InclusiveElProduction::setHadronicS, "sets hadronic center of mass energy")
-        // partonic coefficient functions
-        .def("cg0", &ExclusiveElProduction::cg0)
-        .def("cg1", &ExclusiveElProduction::cg1)
-        .def("cgBarR1", &ExclusiveElProduction::cgBarR1)
-        .def("cgBarF1", &ExclusiveElProduction::cgBarF1)
-        .def("cgBar1", &ExclusiveElProduction::cgBar1)
-        .def("cq1", &ExclusiveElProduction::cq1)
-        .def("cqBarF1", &InclusiveElProduction::cqBarF1)
-        .def("dq1", &ExclusiveElProduction::dq1)
-        // hadronic structure functions
-        .def("F", &ExclusiveElProduction::F)
-        .def("Fg0", &ExclusiveElProduction::Fg0)
-        .def("Fg1", &ExclusiveElProduction::Fg1)
-        .def("Fq1", &ExclusiveElProduction::Fq1)
-        .def_readwrite("MCparams", &ExclusiveElProduction::MCparams)
-        // histograms
-        .def("activateHistogram", &ExclusiveElProduction::activateHistogram, ExclusiveElProduction_activateHistogram_overloads())
+    class_<Flags>("Flags", "controls active channels, bosons and orders")
+        .def_readwrite("useGluonicChannel", &Flags::useGluonicChannel, "use gluonic initial state?")
+        .def_readwrite("useQuarkChannel", &Flags::useQuarkChannel, "use light quark initial state?")
+        .def_readwrite("useLeadingOrder", &Flags::useLeadingOrder, "use leading order calculations?")
+        .def_readwrite("useNextToLeadingOrder", &Flags::useNextToLeadingOrder, "use (pure) next-to-leading order calculations?")
+        .def_readwrite("usePhoton", &Flags::usePhoton, "use photon exchange?")
+        .def_readwrite("usePhotonZ", &Flags::usePhotonZ, "use interference between photon and Z exchange?")
+        .def_readwrite("useZ", &Flags::useZ, "use Z0 exchange?")
     ;
     
-    enum_<Exclusive::histT>("ExclusiveHistT", "historgram type")
-        .value("log10z", Exclusive::histT::log10z)
-        .value("log10xi", Exclusive::histT::log10xi)
-        .value("Theta1", Exclusive::histT::Theta1)
-        
-        .value("HQPairInvMass", Exclusive::histT::HQPairInvMass)
-        .value("HQPairDeltaPhi", Exclusive::histT::HQPairDeltaPhi)
-        .value("HQPairTransverseMomentum", Exclusive::histT::HQPairTransverseMomentum)
-        .value("HQPairConeSizeVariable", Exclusive::histT::HQPairConeSizeVariable)
-        
-        .value("HAQRapidity", Exclusive::histT::HAQRapidity)
-        .value("HAQTransverseMomentum", Exclusive::histT::HAQTransverseMomentum)
-        .value("HAQTransverseMomentumScaling", Exclusive::histT::HAQTransverseMomentumScaling)
-        .value("HAQFeynmanX", Exclusive::histT::HAQFeynmanX)
-        
-        .value("x", Exclusive::histT::x)
-        .value("y", Exclusive::histT::y)
-        .value("Theta2", Exclusive::histT::Theta2)
+    class_<DynamicScaleFactors>("DynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
+        .def_readwrite("cM2", &DynamicScaleFactors::cM2, "factor to m2")
+        .def_readwrite("cQ2", &DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
+        .def_readwrite("cHAQTransverseMomentum", &DynamicScaleFactors::cHAQTransverseMomentum, "factor to p_{Qbar,T)^2")
+        .def_readwrite("cHQPairTransverseMomentum", &DynamicScaleFactors::cHQPairTransverseMomentum, "factor to (p_{Q,T}+p_{Qbar,T})^2")
     ;
-    
-    class_<Exclusive::MCParams>("ExclusiveMCParams")
-        .def_readwrite("calls", &Exclusive::MCParams::calls, "calls")
-        .def_readwrite("iterations", &Exclusive::MCParams::iterations, "calls during warmup")
-        .def_readwrite("warmupCalls", &Exclusive::MCParams::warmupCalls, "iterations")
-        .def_readwrite("warmupIterations", &Exclusive::MCParams::warmupIterations, "iterations during warmup")
-        .def_readwrite("bins", &Exclusive::MCParams::bins, "number of bins")
-        .def_readwrite("verbosity", &Exclusive::MCParams::verbosity, "level of output")
-        .def_readwrite("adaptChi2", &Exclusive::MCParams::adaptChi2, "iterate until |chi2-1| < 0.5?")
-    ;
-    
-    class_<Common::DynamicScaleFactors>("DynamicScaleFactors", "computes dynamic scales", init<double,double,double,double>())
-        .def_readwrite("cM2", &Common::DynamicScaleFactors::cM2, "factor to m2")
-        .def_readwrite("cQ2", &Common::DynamicScaleFactors::cQ2, "factor to q2 (!NOT! Q2)")
-        .def_readwrite("cHQPairTransverseMomentum", &Common::DynamicScaleFactors::cHQPairTransverseMomentum, "factor to (p_{Q,T}+p_{Qbar,T})^2")
-        .def_readwrite("cHAQTransverseMomentum", &Common::DynamicScaleFactors::cHAQTransverseMomentum, "factor to p_{Qbar,T)^2")
-    ;
-    
-    /*
-    // Tests
-    class_<Exclusive::KinematicVars>("ExclusiveKinematicVars",init<dbl,dbl,dbl,dbl,dbl,dbl,dbl>())
-        .def_readonly("t1", &Exclusive::KinematicVars::t1)
-        .def_readonly("u1", &Exclusive::KinematicVars::u1)
-        .def_readonly("tp", &Exclusive::KinematicVars::tp)
-        .def_readonly("up", &Exclusive::KinematicVars::up)
-        .def_readonly("beta5", &Exclusive::KinematicVars::beta5)
-    ;
-    class_<Exclusive::PhasespacePoint>("ExclusivePhasespacePoint",init<dbl,dbl,dbl,Exclusive::DynamicScaleFactors,Exclusive::DynamicScaleFactors>())
-        .def("setupLO", &Exclusive::PhasespacePoint::setupLO)
-        .def("setupNLO", &Exclusive::PhasespacePoint::setupNLO)
-        .def("isNLO", &Exclusive::PhasespacePoint::isNLO)
-        .def("getP1", &Exclusive::PhasespacePoint::getP1)
-        .def("getP2", &Exclusive::PhasespacePoint::getP2)
-    ;
-    class_<rk::P4>("rkP4",init<>())
-        .def("e", &rk::P4::e)
-        .def("px", &rk::P4::px)
-        .def("py", &rk::P4::py)
-        .def("pz", &rk::P4::pz)
-    ;
-    def("ExclusiveAp1G",Exclusive::Ap1G);
-    def("ExclusiveAp1L",Exclusive::Ap1L);
-    def("ExclusiveAp2G",Exclusive::Ap2G);
-    def("ExclusiveAp2L",Exclusive::Ap2L);
-    def("ExclusiveAp3G",Exclusive::Ap3G);
-    def("ExclusiveAp3L",Exclusive::Ap3L);
-    //def("ExclusiveBpQEDG",Exclusive::BpQEDG);
-    //def("ExclusiveBpQEDL",Exclusive::BpQEDL);
-    def("ExclusiveSVOKpG",Exclusive::SVOKpG);
-    def("ExclusiveSVOKpL",Exclusive::SVOKpL);
-    def("ExclusiveSVQEDpG",Exclusive::SVQEDpG);
-    def("ExclusiveSVQEDpL",Exclusive::SVQEDpL);
-    def("ExclusiveROK1pG",Exclusive::ROK1pG);
-    def("ExclusiveROK1pL",Exclusive::ROK1pL);
-    def("ExclusiveROK2pG",Exclusive::ROK2pG);
-    def("ExclusiveROK2pL",Exclusive::ROK2pL);
-    def("ExclusiveRQEDpG",Exclusive::RQEDpG);
-    def("ExclusiveRQEDpL",Exclusive::RQEDpL);
-    def("ExclusiveROKpxCG",Exclusive::ROKpxCG);
-    def("ExclusiveROKpxCL",Exclusive::ROKpxCL);
-    def("ExclusiveRQEDpxCG",Exclusive::RQEDpxCG);
-    def("ExclusiveRQEDpxCL",Exclusive::RQEDpxCL);
-    def("ExclusiveROKpyCG",Exclusive::ROKpyCG);
-    def("ExclusiveROKpyCL",Exclusive::ROKpyCL);
-    def("ExclusiveROKpyxCG",Exclusive::ROKpyxCG);
-    def("ExclusiveROKpyxCL",Exclusive::ROKpyxCL);
-     * /
 }
-*/

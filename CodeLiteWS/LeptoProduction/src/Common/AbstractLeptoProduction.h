@@ -74,13 +74,13 @@ public:
 ///@{
     
 /**
- * @brief sets partonic energy s >= 4*m2
- * @param s partonic energy s >= 4*m2
+ * @brief sets partonic energy \f$s >= 4m^2\f$
+ * @param s partonic energy \f$s >= 4m^2\f$
  */
     void setPartonicS(cdbl s);
     
 /**
- * @brief sets partonic distance from threshold \f$\\eta = \\frac{s-4 m^2}{(4 m^2}\f >= 0$
+ * @brief sets partonic distance from threshold \f$\eta = \frac{s-4 m^2}{4 m^2} >= 0\f$
  * @param eta partonic distance from threshold
  */
     void setPartonicEta(cdbl eta);

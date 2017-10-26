@@ -26,7 +26,7 @@
     </VirtualDirectory>
     <File Name="src/Python.cpp" ExcludeProjConfig="Debug;Release"/>
     <File Name="src/config.h"/>
-    <File Name="src/main.cpp"/>
+    <File Name="src/main.cpp" ExcludeProjConfig="Py27"/>
     <VirtualDirectory Name="Common">
       <File Name="src/Common/AbstractLeptoProduction.h"/>
       <File Name="src/Common/AbstractLeptoProduction.cpp"/>
@@ -50,7 +50,7 @@
     <File Name="src/Projection.hpp"/>
     <File Name="src/DynamicScaleFactors.hpp"/>
   </VirtualDirectory>
-  <Settings Type="Executable">
+  <Settings Type="Dynamic Library">
     <GlobalSettings>
       <Compiler Options="-std=c++11;`lhapdf-config --cflags`" C_Options="" Assembler="">
         <IncludePath Value="."/>
@@ -121,7 +121,72 @@ $(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/
 	gfortran -c src/Pdf/grv94.f -g -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
 
 $(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
-	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
+	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o</CustomPreBuild>
+      </AdditionalRules>
+      <Completion EnableCpp11="no" EnableCpp14="no">
+        <ClangCmpFlagsC/>
+        <ClangCmpFlags/>
+        <ClangPP/>
+        <SearchPaths/>
+      </Completion>
+    </Configuration>
+    <Configuration Name="Py27" CompilerType="GCC" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="prepend" BuildResWithGlobalSettings="append">
+      <Compiler Options="-O3;-Wall; -fPIC" C_Options="-O3;-Wall; -fPIC" Assembler="" Required="yes" PreCompiledHeader="" PCHInCommandLine="no" PCHFlags="" PCHFlagsPolicy="0">
+        <IncludePath Value="."/>
+        <IncludePath Value="/usr/include/python2.7"/>
+        <Preprocessor Value="NDEBUG"/>
+      </Compiler>
+      <Linker Options="-Wl,--export-dynamic, -O3" Required="yes">
+        <Library Value="python2.7"/>
+        <Library Value="boost_python"/>
+      </Linker>
+      <ResourceCompiler Options="" Required="no"/>
+      <General OutputFile="$(IntermediateDirectory)/$(ProjectName).so" IntermediateDirectory="./Py27" Command="./$(ProjectName)" CommandArguments="" UseSeparateDebugArgs="no" DebugArguments="" WorkingDirectory="$(IntermediateDirectory)" PauseExecWhenProcTerminates="no" IsGUIProgram="no" IsEnabled="yes"/>
+      <BuildSystem Name="Default"/>
+      <Environment EnvVarSetName="&lt;Use Defaults&gt;" DbgSetName="&lt;Use Defaults&gt;">
+        <![CDATA[]]>
+      </Environment>
+      <Debugger IsRemote="no" RemoteHostName="" RemoteHostPort="" DebuggerPath="" IsExtended="no">
+        <DebuggerSearchPaths/>
+        <PostConnectCommands/>
+        <StartupCommands/>
+      </Debugger>
+      <PreBuild/>
+      <PostBuild/>
+      <CustomBuild Enabled="no">
+        <RebuildCommand/>
+        <CleanCommand/>
+        <BuildCommand/>
+        <PreprocessFileCommand/>
+        <SingleFileCommand/>
+        <MakefileGenerationCommand/>
+        <ThirdPartyToolName/>
+        <WorkingDirectory/>
+      </CustomBuild>
+      <AdditionalRules>
+        <CustomPostBuild/>
+        <CustomPreBuild>$(IntermediateDirectory)/src_Pdf_all.d
+$(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
+					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
+					$(IntermediateDirectory)/src_Pdf_grsvpol.f.o\
+					$(IntermediateDirectory)/src_Pdf_grv94.f.o\
+					$(IntermediateDirectory)/src_Pdf_mortungb.f.o
+	@echo "" &gt; $(IntermediateDirectory)/src_Pdf_all.d
+
+$(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
+	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+
+$(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
+	gfortran -c src/Pdf/cteq3.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+
+$(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
+	gfortran -c src/Pdf/grsvpol.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+
+$(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
+	gfortran -c src/Pdf/grv94.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
+
+$(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
+	gfortran -c src/Pdf/mortungb.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
 </CustomPreBuild>
       </AdditionalRules>
       <Completion EnableCpp11="no" EnableCpp14="no">
