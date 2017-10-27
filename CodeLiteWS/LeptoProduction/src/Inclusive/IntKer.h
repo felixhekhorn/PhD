@@ -23,31 +23,41 @@ class IntKer : public Common::AbstractIntKer {
  */
     void setT1(cdbl a);
 
-/** @brief parton moment variable z = x_bj/xi */
-    dbl z;
-/** @brief jacobian for z */
-    dbl jac_z;
+/** @brief parton moment variable xi */
+    dbl xi;
+    
+/** @brief volume of V_HAQTransverseMass2 */
+    dbl V_HAQTransverseMass2;
 /**
- * @brief sets z (and its jacobian)
+ * @brief sets HAQTransverseMomentum (and the volume of mt2)
  * @param a integration variable
  */
-    void setZ(cdbl a);
+    void setHAQTransverseMomentum(cdbl a);
+    
+/** @brief volume of HAQRapidity */
+    dbl V_HAQRapidity;
+/**
+ * @brief sets HAQRapidity (and its volume)
+ * @param a integration variable
+ */
+    void setHAQRapidity(cdbl a);
+    
+/** @brief partonic s4 */
+    dbl s4;
+/** @brief sets partonic s and t1 by pt,y,s4 */
+    void setPartonicVars();
     
 /**
  * @brief get hadronic T1
- * @param ey exp(y)
- * @param mt sqrt(mt2)
- * @return T1(exp(y),mt)
+ * @return T1
  */
-    cdbl getHadronicT1(cdbl ey, cdbl mt) const;
+    cdbl getHadronicT1() const;
     
 /**
  * @brief get hadronic U1
- * @param ey exp(y)
- * @param mt sqrt(mt2)
- * @return U1(exp(y),mt)
+ * @return U1
  */
-    cdbl getHadronicU1(cdbl ey, cdbl mt) const;
+    cdbl getHadronicU1() const;
     
 /** 
  * @brief computes a single current cg0
@@ -62,10 +72,10 @@ class IntKer : public Common::AbstractIntKer {
     cdbl cg0() const;
     
 /** 
- * @brief computes F
- * @return F
+ * @brief computes Fg0
+ * @return Fg0
  */
-    cdbl F() const;
+    cdbl Fg0() const;
     
 public:
     
@@ -73,10 +83,10 @@ public:
     dbl Delta;
     
 /** @brief current transverse momentum pt of heavy anti quark */
-    dbl HAQTransverseMomentum;
+    dbl HAQTransverseMomentum = nan("");
     
 /** @brief current rapidity y of heavy anti quark */
-    dbl HAQRapidity;
+    dbl HAQRapidity = nan("");
     
 /** @brief current Feynman-x of heavy anti quark */
     dbl HAQFeynmanX;

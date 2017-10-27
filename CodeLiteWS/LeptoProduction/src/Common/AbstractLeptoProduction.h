@@ -26,7 +26,7 @@ protected:
 /** @brief check xBjorken */
     #define checkXBjorken(xBj) if (!isfinite(xBj) || xBj <= 0. || xBj > 1.) throw domain_error("x_Bjorken has to be set, finite and in (0:1]!");
 /** @brief check lambdaQCD */
-    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("lambda_QCD has to be set, finite and positive!");
+    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("Lambda_QCD has to be set, finite and positive!");
     
 public:
 
@@ -87,13 +87,19 @@ public:
 ///@}
 
 /** @name hadronic setter */
-///@{    
+///@{
 
 /**
  * @brief sets Bjorken scaling variable x
  * @param xBj Bjorken scaling variable
  */
     void setBjorkenX(cdbl xBj);
+
+/**
+ * @brief sets hadronic S
+ * @param Sh hadronic S
+ */
+    void setHadronicS(cdbl Sh);
     
 /**
  * @brief sets PDF

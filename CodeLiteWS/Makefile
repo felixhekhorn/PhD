@@ -1,8 +1,8 @@
 .PHONY: clean All
 
 All:
-	@echo "----------Building project:[ LeptoProduction - Py27 ]----------"
+	@echo "----------Building project:[ LeptoProduction - Debug ]----------"
 	@cd "LeptoProduction" && "$(MAKE)" -f  "LeptoProduction.mk" PrePreBuild && "$(MAKE)" -f  "LeptoProduction.mk"
 clean:
-	@echo "----------Cleaning project:[ LeptoProduction - Py27 ]----------"
+	@echo "----------Cleaning project:[ LeptoProduction - Debug ]----------"
 	@cd "LeptoProduction" && "$(MAKE)" -f  "LeptoProduction.mk" clean

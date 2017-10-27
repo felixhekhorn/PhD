@@ -62,9 +62,9 @@ int test() {
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
         o2.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl c2 = o2.dF_dHAQFeynmanX(0.);
-        cdbl cL = oL.dF_dHAQFeynmanX(0.);
-        cdbl cP = oP.dF_dHAQFeynmanX(0.);
+        cdbl c2 = o2.dF_dHAQTransverseMomentumScaling(.5);
+        cdbl cL = oL.dF_dHAQTransverseMomentumScaling(.5);
+        cdbl cP = oP.dF_dHAQTransverseMomentumScaling(.5);
         printf("%e\t%e\t%e\t%e\n",x,c2,cL,cP);
     }
     

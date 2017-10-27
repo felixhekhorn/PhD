@@ -96,7 +96,7 @@ cdbl InclusiveLeptoProduction::dF_dHAQRapidity(cdbl HAQRapidity) const {
 
 cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
     initF
-    if (HAQFeynmanX < -1. || HAQFeynmanX > 1)
+    if (HAQFeynmanX < -1. || HAQFeynmanX > 1.)
         throw invalid_argument((boost::format("HAQFeynmanX has to be within [-1,1]! (x_F = %e)")%HAQFeynmanX).str());
     kker->HAQFeynmanX = HAQFeynmanX;
     this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQFeynmanX;
@@ -107,8 +107,9 @@ cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling(cdbl HAQTransverseMomentumScaling) const {
+    initF
     if (HAQTransverseMomentumScaling < 0. || HAQTransverseMomentumScaling > 1.)
         throw invalid_argument((boost::format("HAQTransverseMomentumScaling has to be within [0,1]! (xt = %e)")%HAQTransverseMomentumScaling).str());
     cdbl pt_max = this->ker->getHAQTransverseMomentumMax();
-    return pt_max*this->dF_dHAQFeynmanX(HAQTransverseMomentumScaling*pt_max);
+    return pt_max*this->dF_dHAQTransverseMomentum(HAQTransverseMomentumScaling*pt_max);
 }

@@ -35,6 +35,7 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setMu2", &InclusiveLeptoProduction::setMu2, "sets common scale")
         .def("setLambdaQCD", &InclusiveLeptoProduction::setLambdaQCD, "sets lambda_{QCD,f}")
         .def("setBjorkenX", &InclusiveLeptoProduction::setBjorkenX, "sets Bjorken x")
+        .def("setHadronicS", &InclusiveLeptoProduction::setHadronicS, "sets hadronic center of mass energy")
         // partonic coefficient functions
         .def("cg0_VV", &InclusiveLeptoProduction::cg0_VV)
         .def("cg0_VA", &InclusiveLeptoProduction::cg0_VA)

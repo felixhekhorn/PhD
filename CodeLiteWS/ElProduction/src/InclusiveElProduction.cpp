@@ -338,6 +338,7 @@ cdbl InclusiveElProduction::dF_dHAQTransverseMomentumScaling(cdbl xt, const uint
 }
 
 #define dFcn_dHAQTransverseMomentumScaling(cn) cdbl InclusiveElProduction::dF##cn##_dHAQTransverseMomentumScaling(cdbl xt) const {\
+    if (this->bjorkenX >= this->zMax) return 0.;\
     if (xt < 0. || xt > 1)\
         throw invalid_argument((boost::format("xt has to be within [0,1]! (xt = %e)")%xt).str());\
     cdbl pt_max = this->getHAQTransverseMomentumMax();\

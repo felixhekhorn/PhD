@@ -48,6 +48,13 @@ void Common::AbstractLeptoProduction::setBjorkenX(cdbl xBj) {
     this->ker->xBj = xBj;
 }
 
+void Common::AbstractLeptoProduction::setHadronicS(cdbl Sh) {
+    if (Sh < 4.*this->ker->m2)
+        throw domain_error("hadronic cm-energy has to be larger than threshold 4m^2!");
+    checkQ2(this->ker->Q2)
+    this->setBjorkenX(this->ker->Q2/(Sh + this->ker->Q2));
+}
+
 void Common::AbstractLeptoProduction::setPdf(str name, int member) {
     if (0 != this->ker->pdf)
         delete (this->ker->pdf);
