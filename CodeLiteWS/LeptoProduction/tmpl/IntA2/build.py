@@ -5,7 +5,7 @@ tmpl = """#include "IntA2.h"
 
 #define Power(x,y) pow(x,y)
 
-#define initIntA2 cdbl u1 = - sp - t1;\\
+#define initIntA2 cdbl u1 = s4 - sp - t1;\\
 cdbl s = sp+q2;\\
 cdbl r1 = sqrt(pow(s - s4,2) - 4.*m2*s);\\
 cdbl r2 = sqrt(pow(sp + u1 - q2,2) - 4.*q2*(t1 + m2));\\

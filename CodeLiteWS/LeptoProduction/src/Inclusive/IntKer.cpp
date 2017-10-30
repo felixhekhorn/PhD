@@ -2,6 +2,7 @@
 
 #include "../Common/Color.hpp"
 #include "../Common/ME/BQED.h"
+#include "ME/IntA2.h"
 
 Inclusive::IntKer::IntKer() : AbstractIntKer() {
 };
@@ -70,13 +71,15 @@ void Inclusive::IntKer::setPartonicVars() {
     this->t1 = this->xi*T1;
 }
 
-cdbl Inclusive::IntKer::cg0_cur() const {
-    _sp
-    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;
-    fPtr4dbl fVV = 0;
-    fPtr4dbl fVA = 0;
-    fPtr4dbl fAA = 0;
+#define initCg0 _sp\
+    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;\
+    fPtr4dbl fVV = 0;\
+    fPtr4dbl fVA = 0;\
+    fPtr4dbl fAA = 0;\
     this->getBQED(fVV, fVA, fAA);
+
+cdbl Inclusive::IntKer::cg0_cur() const {
+    initCg0
     if (Mode_cg0_VV == this->mode) return n * fVV(m2,-Q2,sp,t1);
     if (Mode_cg0_VA == this->mode) return n * fVA(m2,-Q2,sp,t1);
     if (Mode_cg0_AA == this->mode) return n * fAA(m2,-Q2,sp,t1);
@@ -84,12 +87,7 @@ cdbl Inclusive::IntKer::cg0_cur() const {
 }
 
 cdbl Inclusive::IntKer::cg0() const {
-    _sp
-    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;
-    fPtr4dbl fVV = 0;
-    fPtr4dbl fVA = 0;
-    fPtr4dbl fAA = 0;
-    this->getBQED(fVV, fVA, fAA);
+    initCg0
     cdbl eH = this->getElectricCharge(this->nlf+1);
     cdbl gVQ = this->getVectorialCoupling(this->nlf+1);
     cdbl gAQ = this->getAxialCoupling(this->nlf+1);
@@ -100,10 +98,9 @@ cdbl Inclusive::IntKer::cg0() const {
         if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gVQ * eVV;
         if (this->flags.useZ) {
             cdbl eAA = fAA(this->m2,-this->Q2,sp,t1);
-            cdbl c = this->getNormZ();
             // if needed: rewrite to reveal new term v2-a2
-            // v2 * fvv + a2*faa = (v2+a2)*(fvv + faa)/2 + (v2-a2)*(fvv-faa)/2;
-            r += c*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
+            // v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
+            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
         }
     } else {
         cdbl eVA = fVA(this->m2,-this->Q2,sp,t1);
@@ -111,6 +108,29 @@ cdbl Inclusive::IntKer::cg0() const {
         if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
     }
     return n * r;
+}
+
+void Inclusive::IntKer::getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const {
+    switch(this->proj) {
+        case F2:   fVV = &Inclusive::ME::IntA2_F2_VV;   fVA = 0; break;
+        case FL:   fVV = &Inclusive::ME::IntA2_FL_VV;   fVA = 0; break;
+        case x2g1: fVV = &Inclusive::ME::IntA2_x2g1_VV; fVA = 0; break;
+        case xF3:  fVA = &Inclusive::ME::IntA2_xF3_VA;  fVV = 0; break;
+        case g4:   fVA = &Inclusive::ME::IntA2_g4_VA;   fVV = 0; break;
+        case gL:   fVA = &Inclusive::ME::IntA2_gL_VA;   fVV = 0; break;
+    }
+}
+
+cdbl Inclusive::IntKer::dq1_cur() const {
+    _sp
+    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kqph * (cdbl)Color::NC * Color::CF;
+    fPtr5dbl fVV = 0;
+    fPtr5dbl fVA = 0;
+    this->getIntA2(fVV, fVA);
+    if (Mode_dq1_VV == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
+    if (Mode_dq1_VA == this->mode) return n * fVA(m2,-Q2,sp,t1,s4);
+    if (Mode_dq1_AA == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
+    return 0.;
 }
 
 cdbl Inclusive::IntKer::Fg0() const {
@@ -129,10 +149,19 @@ cdbl Inclusive::IntKer::Fg0() const {
 cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2) {      
     // void mode
     if (0 == this->mode) return 0.;
-    // partonic mode
+    // cg0
     if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode) {
         this->setT1(a1);
         return this->jac_t1*this->cg0_cur();
+    } // dq1
+    if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode) {
+        this->setT1(a1);
+        // setS4
+        _sp
+        cdbl beta = this->beta();
+        cdbl s4max = (this->s*((sp*(1. - beta))/2. + t1)*((sp*(1. + beta))/2. + t1))/(sp*t1);
+        this->s4 = a2*s4max;
+        return this->jac_t1*s4max*this->dq1_cur();
     }
     // structure function mode
     dbl jac = 0.;

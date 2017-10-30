@@ -15,8 +15,9 @@
 
 int runInclusive();
 int runInclusive2();
+#include "./Inclusive/ME/IntA.h"
 int test() {
-    PdfWrapper a("MorfinTungB",0);
+    /*PdfWrapper a("MorfinTungB",0);
     PdfWrapper b("MorfinTungB_old",0);
     const int pid = -1;
     cout << "pid = " << pid << endl;
@@ -27,7 +28,13 @@ int test() {
             printf("%e\t%e\t%e\t%e\n",Q2,x,a.xfxQ2(pid,x,Q2),b.xfxQ2(pid,x,Q2));
         }
         cout << endl;
-    }
+    }*/
+    cdbl m2 = 1.;
+    cdbl q2 = -1.;
+    cdbl sp = 7.;
+    cdbl t1 = -3.;
+    cdbl s4 = 1.;
+    cout << Inclusive::IntAL2(m2,q2,sp,s4,t1) << endl;
     return EXIT_SUCCESS;
 }
 
@@ -38,8 +45,8 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
-	return runInclusive();
+    return test();
+	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;
     cdbl m2 = 4.75*4.75;

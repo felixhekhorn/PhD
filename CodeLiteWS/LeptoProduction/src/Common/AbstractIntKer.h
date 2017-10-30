@@ -81,6 +81,16 @@ protected:
 /** @brief define shortcut */
     typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
     
+/** @brief getter for matrix elements */
+    #define getME(ns) switch(this->proj) {\
+        case F2:   fVV = &ns##_F2_VV;   fAA = &ns##_F2_AA;   fVA = 0; break;\
+        case FL:   fVV = &ns##_FL_VV;   fAA = &ns##_FL_AA;   fVA = 0; break;\
+        case x2g1: fVV = &ns##_x2g1_VV; fAA = &ns##_x2g1_AA; fVA = 0; break;\
+        case xF3:  fVA = &ns##_xF3_VA; fVV = 0; fAA = 0;              break;\
+        case g4:   fVA = &ns##_g4_VA;  fVV = 0; fAA = 0;              break;\
+        case gL:   fVA = &ns##_gL_VA;  fVV = 0; fAA = 0;              break;\
+    }
+    
 /**
  * @brief sets correct pointers to BQED
  * @param fVV vector-vector part
@@ -88,13 +98,6 @@ protected:
  * @param fAA axial-axial part
  */
     void getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
-    
-/**
- * @brief get suitable B_QED
- * @param t1
- * @return B_QED in correct projection and correct linear combination
- */
-    cdbl BQED(cdbl t1) const;
     
 public:
 
@@ -154,6 +157,9 @@ public:
     static cuint Mode_cg0_VV = 1;
     static cuint Mode_cg0_VA = 2;
     static cuint Mode_cg0_AA = 3;
+    static cuint Mode_dq1_VV = 4;
+    static cuint Mode_dq1_VA = 5;
+    static cuint Mode_dq1_AA = 6;
     static cuint Mode_F = 100;
 ///@}
     

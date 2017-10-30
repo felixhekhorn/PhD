@@ -14,7 +14,8 @@ Release/src_main.cpp.o: src/main.cpp src/config.h src/Common/Timer.h \
  src/Exclusive/IntKers/KinematicVars.hpp \
  src/Exclusive/IntKers/../../Common/DynamicScaleFactors.hpp \
  src/Exclusive/IntKers/KinematicVars.hpp src/gslpp/gslpp.Functor.hpp \
- src/Common/Integration.h src/Common/../config.h
+ src/Common/Integration.h src/Common/../config.h \
+ src/./Inclusive/ME/IntA.h src/./Inclusive/ME/../../config.h
 
 src/config.h:
 
@@ -71,3 +72,7 @@ src/gslpp/gslpp.Functor.hpp:
 src/Common/Integration.h:
 
 src/Common/../config.h:
+
+src/./Inclusive/ME/IntA.h:
+
+src/./Inclusive/ME/../../config.h:

@@ -147,22 +147,40 @@ public:
 ///@{
 
 /**
- * @brief computes vector-vector part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @brief computes vector-vector part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),VV}\f$
  * @return vector-vector part of leading order partonic gluon contribution
  */
     virtual cdbl cg0_VV() const = 0;
 
 /**
- * @brief computes vector-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @brief computes vector-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),VA}\f$
  * @return vector-axial part of leading order partonic gluon contribution
  */
     virtual cdbl cg0_VA() const = 0;
 
 /**
- * @brief computes axial-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0)}\f$
+ * @brief computes axial-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),AA}\f$
  * @return axial-axial part of leading order partonic gluon contribution
  */
     virtual cdbl cg0_AA() const = 0;
+
+/**
+ * @brief computes vector-vector part of next-to-leading order partonic quark contribution \f$d_{\Pq}^{(1),VV}\f$
+ * @return vector-vector part of next-to-leading order partonic quark contribution
+ */
+    virtual cdbl dq1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order partonic quark contribution \f$d_{\Pq}^{(1),VA}\f$
+ * @return vector-axial part of next-to-leading order partonic quark contribution
+ */
+    virtual cdbl dq1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order partonic quark contribution \f$d_{\Pq}^{(1),AA}\f$
+ * @return axial-axial part of next-to-leading order partonic quark contribution
+ */
+    virtual cdbl dq1_AA() const = 0;
     
 ///@}
 

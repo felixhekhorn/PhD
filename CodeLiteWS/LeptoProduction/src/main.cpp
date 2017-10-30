@@ -5,6 +5,7 @@
 
 #include "InclusiveLeptoProduction.h"
 
+int testHadronic();
 int test();
 
 /**
@@ -14,27 +15,43 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
+    //return testHadronic();
+    
     cuint nlf = 4;
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e3;
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
     o.setQ2(Q2);
-    cdbl eta = 1e3;
-    o.setPartonicEta(eta);
-    o.setProjection(F2);
-    cdbl cF2 = o.cg0_VV();
-    o.setProjection(FL);
-    cdbl cFL = o.cg0_VV();
-    o.setProjection(x2g1);
-    cdbl cx2g1 = o.cg0_VV();
-    cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
+    cuint N = 11;
+    for (uint j = 0; j < N; ++j) {
+        cdbl eta = pow(10.,-3.+6./(N-1)*j);
+        o.setPartonicEta(eta);
+        o.setProjection(F2);
+        cdbl cF2 = o.dq1_VV();
+        o.setProjection(FL);
+        cdbl cFL = o.dq1_VV();
+        o.setProjection(x2g1);
+        cdbl cx2g1 = o.dq1_VV();
+        cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
+    }
     
     return EXIT_SUCCESS;
 }
 
+#include "Inclusive/ME/IntA2.h"
 int test() {
+    cdbl m2 = 1.;
+    cdbl q2 = -1.;
+    cdbl sp = 7.;
+    cdbl t1 = -3.;
+    cdbl s4 = 1.;
+    cout << Inclusive::ME::IntA2_FL_VV(m2,q2,sp,t1,s4) << endl;
+    return EXIT_SUCCESS;
+}
+
+int testHadronic() {
     cuint nlf = 4;
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e2;

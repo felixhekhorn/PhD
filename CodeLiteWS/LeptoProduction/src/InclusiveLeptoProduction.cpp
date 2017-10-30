@@ -14,40 +14,61 @@ InclusiveLeptoProduction::InclusiveLeptoProduction(cuint nlf, cdbl m2, cdbl Delt
 InclusiveLeptoProduction::~InclusiveLeptoProduction() {
 }
 
-cdbl InclusiveLeptoProduction::cg0_VV() const {
-    checkQ2(this->ker->Q2)
-    checkPartonicS(this->ker->s)
-    if (!isParityConservingProj(this->ker->proj))
+#define initPartonicVV checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (!isParityConservingProj(this->ker->proj))\
         throw domain_error("current projection does NOT have a vector-vector part!");
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    this->ker->mode = Common::AbstractIntKer::Mode_cg0_VV;
+
+#define initPartonicAA checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (!isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a axial-axial part!");
+        
+#define initPartonicVA checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a vector-axial part!");
+        
+#define runCg0(cur) this->ker->mode = Common::AbstractIntKer::Mode_cg0_##cur;\
+    gsl_function f;\
+    f.params = this->ker;\
+    f.function = gslpp::callFunctor<Inclusive::IntKer>;\
     return Common::int1D(&f);
+
+cdbl InclusiveLeptoProduction::cg0_VV() const {
+    initPartonicVV
+    runCg0(VV)
 }
 
 cdbl InclusiveLeptoProduction::cg0_AA() const {
-    checkQ2(this->ker->Q2)
-    checkPartonicS(this->ker->s)
-    if (!isParityConservingProj(this->ker->proj))
-        throw domain_error("current projection does NOT have a axial-axial part!");
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    this->ker->mode = Common::AbstractIntKer::Mode_cg0_AA;
-    return Common::int1D(&f);
+    initPartonicAA
+    runCg0(AA)
 }
 
 cdbl InclusiveLeptoProduction::cg0_VA() const {
-    checkQ2(this->ker->Q2)
-    checkPartonicS(this->ker->s)
-    if (isParityConservingProj(this->ker->proj))
-        throw domain_error("current projection does NOT have a vector-axial part!");
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    this->ker->mode = Common::AbstractIntKer::Mode_cg0_VA;
-    return Common::int1D(&f);
+    initPartonicVA
+    runCg0(VA)
+}
+
+#define runDq1(cur) this->ker->mode = Common::AbstractIntKer::Mode_dq1_##cur;\
+    gsl_monte_function f;\
+    f.params = this->ker;\
+    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
+    return Common::int2D(&f);
+
+cdbl InclusiveLeptoProduction::dq1_VV() const {
+    initPartonicVV
+    runDq1(VV)
+}
+
+cdbl InclusiveLeptoProduction::dq1_AA() const {
+    initPartonicAA
+    runDq1(AA)
+}
+
+cdbl InclusiveLeptoProduction::dq1_VA() const {
+    initPartonicVA
+    runDq1(VA)
 }
 
 #define initF checkQ2(this->ker->Q2)\
@@ -61,12 +82,18 @@ cdbl InclusiveLeptoProduction::cg0_VA() const {
 
 cdbl InclusiveLeptoProduction::F() const {
     initF
+    this->ker->mode = Common::AbstractIntKer::Mode_F;
     gsl_monte_function f;
     f.params = this->ker;
-    this->ker->mode = Common::AbstractIntKer::Mode_F;
     f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
     return Common::int2D(&f);
 }
+
+#define run_dF_dHAQX(var) this->ker->mode = Inclusive::IntKer::Mode_dF_d##var;\
+    gsl_function f;\
+    f.params = this->ker;\
+    f.function = gslpp::callFunctor<Inclusive::IntKer>;\
+    return Common::int1D(&f);
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentum(cdbl HAQTransverseMomentum) const {
     initF
@@ -75,11 +102,7 @@ cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentum(cdbl HAQTransverseMomen
     if (HAQTransverseMomentum >= this->ker->getHAQTransverseMomentumMax())
         return 0.;
     kker->HAQTransverseMomentum = HAQTransverseMomentum;
-    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQTransverseMomentum;
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    return Common::int1D(&f);
+    run_dF_dHAQX(HAQTransverseMomentum)
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQRapidity(cdbl HAQRapidity) const {
@@ -87,11 +110,7 @@ cdbl InclusiveLeptoProduction::dF_dHAQRapidity(cdbl HAQRapidity) const {
     if (fabs(HAQRapidity) >= this->ker->getHAQRapidityMax())
         return 0.;
     kker->HAQRapidity = HAQRapidity;
-    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQRapidity;
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    return Common::int1D(&f);
+    run_dF_dHAQX(HAQRapidity)
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
@@ -99,11 +118,7 @@ cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
     if (HAQFeynmanX < -1. || HAQFeynmanX > 1.)
         throw invalid_argument((boost::format("HAQFeynmanX has to be within [-1,1]! (x_F = %e)")%HAQFeynmanX).str());
     kker->HAQFeynmanX = HAQFeynmanX;
-    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQFeynmanX;
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    return Common::int1D(&f);
+    run_dF_dHAQX(HAQFeynmanX)
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling(cdbl HAQTransverseMomentumScaling) const {
