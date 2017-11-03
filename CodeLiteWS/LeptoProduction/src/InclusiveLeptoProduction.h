@@ -59,6 +59,13 @@ public:
 /** @see AbstractLeptoProduction::dq1_AA() */
     cdbl dq1_AA() const;
     
+/** @see AbstractLeptoProduction::cq1_VV() */
+    cdbl cq1_VV() const;
+/** @see AbstractLeptoProduction::cq1_VA() */
+    cdbl cq1_VA() const;
+/** @see AbstractLeptoProduction::cq1_AA() */
+    cdbl cq1_AA() const;
+    
 ///@}
 
 /** @name hadronic functions */

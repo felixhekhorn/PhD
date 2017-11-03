@@ -34,42 +34,27 @@ InclusiveLeptoProduction::~InclusiveLeptoProduction() {
     f.params = this->ker;\
     f.function = gslpp::callFunctor<Inclusive::IntKer>;\
     return Common::int1D(&f);
-
-cdbl InclusiveLeptoProduction::cg0_VV() const {
-    initPartonicVV
-    runCg0(VV)
-}
-
-cdbl InclusiveLeptoProduction::cg0_AA() const {
-    initPartonicAA
-    runCg0(AA)
-}
-
-cdbl InclusiveLeptoProduction::cg0_VA() const {
-    initPartonicVA
-    runCg0(VA)
-}
+cdbl InclusiveLeptoProduction::cg0_VV() const { initPartonicVV runCg0(VV) }
+cdbl InclusiveLeptoProduction::cg0_AA() const { initPartonicAA runCg0(AA) }
+cdbl InclusiveLeptoProduction::cg0_VA() const { initPartonicVA runCg0(VA) }
 
 #define runDq1(cur) this->ker->mode = Common::AbstractIntKer::Mode_dq1_##cur;\
     gsl_monte_function f;\
     f.params = this->ker;\
     f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
     return Common::int2D(&f);
+cdbl InclusiveLeptoProduction::dq1_VV() const { initPartonicVV runDq1(VV) }
+cdbl InclusiveLeptoProduction::dq1_AA() const { initPartonicAA runDq1(AA) }
+cdbl InclusiveLeptoProduction::dq1_VA() const { initPartonicVA runDq1(VA) }
 
-cdbl InclusiveLeptoProduction::dq1_VV() const {
-    initPartonicVV
-    runDq1(VV)
-}
-
-cdbl InclusiveLeptoProduction::dq1_AA() const {
-    initPartonicAA
-    runDq1(AA)
-}
-
-cdbl InclusiveLeptoProduction::dq1_VA() const {
-    initPartonicVA
-    runDq1(VA)
-}
+#define runCq1(cur) this->ker->mode = Common::AbstractIntKer::Mode_cq1_##cur;\
+    gsl_monte_function f;\
+    f.params = this->ker;\
+    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
+    return Common::int2D(&f);
+cdbl InclusiveLeptoProduction::cq1_VV() const { initPartonicVV runCq1(VV) }
+cdbl InclusiveLeptoProduction::cq1_AA() const { initPartonicAA runCq1(AA) }
+cdbl InclusiveLeptoProduction::cq1_VA() const { initPartonicVA runCq1(VA) }
 
 #define initF checkQ2(this->ker->Q2)\
     checkXBjorken(this->ker->xBj)\

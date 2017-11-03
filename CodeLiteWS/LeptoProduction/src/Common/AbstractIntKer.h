@@ -160,6 +160,9 @@ public:
     static cuint Mode_dq1_VV = 4;
     static cuint Mode_dq1_VA = 5;
     static cuint Mode_dq1_AA = 6;
+    static cuint Mode_cq1_VV = 7;
+    static cuint Mode_cq1_VA = 8;
+    static cuint Mode_cq1_AA = 9;
     static cuint Mode_F = 100;
 ///@}
     

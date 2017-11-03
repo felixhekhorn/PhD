@@ -29,11 +29,11 @@ int main(int argc, char **argv) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         o.setProjection(F2);
-        cdbl cF2 = o.dq1_VV();
+        cdbl cF2 = o.cq1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.dq1_VV();
+        cdbl cFL = o.cq1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.dq1_VV();
+        cdbl cx2g1 = o.cq1_VV();
         cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     }
     

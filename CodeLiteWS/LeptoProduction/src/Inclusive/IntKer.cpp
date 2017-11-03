@@ -3,6 +3,7 @@
 #include "../Common/Color.hpp"
 #include "../Common/ME/BQED.h"
 #include "ME/IntA2.h"
+#include "ME/IntA1.h"
 
 Inclusive::IntKer::IntKer() : AbstractIntKer() {
 };
@@ -133,6 +134,23 @@ cdbl Inclusive::IntKer::dq1_cur() const {
     return 0.;
 }
 
+void Inclusive::IntKer::getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const {
+    getME(Inclusive::ME::IntA1)
+}
+
+cdbl Inclusive::IntKer::cq1_cur() const {
+    _sp
+    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kqph * (cdbl)Color::NC * Color::CF;
+    fPtr5dbl fVV = 0;
+    fPtr5dbl fVA = 0;
+    fPtr5dbl fAA = 0;
+    this->getIntA1(fVV, fVA, fAA);
+    if (Mode_cq1_VV == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
+    if (Mode_cq1_VA == this->mode) return n * fVA(m2,-Q2,sp,t1,s4);
+    if (Mode_cq1_AA == this->mode) return n * fAA(m2,-Q2,sp,t1,s4);
+    return 0.;
+}
+
 cdbl Inclusive::IntKer::Fg0() const {
     cdbl xi = this->xi;
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
@@ -153,15 +171,20 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2) {
     if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode) {
         this->setT1(a1);
         return this->jac_t1*this->cg0_cur();
-    } // dq1
-    if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode) {
+    } // cq1 + dq1
+    if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode ||
+        Mode_cq1_VV == this->mode || Mode_cq1_VA == this->mode || Mode_cq1_AA == this->mode) {
         this->setT1(a1);
         // setS4
         _sp
         cdbl beta = this->beta();
         cdbl s4max = (this->s*((sp*(1. - beta))/2. + t1)*((sp*(1. + beta))/2. + t1))/(sp*t1);
         this->s4 = a2*s4max;
-        return this->jac_t1*s4max*this->dq1_cur();
+        if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode)
+            return this->jac_t1*s4max*this->dq1_cur();
+        if (Mode_cq1_VV == this->mode || Mode_cq1_VA == this->mode || Mode_cq1_AA == this->mode)
+            return this->jac_t1*s4max*this->cq1_cur();
+        return 0.;
     }
     // structure function mode
     dbl jac = 0.;

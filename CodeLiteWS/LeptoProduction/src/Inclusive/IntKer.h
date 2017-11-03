@@ -69,6 +69,14 @@ class IntKer : public Common::AbstractIntKer {
  */
     void getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const;
     
+/**
+ * @brief sets correct pointers to IntA1
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
+    
 /** 
  * @brief computes a single current cg0
  * @return cg0
@@ -80,6 +88,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return dq1
  */
     cdbl dq1_cur() const;
+    
+/** 
+ * @brief computes a single current cq1
+ * @return cq1
+ */
+    cdbl cq1_cur() const;
 
 /** 
  * @brief computes full cg0

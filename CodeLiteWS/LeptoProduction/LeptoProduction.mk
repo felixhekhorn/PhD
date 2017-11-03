@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Felix Hekhorn
-Date                   :=30/10/17
+Date                   :=03/11/17
 CodeLitePath           :=/home/Felix/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -62,7 +62,8 @@ AS       := /usr/bin/as
 CodeLiteDir:=/usr/share/codelite
 DSSV2014_GRIDS:=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/
 GRSV96_GRIDS:=/home/Felix/Physik/PhD/PDF/GRSV96/
-Objects0=$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_Integration.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractIntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) 
+Objects0=$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_Integration.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractIntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) \
+	
 
 
 
@@ -186,6 +187,14 @@ $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(DependSuffix): src/Inclusiv
 
 $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(PreprocessSuffix): src/Inclusive/ME/IntA2.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(PreprocessSuffix) src/Inclusive/ME/IntA2.cpp
+
+$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix): src/Inclusive/ME/IntA1.cpp $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/Inclusive/ME/IntA1.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(DependSuffix): src/Inclusive/ME/IntA1.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(DependSuffix) -MM src/Inclusive/ME/IntA1.cpp
+
+$(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(PreprocessSuffix): src/Inclusive/ME/IntA1.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(PreprocessSuffix) src/Inclusive/ME/IntA1.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)
