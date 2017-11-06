@@ -4,7 +4,9 @@ VectorDimension[n];
 
 (* setup *)
 meElems = Tuples[{{u7,u1},{up,s}}];
-meElems = {#[[1]],void,void,#[[2]]}& /@ meElems;
+meElems = {{#[[1]],void,void,#[[2]]},{void,#[[1]],#[[2]],void}}& /@ meElems;
+meElems = Flatten[meElems,1];
+Print@meElems;
 elems = Tuples[{{V,Apre,Apost},{V,Apre,Apost},meElems}];
 elems = Flatten[#]& /@ elems;
 
@@ -33,7 +35,7 @@ meNLOq[void][Gint_][mu_, nu_] :=  {{nu}};
 
 (* calculate *)
 applyProj[tr_,k_] := Module[{f},
-WriteString["stdout","."];
+WriteString[$Output,"."];
 f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
 f = f//.{H[a_+b_,c_]:>H[a,c]+H[b,c],H[a_,c_+d_]:>H[a,c]+H[a,d],H[-a_,b_]:>-H[a,b],H[a_,-b_]:>-H[a,b]};
 f = RemoveHatMomenta[f,q,k1,p2]/.{H[k2, p1]->k2hat2,H[k2, k2]->-k2hat2,H[p1, p1]->-k2hat2};
@@ -44,7 +46,7 @@ Return[f];
 Clear@AA3;
 
 calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
-WriteString["stdout","elems[",ToString@First@ind,"] = ",ToString@e," "];
+WriteString[$Output,"elems[",ToString@First@ind,"] = ",ToString@e," "];
 {cur1,cur2,ch1,ch2,ch3,ch4} = e;
 
 HQLine = {(p1 + Sqrt@m2 U)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugQ] ~Join~ {(p2-Sqrt@m2 U)} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugQp]/.{G5->-G5}];
@@ -65,7 +67,7 @@ trqA = GammaTrace@@qLineA;
 trA = Expand@ContractEpsGamma[(-{nugq}.{nugQ})/tp*trQ*trqA*(-{nugqp}.{nugQp})/s5];
 Do[(AA3@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-Write["stdout",""];
+WriteString[$Output,""];
 ];
 
 Print["Length@elems = ",Length@elems];

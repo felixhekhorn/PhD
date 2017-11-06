@@ -100,6 +100,26 @@ class IntKer : public Common::AbstractIntKer {
  * @return cg0
  */
     cdbl cg0() const;
+
+/** 
+ * @brief computes full dq1
+ * @return dq1
+ */
+    cdbl dq1() const;
+
+/** 
+ * @brief computes full cq1
+ * @return cq1
+ */
+    cdbl cq1() const;
+    
+/**
+ * @brief computes a single partonic function
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @return a single partonic function
+ */
+    cdbl runPartonic(cdbl a1, cdbl a2);
     
 /** 
  * @brief computes Fg0
@@ -129,8 +149,9 @@ public:
     
 /**
  * @brief called function in kernel
- * @param a1
- * @param a2
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @return kernel
  */
     cdbl operator()(cdbl a1, cdbl a2 = 0.);
     

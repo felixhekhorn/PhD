@@ -34,7 +34,7 @@ int test() {
     cdbl sp = 7.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << Inclusive::IntAL2(m2,q2,sp,s4,t1) << endl;
+    cout << (Inclusive::IntAL1(m2,q2,sp,s4,t1)) << endl;
     return EXIT_SUCCESS;
 }
 

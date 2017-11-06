@@ -27,7 +27,7 @@ meNLOq[u1][Gint_][mu_, nu_] :=  {{nu}, (q-p2+Sqrt@m2 U)} ~Join~ Gint[mu];
 
 (* calculate *)
 applyProj[tr_,k_] := Module[{f},
-WriteString["stdout","."];
+WriteString[$Output,"."];
 f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
 f = f//.{H[a_+b_,c_]:>H[a,c]+H[b,c],H[a_,c_+d_]:>H[a,c]+H[a,d],H[-a_,b_]:>-H[a,b],H[a_,-b_]:>-H[a,b]};
 f = RemoveHatMomenta[f,q,k1,p2]/.{H[k2, p1]->k2hat2,H[k2, k2]->-k2hat2,H[p1, p1]->-k2hat2};
@@ -41,7 +41,7 @@ qLineV = GammaTrace[lqV,(k2),{nugq},(k1),{nugqp}];
 qLineA = GammaTrace[lqA,(k2),{nugq},(k1),(-G5),{nugqp}];
 
 calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
-WriteString["stdout","elems[",ToString@First@ind,"] = ",ToString@e," "];
+WriteString[$Output,"elems[",ToString@First@ind,"] = ",ToString@e," "];
 {cur1,cur2,ch1,ch2} = e;
 
 line = {(p1 + Sqrt@m2 U)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugQ] ~Join~ {(p2-Sqrt@m2 U)} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugQp]/.{G5->-G5}];
@@ -54,7 +54,7 @@ Do[(AA1@@e)[F,k] = applyProj[trV,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineA*(-{nugqp}.{nugQp})/tp];
 Do[(AA1@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-Write["stdout",""];
+WriteString[$Output,""];
 ];
 
 MapIndexed[calcTr, elems]

@@ -6,8 +6,6 @@ tmpl = """#include "IntA1.h"
 #define Power(x,y) pow(x,y)
 
 #define initIntA1 cdbl u1 = s4 - sp - t1;\\
-cdbl s = sp+q2;\\
-cdbl r1 = sqrt(pow(s - s4,2) - 4.*m2*s);\\
 cdbl r2 = sqrt(pow(sp + u1 - q2,2) - 4.*q2*(t1 + m2));\\
 cdbl psLog2_S1_u7 = log(((s4+m2)*pow(t1,2)*pow(u1,2))/(pow(sp+t1,2)*(q2*s4*t1 + m2*pow(sp+u1,2))));\\
 cdbl psLog3_S1_u7 = log1p(- (2.*r2*s4)/(2.*m2*(sp+u1) + s4*(-q2 + r2 + sp + u1)));

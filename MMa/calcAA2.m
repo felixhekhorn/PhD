@@ -30,7 +30,7 @@ meNLOq[s][Gint_][mu_, nu_] :=  {{nu}, (k1+q)} ~Join~ Gint[mu];
 
 (* calculate *)
 applyProj[tr_,k_] := Module[{f},
-WriteString["stdout","."];
+WriteString[$Output,"."];
 f = ContractEpsGamma[proj[V][k][mu,mup]*tr];
 (*f = RemoveHatMomenta[f,k1,q,p2]/.{H[k2, p1]->k2hat2};*)
 f = f/.{H[_,_]->0}/.{Tracer`Private`eps[__]->epsi};
@@ -42,7 +42,7 @@ Clear@AA2;
 HQLine = GammaTrace[lHQ,(p1 + Sqrt@m2 U),{nugQ}, (p2 - Sqrt@m2 U),{nugQp}];
 
 calcTr[e_,ind_] := Module[{cur1,cur2,ch1,ch2,line,tr},
-WriteString["stdout","elems[",ToString@First@ind,"] = ",ToString@e," "];
+WriteString[$Output,"elems[",ToString@First@ind,"] = ",ToString@e," "];
 {cur1,cur2,ch1,ch2} = e;
 
 lineV = {(k2)} ~Join~ meNLOq[ch1][Gint[cur1]][mu, nugq] ~Join~ {(k1)} ~Join~ Reverse[meNLOq[ch2][Gint[cur2]][mup, nugqp]/.{G5->-G5}];
@@ -57,7 +57,7 @@ trA = GammaTrace@@lineA;
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/s5*(trA)*HQLine*(-{nugqp}.{nugQp})/s5];
 Do[(AA2@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-Write["stdout",""];
+WriteString[$Output,""];
 ];
 
 MapIndexed[calcTr, elems];
