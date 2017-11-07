@@ -56,13 +56,22 @@ cdbl InclusiveLeptoProduction::cq1_VV() const { initPartonicVV runCq1(VV) }
 cdbl InclusiveLeptoProduction::cq1_AA() const { initPartonicAA runCq1(AA) }
 cdbl InclusiveLeptoProduction::cq1_VA() const { initPartonicVA runCq1(VA) }
 
+#define runCqBarF1(cur) this->ker->mode = Common::AbstractIntKer::Mode_cqBarF1_##cur;\
+    gsl_monte_function f;\
+    f.params = this->ker;\
+    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
+    return Common::int2D(&f);
+cdbl InclusiveLeptoProduction::cqBarF1_VV() const { initPartonicVV runCqBarF1(VV) }
+cdbl InclusiveLeptoProduction::cqBarF1_AA() const { initPartonicAA runCqBarF1(AA) }
+cdbl InclusiveLeptoProduction::cqBarF1_VA() const { initPartonicVA runCqBarF1(VA) }
+
 #define initF checkQ2(this->ker->Q2)\
     checkXBjorken(this->ker->xBj)\
     checkLambdaQCD(this->ker->lambdaQCD)\
     if (0 == this->ker->pdf)\
         throw domain_error("needs PDF for hadronic structure function!");\
     if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
-        throw domain_error("scale for inclusive computation may not depend on exclusive variable HQPairTransverseMomentum!");\
+        throw domain_error("scales for inclusive computation may not depend on exclusive variable HQPairTransverseMomentum!");\
     if (this->ker->xBj >= this->ker->getZMax()) return 0.;
 
 cdbl InclusiveLeptoProduction::F() const {
@@ -74,11 +83,18 @@ cdbl InclusiveLeptoProduction::F() const {
     return Common::int2D(&f);
 }
 
-#define run_dF_dHAQX(var) this->ker->mode = Inclusive::IntKer::Mode_dF_d##var;\
-    gsl_function f;\
-    f.params = this->ker;\
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;\
+cdbl InclusiveLeptoProduction::rundF_dHAQX() const {
+    if (this->ker->flags.useNextToLeadingOrder) {
+        gsl_monte_function f;
+        f.params = this->ker;
+        f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
+        return Common::int2D(&f);
+    }
+    gsl_function f;
+    f.params = this->ker;
+    f.function = gslpp::callFunctor<Inclusive::IntKer>;
     return Common::int1D(&f);
+}
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentum(cdbl HAQTransverseMomentum) const {
     initF
@@ -87,7 +103,8 @@ cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentum(cdbl HAQTransverseMomen
     if (HAQTransverseMomentum >= this->ker->getHAQTransverseMomentumMax())
         return 0.;
     kker->HAQTransverseMomentum = HAQTransverseMomentum;
-    run_dF_dHAQX(HAQTransverseMomentum)
+    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQTransverseMomentum;
+    return this->rundF_dHAQX();
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQRapidity(cdbl HAQRapidity) const {
@@ -95,7 +112,8 @@ cdbl InclusiveLeptoProduction::dF_dHAQRapidity(cdbl HAQRapidity) const {
     if (fabs(HAQRapidity) >= this->ker->getHAQRapidityMax())
         return 0.;
     kker->HAQRapidity = HAQRapidity;
-    run_dF_dHAQX(HAQRapidity)
+    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQRapidity;
+    return this->rundF_dHAQX();
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
@@ -103,7 +121,8 @@ cdbl InclusiveLeptoProduction::dF_dHAQFeynmanX(cdbl HAQFeynmanX) const {
     if (HAQFeynmanX < -1. || HAQFeynmanX > 1.)
         throw invalid_argument((boost::format("HAQFeynmanX has to be within [-1,1]! (x_F = %e)")%HAQFeynmanX).str());
     kker->HAQFeynmanX = HAQFeynmanX;
-    run_dF_dHAQX(HAQFeynmanX)
+    this->ker->mode = Inclusive::IntKer::Mode_dF_dHAQFeynmanX;
+    return this->rundF_dHAQX();
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling(cdbl HAQTransverseMomentumScaling) const {

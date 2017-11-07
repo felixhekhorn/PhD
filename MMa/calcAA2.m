@@ -57,7 +57,7 @@ trA = GammaTrace@@lineA;
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/s5*(trA)*HQLine*(-{nugqp}.{nugQp})/s5];
 Do[(AA2@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-WriteString[$Output,""];
+Write[$Output,""];
 ];
 
 MapIndexed[calcTr, elems];

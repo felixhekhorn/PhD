@@ -4,7 +4,7 @@ VectorDimension[n];
 
 (* setup *)
 meL = {{s4,t1},{u7,t1},{s4,u1},{u6,u1},{u7,s3},{u6,s3},{u1,tp},{u7,tp}};
-meT = Table[{meL[[k]],meL[[l]]},{k,1,Length@meL},{l,1,k}];
+meT = Table[{meL[[k]],meL[[l]]},{k,1,Length@meL},{l,1,Length@meL}];
 meT = Flatten[meT,1];
 elems = Tuples[{{V,Apre,Apost},{V,Apre,Apost},meT}];
 elems = Flatten[#,1]& /@ elems;

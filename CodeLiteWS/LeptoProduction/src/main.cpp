@@ -29,11 +29,11 @@ int main(int argc, char **argv) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         o.setProjection(F2);
-        cdbl cF2 = o.cq1_VV();
+        cdbl cF2 = o.cqBarF1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.cq1_VV();
+        cdbl cFL = o.cqBarF1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.cq1_VV();
+        cdbl cx2g1 = o.cqBarF1_VV();
         cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     }
     
@@ -56,7 +56,7 @@ int testHadronic() {
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e2;
     cdbl Delta = 1.e-6;
-    DynamicScaleFactors mu02 (4., 1., 0., 0.);
+    DynamicScaleFactors mu02 (1.+0.*4.,0.*1., 0., 0.);
     cdbl lambdaQCD = .239;
     
     InclusiveLeptoProduction o2(nlf,m2,Delta);
@@ -71,7 +71,8 @@ int testHadronic() {
     o2.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
     o2.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
     
-    o2.flags().useNextToLeadingOrder = oL.flags().useNextToLeadingOrder = oP.flags().useNextToLeadingOrder = false;
+    /*o2.flags().useNextToLeadingOrder = oL.flags().useNextToLeadingOrder = oP.flags().useNextToLeadingOrder = false;*/
+    o2.flags().useGluonicChannel = oL.flags().useGluonicChannel = oP.flags().useGluonicChannel = false;
     o2.flags().usePhotonZ = oL.flags().usePhotonZ = oP.flags().usePhotonZ = false;
     o2.flags().useZ = oL.flags().useZ = oP.flags().useZ = false;
     

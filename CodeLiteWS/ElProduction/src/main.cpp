@@ -45,8 +45,8 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
-	//return runInclusive();
+    //return test();
+	return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;
     cdbl m2 = 4.75*4.75;
@@ -244,7 +244,7 @@ int runInclusive(){
     cdbl Delta = 1e-6;
     cdbl q2 = -1e2;
     cdbl lambdaQCD = .239; // nlf=3
-    const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
+    const Common::DynamicScaleFactors mu02(1.+0.*4.,0.*-1.,0.,0.);
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
     InclusiveElProduction oL(m2,q2,Delta,L,nlf);
     InclusiveElProduction oP(m2,q2,Delta,P,nlf);
@@ -263,9 +263,9 @@ int runInclusive(){
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl g = oG.dFg0_dHAQTransverseMomentumScaling(.5);
-        cdbl l = oL.dFg0_dHAQTransverseMomentumScaling(.5);
-        cdbl p = oP.dFg0_dHAQTransverseMomentumScaling(.5);
+        cdbl g = oG.dFq1_dHAQTransverseMomentumScaling(.5);
+        cdbl l = oL.dFq1_dHAQTransverseMomentumScaling(.5);
+        cdbl p = oP.dFq1_dHAQTransverseMomentumScaling(.5);
         printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
     }
     /*uint N = 11;

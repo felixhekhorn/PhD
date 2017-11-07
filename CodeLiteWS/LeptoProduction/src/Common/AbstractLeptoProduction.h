@@ -148,57 +148,75 @@ public:
 
 /**
  * @brief computes vector-vector part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),VV}\f$
- * @return vector-vector part of leading order partonic gluon contribution
+ * @return \f$c_{\Pg}^{(0),VV}\f$
  */
     virtual cdbl cg0_VV() const = 0;
 
 /**
  * @brief computes vector-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),VA}\f$
- * @return vector-axial part of leading order partonic gluon contribution
+ * @return \f$c_{\Pg}^{(0),VA}\f$
  */
     virtual cdbl cg0_VA() const = 0;
 
 /**
  * @brief computes axial-axial part of leading order partonic gluon contribution \f$c_{\Pg}^{(0),AA}\f$
- * @return axial-axial part of leading order partonic gluon contribution
+ * @return \f$c_{\Pg}^{(0),AA}\f$
  */
     virtual cdbl cg0_AA() const = 0;
 
 /**
  * @brief computes vector-vector part of next-to-leading order partonic quark contribution with light quark charge \f$d_{\Pq}^{(1),VV}\f$
- * @return vector-vector part of next-to-leading order partonic quark contribution with light quark charge
+ * @return \f$d_{\Pq}^{(1),VV}\f$
  */
     virtual cdbl dq1_VV() const = 0;
 
 /**
  * @brief computes vector-axial part of next-to-leading order partonic quark contribution with light quark charge \f$d_{\Pq}^{(1),VA}\f$
- * @return vector-axial part of next-to-leading order partonic quark contribution with light quark charge
+ * @return \f$d_{\Pq}^{(1),VA}\f$
  */
     virtual cdbl dq1_VA() const = 0;
 
 /**
  * @brief computes axial-axial part of next-to-leading order partonic quark contribution with light quark charge \f$d_{\Pq}^{(1),AA}\f$
- * @return axial-axial part of next-to-leading order partonic quark contribution with light quark charge
+ * @return \f$d_{\Pq}^{(1),AA}\f$
  */
     virtual cdbl dq1_AA() const = 0;
 
 /**
  * @brief computes vector-vector part of next-to-leading order partonic quark contribution with heavy quark charge \f$c_{\Pq}^{(1),VV}\f$
- * @return vector-vector part of next-to-leading order partonic quark contribution with heavy quark charge
+ * @return \f$c_{\Pq}^{(1),VV}\f$
  */
     virtual cdbl cq1_VV() const = 0;
 
 /**
  * @brief computes vector-axial part of next-to-leading order partonic quark contribution with heavy quark charge \f$c_{\Pq}^{(1),VA}\f$
- * @return vector-axial part of next-to-leading order partonic quark contribution with heavy quark charge
+ * @return \f$c_{\Pq}^{(1),VA}\f$
  */
     virtual cdbl cq1_VA() const = 0;
 
 /**
  * @brief computes axial-axial part of next-to-leading order partonic quark contribution with heavy quark charge \f$c_{\Pq}^{(1),AA}\f$
- * @return axial-axial part of next-to-leading order partonic quark contribution with heavy quark charge
+ * @return \f$c_{\Pq}^{(1),AA}\f$
  */
     virtual cdbl cq1_AA() const = 0;
+
+/**
+ * @brief computes vector-vector part of next-to-leading order partonic quark contribution with factorisation scale \f$\bar c_{\Pq}^{F,(1),VV}\f$
+ * @return \f$\bar c_{\Pq}^{F,(1),VV}\f$
+ */
+    virtual cdbl cqBarF1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order partonic quark contribution with factorisation scale \f$\bar c_{\Pq}^{F,(1),VA}\f$
+ * @return \f$\bar c_{\Pq}^{F,(1),VA}\f$
+ */
+    virtual cdbl cqBarF1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order partonic quark contribution with factorisation scale \f$\bar c_{\Pq}^{F,(1),AA}\f$
+ * @return \f$\bar c_{\Pq}^{F,(1),AA}\f$
+ */
+    virtual cdbl cqBarF1_AA() const = 0;
     
 ///@}
 

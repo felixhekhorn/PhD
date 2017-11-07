@@ -13,6 +13,12 @@ class InclusiveLeptoProduction : public Common::AbstractLeptoProduction {
     
 /** @brief cast ker to my type */
     #define kker ((Inclusive::IntKer*)this->ker)
+    
+/**
+ * @brief runs the integration
+ * @return dF_dHAQX
+ */
+    cdbl rundF_dHAQX() const;
 
 public:
 
@@ -65,6 +71,13 @@ public:
     cdbl cq1_VA() const;
 /** @see AbstractLeptoProduction::cq1_AA() */
     cdbl cq1_AA() const;
+    
+/** @see AbstractLeptoProduction::cqBarF1_VV() */
+    cdbl cqBarF1_VV() const;
+/** @see AbstractLeptoProduction::cqBarF1_VA() */
+    cdbl cqBarF1_VA() const;
+/** @see AbstractLeptoProduction::cqBarF1_AA() */
+    cdbl cqBarF1_AA() const;
     
 ///@}
 

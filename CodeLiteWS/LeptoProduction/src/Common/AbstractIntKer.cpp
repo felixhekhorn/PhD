@@ -1,6 +1,7 @@
 #include "AbstractIntKer.h"
 
 #include "./ME/BQED.h"
+#include "./AltarelliParisi.hpp"
 
 Common::AbstractIntKer::AbstractIntKer() : muR2(4.,1.,0.,0.), muF2(4.,1.,0.,0.) {
     this->aS = new LHAPDF::AlphaS_Analytic();
@@ -81,11 +82,19 @@ void Common::AbstractIntKer::getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA
     getME(Common::ME::BQED)
 }
 
+Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPgq0() const {
+    switch(this->proj) {
+        case F2:   case FL: case xF3: return &AltarelliParisi::Pgq0;
+        case x2g1: case g4: case gL:  return &AltarelliParisi::DeltaPgq0;
+    }
+    throw domain_error("unkonwn projection: "+strProj(this->proj));
+}
+
 cdbl Common::AbstractIntKer::getNormphZ() const {
     cdbl etaPhZ = 1./(4. * this->sin2ThetaWeak * (1. - this->sin2ThetaWeak)) * this->Q2 / (this->Q2 + this->MZ2);
     cdbl sgn = this->incomingLeptonHasNegativeCharge ? -1. : 1.;
     cdbl lam = this->incomingLeptonHasPositiveHelicity ? 1. : -1.;
-    cdbl gVl = this->getVectorialCoupling(11); // initial lepton defaults to electron = 11 - allow change?
+    cdbl gVl = this->getVectorialCoupling(11); /// @todo initial lepton defaults to electron = 11; allow change?
     cdbl gAl = this->getAxialCoupling(11);
     if (isParityConservingProj(this->proj))
         return (gVl + sgn*lam*gAl) * etaPhZ;
@@ -96,7 +105,7 @@ cdbl Common::AbstractIntKer::getNormZ() const {
     cdbl etaPhZ = 1./(4. * this->sin2ThetaWeak * (1. - this->sin2ThetaWeak)) * this->Q2 / (this->Q2 + this->MZ2);
     cdbl sgn = this->incomingLeptonHasNegativeCharge ? -1. : 1.;
     cdbl lam = this->incomingLeptonHasPositiveHelicity ? 1. : -1.;
-    cdbl gVl = this->getVectorialCoupling(11); // initial lepton defaults to electron = 11 - allow change?
+    cdbl gVl = this->getVectorialCoupling(11); /// @todo initial lepton defaults to electron = 11; allow change?
     cdbl gAl = this->getAxialCoupling(11);
     if (isParityConservingProj(this->proj))
         return (gVl*gVl + gAl*gAl + 2.*sgn*lam*gVl*gAl) * etaPhZ*etaPhZ;

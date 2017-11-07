@@ -67,7 +67,7 @@ trqA = GammaTrace@@qLineA;
 trA = Expand@ContractEpsGamma[(-{nugq}.{nugQ})/tp*trQ*trqA*(-{nugqp}.{nugQp})/s5];
 Do[(AA3@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-WriteString[$Output,""];
+Write[$Output,""];
 ];
 
 Print["Length@elems = ",Length@elems];

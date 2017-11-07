@@ -94,6 +94,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return cq1
  */
     cdbl cq1_cur() const;
+    
+/** 
+ * @brief computes a single current cqBarF1
+ * @return cqBarF1
+ */
+    cdbl cqBarF1_cur() const;
 
 /** 
  * @brief computes full cg0
@@ -102,16 +108,16 @@ class IntKer : public Common::AbstractIntKer {
     cdbl cg0() const;
 
 /** 
- * @brief computes full dq1
- * @return dq1
- */
-    cdbl dq1() const;
-
-/** 
  * @brief computes full cq1
  * @return cq1
  */
     cdbl cq1() const;
+
+/** 
+ * @brief computes full cqBarF1
+ * @return cqBarF1
+ */
+    cdbl cqBarF1() const;
     
 /**
  * @brief computes a single partonic function
@@ -126,6 +132,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return Fg0
  */
     cdbl Fg0() const;
+    
+/** 
+ * @brief computes Fq1
+ * @return Fq1
+ */
+    cdbl Fq1() const;
     
 public:
     
@@ -151,9 +163,10 @@ public:
  * @brief called function in kernel
  * @param a1 integration variable
  * @param a2 integration variable
+ * @param a3 integration variable
  * @return kernel
  */
-    cdbl operator()(cdbl a1, cdbl a2 = 0.);
+    cdbl operator()(cdbl a1, cdbl a2 = 0., cdbl a3 = 0.);
     
     
 /** @name additional kernel modes */

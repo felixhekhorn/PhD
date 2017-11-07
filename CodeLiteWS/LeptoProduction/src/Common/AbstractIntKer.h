@@ -78,7 +78,7 @@ protected:
  */
     cdbl getAlphaS(cdbl HAQTransverseMomentum, cdbl HQPairTransverseMomentum = 0.) const;
     
-/** @brief define shortcut */
+/** @brief define shortcut for BQED */
     typedef cdbl (*fPtr4dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
     
 /** @brief getter for matrix elements */
@@ -98,6 +98,15 @@ protected:
  * @param fAA axial-axial part
  */
     void getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
+    
+/** @brief define shortcut for Ps */
+    typedef cdbl (*fPtr1dbl)(cdbl x);
+    
+/**
+ * @brief finds correct pointer to Pgq
+ * @return Pgq
+ */
+    fPtr1dbl getPgq0() const;
     
 public:
 
@@ -163,6 +172,9 @@ public:
     static cuint Mode_cq1_VV = 7;
     static cuint Mode_cq1_VA = 8;
     static cuint Mode_cq1_AA = 9;
+    static cuint Mode_cqBarF1_VV = 10;
+    static cuint Mode_cqBarF1_VA = 11;
+    static cuint Mode_cqBarF1_AA = 12;
     static cuint Mode_F = 100;
 ///@}
     

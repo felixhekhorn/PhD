@@ -54,7 +54,7 @@ Do[(AA1@@e)[F,k] = applyProj[trV,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 trA = ContractEpsGamma[(-{nugq}.{nugQ})/tp*tr*qLineA*(-{nugqp}.{nugQp})/tp];
 Do[(AA1@@e)[g,k] = applyProj[trA,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-WriteString[$Output,""];
+Write[$Output,""];
 ];
 
 MapIndexed[calcTr, elems]
