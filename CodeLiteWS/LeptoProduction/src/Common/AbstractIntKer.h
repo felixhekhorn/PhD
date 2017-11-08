@@ -89,6 +89,7 @@ protected:
         case xF3:  fVA = &ns##_xF3_VA; fVV = 0; fAA = 0;              break;\
         case g4:   fVA = &ns##_g4_VA;  fVV = 0; fAA = 0;              break;\
         case gL:   fVA = &ns##_gL_VA;  fVV = 0; fAA = 0;              break;\
+        default: throw domain_error("unkonwn projection: "+strProj(this->proj));\
     }
     
 /**

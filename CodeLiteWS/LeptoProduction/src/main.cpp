@@ -16,7 +16,7 @@ int test();
  */
 int main(int argc, char **argv) {
     //return test();
-    //return testHadronic();
+    return testHadronic();
     
     cuint nlf = 4;
     cdbl m2 = pow(4.75,2);
@@ -56,7 +56,7 @@ int testHadronic() {
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e2;
     cdbl Delta = 1.e-6;
-    DynamicScaleFactors mu02 (1.+0.*4.,0.*1., 0., 0.);
+    DynamicScaleFactors mu02 (4.,1., 0., 0.);
     cdbl lambdaQCD = .239;
     
     InclusiveLeptoProduction o2(nlf,m2,Delta);
@@ -80,9 +80,9 @@ int testHadronic() {
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
         o2.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl c2 = o2.dF_dHAQTransverseMomentumScaling(.5);
-        cdbl cL = oL.dF_dHAQTransverseMomentumScaling(.5);
-        cdbl cP = oP.dF_dHAQTransverseMomentumScaling(.5);
+        cdbl c2 = o2.dF_dHAQFeynmanX(.5);
+        cdbl cL = oL.dF_dHAQFeynmanX(.5);
+        cdbl cP = oP.dF_dHAQFeynmanX(.5);
         printf("%e\t%e\t%e\t%e\n",x,c2,cL,cP);
     }
     

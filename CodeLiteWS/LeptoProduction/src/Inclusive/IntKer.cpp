@@ -227,10 +227,9 @@ cdbl Inclusive::IntKer::Fg0() const {
 }
 
 cdbl Inclusive::IntKer::Fq1() const {
-    // prepare dq1
+    // compute matrix elements for dq1
     dbl dq1_eVV = 0.;
     dbl dq1_eVA = 0.;
-    dbl dq1 = 0.;
     {
         initDq1
         if (isParityConservingProj(this->proj)) {
@@ -239,27 +238,25 @@ cdbl Inclusive::IntKer::Fq1() const {
             dq1_eVA = n*fVA(this->m2,-this->Q2,sp,t1,s4);
         }
     }
-    // common stuff usable for everything
+    // common stuff
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
     cdbl curMuF2 = this->getScale(this->muF2,this->HAQTransverseMomentum);
     cdbl nNLO = alphaS*alphaS/this->m2 * (this->Q2)/(M_PI);
     cdbl cq1 = this->cq1() + log(curMuF2/this->m2) * this->cqBarF1();
-    cdbl eH = this->getElectricCharge(this->nlf+1);
-    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);
-    cdbl gAQ = this->getAxialCoupling(this->nlf+1);
     dbl fqs = 0.;
     for (uint q = 1; q < this->nlf + 1; ++q) {
+        dbl dq1 = 0.;
         { // compute actual dq1
             cdbl eL = getElectricCharge(q);
             cdbl gVq = this->getVectorialCoupling(q);
             cdbl gAq = this->getAxialCoupling(q);
             if (isParityConservingProj(this->proj)) {
-                if (this->flags.usePhoton)  dq1 +=                       eH *eL             * dq1_eVV;
-                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() * (eH *gVq + gVQ*eL)  * dq1_eVV;
-                if (this->flags.useZ)       dq1 += this->getNormZ()   * (gVQ*gVq + gAQ*gAq) * dq1_eVV; /// @todo add factor to dq1 in Z-exchange
+                if (this->flags.usePhoton)  dq1 +=                       eL*eL              * dq1_eVV;
+                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() *  eL*gVq             * dq1_eVV;
+                if (this->flags.useZ)       dq1 += this->getNormZ()   * (gVq*gVq + gAq*gAq) * dq1_eVV;
             } else {
-                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() * (eH *gAq + gAQ*eL)  * dq1_eVA;
-                if (this->flags.useZ)       dq1 += this->getNormZ()   * (gVQ*gAq + gAQ*gVq) * dq1_eVA;
+                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() *    eL *gAq * dq1_eVA;
+                if (this->flags.useZ)       dq1 += this->getNormZ()   * 2.*gVq*gAq * dq1_eVA;
             }        
         }
         // combine cq1+dq1

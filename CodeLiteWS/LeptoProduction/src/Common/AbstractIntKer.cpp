@@ -66,9 +66,9 @@ cdbl Common::AbstractIntKer::getAxialCoupling(const int PDGId) const {
 }
 
 cdbl Common::AbstractIntKer::getScale(const DynamicScaleFactors& factors, cdbl HAQTransverseMomentum, cdbl HQPairTransverseMomentum) const {
-    cdbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->Q2 + factors.cHAQTransverseMomentum * HAQTransverseMomentum*HAQTransverseMomentum;
+    cdbl mu2 = factors.cM2 * this->m2 + factors.cQ2 * this->Q2 + factors.cHAQTransverseMomentum * HAQTransverseMomentum*HAQTransverseMomentum + factors.cHQPairTransverseMomentum * HQPairTransverseMomentum*HQPairTransverseMomentum;
     if (!isfinite(mu2) || mu2 <= 0.)
-        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e**2)")%mu2%factors.cM2%m2%factors.cQ2%Q2%factors.cHAQTransverseMomentum%HAQTransverseMomentum).str());
+        throw domain_error((boost::format("all scales have to be finite and positive! (%e = %e*%e + %e*%e + %e*%e^2 + %e*%e^2)")%mu2%factors.cM2%m2%factors.cQ2%Q2%factors.cHAQTransverseMomentum%HAQTransverseMomentum%factors.cHQPairTransverseMomentum%HQPairTransverseMomentum).str());
     return mu2;
 }
 
