@@ -65,13 +65,15 @@ cdbl InclusiveLeptoProduction::cqBarF1_VV() const { initPartonicVV runCqBarF1(VV
 cdbl InclusiveLeptoProduction::cqBarF1_AA() const { initPartonicAA runCqBarF1(AA) }
 cdbl InclusiveLeptoProduction::cqBarF1_VA() const { initPartonicVA runCqBarF1(VA) }
 
+#define checkMu if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
+        throw domain_error("scales for inclusive computation may not depend on the exclusive variable HQPairTransverseMomentum!");
+
 #define initF checkQ2(this->ker->Q2)\
     checkXBjorken(this->ker->xBj)\
     checkLambdaQCD(this->ker->lambdaQCD)\
     if (0 == this->ker->pdf)\
         throw domain_error("needs PDF for hadronic structure function!");\
-    if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
-        throw domain_error("scales for inclusive computation may not depend on exclusive variable HQPairTransverseMomentum!");\
+    checkMu\
     if (this->ker->xBj >= this->ker->getZMax()) return 0.;
 
 cdbl InclusiveLeptoProduction::F() const {
@@ -131,4 +133,29 @@ cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling(cdbl HAQTransver
         throw invalid_argument((boost::format("HAQTransverseMomentumScaling has to be within [0,1]! (xt = %e)")%HAQTransverseMomentumScaling).str());
     cdbl pt_max = this->ker->getHAQTransverseMomentumMax();
     return pt_max*this->dF_dHAQTransverseMomentum(HAQTransverseMomentumScaling*pt_max);
+}
+
+cdbl InclusiveLeptoProduction::sigma() const {
+    checkLambdaQCD(this->ker->lambdaQCD)
+    checkAlphaEM(this->ker->alphaEM)
+    if (0 == this->ker->pdf)
+        throw domain_error("needs PDF for leptonic cross section!");
+    checkMu
+    checkLeptonicS(this->ker->Sl)
+    // kinematic phase space available for y?
+    cdbl yBjMax = 1.;
+    cdbl yBjMin = 4.*this->ker->m2 / this->ker->Sl;
+    if (yBjMin >= yBjMax)
+        return 0.;
+    // kinematic phase space available for Q2?
+    cdbl Q2max = this->ker->Sl - 4.*this->ker->m2;
+    if (isfinite(this->ker->Q2min) && this->ker->Q2min >= Q2max)
+        return 0.;
+    else if (isfinite(this->ker->q2minHVQDIS)) {
+        cdbl Q2min = this->ker->q2minHVQDIS * yBjMin*yBjMin/(1. - yBjMin)/(1. - yBjMin);
+        if (Q2min >= Q2max)
+            return 0.;
+    } else 
+        throw domain_error("needs cut on Q2 for leptonic cross section!");
+    return 0.;
 }

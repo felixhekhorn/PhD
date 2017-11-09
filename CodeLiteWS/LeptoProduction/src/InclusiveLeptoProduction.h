@@ -84,7 +84,7 @@ public:
 /** @name hadronic functions */
 ///@{
 
-/** @see AbstractLeptoProduction::F() */
+/** @see Common::AbstractLeptoProduction::F() */
     cdbl F() const;
     
 /**
@@ -119,6 +119,13 @@ public:
 ///@}
     
     
+/** @name leptonic cross sections */
+///@{
+
+/** @see Common::AbstractLeptoProduction::sigma() */
+    cdbl sigma() const;
+
+///@}
 };
 
 #endif // INCLUSIVELEPTOPRODUCTION_H

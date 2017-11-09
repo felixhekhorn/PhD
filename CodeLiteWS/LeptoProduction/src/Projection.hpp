@@ -1,3 +1,7 @@
+/**
+ * @file Projection.hpp
+ * @brief defines projections and related functions
+ */
 #ifndef Projection_HPP_
 #define Projection_HPP_
 

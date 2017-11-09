@@ -20,13 +20,17 @@ protected:
     AbstractIntKer* ker = 0;
     
 /** @brief check partonic s */
-    #define checkPartonicS(s) if (!isfinite(s) || s < 4.*this->ker->m2) throw domain_error("partonic energy has to be set, finite and larger than the threshold 4m^2!");
+    #define checkPartonicS(s) if (!isfinite(s) || s < 4.*this->ker->m2) throw domain_error("partonic s has to be set, finite and larger than the threshold 4m^2!");
 /** @brief check Q2 */
-    #define checkQ2(Q2) if (!isfinite(Q2) || Q2 <= 0.) throw domain_error("transfered Q2 has to be set, finite and positive!");
+    #define checkQ2(Q2) if (!isfinite(Q2) || Q2 <= 0.) throw domain_error("transfered Q2 has to be set, finite and strict positive!");
 /** @brief check xBjorken */
     #define checkXBjorken(xBj) if (!isfinite(xBj) || xBj <= 0. || xBj > 1.) throw domain_error("x_Bjorken has to be set, finite and in (0:1]!");
 /** @brief check lambdaQCD */
-    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("Lambda_QCD has to be set, finite and positive!");
+    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("Lambda_QCD has to be set, finite and strict positive!");
+/** @brief check alphaEM */
+    #define checkAlphaEM(alphaEM) if (!isfinite(alphaEM) || alphaEM <= 0.) throw domain_error("alpha_EM has to be finite and strict positive!");
+/** @brief check leptonic Sl */
+    #define checkLeptonicS(Sl) if (!isfinite(Sl) || Sl <= 4.*this->ker->m2) throw domain_error("leptonic s has to be set, finite and strict larger than the threshold 4m^2!");
     
 public:
 
@@ -68,6 +72,14 @@ public:
  */
     void setProjection(Projection proj);
     
+/**
+ * @brief manipulate controlling flags
+ * @return controlling flags
+ */
+    inline Flags& flags() const {
+        return this->ker->flags;
+    }
+    
 ///@}
 
 /** @name partonic setter */
@@ -85,63 +97,6 @@ public:
  */
     void setPartonicEta(cdbl eta);
 ///@}
-
-/** @name hadronic setter */
-///@{
-
-/**
- * @brief sets Bjorken scaling variable x
- * @param xBj Bjorken scaling variable
- */
-    void setBjorkenX(cdbl xBj);
-
-/**
- * @brief sets hadronic S
- * @param Sh hadronic S
- */
-    void setHadronicS(cdbl Sh);
-    
-/**
- * @brief sets PDF
- * @param name LHAPDF name
- * @param member LHAPDF member index
- * @see LHAPDF::mkPDF()
- */
-    void setPdf(str name, int member);
-    
-/**
- * @brief sets renormalisation scale \f$\mu_R^2\f$
- * @param muR2 renormalisation scale \f$\mu_R^2\f$
- */
-    void setMuR2(const DynamicScaleFactors& muR2);
-    
-/**
- * @brief sets factorisation scale \f$\mu_F^2\f$
- * @param muF2 factorisation scale \f$\mu_F^2\f$
- */
-    void setMuF2(const DynamicScaleFactors& muF2);
-    
-/**
- * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
- * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
- */
-    void setMu2(const DynamicScaleFactors& mu2);
-    
-/**
- * @brief sets \f$\Lambda_{QCD,n_{lf}+1}\f$
- * @param lambdaQCD \f$\Lambda_{QCD,n_{lf}+1}\f$
- */
-    void setLambdaQCD(cdbl lambdaQCD);
-    
-///@}
-    
-/**
- * @brief manipulate controlling flags
- * @return controlling flags
- */
-    inline Flags& flags() const {
-        return this->ker->flags;
-    }
     
 /** @name partonic coefficient functions */
 ///@{
@@ -220,14 +175,109 @@ public:
     
 ///@}
 
+/** @name hadronic setter */
+///@{
+
+/**
+ * @brief sets Bjorken scaling variable x
+ * @param xBj Bjorken scaling variable
+ */
+    void setBjorkenX(cdbl xBj);
+
+/**
+ * @brief sets hadronic \f$S_h = (p + q)^2 \f$
+ * @param Sh hadronic S
+ */
+    void setHadronicS(cdbl Sh);
+    
+/**
+ * @brief sets PDF
+ * @param name LHAPDF/ported name
+ * @param member (LHAPDF) member index
+ * @see LHAPDF::mkPDF()
+ */
+    void setPdf(str name, int member);
+    
+/**
+ * @brief sets renormalisation scale \f$\mu_R^2\f$
+ * @param muR2 renormalisation scale \f$\mu_R^2\f$
+ */
+    void setMuR2(const DynamicScaleFactors& muR2);
+    
+/**
+ * @brief sets factorisation scale \f$\mu_F^2\f$
+ * @param muF2 factorisation scale \f$\mu_F^2\f$
+ */
+    void setMuF2(const DynamicScaleFactors& muF2);
+    
+/**
+ * @brief sets common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
+ * @param mu2 common scale \f$\mu^2=\mu_F^2=\mu_R^2\f$
+ */
+    void setMu2(const DynamicScaleFactors& mu2);
+    
+/**
+ * @brief sets \f$\Lambda_{QCD,n_{lf}+1}\f$
+ * @param lambdaQCD \f$\Lambda_{QCD,n_{lf}+1}\f$
+ */
+    void setLambdaQCD(cdbl lambdaQCD);
+    
+///@}
+
 /** @name hadronic structure functions */
 ///@{
 
 /**
- * @brief computes corresponding structure functions \f$F_{k}\f$
+ * @brief computes the corresponding structure functions \f$F_{k}\f$
  * @return corresponding structure function
  */
     virtual cdbl F() const = 0;
+    
+///@}
+
+/** @name leptonic setter */
+///@{
+
+/**
+ * @brief sets electro-magnetic coupling constant
+ * @param alphaEM electro-magnetic coupling constant
+ */
+    void setAlphaEM(cdbl alphaEM);
+    
+/**
+ * @brief use polarized beams?
+ * @param polarizeBeams polarized beams?
+ */
+    void setPolarizeBeams(bool polarizeBeams);
+
+/**
+ * @brief sets leptonic \f$S_l = (p + l_1)^2 \f$
+ * @param Sl leptonic S
+ */
+    void setLeptonicS(cdbl Sl);
+    
+/**
+ * @brief sets constant cut on lower Q2
+ * @param Q2min constant cut on lower Q2
+ */
+    void setQ2min(cdbl Q2min);
+    
+/**
+ * @brief cut on lower Q2 as done by HVQDIS: \f$Q^2 = q^{2,HVQDIS}_{min}\cdot \frac {y^2}{(1-y)^2}\f$
+ * @param q2minHVQDIS parameter for dynamic cut on lower Q2
+ */
+    void setQ2minByHVQDIS(cdbl q2minHVQDIS);
+    
+///@}
+
+/** @name leptonic cross sections */
+///@{
+
+/**
+ * @brief computes the leptonic cross section \f$\sigma\f$
+ * @return leptonic cross section \f$\sigma\f$
+ */
+    virtual cdbl sigma() const = 0;
     
 ///@}
         

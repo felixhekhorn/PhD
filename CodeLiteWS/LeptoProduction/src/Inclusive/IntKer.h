@@ -14,7 +14,7 @@ namespace Inclusive {
 class IntKer : public Common::AbstractIntKer {
     
 /** @brief partonic t1 */
-    dbl t1 = nan("");
+    dbl t1 = dblNaN;
 /** @brief jacobian for t1 trafo */
     dbl jac_t1 = 0.;
 /**
@@ -24,7 +24,7 @@ class IntKer : public Common::AbstractIntKer {
     void setT1(cdbl a);
 
 /** @brief parton moment variable xi */
-    dbl xi = nan("");
+    dbl xi = dblNaN;
     
 /** @brief volume of V_HAQTransverseMass2 */
     dbl V_HAQTransverseMass2 = 0.;
@@ -43,7 +43,7 @@ class IntKer : public Common::AbstractIntKer {
     void setHAQRapidity(cdbl a);
     
 /** @brief partonic s4 */
-    dbl s4 = nan("");
+    dbl s4 = dblNaN;
 /** @brief sets partonic s and t1 by pt,y,s4 */
     void setPartonicVars();
     
@@ -145,13 +145,13 @@ public:
     dbl Delta = 0.;
     
 /** @brief current transverse momentum pt of heavy anti quark */
-    dbl HAQTransverseMomentum = nan("");
+    dbl HAQTransverseMomentum = dblNaN;
     
 /** @brief current rapidity y of heavy anti quark */
-    dbl HAQRapidity = nan("");
+    dbl HAQRapidity = dblNaN;
     
 /** @brief current Feynman-x of heavy anti quark */
-    dbl HAQFeynmanX = nan("");
+    dbl HAQFeynmanX = dblNaN;
 
 /** @brief constructor */
     IntKer();

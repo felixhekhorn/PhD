@@ -109,40 +109,69 @@ protected:
  */
     fPtr1dbl getPgq0() const;
     
+/**
+ * @brief constructor
+ * 
+ * sets mu2 = 4m2 + Q2 as default scale
+ */
+    AbstractIntKer();
+    
 public:
+
+/** @name common variables */
+///@{
 
 /** @brief number of light flavours */
     uint nlf = 0;
     
 /** @brief mass^2 of heavy quark */
-    dbl m2 = nan("");
+    dbl m2 = dblNaN;
     
 /** @brief controlling flags */
     Flags flags;
     
-/** @brief transferred Q2 > 0 */
-    dbl Q2 = nan("");
+/** @brief current kernel mode */
+    uint mode = 0;
+
+///@}
     
-/** @brief partonic energy */
-    dbl s = nan("");
+/** @name partonic variables */
+///@{
+    
+/** @brief transferred Q2 > 0 */
+    dbl Q2 = dblNaN;
+    
+/** @brief partonic cm-energy^2 */
+    dbl s = dblNaN;
+    
+/** @brief used projection */
+    Projection proj = F2;
+    
+///@}
+
+/** @name hadronic variables */
+///@{
     
 /** @brief Bjorken scaling variable x */
-    dbl xBj = nan("");
+    dbl xBj = dblNaN;
+    
+/** @brief leptonic cm-energy^2 */
+    dbl Sl = dblNaN;
     
 /** @brief invariant Mass of Z0 - defaults to PDG value */
-    dbl MZ2 = pow(91.1876,2);
+    dbl MZ2 = pow(91.18,2);
     
 /** @brief weak mixing angle - defaults to PDG value */
-    dbl sin2ThetaWeak = 0.231;
+    dbl sin2ThetaWeak = 0.2315;
+    
+/** @brief electro-magnetic coupling constant - defaults to PDG value */
+    dbl alphaEM = 1./137.0359991;
     
 /** @brief incoming lepton has negative charge?  - i.e. e- or e+ */
     bool incomingLeptonHasNegativeCharge = true;
     
 /** @brief incoming lepton has positive helicity? */
     bool incomingLeptonHasPositiveHelicity = true;
-    
-/** @brief used projection */
-    Projection proj = F2;
     
 /** @brief used pdfs */
     PdfWrapper* pdf = 0;
@@ -156,13 +185,32 @@ public:
 /** @brief running strong coupling as provided by LHAPDF */
     LHAPDF::AlphaS_Analytic* aS = 0;
     
-/** @brief QCD scale */
-    dbl lambdaQCD = nan("");
+/** @brief QCD scale \f$\Lambda_{QCD}\f$ */
+    dbl lambdaQCD = dblNaN;
     
-/** @brief current kernel mode */
-    uint mode = 0;
+///@}
+
+/** @name leptonic variables */
+///@{
     
-/** @name common kernel modes */
+/** @brief bool polarize beams? */
+    bool polarizeBeams = false;
+    
+/** @brief constant cut on Q2 */
+    dbl Q2min = dblNaN;
+    
+/** @brief lower cut on Q2, as done by HVQDIS */
+    dbl q2minHVQDIS = dblNaN;
+    
+///@}
+    
+/**
+ * @name common kernel modes
+ * 
+ * - 1 - 99 : partonic modes
+ * - 100 - 199 : hadronic modes
+ * - 200 - 299 : leptonic modes
+ */
 ///@{
     static cuint Mode_cg0_VV = 1;
     static cuint Mode_cg0_VA = 2;
@@ -177,14 +225,8 @@ public:
     static cuint Mode_cqBarF1_VA = 11;
     static cuint Mode_cqBarF1_AA = 12;
     static cuint Mode_F = 100;
+    static cuint Mode_sigma = 200;
 ///@}
-    
-/**
- * @brief constructor
- * 
- * sets mu2 = 4m2 + Q2 as default scale
- */
-    AbstractIntKer();
     
 /**
  * @brief destructor
@@ -193,7 +235,7 @@ public:
 
 /**
  * @brief returns maximum z
- * @return beta
+ * @return z_max
  */
     inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
     

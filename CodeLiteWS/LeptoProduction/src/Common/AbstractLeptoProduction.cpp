@@ -79,3 +79,31 @@ void Common::AbstractLeptoProduction::setLambdaQCD(cdbl lambdaQCD) {
     this->ker->lambdaQCD = lambdaQCD;
     this->ker->aS->setLambda(this->ker->nlf + 1, lambdaQCD);
 }
+
+void Common::AbstractLeptoProduction::setAlphaEM(cdbl alphaEM) {
+    checkAlphaEM(alphaEM)
+    this->ker->alphaEM = alphaEM;
+}
+
+void Common::AbstractLeptoProduction::setPolarizeBeams(bool polarizeBeams) {
+    this->ker->polarizeBeams = polarizeBeams;
+}
+
+void Common::AbstractLeptoProduction::setLeptonicS(cdbl Sl) {
+    checkLeptonicS(Sl)
+    this->ker->Sl = Sl;
+}
+
+void Common::AbstractLeptoProduction::setQ2min(cdbl Q2min) {
+    if (!isfinite(Q2min) || Q2min <= 0.)
+        throw domain_error("Q2min has to be finite and strict positive!");
+    this->ker->Q2min = Q2min;
+    this->ker->q2minHVQDIS = dblNaN;
+}
+
+void Common::AbstractLeptoProduction::setQ2minByHVQDIS(cdbl q2minHVQDIS)  {
+    if (!isfinite(q2minHVQDIS) || q2minHVQDIS <= 0.)
+        throw domain_error("q2minHVQDIS has to be finite and strict positive!");
+    this->ker->q2minHVQDIS = q2minHVQDIS;
+    this->ker->Q2min = dblNaN;
+}

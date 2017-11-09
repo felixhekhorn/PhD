@@ -297,18 +297,18 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3) {
     // structure function mode
     dbl jac = 0.;
     if (Mode_F == this->mode) {
-        this->HAQRapidity = nan("");
-        this->HAQTransverseMomentum = nan("");
+        this->HAQRapidity = dblNaN;
+        this->HAQTransverseMomentum = dblNaN;
         this->setHAQRapidity(a1);
         this->setHAQTransverseMomentum(a2);
         jac = this->V_HAQTransverseMass2*this->V_HAQRapidity;
     } else if (Mode_dF_dHAQTransverseMomentum == this->mode) {
-        this->HAQRapidity = nan("");
+        this->HAQRapidity = dblNaN;
         this->setHAQRapidity(a1);
         cdbl jac2 = 2. * this->HAQTransverseMomentum;
         jac = this->V_HAQRapidity * jac2;
     } else if (Mode_dF_dHAQRapidity == this->mode) {
-        this->HAQTransverseMomentum = nan("");
+        this->HAQTransverseMomentum = dblNaN;
         this->setHAQTransverseMomentum(a1);
         jac = this->V_HAQTransverseMass2;
     } else if (Mode_dF_dHAQFeynmanX == this->mode) {
