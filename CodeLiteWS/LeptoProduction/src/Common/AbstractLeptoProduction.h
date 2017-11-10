@@ -182,7 +182,7 @@ public:
  * @brief sets Bjorken scaling variable x
  * @param xBj Bjorken scaling variable
  */
-    void setBjorkenX(cdbl xBj);
+    void setXBjorken(cdbl xBj);
 
 /**
  * @brief sets hadronic \f$S_h = (p + q)^2 \f$

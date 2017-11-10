@@ -127,6 +127,15 @@ class IntKer : public Common::AbstractIntKer {
  */
     cdbl runPartonic(cdbl a1, cdbl a2);
     
+/**
+ * @brief computes a hadronic function
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @param a3 integration variable
+ * @return a single hadronic function
+ */
+    cdbl runHadronic(cdbl a1, cdbl a2, cdbl a3);
+    
 /** 
  * @brief computes Fg0
  * @return Fg0
@@ -164,10 +173,11 @@ public:
  * @param a1 integration variable
  * @param a2 integration variable
  * @param a3 integration variable
+ * @param a4 integration variable
+ * @param a5 integration variable
  * @return kernel
  */
-    cdbl operator()(cdbl a1, cdbl a2 = 0., cdbl a3 = 0.);
-    
+    cdbl operator()(cdbl a1, cdbl a2 = 0., cdbl a3 = 0., cdbl a4 = 0., cdbl a5 = 0.);
     
 /** @name additional kernel modes */
 ///@{

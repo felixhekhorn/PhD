@@ -6,6 +6,7 @@
 #include "InclusiveLeptoProduction.h"
 
 int testHadronic();
+int testLeptonic();
 int test();
 
 /**
@@ -16,7 +17,8 @@ int test();
  */
 int main(int argc, char **argv) {
     //return test();
-    return testHadronic();
+    //return testHadronic();
+    return testLeptonic();
     
     cuint nlf = 4;
     cdbl m2 = pow(4.75,2);
@@ -79,11 +81,47 @@ int testHadronic() {
     uint N = 11;
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
-        o2.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl c2 = o2.dF_dHAQFeynmanX(.5);
-        cdbl cL = oL.dF_dHAQFeynmanX(.5);
-        cdbl cP = oP.dF_dHAQFeynmanX(.5);
+        o2.setXBjorken(x);oL.setXBjorken(x);oP.setXBjorken(x);
+        cdbl c2 = o2.F();
+        cdbl cL = oL.F();
+        cdbl cP = oP.F();
         printf("%e\t%e\t%e\t%e\n",x,c2,cL,cP);
+    }
+    
+    return EXIT_SUCCESS;
+}
+
+int testLeptonic() {
+    cuint nlf = 3;
+    cdbl m2 = pow(1.5,2);
+    cdbl Delta = 1.e-6;
+    DynamicScaleFactors mu02 (4.,1., 0., 0.);
+    cdbl lambdaQCD = .239;
+    
+    InclusiveLeptoProduction oF(nlf,m2,Delta);
+    oF.setPolarizeBeams(false);
+    InclusiveLeptoProduction og(nlf,m2,Delta);
+    og.setPolarizeBeams(true);
+    
+    oF.setPdf("MSTW2008nlo90cl",0);og.setPdf("DSSV2014",0);
+    oF.setMu2(mu02);og.setMu2(mu02);
+    oF.setLambdaQCD(lambdaQCD);og.setLambdaQCD(lambdaQCD);
+    
+    oF.flags().useNextToLeadingOrder = og.flags().useNextToLeadingOrder = false;
+    /*oF.flags().useGluonicChannel = og.flags().useGluonicChannel = false;*/
+    oF.flags().usePhotonZ = og.flags().usePhotonZ = false;
+    oF.flags().useZ = og.flags().useZ = false;
+    
+    cdbl Q2min = 2.;
+    oF.setQ2min(Q2min);og.setQ2min(Q2min);
+    
+    uint N = 11;
+    for (uint j = 0; j < N; ++j) {
+        cdbl Sl = 200. + j*50.;
+        oF.setLeptonicS(Sl);og.setLeptonicS(Sl);
+        cdbl sig = oF.sigma();
+        cdbl DeltaSig = og.sigma();
+        printf("%e\t%e\t%e\n",Sl,sig,DeltaSig);
     }
     
     return EXIT_SUCCESS;

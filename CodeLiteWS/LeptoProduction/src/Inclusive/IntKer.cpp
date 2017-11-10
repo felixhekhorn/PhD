@@ -21,7 +21,7 @@ void Inclusive::IntKer::setT1(cdbl a) {
 }
 
 void Inclusive::IntKer::setHAQTransverseMomentum(cdbl a) {
-    dbl mt2Max;
+    dbl mt2Max = dblNaN;
     if(isfinite(this->HAQRapidity)) {
         cdbl Sh = this->getHadronicS();
         cdbl coshy = cosh(this->HAQRapidity);
@@ -36,7 +36,7 @@ void Inclusive::IntKer::setHAQTransverseMomentum(cdbl a) {
 }
 
 void Inclusive::IntKer::setHAQRapidity(cdbl a) {
-    dbl y0;
+    dbl y0 = dblNaN;
     if (isfinite(this->HAQTransverseMomentum)) {
         cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
         y0 = acosh(sqrt(this->getHadronicS())/(2.*mt));
@@ -288,13 +288,7 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
     return 0.;
 }
 
-cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3) {      
-    // void mode
-    if (0 == this->mode) return 0.;
-    // partonic mode?
-    if (this->mode < Mode_F)
-        return this->runPartonic(a1, a2);
-    // structure function mode
+cdbl Inclusive::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3) {
     dbl jac = 0.;
     if (Mode_F == this->mode) {
         this->HAQRapidity = dblNaN;
@@ -327,12 +321,12 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3) {
     }
     cdbl Shp = this->getHadronicS() + this->Q2;
     cdbl T1 = this->getHadronicT1();
-    jac *= Shp*this->xi/(Shp + T1);
+    jac *= Shp/(Shp + T1);
     dbl r = 0.;
     if (this->flags.useLeadingOrder && this->flags.useGluonicChannel) {
         this->s4 = 0;
         this->setPartonicVars();
-        r += jac * this->Fg0();
+        r += jac*this->xi * this->Fg0();
     }
     if (this->flags.useNextToLeadingOrder) {
         // setS4
@@ -342,8 +336,71 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3) {
         if (this->flags.useQuarkChannel) {
             this->s4 = s4max*as4;
             this->setPartonicVars();
-            r += jac*s4max * this->Fq1();
+            r += jac*this->xi*s4max * this->Fq1();
         }
     }
     return r;
+}
+
+cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) {      
+    // void mode
+    if (0 == this->mode) return 0.;
+    // partonic mode?
+    if (this->mode < Mode_F)
+        return this->runPartonic(a1, a2);
+    // hadronic mode?
+    if (this->mode < Mode_sigma)
+        return this->runHadronic(a1, a2, a3);
+    // leptonic mode = Mode_sigma
+    // setYBj
+    cdbl yBjMax = 1.;
+    cdbl yBjMin = 4.*this->m2 / this->Sl;
+    cdbl V_yBj = yBjMax - yBjMin;
+    if (V_yBj <= 0.)
+        return 0.;
+    cdbl yBj = yBjMin + V_yBj*a1;
+    cdbl OmYBj = 1. - yBj;
+    // set Q2
+    dbl curQ2min = this->Q2min;
+    if (!isfinite(this->Q2min)) {
+        curQ2min = this->q2minHVQDIS * yBj*yBj/OmYBj/OmYBj;
+    }
+    cdbl Q2max = yBj * this->Sl - 4.*this->m2;
+    cdbl V_Q2 = Q2max - curQ2min;
+    if (V_Q2 <= 0.)
+        return 0.;
+    this->Q2 = curQ2min + V_Q2*a2;
+    this->xBj = this->Q2/yBj/this->Sl;
+    if(this->xBj >= this->getZMax())
+        return 0.;
+    // normalisation
+    cdbl n = 2.*M_PI*this->alphaEM*this->alphaEM/yBj/this->Q2/this->Q2;
+    cdbl polN = this->polarizeBeams ? 2. : 1.;
+    // collect structure functions
+    dbl F2_mg4 = 0.;
+    dbl FL_mgL = 0.;
+    dbl xF3_x2g1 = 0.;
+    this->mode = Mode_F;
+    if (this->polarizeBeams) {
+        this->proj = x2g1;
+        xF3_x2g1 = this->runHadronic(a3,a4,a5);
+        this->proj = g4;
+        F2_mg4 = -this->runHadronic(a3,a4,a5);
+        this->proj = gL;
+        FL_mgL = -this->runHadronic(a3,a4,a5);
+    } else {
+        this->proj = F2;
+        F2_mg4 = this->runHadronic(a3,a4,a5);
+        this->proj = FL;
+        FL_mgL = this->runHadronic(a3,a4,a5);
+        this->proj = xF3;
+        xF3_x2g1 = this->runHadronic(a3,a4,a5);
+    }
+    this->mode = Mode_sigma;
+    // combine
+    cdbl Yp = 1. + OmYBj*OmYBj;
+    cdbl Ym = 1. - OmYBj*OmYBj;
+    cdbl YmSign = this->incomingLeptonHasNegativeCharge ? 1. : -1. ;
+    cdbl sig = n*polN*(Yp*F2_mg4 + YmSign*Ym*xF3_x2g1 - yBj*yBj*FL_mgL);
+    return V_yBj*V_Q2*sig;
 }

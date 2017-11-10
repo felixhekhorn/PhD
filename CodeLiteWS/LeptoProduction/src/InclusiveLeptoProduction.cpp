@@ -81,21 +81,35 @@ cdbl InclusiveLeptoProduction::F() const {
     this->ker->mode = Common::AbstractIntKer::Mode_F;
     gsl_monte_function f;
     f.params = this->ker;
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
-    return Common::int2D(&f);
+    dbl r = dblNaN;
+    if (this->ker->flags.useNextToLeadingOrder) {
+        f.f = gslpp::callFunctor3D<Inclusive::IntKer>;
+        r = Common::int3D(&f);
+    } else {
+        f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
+        r = Common::int2D(&f);
+    }
+    // unset integration variables
+    this->ker->s = dblNaN;
+    return r;
 }
 
 cdbl InclusiveLeptoProduction::rundF_dHAQX() const {
+    dbl r = dblNaN;
     if (this->ker->flags.useNextToLeadingOrder) {
         gsl_monte_function f;
         f.params = this->ker;
         f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
-        return Common::int2D(&f);
+        r = Common::int2D(&f);
+    } else {
+        gsl_function f;
+        f.params = this->ker;
+        f.function = gslpp::callFunctor<Inclusive::IntKer>;
+        r = Common::int1D(&f);
     }
-    gsl_function f;
-    f.params = this->ker;
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    return Common::int1D(&f);
+    // unset integration variables
+    this->ker->s = dblNaN;
+    return r;
 }
 
 cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentum(cdbl HAQTransverseMomentum) const {
@@ -142,6 +156,8 @@ cdbl InclusiveLeptoProduction::sigma() const {
         throw domain_error("needs PDF for leptonic cross section!");
     checkMu
     checkLeptonicS(this->ker->Sl)
+    if (!isfinite(this->ker->Q2min) && !isfinite(this->ker->q2minHVQDIS))
+        throw domain_error("needs cut on Q2 for leptonic cross section!");
     // kinematic phase space available for y?
     cdbl yBjMax = 1.;
     cdbl yBjMin = 4.*this->ker->m2 / this->ker->Sl;
@@ -155,7 +171,21 @@ cdbl InclusiveLeptoProduction::sigma() const {
         cdbl Q2min = this->ker->q2minHVQDIS * yBjMin*yBjMin/(1. - yBjMin)/(1. - yBjMin);
         if (Q2min >= Q2max)
             return 0.;
-    } else 
-        throw domain_error("needs cut on Q2 for leptonic cross section!");
-    return 0.;
+    }
+    this->ker->mode = Common::AbstractIntKer::Mode_sigma;
+    gsl_monte_function f;
+    f.params = this->ker;
+    dbl r = dblNaN;
+    if (this->flags().useNextToLeadingOrder) {
+        f.f = gslpp::callFunctor5D<Inclusive::IntKer>;
+        r = Common::int5D(&f);
+    } else {
+        f.f = gslpp::callFunctor4D<Inclusive::IntKer>;
+        r = Common::int4D(&f);
+    }
+    // unset integration variables
+    this->ker->xBj = dblNaN;
+    this->ker->Q2 = dblNaN;
+    this->ker->s = dblNaN;
+    return r;
 }
