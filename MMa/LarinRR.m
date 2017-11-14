@@ -1,10 +1,10 @@
 <<tracer11.m
 AntiCommute[off];
-VectorDimension[n];
+VectorDimension[4];
 
 (* setup *)
 meL = {{s4,t1},{u7,t1},{s4,u1},{u6,u1},{u7,s3},{u6,s3},{u1,tp},{u7,tp}};
-meT = Table[{meL[[k]],meL[[l]]},{k,1,Length@meL},{l,1,k}];
+meT = Table[{meL[[k]],meL[[l]]},{k,1,Length@meL},{l,1,Length@meL}];
 meT = Flatten[meT,1];
 elems = Tuples[{{V,A},{V,A},meT}];
 elems = Flatten[#,1]& /@ elems;
@@ -27,6 +27,7 @@ proj[g][g][nu_, nup_] := 2 I Eps[{nu}, {nup}, k1, q] /sp;
 
 Gint[V][mu_] := {{mu}};
 Gint[A][mu_] := {{i[mu][1]},{i[mu][2]},{i[mu][3]}};
+
 
 (* matrix elements *)
 meNLOg[s4,t1][Gint_][mu_, ni_, no_] :=  Join[{{no},    (p1+k2 + Sqrt@m2 U)},Gint[mu],{( k1-p2 + Sqrt@m2 U),  {ni}}  ];
@@ -88,14 +89,6 @@ WriteString[$Output,"."];
 mapg = ParallelMap[(#->applyProj[trg,#])&,{Pg,Pk1k1,Peps,Pqq,Pk1q}];
 Do[(RR@@e)[g,k] = Evaluate[k/.mapg/.{Tracer`Private`eps[__]:>0}/.{H[k2, p1]->k2hat2,H[k2, k2]->-k2hat2,H[p1, p1]->-k2hat2}],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
 
-(*
-trF = ContractEpsGamma[proj[g][F][nui,nuip]*tr];
-Do[(RR@@e)[F,k] = applyProj[trF,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
-
-trg = ContractEpsGamma[proj[g][g][nui,nuip]*tr];
-Do[(RR@@e)[g,k] = applyProj[trg,k],{k,{Pg,Pk1k1,Peps,Pqq,Pk1q}}];
-*)
-
 AppendTo[timing,TimeUsed[]];
 Write[$Output," ",ToString[timing[[-1]] - timing[[-2]]]<>"s"];
 ]
@@ -108,7 +101,7 @@ totT = TimeUsed[] - First@timing;
 Print["tot. time = ",ToString[totT]<>"s, avg. time = ",ToString[totT/Length@elems]<>"s"];
 
 (* Save *)
-fn = "/home/Felix/Physik/PhD/MMa/data/LarinRR.m";
+fn = "data/LarinRR.m";
 Print["Save to "<>fn<>" ..."];
 Put[fn];
 Save[fn,RR];
