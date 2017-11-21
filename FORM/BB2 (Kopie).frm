@@ -16,26 +16,36 @@ Off statistics;
 #define CCme1Post                                            "gi_(1)";
 * u1 matrix element
 #define   me2Name "u1";
-#define   me2Pre "g_(1,nu)*(g_(1,p1) - g_(1,k1) + m*g_(1))";
+#define   me2Pre "g_(1,nu)*(g_(1,p1) - g_(1,k1) + m*gi_(1))";
 #define   me2Post                                            "gi_(1)";
 #define CCme2Pre "gi_(1)";
-#define CCme2Post       "(g_(1,p1) - g_(1,k1) + m*g_(1))*g_(1,nup)";
+#define CCme2Post       "(g_(1,p1) - g_(1,k1) + m*gi_(1))*g_(1,nup)";
 
 *******************
 * interactions and HQ-lines
-#define   GintV "g_(1,mu)";
-#define CCGintV "g_(1,mup)";
 #define HQ  "(g_(1,p1) + m*gi_(1))";
 #define HAQ "(g_(1,p2) - m*gi_(1))";
+#define cur1Name "V";
+#define cur2Name "A";
 
 *******************
 * compute matrix elements
+#do cur1 = 1,2
 #do ch1 = 1,2
 #do ch2 = 1,2
-Local ME = 'HQ'  * 'me`ch1'Pre'  *  'GintV'  *'me`ch1'Post' *
-           'HAQ' * 'CCme`ch2'Pre'*'CCGintV'*'CCme`ch2'Post';
-tracen,1;
-*Print M2;
+#if 1 == 'cur1'
+Local ME = 'HQ'  * 'me`ch1'Pre'   * g_(1,mu) * 'me`ch1'Post' *
+           'HAQ' * 'CCme`ch2'Pre' * g_(1,mup)* 'CCme`ch2'Post';
+
+Print ME;
+*tracen,1;
+#else
+Local ME = 'me`ch1'Post' *
+           'HAQ' * 'CCme`ch2'Pre' * g_(1,mup)* 'CCme`ch2'Post' * 
+           'HQ'  * 'me`ch1'Pre'   * g_(1,mu)*g5_(1);
+
+Print ME;
+#endif
 .sort
 
 *******************
@@ -84,5 +94,6 @@ id e_(k1,q,p1,p2) = 0;
 
 #enddo * /ch2
 #enddo * /ch1
+#enddo * /cur1
 *Print;
 .end
