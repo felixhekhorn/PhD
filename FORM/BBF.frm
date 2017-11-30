@@ -46,13 +46,13 @@ Local ME = `me`ch1'Post' *
            `HAQ' * `CCme`ch2'Pre' * G(mup)* `CCme`ch2'Post' * 
            `HQ'  * `me`ch1'Pre'   * G(mu)*Gfive();
 #elseif 1 == `cur1' && 2 == `cur2'
-Local ME = `CCme`ch2'Post' * 
+Local ME = -G(mup)*`CCme`ch2'Post' * 
             `HQ'  * `me`ch1'Pre'   * G(mu) * `me`ch1'Post' *
-            `HAQ' * `CCme`ch2'Pre' * G(mup)*Gfive();
+            `HAQ' * `CCme`ch2'Pre' * Gfive();
 #else
-Local ME = -`CCme`ch2'Post' * 
+Local ME = -G(mup)*`CCme`ch2'Post' * 
             `HQ'  * `me`ch1'Pre'   * G(muf1)*G(muf2)*G(muf3) * `me`ch1'Post' *
-            `HAQ' * `CCme`ch2'Pre' * G(mup)*Gfive();
+            `HAQ' * `CCme`ch2'Pre' * Gfive();
 #endif
 * contract objects
 repeat;
@@ -64,11 +64,10 @@ endrepeat;
 * trace
 #if 1 == `cur1' && 1 == `cur2'
  id,once,G(?a) = g_(1,?a);
- Tracen 1;
+ Tracen,1;
 #else
  Function G1, G2;
  Index alpha,mu1,mu2,mu3,mu4;
- Multiply i_;
 * S. Moch et al. / Physics Letters B 748 (2015) 432–438
  repeat;
   id,once,G(?a,alpha?,five) = distrib_(-2,3,G1,G2,?a)*G(alpha,five);
@@ -78,13 +77,13 @@ endrepeat;
  repeat;
   if ( count(G1,1) );
     id,once,G1(?a) = g_(1,?a);
-    Tracen 1;
+    Tracen,1;
   endif;
  endrepeat;
 #endif
 .sort
 #if 2 == `cur1' && 2 == `cur2'
- Multiply i_/6*e_(mu,muf1,muf2,muf3);
+ Multiply 1/6*e_(mu,muf1,muf2,muf3);
  .sort
 #endif
 
@@ -95,7 +94,7 @@ endrepeat;
 #define projV2Name "Pk1k1";
 #define projV2 "-4*q2/sp/sp*k1(mu)*k1(mup)";
 #define projV3Name "Peps";
-#define projV3 "i_*e_(mu,mup,q,k1)/sp";
+#define projV3 "e_(mu,mup,q,k1)/sp";
 #define projV4Name "Pqq";
 #define projV4 "-1/q2*q(mu)*q(mup)";
 #define projV5Name "Pk1q";
@@ -103,7 +102,7 @@ endrepeat;
 
 #do V = 1,5
 Local F`V' = ME*(-d_(nu,nup))*`projV`V'';
-Local g`V' = ME*(-2*i_*e_(nu,nup,k1,q)/sp)*`projV`V'';
+Local g`V' = ME*(2*e_(nu,nup,k1,q)/sp)*`projV`V'';
 contract;
 .sort
 #enddo
