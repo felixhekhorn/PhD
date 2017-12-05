@@ -3,12 +3,12 @@
 Symbol n;
 Dimension n;
 Vectors k1, q, p1, p2, l;
-Symbols m;
-Indices mu,mup,nQ,nQp,n1,n1p,n2,n2p,muf1,muf2,muf3;
+Symbols m, threeGVertex,threeGVertexp;
+Indices mu,mup,nQ,nQp,n1,n1p,n2,n2p,nu,nup,muf1,muf2,muf3;
 Function G,GI,Gfive;
 Indices i,j;
 Symbols five;
-Off statistics;
+*Off statistics;
 
 *******************
 * LO t1 matrix element
@@ -33,10 +33,16 @@ Off statistics;
 #define CCmeV1Pre  "G(n2p)*(G(l)-G(p2)+m*GI())";
 * Box 1 crossed matrix element
 #define   meV2Name "box1cr";
-#define   meV2Pre  "";
-#define   meV2Post "";
-#define CCmeV2Pre  "";
-#define CCmeV2Post "";
+#define   meV2Pre  "G(n1)*(G(l)+G(p1)+m*GI())";
+#define CCmeV2Post "(G(l)+G(p1)+m*GI())*G(n1p)";
+#define   meV2Post "(G(l)+G(p1)-G(q)+m*GI())*G(nQ)*(G(l)-G(p2)+m*GI())*G(n2)";
+#define CCmeV2Pre  "G(n2p)*(G(l)-G(p2)+m*GI())*G(nQp)*(G(l)+G(p1)-G(q)+m*GI())";
+* Box 2 matrix element
+#define   meV3Name "box2";
+#define   meV3Pre  "G(nQ)*(G(l)+G(q)-G(p2)+m*GI())";
+#define CCmeV3Post "(G(l)+G(q)-G(p2)+m*GI())*G(nQp)"; 
+#define   meV3Post "(G(l)-G(p2)+m*GI())*(-G(n1))*threeGVertex"
+#define CCmeV3Pre  "threeGVertexp*(-G(n1p))*(G(l)-G(p2)+m*GI())";
 
 *******************
 * interactions and HQ-lines
@@ -50,25 +56,34 @@ Off statistics;
 #do cur1 = 1,1
 #do cur2 = 1,1
 #do chLO = 1,2
-#do chV = 1,1
+#do chV = 3,3
 * combine matrix elements
 #if 1 == `cur1' && 1 == `cur2'
 Local ME = (`HQ'  * `meLO`chLO'Pre'   * G(mu) * `meLO`chLO'Post' *
-            `HAQ' * `CCmeV`chV'Pre'   * G(mup)* `CCmeV`chV'Post'  *(-d_(n1p,n2p))) +
-	   (`HQ'  * `meV`chV'Pre'     * G(mu) * `meV`chV'Post' *
-            `HAQ' * `CCmeLO`chLO'Pre' * G(mup)* `CCmeLO`chLO'Post'*(-d_(n1 ,n2 )));
+            `HAQ' * `CCmeV`chV'Pre'   * G(mup)* `CCmeV`chV'Post' * (-d_(n1p,n2p))  ) + 
+	   (`HQ'  * `meV`chV'Pre'     * G(mu) * `meV`chV'Post'   * (-d_(n1 ,n2 )) *
+            `HAQ' * `CCmeLO`chLO'Pre' * G(mup)* `CCmeLO`chLO'Post'                 );
 #elseif 2 == `cur1' && 1 == `cur2'
-Local ME = `me`ch1'Post' *
-           `HAQ' * `CCme`ch2'Pre' * G(mup)* `CCme`ch2'Post' * 
-           `HQ'  * `me`ch1'Pre'   * G(mu)*Gfive();
+Local ME = (`meLO`chLO'Post' *
+            `HAQ' * `CCmeV`chV'Pre' * G(mup)* `CCmeV`chV'Post' * (-d_(n1p,n2p)) *
+            `HQ'  * `meLO`chLO'Pre' * G(mu)*Gfive()                              ) +
+	   (`meV`chV'Post' *
+            `HAQ' * `CCmeLO`chLO'Pre' * G(mup)* `CCmeLO`chLO'Post' *
+            `HQ'  * `meV`chV'Pre' * G(mu)*Gfive()              * (-d_(n1, n2 ))  );
 #elseif 1 == `cur1' && 2 == `cur2'
-Local ME = -G(mup)*`CCme`ch2'Post' * 
-            `HQ'  * `me`ch1'Pre'   * G(mu) * `me`ch1'Post' *
-            `HAQ' * `CCme`ch2'Pre' * Gfive();
+Local ME = (-G(mup)*`CCmeV`chV'Post' * 
+             `HQ'  * `meLO`chLO'Pre' * G(mu) * `meLO`chLO'Post' *
+             `HAQ' * `CCmeV`chV'Pre' * Gfive()                  * (-d_(n1p,n2p))  ) +
+	   (-G(mup)*`CCmeLO`chLO'Post' * 
+             `HQ'  * `meV`chV'Pre'     * G(mu) * `meV`chV'Post' * (-d_(n1, n2 )) *
+             `HAQ' * `CCmeLO`chLO'Pre' * Gfive()                                  );
 #else
-Local ME = -G(mup)*`CCme`ch2'Post' * 
-            `HQ'  * `me`ch1'Pre'   * G(muf1)*G(muf2)*G(muf3) * `me`ch1'Post' *
-            `HAQ' * `CCme`ch2'Pre' * Gfive();
+Local ME = (-G(mup)*`CCmeV`chV'Post' * 
+             `HQ'  * `meLO`chLO'Pre' * G(muf1)*G(muf2)*G(muf3) * `meLO`chLO'Post' *
+             `HAQ' * `CCmeV`chV'Pre' * Gfive()                                * (-d_(n1p,n2p))   ) +
+	   (-G(mup)*`CCmeLO`chLO'Post' * 
+             `HQ'  * `meV`chV'Pre' * G(muf1)*G(muf2)*G(muf3) * `meV`chV'Post' * (-d_(n1, n2 )) *
+             `HAQ' * `CCmeLO`chLO'Pre' * Gfive()                                                 );
 #endif
 * contract objects
 repeat;
@@ -101,6 +116,11 @@ endrepeat;
 #if 2 == `cur1' && 2 == `cur2'
  Multiply 1/6*e_(mu,muf1,muf2,muf3);
 #endif
+* insert 3g vertex
+#if 3 == `chV'
+ id threeGVertex  = d_(n2 ,nQ )*(k1(nu )-2*l(nu )) + d_(nQ ,nu )*(l(n2 )-2*k1(n2 )) + d_(nu ,n2 )*(k1(nQ )+l(nQ ));
+ id threeGVertexp = d_(n2p,nQp)*(k1(nup)-2*l(nup)) + d_(nQp,nup)*(l(n2p)-2*k1(n2p)) + d_(nup,n2p)*(k1(nQp)+l(nQp));
+#endif
 .sort
 
 *******************
@@ -118,8 +138,14 @@ Symbols sp,q2;
 #define projV5 "2/sp*(k1(mu)*q(mup)+q(mu)*k1(mup))";
 
 #do V = 1,5
-Local F`V' = ME*(-d_(nQ,nQp))*`projV`V'';
+* close 3g vertex
+#if 3 == `chV'
+Local F`V' = ME*( -d_(nu,nQp))        *`projV`V'';
+Local g`V' = ME*(2*e_(nu,nQp,k1,q)/sp)*`projV`V'';
+#else
+Local F`V' = ME*( -d_(nQ,nQp))        *`projV`V'';
 Local g`V' = ME*(2*e_(nQ,nQp,k1,q)/sp)*`projV`V'';
+#endif
 contract;
 .sort
 #enddo
