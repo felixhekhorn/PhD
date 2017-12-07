@@ -1,18 +1,15 @@
+S n;
+Dimension n;
 I mu1,mu2,mu3,mu4,mu5,alpha;
 F G,G1,G2;
-S five;
-L f = G(mu1,mu2,mu3,mu4,mu5,alpha,five);
-Multiply i_;
-repeat;
-  id,once,G(?a,alpha?,five) = distrib_(-2,3,G1,G2,?a)*G(alpha,five);
-  id G2(mu1?,mu2?,mu3?)*G(mu4?,five) = e_(mu1,...,mu4);
-endrepeat;
+V k1,q;
+L f = e_(mu1,mu2,mu3,mu4)^2;
+Contract;
 .sort
- repeat;
-  if ( count(G1,1) );
-    id,once,G1(?a) = g_(1,?a);
-    Tracen,1;
-  endif;
- endrepeat;
+L g = (n-3)*(n-2)*(n-1)*n;
+Bracket n;
+.sort;
+L h = e_(mu1,mu2,k1,q)^2;
+Contract;
 Print;
 .end
