@@ -3,7 +3,7 @@
 Symbol n;
 Dimension n;
 Vectors k1, q, p1, p2, l;
-Symbols m, threeGVertex,threeGVertexp;
+Symbols m,t1,u1,threeGVertex,threeGVertexp,Z2M1,ZmM1;
 Indices mu,mup,nQ,nQp,n1,n1p,n2,n2p,ni,nip,muf1,muf2,muf3;
 Function G,GI,Gfive;
 Indices i,j;
@@ -26,24 +26,84 @@ Tensor ee;
 #define CCmeLO2Pre  "GI()";
 
 *******************
-* Box 1 matrix element
+* box 1 matrix element
 #define   meV1Name "box1";
 #define   meV1Pre  "G(n1)*(G(l)+G(p1)+m*GI())*G(ni)*(G(l)+G(p1)-G(k1)+m*GI())";
 #define CCmeV1Post "(G(l)+G(p1)-G(k1)+m*GI())*G(nip)*(G(l)+G(p1)+m*GI())*G(n1p)";
 #define   meV1Post "(G(l)-G(p2)+m*GI())*G(n2)";
 #define CCmeV1Pre  "G(n2p)*(G(l)-G(p2)+m*GI())";
-* Box 1 crossed matrix element
+* box 1 crossed matrix element
 #define   meV2Name "box1cr";
 #define   meV2Pre  "G(n1)*(G(l)+G(p1)+m*GI())";
 #define CCmeV2Post "(G(l)+G(p1)+m*GI())*G(n1p)";
 #define   meV2Post "(G(l)+G(p1)-G(q)+m*GI())*G(ni)*(G(l)-G(p2)+m*GI())*G(n2)";
 #define CCmeV2Pre  "G(n2p)*(G(l)-G(p2)+m*GI())*G(nip)*(G(l)+G(p1)-G(q)+m*GI())";
-* Box 2 matrix element
+* box 2 matrix element
 #define   meV3Name "box2";
 #define   meV3Pre  "G(nQ)*(G(l)+G(q)-G(p2)+m*GI())";
 #define CCmeV3Post "(G(l)+G(q)-G(p2)+m*GI())*G(nQp)"; 
 #define   meV3Post "(G(l)-G(p2)+m*GI())*(-G(n1))*threeGVertex"
 #define CCmeV3Pre  "threeGVertexp*(-G(n1p))*(G(l)-G(p2)+m*GI())";
+* photon vertex matrix element
+#define   meV4Name "e";
+#define   meV4Pre  "G(ni)*(G(p1)-G(k1)+m*GI())/u1*G(n1)*(G(l)+G(q)-G(p2)+m*GI())";
+#define CCmeV4Post "(G(l)+G(q)-G(p2)+m*GI())*G(n1p)*(G(p1)-G(k1)+m*GI())/u1*G(nip)"; 
+#define   meV4Post "(G(l)-G(p2)+m*GI())*G(n2)";
+#define CCmeV4Pre  "G(n2p)*(G(l)-G(p2)+m*GI())";
+* photon vertex crossed matrix element
+#define   meV5Name "ecr";
+#define   meV5Pre  "G(n2)*(G(l)+G(p1)+m*GI())";
+#define CCmeV5Post "(G(l)+G(p1)+m*GI())*G(n2p)";
+#define   meV5Post "(G(l)+G(p1)-G(q)+m*GI())*G(n1)*(G(k1)-G(p2)+m*GI())/t1*G(ni)";
+#define CCmeV5Pre  "G(nip)*(G(k1)-G(p2)+m*GI())/t1*G(n1p)*(G(l)+G(p1)-G(q)+m*GI())";
+* abelian gluon vertex matrix element
+#define   meV6Name "g1";
+#define   meV6Pre  "G(n1)*(G(l)+G(p1)+m*GI())*G(ni)*(G(l)+G(p1)-G(k1)+m*GI())*G(n2)*(G(q)-G(p2)+m*GI())/u1";
+#define CCmeV6Post "(G(q)-G(p2)+m*GI())/u1*G(n2p)*(G(l)+G(p1)-G(k1)+m*GI())*G(nip)*(G(l)+G(p1)+m*GI())*G(n1p)";
+#define   meV6Post "GI()";
+#define CCmeV6Pre  "GI()";
+* abelian gluon vertex crossed matrix element
+#define   meV7Name "g1cr";
+#define   meV7Pre  "GI()";
+#define CCmeV7Post "GI()";
+#define   meV7Post "(G(p1)-G(q)+m*GI())/t1*G(n2)*(G(l)-G(p2)+G(k1)*m*GI())*G(ni)*(G(l)-G(p2)+m*GI())*G(n1)"
+#define CCmeV7Pre  "G(n1p)*(G(l)-G(p2)+m*GI())*G(nip)*(G(l)-G(p2)+G(k1)*m*GI())*G(n2p)*(G(p1)-G(q)+m*GI())/t1";
+* non-abelian gluon vertex matrix element
+#define   meV8Name "g2";
+#define   meV8Pre  "G(nQ)*(G(l)+G(p1)+m*GI())*(-G(n1))*(G(q)-G(p2)+m*GI())/u1*threeGVertex";
+#define CCmeV8Post "(G(q)-G(p2)+m*GI())/u1*(-G(n1p))*(G(l)+G(p1)+m*GI())*G(nQp)*threeGVertexp";
+#define   meV8Post "GI()";
+#define CCmeV8Pre  "GI()";
+* non-abelian gluon vertex crossed matrix element
+#define   meV9Name "g2cr";
+#define   meV9Pre  "GI()";
+#define CCmeV9Post "GI()";
+#define   meV9Post "(G(p1)-G(q)+m*GI())/t1*(-G(n1))*(G(l)-G(p2)+m*GI())*G(nQ)*threeGVertex";
+#define CCmeV9Pre  "G(nQp)*(G(l)-G(p2)+m*GI())*(-G(n1p))*(G(p1)-G(q)+m*GI())/t1*threeGVertexp";
+* mass correction matrix element
+#define   meV10Name "m";
+#define   meV10Pre  "G(ni)*(G(p1)-G(k1)+m*GI())/u1*G(n1)*(G(l)+m*GI())*G(n2)*(G(q)-G(p2)+m*GI())/u1";
+#define CCmeV10Post "(G(q)-G(p2)+m*GI())/u1*G(n2p)*(G(l)+m*GI())*G(n1p)*(G(p1)-G(k1)+m*GI())/u1*G(nip)";
+#define   meV10Post "GI()";
+#define CCmeV10Pre  "GI()";
+* mass correction crossed matrix element
+#define   meV11Name "mcr";
+#define   meV11Pre  "GI()";
+#define CCmeV11Post "GI()";
+#define   meV11Post "(G(p1)-G(q)+m*GI())/t1*G(n2)*(G(l)+m*GI())*G(n1)*(G(k1)-G(p2)+m*GI())/t1*G(ni)";
+#define CCmeV11Pre  "G(nip)*(G(k1)-G(p2)+m*GI())/t1*G(n1p)*(G(l)+m*GI())*G(n2p)*(G(p1)-G(q)+m*GI())/t1";
+* mass counter matrix element
+#define   meV12Name "cm";
+#define   meV12Pre  "G(ni)*(G(p1)-G(k1)+m*GI())/u1*(Z2M1*(G(q)-G(p2)+m*GI()) + ZmM1*m*GI())*(G(q)-G(p2)+m*GI())/u1";
+#define CCmeV12Post "(G(q)-G(p2)+m*GI())/u1*(Z2M1*(G(q)-G(p2)+m*GI()) + ZmM1*m*GI())*(G(p1)-G(k1)+m*GI())/u1*G(nip)";
+#define   meV12Post "GI()*(-d_(n1 ,n2 )/n)";
+#define CCmeV12Pre  "GI()*(-d_(n1p,n2p)/n)";
+* mass counter crossed matrix element
+#define   meV13Name "cmcr";
+#define   meV13Pre  "GI()*(-d_(n1 ,n2 )/n)";
+#define CCmeV13Post "GI()*(-d_(n1p,n2p)/n)";
+#define   meV13Post "(G(p1)-G(q)+m*GI())/t1*(Z2M1*(G(p1)-G(q)+m*GI()) + ZmM1*m*GI())*(G(k1)-G(p2)+m*GI())/t1*G(ni)";
+#define CCmeV13Pre  "G(nip)*(G(k1)-G(p2)+m*GI())/t1*(Z2M1*(G(p1)-G(q)+m*GI()) + ZmM1*m*GI())*(G(p1)-G(q)+m*GI())/t1";
 
 *******************
 * interactions and HQ-lines
@@ -57,7 +117,7 @@ Tensor ee;
 #do cur1 = 1,1
 #do cur2 = 1,1
 #do chLO = 1,2
-#do chV = 1,3
+#do chV = 1,13
 * combine matrix elements
 #if 1 == `cur1' && 1 == `cur2'
 Local ME = (`HQ'  * `meLO`chLO'Pre'   * G(mu) * `meLO`chLO'Post' *
@@ -81,10 +141,10 @@ Local ME = (-G(mup)*`CCmeV`chV'Post' *
 #else
 Local ME = (-G(mup)*`CCmeV`chV'Post' * 
              `HQ'  * `meLO`chLO'Pre' * G(muf1)*G(muf2)*G(muf3) * `meLO`chLO'Post' *
-             `HAQ' * `CCmeV`chV'Pre' * Gfive()                                * (-d_(n1p,n2p))   ) +
+             `HAQ' * `CCmeV`chV'Pre' * Gfive()                                * (-d_(n1p,n2p))  ) +
 	   (-G(mup)*`CCmeLO`chLO'Post' * 
              `HQ'  * `meV`chV'Pre' * G(muf1)*G(muf2)*G(muf3) * `meV`chV'Post' * (-d_(n1, n2 )) *
-             `HAQ' * `CCmeLO`chLO'Pre' * Gfive()                                                 );
+             `HAQ' * `CCmeLO`chLO'Pre' * Gfive()                                                );
 #endif
 * contract objects
 repeat;
@@ -117,10 +177,17 @@ endrepeat;
 #if 2 == `cur1' && 2 == `cur2'
  Multiply 1/6*e_(mu,muf1,muf2,muf3);
 #endif
+********************
 * insert 3g vertex
 #if 3 == `chV'
  id threeGVertex  = d_(n2 ,nQ )*(k1(ni )-2*l(ni )) + d_(nQ ,ni )*(l(n2 )-2*k1(n2 )) + d_(ni ,n2 )*(k1(nQ )+l(nQ ));
  id threeGVertexp = d_(n2p,nQp)*(k1(nip)-2*l(nip)) + d_(nQp,nip)*(l(n2p)-2*k1(n2p)) + d_(nip,n2p)*(k1(nQp)+l(nQp));
+#elseif 8 == `chV'
+ id threeGVertex  = d_(ni ,n2 )*(2*k1(nQ )+l(nQ )) + d_(n2 ,nQ )*(-2*l(ni )-k1(ni )) + d_(nQ ,ni )*(l(n2 )-k1(n2 ));
+ id threeGVertexp = d_(nip,n2p)*(2*k1(nQp)+l(nQp)) + d_(n2p,nQp)*(-2*l(nip)-k1(nip)) + d_(nQp,nip)*(l(n2p)-k1(n2p));
+#elseif 9 == `chV'
+ id threeGVertex  = d_(ni ,n2 )*(2*k1(nQ )-l(nQ )) + d_(n2 ,nQ )*(2*l(ni )-k1(ni )) + d_(nQ ,ni )*(-l(n2 )-k1(n2 ));
+ id threeGVertexp = d_(nip,n2p)*(2*k1(nQp)-l(nQp)) + d_(n2p,nQp)*(2*l(nip)-k1(nip)) + d_(nQp,nip)*(-l(n2p)-k1(n2p));
 #endif
 .sort
 
@@ -153,7 +220,7 @@ Contract;
 
 *******************
 * insert scalar products
-Symbols s,t1,u1,m2,l2,lk1,lq,lp1,lp2;
+Symbols s,m2,l2,lk1,lq,lp1,lp2;
 Index al1,al2,al3,al4;
 id m*m = m2;
 id k1.k1 = 0;
