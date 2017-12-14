@@ -247,7 +247,8 @@ id e_(al1?,al2?,al3?,al4?) = 0;
 #write <data/VVF.m> "VVF[%s,%s,%s,\"%s\"][F,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`meLO`chLO'Name',`meV`chV'Name',`projV`V'Name',F`V'
 #write <data/VVF.m> "VVF[%s,%s,%s,\"%s\"][g,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`meLO`chLO'Name',`meV`chV'Name',`projV`V'Name',g`V'
 #enddo
-*.sort
+Drop;
+.sort
 
 #enddo * /chV
 #enddo * /chLO
