@@ -40,6 +40,6 @@ Gluon(ig,vnuQ)\
 	.addLabel("$\Pg(\lambda_{\Pg},a)$",pos=-.3,displace=0.0)\
 	.addParallelArrow(size=0.1, displace=0.06, sense=1).addLabel(r"$k_1$",angle=90,displace=.3)
 Gluon(vnu2,vnu1)\
-	.addParallelArrow(size=0.1, displace=-0.06, sense=-1).addLabel(r"$l$",angle=90,displace=-.3)
+	.addParallelArrow(size=0.1, displace=-0.06, sense=1).addLabel(r"$l$",angle=90,displace=-.3)
 
 fd.draw("nlo-v-g1cr.pdf")

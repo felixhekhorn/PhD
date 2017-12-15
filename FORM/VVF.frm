@@ -66,8 +66,8 @@ Tensor ee;
 #define   meV7Name "g1cr";
 #define   meV7Pre  "GI()";
 #define CCmeV7Post "GI()";
-#define   meV7Post "(G(p1)-G(q)+m*GI())/t1*G(n2)*(G(l)-G(p2)+G(k1)*m*GI())*G(ni)*(G(l)-G(p2)+m*GI())*G(n1)"
-#define CCmeV7Pre  "G(n1p)*(G(l)-G(p2)+m*GI())*G(nip)*(G(l)-G(p2)+G(k1)*m*GI())*G(n2p)*(G(p1)-G(q)+m*GI())/t1";
+#define   meV7Post "(G(p1)-G(q)+m*GI())/t1*G(n2)*(G(l)-G(p2)+G(k1)+m*GI())*G(ni)*(G(l)-G(p2)+m*GI())*G(n1)"
+#define CCmeV7Pre  "G(n1p)*(G(l)-G(p2)+m*GI())*G(nip)*(G(l)-G(p2)+G(k1)+m*GI())*G(n2p)*(G(p1)-G(q)+m*GI())/t1";
 * non-abelian gluon vertex matrix element
 #define   meV8Name "g2";
 #define   meV8Pre  "G(nQ)*(G(l)+G(p1)+m*GI())*(-G(n1))*(G(q)-G(p2)+m*GI())/u1*threeGVertex";
@@ -78,8 +78,8 @@ Tensor ee;
 #define   meV9Name "g2cr";
 #define   meV9Pre  "GI()";
 #define CCmeV9Post "GI()";
-#define   meV9Post "(G(p1)-G(q)+m*GI())/t1*(-G(n1))*(G(l)-G(p2)+m*GI())*G(nQ)*threeGVertex";
-#define CCmeV9Pre  "G(nQp)*(G(l)-G(p2)+m*GI())*(-G(n1p))*(G(p1)-G(q)+m*GI())/t1*threeGVertexp";
+#define   meV9Post "(G(p1)-G(q)+m*GI())/t1*(-G(n1))*(G(l)-G(p2)+m*GI())*G(nQ)*threeGVertex*(-1)"; * TODO track -1?!
+#define CCmeV9Pre  "G(nQp)*(G(l)-G(p2)+m*GI())*(-G(n1p))*(G(p1)-G(q)+m*GI())/t1*threeGVertexp*(-1)";
 * mass correction matrix element
 #define   meV10Name "m";
 #define   meV10Pre  "G(ni)*(G(p1)-G(k1)+m*GI())/u1*G(n1)*(G(l)+m*GI())*G(n2)*(G(q)-G(p2)+m*GI())/u1";
