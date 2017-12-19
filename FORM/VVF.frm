@@ -114,8 +114,8 @@ Tensor ee;
 
 *******************
 * compute matrix elements
-#do cur1 = 1,1
-#do cur2 = 1,1
+#do cur1 = 1,2
+#do cur2 = 1,2
 #do chLO = 1,2
 #do chV = 1,13
 * combine matrix elements
@@ -160,10 +160,11 @@ endrepeat;
 #else
  Function G1, G2;
  Index alpha,mu1,mu2,mu3,mu4;
+* compute traces by algorithm of
 * S. Moch et al. / Physics Letters B 748 (2015) 432–438
  repeat;
   id,once,G(?a,alpha?,five) = distrib_(-2,3,G1,G2,?a)*G(alpha,five);
-  id G2(mu1?,mu2?,mu3?)*G(mu4?,five) = ee(mu1,...,mu4);
+  id G2(mu1?,mu2?,mu3?)*G(mu4?,five) = e_(mu1,...,mu4);
  endrepeat;
  .sort
  repeat;
@@ -214,9 +215,9 @@ contract;
 
 *******************
 * close epsilons
-id ee(?a) = e_(?a);
-Contract;
-.sort
+*id ee(?a) = e_(?a);
+*Contract;
+*.sort
 
 *******************
 * insert scalar products

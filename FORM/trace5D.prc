@@ -116,12 +116,12 @@ id	G3(?d) = 1;
 * (example, for 3-loop forward Compton amplitudes with P.P = 0)
 
 #do i = 1,8
-id  [P+p`i'] = P+p`i';
-id  [P-p`i'] = P-p`i';
+* id  [P+p`i'] = P+p`i';
+* id  [P-p`i'] = P-p`i';
 #enddo
-id  [P+Q] = P+Q;
-id  [P-Q] = P-Q;
-id  P.P = 0;
+* id  [P+Q] = P+Q;
+* id  [P-Q] = P-Q;
+* id  P.P = 0;
 
 .sort:trace5D-simp-mu;
 
@@ -140,7 +140,7 @@ Multiply G3;
    				-G(?a,mu2,p1,?b,p1,?c,mu,fv)*G3(?d,p1)
 				+2*G2(p1,mu2)*G(?a,?b,p1,?c,mu,fv)*G3(?d);
   		id	G2(mu1?,mu2?) = d_(mu1,mu2);
-		id	P.P = 0;
+*		id	P.P = 0;
 	endrepeat;
  endif;
  endrepeat;
@@ -155,7 +155,7 @@ Multiply G3;
    				-G(?a,mu2,p1,?b,p1,?c)*G3(?d,p1)
 				+2*G2(p1,mu2)*G(?a,?b,p1,?c)*G3(?d);
   		id	G2(mu1?,mu2?) = d_(mu1,mu2);
-		id	P.P = 0;
+*		id	P.P = 0;
 	endrepeat;
  endif;
  endrepeat;
@@ -181,7 +181,7 @@ id	G3(?d) = 1;
     	id  G2(mu1?,...,mu4?) = ee(mu1,...,mu4);
     endrepeat;
 #endif
-	id	P.P = 0;
+*	id	P.P = 0;
 .sort
     repeat;
         if ( count(G1,1) );
@@ -205,7 +205,7 @@ id	G3(?d) = 1;
  tracen,1;
  tracen,2;
  tracen,3;
- id	P.P = 0;
+* id	P.P = 0;
 
 .sort:trace5D-end;
 

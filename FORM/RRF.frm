@@ -122,7 +122,8 @@ endrepeat;
 #if 2 == `cur1' && 2 == `cur2'
  Multiply 1/6*e_(mu,muf1,muf2,muf3);
 #endif
-* add 3g vertex
+*******************
+* insert 3g vertex
 #if `ch1' >= 7
  Multiply (-d_(nQ ,ng ))*(d_(ni ,no )*(k1(ng )+k2(ng ))+d_(no ,ng )*(-2*k2(ni )+k1(ni ))+d_(ng ,ni )*(k2(no )-2*k1(no )));
 #endif
@@ -148,7 +149,7 @@ Symbols sp,q2;
 #define projV5 "2/sp*(k1(mu)*q(mup)+q(mu)*k1(mup))";
 
 #do V = 1,5
-Local FP`V' = ME*(-d_(ni,nip))*`projV`V'';
+Local FP`V' = ME*( -d_(ni,nip))        *`projV`V'';
 Local gP`V' = ME*(2*e_(ni,nip,k1,q)/sp)*`projV`V'';
 contract;
 .sort
