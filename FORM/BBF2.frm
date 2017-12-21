@@ -15,15 +15,15 @@ Tensor G3,G,G1,G2,ee;
 * t1 matrix element
 #define   me1Name "t1";
 #define   me1Pre  "1";
+#define CCme1Post "1";
 #define   me1Post "(gg(1,k1)-gg(1,p2) + m)/t1*gg(1,ni)";
 #define CCme1Pre  "gg(1,nip)*(gg(1,k1)-gg(1,p2) + m)/t1";
-#define CCme1Post "1";
 * u1 matrix element
 #define   me2Name "u1";
 #define   me2Pre  "gg(1,ni)*(gg(1,p1)-gg(1,k1) + m)/u1";
+#define CCme2Post "(gg(1,p1)-gg(1,k1) + m)/u1*gg(1,nip)";
 #define   me2Post "1";
 #define CCme2Pre  "1";
-#define CCme2Post "(gg(1,p1)-gg(1,k1) + m)/u1*gg(1,nip)";
 
 *******************
 * interactions and HQ-lines
@@ -99,7 +99,8 @@ id e_(k1,q,p1,p2) = 0;
 #write <data/BBF2.m> "BBF2[%s,%s,%s,%s][F,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`me`ch1'Name',`me`ch2'Name',`projV`V'Name',F`V'
 #write <data/BBF2.m> "BBF2[%s,%s,%s,%s][g,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`me`ch1'Name',`me`ch2'Name',`projV`V'Name',g`V'
 #enddo
-*.sort
+Drop;
+.sort
 
 #enddo * /ch2
 #enddo * /ch1
