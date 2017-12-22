@@ -16,12 +16,12 @@ Tensor G3,G,G1,G2,ee;
 #define   meLO1Name "t1";
 #define   meLO1Pre  "1";
 #define CCmeLO1Post "1";
-#define   meLO1Post "(gg(1,k1)-gg(1,p2) + m)*gg(1,ni)";
-#define CCmeLO1Pre  "gg(1,nip)*(gg(1,k1)-gg(1,p2) + m)";
+#define   meLO1Post "(gg(1,k1)-gg(1,p2) + m)/t1*gg(1,ni)";
+#define CCmeLO1Pre  "gg(1,nip)*(gg(1,k1)-gg(1,p2) + m)/t1";
 * LO u1 matrix element
 #define   meLO2Name "u1";
-#define   meLO2Pre  "gg(1,ni)*(gg(1,p1)-gg(1,k1) + m)";
-#define CCmeLO2Post "(gg(1,p1)-gg(1,k1) + m)*gg(1,nip)";
+#define   meLO2Pre  "gg(1,ni)*(gg(1,p1)-gg(1,k1) + m)/u1";
+#define CCmeLO2Post "(gg(1,p1)-gg(1,k1) + m)/u1*gg(1,nip)";
 #define   meLO2Post "1";
 #define CCmeLO2Pre  "1";
 
