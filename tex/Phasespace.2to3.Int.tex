@@ -82,22 +82,28 @@ If $-l\in\mathcal N$ one finds:
 this way one finds\cite[Ch. 5]{Bojak:2000eu}\cite[App. C]{PhysRevD.40.54}:
 \begin{align}
 I^{(1,0)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1) \cdot \hat I^{(0)}(n-2)\\
- &= \frac {2\pi}{a(n-4)}\\
+ &= \frac {2\pi}{a(n-4)} = \frac {2\pi}{a\epsilon}\\
 I^{(1,-1)}_{a,n} &= \frac 1 a\hat I^{(0)}(n-1)\cdot \left(A\hat I^{(0)}(n-2)+B\hat I^{(2)}(n-2)\right)\\
- &= \frac {2\pi}{a}\frac{(A(n-3)+B)}{(n-3)(n-4)} \approx \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
+ &= \frac {2\pi}{a}\left(\frac{A}{n-4}+\frac{B}{(n-4)(n-3)}\right) = \frac {2\pi}{a}\left(\frac{A+B}\epsilon - 2B + O(\epsilon)\right)\\
 I^{(1,-2)}_{a,n} &= \frac 1 a\left(\hat I^{(0)}(n-1)\cdot \left(A^2\hat I^{(0)}(n-2)+(B^2+2AB)\hat I^{(2)}(n-2)\right) + C^2\hat I^{(2)}(n-1)\hat I^{(0)}(n)\right)\\
  &= \frac {2\pi}{a}\left(\frac {A^2}{n-4} + \frac {2AB + B^2}{(n-4)(n-3)} + \frac {C^2}{(n-3)(n-2)}\right)\\
- &\approx \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)
+ &= \frac {2\pi}{a}\left(\frac{(A+B)^2}{\epsilon}+\frac{C^2}{2}-2AB-B^2+O(\epsilon)\right)\\
+I^{(1,-3)}_{a,n} &= \frac {2\pi} a \left(\frac{A^3}{n-4}+\frac{3A^2B+3AB^2}{(n-4)(n-3)}+\frac{3B^3}{(n-4)(n-3)(n-1)}\right.\nonumber\\
+ &\hspace{40pt} \left.+\frac{3AC^2}{(n-3)(n-2)}+\frac{3BC^2}{(n-3)(n-2)(n-1)}\right)\\
+ &= \frac {2\pi}{a}\left(\frac{(A+B)^3}{\epsilon} + \frac 1 6 \left( 3(3A+B)C^2 - 2B(9A^2+9AB+4B^2) \right) + O(\epsilon)\right)
 \end{align}
+
 \begin{align}
 I^{(2,0)}_{a,n} &= \frac 1 {a^2}\hat I^{(0)}(n-1) \cdot \left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right)\\
- &= \frac {2\pi}{a^2(n-6)} \approx -\frac {\pi}{a^2} + O(\epsilon)\\
+ &= \frac {2\pi}{a^2(n-6)}
+  = -\frac {\pi}{a^2} + O(\epsilon)\\
 I^{(2,-1)}_{a,n} &= \frac 1 {a^2}\hat I^{(0)}(n-1) \cdot \left(A\left(\hat I^{(0)}(n-4) + \hat I^{(2)}(n-4)\right) + 2B\hat I^{(2)}(n-4)\right)\\
- &= \frac {2\pi}{a^2}\left(\frac{A}{n-6}+\frac{2B}{(n-6)(n-4)}\right)\approx -\frac{2\pi}{a^2}\left(\frac{B}{\epsilon} + \frac{A+B} 2\right) + O(\epsilon)\\
+ &= \frac {2\pi}{a^2}\left(\frac{A}{n-6}+\frac{2B}{(n-6)(n-4)}\right)
+  = -\frac{2\pi}{a^2}\left(\frac{B}{\epsilon} + \frac{A+B} 2\right) + O(\epsilon)\\
 I^{(2,-2)}_{a,n} &= \frac 1 {a^2}\left(\hat I^{(0)}(n-1)\cdot \left(A^2(\hat I^{(0)}(n-4)+\hat I^{(2)}(n-4))+4AB\hat I^{(2)}(n-4) \right.\right.\nonumber\\
  &\hspace{20pt}\left.\left. + B^2(\hat I^{(2)}(n-4)+\hat I^{(4)}(n-4))\right) + C^2\hat I^{(2)}(n-1)(\hat I^{(0)}(n-2) + \hat I^{(2)}(n-2))\right)\\
  &= \frac {2\pi}{a^2}\left(\frac {A^2}{n-6}+\frac{4AB}{(n-6)(n-4)} + \frac{B^2 n}{(n-6)(n-4)(n-3)} + \frac{C^2}{(n-4)(n-3)} \right) \\
- &\approx \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
+ &= \frac {2\pi}{a^2}\left(\frac{-2AB-2B^2+C^2}{\epsilon}+\frac{B^2-A^2}{2}-AB-C^2+O(\epsilon)\right)\\
 \end{align}
 
 It is\cite[Ch. 5]{Bojak:2000eu}:

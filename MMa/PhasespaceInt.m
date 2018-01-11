@@ -27,6 +27,7 @@ PsInta[k_,l_][a_,b_,A_,B_,C_] := (PsInta[k,l][a,b,A,B,C]=PsInt\[Epsilon][k,l][a,
 PsInta[1,0][a_,b_,A_,B_,C_] = (2\[Pi])/(a(dDim-4));
 PsInta[1,-1][a_,b_,A_,B_,C_] = (2\[Pi] (B+A(dDim-3)))/(a(dDim-4)(dDim-3));
 PsInta[1,-2][a_,b_,A_,B_,C_] = (2\[Pi] (C^2 (dDim-4)+(2 A B+B^2+A^2 (dDim-3))(dDim-2)))/(a(dDim-4)(dDim-3)(dDim-2));
+PsInta[1,-3][a_,b_,A_,B_,C_] = (2\[Pi]/a)*(A ((3 B^2)/((-4 + dDim) (-3 + dDim)) + (3 C^2)/((-3 + dDim) (-2 + dDim))) + A^3/(-4 + dDim) + (3 A^2 B)/((-4 + dDim) (-3 + dDim)) + (3 B^3)/((-4 + dDim) (-3 + dDim) (-1 + dDim)) + ( 3 B C^2)/((-3 + dDim) (-2 + dDim) (-1 + dDim)));
 PsInta[2,0][a_,b_,A_,B_,C_] = (2 \[Pi])/(a^2(dDim-6));
 PsInta[2,-1][a_,b_,A_,B_,C_] = (2\[Pi] (2 B+A (dDim-4)))/(a^2(dDim-6)(dDim-4));
 PsInta[2,-2][a_,b_,A_,B_,C_] = (2 (C^2 (-6+dDim)+4 A B (-3+dDim)+A^2 (-4+dDim) (-3+dDim)+B^2 dDim) \[Pi])/(a^2(-6+dDim) (-4+dDim) (-3+dDim));
