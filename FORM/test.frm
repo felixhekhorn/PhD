@@ -1,23 +1,21 @@
 Off Statistics;
 S n;
 Dimension n;
-I mu,mup,nu,nup,a1,a2,a3,a4;
-V k1,q;
-L T = e_(mu,mup,q,k1) * e_(nu,nup,k1,q);
-L f1 = g_(1,mu,mup,nup,nu) * T;
-L g1 = 8*(k1.q*k1.q- k1.k1*q.q)*(3-n)*(2-n);
-L h1 = f1-g1;
-tracen,1;
-Contract;
-Print h1;
-.sort
+Index fv,m1;
+AutoDeclare Indices mu;
+NTensor gg;
+Tensor G3,G,G1,G2,ee;
+V p1;
 
-L f2 = g_(1,mu,a1,mup,nup,a2,nu) * T;
-L g2 = 16*(k1(a1)*k1(a2)*q.q + q(a1)*q(a2)*k1.k1 - (k1(a1)*q(a2)+ k1(a2)*q(a1))*k1.q )*(3-n) + 
-       8*(-d_(a1,a2)*(k1.k1*q.q - k1.q*k1.q))*(3-n)*(4-n);
-L h2 = f2 - g2;
-tracen,1;
-Contract;
-Print h2;
+AutoDeclare Indices nu;
+
+Local t1 = gg(1,nu1,nu2,nu3,nu4,fv);
+Local t2 = gg(2,nu1,nu2,nu3,nu4,fv);
+Local t12 = gg(1,nu11,nu12,nu13,nu14,fv)*gg(2,nu21,nu22,nu23,nu24,fv);
+
+#call trace5D
+
+Print;
+
 .sort;
 .end
