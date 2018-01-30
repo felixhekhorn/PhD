@@ -8,7 +8,7 @@ import os
 import numpy as np
 import time
 
-from ElProduction import InclusiveElProduction, DynamicScaleFactors
+from ElProduction import projT, InclusiveElProduction, DynamicScaleFactors
 import Util
 
 class HadronicRunner2:
@@ -120,9 +120,9 @@ class HadronicRunner2:
 	Util.setupPDFs()
         # start processes
         oArgs = {
-            "G": (self.m2,self.q2,self.Delta,ElProduction.projT.G,self.nlf,),
-            "L": (self.m2,self.q2,self.Delta,ElProduction.projT.L,self.nlf,),
-            "P": (self.m2,self.q2,self.Delta,ElProduction.projT.P,self.nlf,)
+            "G": (self.m2,self.q2,self.Delta,projT.G,self.nlf,),
+            "L": (self.m2,self.q2,self.Delta,projT.L,self.nlf,),
+            "P": (self.m2,self.q2,self.Delta,projT.P,self.nlf,)
         }
         lenParams = len(g)
         processes = []
@@ -147,7 +147,7 @@ class HadronicRunner2:
         self.__data["L"] = [[np.nan for k in self.__ks] for j in self.__js]
         self.__data["P"] = [[np.nan for k in self.__ks] for j in self.__js]
         l = self.__qOut.qsize()
-        while g in range(l):
+        for g in range(l):
             p = self.__qOut.get()
             self.__data[p["proj"]][p["j"]][p["k"]] = p["res"]
     # reorder in 2D
@@ -261,7 +261,7 @@ def _threadWorker(qi, qo, oArgs, pdfs, pdfMem, mu02, lambdaQCD, lenParams):
   # prepare objects
   for proj in objs:
     o = objs[proj]
-    o.setMu2(mu02)
+    o.setMu2(DynamicScaleFactors(*mu02))
     o.setLambdaQCD(lambdaQCD)
     o.setPdf(pdfs[proj], pdfMem)
   # run

@@ -17,3 +17,5 @@ nohup nice -n 15 ~/usr/local/bin/python ./NPB392-229-Inclusive-MSTW2008nlo90cl.p
 nohup nice -n 15 ~/usr/local/bin/python ./NPB540-345-Exclusive.py > NPB540-345-Exclusive.log &
 
 nohup nice -n 15 ~/usr/local/bin/python ./NPB540-345-Inclusive.py > NPB540-345-Inclusive.log &
+
+nohup nice -n 15 ~/usr/local/bin/python ./run4-hadronic-pdf.py > run4-hadronic-pdf.log &
