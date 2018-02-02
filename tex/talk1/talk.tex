@@ -1,0 +1,134 @@
+% LaTeX Vorlage
+%\documentclass[
+%  ngerman,		% Sprache
+%  a4paper,		% Papierformat
+%  11pt,			% Schriftgröße (default 10pt)
+%  DIV=12,		% Seiteneinteilung
+%  parskip=half  	% Absätze (full,half,false -+*)
+%]{scrartcl}
+\documentclass{beamer}
+%\documentclass[handout]{beamer}
+
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage[ngerman,english,main=english]{babel} % Sprache 
+\selectlanguage{english}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx} % Grafiken einbinden
+%\usepackage[left=2cm,right=2cm,top=2.5cm,bottom=3cm]{geometry}
+\usepackage{color} % Farbe
+\usepackage{bbm}
+
+\usetheme{Boadilla}
+%\usetheme{ AnnArbor | Antibes | Bergen | Berkeley | Berlin | Boadilla | boxes | CambridgeUS | Copenhagen | Darmstadt | default | Dresden | 	Frankfurt | Goettingen |Hannover | Ilmenau | JuanLesPins | Luebeck | Madrid | Malmoe | Marburg | Montpellier | PaloAlto | Pittsburgh | Rochester | Singapore | Szeged | Warsaw }
+\usecolortheme{whale}
+%\usecolortheme{ albatross | beaver | beetle | crane | default | dolphin | dove | fly | lily | orchid | rose |seagull | seahorse | sidebartab |structure | whale | wolverine }
+\usefonttheme{default}
+%\usefonttheme{ default | professionalfonts | serif | structurebold | structureitalicserif | structuresmallcapsserif }
+
+% Innere Themen spezifizieren die inneren Elemente wie Kopf-, Fußzeile, Sidebar usw. einer Folie.
+\useinnertheme{rectangles}
+% \useinnertheme{
+% 	circles | default | inmargin |
+% 	rectangles | rounded
+% }
+
+% Äußere Themen spezifizieren die Grenzen einer Folie und sagen ob und wo die inneren Elemente liegen.
+% \useoutertheme{
+% 	default | infolines | miniframes |
+% 	shadow | sidebar | smoothbars |
+% 	smoothtree | split | tree
+% }
+
+% Um halbtransparente Overlays auf seinen Folien zu haben, reicht es folgenden Schalter zu setzen:
+% \setbeamercovered{transparent}
+
+% Zum Abschalten der kleinen Navigationsleiste am unteren Rand reicht folgende Zeile aus:
+% \beamertemplatenavigationsymbolsempty
+
+% Seitenzahlen in Fußzeile einfügen
+\setbeamertemplate{footline}[frame number]
+
+
+% Um die Metainfomationen zu setzen die unter anderem für die Titelseite verwendet werden, kann man sich folgender Befehle bedienen:
+\title{Next-to-Leading Order QCD Corrections to Inclusive Heavy-Flavor Production in Polarized Deep-Inelastic Scattering} % Titel des Vortrages
+%\subject{Higgs-Mechanismus} % Setzt Thema in den PDF-Dokument-Eigenschaften
+%\subtitle[Masseerzeugung]{oder warum das Photon auf Diät gesetzt wurde} % Untertitel
+
+\author[F. Hekhorn]{Felix Hekhorn} % Autor festlegen
+\institute{Institute for Theoretical Physics, University of T\"ubingen}
+% \institute[IfI -- HU Berlin]{Institut für Informatik\\ Humboldt-Universität zu Berlin}
+%     Angabe des Institutes
+%\date[13.12.12]{13. Dezember 2012} % Datum der Präsentation, alternativ kann mittels \date{\today} auch das aktuelle Datum eingetragen werden.
+% \logo{\pgfimage[width=2cm,height=2cm]{hulogo}}
+%     Die Datei hulogo.pdf (bzw. hulogo.png, hulogo.jpg, hulogo.mps bei Verwendung von pdftex als Backend) als Logo auf allen Folien, hier mithilfe des Paketes pgf.
+% \titlegraphic{\includegraphics[width=2cm,height=2cm]{hulogo}}
+%     Die Datei hulogo.pdf (bzw. analog wie bei \logo auch entsprechendes Format) als Logo nur auf der Titelseite unter Verwendung des Paketes graphicx.
+
+\usepackage{pgfpages}
+%\pgfpagesuselayout{resize to}[a4paper,border shrink=5mm,landscape]
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+%\pgfpagesuselayout{4 on 1}[a4paper,border shrink=5mm,landscape]
+%\pgfpagesuselayout{8 on 1}[a4paper,border shrink=5mm]
+%\pgfpagesuselayout{16 on 1}[a4paper,border shrink=5mm,landscape]
+
+%\usepackage{pdflscape}
+
+\usepackage{slashed}
+
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+\usepackage{ulem}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{placeins}
+\usepackage{csquotes}
+
+\usepackage{siunitx} % SI Einheiten
+\usepackage[version=3]{mhchem}
+%\sisetup{
+%	exponent-product = \!\cdot\!,
+%	output-product = \cdot,
+%	list-final-separator =  { und } ,
+%	list-pair-separator = { und } ,
+%	range-phrase = { bis },
+%	output-decimal-marker = {,},
+%	separate-uncertainty = true,
+%	group-digits = false
+%}
+
+%\usepackage{simplewick}
+%\usepackage{feynmf}
+\usepackage{slashed}
+\usepackage{hepnames}
+
+\usepackage{url}
+\usepackage{hyperref}
+%\hypersetup{colorlinks=false}
+\usepackage{tabularx}
+
+\include{lib}
+
+\begin{document}
+
+\frame{ \titlepage }
+\frame{
+	\frametitle{Outline}
+	\tableofcontents
+}
+
+\input{Introduction}
+
+\input{Computation}
+
+\input{Partonic}
+
+\input{Hadronic}
+
+\input{Outlook}
+
+\end{document}

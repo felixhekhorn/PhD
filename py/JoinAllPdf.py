@@ -6,9 +6,9 @@ import Util
 import numpy as np
 
 # setup files
-pP = Util.getAbsProjectPath()+"py/FPc-pdf-q2_1-DSSV2014.dat"
-pGLP = Util.getAbsProjectPath()+"py/Fc-q2_1-MSTW2008nlo90cl-DSSV2014.dat"
-pO = Util.getAbsProjectPath()+"py/ALL-pdf-q2_1-DSSV2014-MSTW2008nlo90cl.dat"
+pP = Util.getAbsProjectPath()+"data/FPc-pdf-q2_1-DSSV2014.dat"
+pGLP = Util.getAbsProjectPath()+"data/Fc-q2_1-MSTW2008nlo90cl-DSSV2014.dat"
+pO = Util.getAbsProjectPath()+"data/ALL-pdf-q2_1-DSSV2014-MSTW2008nlo90cl.dat"
 
 # read fils
 lsP = []
