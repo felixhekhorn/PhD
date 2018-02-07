@@ -7,15 +7,16 @@ from HadronicRunner2 import HadronicRunner2
 
 # @brief running strong coupling
 # taken from eq. 10 in G. Altarelli, M. Diemoz, G. Martinelli, and P. Nason, Nucl. Phys. B308 (1988) 724
-def AlphaS(Q2,f):
-  lams = {4: 0.194, 5: 0.126}
-  lam2 = lams[f]**2
-  t = np.log(Q2/lam2)
-  def b(f): return (33. - 2.*f)/(12.*np.pi)
-  def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
-  return 1./(b(f)*t)*(1. - (bp(f)*np.log(t))/(b(f)*t))
+#def AlphaS(Q2,f):
+#  lams = {4: 0.194, 5: 0.126}
+#  lam2 = lams[f]**2
+#  t = np.log(Q2/lam2)
+#  def b(f): return (33. - 2.*f)/(12.*np.pi)
+#  def bp(f): return (153. - 19.*f)/(2.*np.pi*(33. - 2.*f))
+#  return 1./(b(f)*t)*(1. - (bp(f)*np.log(t))/(b(f)*t))
 
 m2 = 1.5**2
+lams = {4: 0.194, 5: 0.126}
 nlf = 3
 q2 = -1.e1
 x = 1e-3
