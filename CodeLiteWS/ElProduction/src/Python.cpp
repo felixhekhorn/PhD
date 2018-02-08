@@ -31,6 +31,7 @@ BOOST_PYTHON_MODULE(ElProduction)
         .value("L", L)
         .value("P", P)
     ;
+    def("projToStr",&projToStr);
     
     class_<InclusiveElProduction>("InclusiveElProduction", "application class for full inclusive electro production", init<double,double,double,projT,uint>())
         // global setter

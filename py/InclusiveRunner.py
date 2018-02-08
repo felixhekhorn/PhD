@@ -18,6 +18,12 @@ class InclusiveRunner:
 		@param e element
 		"""
 		self.__qIn.put(e)
+	def getLen(self):
+		"""
+		returns current length of input queue
+		@return jobs to do
+		"""
+		return self.__qIn.qsize()
 	def run(self,nProcesses = cpu_count()):
 		"""
 		computes all elements

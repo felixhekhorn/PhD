@@ -47,16 +47,3 @@ for k in range(len(lsP)):
 with open(pO, "w") as f:
 	for l in lO:
 		f.write("% e\t% e\t% e\t% e\t% e\t% e\t% e\n"%l)
-
-#path = Util.getAbsProjectPath()+"data/NPB540-345/"
-#Util.pInfo("Computing files for NPB540-345 ...")
-
-#for e in l:
-#	if not m.has_key(e["fp"]): m[e["fp"]] = []
-#	m[e["fp"]].append((e["var"],e["res"]))
-# write
-#def writeDataToFile(fp,d):
-#	with open(fp,"w") as o:
-#		for l in d:
-#			o.write("% e\t% e\n"%l)
-#	Util.pSucc(fp)
