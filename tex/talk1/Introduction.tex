@@ -13,20 +13,6 @@
 \item need improved charm tagging
 \item full inclusive cross section is complicated to reconstruct
 \item no hadronization here
-\iffalse
-%\item theoretical:
-%  \begin{itemize}
-%  \item test QCD at $m > \Lambda_{QCD}$
-%  \item cross section at NLO accuracy
-%  \item PDF scheme for massive quarks?
-%  \end{itemize}
-%\item experimental:
-%  \begin{itemize}
-%  \item low production rate $\to$ high luminosity
-%  \item 2-jet event (no hadronization here)
-%  \item important background process, e.g. in Higgs physics
-%  \end{itemize}
-\fi
 \end{itemize}
 \end{frame}
 
@@ -35,6 +21,7 @@
 \newcolumntype{i}{>{\centering\arraybackslash} m{.3\linewidth} }
 \begin{tabular}{wi}
 \begin{itemize}
+%\setlength{\itemindent}{-1em}
 \item scale of hard process in a pertubative regime $m>\Lambda_{QCD}$
 \item finite mass $m^2$ ensures full inclusive cross sections
 \item full $m^2$ dependence makes computations complicated: phase space + matrix elements
@@ -46,6 +33,28 @@
 \end{tabular}
 \end{frame}
 
+\begin{frame}{Introduction - DIS Setup}
+\[\Pem(l_1)+h(p) \to \Pem(l_2) + \PaQ(p_2) + X[\PQ]\]
+\newcolumntype{w}{>{\centering\arraybackslash} m{.74\linewidth} }
+\newcolumntype{i}{>{\centering\arraybackslash} m{.26\linewidth} }
+\hspace{-.5cm}\begin{tabular}{iw}
+\includegraphics[width=.25\textwidth]{img/DIS.eps} &
+\begin{itemize}
+\item $S_h = (p+l_1)^2 = x\,y\,Q^2,\,x,\,y,$\\
+$Q^2 = -q^2 = - (l_1-l_2)^2 \ll M_Z^2$
+\item unpolarized cross section:\\
+$\frac{d^2\sigma}{dx dy} = \frac{2\pi \alpha^2}{x y Q^2}\left(Y_+F_2(x,Q^2) - y^2F_L(x,Q^2)\right)$\\
+$2xF_1(x,Q^2) = F_2(x,Q^2) - F_L(x,Q^2)$
+\item polarized cross section:\\
+$\frac{d^2\Delta\sigma}{dx dy} = \frac{4\pi \alpha^2}{x y Q^2}Y_-\cdot 2xg_1(x,Q^2)$
+\item with $Y_\pm = 1 \pm (1-y)^2$
+\item $[k=T]\to 2xF_1$, $[k=L]\to F_L$ and $[k=P]\to 2xg_1$
+\end{itemize}
+\end{tabular}
+\end{frame}
+
+%%%
+\iffalse
 \begin{frame}{Introduction - Experimental Setups}
 \begin{center}
 \newcolumntype{C}{>{\centering\arraybackslash} m{3.6cm} } 
@@ -82,3 +91,5 @@ gluon & factorization & top, Higgs
 &&Y_\pm &= 1 \pm (1-y)^2
 \end{align}
 \end{frame}
+\fi
+%%%
