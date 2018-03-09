@@ -1,15 +1,15 @@
 \section{Computation Review}
 \begin{frame}{Computation Review}
 \begin{itemize}
-\item use factorisation theorem: $s\to \xi S_h$ + PDF
-\item $\Pg(k_1) + \Pggx(q) \to \PaQ(p_2) + \PQ(p_1)$
+\item use factorisation theorem: PDF and $s=\xi S_h$
+\item PGF: $\Pg(k_1) + \Pggx(q) \to \PaQ(p_2) + \PQ(p_1)$
 \item three massive particles: $2\cdot m^2>0,q^2=-Q^2<0$
-\item compute 2-to-3-phase space: e.g. $dPS_3 \sim dt_1ds_4d\Omega_n$
-\item compute diagrams: \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-4} + \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-3}
-\item $\Rightarrow 2xg_1(x) \sim e_u^2\cdot \xi\Delta u(\xi) \otimes d_{P,q}^{(1)}(\chi,\chi')$
-\item $d_{P,q}^{(1)}(\chi,\chi') = c_1(\chi,\chi')\ln(\chi) + c_2(\chi,\chi')\DiLog\left(\frac{1+\chi'}{1+\chi}\right)+\ldots$ \checkmark
-\item $\frac{m^2}{s} = \frac{\chi}{(1+\chi)^2}$ and $\frac{m^2}{s+Q^2} = \frac{m^2}{s'} = \frac{\chi'}{(1+\chi')^2}$ and $\frac{m^2}{Q^2} = \frac{\chi_q}{(1-\chi_q)^2}$
-\item $\gamma_5$ and $\varepsilon_{\mu\nu\rho\sigma}$ in $n$-dimension? $\to$ HVBM
+\item<2-> compute 2-to-3-phase space: e.g. $dPS_3 \sim dt_1du_1d\Omega_nd\hat{\mathcal{I}}$
+\item<2-> compute diagrams: \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-4} + \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-3}
+\item<3-> $\Rightarrow 2xg_1(x) \sim e_u^2\cdot \xi\Delta u(\xi) \otimes d_{P,q}^{(1)}(\chi,\chi')$
+\item<3-> $d_{P,q}^{(1)}(\chi,\chi') = c_1(\chi,\chi')\ln(\chi) + c_2(\chi,\chi')\DiLog\left(\frac{1+\chi'}{1+\chi}\right)+\ldots$ \checkmark
+\item<3-> $\frac{m^2}{s} = \frac{\chi}{(1+\chi)^2}$ and $\frac{m^2}{s+Q^2} = \frac{m^2}{s'} = \frac{\chi'}{(1+\chi')^2}$ and $\frac{m^2}{Q^2} = \frac{\chi_q}{(1-\chi_q)^2}$
+\item<4-> $\gamma_5$ and $\varepsilon_{\mu\nu\rho\sigma}$ in $n$-dimension? $\to$ HVBM scheme
 \end{itemize}
 \end{frame}
 
@@ -61,7 +61,7 @@ soft + virtual + renormalization ($\MSbar_m$) + factorization is finite!
 \end{align*}
 \begin{align*}
 \nonumber
-\int\!\! \frac{d\Omega_n}{t' {u_7}^2} &\sim -\frac{2 \pi  (m^2+s_4) ({s'}+{t_1}) }{s_4 {t_1}^2 {u_1}^2} \Bigg[-2+\frac{{t_1} {u_1} (-q^2 s_4+(2 m^2+s_4) ({s'}+{u_1}))}{({s'}+{t_1}) \left(q^2 s_4 {t_1}+m^2 ({s'}+{u_1})^2\right)}\nonumber\\
+\int\!\! \frac{d\Omega_n}{t' {u_7}^2} &= -\frac{2 \pi  (m^2+s_4) ({s'}+{t_1}) }{s_4 {t_1}^2 {u_1}^2} \Bigg[-2+\frac{{t_1} {u_1} (-q^2 s_4+(2 m^2+s_4) ({s'}+{u_1}))}{({s'}+{t_1}) \left(q^2 s_4 {t_1}+m^2 ({s'}+{u_1})^2\right)}\nonumber\\
  & +\frac{2}{\epsilon }+\ln\left(\frac{{t_1}^2 {u_1}^2 ({m^2}+{s_4})}{({s'}+{t_1})^2 \left({m^2} ({s'}+{u_1})^2+{q^2} {t_1} {s_4}\right)}\right)\Bigg]
 \end{align*}\pause
 \only<beamer:2->{\begin{textblock*}{5cm}(10cm,2cm) % {block width} (coords)

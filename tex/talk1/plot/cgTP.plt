@@ -42,62 +42,67 @@ set style line 4 lt 2 lc rgb "#808080" lw 1 dt 3
 #set style line 6 lt 2 lc rgb "#000080" lw 2 dt 2
 
 #set label 1 at graph .02,.07
-set label 1 "c_{k,g}^{(0)}(η)" at graph 0.1,0.9 font ",18"
-set label 2 "k=T" at 0.003,.9
-set label 3 "k=P"  at 0.003,.75
-#set label 4 "Q^2 = 10^3 GeV^2"  at 0.003,.6
+set label 1 "c^{(0)}" at graph 0.06,0.9 font ",18"
+set label 11 "c_{k,g}" at graph 0.06,0.9 font ",18"
+set label 4 "proj. k"  at 0.003,.85  font ",18"
+set label 2 "T" at 0.005,.75  font ",18"
+set label 3 "P"  at 0.005,.65  font ",18"
 
-
+set label 5 at graph .76, graph .92 "Q^2 [GeV^2]" font ",18"
+set key at graph .95, graph .88 spacing 1.3 Left reverse font ",18"
 set yrange [-.23:1.23]
 set ytics format " %.1f"
 plot    0 t "" w lines ls 4,\
-	p."cg0-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 lc rgb "#aa0000" pi -10 pt 5, \
-	p."cg0-q2_-2.dat"  u 1:4 t "Q^2 = 10^{-2} GeV^2" w lines ls 1 lc rgb "#cc0000", \
-	p."cg0-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 lc rgb "#ff0000" pi -10 pt 4, \
-        "<echo '0.002 .9'" t "" ls 1 lc "#ff0000" pt 4, \
-        "<echo '0.002 .75'" t "" ls 3 lc rgb "#aa0000" pt 5, \
-        p."cg0-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#00aa00", \
-        p."cg0-q2_2.dat"   u 1:4 t "Q^2 = 10^{2} GeV^2" w lines ls 2 lc rgb "#00aa00", \
-	p."cg0-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00ff00", \
-	p."cg0-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#0000aa", \
-	p."cg0-q2_3.dat"   u 1:4 t "Q^2 = 10^{3} GeV^2" w lines ls 3 lc rgb "#0000aa", \
-	p."cg0-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000ff"       
+	p."cg0-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 lc rgb "#800000" pi -10 pt 5, \
+	p."cg0-q2_-2.dat"  u 1:4 t "  10^{-2}" w lines ls 1 lc rgb "#800000", \
+	p."cg0-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 pi -10 pt 4 lc rgb "#e00000", \
+        "<echo '0.002 .75'" t "" ls 1 pt 4, \
+        p."cg0-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#008000", \
+        p."cg0-q2_2.dat"   u 1:4 t "  10^{2}" w lines ls 2 lc rgb "#008000", \
+	p."cg0-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00e000", \
+        "<echo '0.002 .65'" t "" ls 3 pt 5, \
+	p."cg0-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#000080", \
+	p."cg0-q2_3.dat"   u 1:4 t "  10^{3}" w lines ls 3 lc rgb "#000080", \
+	p."cg0-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000e0"          
 
 #set size 1,0.33
 #set origin 0.0,0.33
-unset label 1
+#unset label 1
 unset label 2
 unset label 3
 unset label 4
-set label 5 "c_{k,g}^{(1)}(η)" at graph 0.6,.9 font ",18"
+unset label 5
+set label 1 "c^{(1)}"
 #set key left bottom
 #set out "img/cg1TP.tex"
 set yrange [-.12:.36]
 set ytics format "%.2f"
 plot    0 t "" w lines ls 4,\
-	p."cg1-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 pi -10 pt 5 lc rgb "#aa0000", \
-	p."cg1-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 pi -10 pt 4 lc rgb "#ff0000", \
-        p."cg1-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#00aa00", \
-	p."cg1-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00ff00", \
-        p."cg1-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#0000aa", \
-	p."cg1-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000ff"
+	p."cg1-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 pi -10 pt 5 lc rgb "#800000", \
+	p."cg1-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 pi -10 pt 4 lc rgb "#e00000", \
+        p."cg1-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#008000", \
+	p."cg1-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00e000", \
+        p."cg1-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#000080", \
+	p."cg1-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000e0"
 	
-
 #set size 1,0.33
 #set origin 0.0,0.0
-
+set xlabel "η" font ",18"
+set xtics format "%g"
 unset label 5
-set label 6 "@^{/=18-}c_{k,g}^{(1)}(η)" at graph 0.1,.1 font ",18"
+set arrow from graph .06, 0.92 to graph .08,0.92 nohead
+#set label 1 "@^{/=18-}c^{(1)}"
+#set label 6 "@^{/=18-}c_{k,g}^{(1)}(η)" at graph 0.1,.1 font ",18"
 #set key left bottom
 #set out "img/cgBar1TP.tex"
 set yrange [-.19:.17]
 set ytics format "%.2f"
 plot    0 t "" w lines ls 4,\
-	p."cgBar1-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 pi -10 pt 5 lc rgb "#aa0000", \
-	p."cgBar1-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 pi -10 pt 4 lc rgb "#ff0000", \
-        p."cgBar1-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#00aa00", \
-	p."cgBar1-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00ff00", \
-        p."cgBar1-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#0000aa", \
-	p."cgBar1-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000ff"
+	p."cgBar1-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 pi -10 pt 5 lc rgb "#800000", \
+	p."cgBar1-q2_-2.dat"  u 1:2 t "" w linespoints ls 1 pi -10 pt 4 lc rgb "#e00000", \
+        p."cgBar1-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5 lc rgb "#008000", \
+	p."cgBar1-q2_2.dat"   u 1:2 t "" w linespoints ls 2 pi -10 pt 4 lc rgb "#00e000", \
+        p."cgBar1-q2_3.dat"   u 1:4 t "" w linespoints ls 3 pi -10 pt 5 lc rgb "#000080", \
+	p."cgBar1-q2_3.dat"   u 1:2 t "" w linespoints ls 3 pi -10 pt 4 lc rgb "#0000e0"
 	
 #set out

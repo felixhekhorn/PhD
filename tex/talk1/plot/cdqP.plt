@@ -49,7 +49,7 @@ set label 1 "c^{(1)}" at graph 0.1,0.9 font ",18"
 #set label 3 "k=P"  at 0.003,.75
 #set label 4 "Q^2 = 10^3 GeV^2"  at 0.003,.6
 set label 5 at graph .74, graph .3 "Q^2[GeV^2]" font ",18"
-set key at graph .9, graph .25 spacing 1.2 Left reverse font ",18"
+set key at graph .9, graph .12 spacing 1.2 Left reverse font ",18"
 set yrange [-.009:.0075]
 set ytics format " %.3f"
 plot    0 t "" w lines ls 4,\

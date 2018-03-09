@@ -2,7 +2,7 @@
 reset
 
 set term eps transparent size 15,5 dashlength 2
-set out "img/F1g1A-mu2.eps"
+set out "img/F1g1A1-mu2.eps"
 
 #set border 3
 #set margin 3
