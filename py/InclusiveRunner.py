@@ -68,7 +68,8 @@ def _threadWorker(qIn, qOut):
 		# setup
 		o = InclusiveElProduction(*p["objArgs"])
 		o.setPdf(*p["pdf"])
-		o.setLambdaQCD(p["lambdaQCD"])
+		if p.has_key("lambdaQCD"): o.setLambdaQCD(p["lambdaQCD"])
+		if p.has_key("alphaSByLHAPDF"): o.setAlphaSByLHAPDF(*p["alphaSByLHAPDF"])
 		if p.has_key("mu2"):  o.setMu2 (DynamicScaleFactors(*p["mu2"]))
 		if p.has_key("muR2"): o.setMuR2(DynamicScaleFactors(*p["muR2"]))
 		if p.has_key("muF2"): o.setMuF2(DynamicScaleFactors(*p["muF2"]))

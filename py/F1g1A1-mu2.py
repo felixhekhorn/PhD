@@ -15,13 +15,14 @@ r = InclusiveRunner();
 
 Delta = 1e-6
 m2 = 1.5**2
-lams = {4: 0.194, 5: 0.126}
+#lams = {4: 0.194, 5: 0.126}
+aSpdf = ("MSTW2008nlo90cl",0)
 nlf = 3
 mu02 = (4.,-1,0,0)
 pdfs = {projT.G: "MSTW2008nlo90cl", projT.L: "MSTW2008nlo90cl", projT.P: "DSSV2014"}
 
 rMu = 10
-NMu = 5 # has to be odd! -> cMu = 0
+NMu = 21 # has to be odd! -> cMu = 0
 
 # add data points
 def addKinPoint(bjorkenX,q2,fp):
@@ -32,13 +33,13 @@ def addKinPoint(bjorkenX,q2,fp):
       for f in ["Fg0", "Fg1", "Fq1"]:
         r.add({
          "objArgs":(m2,q2,Delta,k,nlf,),
-         "pdf": (pdfs[k],0,), "lambdaQCD": lams[nlf+1], "mu2": mu2, "bjorkenX":bjorkenX,
+         "pdf": (pdfs[k],0,), "alphaSByLHAPDF": aSpdf, "mu2": mu2, "bjorkenX":bjorkenX,
          "f": (f,),"msg": fp+" "+projToStr(k)+" "+f+" %g"%cMu,"fp": fp, "cMu": cMu, "var": projToStr(k)+" "+f
         })
 
 # run
-#addKinPoint(1e-3,-1e1,"F1g1A-mu2-x_3-q2_1-MSTW2008nlo90cl-DSSV2014.dat")
-addKinPoint(1e-1,-1e2,"F1g1A-mu2-x_1-q2_2-MSTW2008nlo90cl-DSSV2014.dat")
+addKinPoint(1e-3,-1e1,"F1g1A1-mu2-x_3-q2_1-MSTW2008nlo90cl-DSSV2014.dat")
+addKinPoint(1e-1,-1e2,"F1g1A1-mu2-x_1-q2_2-MSTW2008nlo90cl-DSSV2014.dat")
 Util.pInfo("Computing %d points  ..."%r.getLen())
 l = r.run()
 #print l

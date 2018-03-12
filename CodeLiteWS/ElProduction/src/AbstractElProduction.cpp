@@ -5,7 +5,7 @@
 AbstractElProduction::AbstractElProduction(cdbl m2, cdbl q2,  projT proj, uint nlf) : 
     m2(0.), q2(0.), sp(0.), hasPartonicS(false), proj(proj), nlf(nlf),
     pdf(0), muR2(0.,0.,0.,0.), hasMuR2(false), muF2(0.,0.,0.,0.), hasMuF2(false), bjorkenX(0.), hasBjorkenX(false),
-    aS(new LHAPDF::AlphaS_Analytic()), hasAlphaS(false), zMax(0.) {
+    aS(0), hasAlphaS(false), zMax(0.) {
     // ordering is important!
     this->setM2(m2);
     this->setQ2(q2);
@@ -85,7 +85,18 @@ void AbstractElProduction::setMu2(const Common::DynamicScaleFactors& mu2) {
 void AbstractElProduction::setLambdaQCD(cdbl lambdaQCD) {
     if (lambdaQCD <= 0.)
         throw domain_error("lambda_QCD has to be positive!");
-    this->aS->setLambda(this->nlf + 1, lambdaQCD);
+    if (0 != this->aS)
+        delete (this->aS);
+    LHAPDF::AlphaS_Analytic *p = new LHAPDF::AlphaS_Analytic();
+    p->setLambda(this->nlf + 1, lambdaQCD);
+    this->aS = p;
+    this->hasAlphaS = true;
+}
+
+void AbstractElProduction::setAlphaSByLHAPDF(str name, int member) {
+    if (0 != this->aS)
+        delete (this->aS);
+    this->aS = LHAPDF::mkAlphaS(name,member);
     this->hasAlphaS = true;
 }
     

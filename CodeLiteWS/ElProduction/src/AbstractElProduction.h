@@ -80,7 +80,7 @@ protected:
 /**
  * @brief running strong coupling as provided by LHAPDF
  */
-    LHAPDF::AlphaS_Analytic* aS;
+    LHAPDF::AlphaS* aS = 0;
     
 /**
  * @brief has running strong coupling been set
@@ -232,10 +232,18 @@ public:
     void setMu2(const Common::DynamicScaleFactors& mu2);
     
 /**
- * @brief sets \f$\Lambda_{QCD,n_{lf+1}}\f$
+ * @brief sets AlphaS_Analytic and its \f$\Lambda_{QCD,n_{lf+1}}\f$
  * @param lambdaQCD \f$\Lambda_{QCD,n_{lf+1}}\f$
  */
     void setLambdaQCD(cdbl lambdaQCD);
+    
+/**
+ * @brief sets Alpha_S by LHAPDF
+ * @param name LHAPDF name
+ * @param member LHAPDF member index
+ * @see LHAPDF::mkAlphaS()
+ */
+    void setAlphaSByLHAPDF(str name, int member);
     
 /**
  * @brief sets Bjorken x

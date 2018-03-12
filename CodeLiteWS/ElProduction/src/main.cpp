@@ -237,13 +237,13 @@ int runInclusive(){
     Timer::make("hg1SVDelta");
     Timer::make("hg1H");*/
     
-    //cdbl m2 = 1.5*1.5;
-    //const uint nlf = 3;
-    cdbl m2 = 4.75*4.75;
-    const uint nlf = 4;
+    cdbl m2 = 1.5*1.5;
+    const uint nlf = 3;
+    //cdbl m2 = 4.75*4.75;
+    //const uint nlf = 4;
     cdbl Delta = 1e-6;
     cdbl q2 = -1e2;
-    cdbl lambdaQCD = .239; // nlf=3
+    cdbl lambdaQCD = 0.194; // nlf=3
     const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
     InclusiveElProduction oL(m2,q2,Delta,L,nlf);
@@ -258,15 +258,23 @@ int runInclusive(){
     
     oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
     oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
-    oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
     uint N = 11;
     for (uint j = 0; j < N; ++j) {
         cdbl x = pow(10,-3. + 3./10.*(dbl)j);
+        
+        {oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
         cdbl g = oG.Fq1();
         cdbl l = oL.Fq1();
         cdbl p = oP.Fq1();
-        printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);
+        printf("%e\t%e\t%e\t%e\t\t",x,g+l*3./2.,l,p);}
+        
+        {oG.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oL.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oP.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);
+        oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
+        cdbl g = oG.Fq1();
+        cdbl l = oL.Fq1();
+        cdbl p = oP.Fq1();
+        printf("%e\t%e\t%e\t%e\n",x,g+l*3./2.,l,p);}
     }
     /*uint N = 11;
     for (uint j = 0; j < N; ++j) {
