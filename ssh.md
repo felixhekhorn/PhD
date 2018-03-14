@@ -22,6 +22,6 @@ nohup nice -n 15 ~/usr/local/bin/python ./run4-hadronic-pdf.py > run4-hadronic-p
 
 nohup nice -n 15 ~/usr/local/bin/python ./F1g1A-mu2.py > F1g1A-mu2.log &
 
-nohup nice -n 15 ~/usr/local/bin/python ./F1g1A-muF2-muR2.py > F1g1A-muF2-muR2.log &
+nohup nice -n 15 ~/usr/local/bin/python ./F1g1A1-muF2-muR2.py > F1g1A1-muF2-muR2.log &
 
 nohup nice -n 15 ~/usr/local/bin/python ./F1g1A-m2.py > F1g1A-m2.log &

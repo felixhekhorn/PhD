@@ -3,13 +3,13 @@
 \begin{itemize}
 \item use factorisation theorem: PDF and $s=\xi S_h$
 \item PGF: $\Pg(k_1) + \Pggx(q) \to \PaQ(p_2) + \PQ(p_1)$
-\item three massive particles: $2\cdot m^2>0,q^2=-Q^2<0$
-\item<2-> compute 2-to-3-phase space: e.g. $dPS_3 \sim dt_1du_1d\Omega_nd\hat{\mathcal{I}}$
+\item three massive particles: $m^2>0,q^2=-Q^2<0$
+\item<2-> compute 2-to-3-phase space: e.g. $dPS_3 \sim dt_1du_1d\Omega_nd\hat{\mathcal{I}}$ \iRef{Laenen, Bojak}
 \item<2-> compute diagrams: \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-4} + \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-3}
-\item<3-> $\Rightarrow 2xg_1(x) \sim e_u^2\cdot \xi\Delta u(\xi) \otimes d_{P,q}^{(1)}(\chi,\chi')$
-\item<3-> $d_{P,q}^{(1)}(\chi,\chi') = c_1(\chi,\chi')\ln(\chi) + c_2(\chi,\chi')\DiLog\left(\frac{1+\chi'}{1+\chi}\right)+\ldots$ \checkmark
+\item<3-> $\Rightarrow g_1 \sim e_u^2\cdot \Delta u \otimes d_{P,q}^{(1)}(\chi,\chi')$
+\item<3-> $d_{P,q}^{(1)}(\chi,\chi') = c_1(\chi,\chi')\ln(\chi) + c_2(\chi,\chi')\DiLog\left(\frac{1+\chi'}{1+\chi}\right)+\ldots$ \checkmark \iRef{Blümlein,Falcioni,De Freitas}
 \item<3-> $\frac{m^2}{s} = \frac{\chi}{(1+\chi)^2}$ and $\frac{m^2}{s+Q^2} = \frac{m^2}{s'} = \frac{\chi'}{(1+\chi')^2}$ and $\frac{m^2}{Q^2} = \frac{\chi_q}{(1-\chi_q)^2}$
-\item<4-> $\gamma_5$ and $\varepsilon_{\mu\nu\rho\sigma}$ in $n$-dimension? $\to$ HVBM scheme
+\item<4-> $\gamma_5$ and $\varepsilon_{\mu\nu\rho\sigma}$ in $n$-dimension? $\to$ HVBM scheme \iRef{'t Hooft,Veltman,Breitenlohner,Maison}
 \end{itemize}
 \end{frame}
 
@@ -29,7 +29,7 @@ collinear poles appear in, e.g.,
 \begin{itemize}
 \item remove by mass factorization $\to \MSbar$
 \item $\Rightarrow 2xg_1(x) \sim e_H^2\cdot \xi\Delta g(\xi) \otimes \ln(\mu_F^2/m^2) \bar c_{P,g}^{F,(1)}(\chi,\chi_q)$
-\item $\bar c_{P,g}^{F,(1)}(\chi,\chi_q) = c_1(\chi,\chi_q)\ln(\chi) + c_2(\chi,\chi_q)\DiLog\left(\frac{1-\chi_q}{1+\chi}\right) + \ldots$ (\checkmark for $Q^2\gg m^2$ )
+\item $\bar c_{P,g}^{F,(1)}(\chi,\chi_q) = c_1(\chi,\chi_q)\ln(\chi) + c_2(\chi,\chi_q)\DiLog\left(\frac{1-\chi_q}{1+\chi}\right) + \ldots$ (\checkmark for $Q^2\gg m^2$ \iRef{Buza,Matiounine,Smith,van Neerven})
 \end{itemize}
 \end{frame}
 
@@ -48,10 +48,11 @@ soft poles appear in the limit of a soft gluon $k_2\rightarrow 0$, e.g.,
 \includegraphics[width=.2\textwidth]{img/nlo-g-4}
 \end{center}
 
-soft + virtual + renormalization ($\MSbar_m$) + factorization is finite!
+soft + virtual + renormalization ($\MSbar_m$) + factorization is finite! \iRef{Laenen,Bojak}
 \end{frame}
 
 \begin{frame}[<+->]{Computation Review - Analytic Expressions}
+\small
 \begin{align*}
 \nonumber
 &D_0(m^2,0,q^2,m^2,t,s,0,m^2,m^2,m^2) = \frac{i C_\epsilon}{\beta s t_1}\times \Bigg[ -\frac{2}{\epsilon} \ln(\chi) -2\ln(\chi)\ln\left(\frac{-t_1}{m^2}\right)\\
@@ -59,6 +60,7 @@ soft + virtual + renormalization ($\MSbar_m$) + factorization is finite!
 &+\DiLog(1-\chi^2)-4\zeta(2)+\ln^2(\chi_q) + 2\DiLog(-\chi\chi_q)+2\DiLog\left(\frac{-\chi}{\chi_q}\right)\\
 &+2\ln(\chi\chi_q) \ln(1+\chi\chi_q)+2\ln\left(\frac{\chi}{\chi_q}\right)\ln\left(1+\frac{\chi}{\chi_q}\right) \Bigg]
 \end{align*}
+\noindent\makebox[\linewidth]{\color{UniRot}\rule{\paperwidth}{0.4pt}}
 \begin{align*}
 \nonumber
 \int\!\! \frac{d\Omega_n}{t' {u_7}^2} &= -\frac{2 \pi  (m^2+s_4) ({s'}+{t_1}) }{s_4 {t_1}^2 {u_1}^2} \Bigg[-2+\frac{{t_1} {u_1} (-q^2 s_4+(2 m^2+s_4) ({s'}+{u_1}))}{({s'}+{t_1}) \left(q^2 s_4 {t_1}+m^2 ({s'}+{u_1})^2\right)}\nonumber\\
