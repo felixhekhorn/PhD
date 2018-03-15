@@ -62,7 +62,7 @@ set yrange [.6:2.1]
 set ytics add  ("1.0" 1, "" 1.25 1, "1.5" 1.5, "" 1.75 1,  "2.0" 2)
 set xtics 1e-4, 10, 1 format "10^{%T}"
 
-set xlabel "x" offset 11, 1.3
+set xlabel "x" offset 11, 1.2 font ",18"
 plot    p.f1 u 1:(abs((($2+$3+$4)-($5+$6+$7))/($2-$5))) ls 3   w lines       t "" ,\
 	1 w line ls 1 t ""
 
@@ -107,6 +107,6 @@ set y2tics mirror
 set y2tics add ("1.0" 1, "" 1.25 1, "1.5" 1.5, "" 1.75 1,  "2.0" 2)
 set xtics 1e-4, 10, 1 format "10^{%T}"
 set xtics add ("1" 1.)
-set xlabel "x" offset 11, 1.3
+set xlabel "x" offset 11, 1.2 font ",18"
 plot    p.f1 u 1:(abs(($8+$9+$10)/($8))) ls 3  w lines       t "" ,\
 	1 w line ls 1 t ""

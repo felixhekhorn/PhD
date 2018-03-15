@@ -51,6 +51,7 @@ set origin 0.16,0.40
 set xtics format "10^{%T}"
 set xlabel "x" offset 7,1.3
 #set xtics add ("10^{-4}" 1e-4, "10^{-2}" 1e-2)
+set label "?" at graph .3,.7 font ",24" tc rgb "#e00000"
 unset key
 set errorbars 2
 plot    d1 u 1:2:4 w filledcurve t "LO",\

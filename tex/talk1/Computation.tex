@@ -5,8 +5,12 @@
 \item PGF: $\Pg(k_1) + \Pggx(q) \to \PaQ(p_2) + \PQ(p_1)$
 \item three massive particles: $m^2>0,q^2=-Q^2<0$
 \item<2-> compute 2-to-3-phase space: e.g. $dPS_3 \sim dt_1du_1d\Omega_nd\hat{\mathcal{I}}$ \iRef{Laenen, Bojak}
-\item<2-> compute diagrams: \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-4} + \includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-3}
-\item<3-> $\Rightarrow g_1 \sim e_u^2\cdot \Delta u \otimes d_{P,q}^{(1)}(\chi,\chi')$
+\item<2-> diagrams: %
+\raisebox{-.4\height}{\includegraphics[height=.15\textheight]{img/nlo-g-4}} +%
+\raisebox{-.4\height}{\includegraphics[height=.15\textheight]{img/nlo-v-1}} + %
+\raisebox{-.4\height}{\includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-4}} + %
+\raisebox{-.4\height}{\includegraphics[width=.2\textwidth]{pyfeyn2/nlo-q-3}} + \ldots
+\item<3-> $\Rightarrow g_1 \sim e_u^2\cdot \Delta u \otimes d_{P,q}^{(1)}$
 \item<3-> $d_{P,q}^{(1)}(\chi,\chi') = c_1(\chi,\chi')\ln(\chi) + c_2(\chi,\chi')\DiLog\left(\frac{1+\chi'}{1+\chi}\right)+\ldots$ \checkmark \iRef{Blümlein,Falcioni,De Freitas}
 \item<3-> $\frac{m^2}{s} = \frac{\chi}{(1+\chi)^2}$ and $\frac{m^2}{s+Q^2} = \frac{m^2}{s'} = \frac{\chi'}{(1+\chi')^2}$ and $\frac{m^2}{Q^2} = \frac{\chi_q}{(1-\chi_q)^2}$
 \item<4-> $\gamma_5$ and $\varepsilon_{\mu\nu\rho\sigma}$ in $n$-dimension? $\to$ HVBM scheme \iRef{'t Hooft,Veltman,Breitenlohner,Maison}
@@ -28,7 +32,7 @@ collinear poles appear in, e.g.,
 
 \begin{itemize}
 \item remove by mass factorization $\to \MSbar$
-\item $\Rightarrow 2xg_1(x) \sim e_H^2\cdot \xi\Delta g(\xi) \otimes \ln(\mu_F^2/m^2) \bar c_{P,g}^{F,(1)}(\chi,\chi_q)$
+\item $\Rightarrow g_1 \sim e_H^2\cdot \Delta g \otimes \ln(\mu_F^2/m^2) \bar c_{P,g}^{F,(1)}$
 \item $\bar c_{P,g}^{F,(1)}(\chi,\chi_q) = c_1(\chi,\chi_q)\ln(\chi) + c_2(\chi,\chi_q)\DiLog\left(\frac{1-\chi_q}{1+\chi}\right) + \ldots$ (\checkmark for $Q^2\gg m^2$ \iRef{Buza,Matiounine,Smith,van Neerven})
 \end{itemize}
 \end{frame}
@@ -43,7 +47,7 @@ virtual diagrams are, e.g.,
 \end{tabular}
 \end{center}
 
-soft poles appear in the limit of a soft gluon $k_2\rightarrow 0$, e.g.,
+soft poles appear in the limit of a soft gluon, e.g.,
 \begin{center}
 \includegraphics[width=.2\textwidth]{img/nlo-g-4}
 \end{center}
