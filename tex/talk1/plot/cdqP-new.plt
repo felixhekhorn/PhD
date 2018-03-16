@@ -44,7 +44,7 @@ plot    0 t "" w lines ls 4,\
         p."cq1-q2_2.dat"   u 1:4 t "DIS(Q^2/m^2 \\~ 4.4)" w lines ls 2    
 
 set label 1 "Compton (d_q)"
-set yrange [-.0091:.0057]
+#set yrange [-.0091:.0057]
 plot    0 t "" w lines ls 4,\
 	p."dq1-q2_-2.dat"  u 1:4 t "" w linespoints ls 1 pi -10 pt 5, \
         p."dq1-q2_2.dat"   u 1:4 t "" w linespoints ls 2 pi -10 pt 5

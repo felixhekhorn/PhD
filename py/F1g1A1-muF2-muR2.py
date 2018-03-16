@@ -15,7 +15,8 @@ r = InclusiveRunner();
 
 Delta = 1e-6
 m2 = 1.5**2
-lams = {4: 0.194, 5: 0.126}
+#lams = {4: 0.194, 5: 0.126}
+aSpdf = ("MSTW2008nlo90cl",0)
 nlf = 3
 mu02 = (4.,-1,0,0)
 pdfs = {projT.G: "MSTW2008nlo90cl", projT.L: "MSTW2008nlo90cl", projT.P: "DSSV2014"}
@@ -35,7 +36,7 @@ def addKinPoint(bjorkenX,q2,fp):
       for f in ["Fg0", "Fg1", "Fq1"]:
         r.add({
          "objArgs":(m2,q2,Delta,k,nlf,),
-         "pdf": (pdfs[k],0,), "lambdaQCD": lams[nlf+1], "muF2": muF2, "muR2": muR2, "bjorkenX":bjorkenX,
+         "pdf": (pdfs[k],0,), "alphaSByLHAPDF": aSpdf, "muF2": muF2, "muR2": muR2, "bjorkenX":bjorkenX,
          "f": (f,),"msg": fp+" "+projToStr(k)+" "+f+" %g,%g"%(cMuF2,cMuR2),"fp": fp, "cMuF2": cMuF2, "cMuR2": cMuR2, "var": projToStr(k)+" "+f
         })
 
