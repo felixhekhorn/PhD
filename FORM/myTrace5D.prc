@@ -1,4 +1,4 @@
-#procedure trace5D
+#procedure myTrace5D
 *
 * 
 *   A procedure for traces with gamma_5 that keeps one gamma_5 implicit. 
@@ -64,133 +64,41 @@
 * Remove chains with vanishing traces
 
 #do i = `MAXGAM'-1,3,-2
- id G(m1?,fv,mu1?,...,mu{`i'}?) = 0;
+ id G(m1?,mu1?,...,mu{`i'}?,fv) = 0;
 #enddo
- id G(m1?,fv,mu1?,mu2?) = 0;
- id G(m1?,fv,mu1?) = 0;
+ id G(m1?,mu1?,mu2?,fv) = 0;
+ id G(m1?,mu1?,fv) = 0;
  id G(m1?,fv) = 0;
 
 * Print;
 .sort:trace5D-start;
 
 
-#ifndef `NoSimplg5'
-
-*  Simplifications, for speed: identical indices
-* (assuming no more than 20 summed indices)
-
-Multiply replace_(<N1_?,mu101>,...,<N20_?,mu120>);
-Multiply G3;
-
-
-#ifndef `Gam5Sym'
-* Care: the index/vector next to fv must not be touched
- repeat;
- if ( match(G(?a,mu1?,?b,mu1?,?c,mu?,fv)) );
-*	print +f "  %t";
-	id	G(?a,mu1?,mu2?,?b,mu1?,?c,mu?,fv)*G3(?d) = 
-		G(?a,mu1,mu2,?b,mu1,?c,mu,fv)*G3(?d,mu1);
-	repeat;
- 		id	G(?a,mu1?,mu1?,?c,mu?,fv)*G3(?d,mu1?) = 
-			d_(mu1,mu1)*G(?a,?c,mu,fv)*G3(?d);
-  		id	G(?a,mu1?,mu2?,?b,mu1?,?c,mu?,fv)*G3(?d,mu1?) =
-  			-G(?a,mu2,mu1,?b,mu1,?c,mu,fv)*G3(?d,mu1)
-			+2*G(?a,?b,mu2,?c,mu,fv)*G3(?d);
-	endrepeat;
- endif;
- endrepeat;
-#else
- repeat;
- if ( match(G(?a,mu1?,?b,mu1?,?c)) );
-*	print +f "  %t";
-   	id	G(?a,mu1?,mu2?,?b,mu1?,?c)*G3(?d) = G(?a,mu1,mu2,?b,mu1,?c)*G3(?d,mu1);
-	repeat;
- 		id	G(?a,mu1?,mu1?,?c)*G3(?d,mu1?) = d_(mu1,mu1)*G(?a,?c)*G3(?d);
-  		id	G(?a,mu1?,mu2?,?b,mu1?,?c)*G3(?d,mu1?) =
-  			-G(?a,mu2,mu1,?b,mu1,?c)*G3(?d,mu1)+2*G(?a,?b,mu2,?c)*G3(?d);
-	endrepeat;
- endif;
- endrepeat;
-#endif
-
-id	G3(?d) = 1;
-*id	G3 = 1;
-
-* Prepare momenta for next step 
-* (example, for 3-loop forward Compton amplitudes with P.P = 0)
-
-#do i = 1,8
-* id  [P+p`i'] = P+p`i';
-* id  [P-p`i'] = P-p`i';
-#enddo
-* id  [P+Q] = P+Q;
-* id  [P-Q] = P-Q;
-* id  P.P = 0;
-
-.sort:trace5D-simp-mu;
-
-* Simplifications(for speed): identical vectors
-
-Multiply G3;
-#ifndef `Gam5Sym'
- repeat;
- if ( match(G(?a,p1?,?b,p1?,?c,mu?,fv)) );
-*	print +f "  %t";
-  	id	G(?a,p1?,mu2?,?b,p1?,?c,mu?,fv)*G3(?d) = 
-		G(?a,p1,mu2,?b,p1,?c,mu,fv)*G3(?d,p1);
-	repeat;
-		id	G(?a,p1?,p1?,?c,mu?,fv)*G3(?d,p1?) = p1.p1*G(?a,?c,mu,fv)*G3(?d);
-   		id	G(?a,p1?,mu2?,?b,p1?,?c,mu?,fv)*G3(?d,p1?) =
-   				-G(?a,mu2,p1,?b,p1,?c,mu,fv)*G3(?d,p1)
-				+2*G2(p1,mu2)*G(?a,?b,p1,?c,mu,fv)*G3(?d);
-  		id	G2(mu1?,mu2?) = d_(mu1,mu2);
-*		id	P.P = 0;
-	endrepeat;
- endif;
- endrepeat;
-#else
- repeat;
- if ( match(G(?a,p1?,?b,p1?,?c)) );
-*	print +f "  %t";
- 	id	G(?a,p1?,mu2?,?b,p1?,?c)*G3(?d) = G(?a,p1,mu2,?b,p1,?c)*G3(?d,p1);
-	repeat;
-		id	G(?a,p1?,p1?,?c)*G3(?d,p1?) = p1.p1*G(?a,?c)*G3(?d);
-   		id	G(?a,p1?,mu2?,?b,p1?,?c)*G3(?d,p1?) =
-   				-G(?a,mu2,p1,?b,p1,?c)*G3(?d,p1)
-				+2*G2(p1,mu2)*G(?a,?b,p1,?c)*G3(?d);
-  		id	G2(mu1?,mu2?) = d_(mu1,mu2);
-*		id	P.P = 0;
-	endrepeat;
- endif;
- endrepeat;
-#endif
-id	G3(?d) = 1;
-*id	G3 = 1;
-.sort:trace5D-simp-p;
-
-* end of block with simplifications
-#endif
-
-
 * The main reduction to the basic trace with four gamma_mu`i'
 
 #ifndef `Gam5Sym'
     repeat;
-        id,once,G(m1?,?a,mu?,fv) = distrib_(-2,3,G1,G2,?a)*G3(mu,fv);
-       	id  G2(mu1?,mu2?,mu3?)*G3(mu4?,fv) = ee(mu1,...,mu4);
+        id,once,G(1,?a,mu?,fv) = distrib_(-2,3,G1a,G2a,?a)*G3a(mu,fv);
+        id,once,G(2,?a,mu?,fv) = distrib_(-2,3,G1b,G2b,?a)*G3b(mu,fv);
+       	id  G2a(mu1?,mu2?,mu3?)*G3a(mu4?,fv) = ee(mu1,...,mu4);
+       	id  G2b(mu1?,mu2?,mu3?)*G3b(mu4?,fv) = ee(mu1,...,mu4);
     endrepeat;
 #else
-	repeat;
+* TODO
+    repeat;
         id,once,G(m1?,?a,fv) = distrib_(-2,4,G1,G2,?a);
     	id  G2(mu1?,...,mu4?) = ee(mu1,...,mu4);
     endrepeat;
 #endif
-*	id	P.P = 0;
-.sort
+    .sort
     repeat;
-        if ( count(G1,1) );
-            id,once,G1(?a) = g_(1,?a);
+        if ( count(G1a,1) );
+            id,once,G1a(?a) = g_(1,?a);
             Tracen,1;
+        endif;
+        if ( count(G1b,1) );
+            id,once,G1b(?a) = g_(2,?a);
+            Tracen,2;
         endif;
     endrepeat;
 
@@ -209,7 +117,6 @@ id	G3(?d) = 1;
  tracen,1;
  tracen,2;
  tracen,3;
-* id	P.P = 0;
 
 .sort:trace5D-end;
 

@@ -9,7 +9,8 @@ Indices mq,mqp,nQ,nQp,nq,nqp,muf1,muf2,muf3;
 Index fv,m1;
 AutoDeclare Indices mu; 
 NTensor gg; 
-Tensor G3,G,G1,G2,ee;
+*Tensor G3,G,G1,G2,ee;
+Tensor G,G1a,G1b,G2a,G2b,G3a,G3b,ee;
 *Off statistics;
 
 *******************
@@ -46,31 +47,38 @@ Tensor G3,G,G1,G2,ee;
 #define Lfq "gg(2,k2)";
 #define cur1Name "V";
 #define cur2Name "A";
+#define mqLine1 "1";
+#define mqLine2 "1";
+#define mqLine3 "2";
+#define mqLine4 "2";
 
 *******************
 * compute matrix elements
-#do cur1 = 1,1
-#do cur2 = 1,1
-#do ch1 = 1,2
-#do ch2 = 1,2
+#do cur1 = 1,2
+#do cur2 = 1,2
+#do ch1 = 1,4
+#do ch2 = 1,4
 * combine matrix elements
 #if 1 == `cur1' && 1 == `cur2'
-Local ME = `HQ'  * `Liq' *   `me`ch1'Pre' * gg(1,mq    ) *   `me`ch1'Post' *
-           `HAQ' * `Lfq' * `CCme`ch2'Pre' * gg(1,mqp   ) * `CCme`ch2'Post';
+Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq    ) *   `me`ch1'Post' *
+           `HAQ' * `Liq' * `CCme`ch2'Pre' * gg(`mqLine`ch2'',mqp   ) * `CCme`ch2'Post';
 #elseif 2 == `cur1' && 1 == `cur2'
-Local ME = `HQ'  * `Liq' *   `me`ch1'Pre' * gg(1,mq, fv) *   `me`ch1'Post' *
-           `HAQ' * `Lfq' * `CCme`ch2'Pre' * gg(1,mqp   ) * `CCme`ch2'Post';
+Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq, fv) *   `me`ch1'Post' *
+           `HAQ' * `Liq' * `CCme`ch2'Pre' * gg(`mqLine`ch2'',mqp   ) * `CCme`ch2'Post';
 #elseif 1 == `cur1' && 2 == `cur2'
-Local ME = `HQ'  * `Liq' *   `me`ch1'Pre' * gg(1,mq    ) *   `me`ch1'Post' *
-           `HAQ' * `Lfq' * `CCme`ch2'Pre' * gg(1,mqp,fv) * `CCme`ch2'Post';
+Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq    ) *   `me`ch1'Post' *
+           `HAQ' * `Liq' * `CCme`ch2'Pre' * gg(`mqLine`ch2'',mqp,fv) * `CCme`ch2'Post';
 #else
-Local ME = `HQ'  * `Liq' *   `me`ch1'Pre' * gg(1,mq, fv) *   `me`ch1'Post' *
-           `HAQ' * `Lfq' * `CCme`ch2'Pre' * 1/6*e_(mqp,muf1,muf2,muf3)*gg(1,muf1,muf2,muf3) * `CCme`ch2'Post';
+Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq, fv) *   `me`ch1'Post' *
+           `HAQ' * `Liq' * `CCme`ch2'Pre' * 1/6*e_(mqp,muf1,muf2,muf3)*gg(`mqLine`ch2'',muf1,muf2,muf3) * `CCme`ch2'Post';
 #endif
+
+* Print ME;
+*.sort
 
 *******************
 * use tracing routine of S. Moch et al. / Physics Letters B 748 (2015) 432-438
-#call trace5D
+#call myTrace5D
 
 *******************
 * contract all tensors in both polarizations
