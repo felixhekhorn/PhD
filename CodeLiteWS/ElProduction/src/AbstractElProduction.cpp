@@ -58,14 +58,6 @@ void AbstractElProduction::setPdf(str name, int member) {
         delete (this->pdf);
     this->pdf = new PdfWrapper(name,member);
 }
-
-/*void AbstractElProduction::setPdf(str nmem) {
-    // suppress log message
-    int v = LHAPDF::verbosity();
-    LHAPDF::setVerbosity(0);
-    this->pdf = LHAPDF::mkPDF(nmem);
-    LHAPDF::setVerbosity(v);
-}*/
     
 void AbstractElProduction::setMuR2(const Common::DynamicScaleFactors& muR2) {
     this->muR2 = muR2;
