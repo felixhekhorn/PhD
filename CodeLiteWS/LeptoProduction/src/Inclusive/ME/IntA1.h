@@ -5,6 +5,9 @@
 
 namespace Inclusive {
 
+/**
+ * @brief namespace for matrix elements for inclusive lepto production of heavy quarks
+ */
 namespace ME {
 
 cdbl IntA1_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);

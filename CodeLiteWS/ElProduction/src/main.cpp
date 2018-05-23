@@ -29,12 +29,72 @@ int test() {
         }
         cout << endl;
     }*/
-    cdbl m2 = 1.;
+    /*cdbl m2 = 1.;
     cdbl q2 = -1.;
     cdbl sp = 7.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << (Inclusive::IntAL1(m2,q2,sp,s4,t1)) << endl;
+    cout << (Inclusive::IntAL1(m2,q2,sp,s4,t1)) << endl;*/
+    
+    return EXIT_SUCCESS;
+}
+
+int test2() {
+    cdbl q2 = -1.e5;
+    cdbl m2 = 4.75*4.75;
+    const uint nlf = 4;
+    //cdbl lambdaQCD = .239; // nlf=3
+    cdbl lambdaQCD = .194; // nlf=3
+    //cdbl lambdaQCD = .2; // nlf=3
+    const Common::DynamicScaleFactors mu02F(4.,-1.,0.,0.);
+    cdbl Delta = 1e-6;
+    cdbl xTilde = .5;//.8;
+    cdbl omega = 1.;
+    cdbl deltax = 1e-8;//1e-6;
+    cdbl deltay = 7e-8;//7e-6;
+    //const str pdf = "MorfinTungB";
+    //const str pdf = "CTEQ3M";
+    //const str pdf = "cteq66";
+    const str pdf = "MSTW2008nlo90cl";
+    //const str pdf = "DSSV2014";
+    //const str pdf = "GRSV96STDLO";
+    
+    const projT proj = P;
+    InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
+    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction iL(m2,q2,Delta,L,nlf);
+    ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
+    printf("[INFO] m2 = %g, q2 = %g, proj = %s\n",m2,q2,projToStr(proj).c_str());
+    
+    //iO.setPdf(pdf,0);eO.setPdf(pdf,0);
+    //iO.setMu2(mu02F);eO.setMu2(mu02F);
+    //iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
+    
+    eO.MCparams.calls = 500000;
+    eO.MCparams.iterations = 5;
+    eO.MCparams.adaptChi2 = false;
+    eO.MCparams.warmupCalls = 5000;
+    eO.MCparams.verbosity = 3;
+    
+    {
+        uint N = 101;
+        for (uint j = 0; j < N; ++j) {
+            cdbl a = pow(10,-3.+6./(N-1)*j);
+            eO.setEta(a);iO.setEta(a);
+            cdbl e = eO.cq1();
+            cdbl i = iO.cq1();
+            printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);
+            
+            /*eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            cdbl g = eG.cg1();
+            cdbl l = eL.cg1();
+            cdbl p = eP.cg1();
+            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);*/
+        }
+    }
     return EXIT_SUCCESS;
 }
 
@@ -45,8 +105,8 @@ int test() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    //return test();
-	return runInclusive();
+    return test2();
+	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;
     cdbl m2 = 4.75*4.75;

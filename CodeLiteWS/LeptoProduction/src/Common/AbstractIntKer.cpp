@@ -90,7 +90,7 @@ Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPgq0() const {
     throw domain_error("unkonwn projection: "+strProj(this->proj));
 }
 
-cdbl Common::AbstractIntKer::getNormphZ() const {
+cdbl Common::AbstractIntKer::getNormPhZ() const {
     cdbl etaPhZ = 1./(4. * this->sin2ThetaWeak * (1. - this->sin2ThetaWeak)) * this->Q2 / (this->Q2 + this->MZ2);
     cdbl sgn = this->incomingLeptonHasNegativeCharge ? -1. : 1.;
     cdbl lam = this->incomingLeptonHasPositiveHelicity ? 1. : -1.;

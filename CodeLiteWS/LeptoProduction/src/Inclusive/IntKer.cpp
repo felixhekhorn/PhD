@@ -96,7 +96,7 @@ cdbl Inclusive::IntKer::cg0() const {
     if (isParityConservingProj(this->proj)) {
         cdbl eVV = fVV(this->m2,-this->Q2,sp,t1);
         if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gVQ * eVV;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
         if (this->flags.useZ) {
             cdbl eAA = fAA(this->m2,-this->Q2,sp,t1);
             // if needed: rewrite to reveal new term v2-a2
@@ -105,7 +105,7 @@ cdbl Inclusive::IntKer::cg0() const {
         }
     } else {
         cdbl eVA = fVA(this->m2,-this->Q2,sp,t1);
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gAQ * eVA;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
         if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
     }
     return n * r;
@@ -131,8 +131,14 @@ void Inclusive::IntKer::getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const {
 cdbl Inclusive::IntKer::dq1_cur() const {
     initDq1
     if (Mode_dq1_VV == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
+    // d_q^1 = 0 for g_4 and g_L
     if (Mode_dq1_VA == this->mode) return n * fVA(m2,-Q2,sp,t1,s4);
-    if (Mode_dq1_AA == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
+    // we find d^1_{x2g1_AA,q} = 0 and d^1_{F2_AA,q} = d^1_{F2_VV,q} and d^1_{FL_AA,q} = d^1_{FL_VV,q}
+    if (Mode_dq1_AA == this->mode) {
+        if (x2g1 == this->proj)
+            return 0.;
+        return n * fVV(m2,-Q2,sp,t1,s4);
+    }
     return 0.;
 }
 
@@ -164,14 +170,14 @@ cdbl Inclusive::IntKer::cq1() const {
     if (isParityConservingProj(this->proj)) {
         cdbl eVV = fVV(this->m2,-this->Q2,sp,t1,s4);
         if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gVQ * eVV;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
         if (this->flags.useZ) {
             cdbl eAA = fAA(this->m2,-this->Q2,sp,t1,s4);
             r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
         }
     } else {
         cdbl eVA = fVA(this->m2,-this->Q2,sp,t1,s4);
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gAQ * eVA;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
         if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
     }
     return n * r;
@@ -204,14 +210,14 @@ cdbl Inclusive::IntKer::cqBarF1() const {
     if (isParityConservingProj(this->proj)) {
         cdbl eVV = fVV(this->m2,-this->Q2,x1*sp,x1*t1);
         if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gVQ * eVV;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
         if (this->flags.useZ) {
             cdbl eAA = fAA(this->m2,-this->Q2,x1*sp,x1*t1);
             r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
         }
     } else {
         cdbl eVA = fVA(this->m2,-this->Q2,x1*sp,x1*t1);
-        if (this->flags.usePhotonZ) r -= this->getNormphZ() * eH*gAQ * eVA;
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
         if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
     }
     return n * r;
@@ -252,10 +258,10 @@ cdbl Inclusive::IntKer::Fq1() const {
             cdbl gAq = this->getAxialCoupling(q);
             if (isParityConservingProj(this->proj)) {
                 if (this->flags.usePhoton)  dq1 +=                       eL*eL              * dq1_eVV;
-                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() *  eL*gVq             * dq1_eVV;
-                if (this->flags.useZ)       dq1 += this->getNormZ()   * (gVq*gVq + gAq*gAq) * dq1_eVV;
+                if (this->flags.usePhotonZ) dq1 -= this->getNormPhZ() *  eL*gVq             * dq1_eVV;
+                if (this->flags.useZ)       dq1 += this->getNormZ()   * (gVq*gVq + gAq*gAq*(x2g1 == this->proj ? 0. : 1.)) * dq1_eVV;
             } else {
-                if (this->flags.usePhotonZ) dq1 -= this->getNormphZ() *    eL *gAq * dq1_eVA;
+                if (this->flags.usePhotonZ) dq1 -= this->getNormPhZ() *    eL *gAq * dq1_eVA;
                 if (this->flags.useZ)       dq1 += this->getNormZ()   * 2.*gVq*gAq * dq1_eVA;
             }        
         }

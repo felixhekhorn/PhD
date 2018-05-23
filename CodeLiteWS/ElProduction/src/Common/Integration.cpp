@@ -83,7 +83,7 @@ cdbl int4D(gsl_monte_function* F) {
     gsl_rng *r;
     F->dim = dim;
         
-    size_t calls = 40000;
+    size_t calls = 100000;
     gsl_rng_env_setup();
     T = gsl_rng_default;
     r = gsl_rng_alloc(T);

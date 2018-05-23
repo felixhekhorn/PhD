@@ -53,7 +53,7 @@ protected:
  * @brief computes normalisation to photon-Z part
  * @return normalisation to photon-Z part
  */
-    cdbl getNormphZ() const;
+    cdbl getNormPhZ() const;
     
 /**
  * @brief computes normalisation to Z part

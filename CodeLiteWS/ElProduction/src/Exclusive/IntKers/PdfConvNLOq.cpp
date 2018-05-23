@@ -53,26 +53,28 @@ const PhasespaceValues PdfConvNLOq::cq1() const {
             cdbl beta5B = sqrt(1. - 4.*m2/s5B);
             cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
             cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
-            cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+            cdbl g = Kqgg*NC * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
             cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
-            cdbl vPqg0 = Pgq0(xE)/CF;
-            cdbl vPgq1 = Pgq1(xE)/CF;
+            cdbl vPqg0 = Pgq0(xE);
+            cdbl vPgq1 = Pgq1(xE);
             r.xEyC += jacxE*jacTheta1*jacyE/jacyC * g*meB*(2.*vPgq1 + vPqg0*l);
         }
     }
 
 #else // CounterByHeavyside
 
+    cdbl ncq1 = m2/(4.*M_PI);
+    
     { // collinear contributions
         cdbl s5B = q2 + sp*xE;
         cdbl beta5B = sqrt(1. - 4.*m2/s5B);
         cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
         cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
         cdbl jacB = jacxE*jacTheta1;
-        cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+        cdbl g = ncq1 * Kqgg*NC * 1./(xE*sp)*1./(2.) * beta5B*sin(Theta1);
         cdbl l = log(sp/m2*sp/(sp+q2)*omega/2.*(1.-xE)*(1.-xE));
-        cdbl vPqg0 = Pgq0(xE)/CF;
-        cdbl vPgq1 = Pgq1(xE)/CF;
+        cdbl vPqg0 = Pgq0(xE);
+        cdbl vPgq1 = Pgq1(xE);
         r.xEyC += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
     } { // hard contributions
         const KinematicVars vsE(m2,q2,sp,xE,yE,Theta1,Theta2);
@@ -80,7 +82,7 @@ const PhasespaceValues PdfConvNLOq::cq1() const {
         cdbl meC = Ap1Counter(m2,q2,sp,xE,Theta1,Theta2);
         cdbl jacE = jacxE*jacyE*jacTheta1*jacTheta2;
         cdbl jacC = jacxE*jacyC*jacTheta1*jacTheta2;
-        cdbl f = -1./(8.*M_PI*M_PI)*m2/sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
+        cdbl f = ncq1 * (-1.)/(2.*M_PI)*1./sp * Kqgg*NC*CF * vsE.beta5*sin(Theta1);
         r.xEyE += f * jacE*meE/(1.+yE);
         r.xEyC -= f * jacC*meC/(1.+yC);
     }
@@ -105,7 +107,7 @@ const PhasespaceValues PdfConvNLOq::cqBarF1() const {
             cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
             cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
             cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-            cdbl l = -1.;// + 3.2e-5;
+            cdbl l = -1.;
             cdbl vPqg0 = Pgq0(xE)/CF;
             r.xEyC += jacxE*jacTheta1/(jacyC) * g*meB*vPqg0*l;
         }
@@ -120,7 +122,7 @@ const PhasespaceValues PdfConvNLOq::cqBarF1() const {
     cdbl meB = BpQED(m2,q2,xE*sp,xE*t1c);
     cdbl jacB = jacxE*jacTheta1;
     cdbl g = Kqgg*NC*CF * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
-    cdbl l = -1.;// + .35e-3/(sp+q2);
+    cdbl l = -1.;
     cdbl vPqg0 = Pgq0(xE)/CF;
     r.xEyC += jacB * g*meB*vPqg0*l;
 
