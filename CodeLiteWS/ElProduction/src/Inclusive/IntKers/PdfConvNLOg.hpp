@@ -97,7 +97,7 @@ protected:
     inline cdbl PdfMeH(cdbl xi, cdbl t1, cdbl s4) const {
         // protect from null pointer
         if (0 == this->cg1H || 0 == this->cgBarF1H)
-                throw invalid_argument("need to set all arguments!");
+            throw invalid_argument("need to set all arguments!");
                 
         cdbl Shp = this->getHadronicSp();
         cdbl sp = xi * Shp;

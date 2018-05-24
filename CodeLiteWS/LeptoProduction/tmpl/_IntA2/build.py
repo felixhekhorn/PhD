@@ -11,7 +11,7 @@ cdbl r1 = sqrt(pow(s - s4,2) - 4.*m2*s);\\
 cdbl r2 = sqrt(pow(sp + u1 - q2,2) - 4.*q2*(t1 + m2));\\
 cdbl psLog3_S1_s5 = log1p(- (2.*r1*s4)/(-2.*m2*s  + s4*(-q2 + r1 + t1 + u1)));\\
 cdbl psLog3_S1_up = log1p(- (2.*r2*s4)/(-2.*m2*q2 + s4*(-q2 + r2 + sp + u1)));\\
-cdbl psLog4_S1_tpsp_s5Mup = log((s4*t1*(m2*sp - s4*t1))/(m2*sp*(m2*q2 + s4*t1)));
+cdbl psLog4_S1_tpsp_s5Mup = log1p((s4*t1)/(m2*q2));
 
 """;
 ls = [];

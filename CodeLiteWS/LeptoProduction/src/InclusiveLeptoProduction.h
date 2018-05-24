@@ -79,6 +79,20 @@ public:
 /** @see AbstractLeptoProduction::cqBarF1_AA() */
     cdbl cqBarF1_AA() const;
     
+/** @see AbstractLeptoProduction::cgBarF1_VV() */
+    cdbl cgBarF1_VV() const;
+/** @see AbstractLeptoProduction::cgBarF1_VA() */
+    cdbl cgBarF1_VA() const;
+/** @see AbstractLeptoProduction::cgBarF1_AA() */
+    cdbl cgBarF1_AA() const;
+    
+/** @see AbstractLeptoProduction::cgBarR1_VV() */
+    cdbl cgBarR1_VV() const;
+/** @see AbstractLeptoProduction::cgBarR1_VA() */
+    cdbl cgBarR1_VA() const;
+/** @see AbstractLeptoProduction::cgBarR1_AA() */
+    cdbl cgBarR1_AA() const;
+    
 ///@}
 
 /** @name hadronic functions */

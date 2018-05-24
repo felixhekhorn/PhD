@@ -75,9 +75,19 @@ void Common::AbstractLeptoProduction::setMu2(const DynamicScaleFactors& mu2) {
 }
 
 void Common::AbstractLeptoProduction::setLambdaQCD(cdbl lambdaQCD) {
-    checkLambdaQCD(lambdaQCD)
-    this->ker->lambdaQCD = lambdaQCD;
-    this->ker->aS->setLambda(this->ker->nlf + 1, lambdaQCD);
+    if (!isfinite(lambdaQCD) || lambdaQCD <= 0.)
+        throw domain_error("Lambda_QCD has to be set, finite and strict positive!");
+    if (0 != this->ker->aS)
+        delete (this->ker->aS);
+    LHAPDF::AlphaS_Analytic *p = new LHAPDF::AlphaS_Analytic();
+    p->setLambda(this->ker->nlf + 1, lambdaQCD);
+    this->ker->aS = p;
+}
+
+void Common::AbstractLeptoProduction::setAlphaSByLHAPDF(str name, int member) {
+    if (0 != this->ker->aS)
+        delete (this->ker->aS);
+    this->ker->aS = LHAPDF::mkAlphaS(name,member);
 }
 
 void Common::AbstractLeptoProduction::setAlphaEM(cdbl alphaEM) {

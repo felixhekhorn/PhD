@@ -31,25 +31,25 @@ int main(int argc, char **argv) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         o.setProjection(F2);
-        cdbl cF2 = o.dq1_VV();
+        cdbl cF2 = o.cgBarR1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.dq1_VV();
+        cdbl cFL = o.cgBarR1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.dq1_VV();
+        cdbl cx2g1 = o.cgBarR1_VV();
         cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     }
     
     return EXIT_SUCCESS;
 }
 
-#include "Inclusive/ME/IntA1.h"
+#include "Inclusive/ME/IntA2.h"
 int test() {
     cdbl m2 = 1.;
-    cdbl q2 = -1.;
-    cdbl sp = 7.;
+    cdbl q2 = -10.;
+    cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << Inclusive::ME::IntA1_FL_VV(m2,q2,sp,t1,s4) << endl;
+    cout << Inclusive::ME::IntA2_F2_VV(m2,q2,sp,t1,s4) << endl;
     return EXIT_SUCCESS;
 }
 

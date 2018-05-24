@@ -77,7 +77,7 @@ Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq, fv) *   `me`ch1
 *.sort
 
 *******************
-* use tracing routine of S. Moch et al. / Physics Letters B 748 (2015) 432-438
+* use modified tracing routine of S. Moch et al. Physics Letters B 748 (2015) 432-438
 #call myTrace5D
 
 *******************
@@ -126,8 +126,6 @@ id e_(al1?,al2?,al3?,al4?) = 0;
 * write file
 #do V = 1,5
 #write <data/AAF2.m> "AAF2[%s,%s,{%s,%s},{%s,%s}][Fg,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`me`ch1'Name',`me`ch2'Name',`projV`V'Name',FgP`V'
-* write <data/RRF2.m> "RRF2[%s,%s,{%s,%s},{%s,%s}][F,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`me`ch1'Name',`me`ch2'Name',`projV`V'Name',FP`V'
-* write <data/RRF2.m> "RRF2[%s,%s,{%s,%s},{%s,%s}][g,%s] = (%E);",`cur`cur1'Name',`cur`cur2'Name',`me`ch1'Name',`me`ch2'Name',`projV`V'Name',gP`V'
 #enddo
 Drop;
 .sort

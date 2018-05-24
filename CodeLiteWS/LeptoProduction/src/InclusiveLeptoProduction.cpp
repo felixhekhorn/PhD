@@ -38,39 +38,29 @@ cdbl InclusiveLeptoProduction::cg0_VV() const { initPartonicVV runCg0(VV) }
 cdbl InclusiveLeptoProduction::cg0_AA() const { initPartonicAA runCg0(AA) }
 cdbl InclusiveLeptoProduction::cg0_VA() const { initPartonicVA runCg0(VA) }
 
-#define runDq1(cur) this->ker->mode = Common::AbstractIntKer::Mode_dq1_##cur;\
+// implement partonic coefficient functions with 2D integration
+#define run2DHelper(n,cur) this->ker->mode = Common::AbstractIntKer::Mode_##n##_##cur;\
     gsl_monte_function f;\
     f.params = this->ker;\
     f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
     return Common::int2D(&f);
-cdbl InclusiveLeptoProduction::dq1_VV() const { initPartonicVV runDq1(VV) }
-cdbl InclusiveLeptoProduction::dq1_AA() const { initPartonicAA runDq1(AA) }
-cdbl InclusiveLeptoProduction::dq1_VA() const { initPartonicVA runDq1(VA) }
+#define implement2DCoeffs(n) \
+cdbl InclusiveLeptoProduction::n##_VV() const { initPartonicVV run2DHelper(n,VV) }\
+cdbl InclusiveLeptoProduction::n##_VA() const { initPartonicVA run2DHelper(n,VA) }\
+cdbl InclusiveLeptoProduction::n##_AA() const { initPartonicAA run2DHelper(n,AA) }
 
-#define runCq1(cur) this->ker->mode = Common::AbstractIntKer::Mode_cq1_##cur;\
-    gsl_monte_function f;\
-    f.params = this->ker;\
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
-    return Common::int2D(&f);
-cdbl InclusiveLeptoProduction::cq1_VV() const { initPartonicVV runCq1(VV) }
-cdbl InclusiveLeptoProduction::cq1_AA() const { initPartonicAA runCq1(AA) }
-cdbl InclusiveLeptoProduction::cq1_VA() const { initPartonicVA runCq1(VA) }
-
-#define runCqBarF1(cur) this->ker->mode = Common::AbstractIntKer::Mode_cqBarF1_##cur;\
-    gsl_monte_function f;\
-    f.params = this->ker;\
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
-    return Common::int2D(&f);
-cdbl InclusiveLeptoProduction::cqBarF1_VV() const { initPartonicVV runCqBarF1(VV) }
-cdbl InclusiveLeptoProduction::cqBarF1_AA() const { initPartonicAA runCqBarF1(AA) }
-cdbl InclusiveLeptoProduction::cqBarF1_VA() const { initPartonicVA runCqBarF1(VA) }
+implement2DCoeffs(dq1)
+implement2DCoeffs(cq1)
+implement2DCoeffs(cqBarF1)
+implement2DCoeffs(cgBarF1)
+implement2DCoeffs(cgBarR1)
 
 #define checkMu if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
         throw domain_error("scales for inclusive computation may not depend on the exclusive variable HQPairTransverseMomentum!");
 
 #define initF checkQ2(this->ker->Q2)\
     checkXBjorken(this->ker->xBj)\
-    checkLambdaQCD(this->ker->lambdaQCD)\
+    checkAlphaS(this->ker->aS)\
     if (0 == this->ker->pdf)\
         throw domain_error("needs PDF for hadronic structure function!");\
     checkMu\
@@ -150,7 +140,7 @@ cdbl InclusiveLeptoProduction::dF_dHAQTransverseMomentumScaling(cdbl HAQTransver
 }
 
 cdbl InclusiveLeptoProduction::sigma() const {
-    checkLambdaQCD(this->ker->lambdaQCD)
+    checkAlphaS(this->ker->aS)
     checkAlphaEM(this->ker->alphaEM)
     if (0 == this->ker->pdf)
         throw domain_error("needs PDF for leptonic cross section!");

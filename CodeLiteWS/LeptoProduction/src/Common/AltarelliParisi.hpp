@@ -85,7 +85,7 @@ inline cdbl PggS1 () { return 0.; }
  * @brief polarized soft part of gluon-splitting-gluon AP-kernel
  * @return \f$\Delta P_{\Pg\Pg}^{S,(1)}\f$
  */
-inline cdbl DeltaPggS1 () { return -((dbl)NC)/12.; }
+inline cdbl DeltaPggS1 () { return -((cdbl)NC)/12.; }
 
 } // namespace AltarelliParisi
 

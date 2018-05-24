@@ -25,8 +25,8 @@ protected:
     #define checkQ2(Q2) if (!isfinite(Q2) || Q2 <= 0.) throw domain_error("transfered Q2 has to be set, finite and strict positive!");
 /** @brief check xBjorken */
     #define checkXBjorken(xBj) if (!isfinite(xBj) || xBj <= 0. || xBj > 1.) throw domain_error("x_Bjorken has to be set, finite and in (0:1]!");
-/** @brief check lambdaQCD */
-    #define checkLambdaQCD(lambdaQCD) if (!isfinite(lambdaQCD) || lambdaQCD <= 0.) throw domain_error("Lambda_QCD has to be set, finite and strict positive!");
+/** @brief check alpha_s */
+    #define checkAlphaS(aS) if (0 == aS) throw domain_error("alpha_s has to be set!");
 /** @brief check alphaEM */
     #define checkAlphaEM(alphaEM) if (!isfinite(alphaEM) || alphaEM <= 0.) throw domain_error("alpha_EM has to be finite and strict positive!");
 /** @brief check leptonic Sl */
@@ -172,6 +172,24 @@ public:
  * @return \f$\bar c_{\Pq}^{F,(1),AA}\f$
  */
     virtual cdbl cqBarF1_AA() const = 0;
+
+/**
+ * @brief computes vector-vector part of next-to-leading order partonic gluon contribution with factorisation scale \f$\bar c_{\Pg}^{F,(1),VV}\f$
+ * @return \f$\bar c_{\Pg}^{F,(1),VV}\f$
+ */
+    virtual cdbl cgBarF1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order partonic gluon contribution with factorisation scale \f$\bar c_{\Pg}^{F,(1),VA}\f$
+ * @return \f$\bar c_{\Pg}^{F,(1),VA}\f$
+ */
+    virtual cdbl cgBarF1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order partonic gluon contribution with factorisation scale \f$\bar c_{\Pg}^{F,(1),AA}\f$
+ * @return \f$\bar c_{\Pg}^{F,(1),AA}\f$
+ */
+    virtual cdbl cgBarF1_AA() const = 0;
     
 ///@}
 
@@ -221,6 +239,14 @@ public:
  * @param lambdaQCD \f$\Lambda_{QCD,n_{lf}+1}\f$
  */
     void setLambdaQCD(cdbl lambdaQCD);
+    
+/**
+ * @brief sets Alpha_S by LHAPDF
+ * @param name LHAPDF name
+ * @param member LHAPDF member index
+ * @see LHAPDF::mkAlphaS()
+ */
+    void setAlphaSByLHAPDF(str name, int member);
     
 ///@}
 

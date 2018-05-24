@@ -12,6 +12,8 @@ namespace Inclusive {
  * @brief Inclusive integration kernel
  */
 class IntKer : public Common::AbstractIntKer {
+/** @name integration variables */
+///@{
     
 /** @brief partonic t1 */
     dbl t1 = dblNaN;
@@ -42,6 +44,8 @@ class IntKer : public Common::AbstractIntKer {
  */
     void setHAQRapidity(cdbl a);
     
+/** @brief maximum partonic s4 */
+    dbl s4max = 0.;
 /** @brief partonic s4 */
     dbl s4 = dblNaN;
 /** @brief sets partonic s and t1 by pt,y,s4 */
@@ -58,6 +62,8 @@ class IntKer : public Common::AbstractIntKer {
  * @return U1
  */
     cdbl getHadronicU1() const;
+    
+///@}
     
 /** @brief define shortcut */
     typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
@@ -76,6 +82,27 @@ class IntKer : public Common::AbstractIntKer {
  * @param fAA axial-axial part
  */
     void getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
+    
+/**
+ * @brief return coefficient for ln^0(Delta/m^2)
+ * @return \f$\mathcal A_0\f$
+ */
+    cdbl getDeltaCoeffA0() const;
+    
+/**
+ * @brief return coefficient for ln^1(Delta/m^2)
+ * @return \f$\mathcal A_1\f$
+ */
+    cdbl getDeltaCoeffA1() const;
+    
+/**
+ * @brief return coefficient for ln^2(Delta/m^2)
+ * @return \f$\mathcal A_2\f$
+ */
+    cdbl getDeltaCoeffA2() const;
+
+/** @name partonic coefficient functions */
+///@{
     
 /** 
  * @brief computes a single current cg0
@@ -100,6 +127,18 @@ class IntKer : public Common::AbstractIntKer {
  * @return cqBarF1
  */
     cdbl cqBarF1_cur() const;
+    
+/** 
+ * @brief computes a single current cgBarF1
+ * @return cgBarF1
+ */
+    cdbl cgBarF1_cur() const;
+    
+/** 
+ * @brief computes a single current cgBarR1
+ * @return cgBarR1
+ */
+    cdbl cgBarR1_cur() const;
 
 /** 
  * @brief computes full cg0
@@ -118,6 +157,20 @@ class IntKer : public Common::AbstractIntKer {
  * @return cqBarF1
  */
     cdbl cqBarF1() const;
+
+/** 
+ * @brief computes full cgBarF1
+ * @return cgBarF1
+ */
+    cdbl cgBarF1() const;
+
+/** 
+ * @brief computes full cgBarR1
+ * @return cgBarR1
+ */
+    cdbl cgBarR1() const;
+    
+///@}
     
 /**
  * @brief computes a single partonic function
@@ -135,6 +188,9 @@ class IntKer : public Common::AbstractIntKer {
  * @return a single hadronic function
  */
     cdbl runHadronic(cdbl a1, cdbl a2, cdbl a3);
+
+/** @name hadronic structure functions */
+///@{
     
 /** 
  * @brief computes Fg0
@@ -147,6 +203,8 @@ class IntKer : public Common::AbstractIntKer {
  * @return Fq1
  */
     cdbl Fq1() const;
+    
+///@}
     
 public:
     

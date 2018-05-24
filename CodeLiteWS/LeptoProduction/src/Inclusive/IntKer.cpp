@@ -72,45 +72,59 @@ void Inclusive::IntKer::setPartonicVars() {
     this->t1 = this->xi*T1;
 }
 
-#define initCg0 _sp\
+// combine all available currents with appropriate factors
+// NB: needs to be macro, to get fVV only evaluate, when needed
+// if needed: rewrite to reveal "new" term v2-a2
+// v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
+#define combineCurs(gVV,gVA,gAA) \
+    cdbl eH = this->getElectricCharge(this->nlf+1);\
+    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
+    cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
+    dbl r = 0.;\
+    if (isParityConservingProj(this->proj)) {\
+        cdbl eVV = gVV;\
+        if (this->flags.usePhoton) r += eH*eH * eVV;\
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;\
+        if (this->flags.useZ) {\
+            cdbl eAA = gAA;\
+            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
+        }\
+    } else {\
+        cdbl eVA = gVA;\
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;\
+        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
+    }\
+    return r;
+
+// implement partonic coefficient as single-current variant and as all-currents-combination
+// @param n name
+#define implementPartonicCoeff(n)\
+cdbl Inclusive::IntKer::n##_cur() const {\
+    init_##n\
+    if (Mode_##n##_VV == this->mode) return n##_VV;\
+    if (Mode_##n##_VA == this->mode) return n##_VA;\
+    if (Mode_##n##_AA == this->mode) return n##_AA;\
+    return 0.;\
+}\
+\
+cdbl Inclusive::IntKer::n() const {\
+    init_##n\
+    combineCurs(n##_VV,n##_VA,n##_AA)\
+}\
+
+// setup cg0
+#define init_cg0 _sp\
     cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;\
     fPtr4dbl fVV = 0;\
     fPtr4dbl fVA = 0;\
     fPtr4dbl fAA = 0;\
     this->getBQED(fVV, fVA, fAA);
+#define cg0_VV n * fVV(m2,-Q2,sp,t1)
+#define cg0_VA n * fVA(m2,-Q2,sp,t1)
+#define cg0_AA n * fAA(m2,-Q2,sp,t1)
+implementPartonicCoeff(cg0)
 
-cdbl Inclusive::IntKer::cg0_cur() const {
-    initCg0
-    if (Mode_cg0_VV == this->mode) return n * fVV(m2,-Q2,sp,t1);
-    if (Mode_cg0_VA == this->mode) return n * fVA(m2,-Q2,sp,t1);
-    if (Mode_cg0_AA == this->mode) return n * fAA(m2,-Q2,sp,t1);
-    return 0.;
-}
-
-cdbl Inclusive::IntKer::cg0() const {
-    initCg0
-    cdbl eH = this->getElectricCharge(this->nlf+1);
-    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);
-    cdbl gAQ = this->getAxialCoupling(this->nlf+1);
-    dbl r = 0.;
-    if (isParityConservingProj(this->proj)) {
-        cdbl eVV = fVV(this->m2,-this->Q2,sp,t1);
-        if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
-        if (this->flags.useZ) {
-            cdbl eAA = fAA(this->m2,-this->Q2,sp,t1);
-            // if needed: rewrite to reveal new term v2-a2
-            // v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
-            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
-        }
-    } else {
-        cdbl eVA = fVA(this->m2,-this->Q2,sp,t1);
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
-        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
-    }
-    return n * r;
-}
-
+// setup dq1
 void Inclusive::IntKer::getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const {
     switch(this->proj) {
         case F2:   fVV = &Inclusive::ME::IntA2_F2_VV;   fVA = 0; break;
@@ -121,15 +135,13 @@ void Inclusive::IntKer::getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const {
         case gL:   fVA = &Inclusive::ME::IntA2_gL_VA;   fVV = 0; break;
     }
 }
-
-#define initDq1 _sp\
+#define init_dq1 _sp\
     cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kqph * (cdbl)Color::NC * Color::CF;\
     fPtr5dbl fVV = 0;\
     fPtr5dbl fVA = 0;\
     this->getIntA2(fVV, fVA);
-
 cdbl Inclusive::IntKer::dq1_cur() const {
-    initDq1
+    init_dq1
     if (Mode_dq1_VV == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
     // d_q^1 = 0 for g_4 and g_L
     if (Mode_dq1_VA == this->mode) return n * fVA(m2,-Q2,sp,t1,s4);
@@ -142,48 +154,23 @@ cdbl Inclusive::IntKer::dq1_cur() const {
     return 0.;
 }
 
+// setup cq1
 void Inclusive::IntKer::getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const {
     getME(Inclusive::ME::IntA1)
 }
-
-#define initCq1 _sp\
+#define init_cq1 _sp\
     cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kqph * (cdbl)Color::NC * Color::CF;\
     fPtr5dbl fVV = 0;\
     fPtr5dbl fVA = 0;\
     fPtr5dbl fAA = 0;\
     this->getIntA1(fVV, fVA, fAA);
+#define cq1_VV n * fVV(m2,-Q2,sp,t1,s4)
+#define cq1_VA n * fVA(m2,-Q2,sp,t1,s4)
+#define cq1_AA n * fAA(m2,-Q2,sp,t1,s4)
+implementPartonicCoeff(cq1)
 
-cdbl Inclusive::IntKer::cq1_cur() const {
-    initCq1
-    if (Mode_cq1_VV == this->mode) return n * fVV(m2,-Q2,sp,t1,s4);
-    if (Mode_cq1_VA == this->mode) return n * fVA(m2,-Q2,sp,t1,s4);
-    if (Mode_cq1_AA == this->mode) return n * fAA(m2,-Q2,sp,t1,s4);
-    return 0.;
-}
-
-cdbl Inclusive::IntKer::cq1() const {
-    initCq1
-    cdbl eH = this->getElectricCharge(this->nlf+1);
-    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);
-    cdbl gAQ = this->getAxialCoupling(this->nlf+1);
-    dbl r = 0.;
-    if (isParityConservingProj(this->proj)) {
-        cdbl eVV = fVV(this->m2,-this->Q2,sp,t1,s4);
-        if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
-        if (this->flags.useZ) {
-            cdbl eAA = fAA(this->m2,-this->Q2,sp,t1,s4);
-            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
-        }
-    } else {
-        cdbl eVA = fVA(this->m2,-this->Q2,sp,t1,s4);
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
-        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
-    }
-    return n * r;
-}
-
-#define initCqBarF1 _sp\
+// setup cqBarF1
+#define init_cqBarF1 _sp\
     fPtr4dbl fVV = 0;\
     fPtr4dbl fVA = 0;\
     fPtr4dbl fAA = 0;\
@@ -192,36 +179,56 @@ cdbl Inclusive::IntKer::cq1() const {
     cdbl x1 = - u1/(sp + t1);\
     fPtr1dbl Pgq0 = this->getPgq0();\
     cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kqph * (cdbl)Color::NC * Pgq0(x1)/u1;
+#define cqBarF1_VV n * fVV(m2,-Q2,x1*sp,x1*t1)
+#define cqBarF1_VA n * fVA(m2,-Q2,x1*sp,x1*t1)
+#define cqBarF1_AA n * fAA(m2,-Q2,x1*sp,x1*t1)
+implementPartonicCoeff(cqBarF1)
 
-cdbl Inclusive::IntKer::cqBarF1_cur() const {
-    initCqBarF1
-    if (Mode_cqBarF1_VV == this->mode) return n * fVV(m2,-Q2,x1*sp,x1*t1);
-    if (Mode_cqBarF1_VA == this->mode) return n * fVA(m2,-Q2,x1*sp,x1*t1);
-    if (Mode_cqBarF1_AA == this->mode) return n * fAA(m2,-Q2,x1*sp,x1*t1);
-    return 0.;
+// soft helper coefficients
+cdbl Inclusive::IntKer::getDeltaCoeffA0() const {
+    return 1./(this->s4max - this->Delta);
+}
+cdbl Inclusive::IntKer::getDeltaCoeffA1() const {
+    return log(this->s4max/this->m2)/(this->s4max - this->Delta) - 1./this->s4;
+}
+cdbl Inclusive::IntKer::getDeltaCoeffA2() const {
+    return pow(log(this->s4max/this->m2),2)/(this->s4max - this->Delta) - 2.*log(this->s4/m2)/this->s4;
 }
 
-cdbl Inclusive::IntKer::cqBarF1() const {
-    initCqBarF1
-    cdbl eH = this->getElectricCharge(this->nlf+1);
-    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);
-    cdbl gAQ = this->getAxialCoupling(this->nlf+1);
-    dbl r = 0.;
-    if (isParityConservingProj(this->proj)) {
-        cdbl eVV = fVV(this->m2,-this->Q2,x1*sp,x1*t1);
-        if (this->flags.usePhoton) r += eH*eH * eVV;
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;
-        if (this->flags.useZ) {
-            cdbl eAA = fAA(this->m2,-this->Q2,x1*sp,x1*t1);
-            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);
-        }
-    } else {
-        cdbl eVA = fVA(this->m2,-this->Q2,x1*sp,x1*t1);
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;
-        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;
-    }
-    return n * r;
-}
+// setup cgBarF1
+#define init_cgBarF1 _sp\
+    fPtr4dbl fVV = 0;\
+    fPtr4dbl fVA = 0;\
+    fPtr4dbl fAA = 0;\
+    this->getBQED(fVV, fVA, fAA);\
+    cdbl u1 = s4 - sp - t1;\
+    cdbl x1 = - u1/(sp + t1);\
+    fPtr1dbl PggH0 = this->getPggH0();\
+    cdbl AP = -2./u1*PggH0(x1)*(-1.);\
+    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;\
+    cdbl A0 = this->getDeltaCoeffA0();\
+    cdbl A1 = this->getDeltaCoeffA1();\
+    cdbl SoftDelta1 = -4.*(cdbl)Color::CA;\
+    cdbl u1S = -sp - t1;\
+    cdbl SoftDelta0 = 4.*(cdbl)Color::CA * log(-u1S/this->m2) - this->beta0lf();\
+    cdbl AS = A0*SoftDelta0 + A1*SoftDelta1;
+#define cgBarF1_VV n * (AP*fVV(m2,-Q2,x1*sp,x1*t1) + AS*fVV(m2,-Q2,sp,t1))
+#define cgBarF1_VA n * (AP*fVA(m2,-Q2,x1*sp,x1*t1) + AS*fVA(m2,-Q2,sp,t1))
+#define cgBarF1_AA n * (AP*fAA(m2,-Q2,x1*sp,x1*t1) + AS*fAA(m2,-Q2,sp,t1))
+implementPartonicCoeff(cgBarF1)
+
+// setup cgBarR1
+#define init_cgBarR1 _sp\
+    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;\
+    fPtr4dbl fVV = 0;\
+    fPtr4dbl fVA = 0;\
+    fPtr4dbl fAA = 0;\
+    this->getBQED(fVV, fVA, fAA);\
+    cdbl b = this->beta0lf()/(16.*M_PI*M_PI);
+#define cgBarR1_VV n * b * fVV(m2,-Q2,sp,t1)
+#define cgBarR1_VA n * b * fVA(m2,-Q2,sp,t1)
+#define cgBarR1_AA n * b * fAA(m2,-Q2,sp,t1)
+implementPartonicCoeff(cgBarR1)
 
 cdbl Inclusive::IntKer::Fg0() const {
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
@@ -234,10 +241,12 @@ cdbl Inclusive::IntKer::Fg0() const {
 
 cdbl Inclusive::IntKer::Fq1() const {
     // compute matrix elements for dq1
+    // as they are combined with the properties of the light quarks,
+    // we have to keep the raw-current elements
     dbl dq1_eVV = 0.;
     dbl dq1_eVA = 0.;
     {
-        initDq1
+        init_dq1
         if (isParityConservingProj(this->proj)) {
             dq1_eVV = n*fVV(this->m2,-this->Q2,sp,t1,s4);
         } else {
@@ -277,20 +286,30 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
     if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode) {
         return this->jac_t1*this->cg0_cur();
     }
-    // setS4 in NLO
+    // cgBarR1
+    if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode) {
+        return this->jac_t1*this->cgBarR1_cur();
+    }
+    // setS4 in NLOq
     _sp
     cdbl beta = this->beta();
-    cdbl s4max = (this->s*((sp*(1. - beta))/2. + t1)*((sp*(1. + beta))/2. + t1))/(sp*t1);
+    this->s4max = (this->s*((sp*(1. - beta))/2. + t1)*((sp*(1. + beta))/2. + t1))/(sp*t1);
     this->s4 = a2*s4max;
     // dq1
     if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode)
-        return this->jac_t1*s4max*this->dq1_cur();
+        return this->jac_t1*this->s4max*this->dq1_cur();
     // cq1
     if (Mode_cq1_VV == this->mode || Mode_cq1_VA == this->mode || Mode_cq1_AA == this->mode)
-        return this->jac_t1*s4max*this->cq1_cur();
+        return this->jac_t1*this->s4max*this->cq1_cur();
     // cqBarF1
     if (Mode_cqBarF1_VV == this->mode || Mode_cqBarF1_VA == this->mode || Mode_cqBarF1_AA == this->mode)
-        return this->jac_t1*s4max*this->cqBarF1_cur();
+        return this->jac_t1*this->s4max*this->cqBarF1_cur();
+    // setS4 in NLOg
+    cdbl V_s4 = s4max - this->Delta;
+    this->s4 = this->Delta + a2*V_s4;
+    // cgBarF1
+    if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
+        return this->jac_t1*V_s4*this->cgBarF1_cur();
     return 0.;
 }
 

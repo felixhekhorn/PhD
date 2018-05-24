@@ -4,7 +4,8 @@ Debug/src_Inclusive_IntKer.cpp.o: src/Inclusive/IntKer.cpp \
  src/Inclusive/../Common/../Projection.hpp \
  src/Inclusive/../Common/../DynamicScaleFactors.hpp \
  src/Inclusive/../Common/../Pdf/PdfWrapper.h \
- src/Inclusive/../Common/Color.hpp src/Inclusive/../Common/ME/BQED.h \
+ src/Inclusive/../Common/Color.hpp src/Inclusive/../Common/Color.hpp \
+ src/Inclusive/../Common/ME/BQED.h \
  src/Inclusive/../Common/ME/../../config.h src/Inclusive/ME/IntA2.h \
  src/Inclusive/ME/../../config.h src/Inclusive/ME/IntA1.h
 
@@ -21,6 +22,8 @@ src/Inclusive/../Common/../Projection.hpp:
 src/Inclusive/../Common/../DynamicScaleFactors.hpp:
 
 src/Inclusive/../Common/../Pdf/PdfWrapper.h:
+
+src/Inclusive/../Common/Color.hpp:
 
 src/Inclusive/../Common/Color.hpp:
 

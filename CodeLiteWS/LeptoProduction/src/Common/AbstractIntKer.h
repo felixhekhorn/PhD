@@ -9,6 +9,7 @@
 #include "../Projection.hpp"
 #include "../DynamicScaleFactors.hpp"
 #include "../Pdf/PdfWrapper.h"
+#include "Color.hpp"
 
 namespace Common {
 
@@ -23,10 +24,16 @@ protected:
     #define _sp cdbl sp = this->s + this->Q2;
 
 /**
- * @brief returns partonic beta
- * @return beta
+ * @brief returns partonic (kinematic) beta
+ * @return \f$\beta = \sqrt{1-4m^2/s}\f$
  */
     inline cdbl beta() const { return sqrt(1. - 4.*this->m2/this->s); }
+
+/**
+ * @brief returns first beta coefficient with light flavors
+ * @return \f$\beta_0^{lf} = \frac{11C_A - 2n_{lf}}{3}\f$
+ */
+    inline cdbl beta0lf() const { return (11.*(cdbl)Color::CA - 2.*this->nlf)/3.; }
     
 /**
  * @brief returns electric charge of particle
@@ -103,11 +110,28 @@ protected:
 /** @brief define shortcut for Ps */
     typedef cdbl (*fPtr1dbl)(cdbl x);
     
+/** @name getter to Altarelli-Parisi functions */
+///@{
+    
 /**
  * @brief finds correct pointer to Pgq
- * @return Pgq
+ * @return \f$P_{\Pg\Pq}(x)\f$
  */
     fPtr1dbl getPgq0() const;
+    
+/**
+ * @brief finds correct pointer to PggH0
+ * @return \f$P_{\Pg\Pg}^{H,(0)}(x)\f$
+ */
+    fPtr1dbl getPggH0() const;
+    
+/**
+ * @brief finds correct pointer to PggH1
+ * @return \f$P_{\Pg\Pg}^{H,(1)}(x)\f$
+ */
+    fPtr1dbl getPggH1() const;
+    
+///@}
     
 /**
  * @brief constructor
@@ -183,10 +207,7 @@ public:
     DynamicScaleFactors muF2;
     
 /** @brief running strong coupling as provided by LHAPDF */
-    LHAPDF::AlphaS_Analytic* aS = 0;
-    
-/** @brief QCD scale \f$\Lambda_{QCD}\f$ */
-    dbl lambdaQCD = dblNaN;
+    LHAPDF::AlphaS* aS = 0;
     
 ///@}
 
@@ -224,7 +245,18 @@ public:
     static cuint Mode_cqBarF1_VV = 10;
     static cuint Mode_cqBarF1_VA = 11;
     static cuint Mode_cqBarF1_AA = 12;
+    static cuint Mode_cg1_VV = 13;
+    static cuint Mode_cg1_VA = 14;
+    static cuint Mode_cg1_AA = 15;
+    static cuint Mode_cgBarF1_VV = 16;
+    static cuint Mode_cgBarF1_VA = 17;
+    static cuint Mode_cgBarF1_AA = 18;
+    static cuint Mode_cgBarR1_VV = 19;
+    static cuint Mode_cgBarR1_VA = 20;
+    static cuint Mode_cgBarR1_AA = 21;
+    
     static cuint Mode_F = 100;
+    
     static cuint Mode_sigma = 200;
 ///@}
     

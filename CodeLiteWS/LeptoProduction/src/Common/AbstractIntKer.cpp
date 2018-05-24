@@ -90,6 +90,22 @@ Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPgq0() const {
     throw domain_error("unkonwn projection: "+strProj(this->proj));
 }
 
+Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPggH0() const {
+    switch(this->proj) {
+        case F2:   case FL: case xF3: return &AltarelliParisi::PggH0;
+        case x2g1: case g4: case gL:  return &AltarelliParisi::DeltaPggH0;
+    }
+    throw domain_error("unkonwn projection: "+strProj(this->proj));
+}
+
+Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPggH1() const {
+    switch(this->proj) {
+        case F2:   case FL: case xF3: return &AltarelliParisi::PggH1;
+        case x2g1: case g4: case gL:  return &AltarelliParisi::DeltaPggH1;
+    }
+    throw domain_error("unkonwn projection: "+strProj(this->proj));
+}
+
 cdbl Common::AbstractIntKer::getNormPhZ() const {
     cdbl etaPhZ = 1./(4. * this->sin2ThetaWeak * (1. - this->sin2ThetaWeak)) * this->Q2 / (this->Q2 + this->MZ2);
     cdbl sgn = this->incomingLeptonHasNegativeCharge ? -1. : 1.;
