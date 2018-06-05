@@ -14,6 +14,27 @@ InclusiveLeptoProduction::InclusiveLeptoProduction(cuint nlf, cdbl m2, cdbl Delt
 InclusiveLeptoProduction::~InclusiveLeptoProduction() {
 }
 
+cdbl InclusiveLeptoProduction::int1D() const {
+    gsl_function f;
+    f.params = this->ker;
+    f.function = gslpp::callFunctor<Inclusive::IntKer>;
+    return Common::int1D(&f);
+}
+
+cdbl InclusiveLeptoProduction::int2D() const {
+    gsl_monte_function f;
+    f.params = this->ker;
+    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
+    return Common::int2D(&f);
+}
+
+cdbl InclusiveLeptoProduction::int3D() const {
+    gsl_monte_function f;
+    f.params = this->ker;
+    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
+    return Common::int3D(&f);
+}
+
 #define initPartonicVV checkQ2(this->ker->Q2)\
     checkPartonicS(this->ker->s)\
     if (!isParityConservingProj(this->ker->proj))\
@@ -29,31 +50,26 @@ InclusiveLeptoProduction::~InclusiveLeptoProduction() {
     if (isParityConservingProj(this->ker->proj))\
         throw domain_error("current projection does NOT have a vector-axial part!");
         
-#define runCg0(cur) this->ker->mode = Common::AbstractIntKer::Mode_cg0_##cur;\
-    gsl_function f;\
-    f.params = this->ker;\
-    f.function = gslpp::callFunctor<Inclusive::IntKer>;\
-    return Common::int1D(&f);
-cdbl InclusiveLeptoProduction::cg0_VV() const { initPartonicVV runCg0(VV) }
-cdbl InclusiveLeptoProduction::cg0_AA() const { initPartonicAA runCg0(AA) }
-cdbl InclusiveLeptoProduction::cg0_VA() const { initPartonicVA runCg0(VA) }
+// implement partonic coefficient functions with 1D integration
+#define implement1DCoeffs(n) \
+cdbl InclusiveLeptoProduction::n##_VV() const { initPartonicVV this->ker->mode = Common::AbstractIntKer::Mode_##n##_VV; return this->int1D(); }\
+cdbl InclusiveLeptoProduction::n##_VA() const { initPartonicVA this->ker->mode = Common::AbstractIntKer::Mode_##n##_VA; return this->int1D(); }\
+cdbl InclusiveLeptoProduction::n##_AA() const { initPartonicAA this->ker->mode = Common::AbstractIntKer::Mode_##n##_AA; return this->int1D(); }
 
 // implement partonic coefficient functions with 2D integration
-#define run2DHelper(n,cur) this->ker->mode = Common::AbstractIntKer::Mode_##n##_##cur;\
-    gsl_monte_function f;\
-    f.params = this->ker;\
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;\
-    return Common::int2D(&f);
 #define implement2DCoeffs(n) \
-cdbl InclusiveLeptoProduction::n##_VV() const { initPartonicVV run2DHelper(n,VV) }\
-cdbl InclusiveLeptoProduction::n##_VA() const { initPartonicVA run2DHelper(n,VA) }\
-cdbl InclusiveLeptoProduction::n##_AA() const { initPartonicAA run2DHelper(n,AA) }
+cdbl InclusiveLeptoProduction::n##_VV() const { initPartonicVV this->ker->mode = Common::AbstractIntKer::Mode_##n##_VV; return this->int2D(); }\
+cdbl InclusiveLeptoProduction::n##_VA() const { initPartonicVA this->ker->mode = Common::AbstractIntKer::Mode_##n##_VA; return this->int2D(); }\
+cdbl InclusiveLeptoProduction::n##_AA() const { initPartonicAA this->ker->mode = Common::AbstractIntKer::Mode_##n##_AA; return this->int2D(); }
+
+implement1DCoeffs(cg0)
+implement1DCoeffs(cgBarR1)
 
 implement2DCoeffs(dq1)
 implement2DCoeffs(cq1)
+implement2DCoeffs(cg1)
 implement2DCoeffs(cqBarF1)
 implement2DCoeffs(cgBarF1)
-implement2DCoeffs(cgBarR1)
 
 #define checkMu if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
         throw domain_error("scales for inclusive computation may not depend on the exclusive variable HQPairTransverseMomentum!");
@@ -69,15 +85,11 @@ implement2DCoeffs(cgBarR1)
 cdbl InclusiveLeptoProduction::F() const {
     initF
     this->ker->mode = Common::AbstractIntKer::Mode_F;
-    gsl_monte_function f;
-    f.params = this->ker;
     dbl r = dblNaN;
     if (this->ker->flags.useNextToLeadingOrder) {
-        f.f = gslpp::callFunctor3D<Inclusive::IntKer>;
-        r = Common::int3D(&f);
+        r = this->int3D();
     } else {
-        f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
-        r = Common::int2D(&f);
+        r = this->int2D();
     }
     // unset integration variables
     this->ker->s = dblNaN;
@@ -87,15 +99,9 @@ cdbl InclusiveLeptoProduction::F() const {
 cdbl InclusiveLeptoProduction::rundF_dHAQX() const {
     dbl r = dblNaN;
     if (this->ker->flags.useNextToLeadingOrder) {
-        gsl_monte_function f;
-        f.params = this->ker;
-        f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
-        r = Common::int2D(&f);
+        r = this->int2D();
     } else {
-        gsl_function f;
-        f.params = this->ker;
-        f.function = gslpp::callFunctor<Inclusive::IntKer>;
-        r = Common::int1D(&f);
+        r = this->int1D();
     }
     // unset integration variables
     this->ker->s = dblNaN;

@@ -84,6 +84,38 @@ class IntKer : public Common::AbstractIntKer {
     void getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
     
 /**
+ * @brief sets correct pointers to IntROK
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getIntROK(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to IntRQED
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getIntRQED(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to SVOK
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getSVOK(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to SVQED
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
+    
+/**
  * @brief return coefficient for ln^0(Delta/m^2)
  * @return \f$\mathcal A_0\f$
  */
@@ -139,6 +171,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return cgBarR1
  */
     cdbl cgBarR1_cur() const;
+    
+/** 
+ * @brief computes a single current cg1
+ * @return cg1
+ */
+    cdbl cg1_cur() const;
 
 /** 
  * @brief computes full cg0
@@ -169,6 +207,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return cgBarR1
  */
     cdbl cgBarR1() const;
+
+/** 
+ * @brief computes full cg1
+ * @return cg1
+ */
+    cdbl cg1() const;
     
 ///@}
     

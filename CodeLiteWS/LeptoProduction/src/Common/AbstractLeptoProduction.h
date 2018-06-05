@@ -174,6 +174,24 @@ public:
     virtual cdbl cqBarF1_AA() const = 0;
 
 /**
+ * @brief computes vector-vector part of next-to-leading order gluon contribution \f$c_{\Pg}^{(1),VV}\f$
+ * @return \f$c_{\Pg}^{(1),VV}\f$
+ */
+    virtual cdbl cg1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order gluon contribution \f$c_{\Pg}^{(1),VA}\f$
+ * @return \f$c_{\Pg}^{(1),VA}\f$
+ */
+    virtual cdbl cg1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order gluon contribution \f$c_{\Pg}^{(1),AA}\f$
+ * @return \f$c_{\Pg}^{(1),AA}\f$
+ */
+    virtual cdbl cg1_AA() const = 0;
+
+/**
  * @brief computes vector-vector part of next-to-leading order partonic gluon contribution with factorisation scale \f$\bar c_{\Pg}^{F,(1),VV}\f$
  * @return \f$\bar c_{\Pg}^{F,(1),VV}\f$
  */
@@ -190,6 +208,25 @@ public:
  * @return \f$\bar c_{\Pg}^{F,(1),AA}\f$
  */
     virtual cdbl cgBarF1_AA() const = 0;
+
+/**
+ * @brief computes vector-vector part of next-to-leading order partonic gluon contribution with renormalization scale \f$\bar c_{\Pg}^{R,(1),VV}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),VV}\f$
+ */
+    virtual cdbl cgBarR1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order partonic gluon contribution with renormalization scale \f$\bar c_{\Pg}^{R,(1),VA}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),VA}\f$
+ */
+    virtual cdbl cgBarR1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order partonic gluon contribution with renormalization scale \f$\bar c_{\Pg}^{R,(1),AA}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),AA}\f$
+ */
+    virtual cdbl cgBarR1_AA() const = 0;
+
     
 ///@}
 

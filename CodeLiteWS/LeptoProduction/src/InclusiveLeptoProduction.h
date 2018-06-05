@@ -19,7 +19,25 @@ class InclusiveLeptoProduction : public Common::AbstractLeptoProduction {
  * @return dF_dHAQX
  */
     cdbl rundF_dHAQX() const;
-
+    
+/**
+ * @brief wrapper to 1D integration
+ * @return integral
+ */
+    cdbl int1D() const;
+    
+/**
+ * @brief wrapper to 2D integration
+ * @return integral
+ */
+    cdbl int2D() const;
+    
+/**
+ * @brief wrapper to 3D integration
+ * @return integral
+ */
+    cdbl int3D() const;
+    
 public:
 
 /**
@@ -78,6 +96,13 @@ public:
     cdbl cqBarF1_VA() const;
 /** @see AbstractLeptoProduction::cqBarF1_AA() */
     cdbl cqBarF1_AA() const;
+    
+/** @see AbstractLeptoProduction::cg1_VV() */
+    cdbl cg1_VV() const;
+/** @see AbstractLeptoProduction::cg1_VA() */
+    cdbl cg1_VA() const;
+/** @see AbstractLeptoProduction::cg1_AA() */
+    cdbl cg1_AA() const;
     
 /** @see AbstractLeptoProduction::cgBarF1_VV() */
     cdbl cgBarF1_VV() const;
