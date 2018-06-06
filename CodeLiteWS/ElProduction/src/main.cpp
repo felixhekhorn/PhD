@@ -40,11 +40,11 @@ int test() {
 }
 
 int test2() {
-    cdbl q2 = -1.e5;
+    cdbl q2 = -1.e3;
     cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
     //cdbl lambdaQCD = .239; // nlf=3
-    cdbl lambdaQCD = .194; // nlf=3
+    //cdbl lambdaQCD = .194; // nlf=3
     //cdbl lambdaQCD = .2; // nlf=3
     const Common::DynamicScaleFactors mu02F(4.,-1.,0.,0.);
     cdbl Delta = 1e-6;
@@ -80,19 +80,19 @@ int test2() {
     eO.MCparams.verbosity = 3;
     
     {
-        uint N = 101;
+        uint N = 11;
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-3.+6./(N-1)*j);
-            eO.setEta(a);iO.setEta(a);
+            /*eO.setEta(a);iO.setEta(a);
             cdbl e = eO.cq1();
             cdbl i = iO.cq1();
-            printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);
+            printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);*/
             
-            /*eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            eG.setEta(a);eL.setEta(a);eP.setEta(a);
             cdbl g = eG.cg1();
             cdbl l = eL.cg1();
             cdbl p = eP.cg1();
-            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);*/
+            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
         }
     }
     return EXIT_SUCCESS;

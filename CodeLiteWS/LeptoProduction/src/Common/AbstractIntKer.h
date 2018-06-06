@@ -33,7 +33,7 @@ protected:
  * @brief returns first beta coefficient with light flavors
  * @return \f$\beta_0^{lf} = \frac{11C_A - 2n_{lf}}{3}\f$
  */
-    inline cdbl beta0lf() const { return (11.*(cdbl)Color::CA - 2.*this->nlf)/3.; }
+    inline cdbl beta0lf() const { return (11.*cdbl(Color::CA) - 2.*this->nlf)/3.; }
     
 /**
  * @brief returns electric charge of particle

@@ -10,17 +10,17 @@ tmpl = """/// %s
 
 #define initIntR cdbl u1 = s4 - sp - t1;\\
 cdbl s = sp + q2;\\
-cdbl r1 = sqrt(pow(s - s4,2) - 4.*m2*s);\\
-cdbl r2 = sqrt(pow(sp + u1 - q2,2) - 4.*q2*(t1 + m2));\\
+cdbl r1 = sqrt(-4*m2*s + Power(s - s4,2));\\
+cdbl r2 = sqrt(-4*q2*(m2 + t1) + Power(-q2 + sp + u1,2));\\
 cdbl r3 = sqrt((q2*(sp + t1) - sp*u1)*(-4*m2*(sp + t1) + q2*(sp + t1) - sp*u1));\\
 cdbl r4 = sqrt(t1*(Power(s,2)*t1 + 4*m2*(-(q2*t1) + sp*(sp + u1))));\\
 cdbl r5 = sqrt(Power(s4*sp - q2*(sp + t1),2) + 4*m2*(sp + t1)*(-(q2*(sp + t1)) + sp*(sp + u1)));\\
 cdbl psLog1_S1_u6 = log((m2 + s4)/m2);\\
-cdbl psLog3_S1_s3 = log1p(- (2*r1)/(2*m2 - q2 + r1 + t1 + u1));\\
-cdbl psLog3_S1_u7 = log1p(- (2*r2*s4)/(2*m2*(sp + u1) + s4*(-q2 + r2 + sp + u1)));\\
-cdbl psLog4_S1_u6_s3 = log1p(- (2*r3)/(r3 - 2*m2*(sp + t1) + q2*(sp + t1) - sp*u1));\\
-cdbl psLog4_S1_u6_u7 = log1p(- (2*r5*s4)/(s4*(r5 - s4*sp + q2*(sp + t1)) - 2*m2*(sp + t1)*(sp + u1)));\\
-cdbl psLog4_S2_u7_s3 = log1p(- (2*r4)/(r4 - s*t1 - 2*m2*(sp + u1)));
+cdbl psLog3_S1_s3 = log1p((-2*r1)/(2*m2 - q2 + r1 + t1 + u1));\\
+cdbl psLog3_S1_u7 = log1p((-2*r2*s4)/(2*m2*(sp + u1) + s4*(-q2 + r2 + sp + u1)));\\
+cdbl psLog4_S1_u6_s3 = log1p((-2*r3)/(r3 - 2*m2*(sp + t1) + q2*(sp + t1) - sp*u1));\\
+cdbl psLog4_S1_u6_u7 = log1p((-2*r5*s4)/(s4*(r5 - s4*sp + q2*(sp + t1)) - 2*m2*(sp + t1)*(sp + u1)));\\
+cdbl psLog4_S2_u7_s3 = log1p((-2*r4)/(r4 - s*t1 - 2*m2*(sp + u1)));
 #define initIntROK \\
 cdbl psLog2_S1_s3 = log(((m2 + s4)*Power(t1,2))/(m2*Power(sp + t1,2)));\\
 cdbl psLog2_S1_u7 = log(((m2 + s4)*Power(t1,2)*Power(u1,2))/(Power(sp + t1,2)*(q2*s4*t1 + m2*Power(sp + u1,2))));

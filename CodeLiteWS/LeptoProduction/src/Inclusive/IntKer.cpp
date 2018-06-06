@@ -202,9 +202,9 @@ cdbl Inclusive::IntKer::getDeltaCoeffA2() const {
     cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * (cdbl)Color::NC * Color::CF;\
     cdbl A0 = this->getDeltaCoeffA0();\
     cdbl A1 = this->getDeltaCoeffA1();\
-    cdbl SoftDelta1 = -4.*(cdbl)Color::CA;\
+    cdbl SoftDelta1 = -4.*cdbl(Color::CA);\
     cdbl u1S = -sp - t1;\
-    cdbl SoftDelta0 = 4.*(cdbl)Color::CA * log(-u1S/this->m2) - this->beta0lf();\
+    cdbl SoftDelta0 = 4.*cdbl(Color::CA) * log(-u1S/this->m2) - this->beta0lf();\
     cdbl AS = A0*SoftDelta0 + A1*SoftDelta1;
 #define cgBarF1_VV n * (AP*fVV(m2,-Q2,x1*sp,x1*t1) + AS*fVV(m2,-Q2,sp,t1))
 #define cgBarF1_VA n * (AP*fVA(m2,-Q2,x1*sp,x1*t1) + AS*fVA(m2,-Q2,sp,t1))
@@ -242,23 +242,23 @@ void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) co
     cdbl A0 = this->getDeltaCoeffA0();\
     cdbl A1 = this->getDeltaCoeffA1();\
     cdbl A2 = this->getDeltaCoeffA2();\
-    cdbl SoftDelta2 = 4.*(cdbl)Color::CA;\
+    cdbl SoftDelta2 = 4.*cdbl(Color::CA);\
     cdbl beta = this->beta();\
     cdbl chi = (1. - beta)/(1. + beta);\
     cdbl u1S = -sp - t1;\
-    cdbl SoftDelta1 = 4.*((cdbl)Color::CA*(log(-t1/m2)-log(-u1S/m2))-((cdbl)Color::CA - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
+    cdbl SoftDelta1 = 4.*(cdbl(Color::CA)*(log(-t1/m2)-log(-u1S/m2))-(cdbl(Color::CA) - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
     
-#define cg1_VV n * ((cdbl)Color::CA*IntROK_VV(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VV(m2,-Q2,sp,t1,s4)\
+#define cg1_VV n * (cdbl(Color::CA)*IntROK_VV(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VV(m2,-Q2,sp,t1,s4)\
                     + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_VV(m2,-Q2,sp,t1)\
-                    + A0*((cdbl)Color::CA*SVOK_VV(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VV(m2,-Q2,sp,t1))\
+                    + A0*(cdbl(Color::CA)*SVOK_VV(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VV(m2,-Q2,sp,t1))\
                    )
-#define cg1_VA n * ((cdbl)Color::CA*IntROK_VA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VA(m2,-Q2,sp,t1,s4)\
+#define cg1_VA n * (cdbl(Color::CA)*IntROK_VA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VA(m2,-Q2,sp,t1,s4)\
                     + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_VA(m2,-Q2,sp,t1)\
-                    + A0*((cdbl)Color::CA*SVOK_VA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VA(m2,-Q2,sp,t1))\
+                    + A0*(cdbl(Color::CA)*SVOK_VA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VA(m2,-Q2,sp,t1))\
                    )
-#define cg1_AA n * ((cdbl)Color::CA*IntROK_AA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_AA(m2,-Q2,sp,t1,s4)\
+#define cg1_AA n * (cdbl(Color::CA)*IntROK_AA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_AA(m2,-Q2,sp,t1,s4)\
                     + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_AA(m2,-Q2,sp,t1)\
-                    + A0*((cdbl)Color::CA*SVOK_AA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_AA(m2,-Q2,sp,t1))\
+                    + A0*(cdbl(Color::CA)*SVOK_AA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_AA(m2,-Q2,sp,t1))\
                    )
 implementPartonicCoeff(cg1)
 
@@ -313,15 +313,14 @@ cdbl Inclusive::IntKer::Fq1() const {
 }
 
 cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
+    // 1D integrations
     this->setT1(a1);
     // cg0
-    if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode) {
+    if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode)
         return this->jac_t1*this->cg0_cur();
-    }
     // cgBarR1
-    if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode) {
+    if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode)
         return this->jac_t1*this->cgBarR1_cur();
-    }
     // setS4 in NLOq
     _sp
     cdbl beta = this->beta();
