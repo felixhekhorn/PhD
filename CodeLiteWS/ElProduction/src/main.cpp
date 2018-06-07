@@ -15,7 +15,7 @@
 
 int runInclusive();
 int runInclusive2();
-#include "./Inclusive/ME/IntA.h"
+#include "./Inclusive/ME/IntRFinite.h"
 int test() {
     /*PdfWrapper a("MorfinTungB",0);
     PdfWrapper b("MorfinTungB_old",0);
@@ -29,12 +29,12 @@ int test() {
         }
         cout << endl;
     }*/
-    /*cdbl m2 = 1.;
-    cdbl q2 = -1.;
-    cdbl sp = 7.;
+    cdbl m2 = 1.;
+    cdbl q2 = -10.;
+    cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << (Inclusive::IntAL1(m2,q2,sp,s4,t1)) << endl;*/
+    cout << (Inclusive::IntRQEDfiniteL(m2,q2,sp,s4,t1)) << endl;
     
     return EXIT_SUCCESS;
 }
@@ -63,6 +63,7 @@ int test2() {
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
     InclusiveElProduction iG(m2,q2,Delta,G,nlf);
     InclusiveElProduction iL(m2,q2,Delta,L,nlf);
+    InclusiveElProduction iP(m2,q2,Delta,P,nlf);
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction eL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
@@ -80,7 +81,7 @@ int test2() {
     eO.MCparams.verbosity = 3;
     
     {
-        uint N = 11;
+        uint N = 3;
         for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-3.+6./(N-1)*j);
             /*eO.setEta(a);iO.setEta(a);
@@ -88,10 +89,14 @@ int test2() {
             cdbl i = iO.cq1();
             printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);*/
             
-            eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            iG.setEta(a);iL.setEta(a);iP.setEta(a);
+            cdbl g = iG.cg1();
+            cdbl l = iL.cg1();
+            cdbl p = iP.cg1();
+            /*eG.setEta(a);eL.setEta(a);eP.setEta(a);
             cdbl g = eG.cg1();
             cdbl l = eL.cg1();
-            cdbl p = eP.cg1();
+            cdbl p = eP.cg1();*/
             printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
         }
     }
@@ -105,7 +110,7 @@ int test2() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test2();
+    return test();
 	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;

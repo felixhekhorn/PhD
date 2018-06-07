@@ -29,15 +29,15 @@ cdbl CF = (cdbl(NC*NC) - 1.)/(2.*cdbl(NC));
 /**
  * @brief Casimir constant of adjoint representation \f$C_A=N_C \f$
  */
-cdbl CA = 0.*cdbl(NC);
+cdbl CA = cdbl(NC);
 
 /**
- * @brief Color avarage of \f$\Pg\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pg\Pgg} = \frac 1 {N_C^2 -1}\f$
+ * @brief Color avarage of \f$\Pg\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pg\Pgg} = \frac 1 {N_C^2 -1} \f$
  */
 cdbl Kgph = 1./(cdbl(NC*NC) - 1.);
 
 /**
- * @brief Color avarage of \f$\Pq\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pq\Pgg} = \frac 1 {N_C}\f$
+ * @brief Color avarage of \f$\Pq\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pq\Pgg} = \frac 1 {N_C} \f$
  */
 cdbl Kqph = 1./(cdbl(NC));
 

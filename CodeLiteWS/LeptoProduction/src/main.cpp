@@ -4,7 +4,6 @@
 #include <boost/format.hpp>
 
 #include "InclusiveLeptoProduction.h"
-
 int testHadronic();
 int testLeptonic();
 int test();
@@ -42,14 +41,14 @@ int main(int argc, char **argv) {
     return EXIT_SUCCESS;
 }
 
-#include "Inclusive/ME/IntA2.h"
+#include "Inclusive/ME/IntR.h"
 int test() {
     cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << Inclusive::ME::IntA2_F2_VV(m2,q2,sp,t1,s4) << endl;
+    cout << Inclusive::ME::IntRQED_FL_VV(m2,q2,sp,t1,s4) << endl;
     return EXIT_SUCCESS;
 }
 

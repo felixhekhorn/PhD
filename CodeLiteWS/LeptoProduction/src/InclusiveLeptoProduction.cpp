@@ -31,7 +31,7 @@ cdbl InclusiveLeptoProduction::int2D() const {
 cdbl InclusiveLeptoProduction::int3D() const {
     gsl_monte_function f;
     f.params = this->ker;
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
+    f.f = gslpp::callFunctor3D<Inclusive::IntKer>;
     return Common::int3D(&f);
 }
 
