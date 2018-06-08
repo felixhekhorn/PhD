@@ -142,7 +142,7 @@ public:
         cdbl r = jac*(meH + fakeMESV);
         // Protect from ps corner cases
         if (!isfinite(r)) return 0.;
-        printf(">%e\t%e\t%e\t%e\t%e\t%e\n",t1,s4,hg1SV(m2,q2,sp,t1),hg1SVDelta1(m2,q2,sp,t1),hg1SVDelta2(m2,q2,sp,t1),hg1H(m2,q2,sp,s4,t1));
+//        printf(">%e\t%e\t%e\t%e\t%e\t%e\n",t1,s4,hg1SV(m2,q2,sp,t1),hg1SVDelta1(m2,q2,sp,t1),hg1SVDelta2(m2,q2,sp,t1),hg1H(m2,q2,sp,s4,t1));
         return r;
     }
 };

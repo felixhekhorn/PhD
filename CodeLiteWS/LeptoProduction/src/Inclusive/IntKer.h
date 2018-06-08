@@ -232,6 +232,17 @@ class IntKer : public Common::AbstractIntKer {
  * @return a single hadronic function
  */
     cdbl runHadronic(cdbl a1, cdbl a2, cdbl a3);
+    
+/**
+ * @brief computes a hadronic function
+ * @param a1 integration variable
+ * @param a2 integration variable
+ * @param a3 integration variable
+ * @param a4 integration variable
+ * @param a5 integration variable
+ * @return a single leptonic function (currently only leptonic xs)
+ */
+    cdbl runLeptonic(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5);
 
 /** @name hadronic structure functions */
 ///@{
@@ -241,6 +252,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return Fg0
  */
     cdbl Fg0() const;
+    
+/** 
+ * @brief computes Fg1
+ * @return Fg1
+ */
+    cdbl Fg1() const;
     
 /** 
  * @brief computes Fq1

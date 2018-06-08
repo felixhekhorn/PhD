@@ -12,7 +12,7 @@ cdbl Common::int1D(gsl_function* F) {
     gsl_integration_qag(F, 0., 1., 5e-6, 1e-4, calls, GSL_INTEG_GAUSS41, w, &res,&err);
     gsl_integration_workspace_free(w);
     //reNevals = w->size;
-//    printf("[INFO] int1D(gsl):    [-] % e ± %e (%.3f%%)\n",res,err,abs(err/res*1e2));
+//    printf("[INFO] int1D(gsl):    [-] % e ± %e (%.3f%%)\n",res,err,fabs(err/res*1e2));
     return res;
 }
 
@@ -38,7 +38,7 @@ cdbl Common::int2D(gsl_monte_function* F) {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
     } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
-    printf("[INFO] int2D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),gsl_monte_vegas_chisq(s));
+    printf("[INFO] int2D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));
     gsl_monte_vegas_free (s);
     gsl_rng_free (r);
     return res;
@@ -67,7 +67,7 @@ cdbl Common::int3D(gsl_monte_function* F) {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate (F, xl, xu, dim, calls, r, s, &res, &err);
     } while (fabs(gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);
-//    printf("[INFO] int3D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),gsl_monte_vegas_chisq(s));
+//    printf("[INFO] int3D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));
     gsl_monte_vegas_free (s);
     gsl_rng_free (r);
     return res;
@@ -96,7 +96,7 @@ cdbl Common::int4D(gsl_monte_function* F) {
         if (!isfinite(res)) return res;
         gsl_monte_vegas_integrate(F, xl, xu, dim, calls, r, s, &res, &err);
     } while (fabs(gsl_monte_vegas_chisq(s) - 1.0) > 0.5 && ++guard < 15);
-//    printf("[INFO] int4D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),gsl_monte_vegas_chisq(s));
+//    printf("[INFO] int4D(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));
     gsl_monte_vegas_free(s);
     gsl_rng_free (r);
     return res;

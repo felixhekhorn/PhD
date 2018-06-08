@@ -110,7 +110,7 @@ int test2() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    return test2();
 	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;

@@ -191,10 +191,10 @@ public:
 /** @brief electro-magnetic coupling constant - defaults to PDG value */
     dbl alphaEM = 1./137.0359991;
     
-/** @brief incoming lepton has negative charge?  - i.e. e- or e+ */
+/** @brief incoming lepton has negative charge?  - i.e. e- (default) or e+ */
     bool incomingLeptonHasNegativeCharge = true;
     
-/** @brief incoming lepton has positive helicity? */
+/** @brief incoming lepton has positive helicity? - defaults to true */
     bool incomingLeptonHasPositiveHelicity = true;
     
 /** @brief used pdfs */
