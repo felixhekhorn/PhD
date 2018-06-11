@@ -1,0 +1,49 @@
+All collinear poles in the gluonic subprocess can be removed by mass factorization in the following way:
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1),fin}(s',t_1,u_1,q^2,\mu_F)}{dt_1du_1} &= \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1)}(s',t_1,u_1,q^2,\epsilon)}{dt_1du_1} \right.\nonumber\\
+ &\hspace{40pt} -\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{k,\Pg\Pg}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)\\
+ &\hspace{60pt}\left.(x_1s')^2\frac{d^2\sigma_{k,\Pg}^{(0)}(x_1s',x_1t_1,u_1,q^2,\epsilon)}{d(x_1t_1)du_1} \right]\\
+\Gamma_{k,ij}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}\left(P_{k,ij}(x)\frac{2}{\epsilon} + f_{k,ij}(x,\mu_F^2,\mu_D^2)\right)
+\end{align}
+where $\Gamma_{k,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{k,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $k$. In the $\MSbar$-scheme the $f_{k,ij}$ take their usual form and we find
+\begin{align}
+\Gamma_{k,ij}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{k,ij}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
+ &= 8\pi\alpha_s P_{k,ij}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right)
+\end{align}
+The $P_{k,ij}(x)$ are the Altarelli-Parisi splitting functions for which we find\cite{Altarelli:1977zs,Vogelsang:1995vh}
+\begin{align}
+P_{k,\Pg\Pg}(x) &= \Theta(1-\delta-x)P_{k,\Pg\Pg}^H(x)+\delta(1-x)\left(2C_A\ln(\delta)+\frac{\beta_0}{2}\right)
+\end{align}
+where we introduced another infrared cut-off $\delta$ to seperate soft ($x\geq 1-\delta$) and hard ($x<1-\delta$) gluons that is connected to $\Delta$ via $\delta=\Delta/(s'+t_1)$. The structure here explains why we were able to write the equation (\ref{eq:ROKPoles}).
+
+The light quark process can be regularized in a complete analogous way:
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pq}^{(1),fin}(s',t_1,u_1,q^2,\mu_F)}{dt_1du_1} &= \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{k,\Pq}^{(1)}(s',t_1,u_1,q^2,\epsilon)}{dt_1du_1} \right.\nonumber\\
+ &\hspace{40pt}-\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{k,\Pg\Pq}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)\nonumber\\
+ &\hspace{60pt}\left.(x_1s')^2\frac{d^2\sigma_{k,\Pg}^{(0)}(x_1s',x_1t_1,u_1,q^2,\epsilon)}{d(x_1t_1)du_1} \right] \label{eq:qMassFact}
+\end{align}
+The needed splitting functions $P_{k,\Pg\Pq}$ have been already quoted in equations (\ref{eq:PGLgq}) and (\ref{eq:PPgq}). Note that $K_{\Pq\Pgg} = 1/(N_C) = 2C_FK_{\Pg\Pgg}$.
+
+The final finite cross sections are then
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1),H,fin}}{dt_1du_1} &=\frac{1}{2\pi}K_{\Pg\Pgg}\alpha\alpha_Se_H^2N_CC_Fb_k(0)\left[-\frac 1 {u_1}P^H_{k,\Pg\Pg}(x_1)\right. \nonumber\\
+ &\hspace{40pt}\left\{4\pi B^{(0)}_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)\right)\right. \nonumber\\
+ &\hspace{40pt}\left.-8\pi B^{(1)}_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
+ &\hspace{20pt}+C_A\frac{s_4}{s_4+m^2}\left(\int\!d\Omega_nd\hat{\mathcal I}\,R_{k,OK}\right)^{finite} \nonumber\\
+ &\hspace{20pt}\left.+2C_F\frac{s_4}{s_4+m^2}\int\!d\Omega_4d\hat{\mathcal I}\,R_{k,QED}\right]
+\end{align}
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pg}^{(1),S+V,fin}}{dt_1du_1} &=4K_{\Pg\Pgg}\alpha\alpha_Se_H^2N_CC_Fb_k(0)B^{(0)}_{k,QED}\delta(s'+t_1+u_1)\left[C_A\ln^2(\Delta/m^2) \right.\nonumber\\
+ &\hspace{20pt} + \ln(\Delta/m^2)\left(\left(\ln(-t_1/m^2)-\ln(-u_1/m^2)-\ln(\mu_F^2/m^2)\right)C_A \right. \nonumber\\
+ &\hspace{80pt} \left. - \frac{2m^2-s}{s\beta}\ln(\chi)(C_A-2C_F) - 2C_F\right) \nonumber\\
+ &\hspace{20pt}\left. + \frac {\beta_0^{lf}}{4}\left(\ln(\mu_R^2/m^2)- \ln(\mu_F^2/m^2)\right) +  f_k(s',u_1,t_1,q^2)\right]
+\end{align}
+where $f_k$ contains lots of logarithms and dilogarithms, but does not depend on $\Delta,\mu_F^2,\mu_R^2$ nor $n_f$ and $\beta_0^{lf} = (11C_A - 2n_{lf})/3$.
+\begin{align}
+{s'}^2\frac{d^2\sigma_{k,\Pq}^{(1),fin}}{dt_1du_1} &=\frac{1}{2\pi}K_{\Pq\Pgg}\alpha\alpha_SN_Cb_k(0)\left[-\frac 1 {u_1}e_H^2P_{k,\Pg\Pq}(x_1)\right. \nonumber\\
+ &\hspace{40pt}\left\{2\pi B^{(0)}_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)+1-\delta_{k,P}\right)\right. \nonumber\\
+ &\hspace{40pt}\left.-4\pi B^{(1)}_{k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
+ &\hspace{20pt}+C_F\frac{s_4}{s_4+m^2}\left(\int\!d\Omega_nd\hat{\mathcal I}\,e_H^2A_{k,1}\right)^{finite} \nonumber\\
+ &\hspace{20pt}\left.+C_F\frac{s_4}{s_4+m^2}\int\!d\Omega_4d\hat{\mathcal I}\,e_L^2A_{k,2} +C_F\frac{s_4}{s_4+m^2}\int\!d\Omega_4d\hat{\mathcal I}\,e_H e_L A_{k,3} \right]
+\end{align}
+where $1-\delta_{k,P}$ may also be written as $-2\partial_\epsilon E_{k}(\epsilon=0)$ as it originates from the additional factor of $E_k(\epsilon)$ in the subtraction part of equation (\ref{eq:qMassFact}).
