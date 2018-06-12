@@ -29,6 +29,7 @@ int main(int argc, char **argv) {
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-4.+2./(N-1)*j);
         o.setPartonicEta(eta);
+        //o.setDelta(eta/1000.);
         o.setProjection(F2);
         cdbl cF2 = o.cg1_VV();
         o.setProjection(FL);

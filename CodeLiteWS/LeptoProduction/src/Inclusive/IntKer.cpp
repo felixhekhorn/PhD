@@ -246,8 +246,8 @@ void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) co
     cdbl beta = this->beta();\
     cdbl chi = (1. - beta)/(1. + beta);\
     cdbl u1S = -sp - t1;\
-    if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4)))   printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);\
     if(!isfinite(IntRQED_VV(m2,-Q2,sp,t1,s4)))  printf(">%.10e\t%.10e IntRQED_VV\n",t1,s4);\
+    if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4))) printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);\
     cdbl SoftDelta1 = 4.*(Color::CA*(log(-t1/m2)-log(-u1S/m2))-(Color::CA - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
     
 #define cg1_VV n * ((Color::CA*IntROK_VV(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VV(m2,-Q2,sp,t1,s4))\
@@ -263,6 +263,7 @@ void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) co
                     + A0*(Color::CA*SVOK_AA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_AA(m2,-Q2,sp,t1))\
                    )
 implementPartonicCoeff(cg1)
+
 
 cdbl Inclusive::IntKer::Fg0() const {
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
