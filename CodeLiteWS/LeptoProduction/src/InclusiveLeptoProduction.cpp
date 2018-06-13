@@ -9,6 +9,34 @@
 InclusiveLeptoProduction::InclusiveLeptoProduction(cuint nlf, cdbl m2, cdbl Delta) :
     AbstractLeptoProduction(new Inclusive::IntKer(), nlf, m2) {
     this->setDelta(Delta);
+    // setup default values for IntegrationConfig
+    this->intConfigs.resize(5);
+    Common::IntegrationConfig i1;
+    i1.method = "gsl_integration_qag";
+    i1.GslQag_epsabs = 5e-6;
+    i1.GslQag_epsrel = 1e-4;
+    i1.GslQag_key = GSL_INTEG_GAUSS41;
+    this->intConfigs[0] = i1;
+    Common::IntegrationConfig i2;
+    i2.method = "gsl_monte_vegas_integrate";
+    i2.warmupCalls = 3000;
+    i2.calls = 30000;
+    this->intConfigs[1] = i2;
+    Common::IntegrationConfig i3;
+    i2.method = "gsl_monte_vegas_integrate";
+    i2.warmupCalls = 5000;
+    i2.calls = 50000;
+    this->intConfigs[2] = i3;
+    Common::IntegrationConfig i4;
+    i2.method = "gsl_monte_vegas_integrate";
+    i2.warmupCalls = 7000;
+    i2.calls = 70000;
+    this->intConfigs[3] = i4;
+    Common::IntegrationConfig i5;
+    i2.method = "gsl_monte_vegas_integrate";
+    i2.warmupCalls = 10000;
+    i2.calls = 100000;
+    this->intConfigs[4] = i4;
 }
 
 InclusiveLeptoProduction::~InclusiveLeptoProduction() {
@@ -18,37 +46,32 @@ cdbl InclusiveLeptoProduction::int1D() const {
     gsl_function f;
     f.params = this->ker;
     f.function = gslpp::callFunctor<Inclusive::IntKer>;
-    return Common::int1D(&f);
+    return Common::integrate1D(&f,this->intConfigs[0],this->intOut);
 }
 
-cdbl InclusiveLeptoProduction::int2D() const {
-    gsl_monte_function f;
-    f.params = this->ker;
-    f.f = gslpp::callFunctor2D<Inclusive::IntKer>;
-    return Common::int2D(&f);
+#define intND(N) cdbl InclusiveLeptoProduction::int##N##D() const {\
+    gsl_monte_function f;\
+    f.params = this->ker;\
+    f.f = gslpp::callFunctor##N##D<Inclusive::IntKer>;\
+    return Common::integrate##N##D(&f,this->intConfigs[N-1],this->intOut);\
 }
-
-cdbl InclusiveLeptoProduction::int3D() const {
-    gsl_monte_function f;
-    f.params = this->ker;
-    f.f = gslpp::callFunctor3D<Inclusive::IntKer>;
-    return Common::int3D(&f);
-}
+intND(2)
+intND(3)
+intND(4)
+intND(5)
 
 #define initPartonicVV checkQ2(this->ker->Q2)\
     checkPartonicS(this->ker->s)\
     if (!isParityConservingProj(this->ker->proj))\
         throw domain_error("current projection does NOT have a vector-vector part!");
-
-#define initPartonicAA checkQ2(this->ker->Q2)\
-    checkPartonicS(this->ker->s)\
-    if (!isParityConservingProj(this->ker->proj))\
-        throw domain_error("current projection does NOT have a axial-axial part!");
-        
 #define initPartonicVA checkQ2(this->ker->Q2)\
     checkPartonicS(this->ker->s)\
     if (isParityConservingProj(this->ker->proj))\
         throw domain_error("current projection does NOT have a vector-axial part!");
+#define initPartonicAA checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (!isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a axial-axial part!");
         
 // implement partonic coefficient functions with 1D integration
 #define implement1DCoeffs(n) \
@@ -169,15 +192,11 @@ cdbl InclusiveLeptoProduction::sigma() const {
             return 0.;
     }
     this->ker->mode = Common::AbstractIntKer::Mode_sigma;
-    gsl_monte_function f;
-    f.params = this->ker;
     dbl r = dblNaN;
     if (this->flags().useNextToLeadingOrder) {
-        f.f = gslpp::callFunctor5D<Inclusive::IntKer>;
-        r = Common::int5D(&f);
+        r = this->int5D();
     } else {
-        f.f = gslpp::callFunctor4D<Inclusive::IntKer>;
-        r = Common::int4D(&f);
+        r = this->int4D();
     }
     // unset integration variables
     this->ker->xBj = dblNaN;

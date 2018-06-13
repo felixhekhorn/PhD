@@ -3,6 +3,9 @@
 
 #include "../config.h"
 #include "AbstractIntKer.h"
+#include "IntegrationMeta.hpp"
+
+#include <vector>
 
 /**
  * @brief namespace for common functions, such as Altarelli-Parisi
@@ -32,6 +35,11 @@ protected:
 /** @brief check leptonic Sl */
     #define checkLeptonicS(Sl) if (!isfinite(Sl) || Sl <= 4.*this->ker->m2) throw domain_error("leptonic s has to be set, finite and strict larger than the threshold 4m^2!");
     
+/** @brief holds all necessary IntegrationConfig */
+    std::vector<Common::IntegrationConfig> intConfigs;
+    
+/** @brief current (last) IntegrationOutput */
+    Common::IntegrationOutput* intOut;
 public:
 
 /**

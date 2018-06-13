@@ -81,22 +81,22 @@ int test2() {
     eO.MCparams.verbosity = 3;
     
     {
-        uint N = 3;
-        for (uint j = 0; j < N; ++j) {
+        uint N = 101;
+        for (uint j = 85; j < N; ++j) {
             cdbl a = pow(10,-3.+6./(N-1)*j);
             /*eO.setEta(a);iO.setEta(a);
             cdbl e = eO.cq1();
             cdbl i = iO.cq1();
             printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);*/
             
-            iG.setEta(a);iL.setEta(a);iP.setEta(a);
+            /*iG.setEta(a);iL.setEta(a);iP.setEta(a);
             cdbl g = iG.cg1();
             cdbl l = iL.cg1();
-            cdbl p = iP.cg1();
-            /*eG.setEta(a);eL.setEta(a);eP.setEta(a);
-            cdbl g = eG.cg1();
-            cdbl l = eL.cg1();
-            cdbl p = eP.cg1();*/
+            cdbl p = iP.cg1();*/
+            eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            cdbl g = 0/*eG.cg1()*/;
+            cdbl l = 0/*eL.cg1()*/;
+            cdbl p = eP.cg1();
             printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
         }
     }

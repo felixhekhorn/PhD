@@ -246,8 +246,8 @@ void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) co
     cdbl beta = this->beta();\
     cdbl chi = (1. - beta)/(1. + beta);\
     cdbl u1S = -sp - t1;\
-    if(!isfinite(IntRQED_VV(m2,-Q2,sp,t1,s4)))  printf(">%.10e\t%.10e IntRQED_VV\n",t1,s4);\
-    if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4))) printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);\
+    /*if(!isfinite(IntRQED_VV(m2,-Q2,sp,t1,s4)))  printf(">%.10e\t%.10e IntRQED_VV\n",t1,s4);\
+    if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4))) printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);*/\
     cdbl SoftDelta1 = 4.*(Color::CA*(log(-t1/m2)-log(-u1S/m2))-(Color::CA - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
     
 #define cg1_VV n * ((Color::CA*IntROK_VV(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VV(m2,-Q2,sp,t1,s4))\
@@ -399,11 +399,13 @@ cdbl Inclusive::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3) {
     cdbl T1 = this->getHadronicT1();
     jac *= Shp/(Shp + T1);
     dbl r = 0.;
+    // LO
     if (this->flags.useLeadingOrder && this->flags.useGluonicChannel) {
         this->s4 = 0;
         this->setPartonicVars();
         r += jac*this->xi * this->Fg0();
     }
+    // NLO
     if (this->flags.useNextToLeadingOrder) {
         // setS4
         cdbl U1 = this->getHadronicU1();

@@ -4,11 +4,14 @@ Common::AbstractLeptoProduction::AbstractLeptoProduction(AbstractIntKer* ker, cu
     this->ker = ker;
     this->setNumberOfLightFlavours(nlf);
     this->setM2(m2);
+    this->intOut = new IntegrationOutput();
 }
 
 Common::AbstractLeptoProduction::~AbstractLeptoProduction() {
     if (0 != this->ker)
-        delete ker;
+        delete this->ker;
+    if (0 != this->intOut)
+        delete this->intOut;
 }
 
 void Common::AbstractLeptoProduction::setNumberOfLightFlavours(cuint nlf) {

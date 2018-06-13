@@ -7,6 +7,7 @@
 #define Integration_H_
 
 #include "../config.h"
+#include "IntegrationMeta.hpp"
 
 #include <gsl/gsl_monte.h>
 #include <gsl/gsl_integration.h>
@@ -14,39 +15,39 @@
 namespace Common {
 
 /**
- * @brief integrates 1 dimension
+ * @brief integrates the kernel in 1 dimension
  * @param F kernel
  * @return \f$\int\limits_0^1 f(a)\,da\f$
  */
-cdbl int1D(gsl_function* F);
-    
+cdbl integrate1D(gsl_function* F, const IntegrationConfig& cfg, IntegrationOutput* out);
+
 /**
- * @brief integrates 2 dimension with gsl_monte_vegas
+ * @brief integrates the kernel in 2 dimension
  * @param F kernel
  * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
-cdbl int2D(gsl_monte_function* F);
-    
+cdbl integrate2D(gsl_monte_function* F, const IntegrationConfig& cfg, IntegrationOutput* out);
+
 /**
- * @brief integrates 3 dimension
+ * @brief integrates the kernel in 2 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(a_1,a_2,a_3)\,da_1da_2da_3\f$
+ * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
-cdbl int3D(gsl_monte_function* F);
-    
+cdbl integrate3D(gsl_monte_function* F, const IntegrationConfig& cfg, IntegrationOutput* out);
+
 /**
- * @brief integrates 4 dimension
+ * @brief integrates the kernel in 2 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4)\,da_1da_2da_3da_4\f$
+ * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
-cdbl int4D(gsl_monte_function* F);
-    
+cdbl integrate4D(gsl_monte_function* F, const IntegrationConfig& cfg, IntegrationOutput* out);
+
 /**
- * @brief integrates 5 dimension with gsl_monte_vegas
+ * @brief integrates the kernel in 2 dimension
  * @param F kernel
- * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
+ * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
-cdbl int5D(gsl_monte_function* F);
+cdbl integrate5D(gsl_monte_function* F, const IntegrationConfig& cfg, IntegrationOutput* out);
 
 } // namespace Common
 

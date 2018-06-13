@@ -25,17 +25,17 @@ int main(int argc, char **argv) {
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
     o.setQ2(Q2);
-    cuint N = 21;
-    for (uint j = 0; j < N; ++j) {
-        cdbl eta = pow(10.,-4.+2./(N-1)*j);
+    cuint N = 101;
+    for (uint j = 85; j < N; ++j) {
+        cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         //o.setDelta(eta/1000.);
         o.setProjection(F2);
-        cdbl cF2 = o.cg1_VV();
+        cdbl cF2 = 0/*o.cg1_VV()*/;
         o.setProjection(FL);
         cdbl cFL = 0/*o.cg1_VV()*/;
         o.setProjection(x2g1);
-        cdbl cx2g1 = 0/*o.cg1_VV()*/;
+        cdbl cx2g1 = o.cg1_VV();
         cout << boost::format("%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     }
     

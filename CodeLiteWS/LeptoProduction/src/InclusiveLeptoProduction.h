@@ -38,6 +38,18 @@ class InclusiveLeptoProduction : public Common::AbstractLeptoProduction {
  */
     cdbl int3D() const;
     
+/**
+ * @brief wrapper to 4D integration
+ * @return integral
+ */
+    cdbl int4D() const;
+    
+/**
+ * @brief wrapper to 5D integration
+ * @return integral
+ */
+    cdbl int5D() const;
+    
 public:
 
 /**
