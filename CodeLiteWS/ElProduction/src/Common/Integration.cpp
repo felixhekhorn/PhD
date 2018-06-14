@@ -1,4 +1,4 @@
-#include "Integration.h"
+#include "Integration.hpp"
 
 #include <gsl/gsl_integration.h>
 #include <gsl/gsl_monte_plain.h>

@@ -3,6 +3,7 @@
 
 #include <limits.h>
 #include <boost/format.hpp>
+#include <dvegas/dvegas.h>
 
 #include "../config.h"
 #include "../Flags.hpp"
@@ -17,7 +18,7 @@ namespace Common {
  * @class AbstractIntKer
  * @brief abstract base class for integration kernels
  */
-class AbstractIntKer {
+class AbstractIntKer : public HepSource::Integrand {
 protected:
 
 /** @brief define s' = s - q2 */
@@ -156,6 +157,9 @@ public:
     
 /** @brief current kernel mode */
     uint mode = 0;
+    
+/** @brief integration dimension */
+    uint dim = 0;
 
 ///@}
     
@@ -263,7 +267,7 @@ public:
 /**
  * @brief destructor
  */
-    ~AbstractIntKer();
+    virtual ~AbstractIntKer();
 
 /**
  * @brief returns maximum z

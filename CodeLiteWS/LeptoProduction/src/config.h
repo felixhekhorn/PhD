@@ -30,7 +30,7 @@ typedef double dbl;
 /** @brief defines floating point precision */
 typedef const dbl cdbl;
 
-/** @brief NaN (often (mis-)used as synonym to null-pointer/void) */
+/** @brief NaN (often (mis-)used by me as synonym to null-pointer/void) */
 cdbl dblNaN = nan("");
 ///@}
 

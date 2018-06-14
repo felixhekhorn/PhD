@@ -36,10 +36,11 @@ protected:
     #define checkLeptonicS(Sl) if (!isfinite(Sl) || Sl <= 4.*this->ker->m2) throw domain_error("leptonic s has to be set, finite and strict larger than the threshold 4m^2!");
     
 /** @brief holds all necessary IntegrationConfig */
-    std::vector<Common::IntegrationConfig> intConfigs;
+    std::vector<Common::IntegrationConfig*> intConfigs;
     
 /** @brief current (last) IntegrationOutput */
     Common::IntegrationOutput* intOut;
+    
 public:
 
 /**
@@ -53,7 +54,7 @@ public:
 /** @brief destructor */
     ~AbstractLeptoProduction();
     
-/** @name global setter */
+/** @name global getter and setter */
 ///@{
     
 /**
@@ -84,9 +85,20 @@ public:
  * @brief manipulate controlling flags
  * @return controlling flags
  */
-    inline Flags& flags() const {
-        return this->ker->flags;
-    }
+    inline Flags& flags() const { return this->ker->flags; }
+    
+/**
+ * @brief get matching IntegrationConfig
+ * @param method calling method, such as cg1_VV or F
+ * @return corresponding IntegrationConfig
+ */
+    virtual Common::IntegrationConfig* getIntegrationConfig(str method) const = 0;
+    
+/**
+ * @brief get current/latest IntegrationOutput
+ * @return current/latest IntegrationOutput
+ */
+    Common::IntegrationOutput* getIntegrationOutput() const;
     
 ///@}
 

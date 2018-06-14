@@ -288,7 +288,7 @@ public:
     ~IntKer();
     
 /**
- * @brief called function in kernel
+ * @brief called function in gsl kernel
  * @param a1 integration variable
  * @param a2 integration variable
  * @param a3 integration variable
@@ -297,6 +297,16 @@ public:
  * @return kernel
  */
     cdbl operator()(cdbl a1, cdbl a2 = 0., cdbl a3 = 0., cdbl a4 = 0., cdbl a5 = 0.);
+    
+/**
+ * @brief called function in Dvegas kernel
+ * @param x adapted continuous integration variables
+ * @param k discrete integration variables
+ * @param weight integration weight
+ * @param aux unadapted continuous integration variables
+ * @param f output
+ */
+    void operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]);
     
 /** @name additional kernel modes */
 ///@{

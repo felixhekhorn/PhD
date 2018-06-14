@@ -10,8 +10,14 @@ Common::AbstractLeptoProduction::AbstractLeptoProduction(AbstractIntKer* ker, cu
 Common::AbstractLeptoProduction::~AbstractLeptoProduction() {
     if (0 != this->ker)
         delete this->ker;
+    for (uint j = 0; j < this->intConfigs.size(); ++j)
+        delete this->intConfigs[j];
     if (0 != this->intOut)
         delete this->intOut;
+}
+
+Common::IntegrationOutput* Common::AbstractLeptoProduction::getIntegrationOutput() const {
+    return this->intOut;
 }
 
 void Common::AbstractLeptoProduction::setNumberOfLightFlavours(cuint nlf) {

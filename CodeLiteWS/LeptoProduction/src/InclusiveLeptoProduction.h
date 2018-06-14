@@ -63,7 +63,7 @@ public:
 /** @brief destructor */
     ~InclusiveLeptoProduction();
     
-/** @name global setter */
+/** @name global getter and setter */
 ///@{
 
 /**
@@ -75,6 +75,9 @@ public:
             throw domain_error("Delta has to be positive!");
         kker->Delta = Delta;
     };
+    
+/** @see AbstractLeptoProduction::getIntegrationConfig */
+    Common::IntegrationConfig* getIntegrationConfig(str method) const;
         
 ///@}
 

@@ -498,3 +498,7 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) 
     cdbl r = this->runLeptonic(a1, a2, a3, a4, a5);
     return isfinite(r) ? r : 0.;
 }
+
+void Inclusive::IntKer::operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
+    f[0] = this->operator()(x[0],x[1]);
+}
