@@ -500,5 +500,11 @@ cdbl Inclusive::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) 
 }
 
 void Inclusive::IntKer::operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
-    f[0] = this->operator()(x[0],x[1]);
+    // proide simple redirect as weight isn't needed
+    cdbl a0 = this->dim >= 1 ? x[0] : 0.;
+    cdbl a1 = this->dim >= 2 ? x[1] : 0.;
+    cdbl a2 = this->dim >= 3 ? x[2] : 0.;
+    cdbl a3 = this->dim >= 4 ? x[3] : 0.;
+    cdbl a4 = this->dim >= 5 ? x[4] : 0.;
+    f[0] = this->operator()(a0,a1,a2,a3,a4);
 }

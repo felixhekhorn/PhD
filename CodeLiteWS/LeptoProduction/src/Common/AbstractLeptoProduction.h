@@ -98,7 +98,7 @@ public:
  * @brief get current/latest IntegrationOutput
  * @return current/latest IntegrationOutput
  */
-    Common::IntegrationOutput* getIntegrationOutput() const;
+    Common::IntegrationOutput getIntegrationOutput() const;
     
 ///@}
 

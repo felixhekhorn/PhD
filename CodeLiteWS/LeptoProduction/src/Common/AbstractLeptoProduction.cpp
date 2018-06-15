@@ -16,8 +16,8 @@ Common::AbstractLeptoProduction::~AbstractLeptoProduction() {
         delete this->intOut;
 }
 
-Common::IntegrationOutput* Common::AbstractLeptoProduction::getIntegrationOutput() const {
-    return this->intOut;
+Common::IntegrationOutput Common::AbstractLeptoProduction::getIntegrationOutput() const {
+    return Common::IntegrationOutput(*this->intOut);
 }
 
 void Common::AbstractLeptoProduction::setNumberOfLightFlavours(cuint nlf) {

@@ -35,7 +35,7 @@ inline std::string strProj(Projection proj) {
     if (F2 == proj) return "F2";
     if (FL == proj) return "FL";
     if (xF3 == proj) return "xF3";
-    if (x2g1 == proj) return "2xg1";
+    if (x2g1 == proj) return "x2g1";
     if (g4 == proj) return "g4";
     if (gL == proj) return "gL";
     return "unknown projection!";

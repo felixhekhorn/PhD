@@ -37,10 +37,10 @@ int main(int argc, char **argv) {
         o.setProjection(x2g1);
         //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
         cdbl cx2g1 = o.cg0_VV();
-        cdbl ex2g1 = o.getIntegrationOutput()->error;
+        cdbl ex2g1 = o.getIntegrationOutput().error;
         //o.getIntegrationConfig("cg1_VV")->method = "Dvegas";
         cdbl cx2g1_ = o.cg0_VV();
-        cdbl ex2g1_ = o.getIntegrationOutput()->error;
+        cdbl ex2g1_ = o.getIntegrationOutput().error;
         cout << boost::format("%e\t%e\t%e\t%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1%ex2g1%cx2g1_%ex2g1_ << endl;
     }
     

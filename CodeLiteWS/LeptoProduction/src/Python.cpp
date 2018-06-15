@@ -17,9 +17,10 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .value("gL", gL)
     ;
     def("isParityConservingProj", &isParityConservingProj, "does projection conserve parity?");
+    def("strProj", &strProj, "cast projection to string");
     
     class_<InclusiveLeptoProduction>("InclusiveLeptoProduction", "application class for full inclusive lepto production", init<uint,double,double>())
-        // global setter
+        // global getter and setter
         .def("setProjection", &InclusiveLeptoProduction::setProjection, "sets projection")
         .def("setNumberOfLightFlavours", &InclusiveLeptoProduction::setNumberOfLightFlavours, "sets number of light flavours")
         .def("setQ2", &InclusiveLeptoProduction::setQ2, "sets transferred momentum Q2 > 0")
@@ -27,10 +28,7 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setDelta", &InclusiveLeptoProduction::setDelta, "sets phase space slice")
         .def("getIntegrationConfig", &InclusiveLeptoProduction::getIntegrationConfig, "get matching IntegrationConfig", 
                                     return_value_policy<reference_existing_object>())
-        .def("getIntegrationOutput", &InclusiveLeptoProduction::getIntegrationOutput, "get current/latest IntegrationOutput", 
-                                    return_value_policy<reference_existing_object>())
-        .def("flags", &InclusiveLeptoProduction::flags, "manipulate controlling flags", 
-                                    return_value_policy<reference_existing_object>())
+        .def("getIntegrationOutput", &InclusiveLeptoProduction::getIntegrationOutput, "get current/latest IntegrationOutput")
         // partonic setter
         .def("setPartonicEta", &InclusiveLeptoProduction::setPartonicEta, "sets partonic eta")
         .def("setPartonicS", &InclusiveLeptoProduction::setPartonicS, "sets partonic s = (k1+q)²")
@@ -65,6 +63,8 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setAlphaSByLHAPDF", &InclusiveLeptoProduction::setAlphaSByLHAPDF, "sets Alpha_S by one LHAPDF")
         .def("setXBjorken", &InclusiveLeptoProduction::setXBjorken, "sets Bjorken x")
         .def("setHadronicS", &InclusiveLeptoProduction::setHadronicS, "sets hadronic Sh = (p+q)²")
+        .def("flags", &InclusiveLeptoProduction::flags, "manipulate controlling flags", 
+                                    return_value_policy<reference_existing_object>())
         // hadronic structure functions
         .def("F",   &InclusiveLeptoProduction::F)
         .def("dF_dHAQTransverseMomentum",     &InclusiveLeptoProduction::dF_dHAQTransverseMomentum)
