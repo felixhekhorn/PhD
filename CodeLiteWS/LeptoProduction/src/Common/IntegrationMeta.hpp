@@ -21,7 +21,7 @@ struct IntegrationConfig {
     
 /** @name common variables */
 ///@{
-/** @brief used method */
+/** @brief used integration method */
     string method;
     
 /** @brief level of output */
@@ -29,18 +29,22 @@ struct IntegrationConfig {
 
 /** @brief calls */
     size_t calls = 0;
+///@}
+    
+/** @name Monte Carlo variables */
+///@{
     
 /** @brief calls for warmup */
-    size_t warmupCalls = 0;
+    size_t MC_warmupCalls = 0;
     
 /** @brief iterations */
-    uint iterations = 5;
+    uint MC_iterations = 5;
     
 /** @brief iterations during warmup */
-    uint warmupIterations = 5;
+    uint MC_warmupIterations = 5;
     
 /** @brief iterate until |chi2-1| < 0.5? */
-    bool adaptChi2 = true;
+    bool MC_adaptChi2 = true;
 ///@}
 
 /** @name variables for Dvegas */
@@ -52,31 +56,31 @@ struct IntegrationConfig {
 /** @name variables for gsl_integration_qag */
 ///@{
 /** @see gsl_integration_qag */
-    int GslQag_epsabs = 5e-6;
+    dbl GslQag_epsabs = 5e-6;
 /** @see gsl_integration_qag */
-    int GslQag_epsrel = 1e-4;
+    dbl GslQag_epsrel = 1e-4;
 /** @see gsl_integration_qag */
     int GslQag_key = GSL_INTEG_GAUSS41;
 ///@}
 
 /**
- * @brief give string representation
+ * @brief return YAML representation as string
  * @return string
  */
-    str toString() const {
+    str toYAML() const {
         YAML::Node r;
         r["method"] = method;
         r["verbosity"] = verbosity;
+        r["calls"] = calls;
         if ("gsl_integration_qag" == this->method) {
             r["GslQag_epsabs"] = GslQag_epsabs;
             r["GslQag_epsrel"] = GslQag_epsrel;
             r["GslQag_key"] = GslQag_key;
         } else {
-            r["calls"] = calls;
-            r["warmupCalls"] = warmupCalls;
-            r["iterations"] = iterations;
-            r["warmupIterations"] = warmupCalls;
-            r["adaptChi2"] = adaptChi2;
+            r["MC_warmupCalls"] = MC_warmupCalls;
+            r["MC_iterations"] = MC_iterations;
+            r["MC_warmupIterations"] = MC_warmupCalls;
+            r["MC_adaptChi2"] = MC_adaptChi2;
             if ("Dvegas" == this->method) {
                 r["Dvegas_bins"] = Dvegas_bins;
             }
@@ -94,7 +98,7 @@ struct IntegrationConfig {
  * @return improved stream
  */
     friend std::ostream& operator<<(std::ostream& os, const IntegrationConfig& c ) {
-        os << c.toString();
+        os << c.toYAML();
         return os;
     }
 
@@ -109,8 +113,7 @@ struct IntegrationOutput {
 ///@{
 /** @brief result */
     dbl result = dblNaN;
-    
-/** @brief error */
+/** @brief (absolute) error */
     dbl error = dblNaN;
 ///@}
     

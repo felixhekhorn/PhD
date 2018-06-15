@@ -25,6 +25,12 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setQ2", &InclusiveLeptoProduction::setQ2, "sets transferred momentum Q2 > 0")
         .def("setM2", &InclusiveLeptoProduction::setM2, "sets mass of heavy quark; unsets partonic center of mass energy")
         .def("setDelta", &InclusiveLeptoProduction::setDelta, "sets phase space slice")
+        .def("getIntegrationConfig", &InclusiveLeptoProduction::getIntegrationConfig, "get matching IntegrationConfig", 
+                                    return_value_policy<reference_existing_object>())
+        .def("getIntegrationOutput", &InclusiveLeptoProduction::getIntegrationOutput, "get current/latest IntegrationOutput", 
+                                    return_value_policy<reference_existing_object>())
+        .def("flags", &InclusiveLeptoProduction::flags, "manipulate controlling flags", 
+                                    return_value_policy<reference_existing_object>())
         // partonic setter
         .def("setPartonicEta", &InclusiveLeptoProduction::setPartonicEta, "sets partonic eta")
         .def("setPartonicS", &InclusiveLeptoProduction::setPartonicS, "sets partonic s = (k1+q)²")
@@ -72,7 +78,7 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setQ2min", &InclusiveLeptoProduction::setQ2min, "sets constant cut on lower Q2")
         .def("setQ2minByHVQDIS", &InclusiveLeptoProduction::setQ2minByHVQDIS, "cut on lower Q2 as done by HVQDIS")
         // leptonic cross sections
-        .def("sigma",   &InclusiveLeptoProduction::sigma)
+        .def("sigma",   &InclusiveLeptoProduction::sigma, "computes the leptonic cross section")
     ;
     
     class_<Flags>("Flags", "controls active channels, orders and bosons")
@@ -91,4 +97,32 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def_readwrite("cHAQTransverseMomentum", &DynamicScaleFactors::cHAQTransverseMomentum, "factor to p_{Qbar,T)^2")
         .def_readwrite("cHQPairTransverseMomentum", &DynamicScaleFactors::cHQPairTransverseMomentum, "factor to (p_{Q,T}+p_{Qbar,T})^2")
     ;
+    
+    class_<Common::IntegrationOutput>("IntegrationOutput", "stores meta data for a single integration")
+        .def_readwrite("result", &Common::IntegrationOutput::result, "result")
+        .def_readwrite("error", &Common::IntegrationOutput::error, "error")
+        .def_readwrite("MC_chi2", &Common::IntegrationOutput::MC_chi2, "chi^2")
+        .def_readwrite("MC_chi2inter", &Common::IntegrationOutput::MC_chi2inter, "number of iteration to converge chi^2")
+    ;
+    
+    scope intCfg = class_<Common::IntegrationConfig,Common::IntegrationConfig*>("IntegrationConfig", "configurates a single integration")
+        .def_readwrite("method", &Common::IntegrationConfig::method, "used integration method")
+        .def_readwrite("verbosity", &Common::IntegrationConfig::verbosity, "level of output")
+        .def_readwrite("calls", &Common::IntegrationConfig::calls, "calls")
+        .def_readwrite("MC_warmupCalls", &Common::IntegrationConfig::MC_warmupCalls, "calls for warmup")
+        .def_readwrite("MC_iterations", &Common::IntegrationConfig::MC_iterations, "iterations")
+        .def_readwrite("MC_warmupIterations", &Common::IntegrationConfig::MC_warmupIterations, "iterations for warmup")
+        .def_readwrite("MC_adaptChi2", &Common::IntegrationConfig::MC_adaptChi2, "iterate until |chi2-1| < 0.5?")
+        .def_readwrite("Dvegas_bins", &Common::IntegrationConfig::Dvegas_bins, "number of bins")
+        .def_readwrite("GslQag_epsabs", &Common::IntegrationConfig::GslQag_epsabs, "absolute error in gsl_integrate_qag")
+        .def_readwrite("GslQag_epsrel", &Common::IntegrationConfig::GslQag_epsrel, "relative error in gsl_integrate_qag")
+        .def_readwrite("GslQag_key", &Common::IntegrationConfig::GslQag_key, "number of nodes in gsl_integrate_qag")
+        .def("toYAML", &Common::IntegrationConfig::toYAML, "return YAML representation as string")
+    ;
+    intCfg.attr("GSL_INTEG_GAUSS15") = (int)GSL_INTEG_GAUSS15;
+    intCfg.attr("GSL_INTEG_GAUSS21") = (int)GSL_INTEG_GAUSS21;
+    intCfg.attr("GSL_INTEG_GAUSS31") = (int)GSL_INTEG_GAUSS31;
+    intCfg.attr("GSL_INTEG_GAUSS41") = (int)GSL_INTEG_GAUSS41;
+    intCfg.attr("GSL_INTEG_GAUSS51") = (int)GSL_INTEG_GAUSS51;
+    intCfg.attr("GSL_INTEG_GAUSS61") = (int)GSL_INTEG_GAUSS61;
 }

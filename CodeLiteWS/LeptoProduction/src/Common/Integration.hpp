@@ -59,12 +59,12 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     /* warmup */\
     gsl_monte_vegas_params p;\
     gsl_monte_vegas_params_get(s,&p);\
-    p.iterations = cfg.warmupIterations;\
+    p.iterations = cfg.MC_warmupIterations;\
     p.verbose = cfg.verbosity - 3;\
     gsl_monte_vegas_params_set(s,&p);\
-    gsl_monte_vegas_integrate (&F, xl, xu, dim, cfg.warmupCalls, r, s, &res, &err);\
+    gsl_monte_vegas_integrate (&F, xl, xu, dim, cfg.MC_warmupCalls, r, s, &res, &err);\
     /* run */\
-    p.iterations = cfg.iterations;\
+    p.iterations = cfg.MC_iterations;\
     p.verbose = cfg.verbosity - 2;\
     gsl_monte_vegas_params_set(s,&p);\
     uint guard = 0;\
@@ -72,7 +72,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     out->error = dblNaN;\
     out->MC_chi2 = dblNaN;\
     out->MC_chi2inter = 0;\
-    if (cfg.adaptChi2) {\
+    if (cfg.MC_adaptChi2) {\
         do {\
             if (!isfinite(res)) return res;\
             gsl_monte_vegas_integrate (&F, xl, xu, dim, cfg.calls, r, s, &res, &err);\
@@ -99,7 +99,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     double res, err;\
     /* clear histograms */\
     /* warm-up */\
-    HepSource::VEGAS(dv,cfg.warmupCalls,cfg.warmupIterations,0,cfg.verbosity - 3);\
+    HepSource::VEGAS(dv,cfg.MC_warmupCalls,cfg.MC_warmupIterations,0,cfg.verbosity - 3);\
     HepSource::IntegrandEstimate e = dv.stats(0);\
     res = e.integral();\
     uint guard = 0;\
@@ -108,11 +108,11 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     out->MC_chi2 = dblNaN;\
     out->MC_chi2inter = 0;\
     /* run */\
-    if (cfg.adaptChi2) { /* adapt chi */\
+    if (cfg.MC_adaptChi2) { /* adapt chi */\
         do {\
             if (!isfinite(res)) return res;\
             /* F.scaleHistograms(0.); */\
-            HepSource::VEGAS(dv,cfg.calls,cfg.iterations,1,cfg.verbosity - 2);\
+            HepSource::VEGAS(dv,cfg.calls,cfg.MC_iterations,1,cfg.verbosity - 2);\
             e = dv.stats(0);\
             res = e.integral();\
             err = e.standardDeviation();\
@@ -121,7 +121,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
         } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);\
     } else { /* simple run */\
         /* F.scaleHistograms(0.); */\
-        HepSource::VEGAS(dv,cfg.calls,cfg.iterations,1,cfg.verbosity - 2);\
+        HepSource::VEGAS(dv,cfg.calls,cfg.MC_iterations,1,cfg.verbosity - 2);\
         e = dv.stats(0);\
         res = e.integral();\
         err = e.standardDeviation();\
