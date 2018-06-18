@@ -48,7 +48,7 @@ Common::IntegrationConfig* InclusiveLeptoProduction::getIntegrationConfig(str me
     // partonic functions
     if (boost::starts_with(method,"cg0_") || boost::starts_with(method,"cgBarR1_"))
         return this->intConfigs.at(0);
-    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || 
+    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || boost::starts_with(method,"cgBar1_") || 
         boost::starts_with(method,"cq1_") || boost::starts_with(method,"cqBarF1_") || boost::starts_with(method,"dq1_"))
         return this->intConfigs.at(1);
     // hadronic functions
@@ -110,6 +110,7 @@ implement2DCoeffs(cq1)
 implement2DCoeffs(cqBarF1)
 implement2DCoeffs(cg1)
 implement2DCoeffs(cgBarF1)
+implement2DCoeffs(cgBar1)
 
 #define checkMu if (0. != this->ker->muF2.cHQPairTransverseMomentum || 0. != this->ker->muR2.cHQPairTransverseMomentum)\
         throw domain_error("scales for inclusive computation may not depend on the exclusive variable HQPairTransverseMomentum!");

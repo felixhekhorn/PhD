@@ -79,7 +79,7 @@ struct IntegrationConfig {
         } else {
             r["MC_warmupCalls"] = MC_warmupCalls;
             r["MC_iterations"] = MC_iterations;
-            r["MC_warmupIterations"] = MC_warmupCalls;
+            r["MC_warmupIterations"] = MC_warmupIterations;
             r["MC_adaptChi2"] = MC_adaptChi2;
             if ("Dvegas" == this->method) {
                 r["Dvegas_bins"] = Dvegas_bins;

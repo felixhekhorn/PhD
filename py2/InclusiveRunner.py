@@ -110,8 +110,8 @@ def _threadWorker(qIn, qOut):
 			if "F"       == run: p["res"] = o.F()
 			elif "sigma" == run: p["res"] = o.sigma()
 			else:
-				if None == re.match("^[cd][gq](Bar[RF])?[01]_[VA][VA]$", run):
-					Util.pErr(p)
+				if None == re.match("^[cd][gq](Bar[RF]?)?[01]_[VA][VA]$", run):
+					Util.pWarn(p)
 					raise "unknown function: "+run
 				p["res"] = getattr(o,run)()
 		elif tuple == type(run) or list == type(run):
@@ -120,7 +120,7 @@ def _threadWorker(qIn, qOut):
 			elif "dF_dHAQRapidity"                  == run[0]: p["res"] = o.dF_dHAQRapidity(run[1])
 			elif "dF_dHAQFeynmanX"                  == run[0]: p["res"] = o.dF_dHAQFeynmanX(run[1])
 			else:
-				Util.pErr(p)
+				Util.pWarn(p)
 				raise "unknown function: "+run
 		if p.has_key("integrationOutput"): p["integrationOutput"] = o.getIntegrationOutput()
 		qOut.put(p)

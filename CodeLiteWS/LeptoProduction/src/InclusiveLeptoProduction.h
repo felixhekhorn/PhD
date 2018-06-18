@@ -133,6 +133,13 @@ public:
 /** @see AbstractLeptoProduction::cgBarR1_AA() */
     cdbl cgBarR1_AA() const;
     
+/** @see AbstractLeptoProduction::cgBar1_VV() */
+    cdbl cgBar1_VV() const;
+/** @see AbstractLeptoProduction::cgBar1_VA() */
+    cdbl cgBar1_VA() const;
+/** @see AbstractLeptoProduction::cgBar1_AA() */
+    cdbl cgBar1_AA() const;
+    
 ///@}
 
 /** @name hadronic functions */

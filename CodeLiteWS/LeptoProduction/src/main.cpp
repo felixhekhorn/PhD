@@ -25,21 +25,21 @@ int main(int argc, char **argv) {
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
     o.setQ2(Q2);
-    cuint N = 101;
+    cuint N = 11;
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         //o.setDelta(eta/1000.);
         o.setProjection(F2);
-        cdbl cF2 = o.cg0_VV();
+        cdbl cF2 = o.cgBar1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.cg0_VV();
+        cdbl cFL = o.cgBar1_VV();
         o.setProjection(x2g1);
-        //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
-        cdbl cx2g1 = o.cg0_VV();
+        o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
+        cdbl cx2g1 = o.cgBar1_VV();
         cdbl ex2g1 = o.getIntegrationOutput().error;
-        //o.getIntegrationConfig("cg1_VV")->method = "Dvegas";
-        cdbl cx2g1_ = o.cg0_VV();
+        o.getIntegrationConfig("cg1_VV")->method = "Dvegas";
+        cdbl cx2g1_ = o.cgBar1_VV();
         cdbl ex2g1_ = o.getIntegrationOutput().error;
         cout << boost::format("%e\t%e\t%e\t%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1%ex2g1%cx2g1_%ex2g1_ << endl;
     }

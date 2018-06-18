@@ -361,6 +361,21 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
     // cgBarF1
     if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
         return this->jac_t1*V_s4*this->cgBarF1_cur();
+    // cgBar1
+    if (Mode_cgBar1_VV == this->mode || Mode_cgBar1_VA == this->mode || Mode_cgBar1_AA == this->mode) {
+        cuint old = this->mode;
+        uint F,R;
+        if (Mode_cgBar1_VV == this->mode) { F = this->Mode_cgBarF1_VV; R = this->Mode_cgBarR1_VV; }
+        else if (Mode_cgBar1_VA == this->mode) { F = this->Mode_cgBarF1_VA; R = this->Mode_cgBarR1_VA; }
+        else if (Mode_cgBar1_AA == this->mode) { F = this->Mode_cgBarF1_AA; R = this->Mode_cgBarR1_AA; }
+        dbl r = 0.;
+        this->mode = F;
+        r += this->jac_t1*V_s4*this->cgBarF1_cur();
+        this->mode = R;
+        r += this->jac_t1*this->cgBarR1_cur();
+        this->mode = old;
+        return r;
+    }
     return 0.;
 }
 

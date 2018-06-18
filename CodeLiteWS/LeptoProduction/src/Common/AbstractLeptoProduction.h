@@ -247,6 +247,24 @@ public:
  */
     virtual cdbl cgBarR1_AA() const = 0;
 
+/**
+ * @brief computes vector-vector part of next-to-leading order partonic gluon contribution with common scale \f$\bar c_{\Pg}^{(1),VV} = \bar c_{\Pg}^{F,(1),VV} + \bar c_{\Pg}^{R,(1),VV}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),VV}\f$
+ */
+    virtual cdbl cgBar1_VV() const = 0;
+
+/**
+ * @brief computes vector-axial part of next-to-leading order partonic gluon contribution with common scale \f$\bar c_{\Pg}^{(1),VA} = \bar c_{\Pg}^{F,(1),VA} + \bar c_{\Pg}^{R,(1),VA}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),VA}\f$
+ */
+    virtual cdbl cgBar1_VA() const = 0;
+
+/**
+ * @brief computes axial-axial part of next-to-leading order partonic gluon contribution with common scale \f$\bar c_{\Pg}^{(1),AA} = \bar c_{\Pg}^{F,(1),AA} + \bar c_{\Pg}^{R,(1),AA}\f$
+ * @return \f$\bar c_{\Pg}^{R,(1),AA}\f$
+ */
+    virtual cdbl cgBar1_AA() const = 0;
+
     
 ///@}
 

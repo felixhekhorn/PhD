@@ -258,6 +258,9 @@ public:
     static cuint Mode_cgBarR1_VV = 19;
     static cuint Mode_cgBarR1_VA = 20;
     static cuint Mode_cgBarR1_AA = 21;
+    static cuint Mode_cgBar1_VV = 22;
+    static cuint Mode_cgBar1_VA = 23;
+    static cuint Mode_cgBar1_AA = 24;
     
     static cuint Mode_F = 100;
     
