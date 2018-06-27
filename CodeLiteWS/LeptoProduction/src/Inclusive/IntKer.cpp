@@ -84,7 +84,7 @@ void Inclusive::IntKer::setPartonicVars() {
     cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
     dbl r = 0.;\
     if (isParityConservingProj(this->proj)) {\
-        cdbl eVV = {gVV};\
+        cdbl eVV = gVV;\
         if (this->flags.usePhoton) r += eH*eH * eVV;\
         if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;\
         if (this->flags.useZ) {\
@@ -92,7 +92,7 @@ void Inclusive::IntKer::setPartonicVars() {
             r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
         }\
     } else {\
-        cdbl eVA = {gVA};\
+        cdbl eVA = gVA;\
         if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;\
         if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
     }\

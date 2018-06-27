@@ -1,5 +1,95 @@
 \fxerror{write more notation}
-We use the definition of \cite{Patrignani:2016xqp} for the hadronic tensor:
+
+We study the reaction
+\begin{equation}
+\Pl(k) + \PN(P) \to \Pl'(k') + \PaQ(p_2) + X[\PQ]
+\end{equation}
+and define the usual set of kinematic variables
 \begin{align}
-W_{\mu\mu'} &= (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) F_1(x,Q^2) + \frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} F_2(x,Q^2)
+q &= k - k', &Q^2 &= -q^2, &x &= \frac{Q^2}{2q\cdot P}, &y &= \frac{q\cdot P}{k\cdot P}
+\end{align}
+
+Assuming $k^2 = m_{\Pl}^2 = 0$, we can write the hadronic tensor (using the naming convention of \cite{Patrignani:2016xqp}):
+\begin{align}
+W_{\mu\mu'} &= (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) F_1(x,Q^2) + \frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} F_2(x,Q^2) - i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha P^\beta}{2P\cdot q} F_3(x,Q^2) \nonumber\\
+ &\hspace{15pt} + i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha S^\beta}{P\cdot q} g_1(x,Q^2) + \frac{S\cdot q}{P\cdot q}\left[\frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} g_4(x,Q^2) + (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) g_5(x,Q^2)\right] \label{eq:HadroTen}
+\end{align}
+with
+\begin{align}
+\hat P_\mu &= P_\mu - \frac{P\cdot q}{q^2}q_\mu
+\end{align}
+and introduce two new structure functions
+\begin{align}
+F_L &= F_2 - 2xF_1, &g_L &= g_4 - 2xg_5\,.
+\end{align}
+
+The hadronic tensor \ref{eq:HadroTen} can be mapped onto a partonic level with
+\begin{align}
+k_1 &= \xi P', &z &= \frac{Q^2}{2q\cdot k_1} = \frac {x}{\xi}
+\end{align}
+and we write
+\begin{align}
+\frac 1 {2z} \hat w_{\mu,\mu'} &= (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) \hat F_1(z,Q^2) + \frac{\hat k_{1,\mu} \hat k_{1,\mu'}}{k_1\cdot q} \hat F_2(z,Q^2) - i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha k_1^\beta}{2k_1\cdot q} \hat F_3(z,Q^2) \nonumber\\
+ &\hspace{15pt} + \frac{q_\mu q_{\mu'}}{q^2} \hat F_4(z,Q^2) + \frac{q_\mu k_{1,\mu'} + q_{\mu'}k_{1,\mu}}{2k_1\cdot q} \hat F_5(z,Q^2)  \nonumber\\
+ &\hspace{15pt} + i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha S^\beta}{k_1\cdot q} \hat g_1(z,Q^2) + \frac{S\cdot q}{k_1\cdot q}\left[\frac{\hat k_{1,\mu} \hat k_{1,\mu'}}{k_1\cdot q}\hat g_4(z,Q^2) + (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) \hat g_5(z,Q^2)\right] \nonumber\\
+ &\hspace{15pt} + \frac{S\cdot q}{k_1\cdot q}\left[\frac{q_\mu q_{\mu'}}{q^2} \hat g_6(z,Q^2) + \frac{q_\mu k_{1,\mu'} + q_{\mu'}k_{1,\mu}}{2k_1\cdot q} \hat g_7(z,Q^2)  \right]
+\label{eq:PartonTen}
+\end{align}
+with
+\begin{align}
+\hat k_{1,\mu} &= k_{1,\mu} - \frac{k_1\cdot q}{q^2}q_\mu
+\end{align}
+and
+\begin{align}
+\hat F_L &= \hat F_2 - 2z\hat F_1, &\hat g_L &= \hat g_4 - 2z\hat g_5\,.
+\end{align}
+
+It is convenient to rescale the structure functions and so we focus in the following on the six structure functions
+\begin{equation}
+\hat F_2, \hat F_L, z\hat F_3, 2z\hat g_1, \hat g_4 \text{ and } \hat g_L
+\end{equation}
+or their hadronic counter parts.
+
+Note that we have to include $\hat F_4,\hat F_5,\hat g_6$ and $\hat g_7$ into Eq. \ref{eq:PartonTen} as we are interested in the full neutral current case, that is, we allow for $\PZ$-bosons to be exchanged and due to this we can no longer rely on the Ward-identity, because the axial current $J^\mu_5$ does not vanish for massive particles:
+\begin{align}
+q_\mu J^{\mu}_5 &= q_\mu \bar \psi \gamma^\mu \gamma^5\psi = 2m\,\bar \psi i \gamma^5\psi\,.
+\end{align}
+This way we can define the projections onto the structure functions by
+\begin{align}
+\hat{\mathcal P}_{\hat F_2}^{\Pgg,\mu\mu'} &= \frac{-g^{\mu\mu'}}{n-2} - \frac{n-1}{n-2} \cdot \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{n-2}{n-1}\cdot \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
+\hat{\mathcal P}_{\hat F_L}^{\Pgg,\mu\mu'} &= - \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
+\hat{\mathcal P}_{z\hat F_3}^{\Pgg,\mu\mu'} &= -\frac{i z\varepsilon^{\mu\mu'\alpha\beta}k_{1,\alpha}q_\beta}{q^2}
+\end{align}
+and, due to the symmetry in the Lorentz structure,
+\begin{align}
+\hat{\mathcal P}_{2z\hat g_1}^{\Pgg,\mu\mu'} &= \hat{\mathcal P}_{z\hat F_3}^{\Pgg,\mu\mu'}
+&\hat{\mathcal P}_{\hat g_4}^{\Pgg,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_2}^{\Pgg,\mu\mu'}
+&\hat{\mathcal P}_{\hat g_L}^{\Pgg,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_L}^{\Pgg,\mu\mu'}\,.
+\end{align}
+This way we have
+\begin{align}
+\hat{\mathcal P}_{\hat h}^{\Pgg,\mu\mu'} \hat w_{\mu,\mu'} &= \hat h\quad\text{for }\hat h\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}
+\end{align}
+
+For the unpolarized structure functions $\hat F_2,\hat F_L$ and $z\hat F_3$ the helicity of the parton, either gluon or (anti-)quark, has to be averaged, whereas for the polarized $2z\hat g_1,\hat g_4$ and $\hat g_L$ we have to consider the helicity difference. For the gluons this is achieved by
+\begin{align}
+\hat{\mathcal P}_{F}^{\Pg,\nu\nu'} &= - g^{\nu\nu'}
+&\hat{\mathcal P}_{g}^{\Pg,\nu\nu'} &= 2i\varepsilon^{\nu\nu'\alpha\beta} \frac{k_{1,\alpha}q_\beta}{2k_1\cdot q}
+\end{align}
+and by choosing just $- g^{\nu\nu'}$, we decided to include incoming external ghost to cancel all unphysical gluon polarization. All initial-state (anti-)quarks are taken as massless partons, so the relevant projection operators onto definitive helicity states are given by
+\begin{align}
+\hat{\mathcal P}_{F}^{\Pq,aa'} &= (\slashed k_1)_{aa'},
+&\hat{\mathcal P}_{g}^{\Pq,aa'} &= -(\gamma_5\slashed k_1)_{aa'},\nonumber\\
+\hat{\mathcal P}_{F}^{\Paq,bb'} &= (\slashed k_1)_{bb'},
+&\hat{\mathcal P}_{g}^{\Paq,bb'} &= (\gamma_5\slashed k_1)_{bb'}
+\end{align}
+where $a$ and $a'$ ($b$ and $b'$) refer to the Dirac-index of the initial (anti-)quark spinor in the relevant matrix elements given below.
+
+In order to compute the exchange of scattered vector boson $b=\{\Pgg,\PZ\}$ with a common notation, we write the coupling of $b$ to the hadronic process by
+\begin{align}
+\Gamma^\mu_{b,j} &= g^V_{b,j} \Gamma^\mu_{V} + g^A_{b,j} \Gamma^\mu_{A} = g^V_{b,j} \gamma^\mu + g^A_{b,j} \gamma^\mu\gamma^5 \quad j\in\{\Pq,\PQ\}.
+\end{align}
+Due to symmetry reasons the parity-violating structure functions $z\hat F_3,g_4,g_L$ can only recieve contributions from $\Gamma^\mu_V\Gamma^{\mu'}_A$, where $\mu$  refer to the Lorentz index of the boson in matrix amplitude and the $\mu'$ to the index in the complex conjungate. Likewise the parity conserving structure functions can only recieve contributions from either $\Gamma^\mu_V\Gamma^{\mu'}_V$ or $\Gamma^\mu_A\Gamma^{\mu'}_A$. To introduce a compact notation we write
+\begin{align}
+\vec \kappa =(\kappa_1,\kappa_2)\quad\kappa_1\in\{\tVV,\tVA,\tAA\},\,\kappa_2\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}
 \end{align}
