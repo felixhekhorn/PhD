@@ -1,57 +1,43 @@
 \label{sec:NLO.g}
-In next-to-leading order we have to consider the following process:
+In addition to the virtual corrections we have to consider the radiation of an additional gluon at next-to-leading order, i. e., the $2\to 3$ process
 \begin{equation}
-\Pggx(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2)
+b(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2),\quad b\in\{\Pggx,\PZx\}
 \end{equation}
 All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
-\begin{equation}
-\hat {\mathcal P}_{\vec k}^{\Pgg,\mu\mu'}\hat {\mathcal P}_{\vec k}^{\Pg}\sum_{j,j'}{\Md^{(1),g}_{j,\mu}\Md^{(1),g}_{j',\mu'}}^* = 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{\vec k,OK} + 2C_F R_{\vec k,QED}\right)
-\end{equation}
-and it will depend on ten kinematical invariants:
 \begin{align}
-s &= (q+k_1)^2 &t_1 &=(k_1-p_2)^2-m^2 &u_1 &=(q-p_2)^2 -m^2\\
-s_3 &= (k_2+p_2)^2-m^2 &s_4 &=(k_2+p_1)^2-m^2 &s_5 &= (p_1+p_2)^2=-u_5\\
-t' &= (k_1-k_2)^2\\
-u' &= (q-k_2)^2 &u_6 &=(k_1-p_1)^2-m^2 &u_7 &=(q-p_1)^2-m^2
+M_{\vec \kappa}^{(1),\Pg} &= \hat {\mathcal P}_{\vec \kappa}^{b,\mu\mu'}\hat {\mathcal P}_{\kappa_2}^{\Pg,\nu\nu'}\sum_{j,j'}\Md^{(1),\Pg}_{j,\mu\nu}\left(\Md^{(1),\Pg}_{j',\mu'\nu'}\right)^*\\
+ &= 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{\vec \kappa,\tOK} + 2C_F R_{\vec \kappa,\tQED}\right)
 \end{align}
-from which only five are independent as can be seen from momentum conservation $k_1+q=p_1+p_2+k_2$ and $s,t_1,u_1$ match to their leading order definition.
 
-The $2\rightarrow 3$ $n$-dimensional phase space is given by
+The required $n$-dimensional phase space $\dPSThree$ is given by
 \begin{align}
-dPS_3 &= \!\int\!\!\frac{d^{n}p_1}{(2\pi)^{n-1}}\frac{d^{n}p_2}{(2\pi)^{n-1}}\frac{d^{n}k_2}{(2\pi)^{n-1}}(2\pi)^n\delta^{(n)}(k_1+q-p_1-p_2-k_2) \nonumber\\
- &\hspace{50pt}\Theta(p_{1,0})\delta(p_1^2-m^2)\Theta(p_{2,0})\delta(p_2^2-m^2)\Theta(k_{2,0})\delta(k_2^2) \label{eq:PS3}
+\dPSThree &= \frac{S_\epsilon^2}{\Gamma(1+\epsilon)s'} \frac{s_4^{1+\epsilon}}{(s_4+m^2)^{1+\epsilon/2}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{\epsilon/2}\! dt_1 du_1 d\Omega_n
 \end{align}
-This can be solved by writing eq. (\ref{eq:PS3}) as product of a $2\rightarrow 2$ decay and a subsequent $1\rightarrow 2$ decay\cite{PhysRevD4054}. We find
-\begin{align}
-dPS_3 &= \frac 1 {(4\pi)^n\Gamma(n-3)s'} \frac{s_4^{n-3}}{(s_4+m^2)^{n/2-1}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{(n-4)/2}\! dt_1 du_1 d\Omega_n d\hat{\mathcal I}\\
- &=h_3(n)\,dt_1 du_1 d\Omega_n d\hat{\mathcal I}
-\end{align}
-with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$ and $d\hat{\mathcal I}$ taking care of all occuring hat momenta:
-\begin{align}
-d\hat{\mathcal I} &= \frac 1 {B(1/2,(n-4)/2)}\frac{x^{(n-6)/2}}{\sqrt{1-x}}dx &\text{with}\,x &= \hat p_1^2/\hat p_{1,max}\\
-\hat p_{1,max} &= \frac{s_4^2}{4(s_4+m^2)}\sin^2(\theta_1)\sin^2(\theta_2)
-\end{align}
-\begin{equation}
-\Rightarrow \int\!d\hat{\mathcal I} = 1 \qquad \int\!d\hat{\mathcal I}\,\hat p_1^2 = \epsilon \hat p_{1,max} + O(\epsilon^2)
-\end{equation}
+with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$.
 
-Again when integrating the phase space angles the expressions become quite lengthy, but the (collinear) pole parts are compact:
+Again when integrating the phase space angles the expressions become quite lengthy, but the collinear poles can be given in a compact form by
 \begin{align}
-\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_n d\hat{\mathcal I}\,C_A R_{\vec k,OK} &=-\frac 1 {u_1}B_{\vec k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^H_{\vec k,\Pg\Pg}(x_1)\frac 2 \epsilon + O(\epsilon^0) \label{eq:ROKPoles}
+\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_n \,C_A R_{\vec \kappa,OK} &=-\frac 2 {u_1}B_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^{(0),H}_{\kappa_2,\Pg\Pg}(x_1)\frac 2 \epsilon + O(\epsilon^0) \label{eq:ROKPoles}
 \end{align}
-with $x_1 = -u_1/(s'+t_1)$ and the hard part of the Altarelli-Parisi splitting functions $P^H_{k,\Pg\Pg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
+with $x_1 = -u_1/(s'+t_1)$ and the hard part of the LO Altarelli-Parisi splitting functions $P^{(0),H}_{\kappa_2,\Pg\Pg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
 \begin{align}
-P^H_{F,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right)\\
-P^H_{g,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} - 4x + 2\right)
+P^{(0),H}_{F_2,\Pg\Pg}(x) = P^{(0),H}_{F_L,\Pg\Pg}(x) = P^{(0),H}_{xF_3,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right) \label{eq:PFggH}\\
+P^{(0),H}_{2xg_1,\Pg\Pg}(x) = P^{(0),H}_{g_4,\Pg\Pg}(x) = P^{(0),H}_{g_L,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} - 4x + 2\right) \label{eq:PgggH}
 \end{align}
-The $R_{\vec k,QED}$ do not contain poles. \fxerror{shift to factorization?}
+The hard abelian QED part $R_{\vec \kappa,\tQED}$ does not contain collinear poles.
 
-From the above expression we can obtain the soft limit $k_2\rightarrow 0$ and seperate their calculations:
-\begin{equation}
-\lim_{k_2\rightarrow 0}\left(C_A R_{\vec k,OK} + 2C_F R_{\vec k,QED}\right) = \left(C_A S_{\vec k,OK} + 2C_F S_{\vec k,QED}\right) + O(1/s_4,1/s_3,1/t')
-\end{equation}
+The spin and color averaged partonic cross section for the real corrections to the PGF process is then given by
 \begin{align}
-S_{\vec k,OK}  &= 2\left(\frac{t_1}{t's_3} + \frac{u_1}{t's_4}-\frac{s-2m^2}{s_3s_4}\right)B_{\vec k,QED}\\
-S_{\vec k,QED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{\vec k,QED}
+d\sigma_{\vec \kappa,\Pg}^{(1),R} &= \frac 1 {2s'}\frac 1 2 E_{\kappa_2}(\epsilon)K_{\Pg\Pgg} M_{\vec \kappa}^{(1),\Pg} \dPSThree
 \end{align}
-Note that the einkonal factors multiplying the Born functions $B_{\vec k,QED}$ neither depend on $q^2$ nor on the projection $\vec k$. 
+
+From these expressions we can obtain the soft gluon limit $k_2\rightarrow 0$ and seperate their calculations:
+\begin{equation}
+\lim_{k_2\rightarrow 0}\left(C_A R_{\vec \kappa,\tOK} + 2C_F R_{\vec \kappa,\tQED}\right) = \left(C_A S_{\vec \kappa,\tOK} + 2C_F S_{\vec \kappa,\tQED}\right) + O(1/s_4,1/s_3,1/t')
+\end{equation}
+where
+\begin{align}
+S_{\vec \kappa,\tOK}  &= 2\left(\frac{t_1}{t's_3} + \frac{u_1}{t's_4}-\frac{s-2m^2}{s_3s_4}\right)B_{\vec \kappa,\tQED}\\
+S_{\vec \kappa,\tQED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{\vec \kappa,\tQED}
+\end{align}
+Note that the einkonal factors multiplying the Born functions $B_{\vec \kappa,\tQED}$ neither depend on the photon's virtuality $q^2$ nor on the projection $\vec \kappa$. 

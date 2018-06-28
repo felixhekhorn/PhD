@@ -1,6 +1,4 @@
-\fxerror{write more notation}
-
-We study the reaction
+We study the neutral-current (NC) deep inelastic scattering (DIS) reaction
 \begin{equation}
 \Pl(k) + \PN(P) \to \Pl'(k') + \PaQ(p_2) + X[\PQ]
 \end{equation}
@@ -8,26 +6,35 @@ and define the usual set of kinematic variables
 \begin{align}
 q &= k - k', &Q^2 &= -q^2, &x &= \frac{Q^2}{2q\cdot P}, &y &= \frac{q\cdot P}{k\cdot P}
 \end{align}
+Assuming $k^2 = m_{\Pl}^2 = 0$, we can write the hadronic tensor (adopting the naming convention of \cite{Patrignani:2016xqp}):
+\begin{align}
+W_{\mu\mu'} &= \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right) F_1(x,Q^2) + \frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} F_2(x,Q^2) - i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha P^\beta}{2P\cdot q} F_3(x,Q^2) \nonumber\\
+ &\hspace{15pt} + i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha S^\beta}{P\cdot q} g_1(x,Q^2) + \frac{S\cdot q}{P\cdot q}\left[\frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} g_4(x,Q^2) + \left(-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}\right) g_5(x,Q^2)\right] \label{eq:HadroTen}
+\end{align}
+with $\hat P_\mu = P_\mu - \frac{P\cdot q}{q^2}q_\mu$ and $S$ denoting the spin vector of the nucleon. We further introduce the more convenient structure functions
+\begin{align}
+F_L(x,Q^2) &= F_2(x,Q^2) - 2xF_1(x,Q^2), &g_L(x,Q^2) &= g_4(x,Q^2) - 2xg_5(x,Q^2)\,.
+\end{align}
+As we are interested in the full neutral current contributions, we allow for both, the virtual photon $\Pggx$ and the virtual $\PZx$-boson exchange. The structure functions can then be decomposed by
+\begin{align}
+H &= H^{\Pgg} - \left(g_V^{\Pl} \pm \lambda g_A^{\Pl}\right) \eta_{\Pgg\PZ} H^{\Pgg\PZ} + \left((g_V^{\Pl})^2 + (g_A^{\Pl})^2 \pm 2\lambda g_{V}^{\Pl}g_{A}^{\Pl}\right)\eta_{\PZ} H^{\PZ},\,H\in\{F_2,F_L,2xg_1\}\\
+H &= - \left(g_A^{\Pl} \pm \lambda g_V^{\Pl}\right) \eta_{\Pgg\PZ} H^{\Pgg\PZ} + \left(2g_{V}^{\Pl}g_{A}^{\Pl} \pm \lambda\left((g_V^{\Pl})^2 + (g_A^{\Pl})^2 \right) \right)\eta_{\PZ} H^{\PZ},\,H\in\{xF_3,g_4,g_L\}
+\end{align}
+where $\lambda$ defines the helicity of the incoming lepton and
+\begin{align}
+\eta_{\Pgg\PZ} &=\left(\frac{G_F M_{\PZ}^2}{2\sqrt 2 \pi \alpha}\right)\left(\frac{Q^2}{Q^2+M_{\PZ}^2}\right)  &\eta_{\PZ} =\eta_{\Pgg\PZ}^2
+\end{align}
 
-Assuming $k^2 = m_{\Pl}^2 = 0$, we can write the hadronic tensor (using the naming convention of \cite{Patrignani:2016xqp}):
+We use the framework of the collinear factorization, so the leading order partonic reaction is given by
+\begin{equation}
+b(q) + \Pg(k_1) \to \PaQ(p_2) + \PQ(p_1),\quad b\in\{\Pggx,\PZx\}
+\end{equation}
+where $k_1 = \xi P$ and the relevent kinematic variables are
 \begin{align}
-W_{\mu\mu'} &= (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) F_1(x,Q^2) + \frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} F_2(x,Q^2) - i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha P^\beta}{2P\cdot q} F_3(x,Q^2) \nonumber\\
- &\hspace{15pt} + i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha S^\beta}{P\cdot q} g_1(x,Q^2) + \frac{S\cdot q}{P\cdot q}\left[\frac{\hat P_\mu \hat P_{\mu'}}{P\cdot q} g_4(x,Q^2) + (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) g_5(x,Q^2)\right] \label{eq:HadroTen}
+z &= \frac{Q^2}{2q\cdot k_1} = \frac {x}{\xi}, &s &= (k_1+q)^2, &s' &= s-q^2\nonumber\\
+t_1 &= (k_1-p_2) - m^2, &u_1 &= (q-p_2)^2 - m^2, &u_1' &= u_1-q^2\,.
 \end{align}
-with
-\begin{align}
-\hat P_\mu &= P_\mu - \frac{P\cdot q}{q^2}q_\mu
-\end{align}
-and introduce two new structure functions
-\begin{align}
-F_L &= F_2 - 2xF_1, &g_L &= g_4 - 2xg_5\,.
-\end{align}
-
-The hadronic tensor \ref{eq:HadroTen} can be mapped onto a partonic level with
-\begin{align}
-k_1 &= \xi P', &z &= \frac{Q^2}{2q\cdot k_1} = \frac {x}{\xi}
-\end{align}
-and we write
+The hadronic tensor \ref{eq:HadroTen} can then be mapped onto a partonic level by
 \begin{align}
 \frac 1 {2z} \hat w_{\mu,\mu'} &= (-g_{\mu\mu'} + \frac{q_\mu q_{\mu'}}{q^2}) \hat F_1(z,Q^2) + \frac{\hat k_{1,\mu} \hat k_{1,\mu'}}{k_1\cdot q} \hat F_2(z,Q^2) - i\varepsilon_{\mu\mu'\alpha\beta} \frac{q^\alpha k_1^\beta}{2k_1\cdot q} \hat F_3(z,Q^2) \nonumber\\
  &\hspace{15pt} + \frac{q_\mu q_{\mu'}}{q^2} \hat F_4(z,Q^2) + \frac{q_\mu k_{1,\mu'} + q_{\mu'}k_{1,\mu}}{2k_1\cdot q} \hat F_5(z,Q^2)  \nonumber\\
@@ -35,13 +42,14 @@ and we write
  &\hspace{15pt} + \frac{S\cdot q}{k_1\cdot q}\left[\frac{q_\mu q_{\mu'}}{q^2} \hat g_6(z,Q^2) + \frac{q_\mu k_{1,\mu'} + q_{\mu'}k_{1,\mu}}{2k_1\cdot q} \hat g_7(z,Q^2)  \right]
 \label{eq:PartonTen}
 \end{align}
-with
+with $\hat k_{1,\mu} = k_{1,\mu} - \frac{k_1\cdot q}{q^2}q_\mu$ and
 \begin{align}
-\hat k_{1,\mu} &= k_{1,\mu} - \frac{k_1\cdot q}{q^2}q_\mu
+\hat F_L(z,Q^2) &= \hat F_2(z,Q^2) - 2z\hat F_1(z,Q^2), &\hat g_L(z,Q^2) &= \hat g_4(z,Q^2) - 2z\hat g_5(z,Q^2)\,.
 \end{align}
-and
+
+Note that we have to include $\hat F_4,\hat F_5,\hat g_6$ and $\hat g_7$ into Eq. \ref{eq:PartonTen} as we are interested in the full neutral current case, that is, we allow for $\PZ$-bosons to be exchanged and due to this we can no longer rely on the Ward-identity, because the contraction of the axial current $q_\mu J^\mu_5$ does not vanish for massive particles:
 \begin{align}
-\hat F_L &= \hat F_2 - 2z\hat F_1, &\hat g_L &= \hat g_4 - 2z\hat g_5\,.
+q_\mu J^{\mu}_5 &= q_\mu \bar \psi \gamma^\mu \gamma^5\psi = 2m\,\bar \psi i \gamma^5\psi\,.
 \end{align}
 
 It is convenient to rescale the structure functions and so we focus in the following on the six structure functions
@@ -50,25 +58,21 @@ It is convenient to rescale the structure functions and so we focus in the follo
 \end{equation}
 or their hadronic counter parts.
 
-Note that we have to include $\hat F_4,\hat F_5,\hat g_6$ and $\hat g_7$ into Eq. \ref{eq:PartonTen} as we are interested in the full neutral current case, that is, we allow for $\PZ$-bosons to be exchanged and due to this we can no longer rely on the Ward-identity, because the axial current $J^\mu_5$ does not vanish for massive particles:
-\begin{align}
-q_\mu J^{\mu}_5 &= q_\mu \bar \psi \gamma^\mu \gamma^5\psi = 2m\,\bar \psi i \gamma^5\psi\,.
-\end{align}
 This way we can define the projections onto the structure functions by
 \begin{align}
-\hat{\mathcal P}_{\hat F_2}^{\Pgg,\mu\mu'} &= \frac{-g^{\mu\mu'}}{n-2} - \frac{n-1}{n-2} \cdot \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{n-2}{n-1}\cdot \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
-\hat{\mathcal P}_{\hat F_L}^{\Pgg,\mu\mu'} &= - \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
-\hat{\mathcal P}_{z\hat F_3}^{\Pgg,\mu\mu'} &= -\frac{i z\varepsilon^{\mu\mu'\alpha\beta}k_{1,\alpha}q_\beta}{q^2}
+\hat{\mathcal P}_{\hat F_2}^{b,\mu\mu'} &= \frac{-g^{\mu\mu'}}{n-2} - \frac{n-1}{n-2} \cdot \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{n-2}{n-1}\cdot \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
+\hat{\mathcal P}_{\hat F_L}^{b,\mu\mu'} &= - \frac{4z^2 k_{1}^{\mu}k_{1}^{\mu'}}{q^2} - \frac{q^\mu q^{\mu'}}{q^2} - \frac{2z(q^\mu k_{1}^{\mu'} + q^{\mu'}k_{1}^{\mu})}{q^2}\\
+\hat{\mathcal P}_{z\hat F_3}^{b,\mu\mu'} &= -\frac{i z\varepsilon^{\mu\mu'\alpha\beta}k_{1,\alpha}q_\beta}{q^2}
 \end{align}
 and, due to the symmetry in the Lorentz structure,
 \begin{align}
-\hat{\mathcal P}_{2z\hat g_1}^{\Pgg,\mu\mu'} &= \hat{\mathcal P}_{z\hat F_3}^{\Pgg,\mu\mu'}
-&\hat{\mathcal P}_{\hat g_4}^{\Pgg,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_2}^{\Pgg,\mu\mu'}
-&\hat{\mathcal P}_{\hat g_L}^{\Pgg,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_L}^{\Pgg,\mu\mu'}\,.
+\hat{\mathcal P}_{2z\hat g_1}^{b,\mu\mu'} &= \hat{\mathcal P}_{z\hat F_3}^{b,\mu\mu'}
+&\hat{\mathcal P}_{\hat g_4}^{b,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_2}^{b,\mu\mu'}
+&\hat{\mathcal P}_{\hat g_L}^{b,\mu\mu'} &= -\hat{\mathcal P}_{\hat F_L}^{b,\mu\mu'}\,.
 \end{align}
 This way we have
 \begin{align}
-\hat{\mathcal P}_{\hat h}^{\Pgg,\mu\mu'} \hat w_{\mu,\mu'} &= \hat h\quad\text{for }\hat h\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}
+\hat{\mathcal P}_{\hat h}^{b,\mu\mu'} \hat w_{\mu,\mu'} &= \hat h\quad\text{for }\hat h\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}
 \end{align}
 
 For the unpolarized structure functions $\hat F_2,\hat F_L$ and $z\hat F_3$ the helicity of the parton, either gluon or (anti-)quark, has to be averaged, whereas for the polarized $2z\hat g_1,\hat g_4$ and $\hat g_L$ we have to consider the helicity difference. For the gluons this is achieved by
@@ -87,9 +91,22 @@ where $a$ and $a'$ ($b$ and $b'$) refer to the Dirac-index of the initial (anti-
 
 In order to compute the exchange of scattered vector boson $b=\{\Pgg,\PZ\}$ with a common notation, we write the coupling of $b$ to the hadronic process by
 \begin{align}
-\Gamma^\mu_{b,j} &= g^V_{b,j} \Gamma^\mu_{V} + g^A_{b,j} \Gamma^\mu_{A} = g^V_{b,j} \gamma^\mu + g^A_{b,j} \gamma^\mu\gamma^5 \quad j\in\{\Pq,\PQ\}.
+\Gamma^\mu_{b,j} &= g^V_{b,j} \Gamma^\mu_{V} + g^A_{b,j} \Gamma^\mu_{A} = g^V_{b,j} \gamma^\mu + g^A_{b,j} \gamma^\mu\gamma^5, \quad j\in\{\Pq,\PQ\}.
 \end{align}
 Due to symmetry reasons the parity-violating structure functions $z\hat F_3,g_4,g_L$ can only recieve contributions from $\Gamma^\mu_V\Gamma^{\mu'}_A$, where $\mu$  refer to the Lorentz index of the boson in matrix amplitude and the $\mu'$ to the index in the complex conjungate. Likewise the parity conserving structure functions can only recieve contributions from either $\Gamma^\mu_V\Gamma^{\mu'}_V$ or $\Gamma^\mu_A\Gamma^{\mu'}_A$. To introduce a compact notation we write
 \begin{align}
-\vec \kappa =(\kappa_1,\kappa_2)\quad\kappa_1\in\{\tVV,\tVA,\tAA\},\,\kappa_2\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}
+\vec \kappa =(\kappa_1,\kappa_2)\quad\kappa_1\in\{\tVV,\tVA,\tAA\},\,\kappa_2\in\{\hat F_2,\hat F_L,z\hat F_3,2z\hat g_1,\hat g_4,\hat g_L\}\,.
+\end{align}
+
+We define an additional set of partonic variables, that will simplify many partonic expressions:
+\begin{align}
+0\leq&\,\rho = \frac {4m^2} s\leq 1 &0\leq&\,\beta = \sqrt{1-\rho}\leq 1 &0\leq&\,\chi = \frac{1-\beta}{1+\beta}\leq 1\\
+0\leq&\,\rho' = \frac {4m^2} {s'}\leq 1 &0\leq&\,\beta' = \sqrt{1-\rho'}\leq 1 &0\leq&\,\chi' = \frac{1-\beta'}{1+\beta'}\leq 1\\
+&\rho_q = \frac {4m^2} {q^2}\leq 0 &1\leq&\,\beta_q = \sqrt{1-\rho_q} &0\leq&\,\chi_q = \frac{\beta_q-1}{\beta_q+1}\leq 1
+\end{align}
+which obey the further inequalities
+\begin{align}
+\rho' &< \rho, &\rho'&<\frac{\rho_q}{\rho_q-1},
+&\beta &< \beta', &\beta'&<\frac 1 {\beta_q},
+&\chi' &<\chi, &\chi' &<\chi_q\,.
 \end{align}

@@ -1,48 +1,45 @@
-All collinear poles in the gluonic subprocess can be removed by mass factorization in the following way:
+All collinear poles that arise in the NLO corrections to PGF subprocess $\sigma_{\vec\kappa,\Pg}^{(1)}$ or the NLO corrections to the Bethe-Heitler subprocess $\sigma_{\vec\kappa,\Pq}^{(1)}$ can be removed by standard mass factorization in the following way:
 \begin{align}
-{s'}^2\frac{d^2\sigma_{\vec k,\Pg}^{(1),fin}(s',t_1,u_1,q^2,\mu_F)}{dt_1du_1} &= \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{\vec k,\Pg}^{(1)}(s',t_1,u_1,q^2,\epsilon)}{dt_1du_1} \right.\nonumber\\
- &\hspace{40pt} -\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{\vec k,\Pg\Pg}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)\\
- &\hspace{60pt}\left.(x_1s')^2\frac{d^2\sigma_{\vec k,\Pg}^{(0)}(x_1s',x_1t_1,u_1,q^2,\epsilon)}{d(x_1t_1)du_1} \right]\\
-\Gamma_{\vec k,ij}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}\left(P_{\vec k,ij}(x)\frac{2}{\epsilon} + f_{\vec k,ij}(x,\mu_F^2,\mu_D^2)\right)
+&{s'}^2\frac{d^2\sigma_{\vec \kappa,j}^{(1),fin}(s',t_1,u_1,\mu_F)}{dt_1du_1} = \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{\vec \kappa,j}^{(1)}(s',t_1,u_1,\epsilon)}{dt_1du_1} \right.\nonumber\\
+ &\hspace{40pt}\left. -\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{\kappa_2,\Pg j}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)(x_1s')^2\frac{d^2\sigma_{\vec \kappa,\Pg}^{(0)}(x_1s',x_1t_1,u_1,\epsilon)}{d(x_1t_1)du_1} \right]
 \end{align}
-where $\Gamma_{\vec k,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{\vec k,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $k$. In the $\MSbar$-scheme the $f_{\vec k,ij}$ take their usual form and we find
+where $\Gamma_{\kappa_2,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{\kappa_2,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $\kappa_2$:
 \begin{align}
-\Gamma_{\vec k,ij}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{\vec k,ij}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
- &= 8\pi\alpha_s P_{\vec k,ij}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right)
+\Gamma_{\kappa_2,ij}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}\left(P_{\kappa_2,ij}^{(0)}(x)\frac{2}{\epsilon} + f_{\kappa_2,ij}^{(1)}(x,\mu_F^2,\mu_D^2)\right)
 \end{align}
-The $P_{\vec k,ij}(x)$ are the Altarelli-Parisi splitting functions for which we find\cite{Altarelli:1977zs,Vogelsang:1995vh}
+In the adopted $\MSbar$-scheme the $f_{\kappa_2,ij}^{(1)}$ take their usual form and we find
 \begin{align}
-P_{\vec k,\Pg\Pg}(x) &= \Theta(1-\delta-x)P_{\vec k,\Pg\Pg}^H(x)+\delta(1-x)\left(2C_A\ln(\delta)+\frac{\beta_0}{2}\right)
+\Gamma_{\kappa_2,ij}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{\kappa_2,ij}^{(0)}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
+ &= 8\pi\alpha_s P_{\kappa_2,ij}^{(0)}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right)
 \end{align}
-where we introduced another infrared cut-off $\delta$ to seperate soft ($x\geq 1-\delta$) and hard ($x<1-\delta$) gluons that is connected to $\Delta$ via $\delta=\Delta/(s'+t_1)$. The structure here explains why we were able to write the equation (\ref{eq:ROKPoles}).
+For the PGF subprocess we need the LO gluon-to-gluon splitting functions $P_{\kappa_2,\Pg\Pg}(x)$ given by\cite{Altarelli:1977zs}
+\begin{align}
+P_{\kappa_2,\Pg\Pg}^{(0)}(x) &= \Theta(1-\delta-x)P_{\kappa_2,\Pg\Pg}^{(0),H}(x)+\delta(1-x)\left(2C_A\ln(\delta)+\frac{\beta_0}{2}\right)
+\end{align}
+where we introduced another infrared cut-off $\delta$ to seperate soft collinear ($x\geq 1-\delta$) and hard collinear ($x<1-\delta$) gluons. By simple kinematics we find the relation $\delta=\Delta/(s'+t_1)$ that allows us to divide the collinear part again into a hard and a soft part, rendering each into a finite result. The functions $P_{\kappa_2,\Pg\Pg}^{(0),H}(x)$ have been already quoted in Eq. \ref{eq:PFggH} and \ref{eq:PgggH} and the needed splitting functions $P_{\kappa_2,\Pg\Pq}^{(0)}$ for the Bethe-Heitler subprocess have been given in Eqs. (\ref{eq:PGLgq}) and (\ref{eq:PPgq}), to denote the collinear poles there.
 
-The light quark process can be regularized in a complete analogous way:
+The final, finite partonic cross sections for the PGF subprocess can be split into the hard contributions given by
 \begin{align}
-{s'}^2\frac{d^2\sigma_{\vec k,\Pq}^{(1),fin}(s',t_1,u_1,q^2,\mu_F)}{dt_1du_1} &= \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{\vec k,\Pq}^{(1)}(s',t_1,u_1,q^2,\epsilon)}{dt_1du_1} \right.\nonumber\\
- &\hspace{40pt}-\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{\vec k,\Pg\Pq}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)\nonumber\\
- &\hspace{60pt}\left.(x_1s')^2\frac{d^2\sigma_{\vec k,\Pg}^{(0)}(x_1s',x_1t_1,u_1,q^2,\epsilon)}{d(x_1t_1)du_1} \right] \label{eq:qMassFact}
+{s'}^2\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),H,fin}}{dt_1du_1} &=\alpha\alpha_Se_H^2K_{\Pg\Pgg}N_CC_F\left[-\frac 2 {u_1}P^H_{\kappa_2,\Pg\Pg}(x_1)\right. \nonumber\\
+ &\hspace{40pt}\left\{ B^{(0)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)\right)\right. \nonumber\\
+ &\hspace{40pt}\left.-2B^{(1)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
+ &\hspace{20pt}+C_A\frac{s_4}{2\pi(s_4+m^2)}\left(\int\!d\Omega_n\,R_{\vec \kappa,\tOK}\right)^{finite} \nonumber\\
+ &\hspace{20pt}\left.+2C_F\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_4\,R_{\vec \kappa,\tQED}\right]
 \end{align}
-The needed splitting functions $P_{\vec k,\Pg\Pq}$ have been already quoted in equations (\ref{eq:PGLgq}) and (\ref{eq:PPgq}). Note that $K_{\Pq\Pgg} = 1/(N_C) = 2C_FK_{\Pg\Pgg}$.
-
-The final finite cross sections are then
+and the soft plus virtual contributions given by
 \begin{align}
-{s'}^2\frac{d^2\sigma_{\vec k,\Pg}^{(1),H,fin}}{dt_1du_1} &=\alpha\alpha_Se_H^2K_{\Pg\Pgg}N_CC_F\left[-\frac 2 {u_1}P^H_{\vec k,\Pg\Pg}(x_1)\right. \nonumber\\
- &\hspace{40pt}\left\{ B^{(0)}_{\vec k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)\right)\right. \nonumber\\
- &\hspace{40pt}\left.-2B^{(1)}_{\vec k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
- &\hspace{20pt}+C_A\frac{s_4}{2\pi(s_4+m^2)}\left(\int\!d\Omega_nd\hat{\mathcal I}\,R_{\vec k,OK}\right)^{finite} \nonumber\\
- &\hspace{20pt}\left.+2C_F\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_4d\hat{\mathcal I}\,R_{\vec k,QED}\right]
-\end{align}
-\begin{align}
-{s'}^2\frac{d^2\sigma_{\vec k,\Pg}^{(1),S+V,fin}}{dt_1du_1} &=4\alpha\alpha_Se_H^2K_{\Pg\Pgg}N_CC_FB^{(0)}_{\vec k,QED}\delta(s'+t_1+u_1)\left[C_A\ln^2(\Delta/m^2) \right.\nonumber\\
+{s'}^2\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),S+V,fin}}{dt_1du_1} &=4\alpha\alpha_Se_H^2K_{\Pg\Pgg}N_CC_FB^{(0)}_{\vec \kappa,\tQED}\delta(s'+t_1+u_1)\left[C_A\ln^2(\Delta/m^2) \right.\nonumber\\
  &\hspace{20pt} + \ln(\Delta/m^2)\left(\left(\ln(-t_1/m^2)-\ln(-u_1/m^2)-\ln(\mu_F^2/m^2)\right)C_A \right. \nonumber\\
  &\hspace{80pt} \left. - \frac{2m^2-s}{s\beta}\ln(\chi)(C_A-2C_F) - 2C_F\right) \nonumber\\
- &\hspace{20pt}\left. + \frac {\beta_0^{lf}}{4}\left(\ln(\mu_R^2/m^2)- \ln(\mu_F^2/m^2)\right) +  f_{\vec k}(s',u_1,t_1,q^2)\right]
+ &\hspace{20pt}\left. + \frac {\beta_0^{lf}}{4}\left(\ln(\mu_R^2/m^2)- \ln(\mu_F^2/m^2)\right) +  f_{\vec \kappa}(s',u_1,t_1,q^2)\right] \label{eq:SVfinal}
 \end{align}
-where $f_{\vec k}$ contains lots of logarithms and dilogarithms, but does not depend on $\Delta,\mu_F^2,\mu_R^2$ nor $n_f$ and $\beta_0^{lf} = (11C_A - 2n_{lf})/3$.
+where the functions $f_{\vec \kappa}$ in Eq. \ref{eq:SVfinal} contain logarithms and dilogarithms with different, complicated arguments, but they do not depend on $\Delta,\mu_F^2,\mu_R^2$ nor $n_f$ and $\beta_0^{lf} = (11C_A - 2n_{lf})/3$.
+
+The corresponding finite, reduced partonic cross section for the light quark initiated Bethe-Heitler and Compton processes reads
 \begin{align}
-{s'}^2\frac{d^2\sigma_{\vec k,\Pq}^{(1),fin}}{dt_1du_1} &=\alpha\alpha_SK_{\Pq\Pgg}N_C\left[-\frac 1 {u_1}e_H^2P_{\vec k,\Pg\Pq}(x_1)\right. \nonumber\\
- &\hspace{40pt}\left\{B^{(0)}_{\vec k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)-2\partial_\epsilon E_{\vec k}(\epsilon=0)\right)\right. \nonumber\\
- &\hspace{40pt}\left.-2 B^{(1)}_{\vec k,QED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
- &\hspace{20pt}+C_F\frac{s_4}{4\pi(s_4+m^2)}\left(\int\!d\Omega_nd\hat{\mathcal I}\,e_H^2A_{\vec k,1}\right)^{finite} \nonumber\\
- &\hspace{20pt}\left.+C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4d\hat{\mathcal I}\,e_L^2A_{\vec k,2} +C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4d\hat{\mathcal I}\,e_H e_L A_{\vec k,3} \right]
+{s'}^2\frac{d^2\sigma_{\vec \kappa,\Pq}^{(1),fin}}{dt_1du_1} &=\alpha\alpha_SK_{\Pq\Pgg}N_C\left[-\frac 1 {u_1}e_H^2P_{\kappa_2,\Pg\Pq}(x_1)\right. \nonumber\\
+ &\hspace{40pt}\left\{B^{(0)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)-2\partial_\epsilon E_{\vec \kappa}(\epsilon=0)\right)\right. \nonumber\\
+ &\hspace{40pt}\left.-2 B^{(1)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
+ &\hspace{20pt}+C_F\frac{s_4}{4\pi(s_4+m^2)}\left(\int\!d\Omega_n\,e_H^2A_{\vec \kappa,1}\right)^{finite} \nonumber\\
+ &\hspace{20pt}\left.+C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_L^2A_{\vec \kappa,2} +C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_H e_L A_{\vec \kappa,3} \right]
 \end{align}
