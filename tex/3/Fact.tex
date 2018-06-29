@@ -1,9 +1,9 @@
-All collinear poles that arise in the NLO corrections to PGF subprocess $\sigma_{\vec\kappa,\Pg}^{(1)}$ or the NLO corrections to the Bethe-Heitler subprocess $\sigma_{\vec\kappa,\Pq}^{(1)}$ can be removed by standard mass factorization in the following way:
+All collinear poles that arise in the NLO corrections to PGF subprocess $\sigma_{\vec\kappa,\Pg}^{(1)}$ or the Bethe-Heitler subprocess $\sigma_{\vec\kappa,\Pq}^{(1)}$ can be removed by a standard mass factorization 
 \begin{align}
 &{s'}^2\frac{d^2\sigma_{\vec \kappa,j}^{(1),fin}(s',t_1,u_1,\mu_F)}{dt_1du_1} = \lim_{\epsilon\rightarrow 0}\left[{s'}^2\frac{d^2\sigma_{\vec \kappa,j}^{(1)}(s',t_1,u_1,\epsilon)}{dt_1du_1} \right.\nonumber\\
  &\hspace{40pt}\left. -\int\limits_0^1\frac{dx_1}{x_1}\Gamma_{\kappa_2,\Pg j}^{(1)}(x_1,\mu_F^2,\mu_D,\epsilon)(x_1s')^2\frac{d^2\sigma_{\vec \kappa,\Pg}^{(0)}(x_1s',x_1t_1,u_1,\epsilon)}{d(x_1t_1)du_1} \right]
 \end{align}
-where $\Gamma_{\kappa_2,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{\kappa_2,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $\kappa_2$:
+for $j=\{\Pg,\Pq\}$ and where $\Gamma_{\kappa_2,ij}^{(1)}$ is the first order correction to the transition functions $\Gamma_{\kappa_2,ij}$ for \textit{incoming} particle $j$ and \textit{outgoing} particle $i$ in projection $\kappa_2$:
 \begin{align}
 \Gamma_{\kappa_2,ij}^{(1)}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}\left(P_{\kappa_2,ij}^{(0)}(x)\frac{2}{\epsilon} + f_{\kappa_2,ij}^{(1)}(x,\mu_F^2,\mu_D^2)\right)
 \end{align}
@@ -12,19 +12,19 @@ In the adopted $\MSbar$-scheme the $f_{\kappa_2,ij}^{(1)}$ take their usual form
 \Gamma_{\kappa_2,ij}^{(1),\MSbar}(x,\mu_F^2,\mu_D,\epsilon) &= \frac{\alpha_s}{2\pi}P_{\kappa_2,ij}^{(0)}(x)\left(\frac{2}{\epsilon} +\gamma_E - \ln(4\pi) + \ln(\mu_F^2/m^2) - \ln(\mu_D^2/m^2)\right)\\
  &= 8\pi\alpha_s P_{\kappa_2,ij}^{(0)}(x) C_\epsilon \left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2} \left(\frac{2}{\epsilon} + \ln(\mu_F^2/m^2)\right)
 \end{align}
-For the PGF subprocess we need the LO gluon-to-gluon splitting functions $P_{\kappa_2,\Pg\Pg}(x)$ given by\cite{Altarelli:1977zs}
+For the PGF subprocess we need the LO gluon-to-gluon splitting functions $P_{\kappa_2,\Pg\Pg}^{(0)}(x)$ given by\cite{Altarelli:1977zs}
 \begin{align}
 P_{\kappa_2,\Pg\Pg}^{(0)}(x) &= \Theta(1-\delta-x)P_{\kappa_2,\Pg\Pg}^{(0),H}(x)+\delta(1-x)\left(2C_A\ln(\delta)+\frac{\beta_0}{2}\right)
 \end{align}
 where we introduced another infrared cut-off $\delta$ to seperate soft collinear ($x\geq 1-\delta$) and hard collinear ($x<1-\delta$) gluons. By simple kinematics we find the relation $\delta=\Delta/(s'+t_1)$ that allows us to divide the collinear part again into a hard and a soft part, rendering each into a finite result. The functions $P_{\kappa_2,\Pg\Pg}^{(0),H}(x)$ have been already quoted in Eq. \ref{eq:PFggH} and \ref{eq:PgggH} and the needed splitting functions $P_{\kappa_2,\Pg\Pq}^{(0)}$ for the Bethe-Heitler subprocess have been given in Eqs. (\ref{eq:PGLgq}) and (\ref{eq:PPgq}), to denote the collinear poles there.
 
-The final, finite partonic cross sections for the PGF subprocess can be split into the hard contributions given by
+The final, finite partonic cross sections for the PGF subprocess is split, as discussed, into a hard contribution given by
 \begin{align}
 {s'}^2\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),H,fin}}{dt_1du_1} &=\alpha\alpha_Se_H^2K_{\Pg\Pgg}N_CC_F\left[-\frac 2 {u_1}P^H_{\kappa_2,\Pg\Pg}(x_1)\right. \nonumber\\
  &\hspace{40pt}\left\{ B^{(0)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)\right)\right. \nonumber\\
  &\hspace{40pt}\left.-2B^{(1)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
  &\hspace{20pt}+C_A\frac{s_4}{2\pi(s_4+m^2)}\left(\int\!d\Omega_n\,R_{\vec \kappa,\tOK}\right)^{finite} \nonumber\\
- &\hspace{20pt}\left.+2C_F\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_4\,R_{\vec \kappa,\tQED}\right]
+ &\hspace{20pt}\left.+2C_F\frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_4\,R_{\vec \kappa,\tQED}\right] \label{eq:Hfinal}
 \end{align}
 and the soft plus virtual contributions given by
 \begin{align}
@@ -35,11 +35,13 @@ and the soft plus virtual contributions given by
 \end{align}
 where the functions $f_{\vec \kappa}$ in Eq. \ref{eq:SVfinal} contain logarithms and dilogarithms with different, complicated arguments, but they do not depend on $\Delta,\mu_F^2,\mu_R^2$ nor $n_f$ and $\beta_0^{lf} = (11C_A - 2n_{lf})/3$.
 
-The corresponding finite, reduced partonic cross section for the light quark initiated Bethe-Heitler and Compton processes reads
+The corresponding finite, reduced partonic cross section for the light quark initiated processes reads
 \begin{align}
 {s'}^2\frac{d^2\sigma_{\vec \kappa,\Pq}^{(1),fin}}{dt_1du_1} &=\alpha\alpha_SK_{\Pq\Pgg}N_C\left[-\frac 1 {u_1}e_H^2P_{\kappa_2,\Pg\Pq}(x_1)\right. \nonumber\\
  &\hspace{40pt}\left\{B^{(0)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) \left(\ln\left(\frac{s_4^2}{m^2(s_4+m^2)}\right)-\ln(\mu_F^2/m^2)-2\partial_\epsilon E_{\vec \kappa}(\epsilon=0)\right)\right. \nonumber\\
  &\hspace{40pt}\left.-2 B^{(1)}_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right)\right\} \nonumber\\
  &\hspace{20pt}+C_F\frac{s_4}{4\pi(s_4+m^2)}\left(\int\!d\Omega_n\,e_H^2A_{\vec \kappa,1}\right)^{finite} \nonumber\\
- &\hspace{20pt}\left.+C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_L^2A_{\vec \kappa,2} +C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_H e_L A_{\vec \kappa,3} \right]
+ &\hspace{20pt}\left.+C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_L^2A_{\vec \kappa,2} +C_F\frac{s_4}{4\pi(s_4+m^2)}\int\!d\Omega_4\,e_H e_L A_{\vec \kappa,3} \right] \label{eq:qfinal}\,.
 \end{align}
+
+Note that the hat contributions for $g_1(x,Q^2)$ to the NLO PGF and the Bethe-Heitler process as computed in \cite{Hekhorn:2018ywm} this way can be directly related to $B^{(1)}_{\tVV,2xg_1,\tQED}$, as in this calculation this variable is not longer vanishing. This way we have shown that the Larin-scheme and the HVBM-scheme are equivalent for this process up to NLO.

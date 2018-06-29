@@ -1,21 +1,23 @@
+At NLO we have to consider the one-loop virtual corrections to the PGF process. In this order two different color structures arise: the abelian QED part and the non-Abelian OK part, so we decompose our result by this structure. The needed matrix elements can then be written analog to \cite{Hekhorn:2018ywm}
 \begin{align}
-M_{\vec \kappa}^{(1),V}&=\hat {\mathcal P}_{\vec \kappa}^{\Pgg,\mu\mu'}\hat {\mathcal P}_{\kappa_2}^{\Pg,\nu\nu'}\sum_{j,j'}2\text{Re}\left[\Md^{(1),V}_{j,\mu\nu}\left(\Md^{(0)}_{j',\mu'\nu'}\right)^*\right] \nonumber\\
+M_{\vec \kappa}^{(1),V}&=\hat {\mathcal P}_{\vec \kappa}^{b,\mu\mu'}\hat {\mathcal P}_{\kappa_2}^{\Pg,\nu\nu'}\sum_{j,j'}2\text{Re}\left[\Md^{(1),V}_{j,\mu\nu}\left(\Md^{(0)}_{j',\mu'\nu'}\right)^*\right] \nonumber\\
  &= 8g^4\mu_D^{-\epsilon}e^2e_H^2 N_C C_FC_\epsilon\left( C_A V_{\vec \kappa,\tOK} + 2C_F V_{\vec \kappa,\tQED}\right)
 \end{align}
-where $C_\epsilon = \exp(\epsilon/2(\gamma_E-\ln(4\pi)))/(16\pi^2)$ and $C_A$ is the second Casimir constant of the adjoint representation for the gluon (that introduces a non-abelian part).
+where $C_\epsilon = \exp(\epsilon/2(\gamma_E-\ln(4\pi)))/(16\pi^2)$, $\gamma_E$ is the Euler-Mascheroni constant and $C_A=N_C$ is the second Casimir constant of the adjoint representation for the gluon (that introduces the non-abelian OK part).
 
-The full expressions for the $V_{\vec \kappa,\tOK},V_{\vec \kappa,\tQED}$ are quite complicated and are too long to be presented here, nevertheless the arising poles are quite compact:
+The details of the calculation for the $V_{\vec \kappa,\tOK},V_{\vec \kappa,\tQED}$ are outlined in our previous paper \cite{Hekhorn:2018ywm} along with a correction for an integral in \cite{Laenen1993162}. As we adopted the Larin-scheme here to deal with the subtleties of $\gamma_5$ instead of the HVBM-scheme there, the expressions in the intermediate steps do not match. Nevertheless the arising poles can be cast in the very same form, i.e.,
 \begin{align}
-V_{\vec \kappa,\tOK} &= -2B_{\vec \kappa,\tQED}\left(\frac 4 {\epsilon^2} + \left(\ln(-t_1/m^2) + \ln(-u_1/m^2) +\frac{s-2m^2}{s\beta}\ln(\chi)\right)\frac 2 \epsilon \right) + O(\epsilon^0)\\
+V_{\vec \kappa,\tOK} &= -2B_{\vec \kappa,\tQED}\left(\frac 4 {\epsilon^2} + \frac 2 \epsilon\left[\ln(-t_1/m^2) + \ln(-u_1/m^2) +\frac{s-2m^2}{s\beta}\ln(\chi)\right] \right) + O(\epsilon^0)\\
 V_{\vec \kappa,\tQED} &= -2B_{\vec \kappa,\tQED}\left(1-\frac{s-2m^2}{s\beta}\ln(\chi)\right)\frac 2 \epsilon + O(\epsilon^0)
 \end{align}
-The above results already include the mass renormalization that we have performed \textit{on-shell}, so all ultra-violet poles have been removed. For the renormalization of the strong coupling we use the $\MSbar_m$ scheme defined in \cite{Bojak:2000eu} and so the full (remaining) renormalization can be achieved by
+Note that these results completely factorize and the $B_{\vec \kappa,\tQED}$ carry the only dependence on the projection $\vec\kappa$. The above results do not include self-energies on external legs. We renormalize the HQs \textit{on-shell} and $m$ thus refers to the pole mass of the HQ. For the renormalization of the strong coupling we use the same $\MSbar_m$ scheme as defined in \cite{Hekhorn:2018ywm} and so the full (remaining) renormalization of all ultra-violates poles can be achieved by
 \begin{align}
-\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),V}}{dt_1du_1} &=\left.\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),V}}{dt_1du_1} \right|_{\text{bare}}+ 4\pi\alpha_s(\mu_R^2)C_\epsilon\left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2}\left[\left(\frac 2 \epsilon +\ln(\mu_R^2/m^2)\right)\beta_0^f +\frac 2 3 \ln(\mu_R^2/m^2)\right]\frac{d^2\sigma_{\vec \kappa,\Pg}^{(0)}}{dt_1du_1}
+\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),V}}{dt_1du_1} &=\left.\frac{d^2\sigma_{\vec \kappa,\Pg}^{(1),V}}{dt_1du_1} \right|_{\text{bare}}+ 4\pi\alpha_s(\mu_R^2)C_\epsilon\left(\frac{\mu_D^2}{m^2}\right)^{-\epsilon/2}\nonumber\\
+ &\hspace{120pt}\left[\left(\frac 2 \epsilon +\ln(\mu_R^2/m^2)\right)\beta_0^f +\frac 2 3 \ln(\mu_R^2/m^2)\right]\frac{d^2\sigma_{\vec \kappa,\Pg}^{(0)}}{dt_1du_1}
 \end{align}
-with $\mu_R$ the renormalization scale introduced by the RGE, $\beta_0^f = (11C_A- 2n_{f})/3$ the first coefficient of the beta function and $n_f$ the number of \textit{total} flavours (i.e. $n_{lf}=n_f-1$ active (light) flavours and one heavy flavour). The double poles occuring in $V_{\vec \kappa,\tOK}$ are introduced by the diagrams \fxerror{do} when the soft and collinear singularities coincide.
+with $\mu_R$ the renormalization scale, $\beta_0^f = (11C_A- 2n_{f})/3$ the first coefficient of the beta function and $n_f$ the number of \textit{total} flavours (i.e. $n_{lf}=n_f-1$ active (light) flavours and one heavy flavour). The double poles in $V_{\vec \kappa,\tOK}$ originate from diagrams where soft and collinear singularities can coincide. In what follows, we will often drop the scale in the strong coupling, i.e., $\alpha_s$ has to be understood as $\alpha_s(\mu_R)$.
 
-The partonic cross section is given by
+The bare double differential partonic one-loop virtual PGF cross section is given by
 \begin{align}
-d\sigma_{\vec \kappa,\Pg}^{(1),V} &= \frac 1 {2s'}\frac 1 2 E_{\kappa_2}(\epsilon) M_{\vec \kappa}^{(1),V} \dPSTwo
+\left.d\sigma_{\vec \kappa,\Pg}^{(1),V}\right|_{\text{bare}} &= \frac 1 {2s'}\frac 1 2 E_{\kappa_2}(\epsilon) K_{\Pg\Pgg} M_{\vec \kappa}^{(1),V} \dPSTwo
 \end{align}

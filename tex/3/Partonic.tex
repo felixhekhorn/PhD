@@ -1,30 +1,29 @@
-\fxerror{write partonic}
-
-We decompose the partonic structure functions by their charge structure and write
+We decompose the partonic cross section by their order in QCD pertubation theory and their charge structure and write
 \begin{align}
 \sigma_{\vec \kappa}(m^2,q^2,s) &= \frac{\alpha\alpha_s}{m^2}\left\{e_H^2 c_{\vec\kappa,\Pg}^{(0)} + 4\pi\alpha_s\left[e_H^2\left(c_{\vec\kappa,\Pg}^{(1)} + \bar c_{\vec\kappa,\Pg}^{(1),F}\ln(\mu_F^2/m^2)  + \bar c_{\vec\kappa,\Pg}^{(1),R}\ln(\mu_R^2/m^2) \right) \right] \right.\nonumber\\
  &\hspace{80pt} \left. + 4\pi\alpha_s\left[e_H^2 c_{\vec \kappa,\Pq}^{(1)} + e_L^2 d_{\vec \kappa,\Pq}^{(1)}\right]\right\}
 \end{align}
-From Eq. \ref{eq:SVfinal} we find immediately
+
+The LO coefficient functions $c_{\vec\kappa,\Pg}^{(0)}$ can be computed from Eq. \ref{eq:LOxs} by analytical means. The parity violating $B_{\tVA,\kappa_2,\tQED}$ are anti-symmetric with respect to the $t_1$-integration so they do not contribute to the full inclusive cross sections and we find
+\begin{equation}
+c_{\tVA,\kappa_2,\Pg}^{(0)} = 0 \quad \kappa_2\in\{xF_3,g_4,g_L\}\,.
+\end{equation}
+This also holds for the NLO factorization scaling functions $\bar c_{\tVA,\kappa_2,\Pg}^{(1),F}$ and $\bar c_{\tVA,\kappa_2,\Pq}^{(1),F}$ due to the Eqs. \ref{eq:Hfinal}-\ref{eq:qfinal}. Their simplified structure actually allows us to give analytical results for these coefficient functions, given in the Appendices \ref{sec:Appendix:Partonic:cgBar1} and \ref{sec:Appendix:Partonic:cqBarF1} respectively.
+
+From Eq. \ref{eq:SVfinal} we can also find immediately the renormalization scaling functions
 \begin{align}
 \bar c_{\vec\kappa,\Pg}^{(1),R} &= \frac{\beta_0^{lf}}{16\pi^2} c_{\vec\kappa,\Pg}^{(0)}
 \end{align}
-and for convenience we then also define $\bar c_{\vec\kappa,\Pg}^{(1)} = \bar c_{\vec\kappa,\Pg}^{(1),F} + \bar c_{\vec\kappa,\Pg}^{(1),R}$.
+and for convenience we also define $\bar c_{\vec\kappa,\Pg}^{(1)} = \bar c_{\vec\kappa,\Pg}^{(1),F} + \bar c_{\vec\kappa,\Pg}^{(1),R}$.
 
-\subsection{$c_{\vec\kappa,\Pg}^{(0)}$}
-\include{Partonic.cg0}
-
-\subsection{$c_{\vec\kappa,\Pg}^{(1)}$}
-\include{Partonic.cg1}
-
-\subsection{$\bar c_{\vec\kappa,\Pg}^{(1)}$}
-\include{Partonic.cgBar1}
-
-\subsection{$c_{\vec\kappa,\Pq}^{(1)}$}
-\include{Partonic.cq1}
-
-\subsection{$\bar c_{\vec\kappa,\Pq}^{(1),F}$}
-\include{Partonic.cqBarF1}
-
-\subsection{$d_{\vec\kappa,\Pq}^{(1)}$}
-\include{Partonic.dq1}
+The Coulomb coefficient function $d_{\vec\kappa,\Pq}^{(1)}$ also have a simplified analytic structure, so we can give analytic results for these as well (see Appendix \ref{sec:Appendix:Partonic:dq1}). We find at this order
+\begin{equation}
+d_{\tVA,g_4,\Pq}^{(1)} = d_{\tVA,g_L,\Pq}^{(1)} = 0 = d_{\tAA,2xg_1,\Pq}^{(1)}
+\end{equation}
+and
+\begin{align}
+d_{\tVV,F_2,\Pq}^{(1)} &= d_{\tAA,F_2,\Pq}^{(1)}\,,
+&d_{\tVV,F_L,\Pq}^{(1)} &= d_{\tAA,F_L,\Pq}^{(1)}\,,
+&d_{\tVV,2xg_1,\Pq}^{(1)} &= d_{\tVA,xF_3,\Pq}^{(1)}\,. 
+\end{align}
+So here the coefficient functions for the parity conserving unpolarized $F_2$ and $F_L$ do show the V-A structure of the massless case, i.e. $d_{\tVV,F_2,\Pq}^{(1)} - d_{\tAA,F_2,\Pq}^{(1)} = 0$, as the exchanged boson couples to the massless quark $\Pq$. This does not hold for the polarized $2xg_1$, instead the matrix element to the axial-axial couling does vanish, i.e. $A_{\tAA,2xg_1,2} = 0$.

@@ -1,43 +1,42 @@
-\label{sec:NLO.g}
 In addition to the virtual corrections we have to consider the radiation of an additional gluon at next-to-leading order, i. e., the $2\to 3$ process
 \begin{equation}
 b(q) + \Pg(k_1) \rightarrow \PQ(p_1)+\PaQ(p_2) + \Pg(k_2),\quad b\in\{\Pggx,\PZx\}
 \end{equation}
-All contributing diagrams are depicted in figure \fxerror{do} and the result can be written as
+As before, we split the results according to their color structure into QED and OK parts and matrix elements can then be written as
 \begin{align}
 M_{\vec \kappa}^{(1),\Pg} &= \hat {\mathcal P}_{\vec \kappa}^{b,\mu\mu'}\hat {\mathcal P}_{\kappa_2}^{\Pg,\nu\nu'}\sum_{j,j'}\Md^{(1),\Pg}_{j,\mu\nu}\left(\Md^{(1),\Pg}_{j',\mu'\nu'}\right)^*\\
- &= 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{\vec \kappa,\tOK} + 2C_F R_{\vec \kappa,\tQED}\right)
+ &= 8g^4\mu_D^{-2\epsilon}e^2e_H^2 N_C C_F\left( C_A R_{\vec \kappa,\tOK} + 2C_F R_{\vec \kappa,\tQED}\right)\,.
 \end{align}
 
-The required $n$-dimensional phase space $\dPSThree$ is given by
+The required $n$-dimensional phase space $\dPSThree$ was computed in \cite{Hekhorn:2018ywm} and is given by
 \begin{align}
 \dPSThree &= \frac{S_\epsilon^2}{\Gamma(1+\epsilon)s'} \frac{s_4^{1+\epsilon}}{(s_4+m^2)^{1+\epsilon/2}}\left(\frac{(t_1u_1'-s'm^2)s' - q^2t_1^2}{s'^2}\right)^{\epsilon/2}\! dt_1 du_1 d\Omega_n
 \end{align}
-with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$.
+with $d\Omega_n = \sin^{n-3}(\theta_1)d\theta_1\sin^{n-4}(\theta_2)d\theta_2$. Note that we do not have to consider the hat momenta space, as we use the Larin-scheme here.
 
-Again when integrating the phase space angles the expressions become quite lengthy, but the collinear poles can be given in a compact form by
+Most of needed the phase space integrals have already been calculated for \cite{Hekhorn:2018ywm}, but the new projections here do bring up some more integrals that are obtained straight forward using the list in \cite{Bojak:2000eu}. The collinear poles can then be given in a compact form by
 \begin{align}
 \frac{s_4}{2\pi(s_4+m^2)}\int\!d\Omega_n \,C_A R_{\vec \kappa,OK} &=-\frac 2 {u_1}B_{\vec \kappa,\tQED}\left(\!\begin{array}{l}s'\rightarrow x_1s'\\t_1\rightarrow x_1 t_1\end{array}\!\!\right) P^{(0),H}_{\kappa_2,\Pg\Pg}(x_1)\frac 2 \epsilon + O(\epsilon^0) \label{eq:ROKPoles}
 \end{align}
-with $x_1 = -u_1/(s'+t_1)$ and the hard part of the LO Altarelli-Parisi splitting functions $P^{(0),H}_{\kappa_2,\Pg\Pg}$\cite{Altarelli:1977zs,Vogelsang:1995vh}:
+with $x_1 = -u_1/(s'+t_1)$ and the hard part of the LO Altarelli-Parisi splitting functions $P^{(0),H}_{\kappa_2,\Pg\Pg}$\cite{Altarelli:1977zs}:
 \begin{align}
 P^{(0),H}_{F_2,\Pg\Pg}(x) = P^{(0),H}_{F_L,\Pg\Pg}(x) = P^{(0),H}_{xF_3,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} + \frac 2 x - 4 + 2x - 2x^2\right) \label{eq:PFggH}\\
 P^{(0),H}_{2xg_1,\Pg\Pg}(x) = P^{(0),H}_{g_4,\Pg\Pg}(x) = P^{(0),H}_{g_L,\Pg\Pg}(x) &= C_A\left(\frac 2 {1-x} - 4x + 2\right) \label{eq:PgggH}
 \end{align}
-The hard abelian QED part $R_{\vec \kappa,\tQED}$ does not contain collinear poles.
+The hard abelian QED part $R_{\vec \kappa,\tQED}$ does not contain any collinear poles.
 
-The spin and color averaged partonic cross section for the real corrections to the PGF process is then given by
+The spin and color averaged partonic cross section for the real corrections (R) to the PGF process is then given by
 \begin{align}
-d\sigma_{\vec \kappa,\Pg}^{(1),R} &= \frac 1 {2s'}\frac 1 2 E_{\kappa_2}(\epsilon)K_{\Pg\Pgg} M_{\vec \kappa}^{(1),\Pg} \dPSThree
+d\sigma_{\vec \kappa,\Pg}^{(1),R} &= \frac 1 {2s'}\frac 1 2 E_{\kappa_2}(\epsilon)K_{\Pg\Pgg} M_{\vec \kappa}^{(1),\Pg} \dPSThree\,.
 \end{align}
 
-From these expressions we can obtain the soft gluon limit $k_2\rightarrow 0$ and seperate their calculations:
+Following the phase space slicing methods introduced in \cite{Hekhorn:2018ywm}, we split the calculation of the real contributions into a hard part $s_4 > \Delta$ and a soft part $s_4<\Delta$. The soft limit of the matrix elements is obtained by taking the limit $k_2\rightarrow 0$ and we find
 \begin{equation}
 \lim_{k_2\rightarrow 0}\left(C_A R_{\vec \kappa,\tOK} + 2C_F R_{\vec \kappa,\tQED}\right) = \left(C_A S_{\vec \kappa,\tOK} + 2C_F S_{\vec \kappa,\tQED}\right) + O(1/s_4,1/s_3,1/t')
 \end{equation}
 where
 \begin{align}
 S_{\vec \kappa,\tOK}  &= 2\left(\frac{t_1}{t's_3} + \frac{u_1}{t's_4}-\frac{s-2m^2}{s_3s_4}\right)B_{\vec \kappa,\tQED}\\
-S_{\vec \kappa,\tQED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{\vec \kappa,\tQED}
+S_{\vec \kappa,\tQED} &= 2\left(\frac{s-2m^2}{s_3s_4} - \frac{m^2}{s_3^2} - \frac{m^2}{s_4^2}\right)B_{\vec \kappa,\tQED}\,.
 \end{align}
-Note that the einkonal factors multiplying the Born functions $B_{\vec \kappa,\tQED}$ neither depend on the photon's virtuality $q^2$ nor on the projection $\vec \kappa$. 
+Note that the einkonal factors multiplying the Born functions $B_{\vec \kappa,\tQED}$ neither depend on the photon's virtuality $q^2$ nor on the projection $\vec \kappa$.
