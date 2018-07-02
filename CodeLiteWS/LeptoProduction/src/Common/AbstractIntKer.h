@@ -23,6 +23,54 @@ protected:
 
 /** @brief define s' = s - q2 */
     #define _sp cdbl sp = this->s + this->Q2;
+    
+    
+/**
+ * @brief combine all available currents with appropriate factors
+ * NB: needs to be macro, to get fVV only evaluate, when needed
+ * if needed: rewrite to reveal "new" term v2-a2
+ * v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
+ * @param gVV VV matrix element
+ * @param gVA VA matrix element
+ * @param gAA AA matrix element
+ */
+#define combineCurs(gVV,gVA,gAA) \
+    cdbl eH = this->getElectricCharge(this->nlf+1);\
+    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
+    cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
+    dbl r = 0.;\
+    if (isParityConservingProj(this->proj)) {\
+        cdbl eVV = gVV;\
+        if (this->flags.usePhoton) r += eH*eH * eVV;\
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;\
+        if (this->flags.useZ) {\
+            cdbl eAA = gAA;\
+            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
+        }\
+    } else {\
+        cdbl eVA = gVA;\
+        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;\
+        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
+    }\
+    return r;
+
+/**
+ * @brief implement partonic coefficient as single-current variant and as all-currents-combination
+ * @param n name
+ */
+#define implementPartonicCoeff(ns,n)\
+cdbl ns::IntKer::n##_cur() const {\
+    init_##n\
+    if (Mode_##n##_VV == this->mode) { return n##_VV; }\
+    if (Mode_##n##_VA == this->mode) { return n##_VA; }\
+    if (Mode_##n##_AA == this->mode) { return n##_AA; }\
+    return 0.;\
+}\
+\
+cdbl ns::IntKer::n() const {\
+    init_##n\
+    combineCurs(n##_VV,n##_VA,n##_AA)\
+}
 
 /**
  * @brief returns partonic (kinematic) beta

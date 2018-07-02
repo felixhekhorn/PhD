@@ -74,46 +74,6 @@ void Inclusive::IntKer::setPartonicVars() {
     this->t1 = this->xi*T1;
 }
 
-// combine all available currents with appropriate factors
-// NB: needs to be macro, to get fVV only evaluate, when needed
-// if needed: rewrite to reveal "new" term v2-a2
-// v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
-#define combineCurs(gVV,gVA,gAA) \
-    cdbl eH = this->getElectricCharge(this->nlf+1);\
-    cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
-    cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
-    dbl r = 0.;\
-    if (isParityConservingProj(this->proj)) {\
-        cdbl eVV = gVV;\
-        if (this->flags.usePhoton) r += eH*eH * eVV;\
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gVQ * eVV;\
-        if (this->flags.useZ) {\
-            cdbl eAA = {gAA};\
-            r += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
-        }\
-    } else {\
-        cdbl eVA = gVA;\
-        if (this->flags.usePhotonZ) r -= this->getNormPhZ() * eH*gAQ * eVA;\
-        if (this->flags.useZ) r += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
-    }\
-    return r;
-
-// implement partonic coefficient as single-current variant and as all-currents-combination
-// @param n name
-#define implementPartonicCoeff(n)\
-cdbl Inclusive::IntKer::n##_cur() const {\
-    init_##n\
-    if (Mode_##n##_VV == this->mode) { return n##_VV; }\
-    if (Mode_##n##_VA == this->mode) { return n##_VA; }\
-    if (Mode_##n##_AA == this->mode) { return n##_AA; }\
-    return 0.;\
-}\
-\
-cdbl Inclusive::IntKer::n() const {\
-    init_##n\
-    combineCurs(n##_VV,n##_VA,n##_AA)\
-}
-
 // setup cg0
 #define init_cg0 _sp\
     cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;\
@@ -124,7 +84,7 @@ cdbl Inclusive::IntKer::n() const {\
 #define cg0_VV n * fVV(m2,-Q2,sp,t1)
 #define cg0_VA n * fVA(m2,-Q2,sp,t1)
 #define cg0_AA n * fAA(m2,-Q2,sp,t1)
-implementPartonicCoeff(cg0)
+implementPartonicCoeff(Inclusive,cg0)
 
 // setup dq1
 void Inclusive::IntKer::getIntA2(fPtr5dbl &fVV, fPtr5dbl &fVA) const {
@@ -165,7 +125,7 @@ void Inclusive::IntKer::getIntA1(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) co
 #define cq1_VV n * fVV(m2,-Q2,sp,t1,s4)
 #define cq1_VA n * fVA(m2,-Q2,sp,t1,s4)
 #define cq1_AA n * fAA(m2,-Q2,sp,t1,s4)
-implementPartonicCoeff(cq1)
+implementPartonicCoeff(Inclusive,cq1)
 
 // setup cqBarF1
 #define init_cqBarF1 _sp\
@@ -178,7 +138,7 @@ implementPartonicCoeff(cq1)
 #define cqBarF1_VV n * fVV(m2,-Q2,x1*sp,x1*t1)
 #define cqBarF1_VA n * fVA(m2,-Q2,x1*sp,x1*t1)
 #define cqBarF1_AA n * fAA(m2,-Q2,x1*sp,x1*t1)
-implementPartonicCoeff(cqBarF1)
+implementPartonicCoeff(Inclusive,cqBarF1)
 
 // soft helper coefficients
 cdbl Inclusive::IntKer::getDeltaCoeffA0() const {
@@ -209,7 +169,7 @@ cdbl Inclusive::IntKer::getDeltaCoeffA2() const {
 #define cgBarF1_VV n * (AP*fVV(m2,-Q2,x1*sp,x1*t1) + AS*fVV(m2,-Q2,sp,t1))
 #define cgBarF1_VA n * (AP*fVA(m2,-Q2,x1*sp,x1*t1) + AS*fVA(m2,-Q2,sp,t1))
 #define cgBarF1_AA n * (AP*fAA(m2,-Q2,x1*sp,x1*t1) + AS*fAA(m2,-Q2,sp,t1))
-implementPartonicCoeff(cgBarF1)
+implementPartonicCoeff(Inclusive,cgBarF1)
 
 // setup cgBarR1
 #define init_cgBarR1 _sp\
@@ -220,7 +180,7 @@ implementPartonicCoeff(cgBarF1)
 #define cgBarR1_VV n * b * fVV(m2,-Q2,sp,t1)
 #define cgBarR1_VA n * b * fVA(m2,-Q2,sp,t1)
 #define cgBarR1_AA n * b * fAA(m2,-Q2,sp,t1)
-implementPartonicCoeff(cgBarR1)
+implementPartonicCoeff(Inclusive,cgBarR1)
 
 // setup cg1
 void Inclusive::IntKer::getIntROK(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const { getME(Inclusive::ME::IntROK) }
@@ -262,7 +222,7 @@ void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) co
                     + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_AA(m2,-Q2,sp,t1)\
                     + A0*(Color::CA*SVOK_AA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_AA(m2,-Q2,sp,t1))\
                    )
-implementPartonicCoeff(cg1)
+implementPartonicCoeff(Inclusive,cg1)
 
 
 cdbl Inclusive::IntKer::Fg0() const {

@@ -11,7 +11,7 @@
 
 #include <gsl/gsl_integration.h>
 #include "gslpp/gslpp.Functor.hpp"
-#include "Common/Integration.hpp"
+#include "Common/Integration.h"
 
 int runInclusive();
 int runInclusive2();

@@ -5,7 +5,7 @@
 #include <gsl/gsl_integration.h>
 
 #include "gslpp/gslpp.Functor.hpp"
-#include "Common/Integration.hpp"
+#include "Common/Integration.h"
 
 #include "Inclusive/ME/Born.h"
 #include "Inclusive/ME/NLOq.h"

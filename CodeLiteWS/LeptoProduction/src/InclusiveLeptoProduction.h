@@ -1,5 +1,5 @@
-#ifndef INCLUSIVELEPTOPRODUCTION_H
-#define INCLUSIVELEPTOPRODUCTION_H
+#ifndef InclusiveLeptoProduction_H
+#define InclusiveLeptoProduction_H
 
 #include "Common/AbstractLeptoProduction.h"
 
@@ -189,4 +189,4 @@ public:
 ///@}
 };
 
-#endif // INCLUSIVELEPTOPRODUCTION_H
+#endif // InclusiveLeptoProduction_H

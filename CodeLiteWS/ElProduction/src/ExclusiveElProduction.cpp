@@ -7,7 +7,7 @@
 #include <gsl/gsl_integration.h>
 
 #include "gslpp/gslpp.Functor.hpp"
-#include "Common/Integration.hpp"
+#include "Common/Integration.h"
 
 #include "Common/ME/BpQED.h"
 #include "Common/ME/AltarelliParisi.hpp"

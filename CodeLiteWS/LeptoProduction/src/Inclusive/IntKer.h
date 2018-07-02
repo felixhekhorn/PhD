@@ -1,5 +1,5 @@
-#ifndef INTKER_H
-#define INTKER_H
+#ifndef Inclusive_IntKer_H
+#define Inclusive_IntKer_H
 
 #include "../Common/AbstractIntKer.h"
 
@@ -319,4 +319,4 @@ public:
 
 }
 
-#endif // INTKER_H
+#endif // Inclusive_IntKer_H

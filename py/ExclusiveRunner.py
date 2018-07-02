@@ -11,6 +11,7 @@ import Util
 # compute all data points
 class ExclusiveRunner:
 	__qIn = JoinableQueue()
+	__qOut = Queue()
 	def add(self,e):
 		"""
 		adds an element
@@ -29,7 +30,7 @@ class ExclusiveRunner:
 		# setup PDFs
 		Util.setupPDFs()
 		# start processes
-		threadArgs = (self.__qIn, )
+		threadArgs = (self.__qIn, self.__qOut)
 		processes = []
 		for j in xrange(nProcesses):
 			processes.append(Process(target=_threadWorker, args=threadArgs))
@@ -43,9 +44,15 @@ class ExclusiveRunner:
 			Util.pWarn("aborting at %d/%d"%((lenParams-self.__qIn.qsize()),lenParams))
 			self.__qIn.close()
 		self.__qIn.close()
+		# remap
+		lOut = []
+		for j in xrange(lenParams):
+			lOut.append(self.__qOut.get())
+		self.__qOut.close()
+		return lOut
 
 # thread worker
-def _threadWorker(qIn):
+def _threadWorker(qIn, qOut):
 	while True:
 		# get
 		p = qIn.get()
@@ -61,14 +68,16 @@ def _threadWorker(qIn):
 		if p.has_key("muF2"): o.setMuF2(DynamicScaleFactors(*p["muF2"]))
 		if p.has_key("bjorkenX"):  o.setBjorkenX(p["bjorkenX"])
 		if p.has_key("hadronicS"): o.setHadronicS(p["hadronicS"])
-		for e in p["activatedHistograms"]:
-			o.activateHistogram(*e)
+		if p.has_key("activatedHistograms"):
+			for e in p["activatedHistograms"]:
+				o.activateHistogram(*e)
 		if p.has_key("calls"): 		o.MCparams.calls = p["calls"]
 		if p.has_key("iterations"): 	o.MCparams.iterations = p["iterations"]
 		if p.has_key("bins"): 		o.MCparams.bins = p["bins"]
 		if p.has_key("adaptChi2"): 	o.MCparams.adaptChi2 = p["adaptChi2"]
 		if p.has_key("verbosity"): 	o.MCparams.verbosity = p["verbosity"]
 		# run
-		o.F(p["orderFlag"],p["channelFlag"])
+		p["res"] = o.F(p["orderFlag"],p["channelFlag"])
+		qOut.put(p)
 		qIn.task_done()
 		if p.has_key("msg"): Util.pSucc(p["msg"])

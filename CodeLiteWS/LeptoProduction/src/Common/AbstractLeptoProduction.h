@@ -35,6 +35,30 @@ protected:
 /** @brief check leptonic Sl */
     #define checkLeptonicS(Sl) if (!isfinite(Sl) || Sl <= 4.*this->ker->m2) throw domain_error("leptonic s has to be set, finite and strict larger than the threshold 4m^2!");
     
+/** @brief has current projection a VV part? */
+#define initPartonicVV checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (!isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a vector-vector part!");
+/** @brief has current projection a VA part? */
+#define initPartonicVA checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a vector-axial part!");
+/** @brief has current projection a AA part? */
+#define initPartonicAA checkQ2(this->ker->Q2)\
+    checkPartonicS(this->ker->s)\
+    if (!isParityConservingProj(this->ker->proj))\
+        throw domain_error("current projection does NOT have a axial-axial part!");
+        
+/** @brief check parameter to F */
+#define initF checkQ2(this->ker->Q2)\
+    checkXBjorken(this->ker->xBj)\
+    checkAlphaS(this->ker->aS)\
+    if (0 == this->ker->pdf)\
+        throw domain_error("needs PDF for hadronic structure function!");\
+    if (this->ker->xBj >= this->ker->getZMax()) return 0.;
+    
 /** @brief holds all necessary IntegrationConfig */
     std::vector<Common::IntegrationConfig*> intConfigs;
     

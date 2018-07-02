@@ -2,18 +2,18 @@
 ## Auto Generated makefile by CodeLite IDE
 ## any manual changes will be erased      
 ##
-## Py27
+## Debug
 ProjectName            :=LeptoProduction
-ConfigurationName      :=Py27
+ConfigurationName      :=Debug
 WorkspacePath          :=/home/Felix/Physik/PhD/CodeLiteWS
 ProjectPath            :=/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction
-IntermediateDirectory  :=./Py27
+IntermediateDirectory  :=./Debug
 OutDir                 := $(IntermediateDirectory)
 CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Felix Hekhorn
-Date                   :=27/06/18
+Date                   :=02/07/18
 CodeLitePath           :=/home/Felix/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -27,20 +27,20 @@ OutputSwitch           :=-o
 LibraryPathSwitch      :=-L
 PreprocessorSwitch     :=-D
 SourceSwitch           :=-c 
-OutputFile             :=$(IntermediateDirectory)/$(ProjectName).so
-Preprocessors          :=$(PreprocessorSwitch)NDEBUG 
+OutputFile             :=$(IntermediateDirectory)/$(ProjectName)
+Preprocessors          :=
 ObjectSwitch           :=-o 
 ArchiveOutputSwitch    := 
 PreprocessOnlySwitch   :=-E
 ObjectsFileList        :="LeptoProduction.txt"
 PCHCompileFlags        :=
 MakeDirCommand         :=mkdir -p
-LinkOptions            := -Wl,--export-dynamic, -O3 `lhapdf-config --ldflags` $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o $(IntermediateDirectory)/src_Pdf_cteq3.f.o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o $(IntermediateDirectory)/src_Pdf_grv94.f.o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
-IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). $(IncludeSwitch)/usr/include/python2.7 
+LinkOptions            := `lhapdf-config --ldflags` $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o $(IntermediateDirectory)/src_Pdf_cteq3.f.o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o $(IntermediateDirectory)/src_Pdf_grv94.f.o $(IntermediateDirectory)/src_Pdf_mortungb.f.o 
+IncludePath            :=  $(IncludeSwitch). $(IncludeSwitch). 
 IncludePCH             := 
 RcIncludePath          := 
-Libs                   := $(LibrarySwitch)python2.7 $(LibrarySwitch)boost_python $(LibrarySwitch)m $(LibrarySwitch)gsl $(LibrarySwitch)gslcblas $(LibrarySwitch)gfortran $(LibrarySwitch)boost_system $(LibrarySwitch)boost_filesystem $(LibrarySwitch)dvegas $(LibrarySwitch)rk $(LibrarySwitch)yaml-cpp 
-ArLibs                 :=  "python2.7" "boost_python" "m" "gsl" "gslcblas" "gfortran" "libboost_system" "libboost_filesystem" "dvegas" "rk" "yaml-cpp" 
+Libs                   := $(LibrarySwitch)m $(LibrarySwitch)gsl $(LibrarySwitch)gslcblas $(LibrarySwitch)gfortran $(LibrarySwitch)boost_system $(LibrarySwitch)boost_filesystem $(LibrarySwitch)dvegas $(LibrarySwitch)rk $(LibrarySwitch)yaml-cpp 
+ArLibs                 :=  "m" "gsl" "gslcblas" "gfortran" "libboost_system" "libboost_filesystem" "dvegas" "rk" "yaml-cpp" 
 LibPath                := $(LibraryPathSwitch). 
 
 ##
@@ -50,8 +50,8 @@ LibPath                := $(LibraryPathSwitch).
 AR       := /usr/bin/ar rcu
 CXX      := /usr/bin/g++
 CC       := /usr/bin/gcc
-CXXFLAGS := -std=c++11 `lhapdf-config --cflags` -O3 -Wall  -fPIC $(Preprocessors)
-CFLAGS   :=  -O3 -Wall  -fPIC $(Preprocessors)
+CXXFLAGS := -std=c++11 `lhapdf-config --cflags` -g -O0 -Wall $(Preprocessors)
+CFLAGS   :=  -g -O0 -Wall $(Preprocessors)
 ASFLAGS  := 
 AS       := /usr/bin/as
 
@@ -60,8 +60,10 @@ AS       := /usr/bin/as
 ## User defined environment variables
 ##
 CodeLiteDir:=/usr/share/codelite
-Objects0=$(IntermediateDirectory)/src_Python.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractIntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_SV.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/src_Inclusive_ME_IntR.cpp$(ObjectSuffix) 
+DSSV2014_GRIDS:=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/
+GRSV96_GRIDS:=/home/Felix/Physik/PhD/PDF/GRSV96/
+Objects0=$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractIntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_SV.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntR.cpp$(ObjectSuffix) 
 
 
 
@@ -77,16 +79,14 @@ $(OutputFile): $(IntermediateDirectory)/.d $(Objects)
 	@$(MakeDirCommand) $(@D)
 	@echo "" > $(IntermediateDirectory)/.d
 	@echo $(Objects0)  > $(ObjectsFileList)
-	$(SharedObjectLinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
-	@$(MakeDirCommand) "/home/Felix/Physik/PhD/CodeLiteWS/.build-py27"
-	@echo rebuilt > "/home/Felix/Physik/PhD/CodeLiteWS/.build-py27/LeptoProduction"
+	$(LinkerName) $(OutputSwitch)$(OutputFile) @$(ObjectsFileList) $(LibPath) $(Libs) $(LinkOptions)
 
 MakeIntermediateDirs:
-	@test -d ./Py27 || $(MakeDirCommand) ./Py27
+	@test -d ./Debug || $(MakeDirCommand) ./Debug
 
 
 $(IntermediateDirectory)/.d:
-	@test -d ./Py27 || $(MakeDirCommand) ./Py27
+	@test -d ./Debug || $(MakeDirCommand) ./Debug
 PrePreBuild: $(IntermediateDirectory)/src_Pdf_all.d
 $(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o\
 					$(IntermediateDirectory)/src_Pdf_cteq3.f.o\
@@ -96,19 +96,19 @@ $(IntermediateDirectory)/src_Pdf_all.d: $(IntermediateDirectory)/src_Pdf_DSSV_gl
 	@echo "" > $(IntermediateDirectory)/src_Pdf_all.d
 
 $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o: $(IntermediateDirectory)/.d src/Pdf/DSSV_gluon_update.f
-	gfortran -c src/Pdf/DSSV_gluon_update.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
+	gfortran -c src/Pdf/DSSV_gluon_update.f -g -w -o $(IntermediateDirectory)/src_Pdf_DSSV_gluon_update.f.o
 
 $(IntermediateDirectory)/src_Pdf_cteq3.f.o: $(IntermediateDirectory)/.d src/Pdf/cteq3.f
-	gfortran -c src/Pdf/cteq3.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
+	gfortran -c src/Pdf/cteq3.f -g -w -o $(IntermediateDirectory)/src_Pdf_cteq3.f.o
 
 $(IntermediateDirectory)/src_Pdf_grsvpol.f.o: $(IntermediateDirectory)/.d src/Pdf/grsvpol.f
-	gfortran -c src/Pdf/grsvpol.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
+	gfortran -c src/Pdf/grsvpol.f -g -w -o $(IntermediateDirectory)/src_Pdf_grsvpol.f.o
 
 $(IntermediateDirectory)/src_Pdf_grv94.f.o: $(IntermediateDirectory)/.d src/Pdf/grv94.f
-	gfortran -c src/Pdf/grv94.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
+	gfortran -c src/Pdf/grv94.f -g -w -o $(IntermediateDirectory)/src_Pdf_grv94.f.o
 
 $(IntermediateDirectory)/src_Pdf_mortungb.f.o: $(IntermediateDirectory)/.d src/Pdf/mortungb.f
-	gfortran -c src/Pdf/mortungb.f -O3 -fPIC -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
+	gfortran -c src/Pdf/mortungb.f -g -w -o $(IntermediateDirectory)/src_Pdf_mortungb.f.o
 
 PreBuild:
 
@@ -116,13 +116,13 @@ PreBuild:
 ##
 ## Objects
 ##
-$(IntermediateDirectory)/src_Python.cpp$(ObjectSuffix): src/Python.cpp $(IntermediateDirectory)/src_Python.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/Python.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_Python.cpp$(ObjectSuffix) $(IncludePath)
-$(IntermediateDirectory)/src_Python.cpp$(DependSuffix): src/Python.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_Python.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_Python.cpp$(DependSuffix) -MM src/Python.cpp
+$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix): src/main.cpp $(IntermediateDirectory)/src_main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_main.cpp$(DependSuffix): src/main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_main.cpp$(DependSuffix) -MM src/main.cpp
 
-$(IntermediateDirectory)/src_Python.cpp$(PreprocessSuffix): src/Python.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_Python.cpp$(PreprocessSuffix) src/Python.cpp
+$(IntermediateDirectory)/src_main.cpp$(PreprocessSuffix): src/main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_main.cpp$(PreprocessSuffix) src/main.cpp
 
 $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix): src/InclusiveLeptoProduction.cpp $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/InclusiveLeptoProduction.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IncludePath)
@@ -131,6 +131,14 @@ $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(DependSuffix): src/In
 
 $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(PreprocessSuffix): src/InclusiveLeptoProduction.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(PreprocessSuffix) src/InclusiveLeptoProduction.cpp
+
+$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(ObjectSuffix): src/FullyDiffLeptoProduction.cpp $(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiffLeptoProduction.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(DependSuffix): src/FullyDiffLeptoProduction.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(DependSuffix) -MM src/FullyDiffLeptoProduction.cpp
+
+$(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(PreprocessSuffix): src/FullyDiffLeptoProduction.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(PreprocessSuffix) src/FullyDiffLeptoProduction.cpp
 
 $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix): src/Pdf/PdfWrapper.cpp $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/Pdf/PdfWrapper.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IncludePath)
@@ -163,6 +171,22 @@ $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(DependSuffix): src/Inclusive/
 
 $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(PreprocessSuffix): src/Inclusive/IntKer.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(PreprocessSuffix) src/Inclusive/IntKer.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(ObjectSuffix): src/FullyDiff/IntKer.cpp $(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/IntKer.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(DependSuffix): src/FullyDiff/IntKer.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(DependSuffix) -MM src/FullyDiff/IntKer.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(PreprocessSuffix): src/FullyDiff/IntKer.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(PreprocessSuffix) src/FullyDiff/IntKer.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(ObjectSuffix): src/FullyDiff/PhasespacePoint.cpp $(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/PhasespacePoint.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(DependSuffix): src/FullyDiff/PhasespacePoint.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(DependSuffix) -MM src/FullyDiff/PhasespacePoint.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(PreprocessSuffix): src/FullyDiff/PhasespacePoint.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(PreprocessSuffix) src/FullyDiff/PhasespacePoint.cpp
 
 $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix): src/Common/ME/BQED.cpp $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/Common/ME/BQED.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) $(IncludePath)
@@ -210,6 +234,6 @@ $(IntermediateDirectory)/src_Inclusive_ME_IntR.cpp$(PreprocessSuffix): src/Inclu
 ## Clean
 ##
 clean:
-	$(RM) -r ./Py27/
+	$(RM) -r ./Debug/
 
 
