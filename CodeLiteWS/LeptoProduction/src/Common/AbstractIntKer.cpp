@@ -78,14 +78,20 @@ cdbl Common::AbstractIntKer::getAlphaS(cdbl HAQTransverseMomentum, cdbl HQPairTr
     return this->aS->alphasQ2(muR2);
 }
 
-void Common::AbstractIntKer::getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const {
-    getME(Common::ME::BQED)
-}
+void Common::AbstractIntKer::getBQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const { getME(Common::ME::BQED) }
 
 Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPgq0() const {
     switch(this->proj) {
         case F2:   case FL: case xF3: return &AltarelliParisi::Pgq0;
         case x2g1: case g4: case gL:  return &AltarelliParisi::DeltaPgq0;
+    }
+    throw domain_error("unkonwn projection: "+strProj(this->proj));
+}
+
+Common::AbstractIntKer::fPtr1dbl Common::AbstractIntKer::getPgq1() const {
+    switch(this->proj) {
+        case F2:   case FL: case xF3: return &AltarelliParisi::Pgq1;
+        case x2g1: case g4: case gL:  return &AltarelliParisi::DeltaPgq1;
     }
     throw domain_error("unkonwn projection: "+strProj(this->proj));
 }

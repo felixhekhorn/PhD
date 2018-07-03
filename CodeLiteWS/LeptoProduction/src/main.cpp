@@ -4,6 +4,7 @@
 #include <boost/format.hpp>
 
 #include "InclusiveLeptoProduction.h"
+#include "FullyDiffLeptoProduction.h"
 int testHadronic();
 int testLeptonic();
 int test();
@@ -22,39 +23,45 @@ int main(int argc, char **argv) {
     cuint nlf = 4;
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e3;
-    cdbl Delta = 1.e-6;
-    InclusiveLeptoProduction o(nlf,m2,Delta);
+    //cdbl Delta = 1.e-6;
+    cdbl xTilde = .8;
+    cdbl omega = 1.;
+    cdbl deltax = 1e-6;
+    cdbl deltay = 7e-6;
+    //InclusiveLeptoProduction o(nlf,m2,Delta);
+    FullyDiffLeptoProduction o(nlf,m2,xTilde,omega,deltax,deltay);
+     
     o.setQ2(Q2);
     cuint N = 11;
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
+        //o.getIntegrationConfig("dq1_VV")->verbosity = 1;
+        //o.getIntegrationConfig("dq1_VV")->calls = 50000;
         //o.setDelta(eta/1000.);
         o.setProjection(F2);
-        cdbl cF2 = o.cgBar1_VV();
+        cdbl cF2 = o.cq1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.cgBar1_VV();
+        cdbl cFL = o.cq1_VV();
         o.setProjection(x2g1);
-        o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
-        cdbl cx2g1 = o.cgBar1_VV();
+        cdbl cx2g1 = o.cq1_VV();
         cdbl ex2g1 = o.getIntegrationOutput().error;
-        o.getIntegrationConfig("cg1_VV")->method = "Dvegas";
-        cdbl cx2g1_ = o.cgBar1_VV();
-        cdbl ex2g1_ = o.getIntegrationOutput().error;
-        cout << boost::format("%e\t%e\t%e\t%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1%ex2g1%cx2g1_%ex2g1_ << endl;
+        cout << boost::format("%e\t%e\t%e\t%e\t%e")%eta%(cF2-cFL)%cFL%cx2g1%ex2g1 << endl;
     }
     
     return EXIT_SUCCESS;
 }
 
-#include "Inclusive/ME/IntR.h"
+#include "FullyDiff/ME/A2.h"
 int test() {
     cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
-    cdbl s4 = 1.;
-    cout << Inclusive::ME::IntRQED_FL_VV(m2,q2,sp,t1,s4) << endl;
+    cdbl u1 = -1.;
+    cdbl tp = -1.;
+    cdbl up = -1.;
+    cout << FullyDiff::ME::A2_FL_VV(m2,q2,sp,t1,u1,tp,up) << endl;
     return EXIT_SUCCESS;
 }
 

@@ -34,8 +34,7 @@ struct KinematicVars {
      * @param Theta1
      * @param Theta2
      */
-    KinematicVars(cdbl m2, cdbl Q2, cdbl sp, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2) {
-        cdbl q2 = -Q2;
+    KinematicVars(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2) {
         cdbl s = sp+q2;
         this->s5 = max(q2 + sp*x,4.*m2);
         this->tp = -1./2.*sp*(sp/s)*(1.-x)*(1.+y);

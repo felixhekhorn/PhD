@@ -47,25 +47,25 @@ InclusiveLeptoProduction::~InclusiveLeptoProduction() {
 Common::IntegrationConfig* InclusiveLeptoProduction::getIntegrationConfig(str method) const {
     // partonic functions
     if (boost::starts_with(method,"cg0_") || boost::starts_with(method,"cgBarR1_"))
-        return this->intConfigs.at(0);
-    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || boost::starts_with(method,"cgBar1_") || 
+        return this->intConfigs.at(1-1);
+    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || 
         boost::starts_with(method,"cq1_") || boost::starts_with(method,"cqBarF1_") || boost::starts_with(method,"dq1_"))
-        return this->intConfigs.at(1);
+        return this->intConfigs.at(2-1);
     // hadronic functions
     bool isNLO = this->ker->flags.useNextToLeadingOrder;
     if (boost::starts_with(method,"dF_d"))
-        return isNLO ? this->intConfigs.at(1) : this->intConfigs.at(0);
+        return isNLO ? this->intConfigs.at(2-1) : this->intConfigs.at(1-1);
     if (boost::iequals(method,"F"))
-        return isNLO ? this->intConfigs.at(2) : this->intConfigs.at(1);
+        return isNLO ? this->intConfigs.at(3-1) : this->intConfigs.at(2-1);
     // leptonic functions
     if (boost::iequals(method,"sigma"))
-        return isNLO ? this->intConfigs.at(4) : this->intConfigs.at(3);
+        return isNLO ? this->intConfigs.at(4-1) : this->intConfigs.at(4-1);
     throw invalid_argument(str("unknown method: ")+method);
 }
 
 cdbl InclusiveLeptoProduction::int1D() const {
     this->ker->dim = 1;
-    return Common::integrate1D<Inclusive::IntKer>(kker,*this->intConfigs.at(0),this->intOut);
+    return Common::integrate1D<Inclusive::IntKer>(kker,*this->intConfigs.at(1-1),this->intOut);
 }
 
 #define intND(N) cdbl InclusiveLeptoProduction::int##N##D() const {\

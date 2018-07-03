@@ -12,13 +12,31 @@
 class FullyDiffLeptoProduction : public Common::AbstractLeptoProduction {
     
 /** @brief cast ker to my type */
-    #define kker ((FullyDiff::IntKer*)this->ker)
+    #define FDker ((FullyDiff::IntKer*)this->ker)
     
 /**
  * @brief wrapper to 1D integration
  * @return integral
  */
     cdbl int1D() const;
+    
+/**
+ * @brief wrapper to 2D integration
+ * @return integral
+ */
+    cdbl int2D() const;
+    
+/**
+ * @brief wrapper to 4D integration
+ * @return integral
+ */
+    cdbl int4D() const;
+    
+/**
+ * @brief wrapper to 5D integration
+ * @return integral
+ */
+    cdbl int5D() const;
     
 public:
 

@@ -6,7 +6,11 @@ Debug/src_FullyDiff_IntKer.cpp.o: src/FullyDiff/IntKer.cpp \
  src/FullyDiff/../Common/../Pdf/PdfWrapper.h \
  src/FullyDiff/../Common/Color.hpp src/FullyDiff/../Common/Color.hpp \
  src/FullyDiff/../Common/ME/BQED.h \
- src/FullyDiff/../Common/ME/../../config.h
+ src/FullyDiff/../Common/ME/../../config.h \
+ src/FullyDiff/PhasespaceValues.hpp src/FullyDiff/KinematicVars.hpp \
+ src/FullyDiff/../config.h src/FullyDiff/ME/A1.h \
+ src/FullyDiff/ME/../../config.h src/FullyDiff/ME/A1Counter.h \
+ src/FullyDiff/ME/A2.h
 
 src/FullyDiff/IntKer.h:
 
@@ -29,3 +33,17 @@ src/FullyDiff/../Common/Color.hpp:
 src/FullyDiff/../Common/ME/BQED.h:
 
 src/FullyDiff/../Common/ME/../../config.h:
+
+src/FullyDiff/PhasespaceValues.hpp:
+
+src/FullyDiff/KinematicVars.hpp:
+
+src/FullyDiff/../config.h:
+
+src/FullyDiff/ME/A1.h:
+
+src/FullyDiff/ME/../../config.h:
+
+src/FullyDiff/ME/A1Counter.h:
+
+src/FullyDiff/ME/A2.h:

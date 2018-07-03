@@ -15,7 +15,7 @@
 
 int runInclusive();
 int runInclusive2();
-#include "./Inclusive/ME/IntRFinite.h"
+#include "./Exclusive/ME/Ap.h"
 int test() {
     /*PdfWrapper a("MorfinTungB",0);
     PdfWrapper b("MorfinTungB_old",0);
@@ -29,12 +29,21 @@ int test() {
         }
         cout << endl;
     }*/
-    cdbl m2 = 1.;
+    /*cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl s4 = 1.;
-    cout << (Inclusive::IntRQEDfiniteL(m2,q2,sp,s4,t1)) << endl;
+    cout << (Inclusive::IntRQEDfiniteL(m2,q2,sp,s4,t1)) << endl;*/
+    
+    cdbl m2 = 1.;
+    cdbl q2 = -10.;
+    cdbl sp = 5.;
+    cdbl t1 = -3.;
+    cdbl u1 = -1.;
+    cdbl tp = -1.;
+    cdbl up = -1.;
+    cout << (Exclusive::Ap2L(m2,q2,sp,t1,u1,tp,up)) << endl;
     
     return EXIT_SUCCESS;
 }
@@ -110,7 +119,7 @@ int test2() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test2();
+    return test();
 	//return runInclusive();
 	//return runInclusive2();
     cdbl q2 = -1.e5;

@@ -15,22 +15,79 @@ class IntKer : public Common::AbstractIntKer {
 /** @name integration variables */
 ///@{
     
-    
 /** @brief Theta1 */
     dbl Theta1 = dblNaN;
-/** @brief jacobian for Theta1 trafo */
-    cdbl jac_Theta1 = M_PI;
+/** @brief jacobian=volume for Theta1 trafo */
+    cdbl V_Theta1 = M_PI;
+    
+/** @brief lower intergation limit for x \f$\rho^*\f$ */
+    dbl rhoStar = dblNaN;
+/** @brief soft regulation parameter \f$\tilde\rho\f$ */
+    dbl rhoTilde = dblNaN;
+/** @brief current x-for-event */
+    dbl xE = 1.;
+/** @brief volume of x-for-event space */
+    dbl V_xE = 0.;
+/** @brief current x-for-counter-event */
+    dbl xC = 1.;
+/** @brief volume of x-for-counter-event space */
+    dbl V_xC = 0.;
+    
+/** @brief current y-for-event */
+    dbl yE = 1.;
+/** @brief volume of y-for-event space */
+    dbl V_yE = 0.;
+/** @brief current y-for-counter-event */
+    dbl yC = 1.;
+/** @brief volume of y-for-counter-event space */
+    dbl V_yC = 0.;
+    
+/** @brief Theta2 */
+    dbl Theta2 = dblNaN;
+/** @brief jacobian=volume for Theta2 trafo */
+    cdbl V_Theta2 = M_PI;
 /**
- * @brief sets Theta1 (and its jacobian)
+ * @brief sets Theta1
  * @param a integration variable
  */
     void setTheta1(cdbl a);
     
+/**
+ * @brief sets Theta2
+ * @param a integration variable
+ */
+    void setTheta2(cdbl a);
+    
 ///@}
     
-/** @brief define shortcut */
-    typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
+/** @brief define 6-point-function shortcut */
+    typedef cdbl (*fPtr6dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
+/** @brief define 7-point-function shortcut */
+    typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
     
+/**
+ * @brief sets correct pointers to A1
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getA1(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to A1Counter
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getA1Counter(fPtr6dbl &fVV, fPtr6dbl &fVA, fPtr6dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to A2
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getA2(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
 
 /** @name partonic coefficient functions */
 ///@{
@@ -46,6 +103,24 @@ class IntKer : public Common::AbstractIntKer {
  * @return cgBarR1
  */
     cdbl cgBarR1_cur() const;
+    
+/** 
+ * @brief computes a single current cq1
+ * @return cq1
+ */
+    cdbl cq1_cur() const;
+    
+/** 
+ * @brief computes a single current cqBarF1
+ * @return cqBarF1
+ */
+    cdbl cqBarF1_cur() const;
+    
+/** 
+ * @brief computes a single current dq1
+ * @return dq1
+ */
+    cdbl dq1_cur() const;
 
 /** 
  * @brief computes full cg0
@@ -65,9 +140,11 @@ class IntKer : public Common::AbstractIntKer {
  * @brief computes a single partonic function
  * @param a1 integration variable
  * @param a2 integration variable
+ * @param a3 integration variable
+ * @param a4 integration variable
  * @return a single partonic function
  */
-    cdbl runPartonic(cdbl a1, cdbl a2);
+    cdbl runPartonic(cdbl a1, cdbl a2, cdbl a3, cdbl a4);
     
 /**
  * @brief computes a hadronic function

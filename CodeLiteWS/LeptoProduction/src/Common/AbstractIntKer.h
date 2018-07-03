@@ -163,10 +163,16 @@ cdbl ns::IntKer::n() const {\
 ///@{
     
 /**
- * @brief finds correct pointer to Pgq
- * @return \f$P_{\Pg\Pq}(x)\f$
+ * @brief finds correct pointer to Pgq0
+ * @return \f$P_{\Pg\Pq}(x)^{(0)}\f$
  */
     fPtr1dbl getPgq0() const;
+    
+/**
+ * @brief finds correct pointer to Pgq1
+ * @return \f$P_{\Pg\Pq}(x)^{(1)}\f$
+ */
+    fPtr1dbl getPgq1() const;
     
 /**
  * @brief finds correct pointer to PggH0

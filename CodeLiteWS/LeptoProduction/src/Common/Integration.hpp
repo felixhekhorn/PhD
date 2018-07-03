@@ -117,7 +117,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
             res = e.integral();\
             err = e.standardDeviation();\
             if (cfg.verbosity > 2)\
-                printf("int5D(Dvegas): [%d] %e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,err/res*1e2,e.chiSquarePerIteration());\
+                printf("int%dD(Dvegas): [%d] %e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,err/res*1e2,e.chiSquarePerIteration());\
         } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);\
     } else { /* simple run */\
         /* F.scaleHistograms(0.); */\
@@ -128,7 +128,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     }\
     /* F.scaleHistograms(1./((double)iterations)); */\
     if (cfg.verbosity > 0)\
-        printf("[INFO] int5D(Dvegas): [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",guard,res,err,abs(err/res*1e2),e.chiSquarePerIteration());\
+        printf("[INFO] int%dD(Dvegas): [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,abs(err/res*1e2),e.chiSquarePerIteration());\
     out->result = res;\
     out->error = err;\
     out->MC_chi2 = e.chiSquarePerIteration();\
