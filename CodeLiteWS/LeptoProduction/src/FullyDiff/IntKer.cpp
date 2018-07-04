@@ -35,6 +35,51 @@ void FullyDiff::IntKer::setTheta2(cdbl a) {
 #define cg0_AA n * fAA(m2,-Q2,sp,t1)
 implementPartonicCoeff(FullyDiff,cg0)
 
+// setup cgBarF1
+cdbl FullyDiff::IntKer::cgBarF1_cur() const {
+    // collinear contributions
+    _sp
+    cdbl beta = this->beta();
+    // norm to cg1
+    cdbl ncg1 = (m2/(4.*M_PI));
+    PhasespaceValues r;
+    
+    cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
+    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+    this->getBQED(fVV, fVA, fAA);
+    dbl meC = 0;
+    if (Mode_cgBarF1_VV == this->mode)      meC = fVV(m2,-Q2,sp,t1);
+    else if (Mode_cgBarF1_VA == this->mode) meC = fVA(m2,-Q2,sp,t1);
+    else if (Mode_cgBarF1_AA == this->mode) meC = fAA(m2,-Q2,sp,t1);
+    
+    { // S+V contributions
+        cdbl f = 2. * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp);
+        cdbl b0 = this->beta0lf();
+        // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
+        cdbl g = ncg1 * V_Theta1 * f * (b0 + 4.*Color::CA*log(1.-rhoTilde)) * beta*sin(Theta1);
+        r.xCyE -= g * meC;
+    }
+
+    { // collinear contributions
+        cdbl s5E = -Q2 + xE*sp;
+        cdbl beta5E = sqrt(1. - 4.*m2/s5E);
+        cdbl t1c = -.5*sp*(1. - beta5E*cos(Theta1));
+        dbl meE = 0;
+        if (Mode_cgBarF1_VV == this->mode)      meE = fVV(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cgBarF1_VA == this->mode) meE = fVA(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cgBarF1_AA == this->mode) meE = fAA(m2,-Q2,xE*sp,xE*t1c);
+        cdbl f = Color::Kgph*Color::NC*Color::CF * 1./sp * sin(Theta1);
+        cdbl l = -1.;
+        fPtr1dbl PggH0 = this->getPggH0();
+        cdbl gE = ncg1 * V_xE*V_Theta1 * f*beta5E/xE*(PggH0(xE)*l);
+        cdbl gC = ncg1 * V_xC*V_Theta1 * f*beta     *(2.*Color::CA*(1./(1.-xC)*l));
+        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
+        r.xEyC += gE*meE;
+        r.xCyC -= gC*meC;
+    }
+    return r.tot();
+}
+
 // setup cgBarR1
 #define init_cgBarR1 _sp\
     cdbl beta = this->beta();\
@@ -69,10 +114,10 @@ cdbl FullyDiff::IntKer::cq1_cur() const {
         
         fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
         this->getBQED(fVV, fVA, fAA);
-        dbl meB = 0.;
+        dbl meB = 0;
         if (Mode_cq1_VV == this->mode) meB = fVV(m2,-Q2,xE*sp,xE*t1c);
-        if (Mode_cq1_VA == this->mode) meB = fVA(m2,-Q2,xE*sp,xE*t1c);
-        if (Mode_cq1_AA == this->mode) meB = fAA(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cq1_VA == this->mode) meB = fVA(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cq1_AA == this->mode) meB = fAA(m2,-Q2,xE*sp,xE*t1c);
         r.xEyC += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
     } { // hard contributions
         const KinematicVars vsE(m2,-Q2,sp,xE,yE,Theta1,Theta2);
@@ -84,11 +129,11 @@ cdbl FullyDiff::IntKer::cq1_cur() const {
         this->getA1(fVV, fVA, fAA);
         fPtr6dbl gVV = 0;fPtr6dbl gVA = 0;fPtr6dbl gAA = 0;
         this->getA1Counter(gVV, gVA, gAA);
-        dbl meE = 0.;
-        dbl meC = 0.;
+        dbl meE = 0;
+        dbl meC = 0;
         if (Mode_cq1_VV == this->mode) { meE = fVV(m2,-Q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up); meC = gVV(m2,-Q2,sp,xE,Theta1,Theta2); }
-        if (Mode_cq1_VA == this->mode) { meE = fVA(m2,-Q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up); meC = gVA(m2,-Q2,sp,xE,Theta1,Theta2); }
-        if (Mode_cq1_AA == this->mode) { meE = fAA(m2,-Q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up); meC = gAA(m2,-Q2,sp,xE,Theta1,Theta2); }
+        else if (Mode_cq1_VA == this->mode) { meE = fVA(m2,-Q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up); meC = gVA(m2,-Q2,sp,xE,Theta1,Theta2); }
+        else if (Mode_cq1_AA == this->mode) { meE = fAA(m2,-Q2,sp,vsE.t1,vsE.u1,vsE.tp,vsE.up); meC = gAA(m2,-Q2,sp,xE,Theta1,Theta2); }
         r.xEyE += f * jacE*meE/(1.+yE);
         r.xEyC -= f * jacC*meC/(1.+yC);
     }
@@ -147,8 +192,7 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
     // cgBarR1
     if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode)
         return this->cgBarR1_cur();
-    // 4D integrations
-    this->setTheta2(a2);
+    // 2D integrations
     { // setSpRaw
         _sp
         cdbl eta = this->s/(4.*m2) - 1.;
@@ -165,7 +209,16 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
     } { // setX
         this->xE = this->rhoStar  + this->V_xE * a3;
         this->xC = this->rhoTilde + this->V_xC * a3;
-    } { // setY
+    }
+    // cgBarF1
+    if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
+        return this->cgBarF1_cur();
+    // cqBarF1
+    if (Mode_cqBarF1_VV == this->mode || Mode_cqBarF1_VA == this->mode || Mode_cqBarF1_AA == this->mode)
+        return this->cqBarF1_cur();
+    // 4D integrations
+    this->setTheta2(a2);
+    { // setY
         cdbl ymin = -1.+this->deltay;
         this->V_yE = 1. - ymin;
         this->V_yC = (-1. + this->omega) - ymin;
@@ -175,9 +228,6 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
     // cq1
     if (Mode_cq1_VV == this->mode || Mode_cq1_VA == this->mode || Mode_cq1_AA == this->mode)
         return this->cq1_cur();
-    // cqBarF1
-    if (Mode_cqBarF1_VV == this->mode || Mode_cqBarF1_VA == this->mode || Mode_cqBarF1_AA == this->mode)
-        return this->cqBarF1_cur();
     // dq1
     if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode)
         return this->dq1_cur();

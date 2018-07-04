@@ -1,0 +1,1 @@
+(-16*q2*(2 + (-2 + x)*x)*(m2*Power(sp,2) + t1c*(sp + t1c)*(q2 + sp*x)))/((q2 + sp)*t1c*(sp + t1c)*Power(x,2)) + (8*Power(beta5,2)*q2*Power(sp,2)*Power(-1 + x,2)*(q2 + sp*x)*Power(Cos(Theta2),2)*Power(Sin(Theta1),2))/((q2 + sp)*t1c*(sp + t1c)*Power(x,4))

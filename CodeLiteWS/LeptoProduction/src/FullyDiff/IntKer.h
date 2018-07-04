@@ -99,6 +99,12 @@ class IntKer : public Common::AbstractIntKer {
     cdbl cg0_cur() const;
     
 /** 
+ * @brief computes a single current cgBarF1
+ * @return cgBarF1
+ */
+    cdbl cgBarF1_cur() const;
+    
+/** 
  * @brief computes a single current cgBarR1
  * @return cgBarR1
  */
