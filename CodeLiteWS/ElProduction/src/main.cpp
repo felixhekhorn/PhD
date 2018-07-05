@@ -15,7 +15,10 @@
 
 int runInclusive();
 int runInclusive2();
-#include "./Exclusive/ME/Ap.h"
+#include "./Common/Color.h"
+#include "./Exclusive/ME/NLOg.h"
+#include "./Exclusive/ME/Rp.h"
+#include "./Exclusive/ME/SVp.h"
 int test() {
     /*PdfWrapper a("MorfinTungB",0);
     PdfWrapper b("MorfinTungB_old",0);
@@ -36,14 +39,33 @@ int test() {
     cdbl s4 = 1.;
     cout << (Inclusive::IntRQEDfiniteL(m2,q2,sp,s4,t1)) << endl;*/
     
-    cdbl m2 = 1.;
+    /*cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl u1 = -1.;
     cdbl tp = -1.;
     cdbl up = -1.;
-    cout << (Exclusive::Ap2L(m2,q2,sp,t1,u1,tp,up)) << endl;
+    cout << (Exclusive::RpL(m2,q2,sp,t1,u1,tp,up)) << endl;*/
+    
+    /*cdbl m2 = 1.;
+    cdbl q2 = -10.;
+    cdbl sp = 5.;
+    cdbl x = .3;
+    cdbl y = 0.;
+    cdbl Theta1 = .5;
+    cdbl Theta2 = 1.;
+    cdbl t1 = -sp/2.*(1.-sqrt(1. - 4.*m2/(sp+q2))*cos(Theta1));
+    cout << (Color::CA*Exclusive::ROKpyCL(m2,q2,sp,x,Theta1,Theta2)) << endl;*/
+    
+    cdbl m2 = 1.;
+    cdbl q2 = -10.;
+    cdbl s = 4.*m2*(1.+1.);
+    cdbl sp = s-q2;
+    cdbl Theta1 = 1.;
+    cdbl t1 = -sp/2.*(1.-sqrt(1. - 4.*m2/(sp+q2))*cos(Theta1));
+    cdbl betaTilde = .9;
+    cout << (Exclusive::SVOKpL(m2,q2,sp,t1,betaTilde)) << endl;
     
     return EXIT_SUCCESS;
 }

@@ -60,8 +60,10 @@ class IntKer : public Common::AbstractIntKer {
     
 ///@}
     
+/** @brief define 5-point-function shortcut */
+    typedef cdbl (*fPtr5dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl betaTilde);
 /** @brief define 6-point-function shortcut */
-    typedef cdbl (*fPtr6dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl Theta1, cdbl Theta2);
+    typedef cdbl (*fPtr6dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl x_or_y, cdbl Theta1, cdbl Theta2);
 /** @brief define 7-point-function shortcut */
     typedef cdbl (*fPtr7dbl)(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
     
@@ -88,6 +90,46 @@ class IntKer : public Common::AbstractIntKer {
  * @param fAA axial-axial part
  */
     void getA2(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to R
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getR(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to RCounterX
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getRCounterX(fPtr6dbl &fVV, fPtr6dbl &fVA, fPtr6dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to RCounterY
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getRCounterY(fPtr6dbl &fVV, fPtr6dbl &fVA, fPtr6dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to RCounterXY
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getRCounterXY(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to SV
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getSV(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const;
 
 /** @name partonic coefficient functions */
 ///@{
@@ -97,6 +139,12 @@ class IntKer : public Common::AbstractIntKer {
  * @return cg0
  */
     cdbl cg0_cur() const;
+    
+/** 
+ * @brief computes a single current cg1
+ * @return cg1
+ */
+    cdbl cg1_cur() const;
     
 /** 
  * @brief computes a single current cgBarF1

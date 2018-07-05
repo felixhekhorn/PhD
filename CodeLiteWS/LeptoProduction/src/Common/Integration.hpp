@@ -1,5 +1,4 @@
 /**
- * @file Integration.h
  * @brief defines integration routines in 1-5 dimensions
  */
 
@@ -18,7 +17,9 @@ namespace Common {
 
 /**
  * @brief integrates the kernel in 1 dimension
- * @param F kernel
+ * @param K kernel
+ * @param cfg config
+ * @param out output of meta data
  * @return \f$\int\limits_0^1 f(a)\,da\f$
  */
 template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& cfg, IntegrationOutput* out)  {
@@ -76,16 +77,16 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
         do {\
             if (!isfinite(res)) return res;\
             gsl_monte_vegas_integrate (&F, xl, xu, dim, cfg.calls, r, s, &res, &err);\
-            if (cfg.verbosity > 2)\
-                printf("[INFO] int%dD(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));\
+            if (cfg.verbosity > 1)\
+                printf("[INFO] int%dD(gsl):    [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));\
         } while (fabs (gsl_monte_vegas_chisq (s) - 1.0) > 0.5 && ++guard < 15);\
     } else {\
         gsl_monte_vegas_integrate (&F, xl, xu, dim, cfg.calls, r, s, &res, &err);\
     }\
     out->MC_chi2 = gsl_monte_vegas_chisq (s);\
     /* out */\
-    if (cfg.verbosity > 0)\
-        printf("[INFO] int%dD(gsl):    [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));\
+    if (1 == cfg.verbosity)\
+        printf("[INFO] int%dD(gsl):    [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),gsl_monte_vegas_chisq(s));\
     gsl_monte_vegas_free (s);\
     gsl_rng_free (r);\
     out->result = res;\
@@ -116,8 +117,8 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
             e = dv.stats(0);\
             res = e.integral();\
             err = e.standardDeviation();\
-            if (cfg.verbosity > 2)\
-                printf("int%dD(Dvegas): [%d] %e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,err/res*1e2,e.chiSquarePerIteration());\
+            if (cfg.verbosity > 1)\
+                printf("[INFO] int%dD(Dvegas): [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),e.chiSquarePerIteration());\
         } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);\
     } else { /* simple run */\
         /* F.scaleHistograms(0.); */\
@@ -127,8 +128,8 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
         err = e.standardDeviation();\
     }\
     /* F.scaleHistograms(1./((double)iterations)); */\
-    if (cfg.verbosity > 0)\
-        printf("[INFO] int%dD(Dvegas): [%d] % e ± %e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,abs(err/res*1e2),e.chiSquarePerIteration());\
+    if (1 == cfg.verbosity)\
+        printf("[INFO] int%dD(Dvegas): [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),e.chiSquarePerIteration());\
     out->result = res;\
     out->error = err;\
     out->MC_chi2 = e.chiSquarePerIteration();\
@@ -137,7 +138,9 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
 
 /**
  * @brief integrates the kernel in 2 dimension
- * @param F kernel
+ * @param K kernel
+ * @param cfg config
+ * @param out output of meta data
  * @return \f$\int\limits_0^1 f(a_1,a_2)\,da_1da_2\f$
  */
 template <class IntKerT> cdbl integrate2D(IntKerT* K, const IntegrationConfig& cfg, IntegrationOutput* out) {
@@ -157,7 +160,9 @@ template <class IntKerT> cdbl integrate2D(IntKerT* K, const IntegrationConfig& c
 
 /**
  * @brief integrates the kernel in 3 dimension
- * @param F kernel
+ * @param K kernel
+ * @param cfg config
+ * @param out output of meta data
  * @return \f$\int\limits_0^1 f(a_1,a_2,a_3)\,da_1da_2da_3\f$
  */
 template <class IntKerT> cdbl integrate3D(IntKerT* K, const IntegrationConfig& cfg, IntegrationOutput* out) {
@@ -177,7 +182,9 @@ template <class IntKerT> cdbl integrate3D(IntKerT* K, const IntegrationConfig& c
 
 /**
  * @brief integrates the kernel in 4 dimension
- * @param F kernel
+ * @param K kernel
+ * @param cfg config
+ * @param out output of meta data
  * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4)\,da_1da_2da_3da_4\f$
  */
 template <class IntKerT> cdbl integrate4D(IntKerT* K, const IntegrationConfig& cfg, IntegrationOutput* out) {
@@ -197,7 +204,9 @@ template <class IntKerT> cdbl integrate4D(IntKerT* K, const IntegrationConfig& c
 
 /**
  * @brief integrates the kernel in 5 dimension
- * @param F kernel
+ * @param K kernel
+ * @param cfg config
+ * @param out output of meta data
  * @return \f$\int\limits_0^1 f(a_1,a_2,a_3,a_4,a_5)\,da_1da_2da_3da_4da_5\f$
  */
 template <class IntKerT> cdbl integrate5D(IntKerT* K, const IntegrationConfig& cfg, IntegrationOutput* out) {

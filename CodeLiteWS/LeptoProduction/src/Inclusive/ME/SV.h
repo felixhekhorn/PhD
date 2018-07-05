@@ -6,29 +6,12 @@
 namespace Inclusive {
 
 namespace ME {
+    
+#define SVOK(proj)  cdbl SVOK_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
+#define SVQED(proj) cdbl SVQED_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
+#define SV(proj) SVOK(proj) SVQED(proj)
 
-cdbl SVOK_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_F2_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_FL_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_FL_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_x2g1_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_x2g1_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-
-cdbl SVOK_xF3_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_g4_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVOK_gL_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-
-
-cdbl SVQED_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_F2_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_FL_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_FL_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_x2g1_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_x2g1_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-
-cdbl SVQED_xF3_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_g4_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
-cdbl SVQED_gL_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1);
+interateAllProj(SV)
 
 } // namespace ME
 

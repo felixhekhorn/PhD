@@ -9,6 +9,12 @@
 #include "ME/A1Counter.h"
 #include "ME/A2.h"
 
+#include "ME/R.h"
+#include "ME/RCounterX.h"
+#include "ME/RCounterY.h"
+#include "ME/RCounterXY.h"
+#include "ME/SV.h"
+
 FullyDiff::IntKer::IntKer() : AbstractIntKer() {
 };
 
@@ -35,6 +41,123 @@ void FullyDiff::IntKer::setTheta2(cdbl a) {
 #define cg0_AA n * fAA(m2,-Q2,sp,t1)
 implementPartonicCoeff(FullyDiff,cg0)
 
+// setup cg1
+void FullyDiff::IntKer::getR(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const { getME(FullyDiff::ME::R) }
+void FullyDiff::IntKer::getRCounterX(fPtr6dbl &fVV, fPtr6dbl &fVA, fPtr6dbl &fAA) const { getME(FullyDiff::ME::RCounterX) }
+void FullyDiff::IntKer::getRCounterY(fPtr6dbl &fVV, fPtr6dbl &fVA, fPtr6dbl &fAA) const { getME(FullyDiff::ME::RCounterY) }
+void FullyDiff::IntKer::getRCounterXY(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const { getME(FullyDiff::ME::RCounterXY) }
+void FullyDiff::IntKer::getSV(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const { getME(FullyDiff::ME::SV) }
+cdbl FullyDiff::IntKer::cg1_cur() const {
+    _sp
+    // norm to cg1
+    cdbl ncg1 = (m2/(4.*M_PI));
+    PhasespaceValues r;
+    
+    cdbl beta = sqrt(1. - 4.*m2/s);
+    cdbl t1sc = -.5*sp*(1. - beta  *cos(Theta1));
+    
+    { // S+V contributions
+        cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
+        cdbl f = Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp);
+        cdbl betaTilde = sqrt(1. - this->rhoTilde);
+        cdbl g = ncg1 * V_Theta1 * f * beta*sin(Theta1)/(16.*M_PI);
+        /// @todo speed up SV? grid or parametrization? "complicated" part only depends on m2,Q2,s,cos(theta1)
+        fPtr5dbl fVV = 0;fPtr5dbl fVA = 0;fPtr5dbl fAA = 0;
+        this->getSV(fVV, fVA, fAA);
+        dbl meSV = 0;
+        if (Mode_cg1_VV == this->mode)      meSV = fVV(m2,-Q2,sp,t1,betaTilde);
+        else if (Mode_cg1_VA == this->mode) meSV = fVA(m2,-Q2,sp,t1,betaTilde);
+        else if (Mode_cg1_AA == this->mode) meSV = fAA(m2,-Q2,sp,t1,betaTilde);
+        r.xCyE += g * meSV;
+        /// @todo hat contribution?
+        // // hat contributions
+        // if (0. != PggS1()) {
+        //    cdbl g = 16. * (4.*M_PI) * 2. * Kggg*NC*CF * 1./(4.*sp);
+        //    //r -= jacTheta1 * g * BpQED(m2,q2,sp,t1) * PggS1() * beta*sin(Theta1)/(16.*M_PI);
+        // }
+    }
+   
+    { // collinear contributions
+        cdbl s5E = -Q2 + xE*sp;
+        cdbl beta5E = sqrt(1. - 4.*m2/s5E);
+        cdbl t1c  = -.5*sp*(1. - beta5E*cos(Theta1));
+        cdbl f = Color::Kgph*cdbl(Color::NC)*Color::CF * 1./sp * sin(Theta1);
+        cdbl l = log(sp/m2*sp/s*omega/2.);
+        fPtr1dbl PggH0 = this->getPggH0();
+        fPtr1dbl PggH1 = this->getPggH1();
+        
+        // (1-x)P_gg^{H,0} -> 2CA for x->1 for all projections
+        cdbl gE = ncg1 * V_xE*V_Theta1 * f/xE*beta5E * (PggH0(xE)   *(           l + 2.*log(1.-xE)        ) + 2.*PggH1(xE));
+        cdbl gC = ncg1 * V_xC*V_Theta1 * f   *beta   * (2.*Color::CA*(1./(1.-xC)*l + 2.*log(1.-xC)/(1.-xC))               );
+        
+        fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+        this->getBQED(fVV, fVA, fAA);
+        
+        dbl meE = 0;
+        if (Mode_cg1_VV == this->mode)      meE = fVV(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cg1_VA == this->mode) meE = fVA(m2,-Q2,xE*sp,xE*t1c);
+        else if (Mode_cg1_AA == this->mode) meE = fAA(m2,-Q2,xE*sp,xE*t1c);
+        
+        dbl meC = 0;
+        if (Mode_cg1_VV == this->mode)      meC = fVV(m2,-Q2,sp,t1sc);
+        else if (Mode_cg1_VA == this->mode) meC = fVA(m2,-Q2,sp,t1sc);
+        else if (Mode_cg1_AA == this->mode) meC = fAA(m2,-Q2,sp,t1sc);
+        
+        r.xEyC += gE*meE;
+        r.xCyC -= gC*meC;
+    }
+
+    { // hard contributions
+        cdbl s5E = -Q2 + xE*sp;
+        cdbl beta5E = sqrt(1. - 4.*m2/s5E);
+        cdbl f = Color::Kgph*cdbl(Color::NC)*Color::CF * s/(M_PI*pow(sp,3))*sin(Theta1);
+        cdbl gEE = ncg1 * V_xE*V_yE*V_Theta1*V_Theta2 * f*beta5E/(1.-yE) * 1./(1.-xE)/(1.+yE);
+        cdbl gCE = ncg1 * V_xC*V_yE*V_Theta1*V_Theta2 * f*beta  /(1.-yE) * 1./(1.-xC)/(1.+yE);
+        cdbl gEC = ncg1 * V_xE*V_yC*V_Theta1*V_Theta2 * f*beta5E/2.      * 1./(1.-xE)/(1.+yC);
+        cdbl gCC = ncg1 * V_xC*V_yC*V_Theta1*V_Theta2 * f*beta  /2.      * 1./(1.-xC)/(1.+yC);
+        
+        dbl meEE = 0;
+        {
+            fPtr7dbl fVV = 0;fPtr7dbl fVA = 0;fPtr7dbl fAA = 0;
+            this->getR(fVV, fVA, fAA);
+            if (Mode_cg1_VV == this->mode)      meEE = fVV(m2,-Q2,sp,xE,yE,Theta1,Theta2);
+            else if (Mode_cg1_VA == this->mode) meEE = fVA(m2,-Q2,sp,xE,yE,Theta1,Theta2);
+            else if (Mode_cg1_AA == this->mode) meEE = fAA(m2,-Q2,sp,xE,yE,Theta1,Theta2);
+        }
+        dbl meCE = 0;
+        {
+            fPtr6dbl fVV = 0;fPtr6dbl fVA = 0;fPtr6dbl fAA = 0;
+            this->getRCounterX(fVV, fVA, fAA);
+            if (Mode_cg1_VV == this->mode)      meCE = fVV(m2,-Q2,sp,yE,Theta1,Theta2);
+            else if (Mode_cg1_VA == this->mode) meCE = fVA(m2,-Q2,sp,yE,Theta1,Theta2);
+            else if (Mode_cg1_AA == this->mode) meCE = fAA(m2,-Q2,sp,yE,Theta1,Theta2);
+        }
+        dbl meEC = 0;
+        {
+            fPtr6dbl fVV = 0;fPtr6dbl fVA = 0;fPtr6dbl fAA = 0;
+            this->getRCounterY(fVV, fVA, fAA);
+            if (Mode_cg1_VV == this->mode)      meEC = fVV(m2,-Q2,sp,xE,Theta1,Theta2);
+            else if (Mode_cg1_VA == this->mode) meEC = fVA(m2,-Q2,sp,xE,Theta1,Theta2);
+            else if (Mode_cg1_AA == this->mode) meEC = fAA(m2,-Q2,sp,xE,Theta1,Theta2);
+        }
+        dbl meCC = 0;
+        {
+            fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+            this->getRCounterXY(fVV, fVA, fAA);
+            if (Mode_cg1_VV == this->mode)      meCC = fVV(m2,-Q2,sp,t1sc);
+            else if (Mode_cg1_VA == this->mode) meCC = fVA(m2,-Q2,sp,t1sc);
+            else if (Mode_cg1_AA == this->mode) meCC = fAA(m2,-Q2,sp,t1sc);
+        }
+        
+        r.xEyE += gEE * meEE;
+        r.xCyE -= gCE * meCE;
+        r.xEyC -= gEC * meEC;
+        r.xCyC += gCC * meCC;
+    }
+    
+    return r.tot();
+}
+
 // setup cgBarF1
 cdbl FullyDiff::IntKer::cgBarF1_cur() const {
     // collinear contributions
@@ -53,7 +176,7 @@ cdbl FullyDiff::IntKer::cgBarF1_cur() const {
     else if (Mode_cgBarF1_AA == this->mode) meC = fAA(m2,-Q2,sp,t1);
     
     { // S+V contributions
-        cdbl f = 2. * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp);
+        cdbl f = 2. * Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp);
         cdbl b0 = this->beta0lf();
         // PggS0 = b0/2 + 4CA ln(betaTilde) for all projections
         cdbl g = ncg1 * V_Theta1 * f * (b0 + 4.*Color::CA*log(1.-rhoTilde)) * beta*sin(Theta1);
@@ -68,7 +191,7 @@ cdbl FullyDiff::IntKer::cgBarF1_cur() const {
         if (Mode_cgBarF1_VV == this->mode)      meE = fVV(m2,-Q2,xE*sp,xE*t1c);
         else if (Mode_cgBarF1_VA == this->mode) meE = fVA(m2,-Q2,xE*sp,xE*t1c);
         else if (Mode_cgBarF1_AA == this->mode) meE = fAA(m2,-Q2,xE*sp,xE*t1c);
-        cdbl f = Color::Kgph*Color::NC*Color::CF * 1./sp * sin(Theta1);
+        cdbl f = Color::Kgph*cdbl(Color::NC)*Color::CF * 1./sp * sin(Theta1);
         cdbl l = -1.;
         fPtr1dbl PggH0 = this->getPggH0();
         cdbl gE = ncg1 * V_xE*V_Theta1 * f*beta5E/xE*(PggH0(xE)*l);
@@ -84,7 +207,7 @@ cdbl FullyDiff::IntKer::cgBarF1_cur() const {
 #define init_cgBarR1 _sp\
     cdbl beta = this->beta();\
     cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));\
-    cdbl n = 8.*M_PI * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;\
+    cdbl n = 8.*M_PI * Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;\
     fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
     this->getBQED(fVV, fVA, fAA);\
     cdbl b = this->beta0lf()/(16.*M_PI*M_PI);
@@ -105,7 +228,7 @@ cdbl FullyDiff::IntKer::cq1_cur() const {
         cdbl beta5B = sqrt(1. - 4.*m2/s5B);
         cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
         cdbl jacB = V_xE*V_Theta1;
-        cdbl g = ncq1 * Color::Kqph*Color::NC * 1./(xE*sp)*1./(2.) * beta5B*sin(Theta1);
+        cdbl g = ncq1 * Color::Kqph*cdbl(Color::NC) * 1./(xE*sp)*1./(2.) * beta5B*sin(Theta1);
         cdbl l = log(sp/m2*sp/(this->s)*omega/2.*(1.-xE)*(1.-xE));
         fPtr1dbl Pgq0 = this->getPgq0();
         cdbl vPqg0 = Pgq0(xE);
@@ -123,7 +246,7 @@ cdbl FullyDiff::IntKer::cq1_cur() const {
         const KinematicVars vsE(m2,-Q2,sp,xE,yE,Theta1,Theta2);
         cdbl jacE = V_xE*V_yE*V_Theta1*V_Theta2;
         cdbl jacC = V_xE*V_yC*V_Theta1*V_Theta2;
-        cdbl f = ncq1 * (-1.)/(4.*M_PI)*1./sp * Color::Kqph*Color::NC*Color::CF * vsE.beta5*sin(Theta1);
+        cdbl f = ncq1 * (-1.)/(4.*M_PI)*1./sp * Color::Kqph*cdbl(Color::NC)*Color::CF * vsE.beta5*sin(Theta1);
         
         fPtr7dbl fVV = 0;fPtr7dbl fVA = 0;fPtr7dbl fAA = 0;
         this->getA1(fVV, fVA, fAA);
@@ -225,6 +348,9 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
         this->yE = ymin + this->V_yE*a4;
         this->yC = ymin + this->V_yC*a4;
     }
+    // cg1
+    if (Mode_cg1_VV == this->mode || Mode_cg1_VA == this->mode || Mode_cg1_AA == this->mode)
+        return this->cg1_cur();
     // cq1
     if (Mode_cq1_VV == this->mode || Mode_cq1_VA == this->mode || Mode_cq1_AA == this->mode)
         return this->cq1_cur();

@@ -13,7 +13,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Felix Hekhorn
-Date                   :=04/07/18
+Date                   :=05/07/18
 CodeLitePath           :=/home/Felix/.codelite
 LinkerName             :=/usr/bin/g++
 SharedObjectLinkerName :=/usr/bin/g++ -shared -fPIC
@@ -63,7 +63,8 @@ CodeLiteDir:=/usr/share/codelite
 DSSV2014_GRIDS:=/home/Felix/Physik/PhD/PDF/DSSV2014/grids/
 GRSV96_GRIDS:=/home/Felix/Physik/PhD/PDF/GRSV96/
 Objects0=$(IntermediateDirectory)/src_main.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_InclusiveLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiffLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Pdf_PdfWrapper.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractLeptoProduction.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_AbstractIntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_IntKer.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_PhasespacePoint.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Common_ME_BQED.cpp$(ObjectSuffix) \
-	$(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_SV.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntR.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A1Counter.cpp$(ObjectSuffix) 
+	$(IntermediateDirectory)/src_Inclusive_ME_IntA2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntA1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_SV.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_Inclusive_ME_IntR.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A2.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A1.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_A1Counter.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(ObjectSuffix) \
+	$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(ObjectSuffix) $(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(ObjectSuffix) 
 
 
 
@@ -251,6 +252,70 @@ $(IntermediateDirectory)/src_FullyDiff_ME_A1Counter.cpp$(DependSuffix): src/Full
 
 $(IntermediateDirectory)/src_FullyDiff_ME_A1Counter.cpp$(PreprocessSuffix): src/FullyDiff/ME/A1Counter.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_A1Counter.cpp$(PreprocessSuffix) src/FullyDiff/ME/A1Counter.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(ObjectSuffix): src/FullyDiff/ME/RCounterX.cpp $(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/RCounterX.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(DependSuffix): src/FullyDiff/ME/RCounterX.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(DependSuffix) -MM src/FullyDiff/ME/RCounterX.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(PreprocessSuffix): src/FullyDiff/ME/RCounterX.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterX.cpp$(PreprocessSuffix) src/FullyDiff/ME/RCounterX.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(ObjectSuffix): src/FullyDiff/ME/RCounterY.cpp $(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/RCounterY.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(DependSuffix): src/FullyDiff/ME/RCounterY.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(DependSuffix) -MM src/FullyDiff/ME/RCounterY.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(PreprocessSuffix): src/FullyDiff/ME/RCounterY.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterY.cpp$(PreprocessSuffix) src/FullyDiff/ME/RCounterY.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(ObjectSuffix): src/FullyDiff/ME/RCounterXY.cpp $(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/RCounterXY.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(DependSuffix): src/FullyDiff/ME/RCounterXY.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(DependSuffix) -MM src/FullyDiff/ME/RCounterXY.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(PreprocessSuffix): src/FullyDiff/ME/RCounterXY.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_RCounterXY.cpp$(PreprocessSuffix) src/FullyDiff/ME/RCounterXY.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(ObjectSuffix): src/FullyDiff/ME/A3.cpp $(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/A3.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(DependSuffix): src/FullyDiff/ME/A3.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(DependSuffix) -MM src/FullyDiff/ME/A3.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(PreprocessSuffix): src/FullyDiff/ME/A3.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_A3.cpp$(PreprocessSuffix) src/FullyDiff/ME/A3.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(ObjectSuffix): src/FullyDiff/ME/RQED.cpp $(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/RQED.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(DependSuffix): src/FullyDiff/ME/RQED.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(DependSuffix) -MM src/FullyDiff/ME/RQED.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(PreprocessSuffix): src/FullyDiff/ME/RQED.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_RQED.cpp$(PreprocessSuffix) src/FullyDiff/ME/RQED.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(ObjectSuffix): src/FullyDiff/ME/ROK.cpp $(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/ROK.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(DependSuffix): src/FullyDiff/ME/ROK.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(DependSuffix) -MM src/FullyDiff/ME/ROK.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(PreprocessSuffix): src/FullyDiff/ME/ROK.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_ROK.cpp$(PreprocessSuffix) src/FullyDiff/ME/ROK.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(ObjectSuffix): src/FullyDiff/ME/R.cpp $(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/R.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(DependSuffix): src/FullyDiff/ME/R.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(DependSuffix) -MM src/FullyDiff/ME/R.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(PreprocessSuffix): src/FullyDiff/ME/R.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_R.cpp$(PreprocessSuffix) src/FullyDiff/ME/R.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(ObjectSuffix): src/FullyDiff/ME/SV.cpp $(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "/home/Felix/Physik/PhD/CodeLiteWS/LeptoProduction/src/FullyDiff/ME/SV.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(ObjectSuffix) $(IncludePath)
+$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(DependSuffix): src/FullyDiff/ME/SV.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(ObjectSuffix) -MF$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(DependSuffix) -MM src/FullyDiff/ME/SV.cpp
+
+$(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(PreprocessSuffix): src/FullyDiff/ME/SV.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) $(IntermediateDirectory)/src_FullyDiff_ME_SV.cpp$(PreprocessSuffix) src/FullyDiff/ME/SV.cpp
 
 
 -include $(IntermediateDirectory)/*$(DependSuffix)

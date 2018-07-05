@@ -5,21 +5,11 @@
 
 namespace Inclusive {
 
-/**
- * @brief namespace for matrix elements for inclusive lepto production of heavy quarks
- */
 namespace ME {
+    
+#define IntA1(proj) cdbl IntA1_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
 
-cdbl IntA1_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_F2_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_FL_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_FL_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_x2g1_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_x2g1_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-
-cdbl IntA1_xF3_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_g4_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntA1_gL_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
+interateAllProj(IntA1)
 
 } // namespace ME
 

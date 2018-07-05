@@ -6,8 +6,10 @@ Release/src_main.cpp.o: src/main.cpp src/config.h \
  src/Common/Color.hpp src/Common/IntegrationMeta.hpp \
  src/Inclusive/IntKer.h src/Inclusive/../Common/AbstractIntKer.h \
  src/FullyDiffLeptoProduction.h src/FullyDiff/IntKer.h \
- src/FullyDiff/../Common/AbstractIntKer.h src/FullyDiff/ME/A2.h \
- src/FullyDiff/ME/../../config.h
+ src/FullyDiff/../Common/AbstractIntKer.h src/FullyDiff/ME/R.h \
+ src/FullyDiff/ME/../../config.h src/FullyDiff/ME/RCounterX.h \
+ src/FullyDiff/ME/RCounterY.h src/FullyDiff/ME/RCounterXY.h \
+ src/FullyDiff/ME/SV.h
 
 src/config.h:
 
@@ -41,6 +43,14 @@ src/FullyDiff/IntKer.h:
 
 src/FullyDiff/../Common/AbstractIntKer.h:
 
-src/FullyDiff/ME/A2.h:
+src/FullyDiff/ME/R.h:
 
 src/FullyDiff/ME/../../config.h:
+
+src/FullyDiff/ME/RCounterX.h:
+
+src/FullyDiff/ME/RCounterY.h:
+
+src/FullyDiff/ME/RCounterXY.h:
+
+src/FullyDiff/ME/SV.h:

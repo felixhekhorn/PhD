@@ -6,29 +6,12 @@
 namespace Inclusive {
 
 namespace ME {
+    
+#define IntROK(proj)  cdbl IntROK_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
+#define IntRQED(proj) cdbl IntRQED_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
+#define IntR(proj) IntROK(proj) IntRQED(proj)
 
-cdbl IntROK_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_F2_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_FL_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_FL_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_x2g1_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_x2g1_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-
-cdbl IntROK_xF3_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_g4_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntROK_gL_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-
-
-cdbl IntRQED_F2_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_F2_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_FL_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_FL_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_x2g1_VV(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_x2g1_AA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-
-cdbl IntRQED_xF3_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_g4_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
-cdbl IntRQED_gL_VA(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl s4);
+interateAllProj(IntR)
 
 } // namespace ME
 

@@ -1,0 +1,1 @@
+(-2*Power(sp,2)*(-1 + y)*(s*y - 2*m2*(1 + y) + Power(beta,2)*s*Cos(Theta1)*(-(y*Cos(Theta1)) + Sqrt(1 - Power(y,2))*Cos(Theta2)*Sin(Theta1))))/(Power(s,2)*(-1 + beta*y*Cos(Theta1) - beta*Sqrt(1 - Power(y,2))*Cos(Theta2)*Sin(Theta1))*(1 + beta*y*Cos(Theta1) - beta*Sqrt(1 - Power(y,2))*Cos(Theta2)*Sin(Theta1)))

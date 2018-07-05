@@ -34,5 +34,14 @@ typedef const dbl cdbl;
 cdbl dblNaN = nan("");
 ///@}
 
-
+/**
+ * @brief iterates all projections by macro
+ * @param MEHfnc macro
+ */
+#define interateAllProj(MEHfnc) \
+    MEHfnc(F2_VV) MEHfnc(F2_AA) \
+    MEHfnc(FL_VV) MEHfnc(FL_AA) \
+    MEHfnc(x2g1_VV) MEHfnc(x2g1_AA) \
+    MEHfnc(xF3_VA) MEHfnc(g4_VA) MEHfnc(gL_VA)
+    
 #endif // Config_H_

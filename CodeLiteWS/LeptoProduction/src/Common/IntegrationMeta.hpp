@@ -1,5 +1,4 @@
 /**
- * @file IntegrationMeta.h
  * @brief defines meta classes for integration routines
  */
 
@@ -92,7 +91,7 @@ struct IntegrationConfig {
     }
 
 /**
- * @brief writes object to stream
+ * @brief writes object as YAML to stream
  * @param os stream
  * @param c object
  * @return improved stream
