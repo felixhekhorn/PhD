@@ -78,12 +78,12 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
     // partonic functions
     if (boost::starts_with(method,"cg0_") || boost::starts_with(method,"cgBarR1_"))
         return this->intConfigs.at(1-1);
+    if (boost::starts_with(method,"cgBarF1_") || boost::starts_with(method,"cgBar1_") || 
+        boost::starts_with(method,"cqBarF1_"))
+        return this->intConfigs.at(2-1);
     if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cq1_") || boost::starts_with(method,"dq1_"))
         return this->intConfigs.at(4-1);
-    /*if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || boost::starts_with(method,"cgBar1_") || 
-        boost::starts_with(method,"cq1_") || boost::starts_with(method,"cqBarF1_") || boost::starts_with(method,"dq1_"))
-        return this->intConfigs.at(1);
-    // hadronic functions
+    /*// hadronic functions
     bool isNLO = this->ker->flags.useNextToLeadingOrder;
     if (boost::starts_with(method,"dF_d"))
         return isNLO ? this->intConfigs.at(1) : this->intConfigs.at(0);
@@ -95,40 +95,32 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
     */throw invalid_argument(str("unknown method: ")+method);
 }
 
-cdbl FullyDiffLeptoProduction::int1D() const {
-    this->ker->dim = 1;
-    return Common::integrate1D<FullyDiff::IntKer>(FDker,*this->intConfigs.at(0),this->intOut);
-}
-
 #define intND(N) cdbl FullyDiffLeptoProduction::int##N##D() const {\
     this->ker->dim = N;\
     return Common::integrate##N##D<FullyDiff::IntKer>(FDker,*this->intConfigs.at(N-1),this->intOut);\
 }
+intND(1)
 intND(2)
+intND(3)
 intND(4)
 intND(5)
-        
-// implement partonic coefficient functions with 1D integration
-#define implement1DCoeffs(n) \
-cdbl FullyDiffLeptoProduction::n##_VV() const { initPartonicVV this->ker->mode = Common::AbstractIntKer::Mode_##n##_VV; return this->int1D(); }\
-cdbl FullyDiffLeptoProduction::n##_VA() const { initPartonicVA this->ker->mode = Common::AbstractIntKer::Mode_##n##_VA; return this->int1D(); }\
-cdbl FullyDiffLeptoProduction::n##_AA() const { initPartonicAA this->ker->mode = Common::AbstractIntKer::Mode_##n##_AA; return this->int1D(); }
 
-// implement partonic coefficient functions with 4D integration
-#define implement4DCoeffs(n) \
-cdbl FullyDiffLeptoProduction::n##_VV() const { initPartonicVV this->ker->mode = Common::AbstractIntKer::Mode_##n##_VV; return this->int4D(); }\
-cdbl FullyDiffLeptoProduction::n##_VA() const { initPartonicVA this->ker->mode = Common::AbstractIntKer::Mode_##n##_VA; return this->int4D(); }\
-cdbl FullyDiffLeptoProduction::n##_AA() const { initPartonicAA this->ker->mode = Common::AbstractIntKer::Mode_##n##_AA; return this->int4D(); }
+// implement partonic coefficient functions with d-dim integration
+#define implementCoeffs(n,d) \
+cdbl FullyDiffLeptoProduction::n##_VV() const { initPartonicVV this->ker->mode = Common::AbstractIntKer::Mode_##n##_VV; return this->int##d##D(); }\
+cdbl FullyDiffLeptoProduction::n##_VA() const { initPartonicVA this->ker->mode = Common::AbstractIntKer::Mode_##n##_VA; return this->int##d##D(); }\
+cdbl FullyDiffLeptoProduction::n##_AA() const { initPartonicAA this->ker->mode = Common::AbstractIntKer::Mode_##n##_AA; return this->int##d##D(); }
 
-implement1DCoeffs(cg0)
-implement1DCoeffs(cgBarR1)
+implementCoeffs(cg0,1)
+implementCoeffs(cgBarR1,1)
 
-implement4DCoeffs(dq1)
-implement4DCoeffs(cq1)
-implement4DCoeffs(cqBarF1)
-implement4DCoeffs(cg1)
-implement4DCoeffs(cgBarF1)
-implement4DCoeffs(cgBar1)
+implementCoeffs(cgBarF1,2)
+implementCoeffs(cgBar1,2)
+implementCoeffs(cqBarF1,2)
+
+implementCoeffs(dq1,4)
+implementCoeffs(cq1,4)
+implementCoeffs(cg1,4)
 
 cdbl FullyDiffLeptoProduction::F() const { 
     initF

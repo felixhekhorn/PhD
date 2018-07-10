@@ -27,6 +27,12 @@ class FullyDiffLeptoProduction : public Common::AbstractLeptoProduction {
     cdbl int2D() const;
     
 /**
+ * @brief wrapper to 3D integration
+ * @return integral
+ */
+    cdbl int3D() const;
+    
+/**
  * @brief wrapper to 4D integration
  * @return integral
  */

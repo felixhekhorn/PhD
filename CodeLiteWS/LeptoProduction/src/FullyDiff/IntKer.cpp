@@ -54,10 +54,9 @@ cdbl FullyDiff::IntKer::cg1_cur() const {
     PhasespaceValues r;
     
     cdbl beta = sqrt(1. - 4.*m2/s);
-    cdbl t1sc = -.5*sp*(1. - beta  *cos(Theta1));
+    cdbl t1sc = -.5*sp*(1. - beta*cos(Theta1));
     
     { // S+V contributions
-        cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
         cdbl f = Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp);
         cdbl betaTilde = sqrt(1. - this->rhoTilde);
         cdbl g = ncg1 * V_Theta1 * f * beta*sin(Theta1)/(16.*M_PI);
@@ -65,9 +64,9 @@ cdbl FullyDiff::IntKer::cg1_cur() const {
         fPtr5dbl fVV = 0;fPtr5dbl fVA = 0;fPtr5dbl fAA = 0;
         this->getSV(fVV, fVA, fAA);
         dbl meSV = 0;
-        if (Mode_cg1_VV == this->mode)      meSV = fVV(m2,-Q2,sp,t1,betaTilde);
-        else if (Mode_cg1_VA == this->mode) meSV = fVA(m2,-Q2,sp,t1,betaTilde);
-        else if (Mode_cg1_AA == this->mode) meSV = fAA(m2,-Q2,sp,t1,betaTilde);
+        if (Mode_cg1_VV == this->mode)      meSV = fVV(m2,-Q2,sp,t1sc,betaTilde);
+        else if (Mode_cg1_VA == this->mode) meSV = fVA(m2,-Q2,sp,t1sc,betaTilde);
+        else if (Mode_cg1_AA == this->mode) meSV = fAA(m2,-Q2,sp,t1sc,betaTilde);
         r.xCyE += g * meSV;
         /// @todo hat contribution?
         // // hat contributions
@@ -272,7 +271,7 @@ cdbl FullyDiff::IntKer::cqBarF1_cur() const {
     cdbl beta5B = sqrt(1. - 4.*m2/s5B);
     cdbl t1c = -.5*sp*(1. - beta5B*cos(Theta1));
     cdbl jacB = V_xE*V_Theta1;
-    cdbl g = Color::Kqph*Color::NC * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
+    cdbl g = Color::Kqph*cdbl(Color::NC) * m2/(xE*sp)*1./(8.*M_PI) * beta5B*sin(Theta1);
     cdbl l = -1.;
     fPtr1dbl Pgq0 = this->getPgq0();
     cdbl vPqg0 = Pgq0(xE);
@@ -281,8 +280,8 @@ cdbl FullyDiff::IntKer::cqBarF1_cur() const {
     this->getBQED(fVV, fVA, fAA);
     dbl meB = 0.;
     if (Mode_cqBarF1_VV == this->mode) meB = fVV(m2,-Q2,xE*sp,xE*t1c);
-    if (Mode_cqBarF1_VA == this->mode) meB = fVA(m2,-Q2,xE*sp,xE*t1c);
-    if (Mode_cqBarF1_AA == this->mode) meB = fAA(m2,-Q2,xE*sp,xE*t1c);
+    else if (Mode_cqBarF1_VA == this->mode) meB = fVA(m2,-Q2,xE*sp,xE*t1c);
+    else if (Mode_cqBarF1_AA == this->mode) meB = fAA(m2,-Q2,xE*sp,xE*t1c);
     r.xEyC += jacB * g*meB*vPqg0*l;
     return r.tot();
 }
@@ -300,8 +299,8 @@ cdbl FullyDiff::IntKer::dq1_cur() const {
     this->getA2(fVV, fVA, fAA);
     dbl meA2 = 0.;
     if(Mode_dq1_VV == this->mode) meA2 = fVV(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
-    if(Mode_dq1_VA == this->mode) meA2 = fVA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
-    if(Mode_dq1_AA == this->mode) meA2 = fAA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
+    else if(Mode_dq1_VA == this->mode) meA2 = fVA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
+    else if(Mode_dq1_AA == this->mode) meA2 = fAA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up);
     r.xEyE += jac * f * meA2;
     return r.tot();
 }
@@ -330,17 +329,32 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
         this->rhoTilde = min(1. - this->xTilde*(1. - this->rhoStar),xmax);
         this->V_xC = xmax - this->rhoTilde;
     } { // setX
-        this->xE = this->rhoStar  + this->V_xE * a3;
-        this->xC = this->rhoTilde + this->V_xC * a3;
+        this->xE = this->rhoStar  + this->V_xE * a2;
+        this->xC = this->rhoTilde + this->V_xC * a2;
     }
     // cgBarF1
     if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
         return this->cgBarF1_cur();
+    // cgBar1
+    if (Mode_cgBar1_VV == this->mode || Mode_cgBar1_VA == this->mode || Mode_cgBar1_AA == this->mode) {
+        cuint old = this->mode;
+        uint F,R;
+        if (Mode_cgBar1_VV == this->mode) { F = this->Mode_cgBarF1_VV; R = this->Mode_cgBarR1_VV; }
+        else if (Mode_cgBar1_VA == this->mode) { F = this->Mode_cgBarF1_VA; R = this->Mode_cgBarR1_VA; }
+        else if (Mode_cgBar1_AA == this->mode) { F = this->Mode_cgBarF1_AA; R = this->Mode_cgBarR1_AA; }
+        dbl r = 0.;
+        this->mode = F;
+        r += this->cgBarF1_cur();
+        this->mode = R;
+        r += this->cgBarR1_cur();
+        this->mode = old;
+        return r;
+    }
     // cqBarF1
     if (Mode_cqBarF1_VV == this->mode || Mode_cqBarF1_VA == this->mode || Mode_cqBarF1_AA == this->mode)
         return this->cqBarF1_cur();
     // 4D integrations
-    this->setTheta2(a2);
+    this->setTheta2(a3);
     { // setY
         cdbl ymin = -1.+this->deltay;
         this->V_yE = 1. - ymin;

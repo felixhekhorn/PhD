@@ -16,7 +16,7 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
     //return testHadronic();
     //return testLeptonic();
     
@@ -36,16 +36,16 @@ int main(int argc, char **argv) {
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
-        o.getIntegrationConfig("cg1_VV")->verbosity = 2;
-        o.getIntegrationConfig("cg1_VV")->calls = 15000;
-        o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 20;
+        o.getIntegrationConfig("cgBarF1_VV")->verbosity = 1;
+        //o.getIntegrationConfig("cg1_VV")->calls = 20000;
+        //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
         //o.setDelta(eta/1000.);
         o.setProjection(F2);
-        cdbl cF2 = 0/*o.cg1_VV()*/;
+        cdbl cF2 = o.cgBarF1_VV();
         o.setProjection(FL);
-        cdbl cFL = o.cg1_VV();
+        cdbl cFL = o.cgBarF1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = 0/*o.cg1_VV()*/;
+        cdbl cx2g1 = o.cgBarF1_VV();
         cdbl ex2g1 = o.getIntegrationOutput().error;
         cout << boost::format("%e\t% e\t% e\t% e\t% e")%eta%(cF2-cFL)%cFL%cx2g1%ex2g1 << endl;
     }
@@ -59,14 +59,14 @@ int main(int argc, char **argv) {
 #include "FullyDiff/ME/RCounterXY.h"
 #include "FullyDiff/ME/SV.h"
 int test() {
-    /*cdbl m2 = 1.;
+    cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl u1 = -1.;
     cdbl tp = -1.;
     cdbl up = -1.;
-    cout << FullyDiff::ME::R_FL_VV(m2,q2,sp,t1,u1,tp,up) << endl;*/
+    cout << FullyDiff::ME::R_FL_VV(m2,q2,sp,t1,u1,tp,up) << endl;
     
     /*cdbl m2 = 1.;
     cdbl q2 = -10.;
@@ -78,14 +78,14 @@ int test() {
     cdbl t1 = -sp/2.*(1.-sqrt(1. - 4.*m2/(sp+q2))*cos(Theta1));
     cout << (FullyDiff::ME::RCounterY_FL_VV(m2,q2,sp,x,Theta1,Theta2)) << endl;*/
     
-    cdbl m2 = 1.;
+    /*cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl s = 4.*m2*(1.+1.);
     cdbl sp = s-q2;
     cdbl Theta1 = 1.;
     cdbl t1 = -sp/2.*(1.-sqrt(1. - 4.*m2/(sp+q2))*cos(Theta1));
     cdbl betaTilde = .9;
-    cout << (FullyDiff::ME::SVOK_FL_VV(m2,q2,sp,t1,betaTilde)) << endl;
+    cout << (FullyDiff::ME::SVQED_FL_VV(m2,q2,sp,t1,betaTilde)) << endl;*/
     return EXIT_SUCCESS;
 }
 
