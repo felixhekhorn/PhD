@@ -97,6 +97,7 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
 
 #define intND(N) cdbl FullyDiffLeptoProduction::int##N##D() const {\
     this->ker->dim = N;\
+    FDker->operator()(.5,.5,.5,.5);\
     return Common::integrate##N##D<FullyDiff::IntKer>(FDker,*this->intConfigs.at(N-1),this->intOut);\
 }
 intND(1)

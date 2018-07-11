@@ -381,7 +381,7 @@ cdbl FullyDiff::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) 
     // partonic mode?
     if (this->mode < Mode_F) {
         cdbl r = this->runPartonic(a1,a2,a3,a4);
-        //if(!isfinite(r)) printf("<%.10e\t%.10e ()\n",a1,a2);
+if(!isfinite(r)) printf("<%.10e\t%.10e ()\n",a1,a2);
         return isfinite(r) ? r : 0.;
     }
     return 0.;

@@ -39,14 +39,23 @@ int test() {
     cdbl s4 = 1.;
     cout << (Inclusive::IntRQEDfiniteL(m2,q2,sp,s4,t1)) << endl;*/
     
-    cdbl m2 = 1.;
+    /*cdbl m2 = 1.;
     cdbl q2 = -10.;
     cdbl sp = 5.;
     cdbl t1 = -3.;
     cdbl u1 = -1.;
     cdbl tp = -1.;
     cdbl up = -1.;
-    cout << (Exclusive::RpL(m2,q2,sp,t1,u1,tp,up)) << endl;
+    cout << (Exclusive::RpL(m2,q2,sp,t1,u1,tp,up)) << endl;*/
+    
+    cdbl m2 = 22.5625;
+    cdbl q2 = -1e3;
+    cdbl sp = 1090.34025;
+    cdbl Theta1 = 1.5707963267948966;
+    cdbl xE = 0.999958608836369;
+    cdbl Theta2 = 1.5707963267948966;
+    cdbl yE = 3.4999999999341114e-06;
+    cout << (Exclusive::RpL(m2,q2,sp,xE,yE,Theta1,Theta2)) << endl;
     
     /*cdbl m2 = 1.;
     cdbl q2 = -10.;
@@ -79,10 +88,10 @@ int test2() {
     //cdbl lambdaQCD = .2; // nlf=3
     const Common::DynamicScaleFactors mu02F(4.,-1.,0.,0.);
     cdbl Delta = 1e-6;
-    cdbl xTilde = .5;//.8;
+    cdbl xTilde = .8;
     cdbl omega = 1.;
-    cdbl deltax = 1e-8;//1e-6;
-    cdbl deltay = 7e-8;//7e-6;
+    cdbl deltax = 1e-6;
+    cdbl deltay = 7e-6;
     //const str pdf = "MorfinTungB";
     //const str pdf = "CTEQ3M";
     //const str pdf = "cteq66";
@@ -112,8 +121,8 @@ int test2() {
     eO.MCparams.verbosity = 3;
     
     {
-        uint N = 101;
-        for (uint j = 85; j < N; ++j) {
+        uint N = 11;
+        for (uint j = 0; j < N; ++j) {
             cdbl a = pow(10,-3.+6./(N-1)*j);
             /*eO.setEta(a);iO.setEta(a);
             cdbl e = eO.cq1();
@@ -126,9 +135,9 @@ int test2() {
             cdbl p = iP.cg1();*/
             eG.setEta(a);eL.setEta(a);eP.setEta(a);
             cdbl g = 0/*eG.cg1()*/;
-            cdbl l = 0/*eL.cg1()*/;
-            cdbl p = eP.cg1();
-            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
+            cdbl l = eL.cg1();
+            cdbl p = 0/*eP.cg1()*/;
+            printf("%e\t% e\t% e\t% e\n",a,g+l/2.,l,p);
         }
     }
     return EXIT_SUCCESS;
