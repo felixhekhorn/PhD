@@ -7,7 +7,7 @@ namespace FullyDiff {
     
 namespace ME {
 
-#define R(proj) cdbl R_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl t1, cdbl u1, cdbl tp, cdbl up);
+#define R(proj) cdbl R_##proj(cdbl m2, cdbl q2, cdbl sp, cdbl x, cdbl y, cdbl Theta1, cdbl Theta2);
 
 interateAllProj(R)
 

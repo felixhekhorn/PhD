@@ -25,21 +25,58 @@ void FullyDiff::IntKer::setTheta1(cdbl a) {
     this->Theta1 = this->V_Theta1*a;
 }
 
+void FullyDiff::IntKer::setX(cdbl a) {
+    // setSpRaw
+    _sp
+    cdbl eta = this->s/(4.*m2) - 1.;
+    cdbl cut = this->deltax*pow(eta,2./3.);
+    cdbl xmax = 1. - cut;
+    // reached numeric limit?
+    if (0. != this->deltax && 1. == xmax)
+        throw domain_error((boost::format("x_max = 1-deltax*eta^(2/3) = 1. - %e = %e has to be smaller than 1!")%cut%xmax).str());
+    // make hard cut instead of throwing an error
+    cdbl rhoStar = min((4.*m2 + this->Q2)/sp,xmax);
+    this->V_xE = xmax - rhoStar;
+    this->rhoTilde = min(1. - this->xTilde*(1. - rhoStar),xmax);
+    this->V_xC = xmax - this->rhoTilde;
+    this->xE = rhoStar  + this->V_xE * a;
+    this->xC = this->rhoTilde + this->V_xC * a;
+}
+
 void FullyDiff::IntKer::setTheta2(cdbl a) {
     this->Theta2 = this->V_Theta2*a;
 }
 
-// setup cg0
-#define init_cg0 _sp\
-    cdbl beta = this->beta();\
-    cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));\
-    cdbl n = 8.*M_PI * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;\
-    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
+void FullyDiff::IntKer::setY(cdbl a) {
+    cdbl ymin = -1.+this->deltay;
+    this->V_yE = 1. - ymin;
+    this->V_yC = (-1. + this->omega) - ymin;
+    this->yE = ymin + this->V_yE*a;
+    this->yC = ymin + this->V_yC*a;
+}
+
+void FullyDiff::IntKer::setZ(cdbl a) {
+    cdbl zMax = this->getZMax();
+    this->V_z = zMax - this->xBj;
+    this->z = this->xBj + this->V_z*a;
+    cdbl sp = Q2/this->z;
+    this->s = sp - Q2;
+}
+
+cdbl FullyDiff::IntKer::cg0_cur() const {
+    _sp
+    cdbl beta = this->beta();
+    cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
+    cdbl n = 8.*M_PI * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;
+    
+    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
     this->getBQED(fVV, fVA, fAA);
-#define cg0_VV n * fVV(m2,-Q2,sp,t1)
-#define cg0_VA n * fVA(m2,-Q2,sp,t1)
-#define cg0_AA n * fAA(m2,-Q2,sp,t1)
-implementPartonicCoeff(FullyDiff,cg0)
+    dbl me = 0;
+    if (Mode_cg0_VV == this->mode)      me = fVV(m2,-Q2,sp,t1);
+    else if (Mode_cg0_VA == this->mode) me = fVA(m2,-Q2,sp,t1);
+    else if (Mode_cg0_AA == this->mode) me = fAA(m2,-Q2,sp,t1);
+    return n*me;
+}
 
 // setup cg1
 void FullyDiff::IntKer::getR(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const { getME(FullyDiff::ME::R) }
@@ -157,7 +194,6 @@ cdbl FullyDiff::IntKer::cg1_cur() const {
     return r.tot();
 }
 
-// setup cgBarF1
 cdbl FullyDiff::IntKer::cgBarF1_cur() const {
     // collinear contributions
     _sp
@@ -262,7 +298,6 @@ cdbl FullyDiff::IntKer::cq1_cur() const {
     return r.tot();
 }
 
-// setup cqBarF1
 cdbl FullyDiff::IntKer::cqBarF1_cur() const {
     // collinear contributions
     _sp
@@ -305,7 +340,7 @@ cdbl FullyDiff::IntKer::dq1_cur() const {
     return r.tot();
 }
 
-cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
+cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
     // 1D integrations
     this->setTheta1(a1);
     // cg0
@@ -315,23 +350,7 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
     if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode)
         return this->cgBarR1_cur();
     // 2D integrations
-    { // setSpRaw
-        _sp
-        cdbl eta = this->s/(4.*m2) - 1.;
-        cdbl cut = this->deltax*pow(eta,2./3.);
-        cdbl xmax = 1. - cut;
-        // reached numeric limit?
-        if (0. != this->deltax && 1. == xmax)
-            throw domain_error((boost::format("x_max = 1-deltax*eta^(2/3) = 1. - %e = %e has to be smaller than 1!")%cut%xmax).str());
-        // make hard cut instead of throwing an error
-        this->rhoStar = min((4.*m2 + this->Q2)/sp,xmax);
-        this->V_xE = xmax - this->rhoStar;
-        this->rhoTilde = min(1. - this->xTilde*(1. - this->rhoStar),xmax);
-        this->V_xC = xmax - this->rhoTilde;
-    } { // setX
-        this->xE = this->rhoStar  + this->V_xE * a2;
-        this->xC = this->rhoTilde + this->V_xC * a2;
-    }
+    this->setX(a2);
     // cgBarF1
     if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
         return this->cgBarF1_cur();
@@ -355,13 +374,7 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
         return this->cqBarF1_cur();
     // 4D integrations
     this->setTheta2(a3);
-    { // setY
-        cdbl ymin = -1.+this->deltay;
-        this->V_yE = 1. - ymin;
-        this->V_yC = (-1. + this->omega) - ymin;
-        this->yE = ymin + this->V_yE*a4;
-        this->yC = ymin + this->V_yC*a4;
-    }
+    this->setY(a4);
     // cg1
     if (Mode_cg1_VV == this->mode || Mode_cg1_VA == this->mode || Mode_cg1_AA == this->mode)
         return this->cg1_cur();
@@ -371,8 +384,32 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2,cdbl a3, cdbl a4) {
     // dq1
     if (Mode_dq1_VV == this->mode || Mode_dq1_VA == this->mode || Mode_dq1_AA == this->mode)
         return this->dq1_cur();
-    
     return 0.;
+}
+
+cdbl FullyDiff::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) {
+    dbl r = 0.;
+    // 2D integrations
+    this->setZ(a1);
+    this->setTheta1(a1);
+    // LO
+    if (this->flags.useLeadingOrder && this->flags.useGluonicChannel) {
+       PhasespacePoint p(this->m2, this->Q2, this->xBj, this->muR2, this->muF2);
+        p.setupLO(this->z, this->Theta1);
+        cdbl muR2 = p.getMuR2();
+        cdbl muF2 = p.getMuF2();
+        cdbl alphaS = this->aS->alphasQ2(muR2);
+        cdbl eH = getElectricCharge(this->nlf + 1);
+        cdbl nLO = alphaS/m2 * (Q2)/(4.*M_PI*M_PI);
+        cdbl xi = this->xBj/z;
+        cdbl nLOg = this->V_z * 1./this->z * this->pdf->xfxQ2(21,xi,muF2);
+        cdbl cg0 = this->cg0_cur();
+        cdbl fLOg = nLO * eH*eH * nLOg * cg0;
+        this->fillAllOrderHistograms(p, fLOg);
+        r += fLOg;
+    }
+    // 5D integration
+    return r;
 }
 
 cdbl FullyDiff::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) {      
@@ -381,17 +418,173 @@ cdbl FullyDiff::IntKer::operator()(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5) 
     // partonic mode?
     if (this->mode < Mode_F) {
         cdbl r = this->runPartonic(a1,a2,a3,a4);
-if(!isfinite(r)) printf("<%.10e\t%.10e ()\n",a1,a2);
+///if(!isfinite(r)) printf("<%.10e\t%.10e ()\n",a1,a2);
+        return isfinite(r) ? r : 0.;
+    }
+    // hadronic mode?
+    if (this->mode < Mode_sigma) {
+        cdbl r = this->runHadronic(a1,a2,a3,a4,a5);
+///if(!isfinite(r)) printf("<%.10e\t%.10e ()\n",a1,a2);
         return isfinite(r) ? r : 0.;
     }
     return 0.;
 }
 
 void FullyDiff::IntKer::operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]) {
+    this->vegasWeight = &weight;
     cdbl a0 = this->dim >= 1 ? x[0] : 0.;
     cdbl a1 = this->dim >= 2 ? x[1] : 0.;
     cdbl a2 = this->dim >= 3 ? x[2] : 0.;
     cdbl a3 = this->dim >= 4 ? x[3] : 0.;
     cdbl a4 = this->dim >= 5 ? x[4] : 0.;
-    f[0] = this->operator()(a0,a1,a2,a3,a4);
+    cdbl i = this->operator()(a0,a1,a2,a3,a4);
+    f[0] = i;
+}
+
+#define combineNLOInit \
+    PhasespacePoint p(this->m2, this->Q2, this->xBj, this->muR2, this->muF2);\
+    p.setupNLO(this->z,x,y,this->Theta1,this->Theta2);\
+    cdbl muR2 = p.getMuR2();\
+    cdbl muF2 = p.getMuF2();\
+    cdbl alphaS = this->aS->alphasQ2(muR2);\
+    cdbl eH = getElectricCharge(this->nlf + 1);\
+    cdbl nNLO = alphaS*alphaS * 1./m2 * (Q2)/(M_PI);\
+    cdbl xi = this->xBj/z;
+
+cdbl FullyDiff::IntKer::combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1) {
+    combineNLOInit
+    // combine
+    cdbl nNLOg = this->V_z * 1./this->z * this->pdf->xfxQ2(21,xi,muF2);
+    cdbl fNLOg = nNLO * eH*eH * nNLOg * (cg1 + log(muR2/this->m2)*cgBarR1 + log(muF2/this->m2)*cgBarF1);
+    if (!isfinite(fNLOg) || 0. == fNLOg)
+        return 0.;
+    // fill histograms
+    this->fillAllOrderHistograms(p, fNLOg);
+    this->fillNLOHistograms(p, fNLOg);
+    return fNLOg;
+}
+
+cdbl FullyDiff::IntKer::combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1) {
+    combineNLOInit
+    // combine
+    dbl fqs = 0.;
+    for (uint q = 1; q < this->nlf + 1; ++q) {
+        cdbl eL = getElectricCharge(q);
+        fqs += (this->pdf->xfxQ2((int)q,xi,muF2) + this->pdf->xfxQ2(-((int)q),xi,muF2))
+                * (eH*eH*(cq1 + log(muF2/m2)*cqBarF1) + eL*eL*dq1 + eH*eL*oq1);
+    }
+    cdbl fNLOq = nNLO * (this->V_z * 1./this->z) * fqs ;
+    if (!isfinite(fNLOq) || 0. == fNLOq)
+        return 0.;
+    // fill histograms
+    this->fillAllOrderHistograms(p, fNLOq);
+    this->fillNLOHistograms(p, fNLOq);
+    return fNLOq;
+}
+
+void FullyDiff::IntKer::scaleHistograms(cdbl s) const {
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it)
+        it->second->scale(s);
+}
+
+#define fillTemplate(cases)\
+/* something active?*/\
+if (0 == this->histMap) return;\
+if (this->histMap->empty()) return;\
+if (0 == this->vegasWeight) return;\
+if (0. == *this->vegasWeight) return;\
+cdbl value = i*(*this->vegasWeight);\
+for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {\
+    dbl var = dblNaN;\
+    switch (it->first) {\
+        cases\
+        default: continue;\
+    }\
+    it->second->accumulate(var,value);\
+}
+
+void FullyDiff::IntKer::fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const {
+    fillTemplate(
+        case histT::log10z:         var = p.getZ();            break;
+        case histT::log10xi:        var = this->xBj/p.getZ();  break;
+        case histT::Theta1:         var = p.getTheta1();       break;
+        
+        case histT::HQPairInvMass:            var = (p.getP1() + p.getP2()).m();               break;
+        case histT::HQPairDeltaPhi:           var = abs(geom3::deltaPhi(p.getP1(),p.getP2())); break;
+        case histT::HQPairTransverseMomentum: var = (p.getP1() + p.getP2()).pt();              break; 
+        case histT::HQPairConeSizeVariable:   var = geom3::deltaR(p.getP1(),p.getP2());        break;                      
+            
+        case histT::HAQRapidity:                  var = p.getP2().rapidity();     break;
+        case histT::HAQTransverseMomentum:        var = p.getP2().pt();           break;
+        case histT::HAQTransverseMomentumScaling:
+            {cdbl ptmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pt()/ptmax;}    break;
+        case histT::HAQFeynmanX:
+            {cdbl plmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pz()/plmax;}    break;
+    )
+    /*
+    // something active?
+    if (0 == this->histMap)
+        return;
+    if (this->histMap->empty())
+        return;
+    if (0 == this->vegasWeight)
+        return;
+    if (0. == *this->vegasWeight)
+        return;
+    cdbl value = i*(*this->vegasWeight);
+    
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
+        dbl var = nan("");
+        switch (it->first) {
+            case histT::log10z:         var = p.getZ();            break;
+            case histT::log10xi:        var = this->xBj/p.getZ();  break;
+            case histT::Theta1:         var = p.getTheta1();       break;
+            
+            case histT::HQPairInvMass:            var = (p.getP1() + p.getP2()).m();               break;
+            case histT::HQPairDeltaPhi:           var = abs(geom3::deltaPhi(p.getP1(),p.getP2())); break;
+            case histT::HQPairTransverseMomentum: var = (p.getP1() + p.getP2()).pt();              break; 
+            case histT::HQPairConeSizeVariable:   var = geom3::deltaR(p.getP1(),p.getP2());        break;                      
+                
+            case histT::HAQRapidity:                  var = p.getP2().rapidity();     break;
+            case histT::HAQTransverseMomentum:        var = p.getP2().pt();           break;
+            case histT::HAQTransverseMomentumScaling:
+                {cdbl ptmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pt()/ptmax;}    break;
+            case histT::HAQFeynmanX:
+                {cdbl plmax = sqrt(p.getSh()/4-m2);   var = p.getP2().pz()/plmax;}    break;
+            default: continue;
+        }
+        it->second->accumulate(var,value);
+    }*/
+}
+
+void FullyDiff::IntKer::fillNLOHistograms(const PhasespacePoint& p, cdbl i) const {
+    if (!p.isNLO())
+        return;
+    fillTemplate(
+        case histT::x:      var = p.getX();         break;
+        case histT::y:      var = p.getY();         break;
+        case histT::Theta2: var = p.getTheta2();    break;
+    )
+    /*
+    // something active?
+    if (0 == this->histMap)
+        return;
+    if (this->histMap->empty())
+        return;
+    if (0 == this->vegasWeight)
+        return;
+    if (0. == *this->vegasWeight)
+        return;
+    cdbl val = i*(*this->vegasWeight);
+    
+    for (histMapT::const_iterator it = this->histMap->cbegin(); it != this->histMap->cend(); ++it) {
+        dbl var = nan("");
+        switch (it->first) {
+            case histT::x:      var = p.getX();         break;
+            case histT::y:      var = p.getY();         break;
+            case histT::Theta2: var = p.getTheta2();    break;
+            default: continue;
+        }
+        it->second->accumulate(var,val);
+    }*/
 }

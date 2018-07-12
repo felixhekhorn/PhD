@@ -171,7 +171,6 @@ cdbl ExclusiveElProduction::cg1() const {
     gsl_monte_function f;
     f.f = gslpp::callFunctor4D<PsKerCg1>;
     f.params = &k;
-    k(.5,.5,.5,.5);
     return int4D(&f);
 }
 

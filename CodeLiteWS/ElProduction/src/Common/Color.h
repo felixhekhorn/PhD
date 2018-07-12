@@ -27,7 +27,7 @@ cdbl CF = (cdbl(NC*NC) - 1.)/(2.*NC);
 /**
  * @brief Casimir constant of adjoint representation \f$C_A=N_C \f$
  */
-cdbl CA = 0/* cdbl(NC)*/;
+cdbl CA = cdbl(NC);
 
 /**
  * @brief Color avarage of \f$\Pg\f$ and \f$\Pgg\f$ in initial state \f$K_{\Pg\Pgg} = \frac 1 {N_C^2 -1}\f$

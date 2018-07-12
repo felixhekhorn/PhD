@@ -2,6 +2,8 @@
 #define FullyDiff_IntKer_H
 
 #include "../Common/AbstractIntKer.h"
+#include "PhasespacePoint.h"
+#include "histT.hpp"
 
 /**
  * @brief namespace for fully differential lepto production of heavy quarks
@@ -20,32 +22,36 @@ class IntKer : public Common::AbstractIntKer {
 /** @brief jacobian=volume for Theta1 trafo */
     cdbl V_Theta1 = M_PI;
     
-/** @brief lower intergation limit for x \f$\rho^*\f$ */
-    dbl rhoStar = dblNaN;
 /** @brief soft regulation parameter \f$\tilde\rho\f$ */
     dbl rhoTilde = dblNaN;
 /** @brief current x-for-event */
-    dbl xE = 1.;
+    dbl xE = dblNaN;
 /** @brief volume of x-for-event space */
     dbl V_xE = 0.;
 /** @brief current x-for-counter-event */
-    dbl xC = 1.;
+    dbl xC = dblNaN;
 /** @brief volume of x-for-counter-event space */
     dbl V_xC = 0.;
     
 /** @brief current y-for-event */
-    dbl yE = 1.;
+    dbl yE = dblNaN;
 /** @brief volume of y-for-event space */
     dbl V_yE = 0.;
 /** @brief current y-for-counter-event */
-    dbl yC = 1.;
+    dbl yC = dblNaN;
 /** @brief volume of y-for-counter-event space */
     dbl V_yC = 0.;
     
 /** @brief Theta2 */
     dbl Theta2 = dblNaN;
-/** @brief jacobian=volume for Theta2 trafo */
+/** @brief volume for Theta2 trafo */
     cdbl V_Theta2 = M_PI;
+    
+/** @brief z */
+    dbl z = dblNaN;
+/** @brief volume for z trafo */
+    dbl V_z = 0.;
+    
 /**
  * @brief sets Theta1
  * @param a integration variable
@@ -53,10 +59,43 @@ class IntKer : public Common::AbstractIntKer {
     void setTheta1(cdbl a);
     
 /**
+ * @brief sets x
+ * @param a integration variable
+ */
+    void setX(cdbl a);
+    
+/**
  * @brief sets Theta2
  * @param a integration variable
  */
     void setTheta2(cdbl a);
+    
+/**
+ * @brief sets y
+ * @param a integration variable
+ */
+    void setY(cdbl a);
+    
+/**
+ * @brief sets z
+ * @param a integration variable
+ */
+    void setZ(cdbl a);
+    
+///@}
+
+/** @name hadronic variables */
+///@{
+    
+/**
+ * @brief pointer to map of histograms
+ */
+    const histMapT* histMap = 0;
+    
+/**
+ * @brief integration weight determined by VEGAS
+ */
+    cdbl* vegasWeight = 0;
     
 ///@}
     
@@ -177,12 +216,6 @@ class IntKer : public Common::AbstractIntKer {
     cdbl dq1_cur() const;
 
 /** 
- * @brief computes full cg0
- * @return cg0
- */
-    cdbl cg0() const;
-
-/** 
  * @brief computes full cgBarR1
  * @return cgBarR1
  */
@@ -205,9 +238,11 @@ class IntKer : public Common::AbstractIntKer {
  * @param a1 integration variable
  * @param a2 integration variable
  * @param a3 integration variable
+ * @param a4 integration variable
+ * @param a5 integration variable
  * @return a single hadronic function
  */
-    cdbl runHadronic(cdbl a1, cdbl a2, cdbl a3);
+    cdbl runHadronic(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5);
     
 /**
  * @brief computes a hadronic function
@@ -223,23 +258,49 @@ class IntKer : public Common::AbstractIntKer {
 /** @name hadronic structure functions */
 ///@{
     
-/** 
- * @brief computes Fg0
- * @return Fg0
+/**
+ * @brief combines all parts to hadronic NLOg
+ * @param x
+ * @param y
+ * @param cg1
+ * @param cgBarR1
+ * @param cgBarF1
+ * @return total kernel
  */
-    cdbl Fg0() const;
+    cdbl combineNLOg(cdbl x, cdbl y, cdbl cg1, cdbl cgBarR1, cdbl cgBarF1);
     
-/** 
- * @brief computes Fg1
- * @return Fg1
+/**
+ * @brief combines all parts of hadronic NLOq
+ * @param x
+ * @param y
+ * @param cq1
+ * @param cqBarF1
+ * @param dq1
+ * @param oq1
+ * @return total kernel
  */
-    cdbl Fg1() const;
+    cdbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1);
     
-/** 
- * @brief computes Fq1
- * @return Fq1
+/**
+ * @brief scales all avtive histograms
+ * @param s factor
  */
-    cdbl Fq1() const;
+    void scaleHistograms(cdbl s) const;
+
+/**
+ * @brief fills all avtive histograms available in all orders
+ * These histograms may only depend on LO variables such as z, p1, p2, k1, q
+ * @param p current phase space point
+ * @param i integrand
+ */
+    void fillAllOrderHistograms(const PhasespacePoint& p, cdbl i) const;
+
+/**
+ * @brief fills all avtive histograms available in NLO
+ * @param p current phase space point
+ * @param i integrand
+ */
+    void fillNLOHistograms(const PhasespacePoint& p, cdbl i) const;
     
 ///@}
     

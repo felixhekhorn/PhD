@@ -83,13 +83,11 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
         return this->intConfigs.at(2-1);
     if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cq1_") || boost::starts_with(method,"dq1_"))
         return this->intConfigs.at(4-1);
-    /*// hadronic functions
+    // hadronic functions
     bool isNLO = this->ker->flags.useNextToLeadingOrder;
-    if (boost::starts_with(method,"dF_d"))
-        return isNLO ? this->intConfigs.at(1) : this->intConfigs.at(0);
     if (boost::iequals(method,"F"))
-        return isNLO ? this->intConfigs.at(2) : this->intConfigs.at(1);
-    // leptonic functions
+        return isNLO ? this->intConfigs.at(5-1) : this->intConfigs.at(2-1);
+    /*// leptonic functions
     if (boost::iequals(method,"sigma"))
         return isNLO ? this->intConfigs.at(4) : this->intConfigs.at(3);
     */throw invalid_argument(str("unknown method: ")+method);
@@ -97,7 +95,6 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
 
 #define intND(N) cdbl FullyDiffLeptoProduction::int##N##D() const {\
     this->ker->dim = N;\
-    FDker->operator()(.5,.5,.5,.5);\
     return Common::integrate##N##D<FullyDiff::IntKer>(FDker,*this->intConfigs.at(N-1),this->intOut);\
 }
 intND(1)

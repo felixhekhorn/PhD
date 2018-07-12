@@ -16,7 +16,7 @@ int test();
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    //return test();
     //return testHadronic();
     //return testLeptonic();
     
@@ -39,16 +39,16 @@ int main(int argc, char **argv) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
         o.getIntegrationConfig("cg1_VV")->verbosity = 1;
-        o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
-        o.getIntegrationConfig("cg1_VV")->calls = 20000;
+        //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
+        o.getIntegrationConfig("cg1_VV")->calls = 30000;
         //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
         //o.setDelta(eta/1000.);
         o.setProjection(F2);
-        cdbl cF2 = 0/*o.cg1_VV()*/;
+        cdbl cF2 = o.cg1_VV();
         o.setProjection(FL);
         cdbl cFL = o.cg1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = 0/*o.cg1_VV()*/;
+        cdbl cx2g1 = o.cg1_VV();
         cout << boost::format("%e\t% e\t% e\t% e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
     }
     
@@ -73,10 +73,10 @@ int test() {
     cdbl m2 = 22.5625;
     cdbl q2 = -1e3;
     cdbl sp = 1090.34025;
-    cdbl Theta1 = 1.5707963267948966;
     cdbl xE = 0.999958608836369;
-    cdbl Theta2 = 1.5707963267948966;
     cdbl yE = 3.4999999999341114e-06;
+    cdbl Theta1 = 1.5707963267948966;
+    cdbl Theta2 = 1.5707963267948966;
     cout << FullyDiff::ME::R_FL_VV(m2,q2,sp,xE,yE,Theta1,Theta2) << endl;
     
     /*cdbl m2 = 1.;
