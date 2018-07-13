@@ -27,7 +27,6 @@ void FullyDiff::IntKer::setTheta1(cdbl a) {
 
 void FullyDiff::IntKer::setX(cdbl a) {
     // setSpRaw
-    _sp
     cdbl eta = this->s/(4.*m2) - 1.;
     cdbl cut = this->deltax*pow(eta,2./3.);
     cdbl xmax = 1. - cut;
@@ -35,6 +34,7 @@ void FullyDiff::IntKer::setX(cdbl a) {
     if (0. != this->deltax && 1. == xmax)
         throw domain_error((boost::format("x_max = 1-deltax*eta^(2/3) = 1. - %e = %e has to be smaller than 1!")%cut%xmax).str());
     // make hard cut instead of throwing an error
+    _sp
     cdbl rhoStar = min((4.*m2 + this->Q2)/sp,xmax);
     this->V_xE = xmax - rhoStar;
     this->rhoTilde = min(1. - this->xTilde*(1. - rhoStar),xmax);
@@ -63,18 +63,43 @@ void FullyDiff::IntKer::setZ(cdbl a) {
     this->s = sp - Q2;
 }
 
-cdbl FullyDiff::IntKer::cg0_cur() const {
+#define combineModsAndCurs(t,n,gVV,gVA,gAA) \
+    dbl t = 0;\
+    if (Mode_##n##_VV == this->mode)      t = gVV;\
+    else if (Mode_##n##_VA == this->mode) t = gVA;\
+    else if (Mode_##n##_AA == this->mode) t = gAA;\
+    else {\
+        cdbl eH = this->getElectricCharge(this->nlf+1);\
+        cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
+        cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
+        if (isParityConservingProj(this->proj)) {\
+            cdbl eVV = gVV;\
+            if (this->flags.usePhoton) t += eH*eH * eVV;\
+            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gVQ * eVV;\
+            if (this->flags.useZ) {\
+                cdbl eAA = gAA;\
+                t += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
+            }\
+        } else {\
+            cdbl eVA = gVA;\
+            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gAQ * eVA;\
+            if (this->flags.useZ) t += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
+        }\
+    }
+
+cdbl FullyDiff::IntKer::cg0() const {
     _sp
     cdbl beta = this->beta();
     cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
-    cdbl n = 8.*M_PI * Color::Kgph*Color::NC*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;
+    cdbl n = 8.*M_PI * Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;
     
     fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
     this->getBQED(fVV, fVA, fAA);
-    dbl me = 0;
+    /*dbl me = 0;
     if (Mode_cg0_VV == this->mode)      me = fVV(m2,-Q2,sp,t1);
     else if (Mode_cg0_VA == this->mode) me = fVA(m2,-Q2,sp,t1);
-    else if (Mode_cg0_AA == this->mode) me = fAA(m2,-Q2,sp,t1);
+    else if (Mode_cg0_AA == this->mode) me = fAA(m2,-Q2,sp,t1);*/
+    combineModsAndCurs(me,cg0,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
     return n*me;
 }
 
@@ -345,7 +370,7 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
     this->setTheta1(a1);
     // cg0
     if (Mode_cg0_VV == this->mode || Mode_cg0_VA == this->mode || Mode_cg0_AA == this->mode)
-        return this->cg0_cur();
+        return this->cg0();
     // cgBarR1
     if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode)
         return this->cgBarR1_cur();
@@ -391,20 +416,19 @@ cdbl FullyDiff::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3, cdbl a4, cdbl a5)
     dbl r = 0.;
     // 2D integrations
     this->setZ(a1);
-    this->setTheta1(a1);
+    this->setTheta1(a2);
     // LO
     if (this->flags.useLeadingOrder && this->flags.useGluonicChannel) {
-       PhasespacePoint p(this->m2, this->Q2, this->xBj, this->muR2, this->muF2);
+        PhasespacePoint p(this->m2, this->Q2, this->xBj, this->muR2, this->muF2);
         p.setupLO(this->z, this->Theta1);
         cdbl muR2 = p.getMuR2();
         cdbl muF2 = p.getMuF2();
         cdbl alphaS = this->aS->alphasQ2(muR2);
-        cdbl eH = getElectricCharge(this->nlf + 1);
-        cdbl nLO = alphaS/m2 * (Q2)/(4.*M_PI*M_PI);
+        cdbl nLO = alphaS/(4.*M_PI*M_PI) * Q2/m2;
         cdbl xi = this->xBj/z;
         cdbl nLOg = this->V_z * 1./this->z * this->pdf->xfxQ2(21,xi,muF2);
-        cdbl cg0 = this->cg0_cur();
-        cdbl fLOg = nLO * eH*eH * nLOg * cg0;
+        cdbl cg0 = this->cg0();
+        cdbl fLOg = nLO * nLOg * cg0;
         this->fillAllOrderHistograms(p, fLOg);
         r += fLOg;
     }

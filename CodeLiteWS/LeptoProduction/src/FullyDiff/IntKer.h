@@ -174,10 +174,10 @@ class IntKer : public Common::AbstractIntKer {
 ///@{
     
 /** 
- * @brief computes a single current cg0
+ * @brief computes cg0
  * @return cg0
  */
-    cdbl cg0_cur() const;
+    cdbl cg0() const;
     
 /** 
  * @brief computes a single current cg1

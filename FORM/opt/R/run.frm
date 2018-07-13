@@ -1,5 +1,6 @@
 #-
 S m2,q2,sp,t1,u1,tp,up;
+S s3,s4,s5,u6,u7,s;
 #define l1 "F2wVV"
 #define l2 "F2wAA"
 #define l3 "FLwVV"
@@ -11,8 +12,8 @@ S m2,q2,sp,t1,u1,tp,up;
 #define l9 "gLwVA"
 #define col1 "OK"
 #define col2 "QED"
-#do li = 1,9
- #do coli = 1,2
+#do li = 3,3
+ #do coli = 2,2
   #write "running R`col`coli''w`l`li''"
   #include R`col`coli''w`l`li''.frm
   .sort

@@ -20,7 +20,7 @@ class PhasespacePoint {
     cdbl m2;
     
 /**
- * @brief virtuality of the photon \f$q^2< 0\f$
+ * @brief virtuality of the photon \f$Q^2 > 0\f$
  */
     cdbl Q2;
     
