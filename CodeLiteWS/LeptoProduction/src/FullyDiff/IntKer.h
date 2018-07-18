@@ -3,6 +3,7 @@
 
 #include "../Common/AbstractIntKer.h"
 #include "PhasespacePoint.h"
+#include "PhasespaceValues.hpp"
 #include "histT.hpp"
 
 /**
@@ -88,11 +89,6 @@ class IntKer : public Common::AbstractIntKer {
 ///@{
     
 /**
- * @brief pointer to map of histograms
- */
-    const histMapT* histMap = 0;
-    
-/**
  * @brief integration weight determined by VEGAS
  */
     cdbl* vegasWeight = 0;
@@ -129,6 +125,14 @@ class IntKer : public Common::AbstractIntKer {
  * @param fAA axial-axial part
  */
     void getA2(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
+    
+/**
+ * @brief sets correct pointers to A3
+ * @param fVV vector-vector part
+ * @param fVA vector-axial part
+ * @param fAA axial-axial part
+ */
+    void getA3(fPtr7dbl &fVV, fPtr7dbl &fVA, fPtr7dbl &fAA) const;
     
 /**
  * @brief sets correct pointers to R
@@ -180,46 +184,46 @@ class IntKer : public Common::AbstractIntKer {
     cdbl cg0() const;
     
 /** 
- * @brief computes a single current cg1
+ * @brief computes cg1
  * @return cg1
  */
-    cdbl cg1_cur() const;
+    const FullyDiff::PhasespaceValues cg1() const;
     
 /** 
- * @brief computes a single current cgBarF1
+ * @brief computes cgBarF1
  * @return cgBarF1
  */
-    cdbl cgBarF1_cur() const;
+    const FullyDiff::PhasespaceValues cgBarF1() const;
     
 /** 
- * @brief computes a single current cgBarR1
+ * @brief computes cgBarR1
  * @return cgBarR1
  */
-    cdbl cgBarR1_cur() const;
+    const FullyDiff::PhasespaceValues cgBarR1() const;
     
 /** 
- * @brief computes a single current cq1
+ * @brief computes cq1
  * @return cq1
  */
-    cdbl cq1_cur() const;
+    const FullyDiff::PhasespaceValues cq1() const;
     
 /** 
- * @brief computes a single current cqBarF1
+ * @brief computes cqBarF1
  * @return cqBarF1
  */
-    cdbl cqBarF1_cur() const;
+    const FullyDiff::PhasespaceValues cqBarF1() const;
     
 /** 
- * @brief computes a single current dq1
+ * @brief computes dq1
  * @return dq1
  */
-    cdbl dq1_cur() const;
-
+    const FullyDiff::PhasespaceValues dq1() const;
+    
 /** 
- * @brief computes full cgBarR1
- * @return cgBarR1
+ * @brief computes oq1
+ * @return oq1
  */
-    cdbl cgBarR1() const;
+    const FullyDiff::PhasespaceValues oq1() const;
     
 ///@}
     
@@ -275,11 +279,15 @@ class IntKer : public Common::AbstractIntKer {
  * @param y
  * @param cq1
  * @param cqBarF1
- * @param dq1
- * @param oq1
+ * @param dq1_VV
+ * @param dq1_VA
+ * @param dq1_AA
+ * @param oq1_VV
+ * @param oq1_VA
+ * @param oq1_AA
  * @return total kernel
  */
-    cdbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1, cdbl oq1);
+    cdbl combineNLOq(cdbl x, cdbl y, cdbl cq1, cdbl cqBarF1, cdbl dq1_VV, cdbl dq1_VA, cdbl dq1_AA, cdbl oq1_VV, cdbl oq1_VA, cdbl oq1_AA);
     
 /**
  * @brief scales all avtive histograms
@@ -303,6 +311,13 @@ class IntKer : public Common::AbstractIntKer {
     void fillNLOHistograms(const PhasespacePoint& p, cdbl i) const;
     
 ///@}
+
+/** @name additional kernel modes */
+///@{
+    static cuint Mode_oq1_VV = 25;
+    static cuint Mode_oq1_VA = 26;
+    static cuint Mode_oq1_AA = 27;
+///@}
     
 public:
 
@@ -317,6 +332,9 @@ public:
     
 /** @brief offset to lower integration bound in y \f$\delta_y \f$ */
     dbl deltay = 0.;
+    
+/** @brief pointer to map of histograms */
+    histMapT histMap;
 
 /** @brief constructor */
     IntKer();

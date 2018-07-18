@@ -81,7 +81,7 @@ int test() {
 
 int test2() {
     cdbl q2 = -1.e3;
-    cdbl m2 = 4.75*4.75;
+    cdbl m2 = pow(4.75,2);
     const uint nlf = 4;
     //cdbl lambdaQCD = .239; // nlf=3
     //cdbl lambdaQCD = .194; // nlf=3
@@ -129,16 +129,55 @@ int test2() {
             cdbl i = iO.cq1();
             printf("%e\t%e\t%e\t%e\n",a,e,i,(e-i)/i);*/
             
-            /*iG.setEta(a);iL.setEta(a);iP.setEta(a);
-            cdbl g = iG.cg1();
-            cdbl l = iL.cg1();
-            cdbl p = iP.cg1();*/
-            eG.setEta(a);eL.setEta(a);eP.setEta(a);
-            cdbl g = 0/*eG.cg1()*/;
+            iG.setEta(a);iL.setEta(a);iP.setEta(a);
+            cdbl g = iG.cg0();
+            cdbl l = iL.cg0();
+            cdbl p = iP.cg0();
+            /*eG.setEta(a);eL.setEta(a);eP.setEta(a);
+            cdbl g = eG.cg1();
             cdbl l = eL.cg1();
-            cdbl p = 0/*eP.cg1()*/;
+            cdbl p = eP.cg1();*/
             printf("%e\t% e\t% e\t% e\n",a,g+l/2.,l,p);
         }
+    }
+    return EXIT_SUCCESS;
+}
+
+
+int test3() {
+    cdbl q2 = -1.e2;
+    cdbl m2 = pow(1.5,2);
+    const uint nlf = 3;
+    cdbl lambdaQCD = .194;
+    const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
+    
+    /*cdbl Delta = 1e-6;
+    InclusiveElProduction oG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction oL(m2,q2,Delta,L,nlf);
+    InclusiveElProduction oP(m2,q2,Delta,P,nlf);*/
+    
+    cdbl xTilde = .8;
+    cdbl omega = 1.;
+    cdbl deltax = 1e-6;
+    cdbl deltay = 7e-6;
+    ExclusiveElProduction oG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction oL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction oP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
+    
+    oG.setQ2(q2);oL.setQ2(q2);oP.setQ2(q2);
+    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
+    //oG.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oL.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oP.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);
+    oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
+    
+    uint N = 11;
+    for (uint j = 0; j < N; ++j) {
+        cdbl x = pow(10,0. - 4./10.*(dbl)j);
+        oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
+        cdbl cG = oG.F(OrderFlag_LO, ChannelFlag_Full);
+        cdbl cL = oL.F(OrderFlag_LO, ChannelFlag_Full);
+        cdbl cP = oP.F(OrderFlag_LO, ChannelFlag_Full);
+        printf("%e\t% e\t% e\t% e\n",x,cG+cL/2.,cL,cP);
     }
     return EXIT_SUCCESS;
 }
@@ -150,24 +189,24 @@ int test2() {
  * @return EXIT_SUCCESS on success
  */
 int main(int argc, char **argv) {
-    return test();
+    return test3();
 	//return runInclusive();
 	//return runInclusive2();
-    cdbl q2 = -1.e5;
-    cdbl m2 = 4.75*4.75;
-    const uint nlf = 4;
+    /*cdbl q2 = -1.e3;
+    cdbl m2 = pow(1.5,2);
+    const uint nlf = 3;
     //cdbl lambdaQCD = .239; // nlf=3
     cdbl lambdaQCD = .194; // nlf=3
     //cdbl lambdaQCD = .2; // nlf=3
-    const Common::DynamicScaleFactors mu02F(4.,-1.,0.,0.);
+    const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
     //cdbl mu02 = 2.*m2;
     //Common::DynamicScaleFactors mu02F(2.,0.,0.,0.);
-    /*cdbl m2 = 4.75*4.75;
+    cdbl m2 = 4.75*4.75;
     const uint nlf = 4;
     cdbl lambdaQCD = .158; // nlf=4
     cdbl mu02 = (1.*m2-q2);
     const Common::DynamicScaleFactors mu02F(1.,-1.,0.*.25);
-    */
+    *//*
     cdbl Delta = 1e-6;
     cdbl xTilde = .5;//.8;
     cdbl omega = 1.;
@@ -182,48 +221,15 @@ int main(int argc, char **argv) {
     
     const projT proj = L;
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);
-    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
-    InclusiveElProduction iL(m2,q2,Delta,L,nlf);
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
-    ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
-    ExclusiveElProduction eL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
-    ExclusiveElProduction eP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
     printf("[INFO] m2 = %g, q2 = %g, proj = %s\n",m2,q2,projToStr(proj).c_str());
     
-    iO.setPdf(pdf,0);eO.setPdf(pdf,0);
-    iO.setMu2(mu02F);eO.setMu2(mu02F);
-    iO.setLambdaQCD(lambdaQCD);eO.setLambdaQCD(lambdaQCD);
-    
-    eO.MCparams.calls = 500000;
-    eO.MCparams.iterations = 5;
-    eO.MCparams.adaptChi2 = false;
-    eO.MCparams.warmupCalls = 5000;
-    eO.MCparams.verbosity = 0;
-    
-    /*{
-        uint N = 101;
-        for (uint j = 0; j < N; ++j) {
-            cdbl a = pow(10,-3.+6./(N-1)*j);
-            eG.setEta(a);eL.setEta(a);eP.setEta(a);
-            cdbl g = eG.cg1();
-            cdbl l = eL.cg1();
-            cdbl p = eP.cg1();
-            printf("%e\t%e\t%e\t%e\n",a,g+l/2.,l,p);
-        }
-    }*/
-    
-    /*{
-        uint N = 11;
-        printf("a\t\ti\t\te\t\tabs\t\trel\n");
-        for (uint j = 0; j < N; ++j) {
-            cdbl a = pow(10,-3.+1./(N-1)*j);
-            iO.setEta(a);
-            eO.setEta(a);
-            cdbl i = iO.cg1();
-            cdbl e = eO.cg1();
-            printf("%e\t%e\t%e\t%e\t%e\n",a,i,e,i-e,(i-e)/i);
-        }
-    }*/
+    InclusiveElProduction iG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction iL(m2,q2,Delta,L,nlf);
+    InclusiveElProduction iP(m2,q2,Delta,P,nlf);
+    ExclusiveElProduction eG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction eP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);*/
 
 //Timer::make("pdf@combineNLOg");
 /*
@@ -265,12 +271,11 @@ int runInclusive2(){
     const str pdf = "GRSV96STDLO";
     projT proj = P;
     
-    cdbl Delta = 1e-7;
+    cdbl Delta = 1.e-6;
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
     cdbl deltay = 7e-6;
-    
     InclusiveElProduction iO(m2,q2,Delta,proj,nlf);    
     ExclusiveElProduction eO(m2,q2,proj,nlf,xTilde,omega,deltax,deltay);
     

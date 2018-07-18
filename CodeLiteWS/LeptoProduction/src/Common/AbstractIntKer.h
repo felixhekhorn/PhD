@@ -24,7 +24,6 @@ protected:
 /** @brief define s' = s - q2 */
     #define _sp cdbl sp = this->s + this->Q2;
     
-    
 /**
  * @brief combine all available currents with appropriate factors
  * NB: needs to be macro, to get fVV only evaluate, when needed

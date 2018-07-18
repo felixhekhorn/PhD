@@ -120,8 +120,62 @@ implementCoeffs(dq1,4)
 implementCoeffs(cq1,4)
 implementCoeffs(cg1,4)
 
+void FullyDiffLeptoProduction::activateHistogram(const FullyDiff::histT t, cuint size, const str& path, cdbl min, cdbl max) {
+    // assert existance of path
+    boost::filesystem::path fp (path);
+    boost::filesystem::path par = fp.parent_path();
+    if(!boost::filesystem::exists(par))
+        throw ios::failure("histogram path \""+par.string()+"\" does not exist!");
+    // create
+    gslpp::Histogram* h = new gslpp::Histogram(size);
+    if (!isnan(min) && !isnan(max))
+        h->setRangesUniform(min,max);
+    h->setPath(path);
+    // insert
+    FDker->histMap.insert({t,h});
+}
+    
+void FullyDiffLeptoProduction::setupHistograms() const {
+    // hadronic S
+    cdbl Sh = this->ker->getHadronicS();
+    for (FullyDiff::histMapT::const_iterator it = FDker->histMap.cbegin(); it != FDker->histMap.cend(); ++it) {
+        if (it->second->isInitialized())
+            continue;
+        switch (it->first) {
+            case FullyDiff::histT::log10z:                 it->second->setRangesLog10(this->ker->xBj,this->ker->getZMax());      break;
+            case FullyDiff::histT::log10xi:                it->second->setRangesLog10(this->ker->xBj/this->ker->getZMax(),1.);   break;
+            case FullyDiff::histT::Theta1:
+            case FullyDiff::histT::Theta2:                 it->second->setRangesUniform(0.,M_PI);                           break;
+            
+            case FullyDiff::histT::HQPairInvMass:          it->second->setRangesUniform(2.*sqrt(this->ker->m2),sqrt(Sh));   break;
+            case FullyDiff::histT::HQPairDeltaPhi:         it->second->setRangesUniform(-M_PI,M_PI);                        break;
+            case FullyDiff::histT::HQPairTransverseMomentum:
+                /** @todo defalt upper limit of HQPairTransverseMomentum is actually smaller, than 2p_{2,t,max} */
+                it->second->setRangesUniform(0.,2.*this->ker->getHAQTransverseMomentumMax());
+                break;
+            case FullyDiff::histT::HQPairConeSizeVariable:
+                /** @todo determine default upper limit of HQPairConeSizeVariable */
+                throw domain_error("default upper limit of HQPairConeSizeVariable currently unknown!");
+                break;
+            
+            case FullyDiff::histT::HAQRapidity:
+                {cdbl y0 = this->ker->getHAQRapidityMax();
+                it->second->setRangesUniform(-y0,y0);}
+                break;
+            case FullyDiff::histT::HAQTransverseMomentum:         it->second->setRangesUniform(0.,this->ker->getHAQTransverseMomentumMax());        break;
+            case FullyDiff::histT::HAQTransverseMomentumScaling:  it->second->setRangesLog10(1.e-3,1.);                        break;
+            case FullyDiff::histT::HAQFeynmanX:                   it->second->setRangesUniform(-1.,1.+1e-5);                   break;
+            
+            case FullyDiff::histT::x:                      it->second->setRangesLog10(this->ker->xBj/this->ker->getZMax(),1.+1e-5); break;
+            case FullyDiff::histT::y:                      it->second->setRangesUniform(-1.,1.+1e-5);                               break;
+            default: continue;
+        }
+    }
+}
+
 cdbl FullyDiffLeptoProduction::F() const { 
     initF
+    this->ker->aS->setOrderQCD(1 + (this->ker->flags.useNextToLeadingOrder ? 1 : 0 ));
     this->ker->mode = Common::AbstractIntKer::Mode_F;
     dbl r = dblNaN;
     if (this->ker->flags.useNextToLeadingOrder) {
@@ -160,7 +214,7 @@ cdbl FullyDiffLeptoProduction::sigma() const { return 0.;/*
     this->ker->mode = Common::AbstractIntKer::Mode_sigma;
     dbl r = dblNaN;
     if (this->flags().useNextToLeadingOrder) {
-        r = this->int5D();
+        r = this->int7D();
     } else {
         r = this->int4D();
     }

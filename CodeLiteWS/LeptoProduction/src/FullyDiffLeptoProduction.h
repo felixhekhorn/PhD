@@ -4,6 +4,7 @@
 #include "Common/AbstractLeptoProduction.h"
 
 #include "FullyDiff/IntKer.h"
+#include "FullyDiff/histT.hpp"
 
 /**
  * @class FullyDiffLeptoProduction
@@ -43,6 +44,11 @@ class FullyDiffLeptoProduction : public Common::AbstractLeptoProduction {
  * @return integral
  */
     cdbl int5D() const;
+    
+/**
+ * @brief setups all active histograms
+ */
+    void setupHistograms() const;
     
 public:
 
@@ -158,6 +164,17 @@ public:
 
 /** @see Common::AbstractLeptoProduction::F() */
     cdbl F() const;
+    
+/**
+ * @brief activates a histogram
+ * @param t histogram type
+ * @param size number of bins
+ * @param path file path
+ * @param min optional min value (will be bined uniformly to max)
+ * @param max optional max value (will be bined uniformly from min)
+ */
+    void activateHistogram(const FullyDiff::histT t, cuint size, const str& path, cdbl min = nan(""), cdbl max = nan(""));
+    
 ///@}
     
     
