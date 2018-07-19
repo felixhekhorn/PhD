@@ -363,6 +363,15 @@ public:
  */
     void operator()(const double x[], const int k[], const double& weight, const double aux[], double f[]);
     
+/**
+ * @see AbstractIntKer::Dvegas_init
+ */
+    void Dvegas_init() const;
+    
+/**
+ * @see AbstractIntKer::Dvegas_final
+ */
+    void Dvegas_final(cuint iterations) const;
 };
 
 }

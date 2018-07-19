@@ -341,17 +341,24 @@ public:
  * @brief get maximum value of pt of heavy anti quark
  * @return pt_Qbar^max
  */
-    inline cdbl getHAQTransverseMomentumMax() const {
-        return sqrt(this->getHadronicS()/4. - this->m2);
-    }
+    inline cdbl getHAQTransverseMomentumMax() const { return sqrt(this->getHadronicS()/4. - this->m2); }
     
 /**
  * @brief get maximum value of rapidity of heavy anti quark
  * @return y_Qbar^max
  */
-    inline cdbl getHAQRapidityMax() const {
-        return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS()));
-    }
+    inline cdbl getHAQRapidityMax() const { return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS())); }
+    
+/**
+ * @brief called method by Dvegas before run
+ */
+    virtual void Dvegas_init() const {};
+    
+/**
+ * @brief called method by Dvegas after final run
+ * @param iterations last iterations
+ */
+    virtual void Dvegas_final(cuint iterations) const {};
 };
 
 }

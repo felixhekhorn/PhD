@@ -554,6 +554,15 @@ void FullyDiff::IntKer::scaleHistograms(cdbl s) const {
         it->second->scale(s);
 }
 
+
+void FullyDiff::IntKer::Dvegas_init() const {
+    this->scaleHistograms(0.);
+}
+    
+void FullyDiff::IntKer::Dvegas_final(cuint iterations) const {
+    this->scaleHistograms(1./((cdbl)iterations));
+}
+
 #define fillTemplate(cases)\
 /* something active?*/\
 if (this->histMap.empty()) return;\

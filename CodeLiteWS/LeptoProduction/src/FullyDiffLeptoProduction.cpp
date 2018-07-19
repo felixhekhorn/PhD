@@ -183,6 +183,10 @@ cdbl FullyDiffLeptoProduction::F() const {
     } else {
         r = this->int2D();
     }
+    // write histograms
+    for (FullyDiff::histMapT::const_iterator it = FDker->histMap.cbegin(); it != FDker->histMap.cend(); ++it)
+        it->second->writeToFile();
+
     // unset integration variables
     this->ker->s = dblNaN;
     return r;
