@@ -99,6 +99,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     /** @todo activate correlation between z and x? -> Dvegas dv(dim,cfg.Dvegas_bins,2,{},0,1,F); */\
     double res, err;\
     /* clear histograms */\
+    K->Dvegas_init();\
     /* warm-up */\
     HepSource::VEGAS(dv,cfg.MC_warmupCalls,cfg.MC_warmupIterations,0,cfg.verbosity - 3);\
     HepSource::IntegrandEstimate e = dv.stats(0);\
@@ -112,7 +113,7 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     if (cfg.MC_adaptChi2) { /* adapt chi */\
         do {\
             if (!isfinite(res)) return res;\
-            /* F.scaleHistograms(0.); */\
+            K->Dvegas_init();\
             HepSource::VEGAS(dv,cfg.calls,cfg.MC_iterations,1,cfg.verbosity - 2);\
             e = dv.stats(0);\
             res = e.integral();\
@@ -121,13 +122,13 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
                 printf("[INFO] int%dD(Dvegas): [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),e.chiSquarePerIteration());\
         } while (fabs (e.chiSquarePerIteration() - 1.0) > 0.5 && ++guard < 15);\
     } else { /* simple run */\
-        /* F.scaleHistograms(0.); */\
+        K->Dvegas_init();\
         HepSource::VEGAS(dv,cfg.calls,cfg.MC_iterations,1,cfg.verbosity - 2);\
         e = dv.stats(0);\
         res = e.integral();\
         err = e.standardDeviation();\
     }\
-    /* F.scaleHistograms(1./((double)iterations)); */\
+    K->Dvegas_final(cfg.MC_iterations);\
     if (1 == cfg.verbosity)\
         printf("[INFO] int%dD(Dvegas): [%d] % e ± %.3e (%.3f%%) chi2/it: %.3f\n",dim,guard,res,err,fabs(err/res*1e2),e.chiSquarePerIteration());\
     out->result = res;\

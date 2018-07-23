@@ -143,19 +143,20 @@ int test2() {
     return EXIT_SUCCESS;
 }
 
-
-int test3() {
+int testHadronic() {
     cdbl q2 = -1.e2;
     cdbl m2 = pow(1.5,2);
     const uint nlf = 3;
     cdbl lambdaQCD = .194;
     const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
     
-    /*cdbl Delta = 1e-6;
+#define useI 1
+#ifdef useI
+    cdbl Delta = 1e-6;
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
     InclusiveElProduction oL(m2,q2,Delta,L,nlf);
-    InclusiveElProduction oP(m2,q2,Delta,P,nlf);*/
-    
+    InclusiveElProduction oP(m2,q2,Delta,P,nlf);
+#else // ifdef useI
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
@@ -163,6 +164,7 @@ int test3() {
     ExclusiveElProduction oG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction oL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction oP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
+#endif // ifdef useI
     
     oG.setQ2(q2);oL.setQ2(q2);oP.setQ2(q2);
     oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
@@ -170,26 +172,78 @@ int test3() {
     //oG.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oL.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oP.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);
     oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
     
-    uint N = 11;
+    const uint N = 11;
     for (uint j = 0; j < N; ++j) {
-        cdbl x = pow(10,0. - 4./10.*(dbl)j);
+        cdbl x = pow(10,0. - 4./10.*(cdbl)j);
         oG.setBjorkenX(x);oL.setBjorkenX(x);oP.setBjorkenX(x);
-        cdbl cG = oG.F(OrderFlag_LO, ChannelFlag_Full);
-        cdbl cL = oL.F(OrderFlag_LO, ChannelFlag_Full);
-        cdbl cP = oP.F(OrderFlag_LO, ChannelFlag_Full);
+        cdbl cG = oG.F(OrderFlag_NLOonly, ChannelFlag_Gluon);
+        cdbl cL = oL.F(OrderFlag_NLOonly, ChannelFlag_Gluon);
+        cdbl cP = oP.F(OrderFlag_NLOonly, ChannelFlag_Gluon);
         printf("%e\t% e\t% e\t% e\n",x,cG+cL/2.,cL,cP);
     }
     return EXIT_SUCCESS;
 }
 
-/**
- * @brief main
- * @param argc
- * @param argv
- * @return EXIT_SUCCESS on success
- */
+int testHadronic2() {
+    cdbl q2 = -1.e2;
+    cdbl m2 = pow(1.5,2);
+    const uint nlf = 3;
+    cdbl lambdaQCD = .194;
+    const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
+    
+#define useI2 1
+    
+#ifdef useI2
+    cdbl Delta = 1e-6;
+    InclusiveElProduction oG(m2,q2,Delta,G,nlf);
+    InclusiveElProduction oL(m2,q2,Delta,L,nlf);
+    InclusiveElProduction oP(m2,q2,Delta,P,nlf);
+#else // ifdef useI2
+    cdbl xTilde = .8;
+    cdbl omega = 1.;
+    cdbl deltax = 1e-6;
+    cdbl deltay = 7e-6;
+    ExclusiveElProduction oG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction oL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
+    ExclusiveElProduction oP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
+#endif // ifdef useI2
+    
+    oG.setQ2(q2);oL.setQ2(q2);oP.setQ2(q2);
+    oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
+    oG.setMu2(mu02);oL.setMu2(mu02);oP.setMu2(mu02);
+    //oG.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oL.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);oP.setAlphaSByLHAPDF("MSTW2008nlo90cl",0);
+    oG.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
+    
+    cdbl xBj = 1e-3;
+    oG.setBjorkenX(xBj);oL.setBjorkenX(xBj);oP.setBjorkenX(xBj);
+    cout << "[INFO] xBj=" << xBj << endl;
+    
+    cdbl ptMaxSc = .1;
+    const uint N = 10;
+    for (uint j = 0; j < N; ++j) {
+        cdbl ptSc = ptMaxSc/(N)*(j+.5);
+        cdbl cG = oG.dF_dHAQTransverseMomentumScaling(ptSc,OrderFlag_NLO, ChannelFlag_Full);
+        cdbl cL = oL.dF_dHAQTransverseMomentumScaling(ptSc,OrderFlag_NLO, ChannelFlag_Full);
+        cdbl cP = oP.dF_dHAQTransverseMomentumScaling(ptSc,OrderFlag_NLO, ChannelFlag_Full);
+        printf("%e\t% e\t% e\t% e\n",ptSc,cG+cL/2.,cL,cP);
+    }
+    
+    /*cdbl yMax = 1.;
+    const uint N = 100;
+    for (uint j = 0; j < N; ++j) {
+        cdbl y = yMax*(-1. + 2./N*(j+.5));
+        cdbl cG = oG.dF_dHAQRapidity(y,OrderFlag_LO, ChannelFlag_Full);
+        cdbl cL = oL.dF_dHAQRapidity(y,OrderFlag_LO, ChannelFlag_Full);
+        cdbl cP = oP.dF_dHAQRapidity(y,OrderFlag_LO, ChannelFlag_Full);
+        printf("%e\t% e\t% e\t% e\n",y,cG+cL/2.,cL,cP);
+    }*/
+    
+    return EXIT_SUCCESS;
+}
+
 int main(int argc, char **argv) {
-    return test3();
+    return testHadronic();
+    //return testHadronic2();
 	//return runInclusive();
 	//return runInclusive2();
     /*cdbl q2 = -1.e3;

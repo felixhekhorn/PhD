@@ -554,7 +554,6 @@ void FullyDiff::IntKer::scaleHistograms(cdbl s) const {
         it->second->scale(s);
 }
 
-
 void FullyDiff::IntKer::Dvegas_init() const {
     this->scaleHistograms(0.);
 }

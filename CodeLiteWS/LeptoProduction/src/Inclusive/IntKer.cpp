@@ -229,7 +229,7 @@ cdbl Inclusive::IntKer::Fg0() const {
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
     cdbl curMuF2 = this->getScale(this->muF2,this->HAQTransverseMomentum);
     cdbl g = this->pdf->xfxQ2(21,this->xi,curMuF2) / this->xi;
-    cdbl nLO = alphaS/this->m2 * (this->Q2)/(4.*M_PI*M_PI);
+    cdbl nLO = alphaS/(4.*M_PI*M_PI) * (this->Q2/this->m2);
     return nLO * g * this->cg0();
 }
 
@@ -238,7 +238,7 @@ cdbl Inclusive::IntKer::Fg1() const {
     cdbl curMuF2 = this->getScale(this->muF2,this->HAQTransverseMomentum);
     cdbl curMuR2 = this->getScale(this->muR2,this->HAQTransverseMomentum);
     cdbl g = this->pdf->xfxQ2(21,this->xi,curMuF2) / this->xi;
-    cdbl nNLO = alphaS*alphaS/this->m2 * (this->Q2)/(M_PI);
+    cdbl nNLO = alphaS*alphaS/(M_PI) * (this->Q2/this->m2);
     return nNLO * g * (this->cg1() + log(curMuF2/m2)*this->cgBarF1() + log(curMuR2/m2)*this->cgBarR1());
 }
 
@@ -384,18 +384,22 @@ cdbl Inclusive::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3) {
     if (this->flags.useNextToLeadingOrder) {
         // setS4
         cdbl U1 = this->getHadronicU1();
-        cdbl s4max = Shp + T1 + U1;
+        this->s4max = Shp + T1 + U1;
         cdbl as4 = (Mode_F == this->mode) ? a3 : a2;
         if (this->flags.useQuarkChannel) {
             this->s4 = s4max*as4;
-            this->setPartonicVars();
-            r += jac*this->xi*s4max * this->Fq1();
+            if (s4max > 0.) {
+                this->setPartonicVars();
+                r += jac*this->xi*s4max * this->Fq1();
+            }
         }
         if (this->flags.useGluonicChannel) {
             cdbl V_s4 = s4max - this->Delta;
             this->s4 = this->Delta + V_s4*as4;
-            this->setPartonicVars();
-            r += jac*this->xi*V_s4 * this->Fg1();
+            if (V_s4 > 0.) {
+                this->setPartonicVars();
+                r += jac*this->xi*V_s4 * this->Fg1();
+            }
         }
     }
     return r;
