@@ -40,6 +40,7 @@
 # QM
 - adhoc Analogieschluss
 - Fourier
+- Spin -> PSE
 
 # QFT
 - QM, rel. Feldtheorie

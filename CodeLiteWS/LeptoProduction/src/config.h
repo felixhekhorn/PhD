@@ -19,8 +19,10 @@ using namespace std;
 ///@{
 /** @brief unsigned int shorthand */
 typedef unsigned int uint;
-/** @brief unsigned int shorthand */
+/** @brief const unsigned int shorthand */
 typedef const uint cuint;
+/** @brief const int shorthand */
+typedef const int cint;
 
 /** @brief string shorthand */
 typedef string str;

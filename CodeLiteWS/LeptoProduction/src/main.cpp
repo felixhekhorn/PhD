@@ -14,8 +14,8 @@ int test();
 int main(int argc, char **argv) {
     //return test();
     //return testPartonic();
-    return testHadronic();
-    //return testHadronic2();
+    //return testHadronic();
+    return testHadronic2();
     //return testLeptonic();
     
     return EXIT_SUCCESS;
@@ -43,7 +43,7 @@ int testPartonic() {
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
-        o.getIntegrationConfig("cg1_VV")->verbosity = 1;
+        //o.getIntegrationConfig("cg1_VV")->verbosity = 1;
         //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
         //o.getIntegrationConfig("cg1_VV")->calls = 40000;
         //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
@@ -111,8 +111,8 @@ int testHadronic() {
     const DynamicScaleFactors mu02 (4.,1., 0., 0.);
     cdbl lambdaQCD = .194;
     
-#define useI 1
-#ifdef useI
+#define useHI 1
+#ifdef useHI
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o2(nlf,m2,Delta);
     o2.setProjection(F2);
@@ -120,7 +120,7 @@ int testHadronic() {
     oL.setProjection(FL);
     InclusiveLeptoProduction oP(nlf,m2,Delta);
     oP.setProjection(x2g1);
-#else // useI
+#else // useHI
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
@@ -131,7 +131,7 @@ int testHadronic() {
     oL.setProjection(FL);
     FullyDiffLeptoProduction oP(nlf,m2,xTilde,omega,deltax,deltay);
     oP.setProjection(x2g1);
-#endif // useI
+#endif // useHI
     
     o2.setQ2(Q2);oL.setQ2(Q2);oP.setQ2(Q2);
     o2.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
@@ -142,6 +142,7 @@ int testHadronic() {
     o2.flags().useLeadingOrder = oL.flags().useLeadingOrder = oP.flags().useLeadingOrder = false;
     //o2.flags().useNextToLeadingOrder = oL.flags().useNextToLeadingOrder = oP.flags().useNextToLeadingOrder = false;
     //o2.flags().useGluonicChannel = oL.flags().useGluonicChannel = oP.flags().useGluonicChannel = false;
+    o2.flags().useQuarkChannel = oL.flags().useQuarkChannel = oP.flags().useQuarkChannel = false;
     o2.flags().usePhotonZ = oL.flags().usePhotonZ = oP.flags().usePhotonZ = false;
     o2.flags().useZ = oL.flags().useZ = oP.flags().useZ = false;
     
@@ -169,9 +170,9 @@ int testHadronic2() {
     const DynamicScaleFactors mu02 (4.,1., 0., 0.);
     cdbl lambdaQCD = .194;
     
-#define useI2 1
+#define useHI2 1
     
-#ifdef useI2
+#ifdef useHI2
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o2(nlf,m2,Delta);
     o2.setProjection(F2);
@@ -179,7 +180,7 @@ int testHadronic2() {
     oL.setProjection(FL);
     InclusiveLeptoProduction oP(nlf,m2,Delta);
     oP.setProjection(x2g1);
-#else // ifdef useI2
+#else // ifdef useHI2
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
@@ -190,7 +191,7 @@ int testHadronic2() {
     oL.setProjection(FL);
     FullyDiffLeptoProduction oP(nlf,m2,xTilde,omega,deltax,deltay);
     oP.setProjection(x2g1);
-#endif // ifdef useI2
+#endif // ifdef useHI2
     
     o2.setQ2(Q2);oL.setQ2(Q2);oP.setQ2(Q2);
     o2.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);
@@ -199,7 +200,7 @@ int testHadronic2() {
     o2.setLambdaQCD(lambdaQCD);oL.setLambdaQCD(lambdaQCD);oP.setLambdaQCD(lambdaQCD);
     
     //o2.flags().useNextToLeadingOrder = oL.flags().useNextToLeadingOrder = oP.flags().useNextToLeadingOrder = false;
-    /*o2.flags().useGluonicChannel = oL.flags().useGluonicChannel = oP.flags().useGluonicChannel = false;*/
+    //o2.flags().useGluonicChannel = oL.flags().useGluonicChannel = oP.flags().useGluonicChannel = false;
     o2.flags().usePhotonZ = oL.flags().usePhotonZ = oP.flags().usePhotonZ = false;
     o2.flags().useZ = oL.flags().useZ = oP.flags().useZ = false;
     
@@ -209,7 +210,7 @@ int testHadronic2() {
 
     cdbl ptMaxSc = .1;
     cuint N = 10;
-#ifdef useI2
+#ifdef useHI2
     for (uint j = 0; j < N; ++j) {
         cdbl ptSc = ptMaxSc/(N)*(j+.5);
         cdbl c2 = o2.dF_dHAQTransverseMomentumScaling(ptSc);
@@ -218,9 +219,9 @@ int testHadronic2() {
         cdbl eL = oL.getIntegrationOutput().error;
         cdbl cP = oP.dF_dHAQTransverseMomentumScaling(ptSc);
         cdbl eP = oP.getIntegrationOutput().error;
-        printf("%e\t% e\t% e\t% e\t% e\t% e\t% e\n",ptSc,c2-cL,cL,cP,e2-eL,eL,eP);
+        printf("%e\t% e\t% e\t% e\t% e\t% e\t% e\n",ptSc,c2,cL,cP,e2,eL,eP);
     }
-#else // ifdef useI2
+#else // ifdef useHI2
     o2.getIntegrationConfig("F")->verbosity = 1;
     oL.getIntegrationConfig("F")->verbosity = 1;
     oP.getIntegrationConfig("F")->verbosity = 1;
@@ -231,11 +232,11 @@ int testHadronic2() {
     oL.activateHistogram(FullyDiff::histT::HAQTransverseMomentumScaling, N, "/home/Felix/Physik/PhD/data2/debug/xt-eL.dat",0.,ptMaxSc);
     oP.activateHistogram(FullyDiff::histT::HAQTransverseMomentumScaling, N, "/home/Felix/Physik/PhD/data2/debug/xt-eP.dat",0.,ptMaxSc);
     o2.F();oL.F();oP.F();
-#endif // ifdef useI2
+#endif // ifdef useHI2
 
 /*    cdbl yMax = 1.;
     cuint N = 100;
-#ifdef useI2
+#ifdef useHI2
     for (uint j = 0; j < N; ++j) {
         cdbl y = yMax*(-1. + 2./N*(j+.5));
         cdbl c2 = o2.dF_dHAQRapidity(y);
@@ -243,7 +244,7 @@ int testHadronic2() {
         cdbl cP = oP.dF_dHAQRapidity(y);
         printf("%e\t% e\t% e\t% e\n",y,c2,cL,cP);
     }
-#else // ifdef useI2
+#else // ifdef useHI2
     o2.getIntegrationConfig("F")->verbosity = 1;
     oL.getIntegrationConfig("F")->verbosity = 1;
     oP.getIntegrationConfig("F")->verbosity = 1;
@@ -254,7 +255,7 @@ int testHadronic2() {
     oL.activateHistogram(FullyDiff::histT::HAQRapidity, N, "/home/Felix/Physik/PhD/data2/debug/y-eL.dat",-yMax,yMax);
     oP.activateHistogram(FullyDiff::histT::HAQRapidity, N, "/home/Felix/Physik/PhD/data2/debug/y-eP.dat",-yMax,yMax);
     o2.F();oL.F();oP.F();
-#endif // ifdef useI2 */
+#endif // ifdef useHI2 */
     
     return EXIT_SUCCESS;
 }

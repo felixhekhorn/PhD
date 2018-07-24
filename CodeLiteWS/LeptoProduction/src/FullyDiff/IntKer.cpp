@@ -67,30 +67,6 @@ void FullyDiff::IntKer::setZ(cdbl a) {
     this->s = sp - this->Q2;
 }
 
-#define combineModesAndCurs(t,n,gVV,gVA,gAA) \
-    dbl t = 0;\
-    if (Mode_##n##_VV == this->mode)      t = gVV;\
-    else if (Mode_##n##_VA == this->mode) t = gVA;\
-    else if (Mode_##n##_AA == this->mode) t = gAA;\
-    else {\
-        cdbl eH = this->getElectricCharge(this->nlf+1);\
-        cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
-        cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
-        if (isParityConservingProj(this->proj)) {\
-            cdbl eVV = gVV;\
-            if (this->flags.usePhoton) t += eH*eH * eVV;\
-            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gVQ * eVV;\
-            if (this->flags.useZ) {\
-                cdbl eAA = gAA;\
-                t += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
-            }\
-        } else {\
-            cdbl eVA = gVA;\
-            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gAQ * eVA;\
-            if (this->flags.useZ) t += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
-        }\
-    }
-
 cdbl FullyDiff::IntKer::cg0() const {
     _sp
     cdbl beta = this->beta();

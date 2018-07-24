@@ -15,7 +15,6 @@
 namespace Common {
 
 /**
- * @class AbstractIntKer
  * @brief abstract base class for integration kernels
  */
 class AbstractIntKer : public HepSource::Integrand {
@@ -28,7 +27,7 @@ protected:
  * @brief combine all available currents with appropriate factors
  * NB: needs to be macro, to get fVV only evaluate, when needed
  * if needed: rewrite to reveal "new" term v2-a2
- * v2 * eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
+ * v2*eVV + a2*eAA = (v2+a2)*(eVV + eAA)/2 + (v2-a2)*(eVV-eAA)/2;
  * @param gVV VV matrix element
  * @param gVA VA matrix element
  * @param gAA AA matrix element
@@ -72,37 +71,69 @@ cdbl ns::IntKer::n() const {\
 }
 
 /**
+ * @brief implement partonic coefficient as single-current variant and as all-currents-combination
+ * @param t target variable
+ * @param n mode-name
+ * @param gVV
+ * @param gVA
+ * @param gAA
+ */
+#define combineModesAndCurs(t,n,gVV,gVA,gAA) \
+    dbl t = 0;\
+    if (Mode_##n##_VV == this->mode)      t = gVV;\
+    else if (Mode_##n##_VA == this->mode) t = gVA;\
+    else if (Mode_##n##_AA == this->mode) t = gAA;\
+    else {\
+        cdbl eH = this->getElectricCharge(this->nlf+1);\
+        cdbl gVQ = this->getVectorialCoupling(this->nlf+1);\
+        cdbl gAQ = this->getAxialCoupling(this->nlf+1);\
+        if (isParityConservingProj(this->proj)) {\
+            cdbl eVV = gVV;\
+            if (this->flags.usePhoton) t += eH*eH * eVV;\
+            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gVQ * eVV;\
+            if (this->flags.useZ) {\
+                cdbl eAA = gAA;\
+                t += this->getNormZ()*(gVQ*gVQ*eVV + gAQ*gAQ*eAA);\
+            }\
+        } else {\
+            cdbl eVA = gVA;\
+            if (this->flags.usePhotonZ) t -= this->getNormPhZ() * eH*gAQ * eVA;\
+            if (this->flags.useZ) t += this->getNormZ() * 2.*gVQ*gAQ * eVA;\
+        }\
+    }
+
+/**
  * @brief returns partonic (kinematic) beta
  * @return \f$\beta = \sqrt{1-4m^2/s}\f$
  */
-    inline cdbl beta() const { return sqrt(1. - 4.*this->m2/this->s); }
+    constexpr inline cdbl beta() const { return sqrt(1. - 4.*this->m2/this->s); }
 
 /**
  * @brief returns first beta coefficient with light flavors
  * @return \f$\beta_0^{lf} = \frac{11C_A - 2n_{lf}}{3}\f$
  */
-    inline cdbl beta0lf() const { return (11.*Color::CA - 2.*this->nlf)/3.; }
+    constexpr inline cdbl beta0lf() const { return (11.*Color::CA - 2.*this->nlf)/3.; }
     
 /**
  * @brief returns electric charge of particle
  * @param PDGId PDG particle id
  * @return electric charge
  */
-    cdbl getElectricCharge(const int PDGId) const;
+    cdbl getElectricCharge(cint PDGId) const;
     
 /**
  * @brief returns vectorial coupling of particle
  * @param PDGId PDG particle id
  * @return vectorial coupling
  */
-    cdbl getVectorialCoupling(const int PDGId) const;
+    cdbl getVectorialCoupling(cint PDGId) const;
     
 /**
  * @brief returns axial coupling of particle
  * @param PDGId PDG particle id
  * @return axial coupling
  */
-    cdbl getAxialCoupling(const int PDGId) const;
+    cdbl getAxialCoupling(cint PDGId) const;
     
 /**
  * @brief computes normalisation to photon-Z part
@@ -329,25 +360,25 @@ public:
  * @brief returns maximum z
  * @return z_max
  */
-    inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
+    constexpr inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
     
 /**
  * @brief return hadronic S
  * @return S_h
  */
-    inline cdbl getHadronicS() const { return this->Q2/this->xBj - this->Q2; };
+    constexpr inline cdbl getHadronicS() const { return this->Q2/this->xBj - this->Q2; };
     
 /**
  * @brief get maximum value of pt of heavy anti quark
  * @return pt_Qbar^max
  */
-    inline cdbl getHAQTransverseMomentumMax() const { return sqrt(this->getHadronicS()/4. - this->m2); }
+    constexpr inline cdbl getHAQTransverseMomentumMax() const { return sqrt(this->getHadronicS()/4. - this->m2); }
     
 /**
  * @brief get maximum value of rapidity of heavy anti quark
  * @return y_Qbar^max
  */
-    inline cdbl getHAQRapidityMax() const { return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS())); }
+    constexpr inline cdbl getHAQRapidityMax() const { return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS())); }
     
 /**
  * @brief called method by Dvegas before run

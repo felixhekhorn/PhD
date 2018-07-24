@@ -49,21 +49,6 @@ void Inclusive::IntKer::setHAQRapidity(cdbl a) {
     this->HAQRapidity = -y0 + this->V_HAQRapidity*a;
 }
 
-cdbl Inclusive::IntKer::getHadronicT1() const {
-    cdbl ey = exp(this->HAQRapidity);
-    cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
-    cdbl Sh = this->getHadronicS();
-    cdbl Shp = Sh + this->Q2;
-    return - Shp/sqrt(Sh) * mt / ey;
-}
-
-cdbl Inclusive::IntKer::getHadronicU1() const {
-    cdbl ey = exp(this->HAQRapidity);
-    cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
-    cdbl Sh = this->getHadronicS();
-    return -this->Q2 - mt*(Sh*ey - this->Q2/ey)/sqrt(Sh);
-}
-
 void Inclusive::IntKer::setPartonicVars() {
     // set partonic vars
     cdbl Shp = this->getHadronicS() + this->Q2;
@@ -151,78 +136,105 @@ cdbl Inclusive::IntKer::getDeltaCoeffA2() const {
     return pow(log(this->s4max/this->m2),2)/(this->s4max - this->Delta) - 2.*log(this->s4/m2)/this->s4;
 }
 
-// setup cgBarF1
-#define init_cgBarF1 _sp\
-    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
-    this->getBQED(fVV, fVA, fAA);\
-    cdbl u1 = s4 - sp - t1;\
-    cdbl x1 = - u1/(sp + t1);\
-    fPtr1dbl PggH0 = this->getPggH0();\
-    cdbl AP = -2./u1*PggH0(x1)*(-1.);\
-    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;\
-    cdbl A0 = this->getDeltaCoeffA0();\
-    cdbl A1 = this->getDeltaCoeffA1();\
-    cdbl SoftDelta1 = -4.*Color::CA;\
-    cdbl u1S = -sp - t1;\
-    cdbl SoftDelta0 = 4.*Color::CA * log(-u1S/this->m2) - this->beta0lf();\
-    cdbl AS = A0*SoftDelta0 + A1*SoftDelta1;
-#define cgBarF1_VV n * (AP*fVV(m2,-Q2,x1*sp,x1*t1) + AS*fVV(m2,-Q2,sp,t1))
-#define cgBarF1_VA n * (AP*fVA(m2,-Q2,x1*sp,x1*t1) + AS*fVA(m2,-Q2,sp,t1))
-#define cgBarF1_AA n * (AP*fAA(m2,-Q2,x1*sp,x1*t1) + AS*fAA(m2,-Q2,sp,t1))
-implementPartonicCoeff(Inclusive,cgBarF1)
+cdbl Inclusive::IntKer::cgBarF1(cint parts) const {
+    _sp
+    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+    this->getBQED(fVV, fVA, fAA);
+    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;
+    dbl r = 0.;
+    if (parts >= 0) { // H
+        cdbl u1 = s4 - sp - t1;
+        cdbl x1 = - u1/(sp + t1);
+        const fPtr1dbl PggH0 = this->getPggH0();
+        cdbl AP = -2./u1*PggH0(x1)*(-1.);
+        combineModesAndCurs(meH,cgBarF1,fVV(m2,-Q2,x1*sp,x1*t1),fVA(m2,-Q2,x1*sp,x1*t1),fAA(m2,-Q2,x1*sp,x1*t1));
+        r += n*AP*meH;
+    }
+    if (parts <= 0) { // S
+        cdbl A0 = this->getDeltaCoeffA0();
+        cdbl A1 = this->getDeltaCoeffA1();
+        cdbl SoftDelta1 = -4.*Color::CA;
+        cdbl u1S = -sp - t1;
+        cdbl SoftDelta0 = 4.*Color::CA * log(-u1S/this->m2) - this->beta0lf();
+        cdbl AS = A0*SoftDelta0 + A1*SoftDelta1;
+        combineModesAndCurs(meS,cgBarF1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+        r += n*AS*meS;
+    }
+    return r;
+}
 
-// setup cgBarR1
-#define init_cgBarR1 _sp\
-    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;\
-    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
-    this->getBQED(fVV, fVA, fAA);\
+cdbl Inclusive::IntKer::cgBarR1(cint parts) const {
+    _sp
+    cdbl n = 4.*M_PI*m2/(sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;
+    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+    this->getBQED(fVV, fVA, fAA);
     cdbl b = this->beta0lf()/(16.*M_PI*M_PI);
-#define cgBarR1_VV n * b * fVV(m2,-Q2,sp,t1)
-#define cgBarR1_VA n * b * fVA(m2,-Q2,sp,t1)
-#define cgBarR1_AA n * b * fAA(m2,-Q2,sp,t1)
-implementPartonicCoeff(Inclusive,cgBarR1)
+    combineModesAndCurs(me,cgBarR1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+    cdbl r = n * b * me;
+    if (0 == parts) // partonic
+        return r;
+    else if (parts < 0) { // S
+        cdbl A0 = this->getDeltaCoeffA0();
+        return A0*r;
+    } else // H
+        return 0.;
+}
 
 // setup cg1
-void Inclusive::IntKer::getIntROK(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const { getME(Inclusive::ME::IntROK) }
+void Inclusive::IntKer::getIntROK(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA)  const { getME(Inclusive::ME::IntROK) }
 void Inclusive::IntKer::getIntRQED(fPtr5dbl &fVV, fPtr5dbl &fVA, fPtr5dbl &fAA) const { getME(Inclusive::ME::IntRQED) }
-void Inclusive::IntKer::getSVOK(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const { getME(Inclusive::ME::SVOK) }
-void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA) const { getME(Inclusive::ME::SVQED) }
-#define init_cg1 _sp\
-    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;\
-    fPtr5dbl IntROK_VV = 0;fPtr5dbl IntROK_VA = 0;fPtr5dbl IntROK_AA = 0;\
-    this->getIntROK(IntROK_VV, IntROK_VA, IntROK_AA);\
-    fPtr5dbl IntRQED_VV = 0;fPtr5dbl IntRQED_VA = 0;fPtr5dbl IntRQED_AA = 0;\
-    this->getIntRQED(IntRQED_VV, IntRQED_VA, IntRQED_AA);\
-    fPtr4dbl SVOK_VV = 0;fPtr4dbl SVOK_VA = 0;fPtr4dbl SVOK_AA = 0;\
-    this->getSVOK(SVOK_VV, SVOK_VA, SVOK_AA);\
-    fPtr4dbl SVQED_VV = 0;fPtr4dbl SVQED_VA = 0;fPtr4dbl SVQED_AA = 0;\
-    this->getSVQED(SVQED_VV, SVQED_VA, SVQED_AA);\
-    fPtr4dbl BQED_VV = 0;fPtr4dbl BQED_VA = 0;fPtr4dbl BQED_AA = 0;\
-    this->getBQED(BQED_VV, BQED_VA, BQED_AA);\
-    cdbl A0 = this->getDeltaCoeffA0();\
-    cdbl A1 = this->getDeltaCoeffA1();\
-    cdbl A2 = this->getDeltaCoeffA2();\
-    cdbl SoftDelta2 = 4.*Color::CA;\
-    cdbl beta = this->beta();\
-    cdbl chi = (1. - beta)/(1. + beta);\
-    cdbl u1S = -sp - t1;\
-    /*if(!isfinite(IntRQED_VV(m2,-Q2,sp,t1,s4)))  printf(">%.10e\t%.10e IntRQED_VV\n",t1,s4);\
-    if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4))) printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);*/\
-    cdbl SoftDelta1 = 4.*(Color::CA*(log(-t1/m2)-log(-u1S/m2))-(Color::CA - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
+void Inclusive::IntKer::getSVOK(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA)    const { getME(Inclusive::ME::SVOK) }
+void Inclusive::IntKer::getSVQED(fPtr4dbl &fVV, fPtr4dbl &fVA, fPtr4dbl &fAA)   const { getME(Inclusive::ME::SVQED) }
+cdbl Inclusive::IntKer::cg1(cint parts) const {
+    _sp
+    cdbl n = m2/(4.*M_PI*sp*sp) * Color::Kgph * cdbl(Color::NC) * Color::CF;
     
-#define cg1_VV n * ((Color::CA*IntROK_VV(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VV(m2,-Q2,sp,t1,s4))\
-                    + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_VV(m2,-Q2,sp,t1)\
-                    + A0*(Color::CA*SVOK_VV(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VV(m2,-Q2,sp,t1))\
-                   )
-#define cg1_VA n * (Color::CA*IntROK_VA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_VA(m2,-Q2,sp,t1,s4)\
-                    + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_VA(m2,-Q2,sp,t1)\
-                    + A0*(Color::CA*SVOK_VA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_VA(m2,-Q2,sp,t1))\
-                   )
-#define cg1_AA n * (Color::CA*IntROK_AA(m2,-Q2,sp,t1,s4) + 2.*Color::CF*IntRQED_AA(m2,-Q2,sp,t1,s4)\
-                    + (A2*SoftDelta2 + A1*SoftDelta1)*BQED_AA(m2,-Q2,sp,t1)\
-                    + A0*(Color::CA*SVOK_AA(m2,-Q2,sp,t1) + 2.*Color::CF*SVQED_AA(m2,-Q2,sp,t1))\
-                   )
-implementPartonicCoeff(Inclusive,cg1)
+    dbl r = 0.;
+    if (parts >= 0) { // H
+        {
+            fPtr5dbl fVV = 0;fPtr5dbl fVA = 0;fPtr5dbl fAA = 0;
+            this->getIntROK(fVV, fVA, fAA);
+            combineModesAndCurs(meROK,cg1,fVV(m2,-Q2,sp,t1,s4),fVA(m2,-Q2,sp,t1,s4),fAA(m2,-Q2,sp,t1,s4));
+            r += n * Color::CA * meROK;
+        } {
+            fPtr5dbl fVV = 0;fPtr5dbl fVA = 0;fPtr5dbl fAA = 0;
+            this->getIntRQED(fVV, fVA, fAA);
+            combineModesAndCurs(meRQED,cg1,fVV(m2,-Q2,sp,t1,s4),fVA(m2,-Q2,sp,t1,s4),fAA(m2,-Q2,sp,t1,s4));
+            r += n * 2.*Color::CF * meRQED;
+        }
+        /*if(!isfinite(IntRQED_VV(m2,-Q2,sp,t1,s4)))  printf(">%.10e\t%.10e IntRQED_VV\n",t1,s4);\
+        if(!isfinite(IntROK_VV(m2,-Q2,sp,t1,s4))) printf(">%.10e\t%.10e IntROK_VV\n",t1,s4);*/\
+    }
+    if (parts <= 0) { // S
+        {
+            cdbl A1 = this->getDeltaCoeffA1();
+            cdbl A2 = this->getDeltaCoeffA2();
+            cdbl SoftDelta2 = 4.*Color::CA;
+            cdbl beta = this->beta();
+            cdbl chi = (1. - beta)/(1. + beta);
+            cdbl u1S = -sp - t1;
+            cdbl SoftDelta1 = 4.*(Color::CA*(log(-t1/m2)-log(-u1S/m2))-(Color::CA - 2.*Color::CF)*(2.*m2-s)/(s*beta)*log(chi) - 2.*Color::CF);
+            
+            fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+            this->getBQED(fVV, fVA, fAA);
+            combineModesAndCurs(meB,cg1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+            r += n * (A2*SoftDelta2 + A1*SoftDelta1) * meB;
+        }
+        cdbl A0 = this->getDeltaCoeffA0();
+        {
+            fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
+            this->getSVOK(fVV, fVA, fAA);\
+            combineModesAndCurs(meSVOK,cg1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+            r += n * A0 * Color::CA * meSVOK;
+        } {
+            fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;\
+            this->getSVQED(fVV, fVA, fAA);\
+            combineModesAndCurs(meSVQED,cg1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+            r += n * A0 * 2.*Color::CF * meSVQED;
+        }
+    }
+    return r;
+}
 
 
 cdbl Inclusive::IntKer::Fg0() const {
@@ -233,13 +245,13 @@ cdbl Inclusive::IntKer::Fg0() const {
     return nLO * g * this->cg0();
 }
 
-cdbl Inclusive::IntKer::Fg1() const {
+cdbl Inclusive::IntKer::Fg1(cint parts) const {
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
     cdbl curMuF2 = this->getScale(this->muF2,this->HAQTransverseMomentum);
     cdbl curMuR2 = this->getScale(this->muR2,this->HAQTransverseMomentum);
     cdbl g = this->pdf->xfxQ2(21,this->xi,curMuF2) / this->xi;
     cdbl nNLO = alphaS*alphaS/(M_PI) * (this->Q2/this->m2);
-    return nNLO * g * (this->cg1() + log(curMuF2/m2)*this->cgBarF1() + log(curMuR2/m2)*this->cgBarR1());
+    return nNLO * g * (this->cg1(parts) + log(curMuF2/m2)*this->cgBarF1(parts) + log(curMuR2/m2)*this->cgBarR1(parts));
 }
 
 cdbl Inclusive::IntKer::Fq1() const {
@@ -259,7 +271,7 @@ cdbl Inclusive::IntKer::Fq1() const {
     // common stuff
     cdbl alphaS = this->getAlphaS(this->HAQTransverseMomentum);
     cdbl curMuF2 = this->getScale(this->muF2,this->HAQTransverseMomentum);
-    cdbl nNLO = alphaS*alphaS/this->m2 * (this->Q2)/(M_PI);
+    cdbl nNLO = alphaS*alphaS/(M_PI) * (this->Q2/this->m2);
     cdbl cq1 = this->cq1() + log(curMuF2/this->m2) * this->cqBarF1();
     dbl fqs = 0.;
     for (uint q = 1; q < this->nlf + 1; ++q) {
@@ -291,7 +303,7 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
         return this->jac_t1*this->cg0_cur();
     // cgBarR1
     if (Mode_cgBarR1_VV == this->mode || Mode_cgBarR1_VA == this->mode || Mode_cgBarR1_AA == this->mode)
-        return this->jac_t1*this->cgBarR1_cur();
+        return this->jac_t1*this->cgBarR1(0);
     // setS4 in NLOq
     _sp
     //cdbl beta = this->beta();
@@ -317,10 +329,10 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
         return 0.;
     // cg1
     if (Mode_cg1_VV == this->mode || Mode_cg1_VA == this->mode || Mode_cg1_AA == this->mode)
-        return this->jac_t1*V_s4*this->cg1_cur();
+        return this->jac_t1*V_s4*this->cg1(0);
     // cgBarF1
     if (Mode_cgBarF1_VV == this->mode || Mode_cgBarF1_VA == this->mode || Mode_cgBarF1_AA == this->mode)
-        return this->jac_t1*V_s4*this->cgBarF1_cur();
+        return this->jac_t1*V_s4*this->cgBarF1(0);
     // cgBar1
     if (Mode_cgBar1_VV == this->mode || Mode_cgBar1_VA == this->mode || Mode_cgBar1_AA == this->mode) {
         cuint old = this->mode;
@@ -330,9 +342,9 @@ cdbl Inclusive::IntKer::runPartonic(cdbl a1, cdbl a2) {
         else if (Mode_cgBar1_AA == this->mode) { F = this->Mode_cgBarF1_AA; R = this->Mode_cgBarR1_AA; }
         dbl r = 0.;
         this->mode = F;
-        r += this->jac_t1*V_s4*this->cgBarF1_cur();
+        r += this->jac_t1*V_s4*this->cgBarF1(0);
         this->mode = R;
-        r += this->jac_t1*this->cgBarR1_cur();
+        r += this->jac_t1*this->cgBarR1(0);
         this->mode = old;
         return r;
     }
@@ -387,18 +399,24 @@ cdbl Inclusive::IntKer::runHadronic(cdbl a1, cdbl a2, cdbl a3) {
         this->s4max = Shp + T1 + U1;
         cdbl as4 = (Mode_F == this->mode) ? a3 : a2;
         if (this->flags.useQuarkChannel) {
-            this->s4 = s4max*as4;
             if (s4max > 0.) {
+                this->s4 = s4max*as4;
                 this->setPartonicVars();
                 r += jac*this->xi*s4max * this->Fq1();
             }
         }
         if (this->flags.useGluonicChannel) {
             cdbl V_s4 = s4max - this->Delta;
-            this->s4 = this->Delta + V_s4*as4;
             if (V_s4 > 0.) {
+                // split H and S, because xi=xi(s4)
+                // S
+                this->s4 = 0.;
                 this->setPartonicVars();
-                r += jac*this->xi*V_s4 * this->Fg1();
+                this->s4 = this->Delta + V_s4*as4;
+                r += jac*this->xi*V_s4 * this->Fg1(-1);
+                // H
+                this->setPartonicVars();
+                r += jac*this->xi*V_s4 * this->Fg1(1);
             }
         }
     }

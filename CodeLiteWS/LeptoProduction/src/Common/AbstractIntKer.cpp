@@ -14,7 +14,7 @@ Common::AbstractIntKer::~AbstractIntKer() {
         delete this->aS;
 }
 
-cdbl Common::AbstractIntKer::getElectricCharge(const int PDGId) const {
+cdbl Common::AbstractIntKer::getElectricCharge(cint PDGId) const {
     switch(PDGId) {
         case 1: case -1: // u+ubar
         case 3: case -3: // s+sbar
@@ -31,7 +31,7 @@ cdbl Common::AbstractIntKer::getElectricCharge(const int PDGId) const {
     }
 }
 
-cdbl Common::AbstractIntKer::getVectorialCoupling(const int PDGId) const {
+cdbl Common::AbstractIntKer::getVectorialCoupling(cint PDGId) const {
     switch (PDGId) {
         case 11: case -11:// e+-
             return -.5 + 2.*this->sin2ThetaWeak;
@@ -48,7 +48,7 @@ cdbl Common::AbstractIntKer::getVectorialCoupling(const int PDGId) const {
     }
 }
 
-cdbl Common::AbstractIntKer::getAxialCoupling(const int PDGId) const {
+cdbl Common::AbstractIntKer::getAxialCoupling(cint PDGId) const {
     switch (PDGId) {
         case 11: case -11:// e+-
             return -.5;

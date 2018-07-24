@@ -144,19 +144,19 @@ int test2() {
 }
 
 int testHadronic() {
-    cdbl q2 = -1.e2;
-    cdbl m2 = pow(1.5,2);
     const uint nlf = 3;
+    cdbl m2 = pow(1.5,2);
+    cdbl q2 = -1.e2;
+    const Common::DynamicScaleFactors mu02 (4.,-1.,0.,0.);
     cdbl lambdaQCD = .194;
-    const Common::DynamicScaleFactors mu02(4.,-1.,0.,0.);
     
-#define useI 1
-#ifdef useI
+#define useHI 1
+#ifdef useHI
     cdbl Delta = 1e-6;
     InclusiveElProduction oG(m2,q2,Delta,G,nlf);
     InclusiveElProduction oL(m2,q2,Delta,L,nlf);
     InclusiveElProduction oP(m2,q2,Delta,P,nlf);
-#else // ifdef useI
+#else // ifdef useHI
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
@@ -164,7 +164,7 @@ int testHadronic() {
     ExclusiveElProduction oG(m2,q2,G,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction oL(m2,q2,L,nlf,xTilde,omega,deltax,deltay);
     ExclusiveElProduction oP(m2,q2,P,nlf,xTilde,omega,deltax,deltay);
-#endif // ifdef useI
+#endif // ifdef useHI
     
     oG.setQ2(q2);oL.setQ2(q2);oP.setQ2(q2);
     oG.setPdf("MSTW2008nlo90cl",0);oL.setPdf("MSTW2008nlo90cl",0);oP.setPdf("DSSV2014",0);

@@ -48,20 +48,32 @@ class IntKer : public Common::AbstractIntKer {
     dbl s4max = 0.;
 /** @brief partonic s4 */
     dbl s4 = dblNaN;
-/** @brief sets partonic s and t1 by pt,y,s4 */
+    
+/** @brief sets xi, partonic s and t1 by pt,y,s4 */
     void setPartonicVars();
     
 /**
  * @brief get hadronic T1
  * @return T1
  */
-    cdbl getHadronicT1() const;
+    constexpr cdbl getHadronicT1() const {
+        cdbl ey = exp(this->HAQRapidity);
+        cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
+        cdbl Sh = this->getHadronicS();
+        cdbl Shp = Sh + this->Q2;
+        return - Shp/sqrt(Sh) * mt / ey;
+    };
     
 /**
  * @brief get hadronic U1
  * @return U1
  */
-    cdbl getHadronicU1() const;
+    constexpr cdbl getHadronicU1() const {
+        cdbl ey = exp(this->HAQRapidity);
+        cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
+        cdbl Sh = this->getHadronicS();
+        return -this->Q2 - mt*(Sh*ey - this->Q2/ey)/sqrt(Sh);
+    };
     
 ///@}
     
@@ -159,24 +171,6 @@ class IntKer : public Common::AbstractIntKer {
  * @return cqBarF1
  */
     cdbl cqBarF1_cur() const;
-    
-/** 
- * @brief computes a single current cgBarF1
- * @return cgBarF1
- */
-    cdbl cgBarF1_cur() const;
-    
-/** 
- * @brief computes a single current cgBarR1
- * @return cgBarR1
- */
-    cdbl cgBarR1_cur() const;
-    
-/** 
- * @brief computes a single current cg1
- * @return cg1
- */
-    cdbl cg1_cur() const;
 
 /** 
  * @brief computes full cg0
@@ -197,22 +191,25 @@ class IntKer : public Common::AbstractIntKer {
     cdbl cqBarF1() const;
 
 /** 
- * @brief computes full cgBarF1
+ * @brief computes cgBarF1
+ * @param parts which parts to include? parts >= 0 -> H, parts <= 0 -> S
  * @return cgBarF1
  */
-    cdbl cgBarF1() const;
+    cdbl cgBarF1(cint parts) const;
 
 /** 
- * @brief computes full cgBarR1
+ * @brief computes cgBarR1
+ * @param parts which parts to include? parts >= 0 -> H, parts <= 0 -> S
  * @return cgBarR1
  */
-    cdbl cgBarR1() const;
+    cdbl cgBarR1(cint parts) const;
 
 /** 
- * @brief computes full cg1
+ * @brief computes cg1
+ * @param parts which parts to include? parts >= 0 -> H, parts <= 0 -> S
  * @return cg1
  */
-    cdbl cg1() const;
+    cdbl cg1(cint parts) const;
     
 ///@}
     
@@ -255,9 +252,10 @@ class IntKer : public Common::AbstractIntKer {
     
 /** 
  * @brief computes Fg1
+ * @param parts which parts to include? parts >= 0 -> H, parts <= 0 -> S
  * @return Fg1
  */
-    cdbl Fg1() const;
+    cdbl Fg1(cint parts) const;
     
 /** 
  * @brief computes Fq1
