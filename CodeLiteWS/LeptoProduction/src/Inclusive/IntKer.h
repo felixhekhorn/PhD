@@ -56,7 +56,7 @@ class IntKer : public Common::AbstractIntKer {
  * @brief get hadronic T1
  * @return T1
  */
-    constexpr cdbl getHadronicT1() const {
+    inline cdbl getHadronicT1() const {
         cdbl ey = exp(this->HAQRapidity);
         cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
         cdbl Sh = this->getHadronicS();
@@ -68,7 +68,7 @@ class IntKer : public Common::AbstractIntKer {
  * @brief get hadronic U1
  * @return U1
  */
-    constexpr cdbl getHadronicU1() const {
+    inline cdbl getHadronicU1() const {
         cdbl ey = exp(this->HAQRapidity);
         cdbl mt = sqrt(this->m2 + this->HAQTransverseMomentum*this->HAQTransverseMomentum);
         cdbl Sh = this->getHadronicS();

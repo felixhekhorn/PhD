@@ -78,12 +78,12 @@ def _threadWorker(qIn, qOut):
 		if p.has_key("projection"): o.setProjection(p["projection"])
 		if p.has_key("nlf"): o.setNumberOfLightFlavours(p["nlf"])
 		if p.has_key("Q2"): o.setQ2(p["Q2"])
-		if p.has_key("m2"): o.setM2(p["M2"])
+		if p.has_key("m2"): o.setM2(p["m2"])
 		if p.has_key("Delta"): o.setQ2(p["Delta"])
-		if p.has_key("integrationConfig"):
+		if p.has_key("IntegrationConfig"):
 			method = run if type("") == type(run) else run[0]
-			for k in p["integrationConfig"]:
-				setattr(o.getIntegrationConfig(method),k,p["integrationConfig"][k])
+			for k in p["IntegrationConfig"]:
+				setattr(o.getIntegrationConfig(method),k,p["IntegrationConfig"][k])
 		# partonic setter
 		if p.has_key("partonicEta"): o.setPartonicEta(p["partonicEta"])
 		if p.has_key("partonicS"): o.setPartonicS(p["partonicS"])
@@ -94,7 +94,7 @@ def _threadWorker(qIn, qOut):
 		if p.has_key("mu2"):  o.setMu2 (DynamicScaleFactors(*p["mu2"]))
 		if p.has_key("lambdaQCD"): o.setLambdaQCD(p["lambdaQCD"])
 		if p.has_key("alphaSByLHAPDF"): o.setAlphaSByLHAPDF(*p["alphaSByLHAPDF"])
-		if p.has_key("XBjorken"):  o.setXBjorken(p["XBjorken"])
+		if p.has_key("xBjorken"):  o.setXBjorken(p["xBjorken"])
 		if p.has_key("hadronicS"): o.setHadronicS(p["hadronicS"])
 		if p.has_key("flags"):
 			for k in p["flags"]:
@@ -122,7 +122,8 @@ def _threadWorker(qIn, qOut):
 			else:
 				Util.pWarn(p)
 				raise "unknown function: "+run
-		if p.has_key("integrationOutput"): p["integrationOutput"] = o.getIntegrationOutput()
+		# post run
+		if p.has_key("IntegrationOutput"): p["IntegrationOutput"] = o.getIntegrationOutput()
 		qOut.put(p)
 		qIn.task_done()
 		if p.has_key("msg"): Util.pSucc(p["msg"])

@@ -177,6 +177,9 @@ cdbl FullyDiffLeptoProduction::F() const {
     initF
     this->ker->aS->setOrderQCD(1 + (this->ker->flags.useNextToLeadingOrder ? 1 : 0 ));
     this->ker->mode = Common::AbstractIntKer::Mode_F;
+    // läuft Dvegas?
+    if (!FDker->histMap.empty() && "Dvegas" != this->getIntegrationConfig("F")->method)
+        throw std::invalid_argument("To generate histograms, integration method have to supply integration weights! i.e. currently only Dvegas is available");
     dbl r = dblNaN;
     if (this->ker->flags.useNextToLeadingOrder) {
         r = this->int5D();

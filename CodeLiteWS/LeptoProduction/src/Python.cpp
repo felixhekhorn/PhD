@@ -95,7 +95,7 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def("setXTilde", &FullyDiffLeptoProduction::setXTilde, "sets xTilde")
         .def("setOmega", &FullyDiffLeptoProduction::setOmega, "sets omega")
         .def("setDeltax", &FullyDiffLeptoProduction::setDeltax, "sets deltax")
-        .def("setDeltax", &FullyDiffLeptoProduction::setDeltay, "sets deltay")
+        .def("setDeltay", &FullyDiffLeptoProduction::setDeltay, "sets deltay")
         .def("getIntegrationConfig", &FullyDiffLeptoProduction::getIntegrationConfig, "get matching IntegrationConfig", return_value_policy<reference_existing_object>())
         .def("getIntegrationOutput", &FullyDiffLeptoProduction::getIntegrationOutput, "get current/latest IntegrationOutput")
         // partonic setter
@@ -166,11 +166,18 @@ BOOST_PYTHON_MODULE(LeptoProduction)
         .def_readwrite("cHQPairTransverseMomentum", &DynamicScaleFactors::cHQPairTransverseMomentum, "factor to (p_{Q,T}+p_{Qbar,T})^2")
     ;
     
-    class_<Common::IntegrationOutput>("IntegrationOutput", "stores meta data for a single integration")
+    struct IntegrationOutput_pickle_suite : boost::python::pickle_suite {
+        static boost::python::tuple getinitargs(Common::IntegrationOutput const& i) {
+            return boost::python::make_tuple(i.result, i.error, i.MC_chi2, i.MC_chi2inter);
+        }
+    };
+    class_<Common::IntegrationOutput>("IntegrationOutput", "stores meta data for a single integration", init<dbl,dbl,dbl,uint>())
         .def_readwrite("result", &Common::IntegrationOutput::result, "result")
         .def_readwrite("error", &Common::IntegrationOutput::error, "error")
         .def_readwrite("MC_chi2", &Common::IntegrationOutput::MC_chi2, "chi^2")
         .def_readwrite("MC_chi2inter", &Common::IntegrationOutput::MC_chi2inter, "number of iteration to converge chi^2")
+        .def("toYAML", &Common::IntegrationOutput::toYAML, "return YAML representation as string")
+        .def_pickle(IntegrationOutput_pickle_suite())
     ;
     
     enum_<FullyDiff::histT>("FullyDiffHistT", "historgram type")

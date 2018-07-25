@@ -106,13 +106,13 @@ cdbl ns::IntKer::n() const {\
  * @brief returns partonic (kinematic) beta
  * @return \f$\beta = \sqrt{1-4m^2/s}\f$
  */
-    constexpr inline cdbl beta() const { return sqrt(1. - 4.*this->m2/this->s); }
+    inline cdbl beta() const { return sqrt(1. - 4.*this->m2/this->s); }
 
 /**
  * @brief returns first beta coefficient with light flavors
  * @return \f$\beta_0^{lf} = \frac{11C_A - 2n_{lf}}{3}\f$
  */
-    constexpr inline cdbl beta0lf() const { return (11.*Color::CA - 2.*this->nlf)/3.; }
+    inline cdbl beta0lf() const { return (11.*Color::CA - 2.*this->nlf)/3.; }
     
 /**
  * @brief returns electric charge of particle
@@ -360,25 +360,25 @@ public:
  * @brief returns maximum z
  * @return z_max
  */
-    constexpr inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
+    inline cdbl getZMax() const { return this->Q2/(4.*this->m2 + this->Q2); };
     
 /**
  * @brief return hadronic S
  * @return S_h
  */
-    constexpr inline cdbl getHadronicS() const { return this->Q2/this->xBj - this->Q2; };
+    inline cdbl getHadronicS() const { return this->Q2/this->xBj - this->Q2; };
     
 /**
  * @brief get maximum value of pt of heavy anti quark
  * @return pt_Qbar^max
  */
-    constexpr inline cdbl getHAQTransverseMomentumMax() const { return sqrt(this->getHadronicS()/4. - this->m2); }
+    inline cdbl getHAQTransverseMomentumMax() const { return sqrt(this->getHadronicS()/4. - this->m2); }
     
 /**
  * @brief get maximum value of rapidity of heavy anti quark
  * @return y_Qbar^max
  */
-    constexpr inline cdbl getHAQRapidityMax() const { return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS())); }
+    inline cdbl getHAQRapidityMax() const { return atanh(sqrt(1. - 4.*this->m2/this->getHadronicS())); }
     
 /**
  * @brief called method by Dvegas before run

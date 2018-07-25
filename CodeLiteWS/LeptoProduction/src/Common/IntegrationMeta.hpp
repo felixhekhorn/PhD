@@ -108,6 +108,7 @@ struct IntegrationConfig {
  * @brief stores meta data for a single integration
  */
 struct IntegrationOutput {
+    
 /** @name common variables */
 ///@{
 /** @brief result */
@@ -123,6 +124,25 @@ struct IntegrationOutput {
 /** @brief number of iteration to converge chi^2 */
     uint MC_chi2inter = 0;
 ///@}
+    
+    IntegrationOutput(cdbl result = dblNaN, cdbl error = dblNaN, cdbl MC_chi2 = dblNaN, cuint MC_chi2inter = 0) : 
+        result(result), error(error), MC_chi2(MC_chi2), MC_chi2inter(MC_chi2inter) {};
+
+/**
+ * @brief return YAML representation as string
+ * @return string
+ */
+    str toYAML() const {
+        YAML::Node r;
+        r["result"] = result;
+        r["error"] = error;
+        r["MC_chi2"] = MC_chi2;
+        r["MC_chi2inter"] = MC_chi2inter;
+        r.SetStyle(YAML::EmitterStyle::Flow);
+        YAML::Emitter e;
+        e << r;
+        return e.c_str(); 
+    }
 };
 
 } // namespace Common
