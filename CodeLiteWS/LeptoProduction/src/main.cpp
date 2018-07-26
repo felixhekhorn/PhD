@@ -13,9 +13,9 @@ int test();
 
 int main(int argc, char **argv) {
     //return test();
-    //return testPartonic();
+    return testPartonic();
     //return testHadronic();
-    return testHadronic2();
+    //return testHadronic2();
     //return testLeptonic();
     
     return EXIT_SUCCESS;
@@ -43,18 +43,18 @@ int testPartonic() {
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
-        //o.getIntegrationConfig("cg1_VV")->verbosity = 1;
+        o.getIntegrationConfig("cqBarF1_VA")->verbosity = 1;
         //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
         //o.getIntegrationConfig("cg1_VV")->calls = 40000;
         //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
         //o.setDelta(eta/1000.);
-        o.setProjection(F2);
-        cdbl cF2 = o.cg1_VV();
+        o.setProjection(gL);
+        cdbl cF2 = o.cqBarF1_VA();
         o.setProjection(FL);
-        cdbl cFL = o.cg1_VV();
+        cdbl cFL = o.dq1_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.cg1_VV();
-        cout << boost::format("%e\t% e\t% e\t% e")%eta%(cF2-cFL)%cFL%cx2g1 << endl;
+        cdbl cx2g1 = o.dq1_VV();
+        cout << boost::format("%e\t% e\t% e\t% e")%eta%(cF2)%cFL%cx2g1 << endl;
     }
     
     return EXIT_SUCCESS;

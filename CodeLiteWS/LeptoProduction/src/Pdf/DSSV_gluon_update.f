@@ -234,7 +234,11 @@ C...
 *
       FUNCTION DFINT(NARG,ARG,NENT,ENT,TABLE)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      DIMENSION ARG(5),NENT(5),ENT(73),TABLE(1200)
+cfhe gfortran v8 requires exact match for size of ARG, NENT
+cfhe      DIMENSION ARG(5),NENT(5),ENT(73),TABLE(1200)
+      DIMENSION ARG(2),NENT(2),ENT(73),TABLE(1200)
+cfhe
+      
       DIMENSION D(5),NCOMB(5),IENT(5)
       KD=1
       M=1

@@ -48,7 +48,7 @@ Common::IntegrationConfig* InclusiveLeptoProduction::getIntegrationConfig(str me
     // partonic functions
     if (boost::starts_with(method,"cg0_") || boost::starts_with(method,"cgBarR1_"))
         return this->intConfigs.at(1-1);
-    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || 
+    if (boost::starts_with(method,"cg1_") || boost::starts_with(method,"cgBarF1_") || boost::starts_with(method,"cgBar1_") || 
         boost::starts_with(method,"cq1_") || boost::starts_with(method,"cqBarF1_") || boost::starts_with(method,"dq1_"))
         return this->intConfigs.at(2-1);
     // hadronic functions
@@ -59,19 +59,15 @@ Common::IntegrationConfig* InclusiveLeptoProduction::getIntegrationConfig(str me
         return isNLO ? this->intConfigs.at(3-1) : this->intConfigs.at(2-1);
     // leptonic functions
     if (boost::iequals(method,"sigma"))
-        return isNLO ? this->intConfigs.at(4-1) : this->intConfigs.at(4-1);
+        return isNLO ? this->intConfigs.at(5-1) : this->intConfigs.at(4-1);
     throw invalid_argument(str("unknown method: ")+method);
-}
-
-cdbl InclusiveLeptoProduction::int1D() const {
-    this->ker->dim = 1;
-    return Common::integrate1D<Inclusive::IntKer>(kker,*this->intConfigs.at(1-1),this->intOut);
 }
 
 #define intND(N) cdbl InclusiveLeptoProduction::int##N##D() const {\
     this->ker->dim = N;\
     return Common::integrate##N##D<Inclusive::IntKer>(kker,*this->intConfigs.at(N-1),this->intOut);\
 }
+intND(1)
 intND(2)
 intND(3)
 intND(4)

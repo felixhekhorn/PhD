@@ -14,7 +14,7 @@ m2 = 4.75**2
 Delta = 1e-6
 intCfg = {"verbosity": 1}
 
-Netas = 11
+Netas = 101
 etas = [10.**(-3. + 6./(Netas-1)*j) for j in xrange(Netas)]
 objArgs = (nlf, m2, Delta)
 
@@ -68,4 +68,4 @@ def runSet(fn):
   run(fn,1e2)
   run(fn,1e3)
 
-runSet("dq1")
+runSet("cgBar1")

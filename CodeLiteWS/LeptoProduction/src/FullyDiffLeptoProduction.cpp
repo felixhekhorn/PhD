@@ -89,7 +89,7 @@ Common::IntegrationConfig* FullyDiffLeptoProduction::getIntegrationConfig(str me
         return isNLO ? this->intConfigs.at(5-1) : this->intConfigs.at(2-1);
     /*// leptonic functions
     if (boost::iequals(method,"sigma"))
-        return isNLO ? this->intConfigs.at(4) : this->intConfigs.at(3);
+        return isNLO ? this->intConfigs.at(7-1) : this->intConfigs.at(4-1);
     */throw invalid_argument(str("unknown method: ")+method);
 }
 

@@ -177,7 +177,10 @@ C
 *
       FUNCTION GRSV_DFINT(NARG,ARG,NENT,ENT,TABLE)
       IMPLICIT DOUBLE PRECISION (A-H,O-Z)
-      DIMENSION ARG(5),NENT(5),ENT(63),TABLE(882)
+cfhe gfortran v8 requires exact match for size of ARG, NENT
+cfhe      DIMENSION ARG(5),NENT(5),ENT(63),TABLE(882)
+      DIMENSION ARG(2),NENT(2),ENT(63),TABLE(882)
+cfhe
       DIMENSION D(5),NCOMB(5),IENT(5)
       KD=1
       M=1

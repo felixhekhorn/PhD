@@ -101,7 +101,9 @@ template <class IntKerT> cdbl integrate1D(IntKerT* K, const IntegrationConfig& c
     /* clear histograms */\
     K->Dvegas_init();\
     /* warm-up */\
-    HepSource::VEGAS(dv,cfg.MC_warmupCalls,cfg.MC_warmupIterations,0,cfg.verbosity - 3);\
+    /* catch zero kernel */\
+    try{ HepSource::VEGAS(dv,cfg.MC_warmupCalls,cfg.MC_warmupIterations,0,cfg.verbosity - 3); }\
+    catch(domain_error& e){ out->result = 0; out->error = 0; out->MC_chi2 = 0; out->MC_chi2inter = 0; return 0.; }\
     HepSource::IntegrandEstimate e = dv.stats(0);\
     res = e.integral();\
     uint guard = 0;\
