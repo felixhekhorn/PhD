@@ -1,0 +1,71 @@
+#!/usr/bin/gnuplot
+reset
+
+set term png size 400,1000
+set logscale x
+# setup files
+{% for Q2 in Q2s %}
+src{{Q2|replace("-","M")}} = "./data2/partonic-j/{{ fn }}-Q2_{{Q2}}.dat"
+{% endfor %}
+
+{% for proj in projs %}
+set title "{{ fn }} {{proj}}"
+set out "./img2/partonic/{{ fn }}-{{proj}}.png"
+naf = {{1+loop.index}}
+
+set multiplot layout {{Q2s | length}},1 spacing 0,0
+set xtics format ""
+set lmargin 6
+unset xlabel
+#set bmargin 1
+
+{% for Q2 in Q2s %}
+{% if loop.last %}
+set xlabel "eta []"
+set xtics format "%g"
+{% endif %}
+plot    src{{Q2|replace("-","M")}}  u 1:naf w l t "",\
+        src{{Q2|replace("-","M")}}  u 11:int(2*naf+8):int(2*naf+9) w yerror t "",\
+        src{{Q2|replace("-","M")}}  u 30:int(2*naf+27):int(2*naf+28) w yerror t ""
+{% if loop.first %}
+unset title
+{% endif %}
+{% endfor %}
+
+unset multiplot
+set out
+{% endfor %}
+
+#################
+# Error Plot
+#################
+
+set logscale y
+set yrange [1:1.0001]
+set key top left
+unset xlabel
+
+{% for proj in projs %}
+set title "{{ fn }} {{proj}}"
+set out "./img2/partonic/e-{{ fn }}-{{proj}}.png"
+naf = {{1+loop.index}}
+
+set multiplot layout {{Q2s | length}},1 spacing 0,0
+set xtics format ""
+unset xlabel
+
+{% for Q2 in Q2s %}
+{% if loop.last %}
+set xlabel "eta []"
+set xtics format "%g"
+{% endif %}
+plot    src{{Q2|replace("-","M")}}  u 11:(column(2*naf+8)/column(naf)):(column(2*naf+9)/column(naf)) w yerror t "",\
+        src{{Q2|replace("-","M")}}  u 30:(column(2*naf+27)/column(naf)):(column(2*naf+28)/column(naf)) w yerror t ""
+{% if loop.first %}
+unset title
+{% endif %}
+{% endfor %}
+
+unset multiplot
+set out
+{% endfor %}
