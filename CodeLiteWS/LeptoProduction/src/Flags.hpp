@@ -3,11 +3,11 @@
 
 /**
  * @class Flags
- * @brief controls active channels, bosons and orders
+ * @brief controls active channels, orders and bosons
  */
 struct Flags {
     
-    /** @name channels */
+    /** @name partonic channels: gluon, light quark */
     ///@{
     /** @brief use gluonic initial state? */
     bool useGluonicChannel = true;
@@ -16,7 +16,7 @@ struct Flags {
     bool useQuarkChannel = true;
     ///@}
     
-    /** @name orders */
+    /** @name computing orders = number of loops */
     ///@{
     /** @brief use leading order calculations? */
     bool useLeadingOrder = true;
@@ -25,7 +25,7 @@ struct Flags {
     bool useNextToLeadingOrder = true;
     ///@}
     
-    /** @name exchanged bosons */
+    /** @name exchanged bosons: photon, Z */
     ///@{
     /** @brief use photon exchange? */
     bool usePhoton = true;
@@ -33,7 +33,7 @@ struct Flags {
     /** @brief use interference between photon and Z exchange? */
     bool usePhotonZ = true;
     
-    /** @brief use Z0 exchange? */
+    /** @brief use Z exchange? */
     bool useZ = true;
     ///@}
 };

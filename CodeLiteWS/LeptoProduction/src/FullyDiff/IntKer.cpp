@@ -200,8 +200,17 @@ const FullyDiff::PhasespaceValues FullyDiff::IntKer::cgBarF1() const {
 
 const FullyDiff::PhasespaceValues FullyDiff::IntKer::cgBarR1() const {
     PhasespaceValues r;
+    _sp
+    cdbl beta = this->beta();
+    cdbl t1 = -.5*sp*(1. - beta*cos(Theta1));
+    cdbl n = 8.*M_PI * Color::Kgph*cdbl(Color::NC)*Color::CF * 1./(4.*sp) * m2  * beta*sin(Theta1) * this->V_Theta1;
+    
+    fPtr4dbl fVV = 0;fPtr4dbl fVA = 0;fPtr4dbl fAA = 0;
+    this->getBQED(fVV, fVA, fAA);
+    combineModesAndCurs(me,cgBarR1,fVV(m2,-Q2,sp,t1),fVA(m2,-Q2,sp,t1),fAA(m2,-Q2,sp,t1));
+    
     cdbl b = this->beta0lf()/(16.*M_PI*M_PI);
-    r.xCyE += b*this->cg0();
+    r.xCyE += n*b*me;
     return r;
 }
 
@@ -329,7 +338,7 @@ cdbl FullyDiff::IntKer::runPartonic(cdbl a1, cdbl a2, cdbl a3, cdbl a4) {
     if (Mode_cgBar1_VV == this->mode || Mode_cgBar1_VA == this->mode || Mode_cgBar1_AA == this->mode) {
         cuint old = this->mode;
         uint F,R;
-        if (Mode_cgBar1_VV == this->mode) { F = this->Mode_cgBarF1_VV; R = this->Mode_cgBarR1_VV; }
+        if (Mode_cgBar1_VV == this->mode)      { F = this->Mode_cgBarF1_VV; R = this->Mode_cgBarR1_VV; }
         else if (Mode_cgBar1_VA == this->mode) { F = this->Mode_cgBarF1_VA; R = this->Mode_cgBarR1_VA; }
         else if (Mode_cgBar1_AA == this->mode) { F = this->Mode_cgBarF1_AA; R = this->Mode_cgBarR1_AA; }
         dbl r = 0.;

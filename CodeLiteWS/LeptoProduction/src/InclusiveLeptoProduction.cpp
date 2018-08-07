@@ -53,10 +53,10 @@ Common::IntegrationConfig* InclusiveLeptoProduction::getIntegrationConfig(str me
         return this->intConfigs.at(2-1);
     // hadronic functions
     bool isNLO = this->ker->flags.useNextToLeadingOrder;
-    if (boost::starts_with(method,"dF_d"))
-        return isNLO ? this->intConfigs.at(2-1) : this->intConfigs.at(1-1);
     if (boost::iequals(method,"F"))
         return isNLO ? this->intConfigs.at(3-1) : this->intConfigs.at(2-1);
+    if (boost::starts_with(method,"dF_d"))
+        return isNLO ? this->intConfigs.at(2-1) : this->intConfigs.at(1-1);
     // leptonic functions
     if (boost::iequals(method,"sigma"))
         return isNLO ? this->intConfigs.at(5-1) : this->intConfigs.at(4-1);

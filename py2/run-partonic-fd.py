@@ -72,4 +72,4 @@ def runSet(fn):
   run(fn,1e2)
   run(fn,1e3)
 
-runSet("dq1")
+runSet("cgBar1")

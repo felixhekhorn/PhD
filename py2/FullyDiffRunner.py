@@ -83,10 +83,6 @@ def _threadWorker(qIn, qOut):
 		if p.has_key("omega"): o.setOmega(p["omega"])
 		if p.has_key("deltax"): o.setDeltax(p["deltax"])
 		if p.has_key("deltay"): o.setDeltay(p["deltay"])
-		if p.has_key("IntegrationConfig"):
-			method = run if type("") == type(run) else run[0]
-			for k in p["IntegrationConfig"]:
-				setattr(o.getIntegrationConfig(method),k,p["IntegrationConfig"][k])
 		# partonic setter
 		if p.has_key("partonicEta"): o.setPartonicEta(p["partonicEta"])
 		if p.has_key("partonicS"): o.setPartonicS(p["partonicS"])
@@ -111,6 +107,11 @@ def _threadWorker(qIn, qOut):
 		if p.has_key("leptonicS"): o.setLeptonicS(p["leptonicS"])
 		if p.has_key("Q2min"): o.setQ2min(p["Q2min"])
 		if p.has_key("Q2minByHVQDIS"): o.setQ2minByHVQDIS(p["Q2minByHVQDIS"])
+		# int config has to be set AFTER flags!
+		if p.has_key("IntegrationConfig"):
+			method = run if type("") == type(run) else run[0]
+			for k in p["IntegrationConfig"]:
+				setattr(o.getIntegrationConfig(method),k,p["IntegrationConfig"][k])
 		# find run
 		if type("") == type(run):
 			if "F"       == run: p["res"] = o.F()

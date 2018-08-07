@@ -5,12 +5,21 @@ pa="../partonic-a/"
 pi="../partonic-i/"
 pfd="../partonic-fd/"
 
-for l in "cg0" "cgBarR1"
+for l in "cg0" "cgBarR1" "cgBar1"  "cqBarF1"  "dq1"
 do
  for q2 in "-2" "0" "1" "2" "3"
  do
   f=$(printf "%s-Q2_%s.dat" $l $q2)
   paste $pa$f $pi$f $pfd$f > $f
+ done
+done
+
+for l in "cg1"  "cq1"
+do
+ for q2 in "-2" "0" "1" "2" "3"
+ do
+  f=$(printf "%s-Q2_%s.dat" $l $q2)
+  paste $pi$f $pfd$f > $f
  done
 done
 
