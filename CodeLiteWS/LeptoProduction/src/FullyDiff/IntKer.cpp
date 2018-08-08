@@ -227,9 +227,9 @@ const FullyDiff::PhasespaceValues FullyDiff::IntKer::cq1() const {
         cdbl t1c = -.5*sp*(1.-beta5B*cos(Theta1));
         cdbl jacB = V_xE*V_Theta1;
         cdbl g = ncq1 * Color::Kqph*cdbl(Color::NC) * 1./(xE*sp)*1./(2.) * beta5B*sin(Theta1);
-        cdbl l = log(sp/m2*sp/(this->s)*omega/2.*(1.-xE)*(1.-xE));
+        cdbl l = log(sp/m2*sp/s*omega/2.*(1.-xE)*(1.-xE));
         const fPtr1dbl Pgq0 = this->getPgq0();
-        cdbl vPqg0 = Pgq0(xE);
+        cdbl vPgq0 = Pgq0(xE);
         const fPtr1dbl Pgq1 = this->getPgq1();
         cdbl vPgq1 = Pgq1(xE);
         
@@ -237,22 +237,24 @@ const FullyDiff::PhasespaceValues FullyDiff::IntKer::cq1() const {
         this->getBQED(fVV, fVA, fAA);
         combineModesAndCurs(meB,cq1,fVV(m2,-Q2,xE*sp,xE*t1c),fVA(m2,-Q2,xE*sp,xE*t1c),fAA(m2,-Q2,xE*sp,xE*t1c));
         
-        r.xEyC += g*jacB*meB*(2.*vPgq1 + vPqg0*l);
+        r.xEyC += g*jacB*meB*(vPgq0*l + 2.*vPgq1);
     } { // hard contributions
         const KinematicVars vs(m2,-Q2,sp,xE,yE,Theta1,Theta2);
         cdbl jacE = V_xE*V_yE*V_Theta1*V_Theta2;
         cdbl jacC = V_xE*V_yC*V_Theta1*V_Theta2;
         cdbl f = ncq1 * (-1.)/(4.*M_PI)*1./sp * Color::Kqph*cdbl(Color::NC)*Color::CF * vs.beta5*sin(Theta1);
         
-        fPtr7dbl fVV = 0;fPtr7dbl fVA = 0;fPtr7dbl fAA = 0;
-        this->getA1(fVV, fVA, fAA);
-        fPtr6dbl gVV = 0;fPtr6dbl gVA = 0;fPtr6dbl gAA = 0;
-        this->getA1Counter(gVV, gVA, gAA);
-        combineModesAndCurs(meE,cq1,fVV(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up),fVA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up),fAA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up));
-        combineModesAndCurs(meC,cq1,gVV(m2,-Q2,sp,xE,Theta1,Theta2),gVA(m2,-Q2,sp,xE,Theta1,Theta2),gAA(m2,-Q2,sp,xE,Theta1,Theta2));
-        
-        r.xEyE += f * jacE*meE/(1.+yE);
-        r.xEyC -= f * jacC*meC/(1.+yC);
+        {
+            fPtr7dbl fVV = 0;fPtr7dbl fVA = 0;fPtr7dbl fAA = 0;
+            this->getA1(fVV, fVA, fAA);
+            combineModesAndCurs(meE,cq1,fVV(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up),fVA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up),fAA(m2,-Q2,sp,vs.t1,vs.u1,vs.tp,vs.up));
+            r.xEyE += f * jacE*meE/(1.+yE);
+        } {
+            fPtr6dbl gVV = 0;fPtr6dbl gVA = 0;fPtr6dbl gAA = 0;
+            this->getA1Counter(gVV, gVA, gAA);
+            combineModesAndCurs(meC,cq1,gVV(m2,-Q2,sp,xE,Theta1,Theta2),gVA(m2,-Q2,sp,xE,Theta1,Theta2),gAA(m2,-Q2,sp,xE,Theta1,Theta2));
+            r.xEyC -= f * jacC*meC/(1.+yC);
+        }
     }
     return r;
 }

@@ -30,12 +30,14 @@ int testPartonic() {
 #ifdef useIP
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
+printf("[INFO] InclusiveLeptoProduction(%d,%g,%g)\n",nlf,m2,Delta);
 #else // ifdef useIP
     cdbl xTilde = .8;
     cdbl omega = 1.;
     cdbl deltax = 1e-6;
     cdbl deltay = 7e-6;
     FullyDiffLeptoProduction o(nlf,m2,xTilde,omega,deltax,deltay);
+printf("[INFO] FullyDiffLeptoProduction(%d,%g,%g,%g,%g,%g)\n",nlf,m2,xTilde,omega,deltax,deltay);
 #endif // ifdef useIP    
 
     o.setQ2(Q2);
@@ -43,17 +45,17 @@ int testPartonic() {
     for (uint j = 0; j < N; ++j) {
         cdbl eta = pow(10.,-3.+6./(N-1)*j);
         o.setPartonicEta(eta);
-        o.getIntegrationConfig("cgBarR1_VV")->verbosity = 1;
+        //o.getIntegrationConfig("cq1_AA")->verbosity = 1;
         //o.getIntegrationConfig("cg1_VV")->method = "gsl_monte_vegas_integrate";
         //o.getIntegrationConfig("cg1_VV")->calls = 40000;
         //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
         //o.setDelta(eta/1000.);
-        o.setProjection(F2);
-        cdbl cF2 = o.cgBarR1_VV()/o.cg0_VV();
-        o.setProjection(FL);
-        cdbl cFL = o.cgBarR1_VV()/o.cg0_VV();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.cgBarR1_VV()/o.cg0_VV();
+        cdbl cF2 = o.cq1_AA();
+        o.setProjection(FL);
+        cdbl cFL = o.cq1_AA();
+        o.setProjection(x2g1);
+        cdbl cx2g1 = o.cq1_VV();
         cout << boost::format("%e\t% e\t% e\t% e")%eta%(cF2)%cFL%cx2g1 << endl;
     }
     

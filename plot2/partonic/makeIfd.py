@@ -13,19 +13,21 @@ templateEnv = jinja2.Environment( loader=templateLoader )
 
 rawProjs = ["F2-VV", "FL-VV","x2g1-VV","F2-AA", "FL-AA","x2g1-AA"]
 projs = [{"label": rawProjs[k], "ind": 1+k} for k in xrange(len(rawProjs))]
-zeroProjs = [{"label": "xF3-VA", "ind": 7},{"label": "g4-VA", "ind": 8}]
+zeroProjs = [{"label": "xF3-VA", "ind": 7},{"label": "g4-VA", "ind": 8},{"label": "gL-VA", "ind": 9}]
 Q2s = [-2,0,1,2,3]
 
 ymins = {
- "cg1": 1e-6
+ "cg1": 1e-6,
+ "cq1": 1e-6
 }
 yminZeros = {
- "cg1": 1e-8
+ "cg1": 1e-9,
+ "cq1": 1e-11
 }
 
 src = "ifd.plt.jinja"
 t = templateEnv.get_template(src)
-for fn in ["cg1"]:
+for fn in ["cg1", "cq1"]:
   target = curDir + "/" + fn+".plt"
   print "[INFO] preparing %s"%target
   rProjs = projs
@@ -38,7 +40,7 @@ for fn in ["cg1"]:
     "fn": fn,"projs": rProjs, "zeroProjs": rZeroProjs, "Q2s": Q2s,
     "ymin": ymins[fn], 
     "yminZero": yminZeros[fn],
-    "ymaxZero": 1e-12 if "cg0" == fn or "cgBarR1" == fn else 1e-2,
+    "ymaxZero": 1e-2,
     "mainDir": "~/Physik/PhD/" } )
   with open(target, "w") as f:
     f.write(outputText.encode('utf-8'))

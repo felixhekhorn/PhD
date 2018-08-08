@@ -34,8 +34,47 @@ unset xlabel
 set xlabel "eta []"
 set xtics format "%g"
 {% endif %}
-plot    src{{Q2|replace("-","M")}} u 1:int(2*naf):int(2*naf+1) w yerror lc "red" t "",\
-        src{{Q2|replace("-","M")}} u 20:int(2*naf+19):int(2*naf+19+1) w yerror lc "blue" t ""
+plot    src{{Q2|replace("-","M")}} u 1:(column(2*naf)):(column(2*naf+1)) w yerror lc "red" t "",\
+        src{{Q2|replace("-","M")}} u 20:(column(2*naf+19)):(column(2*naf+19+1)) w yerror lc "blue" t ""
+{% if loop.first %}
+unset title
+{% endif %}
+{% endfor %}
+
+unset multiplot
+set out
+{% endfor %}
+
+#####################
+# Error plots
+#####################
+
+#set logscale y
+set ytics format "%.0e"
+set key top left
+unset xlabel
+
+dely = 5e-2
+set yrange [1-dely:1+dely]
+#set ytics 1-1e-2,1e-2
+set ytics format "%g"
+
+{% for proj in projs %}
+set title "{{ fn }} {{proj.label}}"
+set out mainDir . "img2/partonic/e-{{ fn }}-{{proj.label}}.png"
+naf = {{proj.ind}}
+
+set multiplot layout {{Q2s | length}},1 spacing 0,0
+set xtics format ""
+unset xlabel
+
+{% for Q2 in Q2s %}
+{% if loop.last %}
+set xlabel "eta []"
+set xtics format "%g"
+{% endif %}
+plot    src{{Q2|replace("-","M")}} u 1:(column(2*naf)/column(2*naf)):(column(2*naf+1)/column(2*naf)) w yerror lc "red" t "",\
+        src{{Q2|replace("-","M")}} u 20:(column(2*naf+19)/column(2*naf)):(column(2*naf+19+1)/column(2*naf)) w yerror lc "blue" t ""
 {% if loop.first %}
 unset title
 {% endif %}
@@ -56,12 +95,7 @@ unset xlabel
 yminZero = {{yminZero}}
 ymaxZero = {{ymaxZero}}
 set yrange [yminZero:ymaxZero]
-re1(naf,o) = abs(column(2*naf+o))
-re(naf,o) = (0. == re1(naf,o) ? yminZero : re1(naf,o))
-ree1(naf,o) = abs(column(2*naf+o)+column(2*naf+o+1))
-ree2(naf,o) = abs(column(2*naf+o)-column(2*naf+o+1))
-ree12(naf,o) = (ree1(naf,o) < ree2(naf,o) ? ree2(naf,o) : ree1(naf,o))
-ree(naf,o) = (re(naf,o) + ree12(naf,o))
+set ytics auto format "%.0e"
 
 {% for proj in zeroProjs %}
 set title "{{ fn }} {{proj.label}}"
