@@ -51,11 +51,11 @@ printf("[INFO] FullyDiffLeptoProduction(%d,%g,%g,%g,%g,%g)\n",nlf,m2,xTilde,omeg
         //o.getIntegrationConfig("cg1_VV")->Dvegas_bins = 40;
         //o.setDelta(eta/1000.);
         o.setProjection(x2g1);
-        cdbl cF2 = o.cq1_AA();
+        cdbl cF2 = o.cq1_VV();
         o.setProjection(FL);
         cdbl cFL = o.cq1_AA();
         o.setProjection(x2g1);
-        cdbl cx2g1 = o.cq1_VV();
+        cdbl cx2g1 = o.cq1_AA();
         cout << boost::format("%e\t% e\t% e\t% e")%eta%(cF2)%cFL%cx2g1 << endl;
     }
     

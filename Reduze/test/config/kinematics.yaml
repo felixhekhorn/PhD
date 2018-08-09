@@ -1,0 +1,18 @@
+kinematics : 
+  incoming_momenta: [k1, q]
+  outgoing_momenta: [k1p, qp]
+  momentum_conservation: [qp, q + k1 - k1p]
+  kinematic_invariants:
+    - [m2, 2]
+    - [q2, 2]
+    - [sp,  2]
+  scalarproduct_rules:
+    - [[q , q ], q2 ]
+    - [[k1, k1], 0  ]
+    - [[k1, q ], sp ]
+    - [[qp, qp], q2 ]
+    - [[k1p, k1p], 0  ]
+    - [[k1p, qp ], sp ]
+    - [[q , qp], q2 ]
+    - [[k1, k1p], 0  ]
+    - [[k1, qp ], sp ]

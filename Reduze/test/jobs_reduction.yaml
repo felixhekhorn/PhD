@@ -1,0 +1,22 @@
+jobs:
+  - setup_sector_mappings: {}
+  - reduce_sectors:
+      sector_selection:
+        select_recursively: [ [planarbox, 182] ]
+      identities:
+        ibp:
+          - { r: [t, 5], s: [0, 1] }
+        lorentz: # may help to reduce certain integrals at border of seed range
+          - { r: [t, t], s: [1, 1] }
+        sector_symmetries: # sometimes important, doesn't harm
+          - { r: [t, t], s: [0, 1] }
+  - select_reductions:
+      input_file: "myintegrals"
+      output_file: "myintegrals.tmp"
+  - reduce_files: # just for final clean up
+      equation_files: ["myintegrals.tmp"]
+      output_file: "myintegrals.sol"
+  - export:
+      input_file: "myintegrals.sol"
+      output_file: "myintegrals.sol.inc"
+      output_format: "form"
