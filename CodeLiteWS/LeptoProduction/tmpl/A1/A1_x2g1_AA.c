@@ -1,1 +1,1 @@
-(2*q2*Power(tp,2)*(-u1 + u7))/(sp*u1*Power(u7,2)) - (tp*(Power(u1,2)*(q2*(sp + 6*t1) + 4*m2*(2*sp + u1)) - 2*(-4*m2*q2 + Power(q2,2) + Power(sp,2))*u1*u7 + (-2*(2*m2 + sp)*u1 + q2*(sp + 2*(t1 + u1)))*Power(u7,2)))/(sp*Power(u1,2)*Power(u7,2)) + (-(sp*u1*u7*(u1*(2*(sp + t1) + u1) - 2*t1*u7 + Power(u7,2))) - 2*m2*(2*sp + u1 + u7)*((sp + 2*t1)*Power(u1,2) + 2*sp*u1*u7 - (sp + 2*t1)*Power(u7,2)) + 2*q2*(-(t1*(sp + 2*t1)*Power(u1,2)) + u1*(Power(sp,2) + (sp + t1)*u1)*u7 - (Power(sp,2) + 3*sp*t1 + t1*(2*t1 + u1))*Power(u7,2)))/(sp*Power(u1,2)*Power(u7,2))
+0

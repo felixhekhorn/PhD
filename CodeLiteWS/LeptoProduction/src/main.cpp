@@ -26,7 +26,7 @@ int testPartonic() {
     cdbl m2 = pow(4.75,2);
     cdbl Q2 = 1e2;
     
-//#define useIP 1
+#define useIP 1
 #ifdef useIP
     cdbl Delta = 1.e-6;
     InclusiveLeptoProduction o(nlf,m2,Delta);
@@ -38,7 +38,7 @@ printf("[INFO] InclusiveLeptoProduction(%d,%g,%g)\n",nlf,m2,Delta);
     cdbl deltay = 7e-6;
     FullyDiffLeptoProduction o(nlf,m2,xTilde,omega,deltax,deltay);
 printf("[INFO] FullyDiffLeptoProduction(%d,%g,%g,%g,%g,%g)\n",nlf,m2,xTilde,omega,deltax,deltay);
-#endif // ifdef useIP    
+#endif // ifdef useIP
 
     o.setQ2(Q2);
     cuint N = 11;

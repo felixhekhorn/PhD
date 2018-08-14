@@ -53,7 +53,7 @@ Tensor G,G1a,G1b,G2a,G2b,G3a,G3b,ee;
 #define mqLine4 "2";
 
 *******************
-* compute matrix elements
+* compute matrix elements: iterate currents and amplitudes
 #do cur1 = 1,2
 #do cur2 = 1,2
 #do ch1 = 1,4
@@ -70,11 +70,13 @@ Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq    ) *   `me`ch1
            `HAQ' * `Liq' * `CCme`ch2'Pre' * gg(`mqLine`ch2'',mqp,fv) * `CCme`ch2'Post';
 #else
 Local ME = `HQ'  * `Lfq' *   `me`ch1'Pre' * gg(`mqLine`ch1'',mq, fv) *   `me`ch1'Post' *
-           `HAQ' * `Liq' * `CCme`ch2'Pre' * 1/6*e_(mqp,muf1,muf2,muf3)*gg(`mqLine`ch2'',muf1,muf2,muf3) * `CCme`ch2'Post';
+           `HAQ' * `Liq' * `CCme`ch2'Pre' * 1/6*ee(mqp,muf1,muf2,muf3)*gg(`mqLine`ch2'',muf1,muf2,muf3) * `CCme`ch2'Post';
 #endif
 
 * Print ME;
 *.sort
+
+#define eeNoContract "1"
 
 *******************
 * use modified tracing routine of S. Moch et al. Physics Letters B 748 (2015) 432-438
@@ -98,6 +100,11 @@ Local FgP`V' = ME*`projV`V'';
 contract;
 .sort
 #enddo
+
+* contract epsilon now
+id ee(?a) = e_(?a);
+Contract;
+.sort:contract-ee;
 
 *******************
 * insert scalar products
