@@ -1,10 +1,11 @@
 integralfamilies:
   - name: planarbox
-    loop_momenta: [p1]
+    loop_momenta: [p2]
     propagators:
-      - [ "p1", m2 ]
-      - [ "p1-q-k1", m2 ] # p2
-      - [ "p1-q", m2 ]
-      - [ "qp-p1", m2 ]
+      - [ "p2", m2 ]
+      - [ "p2-q-k1", m2 ] # p1
+      - [ "q-p2", m2 ] # u1
+      - [ "p2-qp", m2 ] # u1 in CC
     cut_propagators: [1,2]
 #    permutation_symmetries:
+#     - [[1,2], [3,4]]

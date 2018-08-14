@@ -1,0 +1,15 @@
+integralfamilies:
+  - name: dq1
+    loop_momenta: [p2,k2]
+    propagators:
+      - [ "p2", m2 ]
+      - [ "k1+q-p2-k2", m2 ] # p1
+      - [ "k2", 0 ]
+      - [ "k1+q-k2", 0 ] # s5
+      - [ "k2-q", 0 ] # up
+      - [ "k2-qp", 0 ] # up in CC
+      - [ "k1-k2", 0 ] # tp
+      - [ "k1p-k2", 0 ] # tp in CC
+      - [ "q-p2", m2 ] # u1
+    cut_propagators: [1,2,3]
+#    permutation_symmetries:
